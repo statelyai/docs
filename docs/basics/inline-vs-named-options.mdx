@@ -4,4 +4,65 @@ title: Inline vs. named Options
 
 # Inline vs. named Options
 
-%{{ inline-vs-named-options }}
+<!-- deps: ["options-api"] -->
+
+In the examples so far, we’ve passed options into the config using names:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  entry: ['sayHello'],
+});
+```
+
+These are called **named** actions. You can do the same with named guards, services and delays, and we’ll get to those later.
+
+However, if you don’t want to name your actions, you can also declare them inline:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  entry: [
+    () => {
+      console.log('Hello!');
+    },
+  ],
+});
+```
+
+The difference between named and inline options is mostly stylistic. We support both approaches, and you can mix-and-match named and inline options within the same machine:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine(
+  {
+    entry: [
+      // Inline
+      () => {
+        console.log('Hello!');
+      },
+    ],
+    exit: [
+      // Named
+      'sayGoodbye',
+    ],
+  },
+  {
+    actions: {
+      sayGoodbye: () => {
+        console.log('sayGoodbye');
+      },
+    },
+  }
+);
+```
+
+Named options are preferred when using [typegen](/typescript/typegen) and also show up better when visualized with our [VS Code extension](/tools/ide-extensions). Named options show their name, whereas inline options show an “Inline” label.
+
+When not using typegen, inline options can often give you better type inference than named options.

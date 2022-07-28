@@ -1,26 +1,186 @@
 ---
 title: What is a statechart?
-status: complete # in-progress, complete
-needs: # content, tech-review, copy-review
 ---
 
 # What is a statechart?
 
-%{{what-is-a-statechart}}
+<!-- deps: ["installation"] -->
+<!-- loom: 17150699f66c4a00a5987af2867d66e7 -->
+
+Statecharts are a visual language used to describe the states in a process.
+
+You may have used similar diagrams in the past to design user flows, plan databases or map app architecture. Statecharts are another way of using boxes and arrows to represent flows, but with XState, these flows are also executable code you can use to control the logic in your applications.
+
+[Install XState](/getting-started/installation) and create a statechart by importing `createMachine` from `xstate`.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // statechart config goes here
+});
+```
 
 ## States
 
-%{{states }}
+<!-- deps: ["what-is-a-statechart"] -->
+<!-- loom: a49e651da81f4e309d11acce941a8bf0 -->
+
+The _states_ are represented by rounded rectangle boxes. When drawing a statechart for the process of a dog, two states would first come to mind:
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/asleep-awake.svg)
+
+A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
+
+You can create these states in XState using the `states` property:
+
+```ts twoslash {2-5}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {},
+    awake: {},
+  },
+});
+```
+
+Any process with states will also have an _initial state_, the default state in which the process exists until an event changes its state.
+The initial state is represented by a filled circle with an arrow pointing from the circle to the initial state.
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/initial-state.svg)
+
+In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
+
+```ts twoslash {2}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'waiting',
+  states: {
+    waiting: {},
+  },
+});
+```
 
 ## Transitions and events
 
-%{{transitions-and-events}}
+<!-- deps: ["states"] -->
+<!-- loom: 634d662da24c42c1897be9d92c7acd8c -->
+
+The dog goes between **asleep** and **awake** through _transitions_, symbolized by an arrow pointing from one state to the next state in the process’s sequence.
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/transitions-events.svg)
+
+A transition is caused by an _event_ that results in the change of state. Transitions are labeled with their events.
+
+Transitions and events are _deterministic_. Deterministic means that each transition and event always points to the same next state, and always produces the same result from their given starting condition every time the process is run. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
+
+With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
+
+Use the `on` property inside the desired state to represent its transitions.
+
+```ts twoslash {5-9, 12-16}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {
+      on: {
+        'wakes up': {
+          target: 'awake',
+        },
+      },
+    },
+    awake: {
+      on: {
+        'falls asleep': {
+          target: 'asleep',
+        },
+      },
+    },
+  },
+});
+```
+
+### Events
+
+Define an event with an object using the `type` attribute to describe the event’s name. Events can also pass in other properties along with their type.
+
+```ts twoslash
+const VALID_EVENTS = [
+  {
+    type: 'LOG_OUT',
+  },
+  {
+    type: 'LOG_IN',
+    /**
+     * Pass in any other properties
+     * along with the event
+     */
+    username: 'myusername',
+  },
+  {
+    /**
+     * The event type key and value
+     * can be any text case
+     */
+    type: 'wake up',
+  },
+];
+
+const INVALID_EVENTS = [
+  {
+    /**
+     * The event type key must
+     * be the same text case as
+     * its first instance
+     */
+    TYPE: 'Some event',
+  },
+  {
+    /**
+     * The event type value must
+     * be a string
+     */
+    type: 123,
+  },
+];
+```
 
 {/* this will be a flagged TS tip \ */}
 
 ### Events in TypeScript
 
-%{{events-typescript}}
+<!-- deps: ["transitions-and-events"] -->
+
+In TypeScript, you can strongly type your events by passing a _[union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)_ of all the events to the `schema` property.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  schema: {
+    events: {} as
+      | { type: 'LOG_OUT' }
+      | { type: 'LOG_IN'; value: string }
+      | { type: 'COUNTDOWN'; value: number },
+  },
+});
+```
+
+Wherever you send an event to a machine, or access the event inside the machine, the event will be strongly typed.
 
 {/* end flagged TS tip \ */}
 
