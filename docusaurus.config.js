@@ -11,7 +11,7 @@ const config = {
     'Documentation for XState: State Machines and Statecharts for the Modern Web',
   url: 'https://stately-docs.vercel.app/',
   baseUrl: '/',
-  onBrokenLinks: 'warn',
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/icon.svg',
 
