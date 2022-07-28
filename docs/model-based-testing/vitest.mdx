@@ -4,4 +4,28 @@ title: Vitest in XState Test
 
 # Vitest
 
-%{{ xstate-test-vitest }}
+<!-- deps: ["testing-intro"] -->
+
+Integrating with [Vitest](https://vitest.dev) is simple with `@xstate/test`.
+
+```ts
+import { createTestMachine, createTestModel } from '@xstate/test';
+import { describe, it } from 'vitest';
+
+const machine = createTestMachine({
+  // machine config
+});
+
+describe('My app', () => {
+  createTestModel(machine)
+    .getPaths()
+    .forEach((path) => {
+      it(path.description, async () => {
+        await path.test({
+          states: {},
+          events: {},
+        });
+      });
+    });
+});
+```

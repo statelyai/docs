@@ -1,7 +1,138 @@
 ---
-title: "Test paths"
+title: 'Test paths'
 ---
 
 # Test paths
 
-%{{ xstate-test-test-paths }}
+<!-- deps: ["testing-intro"] -->
+
+`@xstate/test` generates _test paths_ that it walks through to execute your tests. Knowing how these paths are generated will make your tests more predictable.
+
+## Coverage
+
+The following example models a checkbox:
+
+```ts
+import { createTestMachine } from '@xstate/test';
+
+const machine = createTestMachine({
+  initial: 'notChecked',
+  states: {
+    notChecked: {
+      on: {
+        CLICK: 'checked',
+      },
+    },
+    checked: {
+      on: {
+        CLICK: 'notChecked',
+      },
+    },
+  },
+});
+```
+
+You could take a few different approaches to ensure _everything_ in this machine works:
+
+### State coverage
+
+The first approach is to ensure full coverage of **states**, where you would want to test:
+
+1. When `checked` is reached, the checkbox is displaying a checkbox.
+2. When `notChecked` is reached, the checkbox is NOT displaying a checkbox.
+
+### Event coverage
+
+State coverage is a good start, but we also want to ensure all the **events** are working. To do this, we can add a new test:
+
+1. Ensure that `CLICK` changes the checkbox.
+
+Putting these tests together, you’d end up with a single test path:
+
+1. Assert we’re in the `notChecked` state.
+2. Run the `CLICK` event.
+3. Assert we’re in the `checked` state.
+
+### Transition coverage
+
+The test path above feels complete, but it’s not quite there. We now know that clicking the checkbox can change it from `notChecked` to `checked`. But we _don’t_ know that the same will happen when we go the other way! That means our full test should be:
+
+1. Assert we’re in the `notChecked` state.
+2. Run the `CLICK` event.
+3. Assert we’re in the `checked` state.
+4. Run the `CLICK` event.
+5. Assert we’re in the `notChecked` state.
+
+In `@xstate/test`, we achieve the test path above by checking all **transitions** are covered, which means you get full coverage out of the box.
+
+## Multiple paths
+
+Test setup can be expensive, whether you’re loading up a browser or just setting up a database. @xstate/test will speed up your tests by attempting to walk through your test model in as few paths as possible.
+
+The following example models a login form:
+
+```ts
+import { createTestMachine } from "@xstate/test";
+
+const loginMachine = createTestMachine({
+  initial: "showingLoginForm",
+  states: {
+    showingLoginForm: {
+      on: {
+        SUBMIT_VALID_FORM: 'loggedIn',
+        SUBMIT_INVALID_FORM: 'passwordInvalid',
+      }
+    },
+    loggedIn: {}
+    passwordInvalid: {},
+  },
+});
+```
+
+This example would generate two test paths:
+
+```txt
+showingLoginForm -> SUBMIT_VALID_FORM -> loggedIn
+showingLoginForm -> SUBMIT_INVALID_FORM -> passwordInvalid
+```
+
+Two test paths are generated because the test model can’t transition away from the `loggedIn` state or the `passwordInvalid` state.
+
+### Condensing to a single path
+
+If we were to model the machine slightly differently, the test model would generate a single path:
+
+```ts {12-14}
+import { createTestMachine } from "@xstate/test";
+
+const loginMachine = createTestMachine({
+  initial: "showingLoginForm",
+  states: {
+    showingLoginForm: {
+      on: {
+        SUBMIT_VALID_FORM: 'loggedIn',
+        SUBMIT_INVALID_FORM: 'passwordInvalid',
+      }
+    },
+    loggedIn: {
+      on: {
+        LOG_OUT: 'showingLoginForm'
+      }
+    }
+    passwordInvalid: {},
+  },
+});
+```
+
+In the example above, we’ve added a `LOG_OUT` transition to `loggedIn`, which means the test model can navigate away from the `loggedIn` state. Now, the test model will run a single path:
+
+```txt
+showingLoginForm
+  -> SUBMIT_VALID_FORM -> loggedIn
+  -> LOG_OUT -> showingLoginForm
+  -> SUBMIT_INVALID_FORM -> passwordInvalid
+```
+
+The test above requires less setup while also testing more behavior.
+
+**Note**: we don’t necessarily recommend running _fewer_ test paths, but understanding this behavior is useful when using @xstate/test.
