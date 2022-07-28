@@ -11,7 +11,7 @@ const config = {
     'Documentation for XState: State Machines and Statecharts for the Modern Web',
   url: 'https://stately-docs.vercel.app/',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/icon.svg',
 
@@ -36,7 +36,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
+
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
         },
@@ -79,7 +79,7 @@ const config = {
             items: [
               {
                 label: 'XState',
-                to: '/docs/intro',
+                to: '/intro',
               },
             ],
           },
