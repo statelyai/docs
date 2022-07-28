@@ -78,7 +78,7 @@ const config = {
             title: 'Links',
             items: [
               {
-                label: 'https://stately.ai/',
+                label: 'Stately',
                 href: 'https://stately.ai/',
               },
               {
