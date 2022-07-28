@@ -4,4 +4,95 @@ title: Internal and external transitions
 
 # Internal and external transitions
 
-%{{ internal-and-external-transitions }}
+<!-- deps: ["actions","transitions-and-events","self-transitions","after"] -->
+
+Transitions in statecharts can be one of two types: **internal** or **external**. External transitions are transitions that leave the machine’s current state node. In the example below, `a -> FOO -> b` is an external transition.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      on: {
+        FOO: 'b',
+      },
+    },
+    b: {},
+  },
+});
+```
+
+The transition leaves the `a` state and goes to the `b` state, making it an external transition.
+
+Internal transitions do not leave the current state. For example, self-transitions are internal transitions:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+createMachine(
+  {
+    initial: 'a',
+    states: {
+      a: {
+        on: {
+          FOO: {
+            actions: 'sayHello',
+          },
+        },
+      },
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello!');
+      },
+    },
+  }
+);
+```
+
+The `FOO` transition never leaves the `a` state, which makes it an internal transition.
+
+However, you can _force_ an internal transition to become an external transition. For self-transitions, you can specify the target on the transition to force it to be an external transition:
+
+{/* TODO - it's crazy that internal: false doesn't work here! \ */}
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+createMachine(
+  {
+    initial: 'a',
+    states: {
+      a: {
+        entry: ['logThatThisStateWasEntered'],
+        on: {
+          FOO: {
+            target: 'a',
+            actions: 'sayHello',
+          },
+        },
+      },
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello!');
+      },
+      logThatThisStateWasEntered: () => {
+        console.log('A was entered!');
+      },
+    },
+  }
+);
+```
+
+When `target` is `a`, the transition becomes external, which means the node is exited and re-entered and the **entry and exit actions will be re-fired**. You can use this trick to re-run delays, restart services and it is also useful in hierarchical states.
+
+{/* TODO - add links to the above \ */}
+
+{/* TODO - rewrite this so that it uses delays as its example, now that it depends on after \ */}

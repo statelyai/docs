@@ -4,12 +4,268 @@ title: Running machines
 
 # Running machines
 
-%{{ running-machines-intro }}
+<!-- deps: ["transitions-and-events", "states", "context", "options-intro"] -->
+
+We’ve now covered configuring statecharts and setting up their states, transitions, and options.
+
+Next, we need to learn how to _execute_ our machines in code. Depending on where you’re using XState, you’ll likely need to run machines differently. We’ll start with the VanillaJS approach for now.
+
+## Interpret
+
+The `interpret` interpreter provides us with a “running” and _interactive_ version of our machine.
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine({});
+
+const service = interpret(machine).start();
+```
+
+In XState, we call that “running” machine a `service`. The most common way to interact with a service is to send it events:
+
+{/* TODO: maybe refer to this as an 'actor' instead? \ */}
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine(
+  {
+    on: {
+      SAY_HELLO: {
+        actions: 'sayHello',
+      },
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello!');
+      },
+    },
+  }
+);
+
+const service = interpret(machine).start();
+
+service.send({
+  type: 'SAY_HELLO',
+});
+
+// Logs 'Hello!'
+```
+
+You can also subscribe to the service via `service.subscribe`:
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine(
+  {
+    on: {
+      SAY_HELLO: {
+        actions: 'sayHello',
+      },
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello!');
+      },
+    },
+  }
+);
+
+const service = interpret(machine).start();
+
+// ---cut---
+
+// Fires whenever the state changes
+const { unsubscribe } = service.subscribe((state) => {
+  console.log(
+    // We’ll learn what goes inside here soon!
+    state
+  );
+});
+```
+
+You can also stop the service by running `service.stop()` which cleans up the service and runs any relevant exit actions:
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine(
+  {
+    on: {
+      SAY_HELLO: {
+        actions: 'sayHello',
+      },
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello!');
+      },
+    },
+  }
+);
+
+const service = interpret(machine).start();
+
+// ---cut---
+
+service.stop();
+```
+
+{/* TODO - add reference section for interpret \ */}
+
+`interpret` can run _anywhere JavaScript runs_, which means you can run XState in the browser, Node, Electron, React Native… anywhere!
+
+{/* TODO - add URL below \ */}
+
+[Check out the reference docs on the interpret API]() for a full deep dive into everything a `service` can do.
 
 ## State API
 
-%{{ intro-to-state-api }}
+<!-- deps: ["states", "running-machines-intro", "actions", "context"] -->
+
+When running your machine, you’ll want to query the machine to understand which state it’s in. When you run a machine using `interpret`, you can find the state as follows:
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine({});
+
+// ---cut---
+
+const service = interpret(machine).start();
+
+const state = service.state;
+```
+
+You can also get an updated version when you subscribe to the state:
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine({});
+
+const service = interpret(machine).start();
+
+// ---cut---
+
+service.subscribe((state) => {
+  console.log(state);
+});
+```
+
+This `State` class has a bunch of useful attributes and methods.
+
+### Context
+
+First, you can find the state’s context using `state.context`.
+
+```ts twoslash
+import { createMachine, interpret, assign } from 'xstate';
+
+const machine = createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      INCREMENT: {
+        actions: 'incrementCount',
+      },
+    },
+  },
+  {
+    actions: {
+      incrementCount: assign((context) => {
+        return {
+          count: context.count + 1,
+        };
+      }),
+    },
+  }
+);
+
+const service = interpret(machine).start();
+
+service.subscribe((state) => {
+  console.log(state.context.count);
+});
+
+service.send({ type: 'INCREMENT' });
+```
+
+### `state.matches`
+
+You can query which state the machine is in by running `state.matches()`. `state.matches()` returns a boolean depending on whether you’re in a matching state.
+
+```ts twoslash
+import { createMachine, interpret, assign } from 'xstate';
+
+const machine = createMachine({
+  initial: 'toggledOff',
+  states: {
+    toggledOff: {
+      on: {
+        TOGGLE: 'toggledOn',
+      },
+    },
+    toggledOn: {
+      on: {
+        TOGGLE: 'toggledOff',
+      },
+    },
+  },
+});
+
+const service = interpret(machine).start();
+
+service.subscribe((state) => {
+  const isToggledOn = state.matches('toggledOn');
+
+  console.log(isToggledOn); // true / false
+  console.log(state.value); // 'toggledOn' / 'toggledOff'
+});
+```
+
+You can also use `state.value` to check your machine’s state, but we recommend using `state.matches` because of how it works with hierarchical states. We’ll talk more about hierarchical states later. [Fast track to hierarchical states](/path-to/state.matches-in-hierarchical-states).
+
+### Changed
+
+You can check if a state was _changed_ by the most recently received event. The state was changed if:
+
+1. There was a change in `state.value`. For example, moving from `toggledOn` to `toggledOff`.
+2. A value in context was changed.
 
 ## Running machines as pure functions
 
-%{{ machine.transition }}
+<!-- deps: ["transitions-and-events","intro-to-state-api","actions"] -->
+
+You can use `machine.transition` to run your machine as a pure function without executing any of its actions. `machine.transition` is a pure function that takes two arguments:
+
+- `state`, the `State` to transition from
+- `event`, the event that causes the transition
+
+`machine.transition` returns a new `State` resulting from taking all the transitions enabled by the current state and event.
+
+```js
+const machine = createMachine({
+  /* ... */
+});
+
+const initialState = machine.initialState;
+
+// determine next state based on current state and event
+const yellowState = machine.transition(initialState, {
+  type: 'TIMER',
+});
+
+console.log(yellowState.value);
+// => 'yellow'
+```
