@@ -75,11 +75,15 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Links',
             items: [
               {
-                label: 'XState',
-                to: '/intro',
+                label: 'https://stately.ai/',
+                href: 'https://stately.ai/',
+              },
+              {
+                label: 'Blog',
+                href: 'https://stately.ai/blog',
               },
             ],
           },
@@ -89,10 +93,6 @@ const config = {
               {
                 label: 'Discord',
                 href: 'https://discord.gg/xstate',
-              },
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/xstate',
               },
               {
                 label: 'Twitter',
@@ -105,15 +105,15 @@ const config = {
             ],
           },
           {
-            title: 'More',
+            title: 'GitHub',
             items: [
               {
-                label: 'Blog',
-                to: 'https://stately.ai/blog',
+                label: 'XState',
+                href: 'https://github.com/statelyai/xstate',
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                label: 'Tools',
+                href: 'https://github.com/statelyai/xstate-tools',
               },
             ],
           },
