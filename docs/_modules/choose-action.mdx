@@ -1,0 +1,66 @@
+---
+deps: ["actions", "guards", "guarded-actions"]
+group: "transitions-and-choices"
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+The `choose()` built-in action is an alternative API for guarded actions. `choose` lets you pick which actions should be executed based on some conditions inside the action itself.
+
+The `choose()` approach helps you be more flexible with where you run actions. For example, you can run actions inside an entry action:
+
+```ts twoslash
+import { actions, createMachine } from "xstate";
+
+const logMachine = createMachine(
+  {
+    entry: actions.choose([
+      {
+        cond: "inBrowser",
+        actions: "alertUser",
+      },
+      {
+        actions: "logToUser",
+      },
+    ]),
+  },
+  {
+    guards: {
+      inBrowser: () => {
+        return typeof window === "undefined";
+      },
+    },
+    actions: {
+      alertUser: () => {
+        alert("Hello, browser!");
+      },
+      logToUser: () => {
+        console.log("Hello, server!");
+      },
+    },
+  },
+);
+```
+
+Like all built-in actions, you must apply the result of `choose()` directly to an `actions` attribute. The following example will not work:
+
+```ts twoslash
+import { actions, createMachine } from "xstate";
+
+// ---cut---
+const logMachine = createMachine({
+  entry: () => {
+    // 🚫 The following action just returns an object, 
+    // it doesn’t do anything
+    actions.choose([
+      {
+        cond: "inBrowser",
+        actions: "alertUser",
+      },
+      {
+        actions: "logToUser",
+      },
+    ]);
+  },
+});
+```

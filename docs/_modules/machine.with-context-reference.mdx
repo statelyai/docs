@@ -1,0 +1,31 @@
+---
+deps: ["context"]
+status: in-progress # in-progress, complete
+group: reference
+needs: content # content, tech-review, copy-review
+---
+
+# machine.withContext
+
+Or for existing machines, `machine.withContext(...)` should be used:
+
+```js
+const counterMachine = createMachine({
+  /* ... */
+});
+
+// retrieved dynamically
+const someContext = { count: 42, time: Date.now() };
+
+const dynamicCounterMachine =
+  counterMachine.withContext(someContext);
+```
+
+The initial context of a machine can be retrieved from its initial state:
+
+```js
+dynamicCounterMachine.initialState.context;
+// => { count: 42, time: 1543687816981 }
+```
+
+This is preferred to accessing `machine.context` directly, since the initial state is computed with initial `assign(...)` actions and transient transitions, if any.

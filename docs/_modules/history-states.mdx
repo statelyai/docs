@@ -1,0 +1,110 @@
+---
+deps:
+  [
+    "hierarchical-states",
+    "transitions-and-events",
+    "targeting-children",
+    "targeting-children-of-siblings",
+  ]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+When using statecharts, sometimes you’ll want to relaunch a process in a previous state. 
+
+In the example below, when you turn the fan off via `POWER_OFF`, then turn it back on, it will _always_ start in the `lowPower` state.
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const fanMachine = createMachine({
+  initial: "powerOn",
+  states: {
+    powerOn: {
+      on: {
+        TURN_OFF: {
+          target: "powerOff",
+        },
+        SET_TO_LOW_POWER: {
+          target: ".lowPower",
+        },
+        SET_TO_MEDIUM_POWER: {
+          target: ".mediumPower",
+        },
+        SET_TO_HIGH_POWER: {
+          target: ".highPower",
+        },
+      },
+      initial: "lowPower",
+      states: {
+        lowPower: {},
+        mediumPower: {},
+        highPower: {},
+      },
+    },
+    powerOff: {
+      on: {
+        TURN_ON: {
+          target: "powerOn",
+        },
+      },
+    },
+  },
+});
+```
+
+The example above isn’t a great user experience. Ideally, the fan would start with the same power level that the user last selected.
+
+We can use a **history state** inside the `powerOn` state to enable that behavior. A history state, when reached, tells the machine to go to the last recorded child of its parent. In our case, when the machine returns to `powerOn`, it will select `lowPower`, `mediumPower` or `highPower`.
+
+```ts twoslash {23-25, 33-38}
+import { createMachine } from "xstate";
+
+const fanMachine = createMachine({
+  initial: "powerOn",
+  states: {
+    powerOn: {
+      on: {
+        TURN_OFF: {
+          target: "powerOff",
+        },
+        SET_TO_LOW_POWER: {
+          target: ".lowPower",
+        },
+        SET_TO_MEDIUM_POWER: {
+          target: ".mediumPower",
+        },
+        SET_TO_HIGH_POWER: {
+          target: ".highPower",
+        },
+      },
+      initial: "lowPower",
+      states: {
+        hist: {
+          type: "history",
+        },
+        lowPower: {},
+        mediumPower: {},
+        highPower: {},
+      },
+    },
+    powerOff: {
+      on: {
+        TURN_ON: {
+          /**
+           * Target the history node directly
+           */
+          target: "powerOn.hist",
+        },
+      },
+    },
+  },
+});
+```
+
+In the example above, we’ve changed the target of `TURN_ON` to target `powerOn.hist`. You need to target the history node directly. If you targeted `powerOn` instead of the history node, `TURN_ON` would default to `powerOn`'s initial state, `lowPower`.
+
+### Avoid infinite loops with the history state
+
+A history state can’t be specified as its parent’s initial state as this will result in an infinite loop.

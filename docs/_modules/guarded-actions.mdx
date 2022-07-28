@@ -1,0 +1,101 @@
+---
+deps:
+  ["actions", "guards", "transitions-and-events", "context"]
+group: transitions-and-choices
+status: in-progress # in-progress, complete
+needs: has-todos # content, tech-review, copy-review
+---
+
+You can use actions and guards together to run actions conditionally on transitions.
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const atmMachine = createMachine(
+  {
+    context: {
+      balance: 20,
+    },
+    initial: "showingBalance",
+    states: {
+      showingBalance: {
+        on: {
+          WITHDRAW_TEN_DOLLARS: {
+            cond: "hasAtLeastTenDollars",
+            actions: "logTenDollarsComing",
+          },
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      hasAtLeastTenDollars: (context) => {
+        return context.balance >= 10;
+      },
+    },
+    actions: {
+      logTenDollarsComing: () => {
+        console.log(`Here's your ten dollars!`);
+      },
+    },
+  },
+);
+```
+
+In the example above, when the user withdraws ten dollars via `WITHDRAW_TEN_DOLLARS`, we check first if the balance in `context` has at least 10 dollars.
+
+We can add an else condition to `WITHDRAW_TEN_DOLLARS` too:
+
+```ts twoslash {11-19}
+import { createMachine } from "xstate";
+
+// ---cut---
+
+const atmMachine = createMachine(
+  {
+    context: {
+      balance: 20,
+    },
+    initial: "showingBalance",
+    states: {
+      showingBalance: {
+        on: {
+          WITHDRAW_TEN_DOLLARS: [
+            {
+              cond: "hasAtLeastTenDollars",
+              actions: "logTenDollarsComing",
+            },
+            {
+              actions: "sayThereIsNotEnoughInTheAccount",
+            },
+          ],
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      hasAtLeastTenDollars: (context) => {
+        return context.balance >= 10;
+      },
+    },
+    actions: {
+      logTenDollarsComing: () => {
+        console.log(`Here's your ten dollars!`);
+      },
+      sayThereIsNotEnoughInTheAccount: () => {
+        console.log("Not enough in the account!");
+      },
+    },
+  },
+);
+```
+
+In the example above, if we have at least ten dollars in the account, we’ll log that the dollars are coming. Else, we’ll log that there’s not enough in the account.
+
+Remember, **the cond always runs _before_ the action**. XState first checks if it should run the action by running the `cond`, and only then runs the action.
+
+Sometimes you’ll want to run actions on every branch of a transition. Read our tip for that use case below.
+
+{/* TODO: write a tip (or section on its own) on using always to run actions on every transition \ */}

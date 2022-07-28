@@ -1,0 +1,64 @@
+---
+deps: ["states", "hierarchical-states"]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+A parallel state is a state where all of its child states, also known as regions, are active simultaneously. The regions are separated inside the state container by a dashed line.
+
+Inside the **on a walk** state, there could be two regions. One region contains the dog’s activity child states of **walking**, **running** and **stopping to sniff good smells**, and the other region contains the dog’s tail states of **wagging** and **not wagging**. The dog can walk and wag its tail, run and wag its tail or stop and sniff while wagging its tail; it can also do any of these activities without wagging its tail.
+
+{/* no alt because the image is already described in the surrounding text */}
+
+![](/parallel-states.svg)
+
+Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
+
+You can specify a parallel state node on the machine and/or any nested compound state by setting `type: 'parallel'`.
+
+For example, the machine below allows the `upload` and `download` compound states to be simultaneously active. This example represents an application where you can download and upload files at the same time:
+
+```ts twoslash {4,6,22}
+import { createMachine } from "xstate";
+
+const fileMachine = createMachine({
+  type: "parallel",
+  states: {
+    upload: {
+      initial: "idle",
+      states: {
+        idle: {
+          on: {
+            INIT_UPLOAD: { target: "pending" },
+          },
+        },
+        pending: {
+          on: {
+            UPLOAD_COMPLETE: { target: "success" },
+          },
+        },
+        success: {},
+      },
+    },
+    download: {
+      initial: "idle",
+      states: {
+        idle: {
+          on: {
+            INIT_DOWNLOAD: { target: "pending" },
+          },
+        },
+        pending: {
+          on: {
+            DOWNLOAD_COMPLETE: { target: "success" },
+          },
+        },
+        success: {},
+      },
+    },
+  },
+});
+```
+
+Parallel states allow you to run processes _simultaneously_ for greater flexibility and power.

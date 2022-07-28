@@ -1,0 +1,105 @@
+---
+deps: ["hierarchical-states", "intro-to-state-api"]
+group: deep-dive-states
+status: in-progress # in-progress, complete
+needs: content # content, tech-review, copy-review
+---
+
+State nodes can have **tags**, a list of strings that help describe the state node. Tags can be useful when categorizing different state nodes. For example, you can signify which state nodes represent “loading data” using a `"loading"` tag and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
+
+```ts twoslash
+import { createMachine, interpret } from "xstate";
+
+const machine = createMachine({
+  initial: "idle",
+  states: {
+    idle: {
+      on: {
+        FETCH: "loadingUser",
+      },
+    },
+    loadingUser: {
+      tags: ["loading"],
+    },
+    loadingFriends: {
+      tags: ["loading"],
+    },
+    editing: {},
+  },
+});
+
+const actor = interpret(machine).start();
+
+actor.state.hasTag("loading"); // false
+
+actor.send("FETCH");
+
+actor.state.hasTag("loading"); // true
+```
+
+Using tags can help you write more concise code. Instead of matching each actor individually:
+
+```ts twoslash
+import { createMachine, interpret } from "xstate";
+
+const machine = createMachine({
+  initial: "idle",
+  states: {
+    idle: {
+      on: {
+        FETCH: "loadingUser",
+      },
+    },
+    loadingUser: {
+      tags: ["loading"],
+    },
+    loadingFriends: {
+      tags: ["loading"],
+    },
+    editing: {},
+  },
+});
+
+const actor = interpret(machine).start();
+
+// ---cut---
+
+const isLoading =
+  actor.state.matches("loadingUser") ||
+  actor.state.matches("loadingFriends");
+```
+
+You can group the actors by tag:
+
+```ts twoslash
+import { createMachine, interpret } from "xstate";
+
+const machine = createMachine({
+  initial: "idle",
+  states: {
+    idle: {
+      on: {
+        FETCH: "loadingUser",
+      },
+    },
+    loadingUser: {
+      tags: ["loading"],
+    },
+    loadingFriends: {
+      tags: ["loading"],
+    },
+    editing: {},
+  },
+});
+
+const actor = interpret(machine).start();
+
+// ---cut---
+
+const isLoading = actor.state.hasTag("loading");
+```
+
+### Defining tags
+
+- Tags can be specified via an array, as `tag: ['tag1', 'tag2']`, or by a single string: `tag: 'tag1'`.
+- Tags can be made type-safe in TypeScript by using [typegen](/typescript/typegen).

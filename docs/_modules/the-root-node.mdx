@@ -1,0 +1,62 @@
+---
+deps: [hierarchical-states, actions]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+After learning about hierarchical states, you might have noticed that all statecharts are hierarchical! Every statechart has a single _root state_ which you can treat just like any other state.
+
+For example, you can listen to events on the root state:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const machine = createMachine({
+  on: {
+    GREETED: {
+      actions: "sayHello",
+    },
+  },
+  initial: "idle",
+  states: {
+    idle: {},
+    working: {},
+  },
+});
+```
+
+Any time the machine receives the `GREETED` event, no matter which state it’s in, it’ll run the `sayHello` action.
+
+Entry and exit actions are also useful in the root state:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+// ---cut---
+const machine = createMachine({
+  entry: ["sayHello"],
+  exit: ["sayGoodbye"],
+  initial: "idle",
+  states: {
+    idle: {},
+    working: {},
+  },
+});
+```
+
+In the example above, the machine will `sayHello` when it starts running and `sayGoodbye` when it stops running.
+
+You can also omit all states altogether! Sometimes you just need a root state, some events and some actions:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+// ---cut---
+const machine = createMachine({
+  entry: ["sayHello"],
+  exit: ["sayGoodbye"],
+});
+```
+
+Everything that works inside a state — `after`, `always`, `invoke` (we’ll cover these later), `entry`, `exit` and more — will work inside the root node.

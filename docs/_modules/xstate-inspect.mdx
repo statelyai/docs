@@ -1,0 +1,207 @@
+---
+deps: [transitions-and-events]
+group: tools
+status: in-progress # in-progress, complete
+needs: content # content, tech-review, copy-review
+---
+
+![Inspector running from CodeSandbox](https://buttondown.s3.us-west-2.amazonaws.com/images/4c8c0db4-b4d5-408f-8684-57e94ff46c86.png)
+
+`@xstate/inspect` enables you to inspect and manipulate machines _while they’re running_ in your app. [Check out the @xstate/inspect package on GitHub](https://github.com/statelyai/xstate/tree/main/packages/xstate-inspect).
+
+Currently, `@xstate/inspect` only works in _frontend applications_ , but we’re working on a version that can inspect machines running in [Node](https://nodejs.org/).
+
+To see it running right now, here are our CodeSandbox templates:
+
+- [XState (Vanilla)](https://codesandbox.io/s/xstate-ts-viz-template-qzdvv)
+- [XState + TypeScript](https://codesandbox.io/s/xstate-ts-viz-template-qzdvv)
+- [XState + Vue](https://codesandbox.io/s/xstate-vue-viz-template-r5wd7)
+- [XState + React](https://codesandbox.io/s/xstate-react-viz-template-5wq3q)
+
+## Quickstart
+
+1. Install with npm or yarn:
+
+```bash
+npm install @xstate/inspect
+# or yarn add @xstate/inspect
+```
+
+2. Import @xstate/inspect at the beginning of your project before any other code is called:
+
+```ts twoslash
+import { inspect } from "@xstate/inspect";
+
+inspect({
+  // options
+  // url: 'https://stately.ai/viz?inspect', // (default)
+  iframe: false, // open in new window
+});
+```
+
+3. Add `{ devTools: true }` to any interpreted machines you want to visualize:
+
+```ts twoslash
+import { createMachine } from "xstate";
+const someMachine = createMachine({});
+
+// ---cut---
+import { interpret } from "xstate";
+import { inspect } from "@xstate/inspect";
+
+const service = interpret(someMachine, {
+  devTools: true,
+}).start();
+```
+
+## Options
+
+```js
+// defaults
+inspect({
+  iframe: () =>
+    document.querySelector("iframe[data-xstate]"),
+  url: "https://stately.ai/viz?inspect",
+});
+
+// the code above does the same as:
+inspect();
+```
+
+You can pass several properties to the `options` object, all of which are optional.
+
+### `iframe`
+
+`iframe` (function or iframe `Element` or `false`) resolves to the `iframe` element to display the inspector. If set to `iframe: false`, a popup window is used instead.
+
+⚠️ You may need to “allow popups” in your browser to display the inspector in a popup window, as the browser might block them by default.
+
+By default, the inspector will look for an `<iframe data-xstate>` element anywhere in the document. If you want to target a custom iframe, specify it eagerly or lazily:
+
+```js
+// eager
+inspect({
+  iframe: document.querySelector(
+    "iframe.some-xstate-iframe",
+  ),
+});
+```
+
+```js
+// lazy
+inspect({
+  iframe: () =>
+    document.querySelector("iframe.some-xstate-iframe"),
+});
+```
+
+### `url`
+
+Use the `url` property (string) to specify the URL of the inspector you want to connect to. By default, the inspector runs on `https://stately.ai/viz?inspect`.
+
+## Disconnecting
+
+`inspect` returns a function, `disconnect`, you can use to disconnect the inspector.
+
+```ts twoslash
+import { inspect } from "@xstate/inspect";
+
+const inspector = inspect();
+inspector?.disconnect();
+```
+
+## Implementation
+
+You can implement your own inspector by creating a **receiver**. A **receiver** is an actor that receives inspector events from a source, like a parent window or a WebSocket connection:
+
+- `"service.register"`
+
+  ```ts
+  {
+    type: 'service.register';
+    machine: AnyStateMachine;
+    state: AnyState;
+    id: string;
+    sessionId: string;
+    parent?: string;
+    source?: string;
+  }
+  ```
+
+- `"service.stop"`
+
+  ```ts
+  {
+    type: "service.stop";
+    sessionId: string;
+  }
+  ```
+
+- `"service.state"`
+
+  ```ts
+  {
+    type: "service.state";
+    state: AnyState;
+    sessionId: string;
+  }
+  ```
+
+- `"service.event"`
+
+  ```ts
+  {
+    type: 'service.event';
+    event: SCXML.Event<any>;
+    sessionId: string
+  };
+  ```
+
+To listen to events from an inspected source, create a receiver with the appropriate `create*Receiver(...)` function; for example:
+
+```js
+import { createWindowReceiver } from "@xstate/inspect";
+
+const windowReceiver = createWindowReceiver(/* options? */);
+
+windowReceiver.subscribe((event) => {
+  // here, you will receive "service.*" events
+  console.log(event);
+});
+```
+
+You can also send events to the receiver:
+
+```js
+// ...
+
+// This will send the event to the inspected service
+windowReceiver.send({
+  type: 'xstate.event',
+  event: JSON.stringify({ type: 'someEvent' }),
+  service: /* session ID of the service this event is sent to */
+});
+```
+
+The typical inspection workflow is as follows:
+
+1. The `inspect(/* ... */)` call on the client opens the inspector. For example, in a separate window or creates a WebSocket connection.
+2. The receiver sends an `"xstate.inspecting"` event to the client.
+3. The client sends `"service.register"` events to the receiver.
+4. An inspector listening to the receiver via `receiver.subscribe(...)` registers the machine, `event.machine`, by its `event.sessionId`.
+5. The machine is rendered visually, and its current state, `event.state`, is highlighted
+6. As the service at the source receives events and changes state, it will send the receiver `"service.event"` and `"service.state"` events, respectively.
+7. The inspector can use those events to highlight the current state and keep a log of events sent to that service.
+8. When the service stops, a `"service.stop"` event is sent to the receiver with the `event.sessionId` to identify the stopped service.
+
+### How do I run the inspector in a NextJS app?
+
+If you want to run the inspector in a NextJS app, you must ensure that the inspector code only runs on the client rather than the server:
+
+```js
+if (typeof window !== "undefined") {
+  inspect({
+    /* options */
+  });
+}
+```

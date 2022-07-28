@@ -1,0 +1,91 @@
+---
+deps: ["states"]
+group: basics
+loom: 634d662da24c42c1897be9d92c7acd8c
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+The dog goes between **asleep** and **awake** through _transitions_, symbolized by an arrow pointing from one state to the next state in the process’s sequence.
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/transitions-events.svg)
+
+A transition is caused by an _event_ that results in the change of state. Transitions are labeled with their events.
+
+Transitions and events are _deterministic_. Deterministic means that each transition and event always points to the same next state, and always produces the same result from their given starting condition every time the process is run. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
+
+With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
+
+Use the `on` property inside the desired state to represent its transitions.
+
+```ts twoslash {5-9, 12-16}
+import { createMachine } from "xstate";
+
+// ---cut---
+const machine = createMachine({
+  initial: "asleep",
+  states: {
+    asleep: {
+      on: {
+        "wakes up": {
+          target: "awake",
+        },
+      },
+    },
+    awake: {
+      on: {
+        "falls asleep": {
+          target: "asleep",
+        },
+      },
+    },
+  },
+});
+```
+
+### Events
+
+Define an event with an object using the `type` attribute to describe the event’s name. Events can also pass in other properties along with their type.
+
+```ts twoslash
+const VALID_EVENTS = [
+  {
+    type: "LOG_OUT",
+  },
+  {
+    type: "LOG_IN",
+    /**
+     * Pass in any other properties
+     * along with the event
+     */
+    username: "myusername",
+  },
+  {
+    /**
+     * The event type key and value
+     * can be any text case
+     */
+    type: "wake up",
+  },
+];
+
+const INVALID_EVENTS = [
+  {
+    /**
+     * The event type key must
+     * be the same text case as
+     * its first instance
+     */
+    TYPE: "Some event",
+  },
+  {
+    /**
+     * The event type value must
+     * be a string
+     */
+    type: 123,
+  },
+];
+```

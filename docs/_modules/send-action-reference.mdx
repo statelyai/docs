@@ -1,0 +1,23 @@
+---
+deps: ["send-action"]
+group: "reference"
+status: in-progress # in-progress, complete
+needs: copy-review # content, tech-review, copy-review
+---
+
+| Argument   | Type                                       | Description                                               |
+| ---------- | ------------------------------------------ | --------------------------------------------------------- |
+| `event`    | string or event object or event expression | The event to send to the specified `options.to` (or self) |
+| `options?` | send options (see below)                   | Options for sending the event.                            |
+
+The send `options` argument is an object containing:
+
+| Property | Type   | Description                                                                                          |
+| -------- | ------ | ---------------------------------------------------------------------------------------------------- |
+| `id?`    | string | The send ID (used for cancellation)                                                                  |
+| `to?`    | string | The target of the event (defaults to self)                                                           |
+| `delay?` | number | The timeout (milliseconds) before sending the event, if the event is not canceled before the timeout |
+
+{/* ::: warning */}
+The `send(...)` function is an **action creator**; it is a pure function that only returns an action object and does \_not\* imperatively send an event.
+{/* ::: (end tip/warning) \ */}

@@ -1,0 +1,33 @@
+---
+deps: ["testing-intro"]
+group: model-based-testing
+status: in-progress # in-progress, complete
+needs: copy-review # content, tech-review, copy-review
+---
+
+Integrating with [Vitest](https://vitest.dev) is simple with `@xstate/test`.
+
+```ts
+import {
+  createTestMachine,
+  createTestModel,
+} from "@xstate/test";
+import { describe, it } from "vitest";
+
+const machine = createTestMachine({
+  // machine config
+});
+
+describe("My app", () => {
+  createTestModel(machine)
+    .getPaths()
+    .forEach((path) => {
+      it(path.description, async () => {
+        await path.test({
+          states: {},
+          events: {},
+        });
+      });
+    });
+});
+```

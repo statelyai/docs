@@ -1,0 +1,35 @@
+---
+deps: ["actions", "self-transitions"]
+group: "actions-and-context"
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+The `pure` action is useful when you need to run a dynamic number of actions depending on the current machine’s state.
+
+`pure` lets you pass a function to the machine, which calculates the type and number of actions to be executed.
+
+In the example below, we check `context` to find which actions the machine should run.
+
+{/* Remove noErrors when pure TS issue (https://github.com/statelyai/xstate/pull/3233) is fixed */}
+
+```ts twoslash
+// @noErrors
+import { actions, createMachine } from "xstate";
+
+const { pure } = actions;
+
+createMachine({
+  context: {
+    runBothActions: false,
+  },
+  entry: pure((context) => {
+    if (context.runBothActions) {
+      // You can return an array of actions
+      return ["action1", "action2"];
+    }
+    // Or a single action
+    return "action1";
+  }),
+});
+```

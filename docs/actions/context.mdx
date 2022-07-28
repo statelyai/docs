@@ -1,0 +1,37 @@
+---
+title: Context
+---
+
+# Context
+
+import Context from '../_modules/context.mdx';
+
+<Context />;
+
+## Updating context
+
+import AssignAction from '../_modules/assign-action.mdx';
+
+<AssignAction />;
+
+%{{ assign-action }}
+
+## Using context in actions
+
+import EventsAndContextInActions from '../_modules/events-and-context-in-actions.mdx';
+
+<EventsAndContextInActions />;
+
+%{{ events-and-context-in-actions }}
+
+## TypeScript
+
+import ContextTypescript from '../_modules/context-typescript.mdx';
+
+<ContextTypescript />;
+
+## Summary
+
+`States` are used for handling your apps states which you know about in advance. `Context` is a data store that you can use to store any arbitrary values. `assign` can be used to assign values to the context, and the context can be used in any action you call.
+
+Next, we’ll look at some [special built-in actions](/actions/built-in-actions) XState provides to extend its powers.

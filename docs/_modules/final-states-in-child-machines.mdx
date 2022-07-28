@@ -1,0 +1,95 @@
+---
+deps: [machine-services, final-states]
+group: invoking-services
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+When a child machine reaches a final state, it reports that it’s done to its parent. The parent can listen for this event with the `invoke.onDone` property:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+// ---cut---
+const childMachine = createMachine({
+  initial: "waiting",
+  states: {
+    waiting: {
+      after: {
+        3000: {
+          target: "complete",
+        },
+      },
+    },
+    complete: {
+      type: "final",
+    },
+  },
+});
+
+const parentMachine = createMachine(
+  {
+    invoke: {
+      src: childMachine,
+      onDone: {
+        actions: "logComplete",
+      },
+    },
+  },
+  {
+    actions: {
+      logComplete: () => {
+        console.log("Child machine complete!");
+      },
+    },
+  },
+);
+```
+
+You can also send data along with this `onDone` event. This “done data” is specified on the final state’s `data` property:
+
+{/* TODO: remove @noErrors when this is fixed: https://github.com/statelyai/xstate/pull/3217 */}
+
+```ts twoslash {15-17, 29-34}
+// @noErrors
+import { createMachine, assign } from "xstate";
+
+// ---cut---
+
+const secretMachine = createMachine({
+  initial: "wait",
+  context: {
+    secret: "42",
+  },
+  states: {
+    wait: {
+      after: {
+        1000: { target: "reveal" },
+      },
+    },
+    reveal: {
+      type: "final",
+      data: {
+        secret: (context, event) => context.secret,
+      },
+    },
+  },
+});
+
+const parentMachine = createMachine({
+  context: {
+    revealedSecret: undefined,
+  },
+  invoke: {
+    src: secretMachine,
+    onDone: {
+      actions: assign({
+        revealedSecret: (context, event) => {
+          // { type: 'done.invoke.<id>', data: { secret: '42' } }
+          return event.data.secret;
+        },
+      }),
+    },
+  },
+});
+```

@@ -1,0 +1,44 @@
+---
+deps: ["actions"]
+group: "reference"
+status: in-progress # in-progress, complete
+needs: content # content, tech-review, copy-review
+---
+
+## Declarative actions
+
+The `State` instance returned from `machine.transition(...)` has an `.actions` property, which is an array of action objects for the interpreter to execute:
+
+```js {4-9}
+const activeState = triggerMachine.transition('inactive', { type: 'TRIGGER' });
+
+console.log(activeState.actions);
+// [
+//   { type: 'activate', exec: ... },
+//   { type: 'sendTelemetry', exec: ... },
+//   { type: 'notifyActive', exec: ... },
+//   { type: 'sendTelemetry', exec: ... }
+// ]
+```
+
+Each action object has two properties (and others, that you can specify):
+
+- `type` - the action type
+- `exec` - the action implementation function
+
+The `exec` function takes three arguments:
+
+| Argument     | Type         | Description                                                 |
+| ------------ | ------------ | ----------------------------------------------------------- |
+| `context`    | TContext     | The current machine context                                 |
+| `event`      | event object | The event that caused the transition                        |
+| `actionMeta` | meta object  | An object containing meta data about the action (see below) |
+
+The `actionMeta` object includes the following properties:
+
+| Property | Type          | Description                                  |
+| -------- | ------------- | -------------------------------------------- |
+| `action` | action object | The original action object                   |
+| `state`  | State         | The resolved machine state, after transition |
+
+The interpreter will call the `exec` function with the `currentState.context`, the `event`, and the `state` that the machine transitioned to. You can customize this behavior. Read [executing actions](./interpretation.md#executing-actions) for more details.

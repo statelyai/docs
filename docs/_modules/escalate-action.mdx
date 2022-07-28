@@ -1,0 +1,36 @@
+---
+deps: ["actions", "receiving-events-from-parent"]
+group: invoking-services
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+When a parent invokes a child machine, any errors that occur in the child machine will be handled _in the child_. You can use the `escalate` action to send that error to the parent for processing.
+
+In the parent, you can listen for the `escalate` action via the `invoke.onError` transition.
+
+In the example below, the child machine immediately escalates an error to its parent on `entry`. The parent machine then processes the error in an `onError` handler by logging it to the console.
+
+```ts twoslash
+import { createMachine, actions } from "xstate";
+
+const { escalate } = actions;
+
+const childMachine = createMachine({
+  entry: escalate({ message: "This is some error" }),
+});
+
+const parentMachine = createMachine({
+  invoke: {
+    src: childMachine,
+    onError: {
+      actions: (context, event) => {
+        console.log(event.data);
+        // data: {
+        //   message: 'This is some error'
+        // }
+      },
+    },
+  },
+});
+```

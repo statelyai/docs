@@ -1,0 +1,50 @@
+---
+deps: ["steps-and-microsteps", "actions", "send-action"]
+group: power-users
+status: in-progress # in-progress, complete
+needs: content # content, tech-review, copy-review
+---
+
+## Raise action
+
+The `raise()` action creator queues an event to the statechart, in the internal event queue. This means the event is sent immediately on the current “step” of the interpreter.
+
+| Argument | Type                   | Description         |
+| -------- | ---------------------- | ------------------- |
+| `event`  | string or event object | The event to raise. |
+
+```js
+import { createMachine, actions } from 'xstate';
+const { raise } = actions;
+
+const raiseActionDemo = createMachine({
+  id: 'raisedmo',
+  initial: 'entry',
+  states: {
+    entry: {
+      on: {
+        STEP: {
+          target: 'middle'
+        },
+        RAISE: {
+          target: 'middle',
+          // immediately invoke the NEXT event for 'middle'
+          actions: raise('NEXT')
+        }
+      }
+    },
+    middle: {
+      on: {
+        NEXT: { target: 'last' }
+      }
+    },
+    last: {
+      on: {
+        RESET: { target: 'entry' }
+      }
+    }
+  }
+});
+```
+
+Click on both `STEP` and `RAISE` events in the [visualizer](https://stately.ai/viz?gist=fd763ff2c161b172f719891e2544d428) to see the difference.

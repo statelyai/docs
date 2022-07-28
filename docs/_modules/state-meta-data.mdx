@@ -1,0 +1,59 @@
+---
+deps:
+  [
+    "states",
+    "intro-to-state-api",
+    "after",
+    "transitioning-to-nodes-by-id",
+  ]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+You can attach arbitrary data to any state by specifying it as `meta` on the state node:
+
+```ts twoslash
+import { createMachine, interpret } from "xstate";
+
+const fetchMachine = createMachine({
+  initial: "pending",
+  states: {
+    pending: {
+      on: {
+        UNKNOWN_ERROR: "errored",
+      },
+      after: {
+        5000: "timedOut",
+      },
+    },
+    errored: {
+      meta: {
+        error: "An unknown error occurred",
+      },
+    },
+    timedOut: {
+      meta: {
+        error: "Timeout error!",
+      },
+    },
+  },
+});
+```
+
+You can store anything in the `meta` attribute; XState doesn’t monitor it or do anything with its contents.
+
+The current state of the machine collects the `meta` data of all of the state nodes, represented by the state value, and places them on an object where:
+
+- The keys are the state node IDs
+- The values are the state node `meta` values
+
+For instance, if the machine above is in the `timedOut` state, the `meta` will be an object with the following shape:
+
+```js
+{
+  timedOut: {
+    alert: 'Timeout error!'
+  },
+}
+```

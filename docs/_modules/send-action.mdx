@@ -1,0 +1,43 @@
+---
+deps:
+  ["actions", "transitions-and-events", "self-transitions"]
+group: "actions-and-context"
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+XState’s built-in `send` action is useful for when statecharts need to send events back to themselves.
+
+When the send action is executed, it sends an event back to the machine _as if it were from an external source_.
+
+This pattern can help compose different flows together. In the example below, the user can either press the `copy` button or press `ctrl + c` to fire a `COPY` event to the machine. Using the `send` action to fire the same event from both actions reduces duplication.
+
+```ts twoslash
+import { createMachine, send } from "xstate";
+
+const keyboardShortcutMachine = createMachine({
+  on: {
+    PRESS_COPY_BUTTON: {
+      actions: send({ type: "COPY" }),
+    },
+    PRESS_CTRL_C: {
+      actions: send({ type: "COPY" }),
+    },
+    COPY: {
+      actions: "copyToClipboard",
+    },
+  },
+});
+```
+
+You can also dynamically specify the event to send by passing a function to `send`:
+
+```ts twoslash
+import { send } from "xstate";
+// ---cut---
+send((context, event) => {
+  return {
+    type: "SOME_EVENT",
+  };
+});
+```

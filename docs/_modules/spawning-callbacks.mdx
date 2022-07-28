@@ -1,0 +1,28 @@
+---
+deps: ["spawning-machines"]
+group: invoking-services
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+Just like invoking callbacks, callbacks can be spawned as actors.
+
+```ts twoslash {22}
+import { createMachine, assign, spawn } from "xstate";
+
+const machine = createMachine({
+  entry: assign({
+    counterRef: (context, event) =>
+      spawn((sendBack, receive) => {
+        // Run any code you want inside here
+
+        return () => {
+          // Any code inside here will be called when
+          // you leave this state, or the machine is stopped
+        };
+      }),
+  }),
+});
+```
+
+Spawned callbacks behave exactly the same as invoked callbacks but with all the flexibility of `spawn`.

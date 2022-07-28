@@ -1,0 +1,34 @@
+---
+deps: ["testing-intro"]
+group: model-based-testing
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+Integrating with [Cypress](https://www.cypress.io) is simple with `@xstate/test`.
+
+```ts
+import {
+  createTestMachine,
+  createTestModel,
+} from "@xstate/test";
+
+const machine = createTestMachine({
+  // machine config
+});
+
+describe("My app", () => {
+  createTestModel(machine)
+    .getPaths()
+    .forEach((path) => {
+      it(path.description, () => {
+        path.testSync({
+          states: {},
+          events: {},
+        });
+      });
+    });
+});
+```
+
+You _must_ use `path.testSync` as [Cypress doesn’t work well with promises](https://docs.cypress.io/guides/references/error-messages#Cypress-detected-that-you-returned-a-promise-from-a-command-while-also-invoking-one-or-more-cy-commands-in-that-promise).

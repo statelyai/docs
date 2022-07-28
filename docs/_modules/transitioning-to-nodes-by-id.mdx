@@ -1,0 +1,76 @@
+---
+deps:
+  [
+    "hierarchical-states",
+    "transitions-and-events",
+    "targeting-children",
+    "targeting-children-of-siblings",
+  ]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+If you want to transition to _any_ state:
+
+1. Give the state node an `id`, for example, `myState`
+2. Target the state node with a `#` prefix: `#myState`
+
+The approach above works for transitioning to any state node from any state node, so it’s a useful trick if you can’t target a state with the `.a` or `a.b` syntaxes.
+
+The example below shows the `paused` state with an `id` of `playerPaused` and that `id` targeted using `#playerPaused`:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const musicMachine = createMachine({
+  initial: "playing",
+  states: {
+    playing: {
+      initial: "playingTrackOne",
+      states: {
+        playingTrackOne: {
+          on: {
+            PAUSE: {
+              target: "#playerPaused",
+            },
+          },
+        },
+      },
+    },
+    paused: {
+      id: "playerPaused",
+    },
+  },
+});
+```
+
+You can also give the root of your machine an `id` and combine the use of the root machine’s `id` with the `a.b` syntax.
+
+The example below shows the machine’s root with an `id` of `player` and the `paused` state targeted using `#player.paused`:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const musicMachine = createMachine({
+  id: "player",
+  initial: "playing",
+  states: {
+    playing: {
+      initial: "playingTrackOne",
+      states: {
+        playingTrackOne: {
+          on: {
+            PAUSE: {
+              target: "#player.paused",
+            },
+          },
+        },
+      },
+    },
+    paused: {},
+  },
+});
+```
+
+Combining a machine’s root `id` with the use of the `a.b` syntax can help you reduce the number of state `id`s required.

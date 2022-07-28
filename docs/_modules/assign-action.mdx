@@ -1,0 +1,81 @@
+---
+deps: ["context", "actions", "self-transitions"]
+group: "actions-and-context"
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+Assigning new values to the context in XState is done through the `assign` action and is the only way to change a machine’s context. **Never mutate a machine’s `context` externally**. Every context change should happen explicitly due to an event.
+
+The `assign` action takes the context *assigner*, representing how values should be assigned in the current context. The *assigner* can be an object:
+
+```ts twoslash {16-22}
+// @noErrors
+import { createMachine, assign } from "xstate";
+
+const machine = createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      INCREMENT: {
+        actions: "assignToContext",
+      },
+    },
+  },
+  {
+    actions: {
+      assignToContext: assign({
+        // increment the current count by the event value
+        count: (context, event) =>
+          context.count + event.value,
+
+        // assign static value to the message (no function needed)
+        message: "Count changed",
+      }),
+    },
+  },
+);
+```
+
+Or the *assigner* can be a function that returns the updated state:
+
+```ts twoslash {16-21}
+// @noErrors
+import { createMachine, assign } from "xstate";
+
+const machine = createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      INCREMENT: {
+        actions: "assignToContext",
+      },
+    },
+  },
+  {
+    actions: {
+      assignToContext: assign((context) => {
+        return {
+          count: context.count + 1,
+          message: "Count changed",
+        };
+      }),
+    },
+  },
+);
+```
+
+You can pass several `assign` actions in an array and they’ll be executed sequentially:
+
+```js
+// ...
+  actions: [
+    assign({ count: 3 }), // context.count === 3
+    assign({ count: context => context.count * 2 }) // context.count === 6
+  ],
+// ...
+```

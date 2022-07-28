@@ -1,0 +1,28 @@
+---
+deps: ["states", "hierarchical-states"]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+Use the `.target` syntax to transition to a child state from a parent state.
+
+The following machine uses the `.target` syntax for `.hovered`:
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const machine = createMachine({
+  initial: "inactive",
+  on: {
+    HOVER: ".hovered",
+  },
+  states: {
+    inactive: {},
+    hovered: {},
+    visited: {},
+  },
+});
+```
+
+Whichever state the machine is in, whenever it receives a `HOVER` event, it’ll transition to the `hovered` state.

@@ -1,0 +1,222 @@
+---
+deps: ["context"]
+group: reference
+status: in-progress # in-progress, complete
+needs: content # content, tech-review, copy-review
+---
+
+**Set initial context**
+
+```js
+const machine = createMachine({
+  // ...
+  context: {
+    count: 0,
+    user: undefined
+    // ...
+  }
+});
+```
+
+**Set dynamic initial context**
+
+```js
+const createSomeMachine = (count, user) => {
+  return createMachine({
+    // ...
+    // Provided from arguments; your implementation may vary
+    context: {
+      count,
+      user
+      // ...
+    }
+  });
+};
+```
+
+**Set custom initial context**
+
+```js
+const machine = createMachine({
+  // ...
+  // Provided from arguments; your implementation may vary
+  context: {
+    count: 0,
+    user: undefined
+    // ...
+  }
+});
+
+const myMachine = machine.withContext({
+  count: 10,
+  user: {
+    name: 'David'
+  }
+});
+```
+
+**Assign to context**
+
+```js
+const machine = createMachine({
+  // ...
+  context: {
+    count: 0,
+    user: undefined
+    // ...
+  },
+  // ...
+  on: {
+    INCREMENT: {
+      actions: assign({
+        count: (context, event) => context.count + 1
+      })
+    }
+  }
+});
+```
+
+**Assignment (static)**
+
+```js
+// ...
+actions: assign({
+  counter: 42
+}),
+// ...
+```
+
+**Assignment (property)**
+
+```js
+// ...
+actions: assign({
+  counter: (context, event) => {
+    return context.count + event.value;
+  }
+}),
+// ...
+```
+
+**Assignment (context)**
+
+```js
+// ...
+actions: assign((context, event) => {
+  return {
+    counter: context.count + event.value,
+    time: event.time,
+    // ...
+  }
+}),
+// ...
+```
+
+**Assignment (multiple)**
+
+```js
+// ...
+// assume context.count === 1
+actions: [
+  // assigns context.count to 1 + 1 = 2
+  assign({ count: (context) => context.count + 1 }),
+  // assigns context.count to 2 * 3 = 6
+  assign({ count: (context) => context.count * 3 })
+],
+// ...
+```
+
+## TypeScript
+
+For proper type inference, add the context type to the schema property of the machine:
+
+```ts
+import { createMachine } from 'xstate';
+
+interface CounterContext {
+  count: number;
+  user?: {
+    name: string;
+  };
+}
+
+const machine = createMachine({
+  schema: {
+    context: {} as CounterContext
+  },
+  // ...
+  context: {
+    count: 0,
+    user: undefined
+  }
+  // ...
+});
+```
+
+When applicable, you can also use `typeof ...` as a shorthand:
+
+```ts
+const context = {
+  count: 0,
+  user: { name: '' }
+};
+
+const machine = createMachine({
+  schema: {
+    context: {} as typeof context
+  },
+  // ...
+  context
+  // ...
+});
+```
+
+In most cases, the types for `context` and `event` in `assign(...)` actions will be automatically inferred from the type parameters passed into `schema`:
+
+```ts
+interface CounterContext {
+  count: number;
+}
+
+const machine = createMachine({
+  schema: {
+    context: {} as CounterContext
+  },
+  // ...
+  context: {
+    count: 0
+  },
+  // ...
+  {
+    on: {
+      INCREMENT: {
+        // Inferred automatically in most cases
+        actions: assign({
+          count: (context) => {
+            // context: { count: number }
+            return context.count + 1;
+          }
+        })
+      }
+    }
+  }
+});
+```
+
+However, TypeScript inference isn't perfect, so the responsible thing to do is to add the context and event as generics into `assign<Context, Event>(...)`:
+
+```ts {3}
+// ...
+on: {
+  INCREMENT: {
+    // Generics guarantee proper inference
+    actions: assign<CounterContext, CounterEvent>({
+      count: (context) => {
+        // context: { count: number }
+        return context.count + 1;
+      }
+    });
+  }
+}
+// ...
+```

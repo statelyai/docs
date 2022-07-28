@@ -1,0 +1,23 @@
+---
+deps: ["transitions-and-events"]
+group: "basics"
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+In TypeScript, you can strongly type your events by passing a _[union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)_ of all the events to the `schema` property.
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const machine = createMachine({
+  schema: {
+    events: {} as
+      | { type: "LOG_OUT" }
+      | { type: "LOG_IN"; value: string }
+      | { type: "COUNTDOWN"; value: number },
+  },
+});
+```
+
+Wherever you send an event to a machine, or access the event inside the machine, the event will be strongly typed.

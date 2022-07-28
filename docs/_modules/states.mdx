@@ -1,0 +1,51 @@
+---
+deps: ["what-is-a-statechart"]
+group: basics
+loom: a49e651da81f4e309d11acce941a8bf0
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+The _states_ are represented by rounded rectangle boxes. When drawing a statechart for the process of a dog, two states would first come to mind:
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/asleep-awake.svg)
+
+A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
+
+You can create these states in XState using the `states` property:
+
+```ts twoslash {2-5}
+import { createMachine } from "xstate";
+
+// ---cut---
+const machine = createMachine({
+  initial: "asleep",
+  states: {
+    asleep: {},
+    awake: {},
+  },
+});
+```
+
+Any process with states will also have an _initial state_, the default state in which the process exists until an event changes its state.
+The initial state is represented by a filled circle with an arrow pointing from the circle to the initial state.
+
+{/* no alt because the image is already described in the surrounding text \ */}
+
+![](/initial-state.svg)
+
+In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
+
+```ts twoslash {2}
+import { createMachine } from "xstate";
+
+// ---cut---
+const machine = createMachine({
+  initial: "waiting",
+  states: {
+    waiting: {},
+  },
+});
+```

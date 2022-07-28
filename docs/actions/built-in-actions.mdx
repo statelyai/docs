@@ -1,0 +1,29 @@
+---
+title: Built-in actions
+---
+
+# Built-in actions
+
+Along with `assign`, XState has several other built-in actions which can do different things in a state machine. We’ll introduce a couple of built-in actions for now and learn about the others later.
+
+## Send action
+
+import SendAction from '../_modules/send-action.mdx';
+
+<SendAction />;
+
+## Pure action
+
+import PureAction from '../_modules/pure-action.mdx';
+
+<PureAction />;
+
+## Rules of built-in actions
+
+import BuiltInActionsRules from '../_modules/built-in-actions-rules.mdx';
+
+<BuiltInActionsRules />;
+
+## Summary
+
+`send` can be used to send events back to your machine. `pure` can be used to dynamically return different actions. Built-in actions must be passed directly to the machine or returned from `pure`.

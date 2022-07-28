@@ -1,0 +1,40 @@
+---
+deps: ["actions", "receiving-events-from-parent"]
+group: invoking-services
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+You’ll often want to use the parent machine to “forward” events to the child machine. To handle this, XState provides a built-in `forwardTo` action:
+
+```ts twoslash
+import { createMachine, forwardTo } from "xstate";
+
+const alertMachine = createMachine(
+  {
+    on: {
+      ALERT: {
+        actions: "soundTheAlarm",
+      },
+    },
+  },
+  {
+    actions: {
+      soundTheAlarm: () => {
+        alert("Oh no!");
+      },
+    },
+  },
+);
+
+const parentMachine = createMachine({
+  id: "parent",
+  invoke: {
+    id: "alerter",
+    src: alertMachine,
+  },
+  on: {
+    ALERT: { actions: forwardTo("alerter") },
+  },
+});
+```

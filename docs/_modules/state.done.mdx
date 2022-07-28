@@ -1,0 +1,34 @@
+---
+deps: ["intro-to-state-api", "final-states"]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+When running a machine, you can check `state.done` to find out if an actor has reached its final state.
+
+```ts twoslash
+import { createMachine, interpret } from "xstate";
+
+const answeringMachine = createMachine({
+  initial: "unanswered",
+  states: {
+    unanswered: {
+      on: {
+        ANSWER: { target: "answered" },
+      },
+    },
+    answered: {
+      type: "final",
+    },
+  },
+});
+
+const actor = interpret(answeringMachine).start();
+
+actor.send({
+  type: "ANSWER",
+});
+
+actor.state.done; // true
+```

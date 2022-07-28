@@ -1,0 +1,90 @@
+---
+deps: ["history-states", "parallel-states"]
+group: deep-dive-states
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+You can specify two types of history state:
+
+- `shallow`, only the state at the same level as the history state node will be remembered.
+- `deep`, all the state’s children will also be remembered.
+
+You can specify these types on the state node itself by specifying `history: 'deep'`.
+
+```js
+{
+  type: 'history',
+  history: 'deep',
+}
+```
+
+The default behavior of the history state is `shallow`, but `deep` is useful when you want to remember a complex state.
+
+In the example below, the user can hide/show their video AND mute/unmute their microphone. When they leave the call to go to the `notOnCall` state, they can then rejoin the call via `JOIN_CALL`, which targets `onCall.hist`.
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const callMachine = createMachine({
+  initial: "onCall",
+  states: {
+    onCall: {
+      type: "parallel",
+      on: {
+        LEAVE_CALL: "notOnCall",
+      },
+      states: {
+        hist: {
+          type: "history",
+          history: "deep",
+        },
+        microphone: {
+          initial: "muted",
+          states: {
+            muted: {
+              on: {
+                UNMUTE: "notMuted",
+              },
+            },
+            notMuted: {
+              on: {
+                MUTE: "muted",
+              },
+            },
+          },
+        },
+        video: {
+          initial: "noVideo",
+          states: {
+            noVideo: {
+              on: {
+                SHOW_VIDEO: "hasVideo",
+              },
+            },
+            hasVideo: {
+              on: {
+                HIDE_VIDEO: "noVideo",
+              },
+            },
+          },
+        },
+      },
+    },
+    notOnCall: {
+      on: {
+        JOIN_CALL: "onCall.hist",
+      },
+    },
+  },
+});
+```
+
+In the example above, the `deep` history state tracks:
+
+- Whether `video` is in the `noVideo` or `hasVideo` state
+- Whether `microphone` is in the `muted` or `unmuted` state.
+
+Using the `deep` history state here means the user’s settings are automatically retained when they rejoin the call.
+
+The above example _doesn't_ work with a `shallow` history as `shallow` only remembers one level deep, which means the `muted`/`unmuted` state would not be preserved.

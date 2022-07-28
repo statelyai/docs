@@ -1,0 +1,33 @@
+---
+deps:
+  [
+    "services",
+    "running-machines-intro",
+    "callback-services",
+  ]
+group: invoking-services
+status: complete # in-progress, complete
+needs: # content, tech-review, copy-review
+---
+
+Callback services are one way to start invoking long-lived services and are useful for simple to intermediate cases. But sometimes, you’ll want to use all the power of a statechart.
+
+*Machine services* are valuable for such use cases. You can pass a machine directly to the `invoke` `src` property to invoke the machine in that state.
+
+```ts twoslash
+import { createMachine } from "xstate";
+
+const childMachine = createMachine({
+  /* ... */
+});
+
+const parentMachine = createMachine({
+  invoke: {
+    src: childMachine,
+  },
+});
+```
+
+Just like with callback services, the child machine is stopped if the state where it’s invoked is exited.
+
+Machine services enable you to create machines that can act as reusable modules across your application.
