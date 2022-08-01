@@ -4,4 +4,151 @@ title: Guards
 
 # Guards
 
-%{{ guards }}
+<!-- deps: ["options-intro","transitions-and-events","events-and-context-in-actions"] -->
+
+A common pattern in any program is if/else logic — the ability to make decisions based on inputs. The best way to apply if/else logic with statecharts is through _guarded transitions_.
+
+In the following example, we’ll imagine you want to order a decaf coffee at a cafe. You can send the `ORDER_DECAF` event to the barista, but the cafe might not have decaf coffee available! The machine for the ordering process could be as follows:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const baristaMachine = createMachine(
+  {
+    initial: 'receivingOrder',
+    states: {
+      receivingOrder: {
+        on: {
+          /**
+           * Guarded transitions are expressed
+           * as an array
+           */
+          ORDER_DECAF: [
+            {
+              /**
+               * 'cond' stands for condition
+               */
+              cond: 'hasDecaf',
+              target: 'makingDecafCoffee',
+            },
+          ],
+        },
+      },
+      makingDecafCoffee: {},
+    },
+  },
+  {
+    guards: {
+      /**
+       * Implement the guard below
+       */
+      hasDecaf: (context, event) => false,
+    },
+  }
+);
+```
+
+The machine above will only go to the `makingDecafCoffee` state if the `hasDecaf` guard returns `true`. You might have noticed that guards take similar arguments to actions.
+
+You can also provide multiple guards to the same transition. In the example below, the machine checks if the customer is okay with regular coffee if decaf is unavailable:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const baristaMachine = createMachine(
+  {
+    initial: 'receivingOrder',
+    states: {
+      receivingOrder: {
+        on: {
+          ORDER_DECAF: [
+            {
+              cond: 'hasDecaf',
+              target: 'makingDecafCoffee',
+            },
+            {
+              cond: 'customerIsOkWithRegularCoffee',
+              target: 'makingRegularCoffee',
+            },
+          ],
+        },
+      },
+      makingDecafCoffee: {},
+      makingRegularCoffee: {},
+    },
+  },
+  {
+    guards: {
+      hasDecaf: (context, event) => false,
+      customerIsOkWithRegularCoffee: (context, event) => false,
+    },
+  }
+);
+```
+
+The code above is similar to a normal JavaScript function:
+
+```ts twoslash
+const makeDecafCoffee = () => {};
+const makeRegularCoffee = () => {};
+const hasDecaf = false;
+const customerIsOKWithRegularCoffee = false;
+
+// ---cut---
+
+if (hasDecaf) {
+  makeDecafCoffee();
+} else if (customerIsOKWithRegularCoffee) {
+  makeRegularCoffee();
+}
+```
+
+To add an `else` condition, you can create a transition without a `cond` at the end of the array:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const baristaMachine = createMachine(
+  {
+    initial: 'receivingOrder',
+    states: {
+      receivingOrder: {
+        on: {
+          ORDER_DECAF: [
+            {
+              cond: 'hasDecaf',
+              target: 'makingDecafCoffee',
+            },
+            {
+              cond: 'customerIsOkWithRegularCoffee',
+              target: 'makingRegularCoffee',
+            },
+            {
+              target: 'wavingGoodbye',
+            },
+          ],
+        },
+      },
+      makingDecafCoffee: {},
+      makingRegularCoffee: {},
+      wavingGoodbye: {},
+    },
+  },
+  {
+    guards: {
+      hasDecaf: (context, event) => false,
+      customerIsOkWithRegularCoffee: (context, event) => false,
+    },
+  }
+);
+```
+
+In the example above, the machine goes to the `wavingGoodbye` state if `hasDecaf` and `customerIsOkWithRegularCoffee` are both false.
+
+### Which transitions can be guarded?
+
+**You can turn ANY transition into a guarded transition**. Anywhere you can `target: 'newState'`, you can also add a `cond` property and express if/else logic.
+
+We’ll learn about all the types of transitions in more depth later; here’s a brief list: `always`, `after`, `invoke.onDone`, `invoke.onError`, `state.onDone`.

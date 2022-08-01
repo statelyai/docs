@@ -11,7 +11,7 @@ const config = {
     'Documentation for XState: State Machines and Statecharts for the Modern Web',
   url: 'https://stately-docs.vercel.app',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/icon.svg',
 
@@ -34,17 +34,13 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
+
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
-        },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -64,16 +60,10 @@ const config = {
       navbar: {
         title: 'XState',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'XState Logo',
           src: 'img/icon.svg',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Docs',
-          },
           {
             href: 'https://github.com/statelyai/docusaurus-docs',
             label: 'GitHub',
@@ -85,11 +75,15 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Links',
             items: [
               {
-                label: 'XState',
-                to: '/docs/intro',
+                label: 'Stately',
+                href: 'https://stately.ai/',
+              },
+              {
+                label: 'Blog',
+                href: 'https://stately.ai/blog',
               },
             ],
           },
@@ -99,10 +93,6 @@ const config = {
               {
                 label: 'Discord',
                 href: 'https://discord.gg/xstate',
-              },
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/xstate',
               },
               {
                 label: 'Twitter',
@@ -115,15 +105,15 @@ const config = {
             ],
           },
           {
-            title: 'More',
+            title: 'GitHub',
             items: [
               {
-                label: 'Blog',
-                to: 'https://stately.ai/blog',
+                label: 'XState',
+                href: 'https://github.com/statelyai/xstate',
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                label: 'Tools',
+                href: 'https://github.com/statelyai/xstate-tools',
               },
             ],
           },

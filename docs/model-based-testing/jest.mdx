@@ -4,4 +4,27 @@ title: Jest in XState Test
 
 # Jest
 
-%{{ xstate-test-jest }}
+<!-- deps: ["testing-intro"] -->
+
+Integrating with [Jest](https://jestjs.io) is simple with `@xstate/test`.
+
+```ts
+import { createTestMachine, createTestModel } from '@xstate/test';
+
+const machine = createTestMachine({
+  // machine config
+});
+
+describe('My app', () => {
+  createTestModel(machine)
+    .getPaths()
+    .forEach((path) => {
+      it(path.description, async () => {
+        await path.test({
+          states: {},
+          events: {},
+        });
+      });
+    });
+});
+```

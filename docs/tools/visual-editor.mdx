@@ -4,4 +4,47 @@ title: Visual editor
 
 # Visual editor
 
-%{{ stately-editor }}
+<!-- deps: [transitions-and-events] -->
+
+One of XState’s most powerful features is the ability to build and maintain code _visually_. Using statecharts, a visual language using boxes and arrows, we can capture business-critical code in diagrams that are understandable to non-devs and visually editable.
+
+Stately’s [visual editor](https://stately.ai/editor?source=docs) has first-class support for XState, meaning you can **build and edit statecharts on a drag-and-drop canvas**.
+
+![Visualize your application logic with the Stately Editor](/stately-editor-public-beta.png)
+
+### Features
+
+The editor supports everything you need to build state machines and statecharts:
+
+- Atomic, compound, parallel, history, and final states
+- Normal, guarded, and delayed events/transitions
+- Entry, exit, and transition actions
+- Invocations
+- Done and error transitions for states and invocations
+- State and event descriptions
+
+The editor currently has two modes:
+
+- **Editor mode**: add, modify, and delete states, events, and transitions, as well as data including actions, descriptions, and invocations.
+- **Simulation mode**: run the statechart, trigger events, and see the active state nodes.
+
+You can also **export machines to JSON**, ready to be used in your codebase with XState.
+
+### Roadmap
+
+We have a long list of features planned for the editor, including:
+
+- Parameterized actions, guards, and invocations
+- Built-in actions, such as `assign` and `raise`
+- Schema editing for `context` and `events`
+- More granular simulation control, such as specifying event payload and simulating delays
+- Visualizing systems of actors, including spawned and invoked machines
+- Warnings and errors for invalid machine definitions
+- Customizable state node, event, and transition colors
+- Rich text editing and content for state descriptions
+- Markdown generation
+- Event recording and playback
+- Machine versioning and diffing
+- Autolayout and smart layout controls
+- Teams and private machines/systems
+- _And so much more._

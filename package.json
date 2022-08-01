@@ -18,6 +18,7 @@
     "@docusaurus/core": "2.0.1",
     "@docusaurus/preset-classic": "2.0.1",
     "@mdx-js/react": "^1.6.22",
+    "@xstate/inspect": "^0.7.0",
     "@xstate/machine-extractor": "^0.7.0",
     "@xstate/react": "^3.0.0",
     "clsx": "^1.2.1",

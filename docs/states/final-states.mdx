@@ -4,12 +4,125 @@ title: Final states
 
 # Final states
 
-%{{ final-states }}
+<!-- deps: ["hierarchical-states", "after"] -->
+
+Most processes with states will have a _final state_, the last state when the process is finished. The final state is represented by a double border on the state’s rounded rectangle box.
+
+In the dog walking statechart, the final state would be **walk complete**.
+
+![Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete.](/final-state.svg)
+
+To indicate that a state node is final, set its `type` property to `final`:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  initial: 'waiting',
+  states: {
+    waiting: {
+      after: {
+        4000: 'stopped',
+      },
+    },
+    stopped: {
+      type: 'final',
+    },
+  },
+});
+```
+
+The machine above will wait for 4 seconds and then stop.
+
+When a machine reaches its final state, several things happen:
+
+- The machine stops being able to receive events
+- Any running timers/services inside the machine are canceled and cleaned up
+
+Final states give you the option for an idiomatic way of cleaning up your machine.
 
 ## Composing hierarchical and final states
 
-%{{ state-done-events }}
+<!-- deps: ["final-states","hierarchical-states","transitions-and-events"] -->
+
+Final states can be used with hierarchical states to make elegant, modular statecharts.
+
+Inside a hierarchical state, reaching a final child state node will fire a `done` event back to the machine. The machine can listen for the `done` event by declaring `onDone` on the state:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  initial: 'makingCoffee',
+  states: {
+    makingCoffee: {
+      initial: 'boilingWater',
+      states: {
+        boilingWater: {
+          on: {
+            WATER_BOILED: {
+              target: 'pouringWaterThroughPod',
+            },
+          },
+        },
+        pouringWaterThroughPod: {
+          on: {
+            WATER_POURED: {
+              target: 'complete',
+            },
+          },
+        },
+        complete: {
+          type: 'final',
+        },
+      },
+      onDone: {
+        target: 'coffeeMade',
+      },
+    },
+    coffeeMade: {},
+  },
+});
+```
+
+The machine above has two main states - `makingCoffee` and `coffeeMade`. `makingCoffee` has several sub-steps which end up in a `complete` state. When the machine reaches the `complete` state, it fires a `done` event, meaning the `makingCoffee` state is complete.
+
+Because the machine is listening for `onDone` on `makingCoffee`, the machine then transitions to `coffeeMade`.
+
+Using `onDone` can make large statecharts easier to understand. The example above clearly shows that the overall “story” of the machine is that it makes coffee, then the coffee is done. If you need to know how the coffee is made, you can dive into the details of the `makingCoffee` state.
+
+### `onDone` cannot be defined on the machine’s root
+
+The `onDone` transition cannot be defined on the machine’s root because `onDone` is a transition on a `'done.state.*'` event, and when a machine reaches its final state, it can no longer accept any events.
 
 ## `state.done`
 
-%{{ state.done }}
+<!-- deps: ["intro-to-state-api", "final-states"] -->
+
+When running a machine, you can check `state.done` to find out if an actor has reached its final state.
+
+```ts twoslash
+import { createMachine, interpret } from 'xstate';
+
+const answeringMachine = createMachine({
+  initial: 'unanswered',
+  states: {
+    unanswered: {
+      on: {
+        ANSWER: { target: 'answered' },
+      },
+    },
+    answered: {
+      type: 'final',
+    },
+  },
+});
+
+const actor = interpret(answeringMachine).start();
+
+actor.send({
+  type: 'ANSWER',
+});
+
+actor.state.done; // true
+```
