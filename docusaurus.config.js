@@ -9,7 +9,7 @@ const config = {
   title: 'XState Docs',
   tagline:
     'Documentation for XState: State Machines and Statecharts for the Modern Web',
-  url: 'https://stately-docs.vercel.app/',
+  url: 'https://stately-docs.vercel.app',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
