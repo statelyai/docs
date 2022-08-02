@@ -24,7 +24,7 @@ const service = interpret(machine).start();
 
 In XState, we call that “running” machine a `service`. The most common way to interact with a service is to send it events:
 
-{/* TODO: maybe refer to this as an 'actor' instead? \ */}
+<!-- TODO: maybe refer to this as an 'actor' instead? \-->
 
 ```ts twoslash
 import { createMachine, interpret } from 'xstate';
@@ -119,11 +119,11 @@ const service = interpret(machine).start();
 service.stop();
 ```
 
-{/* TODO - add reference section for interpret \ */}
+<!-- TODO - add reference section for interpret \-->
 
 `interpret` can run _anywhere JavaScript runs_, which means you can run XState in the browser, Node, Electron, React Native… anywhere!
 
-{/* TODO - add URL below \ */}
+<!-- TODO - add URL below \-->
 
 Check out the reference docs on the interpret API for a full deep dive into everything a `service` can do.
 

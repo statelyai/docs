@@ -133,7 +133,7 @@ IDs correspond to the definition of IDs in the SCXML spec:
 
 ```xml
 <state id="lightGreen">
-  {/* ... */}
+  <!-- ...-->
 </state>
 ```
 
@@ -202,7 +202,7 @@ The `invoke` property is synonymous with the SCXML `<invoke>` element:
 ```
 
 ```xml
-{/* SCXML */}
+<!-- SCXML-->
 <state id="loading">
   <invoke id="someID" src="someSource" autoforward />
   <transition event="done.invoke.someID" target="success" />

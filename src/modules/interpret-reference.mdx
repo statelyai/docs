@@ -239,11 +239,11 @@ When interpreting statecharts, the order of actions should not necessarily matte
 2. transition `actions` - all actions defined on the chosen transition
 3. `entry` actions - all the entry actions of the entered state node(s), from the parent state down
 
-{/* ::: warning \ */}
+<!-- ::: warning \-->
 In XState version 4.x, `assign` actions have priority and are executed before any other actions. This behavior will be fixed in version 5, as the `assign` actions will be called in order.
-{/* ::: (end tip/warning) \ */}
+<!-- ::: (end tip/warning) \-->
 
-{/* ::: danger \ */}
+<!-- ::: danger \-->
 
 All action creators documented here return **action objects**; it is a pure function that only returns an action object and does _not_ imperatively send an event. Do not imperatively call action creators; they will do nothing!
 
@@ -261,4 +261,4 @@ console.log(send({ type: "SOME_EVENT" }));
 entry: send({ type: "SOME_EVENT" });
 ```
 
-{/* ::: (end tip/warning) \ */}
+<!-- ::: (end tip/warning) \-->

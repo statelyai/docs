@@ -57,7 +57,7 @@ The `pure` action is useful when you need to run a dynamic number of actions dep
 
 In the example below, we check `context` to find which actions the machine should run.
 
-{/* Remove noErrors when pure TS issue (https://github.com/statelyai/xstate/pull/3233) is fixed */}
+<!-- Remove noErrors when pure TS issue (https://github.com/statelyai/xstate/pull/3233) is fixed-->
 
 ```ts twoslash
 // @noErrors
@@ -88,7 +88,7 @@ Built-in actions are _pure functions_. Pure functions don’t execute anything t
 
 For example, the assign function returns an object containing `type: 'xstate.assign'` and an `assigner` function.
 
-{/* TODO - explain what *this* is */}
+<!-- TODO - explain what *this* is-->
 
 ```ts twoslash
 import { assign } from 'xstate';
