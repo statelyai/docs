@@ -24,7 +24,10 @@ const sidebars = {
       type: 'category',
       label: 'Getting Started',
       collapsed: false,
-      items: ['getting-started/installation'],
+      items: [
+        'getting-started/installation',
+        'glossary'
+      ],
     },
     {
       type: 'category',
