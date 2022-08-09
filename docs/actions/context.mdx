@@ -139,9 +139,11 @@ createMachine(
 
 %{{ events-and-context-in-actions }}
 
-## TypeScript
+:::info TypeScript
 
 <!-- deps: [context, assign-action] -->
+
+## TypeScript
 
 In TypeScript, you can strongly type your context by passing a type to the `schema` property, which means that wherever you access the context, whether inside actions or when running your machine, the context will be strongly typed.
 
@@ -154,6 +156,8 @@ const lightMachine = createMachine({
   },
 });
 ```
+
+:::
 
 ## Summary
 
