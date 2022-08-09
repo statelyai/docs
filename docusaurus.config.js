@@ -81,10 +81,12 @@ const config = {
               {
                 label: 'Stately',
                 href: 'https://stately.ai/',
+                target: '_self',
               },
               {
                 label: 'Blog',
                 href: 'https://stately.ai/blog',
+                target: '_self',
               },
             ],
           },
@@ -94,14 +96,17 @@ const config = {
               {
                 label: 'Discord',
                 href: 'https://discord.gg/xstate',
+                target: '_self',
               },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/statelyai',
+                target: '_self',
               },
               {
                 label: 'YouTube',
                 href: 'https://youtube.com/c/statelyai',
+                target: '_self',
               },
             ],
           },
@@ -111,10 +116,12 @@ const config = {
               {
                 label: 'XState',
                 href: 'https://github.com/statelyai/xstate',
+                target: '_self',
               },
               {
                 label: 'Tools',
                 href: 'https://github.com/statelyai/xstate-tools',
+                target: '_self',
               },
             ],
           },
