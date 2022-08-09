@@ -4,6 +4,16 @@
  * work well for content-centric websites.
  */
 
+@font-face {
+  font-family: 'TTCommons';
+  src: url('/ttcommons.woff2') format('woff2');
+  font-display: swap;
+}
+
+body {
+  font-family: 'TTCommons', Arial, sans-serif;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #2e8555;
