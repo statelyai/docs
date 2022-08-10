@@ -8,34 +8,119 @@
   font-family: 'TTCommons';
   src: url('/ttcommons.woff2') format('woff2');
   font-display: swap;
+  font-weight: 100 1000;
 }
 
-body {
-  font-family: 'TTCommons', Arial, sans-serif;
+html, body {
+  font-weight: 450;
+  font-variation-settings: 'wght' 450;
+}
+
+/* Stately color variables */
+
+:root {
+  /* gray */
+  --gray-50: #F8F8FA;
+  --gray-100: #E6E7E9;
+  --gray-200: #CDCFD4;
+  --gray-300: #B4B8BF;
+  --gray-400: #9BA0A8;
+  --gray-500: #535A62;
+  --gray-600: #555A61;
+  --gray-700: #3E4248;
+  --gray-800: #2A2B2F;
+  --gray-900: #141417;
+
+  /* blue */
+  --blue-50: #d0e4ff;
+  --blue-100: #a1c8ff;
+  --blue-200: #72adff;
+  --blue-300: #4392ff;
+  --blue-400: #1476ff;
+  --blue-500: #005fe4;
+  --blue-600: #004cb6;
+  --blue-700: #003887;
+  --blue-800: #002558;
+  --blue-900: #001129;
+
+  /* orange */
+  --orange-50: #ffe3d0;
+  --orange-100: #ffc7a1;
+  --orange-200: #ffab72;
+  --orange-300: #ff8e43;
+  --orange-400: #ff7214;
+  --orange-500: #e45b00;
+  --orange-600: #b64900;
+  --orange-700: #873600;
+  --orange-800: #582300;
+  --orange-900: #291000;
+
+  /* red */
+  --red-50: #fcd3d3;
+  --red-100: #faa6a6;
+  --red-200: #f77a7a;
+  --red-300: #f54e4e;
+  --red-400: #f22121;
+  --red-500: #d80d0d;
+  --red-600: #ac0a0a;
+  --red-700: #7f0707;
+  --red-800: #530505;
+  --red-900: #270202;
+
+  /* yellow */
+  --yellow-50: #ffefd0;
+  --yellow-100: #ffdea1;
+  --yellow-200: #ffce72;
+  --yellow-300: #ffbd43;
+  --yellow-400: #ffad14;
+  --yellow-500: #e49500;
+  --yellow-600: #b67600;
+  --yellow-700: #875800;
+  --yellow-800: #583900;
+  --yellow-900: #291b00;
+
+  /* green */
+  --green-50: #d1feeb;
+  --green-100: #a3fed6;
+  --green-200: #74fdc2;
+  --green-300: #46fcad;
+  --green-400: #18fb99;
+  --green-500: #03e181;
+  --green-600: #03b367;
+  --green-700: #02854c;
+  --green-800: #015632;
+  --green-900: #012817;
 }
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-font-family-base: 'TTCommons', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --ifm-font-size-base: 112%; 
+  --ifm-line-height-base: 1.5; 
+  --ifm-color-primary: var(--blue-500);
+  --ifm-color-primary-dark: var(--blue-600);
+  --ifm-color-primary-darker: var(--blue-700);
+  --ifm-color-primary-darkest: var(--blue-800);
+  --ifm-color-primary-light: var(--blue-200);
+  --ifm-color-primary-lighter: var(--blue-100);
+  --ifm-color-primary-lightest: var(--blue-50);
   --ifm-code-font-size: 95%;
+  --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-breadcrumb-size-multiplier: 1;
+  --ifm-heading-vertical-rhythm-bottom: 0.75;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: var(--blue-300);
+  --ifm-color-primary-dark: var(var(--blue-400));
+  --ifm-color-primary-darker: var(var(--blue-500));
+  --ifm-color-primary-darkest: var(--blue-600);
+  --ifm-color-primary-light: var(--blue-200);
+  --ifm-color-primary-lighter: var(--blue-100);
+  --ifm-color-primary-lightest: var(--blue-50);
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -45,4 +130,42 @@ body {
 
 [data-theme='dark'] .shiki.min-light {
   display: none;
+}
+
+/* Specific font-variation-settings for web font support */
+
+:root {
+  --ifm-font-weight-light: 420; 
+  --ifm-font-weight-normal: 450; 
+  --ifm-font-weight-semibold: 500; 
+  --ifm-font-weight-bold: 550;
+}
+
+.text--light { 
+  font-variation-settings: 'wght' 420;
+}
+.text--normal { 
+  font-variation-settings: 'wght' 450;
+}
+h1, h2, h3, h4, h5, h6, .text--semibold { 
+  font-variation-settings: 'wght' 500;
+}
+.text--bold { 
+  font-variation-settings: 'wght' 550;
+}
+
+/* Make secondary (not content) text a consistent size */
+
+.navbar-sidebar,
+.breadcrumbs__link,
+.table-of-contents {
+  font-size: 0.9rem;
+}
+
+/* Make link underlines interfere less with text readability */
+
+a {
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 0.1em;
+  text-decoration-thickness: 0.05em;
 }
