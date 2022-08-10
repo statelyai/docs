@@ -169,3 +169,10 @@ a {
   text-underline-offset: 0.1em;
   text-decoration-thickness: 0.05em;
 }
+
+/* Set a maximum width and centre main content (including breadcrumbs) */
+
+article {
+  margin: 0 auto;
+  max-width: 66ch;
+}
