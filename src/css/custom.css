@@ -111,6 +111,17 @@ html, body {
   --ifm-breadcrumb-size-multiplier: 1;
   --ifm-heading-vertical-rhythm-bottom: 0.75;
 
+  /* menu sidebar */
+
+  --ifm-menu-color: var(--ifm-color-emphasis-700); 
+  --ifm-menu-color-active: var(--ifm-color-primary); 
+  --ifm-menu-color-background-active: var(--ifm-hover-overlay); 
+  --ifm-menu-color-background-hover: var(--ifm-hover-overlay); 
+  --ifm-menu-link-padding-horizontal: 0.75rem; 
+  --ifm-menu-link-padding-vertical: 0.2em; 
+  --ifm-menu-link-sublist-icon: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16px\" height=\"16px\" viewBox=\"0 0 24 24\"><path fill=\"rgba(0,0,0,0.5)\" d=\"M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z\"></path></svg>"); 
+  --ifm-menu-link-sublist-icon-filter: none; 
+
   /* contents list */
   --ifm-toc-border-color: var(--ifm-color-emphasis-300); 
   --ifm-toc-link-color: var(--ifm-color-content-secondary); 
@@ -162,7 +173,7 @@ h1, h2, h3, h4, h5, h6, .text--semibold {
 
 /* Make secondary (not content) text a consistent size */
 
-.navbar-sidebar,
+.menu__link,
 .breadcrumbs__link,
 .table-of-contents {
   font-size: 0.9rem;
@@ -172,8 +183,8 @@ h1, h2, h3, h4, h5, h6, .text--semibold {
 
 a {
   text-decoration-skip-ink: auto;
-  text-underline-offset: 0.1em;
-  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.1rem;
+  text-decoration-thickness: 0.025rem;
 }
 
 /* Don’t underline links in menus */
@@ -199,8 +210,102 @@ article {
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
 }
 
+.table-of-contents__link:hover {
+  text-decoration: underline;
+}
+
 /* Add more space above page title */
 
 .markdown h1:first-child {
   margin-top: calc( var(--ifm-h1-vertical-rhythm-top) * var(--ifm-leading) ); 
+}
+
+/* Menu sidebar */
+
+.menu { 
+  overflow-x: hidden; 
+}
+.menu__list { 
+  list-style: none; 
+  margin: 0px; 
+  padding-left: 0px; 
+}
+.menu__list .menu__list { 
+  flex: 0 0 100%; 
+  margin-top: 0; 
+  margin-bottom: 0.1rem; 
+}
+.menu__list-item:not(:first-child) { 
+  margin-top: 0; 
+}
+.menu__list-item-collapsible { 
+  border-radius: 0; 
+}
+
+.menu__list .menu__list .menu__list-item-collapsible {
+  margin-left: 0.4rem;
+}
+
+.menu__link, .menu__caret { 
+  align-items: center; 
+  border-radius: 0;
+  display: flex; 
+  transition: background var(--ifm-transition-fast) var(--ifm-transition-timing-default); 
+}
+
+.theme-doc-sidebar-item-link-level-2, .theme-doc-sidebar-item-link-level-3, .theme-doc-sidebar-item-link-level-4 {
+  margin-left: 0.75rem;
+}
+
+.theme-doc-sidebar-item-link-level-3 {
+  border-left: 1px solid black;
+}
+
+.theme-doc-sidebar-item-link-level-3 .menu__link--active {
+  border-left: 3px solid black;
+  margin-left: -2px;
+}
+
+.menu__link--active {
+  font-weight: bold;
+  font-weight: var(--ifm-font-weight-bold);
+  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+}
+
+.menu__link { 
+  color: var(--ifm-menu-color); 
+  flex: 1 1 0%; 
+}
+
+.menu__link:hover { 
+  color: var(--ifm-menu-color); 
+  text-decoration: underline;
+}
+
+.menu__link--sublist-caret::after, .menu__link--sublist-caret::after {
+  display: none;
+}
+
+.menu__caret::before, .menu__link--sublist-caret::before { 
+  content: ""; 
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem; 
+  filter: var(--ifm-menu-link-sublist-icon-filter); 
+  height: 1.25rem; 
+  transform: rotate(180deg); 
+  width: 1.25rem; 
+  transition: transform var(--ifm-transition-fast) linear; 
+}
+
+.menu__link--sublist-caret::before { 
+  margin-left: -0.25rem;
+  margin-right: 0.25rem; 
+  min-width: 1.25rem; 
+}
+
+.menu__list-item--collapsed .menu__link--sublist::before, 
+.menu__list-item--collapsed .menu__caret::before { 
+  transform: rotateZ(90deg); 
+}
+
+html[data-theme="dark"], .navbar--dark { --ifm-menu-link-sublist-icon-filter: invert(100%) sepia(94%) saturate(17%) hue-rotate(223deg) brightness(104%) contrast(98%); 
 }
