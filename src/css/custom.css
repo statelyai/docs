@@ -198,3 +198,9 @@ article {
   font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
 }
+
+/* Add more space above page title */
+
+.markdown h1:first-child {
+  margin-top: calc( var(--ifm-h1-vertical-rhythm-top) * var(--ifm-leading) ); 
+}
