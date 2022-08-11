@@ -111,12 +111,17 @@ html, body {
   --ifm-code-font-size: 95%;
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-breadcrumb-size-multiplier: 1;
   --ifm-heading-vertical-rhythm-bottom: 0.75;
   --ifm-code-background: rgb(246, 247, 248); 
   --ifm-code-font-size: 90%; 
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
+
+  /* breadcrumbs */
+  --ifm-breadcrumb-size-multiplier: 1;
+  --ifm-breadcrumb-border-radius: 0.75rem;
+  --ifm-breadcrumb-padding-horizontal: 0.5rem; 
+  --ifm-breadcrumb-color-active: var(--ifm-font-color-base);
 
   /* menu sidebar */
 
@@ -234,6 +239,19 @@ code {
 
 .navbar__logo {
   height: 3rem;
+}
+
+/* Breadcrumbs */
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  font-weight: bold;
+  font-weight: var(--ifm-font-weight-bold);
+  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+  font-variation-settings: 'slnt' 0;
+}
+
+.breadcrumbs__item--active {
+  --ifm-breadcrumb-padding-horizontal: 0.75rem; 
 }
 
 /* Table of contents list */
