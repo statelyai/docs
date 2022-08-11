@@ -323,3 +323,10 @@ html[data-theme="dark"], .navbar--dark { --ifm-menu-link-sublist-icon-filter: in
 .pagination-nav__link--next .pagination-nav__label::after {
   content: " →";
 }
+
+/* Hide external link icons in header and footer nav */
+
+.navbar__items [class*=iconExternalLink],
+footer [class*=iconExternalLink] {
+  display: none;
+}
