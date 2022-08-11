@@ -289,7 +289,7 @@ article {
 }
 
 .menu__link:hover { 
-  color: var(--ifm-menu-color); 
+  color: var(--ifm-color-primary); 
   text-decoration: underline;
 }
 
