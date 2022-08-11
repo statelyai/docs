@@ -67,8 +67,27 @@ const config = {
         },
         items: [
           {
+            type: 'search',
+            position: 'right',
+          },
+          {
             href: 'https://github.com/statelyai/docusaurus-docs',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            href: 'https://stately.ai/editor',
+            label: 'Editor',
+            position: 'right',
+          },
+          {
+            href: 'https://stately.ai/viz',
+            label: 'Visualizer',
+            position: 'right',
+          },
+          {
+            href: 'https://stately.ai/blog',
+            label: 'Blog',
             position: 'right',
           },
         ],
