@@ -389,6 +389,7 @@ footer [class*=iconExternalLink] {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+  font-variation-settings: 'slnt' 0;
 }
 
 .footer__links {
