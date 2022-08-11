@@ -50,7 +50,7 @@ const config = {
     [
       'docusaurus-preset-shiki-twoslash',
       {
-        themes: ['min-light', 'nord'],
+        themes: ['github-light', 'github-dark'],
       },
     ],
   ],

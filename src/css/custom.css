@@ -141,11 +141,11 @@ html, body {
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-[data-theme='light'] .shiki.nord {
+[data-theme='light'] .shiki.github-dark {
   display: none;
 }
 
-[data-theme='dark'] .shiki.min-light {
+[data-theme='dark'] .shiki.github-light {
   display: none;
 }
 
