@@ -14,6 +14,8 @@
 html, body {
   font-weight: 450;
   font-variation-settings: 'wght' 450;
+  /* fix variable fonts all being italic in Safari */
+  font-variation-settings: 'slnt' 0;
 }
 
 /* Stately color variables */
@@ -162,15 +164,27 @@ html, body {
 
 .text--light { 
   font-variation-settings: 'wght' var(--ifm-font-weight-light);
+  font-variation-settings: 'slnt' 0;
 }
 .text--normal { 
   font-variation-settings: 'wght' var(--ifm-font-weight-normal);
+  font-variation-settings: 'slnt' 0;
 }
 h1, h2, h3, h4, h5, h6, .text--semibold { 
   font-variation-settings: 'wght' var(--ifm-font-weight-semibold);
+  font-variation-settings: 'slnt' 0;
 }
-.text--bold { 
+.text--bold, strong, b {
+  font-synthesis: none;
+  font-weight: bold;
+  font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+  font-variation-settings: 'slnt' 0;
+}
+
+.text--italic, em, i {
+  font-synthesis: none;
+  font-variation-settings: 'slnt' 10;
 }
 
 /* Make secondary (not content) text a consistent size */
@@ -218,6 +232,7 @@ article {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+  font-variation-settings: 'slnt' 0;
 }
 
 .table-of-contents__link:hover {
@@ -286,6 +301,7 @@ article {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+  font-variation-settings: 'slnt' 0;
 }
 
 .menu__link:hover { 
