@@ -113,6 +113,10 @@ html, body {
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-breadcrumb-size-multiplier: 1;
   --ifm-heading-vertical-rhythm-bottom: 0.75;
+  --ifm-code-background: rgb(246, 247, 248); 
+  --ifm-code-font-size: 90%; 
+  --ifm-code-padding-horizontal: 0.1rem; 
+  --ifm-code-padding-vertical: 0.1rem; 
 
   /* menu sidebar */
 
@@ -217,6 +221,13 @@ a {
 article {
   margin: 0 auto;
   max-width: 66ch;
+}
+
+/* Inline code */
+
+code {
+  border: none;
+  vertical-align: baseline;
 }
 
 /* Header */
