@@ -204,6 +204,12 @@ article {
   max-width: 66ch;
 }
 
+/* Header */
+
+.navbar__logo {
+  height: 3rem;
+}
+
 /* Table of contents list */
 
 .table-of-contents__link--active {

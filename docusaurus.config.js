@@ -59,10 +59,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'XState',
+        title: '',
         logo: {
-          alt: 'XState Logo',
-          src: 'img/icon.svg',
+          alt: 'XState',
+          src: '/xstate-logo-black.svg',
+          srcDark: '/xstate-logo-white-nobg.svg',
         },
         items: [
           {
