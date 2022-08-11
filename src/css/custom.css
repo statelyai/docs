@@ -189,10 +189,11 @@ a {
   text-decoration-thickness: 0.025rem;
 }
 
-/* Don’t underline links in menus */
+/* Don’t underline links in menus or button-like links */
 
 .menu__link,
-.table-of-contents__link {
+.table-of-contents__link,
+.pagination-nav__link {
   text-decoration: none;
 }
 
@@ -311,4 +312,14 @@ article {
 }
 
 html[data-theme="dark"], .navbar--dark { --ifm-menu-link-sublist-icon-filter: invert(100%) sepia(94%) saturate(17%) hue-rotate(223deg) brightness(104%) contrast(98%); 
+}
+
+/* Next/prev links */
+
+.pagination-nav__link--prev .pagination-nav__label::before {
+  content: "← ";
+}
+
+.pagination-nav__link--next .pagination-nav__label::after {
+  content: " →";
 }
