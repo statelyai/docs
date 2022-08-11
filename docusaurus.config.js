@@ -77,23 +77,68 @@ const config = {
         style: 'light',
         links: [
           {
-            title: 'Links',
+            title: 'Stately tools',
             items: [
               {
-                label: 'Stately',
-                href: 'https://stately.ai/',
+                label: 'Visual editor',
+                href: 'https://stately.ai/editor',
                 target: '_self',
               },
               {
-                label: 'Blog',
-                href: 'https://stately.ai/blog',
+                label: 'VS Code extension',
+                href: 'https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode',
+                target: '_self',
+              },
+              {
+                label: 'Visualizer',
+                href: 'https://stately.ai/viz',
+                target: '_self',
+              },
+              {
+                label: 'Discover machines',
+                href: 'https://stately.ai/discover',
                 target: '_self',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Find out more',
             items: [
+              {
+                label: 'Stately blog',
+                href: 'https://stately.ai/blog',
+                target: '_self',
+              },
+              {
+                label: 'Roadmap',
+                href: 'https://statelyai.canny.io',
+                target: '_self',
+              },
+              {
+                label: 'Stately RFCs',
+                href: 'https://github.com/statelyai/rfcs',
+                target: '_self',
+              },
+              {
+                label: 'Code of conduct',
+                href: 'https://stately.ai/code-of-conduct',
+                target: '_self',
+              },
+              {
+                label: 'Privacy policy',
+                href: 'https://stately.ai/privacy',
+                target: '_self',
+              },
+            ],
+          },
+          {
+            title: 'Stay updated',
+            items: [
+              {
+                label: 'GitHub',
+                href: 'https://github.com/statelyai/xstate',
+                target: '_self',
+              },
               {
                 label: 'Discord',
                 href: 'https://discord.gg/xstate',
@@ -109,19 +154,9 @@ const config = {
                 href: 'https://youtube.com/c/statelyai',
                 target: '_self',
               },
-            ],
-          },
-          {
-            title: 'GitHub',
-            items: [
               {
-                label: 'XState',
-                href: 'https://github.com/statelyai/xstate',
-                target: '_self',
-              },
-              {
-                label: 'Tools',
-                href: 'https://github.com/statelyai/xstate-tools',
+                label: 'LinkedIn',
+                href: 'https://www.linkedin.com/company/statelyai/',
                 target: '_self',
               },
             ],

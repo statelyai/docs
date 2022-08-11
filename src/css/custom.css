@@ -177,7 +177,8 @@ h1, h2, h3, h4, h5, h6, .text--semibold {
 
 .menu__link,
 .breadcrumbs__link,
-.table-of-contents {
+.table-of-contents,
+.footer__copyright {
   font-size: 0.9rem;
 }
 
@@ -335,4 +336,16 @@ html[data-theme="dark"], .navbar--dark { --ifm-menu-link-sublist-icon-filter: in
 .navbar__items [class*=iconExternalLink],
 footer [class*=iconExternalLink] {
   display: none;
+}
+
+/* Footer */
+
+.footer__title {
+  font-weight: bold;
+  font-weight: var(--ifm-font-weight-bold);
+  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
+}
+
+.footer__links {
+  margin-bottom: 2rem;
 }
