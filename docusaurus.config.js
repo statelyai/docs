@@ -2,9 +2,6 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'XState Docs',
@@ -182,10 +179,6 @@ const config = {
           },
         ],
         copyright: `Copyright © Stately, ${new Date().getFullYear()}`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
       },
       algolia: {
         appId: process.env.ALGOLIA_APP_ID,
