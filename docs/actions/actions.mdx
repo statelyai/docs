@@ -34,7 +34,9 @@ Some examples of actions are:
 
 You can fire an action upon entering or exiting a state by using the `entry` and `exit` attributes on that state.
 
-```ts twoslash
+<StatelyEditor>
+
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -64,9 +66,47 @@ const machine = createMachine(
 );
 ```
 
+</StatelyEditor>
+
+<StatelyEditor>
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine(
+  {
+    initial: 'visiting',
+    states: {
+      visiting: {
+        entry: 'sayHello',
+        exit: 'sayGoodbye',
+        on: {
+          LEAVE: 'notVisiting',
+        },
+      },
+      notVisiting: {},
+    },
+  },
+  {
+    actions: {
+      sayHello: () => {
+        console.log('Hello');
+      },
+      sayGoodbye: () => {
+        console.log('Goodbye');
+      },
+    },
+  }
+);
+```
+
+</StatelyEditor>
+
 You can also fire an action on a transition:
 
-```ts twoslash
+<StatelyEditor>
+
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -101,9 +141,13 @@ const machine = createMachine(
 );
 ```
 
+</StatelyEditor>
+
 Anywhere you can use an action, you can also declare it as an array to express multiple actions.
 
-```ts twoslash
+<StatelyEditor>
+
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -123,6 +167,8 @@ const machine = createMachine(
 );
 ```
 
+</StatelyEditor>
+
 In the example above, `Me: Hello` will be logged to the console, followed by `You: Goodbye`.
 
 ## Actions on self-transitions
@@ -139,7 +185,9 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
 
 Self-transitions are helpful when you want to fire an action, but not leave your current state. You can use an action on the transition to fire it whenever that event is received.
 
-```ts twoslash
+<StatelyEditor>
+
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(
@@ -164,6 +212,8 @@ createMachine(
   }
 );
 ```
+
+</StatelyEditor>
 
 ## Summary
 
