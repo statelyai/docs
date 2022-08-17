@@ -508,6 +508,12 @@ footer [class*=iconExternalLink] {
 
 /* Footer */
 
+@media (min-width: 1440px) {
+  footer .container {
+    margin: 0 0 0 var(--doc-sidebar-width) !important;
+  }
+}
+
 .footer__title {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
