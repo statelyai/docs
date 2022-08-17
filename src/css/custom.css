@@ -300,6 +300,12 @@ code {
 
 /* Header */
 
+/* force search to align with sidebar by making logo width of sidebar */
+.navbar__brand {
+  margin-right: 2rem;
+  width: var(--doc-sidebar-width);
+}
+
 .navbar__logo {
   height: 1.5rem;
 }
