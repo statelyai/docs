@@ -522,6 +522,11 @@ footer [class*=iconExternalLink] {
 
 /* Footer */
 
+.custom-navbar-logo {
+  height: auto;
+  max-width: 10rem;
+}
+
 @media (min-width: 1440px) {
   footer .container {
     margin: 0 0 0 var(--doc-sidebar-width) !important;
