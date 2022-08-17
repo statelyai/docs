@@ -192,6 +192,10 @@ const config = {
           '<strong>🤗 Thank you for reviewing the docs, team!</strong> We can use this bar in future for announcements.',
         isCloseable: false,
       },
+      colorMode: {
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
     }),
 };
 
