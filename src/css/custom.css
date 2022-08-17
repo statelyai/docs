@@ -259,6 +259,12 @@ h1, h2, h3, h4, h5, h6, .text--semibold {
   font-variation-settings: 'slnt' 10;
 }
 
+/* Sub lists */
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-top: var(--ifm-list-item-margin);
+}
+
 /* Make secondary (not content) text a consistent size */
 
 .menu__link,
