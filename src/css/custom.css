@@ -123,6 +123,10 @@ html, body {
   --announcement-background: var(--ifm-color-primary-darker);
   --announcement-text: var(--ifm-color-primary-lightest);
 
+  /* navbar */
+
+  --ifm-navbar-shadow: none; 
+
   /* breadcrumbs */
   --ifm-breadcrumb-size-multiplier: 1;
   --ifm-breadcrumb-border-radius: 0.75rem;
@@ -305,6 +309,10 @@ code {
 }
 
 /* Header */
+
+.navbar {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
 
 /* force search to align with sidebar by making logo width of sidebar */
 .navbar__brand {
