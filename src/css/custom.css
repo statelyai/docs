@@ -118,6 +118,11 @@ html, body {
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
 
+  /* announcement bar */
+
+  --announcement-background: var(--ifm-color-primary-darker);
+  --announcement-text: var(--ifm-color-primary-lightest);
+
   /* breadcrumbs */
   --ifm-breadcrumb-size-multiplier: 1;
   --ifm-breadcrumb-border-radius: 0.75rem;
@@ -297,6 +302,19 @@ code {
 
 .navbar__logo {
   height: 3rem;
+}
+
+/* Announcement bar */
+
+html div[role="banner"][class*="announcementBar"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module {
+  background: var(--announcement-background) !important;
+  color: var(--announcement-text);
+  font-size: 0.9rem !important;
+  height: auto !important; /* override default variable */
+}
+
+html div[role="banner"][class*="announcementBar"] [class*="announcementBarContent"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module [class*="announcementBarContent"] {
+  padding: 0.35rem 0 !important;
 }
 
 /* Search */

@@ -25,6 +25,7 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  
 
   presets: [
     [
@@ -185,6 +186,11 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
+      },
+      announcementBar: {
+        content:
+          '<strong>🤗 Thank you for reviewing the docs, team!</strong> We can use this bar in future for announcements.',
+        isCloseable: false,
       },
     }),
 };
