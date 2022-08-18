@@ -457,6 +457,7 @@ html div[role="banner"][class*="announcementBar"], html div.announcementBarConte
   color: var(--announcement-text);
   font-size: 0.9rem !important;
   height: auto !important; /* override default variable */
+  border-bottom: none;
 }
 
 html div[role="banner"][class*="announcementBar"] [class*="announcementBarContent"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module [class*="announcementBarContent"] {
