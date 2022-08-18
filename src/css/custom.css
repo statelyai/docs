@@ -105,7 +105,7 @@ html, body {
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
-  --ifm-code-background: rgb(246, 247, 248); 
+  --ifm-code-background: rgba(255,222,161,0.4); 
   --ifm-code-font-size: 90%; 
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
@@ -297,7 +297,7 @@ html[data-theme='dark'] body {
   --ifm-color-content: var(--ifm-color-gray-200); 
   --ifm-color-content-secondary: var(--ifm-color-gray-300); 
   --ifm-breadcrumb-separator-filter: invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%); 
-  --ifm-code-background: rgba(255, 255, 255, 0.1); 
+  --ifm-code-background: rgba(255,173,18,0.15); 
   --ifm-scrollbar-track-background-color: #444444; 
   --ifm-scrollbar-thumb-background-color: #686868; 
   --ifm-scrollbar-thumb-hover-background-color: #7a7a7a; 
