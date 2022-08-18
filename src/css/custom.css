@@ -229,7 +229,7 @@ html, body {
   --ifm-menu-link-sublist-icon-filter: none; 
 
   /* contents list */
-  --ifm-toc-border-color: var(--ifm-color-emphasis-300); 
+  --ifm-toc-border-color: var(--ifm-color-emphasis-100); 
   --ifm-toc-link-color: var(--ifm-color-content-secondary); 
   --ifm-toc-padding-vertical: 0.35rem; 
   --ifm-toc-padding-horizontal: 0.5rem; 
