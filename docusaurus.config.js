@@ -92,17 +92,9 @@ const config = {
       },
       footer: {
         style: 'light',
-        logo: {
-          alt: 'Stately',
-          src: 'stately-logo-black.svg',
-          srcDark: 'stately-logo-white.svg',
-          href: 'https://stately.ai/',
-          target: '_self',
-          className: 'custom-navbar-logo',
-        },
         links: [
           {
-            title: 'Stately tools',
+            title: 'Stately',
             items: [
               {
                 label: 'Visual editor',
