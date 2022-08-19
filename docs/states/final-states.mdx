@@ -4,7 +4,7 @@ title: Final states
 
 # Final states
 
-<!-- deps: ["hierarchical-states", "after"] -->
+<!-- deps: ["parent-and-child-states", "after"] -->
 
 Most processes with states will have a _final state_, the last state when the process is finished. The final state is represented by a double border on the state’s rounded rectangle box.
 
@@ -41,13 +41,13 @@ When a machine reaches its final state, several things happen:
 
 Final states give you the option for an idiomatic way of cleaning up your machine.
 
-## Composing hierarchical and final states
+## Composing parent and final states
 
-<!-- deps: ["final-states","hierarchical-states","transitions-and-events"] -->
+<!-- deps: ["final-states","parent-states","transitions-and-events"] -->
 
-Final states can be used with hierarchical states to make elegant, modular statecharts.
+Final states can be used with parent states to make elegant, modular statecharts.
 
-Inside a hierarchical state, reaching a final child state node will fire a `done` event back to the machine. The machine can listen for the `done` event by declaring `onDone` on the state:
+Inside a parent state, reaching a final child state node will fire a `done` event back to the machine. The machine can listen for the `done` event by declaring `onDone` on the state:
 
 ```ts twoslash
 import { createMachine } from 'xstate';

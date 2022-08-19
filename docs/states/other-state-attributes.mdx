@@ -8,7 +8,7 @@ States can have various other attributes, most of which are useful for narrower 
 
 ## State tags
 
-<!-- deps: ["hierarchical-states", "intro-to-state-api"] -->
+<!-- deps: ["parent-and-child-states", "intro-to-state-api"] -->
 
 State nodes can have **tags**, a list of strings that help describe the state node. Tags can be useful when categorizing different state nodes. For example, you can signify which state nodes represent “loading data” using a `"loading"` tag and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
 
@@ -161,7 +161,7 @@ For instance, if the machine above is in the `timedOut` state, the `meta` will b
 
 ## State descriptions
 
-<!-- deps: ["hierarchical-states"] -->
+<!-- deps: ["parent-and-child-states"] -->
 
 You can add descriptive text to states with the `description` attribute.
 

@@ -87,7 +87,7 @@ const sidebars = {
           type: 'category',
           label: 'Deep dive: states',
           items: [
-            'states/hierarchical-states',
+            'states/parent-and-child-states',
             'states/other-state-attributes',
             'states/advanced-transitions',
             'states/final-states',

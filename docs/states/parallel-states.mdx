@@ -4,7 +4,7 @@ title: Parallel states
 
 # Parallel states
 
-<!-- deps: ["states", "hierarchical-states"] -->
+<!-- deps: ["states", "parent-and-child-states"] -->
 
 A parallel state is a state where all of its child states, also known as regions, are active simultaneously. The regions are separated inside the state container by a dashed line.
 
@@ -16,9 +16,9 @@ Inside the **on a walk** state, there could be two regions. One region contains 
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
 
-You can specify a parallel state node on the machine and/or any nested compound state by setting `type: 'parallel'`.
+You can specify a parallel state node on the machine and/or any nested child state by setting `type: 'parallel'`.
 
-For example, the machine below allows the `upload` and `download` compound states to be simultaneously active. This example represents an application where you can download and upload files at the same time:
+For example, the machine below allows the `upload` and `download` child states to be simultaneously active. This example represents an application where you can download and upload files at the same time:
 
 ```ts twoslash {4,6,22}
 import { createMachine } from 'xstate';
@@ -66,9 +66,9 @@ Parallel states allow you to run processes _simultaneously_ for greater flexibil
 
 ## Matching parallel states
 
-<!-- deps: ["intro-to-state-api","hierarchical-states","parallel-states"] -->
+<!-- deps: ["intro-to-state-api","parent-and-child-states","parallel-states"] -->
 
-The `state.matches` syntax checks if an actor is in a particular state when the machine is run using `interpret` or similar. You can use `state.matches` with hierarchical states using either the string method or the object method.
+The `state.matches` syntax checks if an actor is in a particular state when the machine is run using `interpret` or similar. You can use `state.matches` with parent states using either the string method or the object method.
 
 ### `state.matches` string argument
 
@@ -184,7 +184,7 @@ In the example above, the `DEACTIVATE` event simultaneously causes _two_ changes
 
 <!-- deps: ["parallel-states", "state-done-events"] -->
 
-When every child state node in a parallel state node is _done_, the parent parallel state node is also _done_. When every final state node in every child compound node is reached, the `done` event will be fired for the parallel state node.
+When every child state node in a parallel state node is _done_, the parent parallel state node is also _done_. When every final state node in every child state node is reached, the `done` event will be fired for the parallel state node.
 
 `onDone` is very useful in modeling parallel tasks. For example, below there is a shopping machine where `user` and `items` represent two parallel tasks of the `cart` state:
 

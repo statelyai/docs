@@ -1,22 +1,22 @@
 ---
-title: Hierarchical states
+title: Parent and child states
 ---
 
-# Hierarchical states
+# Parent and child states
 
 <!-- deps: ["states", "transitions-and-events"] -->
 
-A **hierarchical state** is a state that can contain more states, also known as child states. These child states can only happen when the parent hierarchical state is happening. Inside the **on a walk** state, there could be the child states of **walking**, **running** and **stopping to sniff good smells**.
+A **parent state** is a state that can contain more states, also known as its child states. These child states can only happen when the parent state is happening. Inside the **on a walk** state, there could be the child states of **walking**, **running** and **stopping to sniff good smells**.
 
-A hierarchical state is symbolized by a labeled rounded rectangle box that acts as a container for its child states.
+A parent state is symbolized by a labeled rounded rectangle box that acts as a container for its child states.
 
 <!-- no alt because the image is already described in the surrounding text \-->
 
-![](/hierarchical-state.svg)
+![](/parent-state.svg)
 
-A hierarchical state must also specify which child state is the initial state. In the **on a walk** hierarchical state, the initial state is **walking**.
+A parent state must also specify which child state is the initial state. In the **on a walk** parent state, the initial child state is **walking**.
 
-In XState, you can specify a hierarchical state using the `states` attribute on child nodes:
+In XState, you can specify a parent state using the `states` attribute on child nodes:
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -76,9 +76,9 @@ However, the machine can only receive the `stop` event inside `on a walk.walking
 
 ## The root node
 
-<!-- deps: [hierarchical-states, actions] -->
+<!-- deps: [parent-states, actions] -->
 
-After learning about hierarchical states, you might have noticed that all statecharts are hierarchical! Every statechart has a single _root state_ which you can treat just like any other state.
+After learning about parent states, you might have noticed that all statecharts are parent states! Every statechart has a single _root state_ which you can treat just like any other state.
 
 For example, you can listen to events on the root state:
 
@@ -134,9 +134,9 @@ const machine = createMachine({
 
 Everything that works inside a state — `after`, `always`, `invoke` (we’ll cover these later), `entry`, `exit` and more — will work inside the root node.
 
-## `on` in hierarchical states
+## `on` in parent states
 
-<!-- deps: ["transitions-and-events", "hierarchical-states", the-root-node] -->
+<!-- deps: ["transitions-and-events", "parent-states", the-root-node] -->
 
 When a child state cannot handle an `event`, that `event` is propagated up to its parent state (including the root node) to be handled.
 
@@ -172,7 +172,7 @@ Adding transitions in the parent state helps reduce duplication when defining tr
 
 ## Wildcard events
 
-<!-- deps: ["transitions-and-events", "event-listeners-in-hierarchical-states"] -->
+<!-- deps: ["transitions-and-events", "event-listeners-in-parent-states"] -->
 
 A transition specified with a wildcard `*` is activated by any event not already handled by the current state.
 
