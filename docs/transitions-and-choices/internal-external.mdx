@@ -60,8 +60,6 @@ The `FOO` transition never leaves the `a` state, which makes it an internal tran
 
 However, you can _force_ an internal transition to become an external transition. For self-transitions, you can specify the target on the transition to force it to be an external transition:
 
-<!-- TODO - it's crazy that internal: false doesn't work here! \-->
-
 ```ts twoslash
 import { createMachine } from 'xstate';
 
