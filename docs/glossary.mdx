@@ -16,7 +16,9 @@ Statecharts are a visual language used to visualize state machines. You may have
 
 ## States
 
-A state describes the status of the machine. A state can be as simple as _on_ and _off_. These states are finite; the machine can only move through the pre-defined states. And machines can only be in one state at a time, unless it is a [parent state](#parent-and-child-states) or a [parallel state](#parallel-states).
+A state describes the status of the machine. A state can be as simple as _active_ and _inactive_. These states are finite; the machine can only move through the pre-defined states. A state machine can only be in one state at a time.
+
+With statecharts, the overall finite state can be the combination of children of a [parent state](#parent-and-child-states) or [parallel states](#parallel-states).
 
 ### Initial state
 
