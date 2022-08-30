@@ -6,7 +6,9 @@ title: Internal and external transitions
 
 <!-- deps: ["actions","transitions-and-events","self-transitions","after"] -->
 
-Transitions in statecharts can be one of two types: **internal** or **external**. External transitions are transitions that leave the machine’s current state node. In the example below, `a -> FOO -> b` is an external transition.
+Transitions in statecharts can be one of two types: **internal** or **external**. External transitions are transitions that leave the machine’s current state node; the “source” state node on which the transition is defined.
+
+In the example below, `a -> FOO -> b` is an external transition.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
