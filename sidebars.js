@@ -45,16 +45,6 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Tools',
-          items: [
-            'tools/visual-editor',
-            'tools/ide-extensions',
-            'tools/visualizer',
-            'tools/inspector',
-          ],
-        },
-        {
-          type: 'category',
           label: 'Actions and context',
           items: [
             'actions/actions',
@@ -140,6 +130,36 @@ const sidebars = {
           label: 'Advanced Topics',
           items: ['advanced/react-patterns', 'advanced/scxml'],
         },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Tools',
+      items: [
+        'tools/visual-editor',
+        'tools/developer-tools',
+        'packages/xstate-cli',
+        'tools/visualizer',
+        'tools/inspector',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'XState add-ons',
+      items: [
+        'packages/xstate-fsm',
+        'packages/xstate-graph',
+        'packages/xstate-test',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Integrations',
+      items: [
+        'packages/xstate-immer',
+        'packages/xstate-react',
+        'packages/xstate-svelte',
+        'packages/xstate-vue',
       ],
     },
     {

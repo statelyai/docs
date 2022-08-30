@@ -8,11 +8,11 @@ title: Typegen
 
 **Warning: This feature is in beta!** Read the section below on known limitations to find out what we’re actively looking to improve.
 
-You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/reference/xstate-cli).
+You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/packages/xstate-cli).
 
 How to get started:
 
-1. Download and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) **or** install the [CLI](/reference/xstate-cli) and run the `xstate typegen` command with the `--watch` flag.
+1. Download and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) **or** install the [CLI](/packages/xstate-cli) and run the `xstate typegen` command with the `--watch` flag.
 2. Open a new file and create a new machine, passing the schema attributes:
 
 ```ts
@@ -139,9 +139,9 @@ createMachine(
 
 Below are some recommendations to help you get the most out of using typegen.
 
-### Use named actions, guards and services
+### Use named actions, guards, and services
 
-We recommend using named actions, guards and services instead of inline actions, guards and services.
+We recommend using named actions, guards, and services instead of inline actions, guards and services.
 
 Named actions, services and guards allow for:
 
@@ -182,7 +182,7 @@ createMachine({
 
 We recommend you gitignore the generated files (`*filename*.typegen.ts`) from your repository.
 
-You can use the [CLI](../packages/xstate-cli/index.md) to regenerate them on CI, for instance, via a postinstall script:
+You can use the [CLI](/packages/xstate-cli) to regenerate them on CI, for instance, via a postinstall script:
 
 ```json
 {

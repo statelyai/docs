@@ -1,18 +1,18 @@
 ---
-title: IDE extensions
+title: Developer tools
 ---
 
-# IDE extensions
+## IDE extensions
 
 Find more about our XState VSCode extension below. We plan to make extensions for more IDEs (Integrated Development Environments) in the future.
 
 <!-- deps: [stately-editor] -->
 
-## XState VSCode extension
+### XState VSCode extension
 
 The XState VSCode extension enhances the XState development experience by providing VSCode users with features like visual editing, autocomplete, typegen and linting.
 
-### Installation
+#### Installation
 
 1. Open the command palette with `shift` + `cmd/ctrl` + `p`.
 2. Search for the Install Extensions command and hit enter to open the Extensions search.
@@ -24,18 +24,18 @@ If you have code lens enabled (this can be enabled using `editor.codeLens` setti
 
 You can also [download the VSCode extension from the VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or [download the VSCode extension from the Open VSX marketplace](https://open-vsx.org/extension/statelyai/stately-vscode).
 
-### Features
+#### Features
 
 - **Visually edit machines**. Edit any XState machine with drag-and-drop using the integrated [Stately Visual editor](https://stately.ai/editor).
 - **Autocomplete**. Intelligent suggestions for transition targets and initial states.
 - **Linting**. Highlights errors and potential bugs in your XState machine definitions.
 - **Jump to definition**. Navigate around machines easily with jump to definition on targets, actions, guards, services and more.
 
-### Refactors
+#### Refactors
 
 When hovering over a named action, guard or service in a machine, press the lightbulb icon to view available refactors.
 
-### Ignoring machines
+#### Ignoring machines
 
 If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-ignore-next-line` comment on the line above the machine:
 
@@ -43,3 +43,12 @@ If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-i
 // xstate-ignore-next-line
 createMachine({});
 ```
+
+## Chrome Devtools
+
+### Quick Start
+
+- Run `npm install`
+- Run `npm start` to build the `/panel` in development mode
+- Go to [`chrome://extensions`](chrome://extensions) and **Load unpacked** this directory (`/packages/xstate-dev`)
+- Select the `XState` extension in the dev tools
