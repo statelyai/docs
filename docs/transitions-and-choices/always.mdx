@@ -62,14 +62,9 @@ const machine = createMachine(
 );
 ```
 
-In the example above, the transition will only happen when `shouldTransition` resolves to true. Otherwise, the machine will stay in the same state.
+In the example above, the transition will only happen when `shouldTransition` returns true. Otherwise, the machine will stay in the same state.
 
-Always transitions are checked:
-
-- immediately when the machine enters the state node
-- every time the machine receives an actionable event
-
-Always transitions are extremely useful for reducing duplication in guards, along with other uses.
+Always transitions are checked immediately when the machine enters the state node. They are extremely useful for reducing duplication in guards, along with other uses.
 
 <!-- TODO - refine this example to show a before and after, with loads of guards in the before \-->
 
