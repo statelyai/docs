@@ -10,7 +10,7 @@ A state machine is a model that describes how the state of a process transitions
 
 ## Statecharts
 
-Statecharts are a visual extension to state machines enabling you to model more complex logic, including hierarchy, concurrency, and communication.
+[Statecharts](/basics/what-is-a-statechart) are a visual extension to state machines enabling you to model more complex logic, including hierarchy, concurrency, and communication.
 
 You may have used similar diagrams in the past to design user flows, plan data transformations or map app logic. Statecharts are another way of using boxes and arrows to represent these kinds of flows. These flows are also executable code you can use to control the logic directly in your application code.
 
@@ -18,25 +18,25 @@ You may have used similar diagrams in the past to design user flows, plan data t
 
 ## States
 
-A state describes the status of the machine. A state can be as simple as _active_ and _inactive_. These states are finite; the machine can only move through the pre-defined states. A state machine can only be in one state at a time.
+A [state](/basics/what-is-a-statechart#states) describes the status of the machine. A state can be as simple as _active_ and _inactive_. These states are finite; the machine can only move through the pre-defined states. A state machine can only be in one state at a time.
 
 With statecharts, the overall finite state can be the combination of children of a [parent state](#parent-and-child-states) or [parallel states](#parallel-states).
 
 ### Initial state
 
-When a state machine starts, it enters the **initial state** first. The <img alt='filled circle with an arrow pointing from the circle to the initial state' src='/initial-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-5px'}} /> icon represents the initial state. A machine can only have one top-level initial state.
+When a state machine starts, it enters the [**initial state**](/basics/what-is-a-statechart#initial-state) first. The <img alt='filled circle with an arrow pointing from the circle to the initial state' src='/initial-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-5px'}} /> icon represents the initial state. A machine can only have one top-level initial state.
 
 <!-- What a state might be -->
 
 #### Initial states of parent states
 
-Inside a parent state, you must specify which child state is the initial state, which the machine enters automatically when it enters the parent state. The <img alt='filled circle with an arrow pointing from the circle to the initial state' src='/initial-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-5px'}} /> icon represents the initial state.
+Inside a [parent state](/states/parent-and-child-states), you must specify which child state is the initial state, which the machine enters automatically when it enters the parent state. The <img alt='filled circle with an arrow pointing from the circle to the initial state' src='/initial-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-5px'}} /> icon represents the initial state.
 
 <!-- What is a typical initial state -->
 
 ### Parent and child states
 
-States can contain more states, also known as child states. These child states are only active when the parent state is active.
+States can contain more states, also known as [child states](/states/parent-and-child-states). These child states are only active when the parent state is active.
 
 <!-- Why you might use parent and child states -->
 
@@ -44,7 +44,7 @@ States can contain more states, also known as child states. These child states a
 
 ### Final state
 
-When a machine reaches the final state, it can no longer receive any events, and anything running inside it is canceled and cleaned up. The <img alt='box with a surrounding border' src='/final-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-6px'}} /> icon represents the final state.
+When a machine reaches the [final state](/states/final-states), it can no longer receive any events, and anything running inside it is canceled and cleaned up. The <img alt='box with a surrounding border' src='/final-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-6px'}} /> icon represents the final state.
 
 A machine can have multiple final states or no final states.
 
@@ -52,7 +52,7 @@ A machine can have multiple final states or no final states.
 
 ### Parallel states
 
-A parallel state is a parent state separated into multiple regions of child states, where each region is active simultaneously. Regions are represented by a dashed line around each region.
+A [parallel state](/states/parallel-states) is a parent state separated into multiple regions of child states, where each region is active simultaneously. Regions are represented by a dashed line around each region.
 
 <!-- Why you might use parallel states -->
 
@@ -60,7 +60,7 @@ A parallel state is a parent state separated into multiple regions of child stat
 
 ### History state
 
-A history state returns the parent state to its most recently active child state. The <img alt='box with an H inside' src='/history-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-6px'}} /> icon represents the history state.
+A [history state](/states/history-states) returns the parent state to its most recently active child state. The <img alt='box with an H inside' src='/history-state-icon.png' height='24' width='24' style={{display: 'inline', marginBottom: '-6px'}} /> icon represents the history state.
 
 The history state can be deep or shallow:
 
@@ -75,25 +75,25 @@ The <img alt='box with an H and asterisk inside' src='/deep-history-state-icon.p
 
 ## Transitions and events
 
-A machine moves from state to state through transitions. These transitions are caused by events. Transitions are deterministic; each combination of state and event always points to the same next state.
+A machine moves from state to state through [transitions](/basics/what-is-a-statechart#transitions-and-events). These transitions are caused by events. Transitions are deterministic; each combination of state and event always points to the same next state.
 
 <!-- What is a typical event -->
 
 ### Guarded transitions
 
-A guard is a condition that the machine checks when it goes through an event. If the condition is true, the transition can be taken. If the condition is false, the next potential transition is tested to determine if it can be taken. Any transition can be a guarded transition.
+A [guard](/transitions-and-choices/guards) is a condition that the machine checks when it goes through an event. If the condition is true, the transition can be taken. If the condition is false, the next potential transition is tested to determine if it can be taken. Any transition can be a guarded transition.
 
 <!-- What you might use a guard for -->
 
 ### Eventless transitions
 
-Eventless transitions are transitions without events. These transitions are **always** taken after any transition in their state if enabled; no event is necessary to trigger the transition. Eventless transitions are labeled “always” and often referred to as “always” transitions.
+[Eventless transitions](/transitions-and-choices/always) are transitions without events. These transitions are **always** taken after any transition in their state if enabled; no event is necessary to trigger the transition. Eventless transitions are labeled “always” and often referred to as “always” transitions.
 
 <!-- What you might use an eventless transition for -->
 
 ### Wildcard transitions
 
-Wildcard transitions are triggered by any event not already handled by the current state. Wildcard transitions are represented by an asterisk \*.
+[Wildcard transitions](/states/parent-and-child-states#wildcard-transitions) are triggered by any event not already handled by the current state. Wildcard transitions are represented by an asterisk \*.
 
 Wildcard transitions are useful for logging untracked events and reducing code duplication.
 
