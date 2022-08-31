@@ -87,7 +87,7 @@ A guard is a condition that the machine checks when it goes through an event. If
 
 ### Eventless transitions
 
-Eventless transitions are transitions without events. These transitions are **always** taken after any transition in their state if they are enabled; no event is necessary to trigger the transition. Eventless transitions are labeled “always.”
+Eventless transitions are transitions without events. These transitions are **always** taken after any transition in their state if they are enabled; no event is necessary to trigger the transition. Eventless transitions are labeled “always” and often refered to as “always” transitions.
 
 <!-- What you might use an eventless transition for -->
 
@@ -107,7 +107,7 @@ Wildcard transitions are useful for logging untracked events and reducing code d
 
 <!-- Will be in v5 -->
 
-## Actors, actions and invocations
+## Actors, actions and invoked actors
 
 A statechart is an executable model of an actor. When you run a statechart, it becomes an actor; a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
 
@@ -119,4 +119,4 @@ An action can be fired upon entry or exit of a state and can also be fired on tr
 
 <!-- What you might use an action transition for -->
 
-An invocation is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state, and stopped when the state is exited.
+An invoked actor is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state, and stopped when the state is exited.
