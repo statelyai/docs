@@ -8,6 +8,8 @@ title: Guards
 
 A common pattern in any program is if/else logic — the ability to make decisions based on inputs. The best way to apply if/else logic with statecharts is through _guarded transitions_.
 
+A guard is a condition that the machine checks when it goes through an event. If the condition is true, the transition can be taken. If the condition is false, the next potential transition is tested to determine if it can be taken. Any transition can be a guarded transition.
+
 In the following example, we’ll imagine you want to order a decaf coffee at a cafe. You can send the `ORDER_DECAF` event to the barista, but the cafe might not have decaf coffee available! The machine for the ordering process could be as follows:
 
 ```ts twoslash
