@@ -76,7 +76,7 @@ service.send("CLICK", { x: 40, y: 21 });
   - The second argument must be an object without a `type: ...` property.
 
 ::: warning
-If the service is not initialized (that is, if `service.start()` wasn't called yet), events will be **deferred** until the service is started. This means that the events won't be processed until `service.start()` is called, and then they will all be sequentially processed.
+If the service is not initialized (that is, if `service.start()` wasn't called yet), events will be **deferred** until the service is started. This means that the events won’t be processed until `service.start()` is called, and then they will all be sequentially processed.
 
 This behavior can be changed by setting `{ deferEvents: false }` in the [service options](#options). When `deferEvents` is `false`, sending an event to an uninitialized service will throw an error.
 :::

@@ -4,7 +4,7 @@ title: React Patterns
 
 # React Patterns
 
-At [Stately](https://stately.ai), we love this combo. It's our go-to stack for creating internal applications.
+At [Stately](https://stately.ai), we love this combo. It’s our go-to stack for creating internal applications.
 
 To ask for help, check out the [`#react-help` channel in our Discord community](https://discord.gg/vedXj62MfQ).
 
@@ -31,7 +31,7 @@ function Toggle() {
 
 Our recommended approach for managing global state with XState and React is to use [React Context](https://reactjs.org/docs/context.html).
 
-> There are two versions of 'context': XState's [context](../guides/context.md) and React's context. It's a little confusing!
+> There are two versions of 'context': XState’s [context](../guides/context.md) and React’s context. It’s a little confusing!
 
 ### Context Provider
 
@@ -57,7 +57,7 @@ export const GlobalStateProvider = (props) => {
 };
 ```
 
-Using `useInterpret` returns a service, which is a static reference to the running machine which can be subscribed to. This value never changes, so we don't need to worry about wasted re-renders.
+Using `useInterpret` returns a service, which is a static reference to the running machine which can be subscribed to. This value never changes, so we don’t need to worry about wasted re-renders.
 
 > For Typescript, you can create the context as `createContext({} as InterpreterFrom<typeof authMachine>);` to ensure strong typings.
 
@@ -164,15 +164,15 @@ export const SomeComponent = (props) => {
 };
 ```
 
-Note that you don't need to call `useActor` for this, it's available right on the context.
+Note that you don’t need to call `useActor` for this, it’s available right on the context.
 
 ## Other hooks
 
-XState's `useMachine` and `useInterpret` hooks can be used alongside others. Two patterns are most common:
+XState’s `useMachine` and `useInterpret` hooks can be used alongside others. Two patterns are most common:
 
 ### Named actions/services/guards
 
-Let's imagine that when you navigate to a certain state, you want to leave the page and go somewhere else, via `react-router` or `next`. For now, we'll declare that action as a 'named' action - where we name it now and declare it later.
+Let’s imagine that when you navigate to a certain state, you want to leave the page and go somewhere else, via `react-router` or `next`. For now, we’ll declare that action as a ‘named’ action - where we name it now and declare it later.
 
 ```js
 import { createMachine } from "xstate";
@@ -216,11 +216,11 @@ const Component = () => {
 
 This also works for services, guards, and delays.
 
-> If you use this technique, any references you use inside `goToOtherPage` will be kept up to date each render. That means you don't need to worry about stale references.
+> If you use this technique, any references you use inside `goToOtherPage` will be kept up to date each render. That means you don’t need to worry about stale references.
 
 ### Syncing data with useEffect
 
-Sometimes, you want to outsource some functionality to another hook. This is especially common with data fetching hooks such as [`react-query`](https://react-query.tanstack.com/) and [`swr`](https://swr.vercel.app/). You don't want to have to re-build all your data fetching functionality in XState.
+Sometimes, you want to outsource some functionality to another hook. This is especially common with data fetching hooks such as [`react-query`](https://react-query.tanstack.com/) and [`swr`](https://swr.vercel.app/). You don’t want to have to re-build all your data fetching functionality in XState.
 
 The best way to manage this is via `useEffect`.
 
@@ -247,7 +247,7 @@ This will send a `DATA_CHANGED` event whenever the result from `useSWR` changes,
 
 ## Class components
 
-If you're using class components, here's an example implementation that doesn't rely on hooks.
+If you’re using class components, here's an example implementation that doesn’t rely on hooks.
 
 - The `machine` is [interpreted](../guides/interpretation.md) and its `service` instance is placed on the component instance.
 - For local state, `this.state.current` will hold the current machine state. You can use a property name other than `.current`.

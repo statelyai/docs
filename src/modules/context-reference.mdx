@@ -203,7 +203,7 @@ const machine = createMachine({
 });
 ```
 
-However, TypeScript inference isn't perfect, so the responsible thing to do is to add the context and event as generics into `assign<Context, Event>(...)`:
+However, TypeScript inference isn’t perfect, so the responsible thing to do is to add the context and event as generics into `assign<Context, Event>(...)`:
 
 ```ts {3}
 // ...
