@@ -170,13 +170,13 @@ If the machine is in the `friendIsNotLookingAtYou` or `friendIsNotWhoYouThoughtT
 
 Adding transitions in the parent state helps reduce duplication when defining transitions.
 
-## Wildcard events
+## Wildcard transitions
 
 <!-- deps: ["transitions-and-events", "event-listeners-in-parent-states"] -->
 
-A transition specified with a wildcard `*` is activated by any event not already handled by the current state.
+A transition specified with a wildcard `*` is triggered by any event not already handled by the current state.
 
-The following example shows a few different cases of when the wildcard `*` is activated or not.
+The following example shows a few different cases of when the wildcard `*` is triggered or not.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -208,4 +208,4 @@ const machine = createMachine({
 - If the `HOVER` event is received in the `active` state, it’ll be caught by the wildcard above it and will `logEventToConsole`.
 - If the `FOCUS` event is received in any state, it’ll trigger the `onFocus` action, not the wildcard.
 
-Wildcard events are great for logging untracked events or reducing code duplication.
+Wildcard transitions are great for logging untracked events or reducing code duplication.
