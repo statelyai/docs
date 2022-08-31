@@ -223,9 +223,9 @@ Instead of enums, use typegen and rely on the strength of the type-safety provid
 
 There are a few known limitations with typegen, which we are working to fix.
 
-### Always transitions and raised events
+### “Always” transitions and raised events
 
-Typegen might incorrectly annotate actions, services, guards and delays if they are called “in response” to always transitions or raised events. We are working on fixing this, both in XState and in the typegen.
+Typegen might incorrectly annotate actions, services, guards and delays if they are called “in response” to [eventless “always” transitions](/transitions-and-choices/always) or raised events. We are working on fixing this, both in XState and in the typegen.
 
 ## Config Objects
 
