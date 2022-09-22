@@ -105,7 +105,7 @@ html, body {
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
-  --ifm-code-background: rgba(255,222,161,0.4); 
+  --ifm-code-background: lightgrey; 
   --ifm-code-font-size: 90%; 
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
@@ -115,23 +115,23 @@ html, body {
   --ifm-color-info: #54c7ec; 
   --ifm-color-warning: #ffba00; 
   --ifm-color-danger: #fa383e; 
-  --ifm-color-primary: var(--blue-500);
-  --ifm-color-primary-dark: var(--blue-600);
-  --ifm-color-primary-darker: var(--blue-700);
-  --ifm-color-primary-darkest: var(--blue-800);
-  --ifm-color-primary-light: var(--blue-200);
-  --ifm-color-primary-lighter: var(--blue-100);
-  --ifm-color-primary-lightest: var(--blue-50);
-  --ifm-color-primary-contrast-background: var(--gray-100); 
-  --ifm-color-primary-contrast-foreground: rgb(16, 36, 69); 
-  --ifm-color-secondary-dark: var(--gray-700); 
-  --ifm-color-secondary-darker: var(--gray-800); 
-  --ifm-color-secondary-darkest: var(--gray-900); 
-  --ifm-color-secondary-light: var(--gray-200); 
-  --ifm-color-secondary-lighter: var(--gray-100); 
-  --ifm-color-secondary-lightest: var(--gray-50); 
-  --ifm-color-secondary-contrast-background: var(--gray-50); 
-  --ifm-color-secondary-contrast-foreground: var(--gray-700); 
+  --ifm-color-primary: black;
+  --ifm-color-primary-dark: black;
+  --ifm-color-primary-darker: black;
+  --ifm-color-primary-darkest: black;
+  --ifm-color-primary-light: black;
+  --ifm-color-primary-lighter: black;
+  --ifm-color-primary-lightest: black;
+  --ifm-color-primary-contrast-background: white; 
+  --ifm-color-primary-contrast-foreground: black; 
+  --ifm-color-secondary-dark: black;
+  --ifm-color-secondary-darker: black;
+  --ifm-color-secondary-darkest: black;
+  --ifm-color-secondary-light: white;
+  --ifm-color-secondary-lighter: white;
+  --ifm-color-secondary-lightest: white;
+  --ifm-color-secondary-contrast-background: black;
+  --ifm-color-secondary-contrast-foreground: white;
   --ifm-color-success-dark: rgb(0, 148, 0); 
   --ifm-color-success-darker: rgb(0, 139, 0); 
   --ifm-color-success-darkest: rgb(0, 115, 0); 
@@ -166,17 +166,17 @@ html, body {
   --ifm-color-danger-contrast-foreground: rgb(75, 17, 19); 
   --ifm-color-white: #fff; 
   --ifm-color-black: #000; 
-  --ifm-color-gray-0: var(--ifm-color-white); 
-  --ifm-color-gray-100: var(--gray-100);
-  --ifm-color-gray-200: var(--gray-200);
-  --ifm-color-gray-300: var(--gray-300);
-  --ifm-color-gray-400: var(--gray-400);
-  --ifm-color-gray-500: var(--gray-500);
-  --ifm-color-gray-600: var(--gray-600);
-  --ifm-color-gray-700: var(--gray-700);
-  --ifm-color-gray-800: var(--gray-800);
-  --ifm-color-gray-850: var(--gray-850);
-  --ifm-color-gray-900: var(--gray-900);
+  --ifm-color-gray-0: white; 
+  --ifm-color-gray-100: white;
+  --ifm-color-gray-200: white;
+  --ifm-color-gray-300: white;
+  --ifm-color-gray-400: white;
+  --ifm-color-gray-500: black;
+  --ifm-color-gray-600: black;
+  --ifm-color-gray-700: black;
+  --ifm-color-gray-800: black;
+  --ifm-color-gray-850: black;
+  --ifm-color-gray-900: black;
   --ifm-color-gray-1000: var(--ifm-color-black); 
   --ifm-color-emphasis-0: var(--ifm-color-gray-900); 
   --ifm-color-emphasis-100: var(--ifm-color-gray-100); 
@@ -192,10 +192,10 @@ html, body {
   --ifm-color-emphasis-1000: var(--ifm-color-gray-1000); 
   --ifm-background-color: var(--ifm-color-white); 
   --ifm-background-surface-color: var(--ifm-color-white); 
-  --ifm-color-content: var(--ifm-color-emphasis-900); 
+  --ifm-color-content: black; 
   --ifm-color-content-inverse: var(--ifm-color-white); 
   --ifm-color-content-secondary: var(--ifm-color-gray-700); 
-  --ifm-hover-overlay: rgba(0, 95, 229, 0.1); 
+  --ifm-hover-overlay: lightgrey; 
   --ifm-font-color-base: var(--ifm-color-content); 
   --ifm-font-color-base-inverse: var(--ifm-color-content-inverse); 
   --ifm-font-color-secondary: var(--ifm-color-content-secondary);
@@ -204,11 +204,12 @@ html, body {
 
   /* announcement bar */
 
-  --announcement-background: linear-gradient(30deg, var(--ifm-color-primary-lightest) 0%, var(--ifm-color-primary-light) 53%, var(--ifm-color-primary-lighter) 100%);
+  --announcement-background: white;
     --announcement-text: var(--ifm-color-primary-darkest);
 
   /* navbar */
 
+  --ifm-navbar-background-color: white;
   --ifm-navbar-shadow: none; 
 
   /* breadcrumbs */
@@ -269,7 +270,7 @@ html[data-theme='light'] {
 
 /* use extra specificity in selector to override defaults */
 
-html[data-theme='dark'] body {
+html[data-theme='dark'], html[data-theme='dark'] body {
 
   --ifm-color-primary: var(--blue-300);
   --ifm-color-primary-dark: var(--blue-200);
@@ -289,15 +290,15 @@ html[data-theme='dark'] body {
   --ifm-color-emphasis-800: var(--ifm-color-gray-300); 
   --ifm-color-emphasis-900: var(--ifm-color-gray-200); 
   --ifm-color-emphasis-1000: var(--ifm-color-gray-100); 
-  --ifm-background-color: var(--ifm-color-gray-850); 
-  --ifm-background-surface-color: var(--ifm-color-gray-850); 
-  --ifm-hover-overlay: rgba(255, 255, 255, 0.1); 
+  --ifm-background-color: black; 
+  --ifm-background-surface-color: black; 
+  --ifm-hover-overlay: gray; 
   --ifm-link-color: var(--ifm-color-primary); 
   --ifm-link-hover-color: var(--ifm-color-primary-dark); 
-  --ifm-color-content: var(--ifm-color-gray-200); 
-  --ifm-color-content-secondary: var(--ifm-color-gray-300); 
+  --ifm-color-content: white; 
+  --ifm-color-content-secondary: white; 
   --ifm-breadcrumb-separator-filter: invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%); 
-  --ifm-code-background: rgba(255,173,18,0.15); 
+  --ifm-code-background: gray; 
   --ifm-scrollbar-track-background-color: #444444; 
   --ifm-scrollbar-thumb-background-color: #686868; 
   --ifm-scrollbar-thumb-hover-background-color: #7a7a7a; 
@@ -343,8 +344,13 @@ html[data-theme='dark'] body {
 
     /* announcement bar */
 
-  --announcement-background: linear-gradient(30deg, var(--ifm-color-primary-lightest) 0%, var(--ifm-color-primary-light) 53%, var(--ifm-color-primary-lighter) 100%);
-  --announcement-text: var(--ifm-color-primary-darkest);
+  --announcement-background: black;
+  --announcement-text: white;
+
+  /* navbar */
+
+  --ifm-navbar-background-color: black;
+  --ifm-navbar-shadow: none; 
   
 }
 
@@ -454,10 +460,11 @@ code {
 
 html div[role="banner"][class*="announcementBar"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module {
   background: var(--announcement-background) !important;
+  box-shadow: none;
   color: var(--announcement-text);
   font-size: 0.9rem !important;
   height: auto !important; /* override default variable */
-  border-bottom: none;
+  border-bottom: 1px solid;
 }
 
 html div[role="banner"][class*="announcementBar"] [class*="announcementBarContent"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module [class*="announcementBarContent"] {
@@ -674,7 +681,7 @@ footer [class*=iconExternalLink] {
 /* Footer */
 
 .footer {
-  background: linear-gradient(50deg, rgba(242,248,254,1) 0%, rgba(231,241,255,1) 53%, rgba(255,255,255,1) 92%);
+  background: white;
 }
 
 html[data-theme='dark'] .footer {
