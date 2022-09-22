@@ -29,15 +29,15 @@ it('should reach "yellow" given "green" when the "TIMER" event occurs', () => {
 });
 ```
 
-## Testing services
+## Testing actors
 
-The behavior and output of services can be tested by asserting that it _eventually_ reaches an expected state, given an initial state and a sequence of events:
+The behavior and output of actors can be tested by asserting that it _eventually_ reaches an expected state, given an initial state and a sequence of events:
 
 ```js
 import { fetchMachine } from '../path/to/fetchMachine';
 
 it('should eventually reach "success"', (done) => {
-  const fetchService = interpret(fetchMachine).onTransition((state) => {
+  const fetchActor = interpret(fetchMachine).onTransition((state) => {
     // this is where you expect the state to eventually
     // be reached
     if (state.matches('success')) {
@@ -45,11 +45,11 @@ it('should eventually reach "success"', (done) => {
     }
   });
 
-  fetchService.start();
+  fetchActor.start();
 
-  // send zero or more events to the service that should
+  // send zero or more events to the actor that should
   // cause it to eventually reach its expected state
-  fetchService.send({ type: 'FETCH', id: 42 });
+  fetchActor.send({ type: 'FETCH', id: 42 });
 });
 ```
 
@@ -68,23 +68,23 @@ it('should eventually reach "success"', (done) => {
   let userAlerted = false;
 
   const mockFetchMachine = fetchMachine.withConfig({
-    services: {
+    actors: {
       fetchFromAPI: (_, event) =>
         new Promise((resolve) => {
           setTimeout(() => {
             resolve({ id: event.id });
           }, 50);
-        })
+        }),
     },
     actions: {
       alertUser: () => {
         // set a flag instead of executing the original action
         userAlerted = true;
-      }
-    }
+      },
+    },
   });
 
-  const fetchService = interpret(mockFetchMachine).onTransition((state) => {
+  const fetchActor = interpret(mockFetchMachine).onTransition((state) => {
     if (state.matches('success')) {
       // assert that effects were executed
       expect(userAlerted).toBeTruthy();
@@ -92,8 +92,8 @@ it('should eventually reach "success"', (done) => {
     }
   });
 
-  fetchService.start();
+  fetchActor.start();
 
-  fetchService.send({ type: 'FETCH', id: 42 });
+  fetchActor.send({ type: 'FETCH', id: 42 });
 });
 ```

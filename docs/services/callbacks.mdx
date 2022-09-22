@@ -4,15 +4,15 @@ title: Callbacks
 
 # Callbacks
 
-<!-- deps: ["services", "promise-services"] -->
+<!-- deps: ["actors", "promise-actors"] -->
 
-Promise services let you model promises declaratively but not every service will be a promise. **Callback services** give you a flexible API for managing a long-running service that can do several things a promise can’t, like:
+Promise actors let you model promises declaratively but not every actor will be a promise. **Callback actors** give you a flexible API for managing a long-running actor that can do several things a promise can’t, like:
 
 - Send events back to its parent
 - Receive events from its parent and react to them
 - Start listeners/processes and clean them up when needed
 
-Callback services are declared using the `() => () => {}` syntax, which is how XState distinguishes them from promise services, which are declared as: `() => {}`.
+Callback actors are declared using the `() => () => {}` syntax, which is how XState distinguishes them from promise actors, which are declared as: `() => {}`.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -20,12 +20,12 @@ import { createMachine } from 'xstate';
 createMachine(
   {
     invoke: {
-      src: 'callbackService',
+      src: 'callbackActor',
     },
   },
   {
-    services: {
-      callbackService: (context, event) => (sendBack, onReceive) => {
+    actors: {
+      callbackActor: (context, event) => (sendBack, onReceive) => {
         // Run any code you want inside here
 
         return () => {
@@ -40,7 +40,7 @@ createMachine(
 
 Callbacks are called with:
 
-- `context`, the state of the context at the moment the service started.
+- `context`, the state of the context at the moment the actor started.
 - `event`, the last event sent to the machine.
 
 Callbacks also receive a `sendBack` function, which you can use to send events back to its parent machine.
@@ -54,7 +54,7 @@ createMachine(
     states: {
       counting: {
         invoke: {
-          src: 'callbackService',
+          src: 'callbackActor',
         },
         on: {
           ONE_SECOND_PASSED: {
@@ -76,8 +76,8 @@ createMachine(
         console.log('One second passed!');
       },
     },
-    services: {
-      callbackService: (context, event) => (sendBack, onReceive) => {
+    actors: {
+      callbackActor: (context, event) => (sendBack, onReceive) => {
         const interval = setInterval(() => {
           sendBack({
             type: 'ONE_SECOND_PASSED',
@@ -95,4 +95,4 @@ createMachine(
 
 In the example above, we use `sendBack` to send an event back to the parent machine every second.
 
-We can return a function from the callback service to run any necessary “cleanup.” This cleanup function is run when the state containing the invoke is exited. In the example above, the interval is cleared when the `counting` state is exited.
+We can return a function from the callback actor to run any necessary “cleanup.” This cleanup function is run when the state containing the invoke is exited. In the example above, the interval is cleared when the `counting` state is exited.

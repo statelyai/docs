@@ -4,9 +4,9 @@ title: Promises
 
 # Promises
 
-<!-- deps: ["services", "actions", "guards"] -->
+<!-- deps: ["actors", "actions", "guards"] -->
 
-The most common type of services you’ll invoke are **promise services**. Promise services allow you to await the result of a promise before deciding what to do next.
+The most common type of actors you’ll invoke are **promise actors**. Promise actors allow you to await the result of a promise before deciding what to do next.
 
 ```ts twoslash
 import { createMachine, assign } from 'xstate';
@@ -25,7 +25,7 @@ const userMachine = createMachine(
     invoke: { src: 'fetchUser' },
   },
   {
-    services: {
+    actors: {
       fetchUser: (context) => {
         return fetchUser(context.userId);
       },
@@ -34,7 +34,7 @@ const userMachine = createMachine(
 );
 ```
 
-When a promise service resolves, a `done.invoke` event is sent back to the machine with the data the on which the event resolved. The resolved data is placed under the `data` property. For example:
+When a promise actor resolves, a `done.invoke` event is sent back to the machine with the data the on which the event resolved. The resolved data is placed under the `data` property. For example:
 
 ```js
 {
@@ -75,7 +75,7 @@ const userMachine = createMachine(
     },
   },
   {
-    services: {
+    actors: {
       fetchUser: (context) => {
         return fetchUser(context.userId);
       },

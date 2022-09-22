@@ -28,8 +28,8 @@ const searchValid = (context, event) => {
 
 const searchMachine = createMachine(
   {
-    id: "search",
-    initial: "idle",
+    id: 'search',
+    initial: 'idle',
     context: {
       canSearch: true,
     },
@@ -38,21 +38,21 @@ const searchMachine = createMachine(
         on: {
           SEARCH: [
             {
-              target: "searching",
+              target: 'searching',
               // Only transition to 'searching' if the guard (cond) evaluates to true
               cond: searchValid, // or { type: 'searchValid' }
             },
-            { target: ".invalid" },
+            { target: '.invalid' },
           ],
         },
-        initial: "normal",
+        initial: 'normal',
         states: {
           normal: {},
           invalid: {},
         },
       },
       searching: {
-        entry: "executeSearch",
+        entry: 'executeSearch',
         // ...
       },
       searchError: {
@@ -64,7 +64,7 @@ const searchMachine = createMachine(
     guards: {
       searchValid, // optional, if the implementation doesn't change
     },
-  },
+  }
 );
 ```
 
@@ -77,16 +77,16 @@ If the `cond` guard returns `false`, then the transition will not be selected, a
 Example of usage with `context`:
 
 ```js
-import { interpret } from "xstate";
+import { interpret } from 'xstate';
 
-const searchService = interpret(searchMachine)
+const searchActor = interpret(searchMachine)
   .onTransition((state) => console.log(state.value))
   .start();
 
-searchService.send({ type: "SEARCH", query: "" });
+searchActor.send({ type: 'SEARCH', query: '' });
 // => 'idle'
 
-searchService.send({ type: "SEARCH", query: "something" });
+searchActor.send({ type: 'SEARCH', query: 'something' });
 // => 'searching'
 ```
 

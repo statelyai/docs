@@ -4,11 +4,11 @@ title: Machines
 
 # Machines
 
-<!-- deps:["services","running-machines-intro","callback-services"] -->
+<!-- deps:["actors","running-machines-intro","callback-actors"] -->
 
-Callback services are one way to start invoking long-lived services and are useful for simple to intermediate cases. But sometimes, you’ll want to use all the power of a statechart.
+Callback actors are one way to start invoking long-lived actors and are useful for simple to intermediate cases. But sometimes, you’ll want to use all the power of a statechart.
 
-_Machine services_ are valuable for such use cases. You can pass a machine directly to the `invoke` `src` property to invoke the machine in that state.
+_Machine actors_ are valuable for such use cases. You can pass a machine directly to the `invoke` `src` property to invoke the machine in that state.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -24,13 +24,13 @@ const parentMachine = createMachine({
 });
 ```
 
-Just like with callback services, the child machine is stopped if the state where it’s invoked is exited.
+Just like with callback actors, the child machine is stopped if the state where it’s invoked is exited.
 
-Machine services enable you to create machines that can act as reusable modules across your application.
+Machine actors enable you to create machines that can act as reusable modules across your application.
 
 ## sendParent
 
-<!-- deps: ["actions", "machine-services"] -->
+<!-- deps: ["actions", "machine-actors"] -->
 
 Child machines can communicate to the parent that invoked them via the `sendParent` action.
 
@@ -75,7 +75,7 @@ If the child machine doesn’t have a parent, for instance, if the machine is ru
 
 ## onDone in child machines
 
-<!-- deps: [machine-services, final-states] -->
+<!-- deps: [machine-actors, final-states] -->
 
 When a child machine reaches a final state, it reports that it’s done to its parent. The parent can listen for this event with the `invoke.onDone` property:
 

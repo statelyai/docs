@@ -124,7 +124,7 @@ const myFunction = (actor: InterpreterFrom<typeof machine>) => {
 
 ## `ActorRefFrom`
 
-`ActorRefFrom` is especially useful when [spawning actors](/services/spawn) because it types the reference created by `spawn` when assigning to context.
+`ActorRefFrom` is especially useful when [spawning actors](/actors/spawn) because it types the reference created by `spawn` when assigning to context.
 
 ```ts twoslash
 import { createMachine, ActorRefFrom, spawn, assign } from 'xstate';
@@ -164,11 +164,11 @@ export interface Typegen0 {
   invokeSrcNameMap: {};
   missingImplementations: {
     actions: 'sayHello' | 'sayHelloAgain';
-    services: never;
+    actors: never;
     guards: never;
     delays: never;
   };
-  eventsCausingServices: {};
+  eventsCausingactors: {};
   eventsCausingGuards: {};
   eventsCausingDelays: {};
   matchesStates: undefined;
@@ -213,11 +213,11 @@ export interface Typegen0 {
   invokeSrcNameMap: {};
   missingImplementations: {
     actions: 'sayGoodbye';
-    services: never;
+    actors: never;
     guards: never;
     delays: never;
   };
-  eventsCausingServices: {};
+  eventsCausingactors: {};
   eventsCausingGuards: {};
   eventsCausingDelays: {};
   matchesStates: undefined;

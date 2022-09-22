@@ -11,7 +11,7 @@
 You may have come across a type of function called a _[pure function](https://en.wikipedia.org/wiki/Pure_function)_. A function is ‘pure’ if it takes in an input, returns a predictable output, and does _nothing else_. Pure functions do not involve:
 
 - Waiting a set amount of time
-- Making an API call to an external service
+- Making an API call
 - Logging things to the console
 
 We can think of the processes above as [side effects](<https://en.wikipedia.org/wiki/Side_effect_(computer_science)>) of our program running. The name gives them a negative medical connotation, but they’re incredibly important. Processes that don’t have side effects don’t talk to anything external, don’t worry about time, and don’t react to unexpected errors.

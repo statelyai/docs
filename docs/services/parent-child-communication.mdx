@@ -4,11 +4,11 @@ title: Parent to child communication
 
 # Parent to child communication
 
-<!-- deps: ["callback-services", "machine-services", "send-parent"] -->
+<!-- deps: ["callback-actors", "machine-actors", "send-parent"] -->
 
-We’ve learned that invoked services can send events to their parent via the invoked machine’s `sendParent` action and the invoked callback’s `sendBack` method. Child services can also _receive_ events from the parent, allowing for bidirectional communication.
+We’ve learned that invoked actors can send events to their parent via the invoked machine’s `sendParent` action and the invoked callback’s `sendBack` method. Child actors can also _receive_ events from the parent, allowing for bidirectional communication.
 
-You must give invoked services a unique id with `invoke.id` to enable parent to child communication:
+You must give invoked actors a unique id with `invoke.id` to enable parent to child communication:
 
 ```ts twoslash {9}
 import { createMachine } from 'xstate';
@@ -25,7 +25,7 @@ const parentMachine = createMachine({
 });
 ```
 
-Once the invoked service has an id, you can use that ID to send it events via the `send` event.
+Once the invoked actor has an id, you can use that ID to send it events via the `send` event.
 
 In the example below, we specify that we want to send the `HELLO_FROM_PARENT` event to the `child` invocation after 3 seconds. The child then logs a message to the console.
 
@@ -71,11 +71,11 @@ const parentMachine = createMachine({
 
 ## Receiving events in invoked callbacks
 
-<!-- deps: ["callback-services", "receiving-events-from-parent"] -->
+<!-- deps: ["callback-actors", "receiving-events-from-parent"] -->
 
 Invoked callbacks can listen to events from the parent. To manage this, they receive an `onReceive` argument.
 
-In the example below, the parent machine sends the child `ponger` service a `PING` event. The child service can listen for that event using `onReceive(listener)` and send a `PONG` event back to the parent in response.
+In the example below, the parent machine sends the child `ponger` actor a `PING` event. The child actor can listen for that event using `onReceive(listener)` and send a `PONG` event back to the parent in response.
 
 ```ts twoslash
 import { createMachine, send } from 'xstate';
@@ -87,7 +87,7 @@ const pingPongMachine = createMachine(
       active: {
         invoke: {
           id: 'ponger',
-          src: 'pongService',
+          src: 'pongActor',
         },
         entry: send({ type: 'PING' }, { to: 'ponger' }),
         on: {
@@ -98,8 +98,8 @@ const pingPongMachine = createMachine(
     },
   },
   {
-    services: {
-      pongService: () => (sendBack, onReceive) => {
+    actors: {
+      pongActor: () => (sendBack, onReceive) => {
         // Whenever parent sends 'PING',
         // send parent 'PONG' event
         onReceive((e) => {
@@ -170,7 +170,7 @@ const machine = createMachine(
     },
   },
   {
-    services: {
+    actors: {
       eventHandler: () => (sendBack, onReceive) => {
         onReceive((event) => {
           // Handle the forwarded event here

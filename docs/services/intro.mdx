@@ -1,14 +1,14 @@
 ---
-title: Services
+title: Actors
 ---
 
-# Services
+# Actors
 
 <!-- deps: ["options-intro","running-machines-intro","the-root-node"] -->
 
-When you run a statechart, it becomes an _actor_, a running process that can receive events. Often, you’ll need your actor to run _other actors_; spawning new statecharts, waiting for promises, or subscribing to observables. We call these child actors _services_; actors whose state is managed by another actor.
+When you run a statechart, it becomes an _actor_, a running process that can receive events. Often, you’ll need your actor to run _other actors_; spawning new statecharts, waiting for promises, or subscribing to observables.
 
-We use the `invoke` attribute on a state to _invoke_ a service in our machine. You can invoke a service on any state, including the root node.
+We use the `invoke` attribute on a state to _invoke_ an actor in our machine. You can invoke an actor on any state, including the root node.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -16,15 +16,15 @@ import { createMachine } from 'xstate';
 const machine = createMachine(
   {
     invoke: {
-      src: 'myService',
+      src: 'someActor',
     },
   },
   {
-    services: {
+    actors: {
       /**
-       * The service is defined here
+       * The actor is defined here
        */
-      myService: async () => {},
+      someActor: async () => {},
     },
   }
 );
@@ -39,17 +39,17 @@ const machine = createMachine(
   {
     invoke: [
       {
-        src: 'myService',
+        src: 'someActor',
       },
       {
-        src: 'myOtherService',
+        src: 'someOtherActor',
       },
     ],
   },
   {
-    services: {
-      myService: async () => {},
-      myOtherService: async () => {},
+    actors: {
+      someActor: async () => {},
+      someOtherActor: async () => {},
     },
   }
 );
