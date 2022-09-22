@@ -708,6 +708,18 @@ html[data-theme='dark'] .footer {
   }
 }
 
+/* Use grid instead of flexbox for footer columns */
+
+.footer__links.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.footer__links .col {
+  max-width: 100%;
+  width: auto;
+}
+
 /* vertically align footer titles to logo */
 
 .footer__col:nth-of-type(2) .footer__title,
@@ -720,8 +732,20 @@ html[data-theme=dark] .footer__col:nth-of-type(1) .footer__title {
 }
 
 @media (min-width: 1440px) {
+  footer {
+    margin-left: var(--doc-sidebar-width);
+  }
   footer .container {
-    margin: 0 0 0 var(--doc-sidebar-width) !important;
+    margin: 0 auto;
+  }
+
+  footer .container .row {
+    padding: var(--ifm-global-spacing);
+  }
+
+  .footer__copyright {
+    /* offset against left sidebar to centre */
+    margin-right: var(--doc-sidebar-width);
   }
 }
 
