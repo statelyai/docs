@@ -501,6 +501,14 @@ html .DocSearch-Button-Key:nth-of-type(2) {
   html .DocSearch-Button { min-width: 50ch; }
 }
 
+/* centre search on homepage */
+
+@media (min-width: 768px) {
+  html.docs-doc-id-intro .DocSearch-Button {
+    margin: 0 auto;
+  }
+}
+
 @media (min-width: 997px) {
   html [class*=searchBox_node_modules] { 
     width: 100%;
