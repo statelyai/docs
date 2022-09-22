@@ -95,6 +95,53 @@ html, body {
   --green-900: #012817;
 }
 
+/* My new colours */
+:root {
+  /* gray */
+  --st-gray-100: #EFF4F9;
+  --st-gray-200: #E2E9F4;
+  --st-gray-300: #D2E0EE;
+  --st-gray-400: #C4D0E9;
+  --st-gray-600: #383B42;
+  --st-gray-700: #27282D;
+  --st-gray-800: #1c1d20;
+  --st-gray-900: #080a0b;
+  /* blue */
+  --st-blue-300: #85B8FF;
+  --st-blue-600: #1856DE;
+}
+
+html[data-theme='light'] {
+
+  --st-background: white;
+  --st-text: var(--st-gray-800);
+  --st-text-secondary: var(--st-gray-600);
+  --st-text-link: var(--st-blue-600);
+  --st-announcement-bar: var(--st-gray-100);
+  --st-navbar-background: white;
+  --st-search-background: var(--st-gray-200);
+  --st-header-border: var(--st-gray-200);
+  --st-layout-border: var(--st-gray-200);
+  --st-code-border: var(--st-gray-200);
+  --st-code-highlight-background: var(--st-gray-200);
+  --st-highlight-background: var(--st-gray-300);
+}
+
+html[data-theme='dark'], html[data-theme='dark'] body {
+  --st-background: var(--st-gray-700);
+  --st-text: var(--st-gray-200);
+  --st-text-secondary: var(--st-gray-400);
+  --st-text-link: var(--st-blue-300);
+  --st-announcement-bar: var(--st-gray-900);
+  --st-navbar-background: var(--st-gray-800);
+  --st-search-background: var(--st-gray-900);
+  --st-header-border: var(--st-background);
+  --st-layout-border: var(--st-gray-600);
+  --st-code-border: var(--st-background);
+  --st-code-highlight-background: var(--st-gray-600);
+  --st-highlight-background: var(--st-gray-600);
+}
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-font-family-base: 'TTCommons', Helvetica, 'Helvetica Neue', Arial, sans-serif;
@@ -105,7 +152,7 @@ html, body {
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
-  --ifm-code-background: lightgrey; 
+  --ifm-code-background: var(--st-code-highlight-background); 
   --ifm-code-font-size: 90%; 
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
@@ -115,22 +162,22 @@ html, body {
   --ifm-color-info: #54c7ec; 
   --ifm-color-warning: #ffba00; 
   --ifm-color-danger: #fa383e; 
-  --ifm-color-primary: black;
-  --ifm-color-primary-dark: black;
-  --ifm-color-primary-darker: black;
-  --ifm-color-primary-darkest: black;
-  --ifm-color-primary-light: black;
-  --ifm-color-primary-lighter: black;
-  --ifm-color-primary-lightest: black;
+  --ifm-color-primary: var(--st-text);
+  --ifm-color-primary-dark: var(--st-text);
+  --ifm-color-primary-darker: var(--st-text);
+  --ifm-color-primary-darkest: var(--st-text);
+  --ifm-color-primary-light: var(--st-text);
+  --ifm-color-primary-lighter: var(--st-text);
+  --ifm-color-primary-lightest: var(--st-text);
   --ifm-color-primary-contrast-background: white; 
-  --ifm-color-primary-contrast-foreground: black; 
-  --ifm-color-secondary-dark: black;
-  --ifm-color-secondary-darker: black;
-  --ifm-color-secondary-darkest: black;
+  --ifm-color-primary-contrast-foreground: var(--st-text); 
+  --ifm-color-secondary-dark: var(--st-text);
+  --ifm-color-secondary-darker: var(--st-text);
+  --ifm-color-secondary-darkest: var(--st-text);
   --ifm-color-secondary-light: white;
   --ifm-color-secondary-lighter: white;
   --ifm-color-secondary-lightest: white;
-  --ifm-color-secondary-contrast-background: black;
+  --ifm-color-secondary-contrast-background: var(--gray-800);
   --ifm-color-secondary-contrast-foreground: white;
   --ifm-color-success-dark: rgb(0, 148, 0); 
   --ifm-color-success-darker: rgb(0, 139, 0); 
@@ -166,17 +213,17 @@ html, body {
   --ifm-color-danger-contrast-foreground: rgb(75, 17, 19); 
   --ifm-color-white: #fff; 
   --ifm-color-black: #000; 
-  --ifm-color-gray-0: white; 
-  --ifm-color-gray-100: white;
-  --ifm-color-gray-200: white;
-  --ifm-color-gray-300: white;
-  --ifm-color-gray-400: white;
-  --ifm-color-gray-500: black;
-  --ifm-color-gray-600: black;
-  --ifm-color-gray-700: black;
-  --ifm-color-gray-800: black;
-  --ifm-color-gray-850: black;
-  --ifm-color-gray-900: black;
+  --ifm-color-gray-0: red; 
+  --ifm-color-gray-100: red;
+  --ifm-color-gray-200: red;
+  --ifm-color-gray-300: red;
+  --ifm-color-gray-400: red;
+  --ifm-color-gray-500: var(--st-text);
+  --ifm-color-gray-600: var(--st-text);
+  --ifm-color-gray-700: var(--st-text);
+  --ifm-color-gray-800: var(--st-text);
+  --ifm-color-gray-850: var(--st-text);
+  --ifm-color-gray-900: var(--st-text);
   --ifm-color-gray-1000: var(--ifm-color-black); 
   --ifm-color-emphasis-0: var(--ifm-color-gray-900); 
   --ifm-color-emphasis-100: var(--ifm-color-gray-100); 
@@ -192,37 +239,38 @@ html, body {
   --ifm-color-emphasis-1000: var(--ifm-color-gray-1000); 
   --ifm-background-color: var(--ifm-color-white); 
   --ifm-background-surface-color: var(--ifm-color-white); 
-  --ifm-color-content: black; 
+  --ifm-color-content: var(--st-text); 
   --ifm-color-content-inverse: var(--ifm-color-white); 
   --ifm-color-content-secondary: var(--ifm-color-gray-700); 
   --ifm-hover-overlay: lightgrey; 
   --ifm-font-color-base: var(--ifm-color-content); 
   --ifm-font-color-base-inverse: var(--ifm-color-content-inverse); 
   --ifm-font-color-secondary: var(--ifm-color-content-secondary);
-  --ifm-link-color: var(--ifm-color-primary); 
+  --ifm-link-color: var(--st-text-link); 
   --ifm-link-hover-color: var(--ifm-color-primary-dark);  
 
   /* announcement bar */
 
-  --announcement-background: white;
-    --announcement-text: var(--ifm-color-primary-darkest);
+  --announcement-background: var(--st-announcement-bar);
+  --announcement-text: var(--ifm-color-primary-darkest);
 
   /* navbar */
 
-  --ifm-navbar-background-color: white;
+  --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none; 
 
   /* breadcrumbs */
   --ifm-breadcrumb-size-multiplier: 1;
   --ifm-breadcrumb-border-radius: 0.75rem;
   --ifm-breadcrumb-padding-horizontal: 0.5rem; 
+  --ifm-breadcrumb-item-background-active: var(--st-highlight-background);
   --ifm-breadcrumb-color-active: var(--ifm-font-color-base);
 
   /* menu sidebar */
 
-  --ifm-menu-color: var(--ifm-color-emphasis-700); 
+  --ifm-menu-color: var(--st-text-secondary); 
   --ifm-menu-color-active: var(--ifm-color-primary); 
-  --ifm-menu-color-background-active: var(--ifm-hover-overlay); 
+  --ifm-menu-color-background-active: var(--st-highlight-background); 
   --ifm-menu-color-background-hover: var(--ifm-hover-overlay); 
   --ifm-menu-link-padding-horizontal: 0.75rem; 
   --ifm-menu-link-padding-vertical: 0.2em; 
@@ -230,8 +278,8 @@ html, body {
   --ifm-menu-link-sublist-icon-filter: none; 
 
   /* contents list */
-  --ifm-toc-border-color: var(--ifm-color-emphasis-100); 
-  --ifm-toc-link-color: var(--ifm-color-content-secondary); 
+  --ifm-toc-border-color: var(--st-layout-border); 
+  --ifm-toc-link-color: var(--st-text); 
   --ifm-toc-padding-vertical: 0.35rem; 
   --ifm-toc-padding-horizontal: 0.5rem; 
 
@@ -251,7 +299,7 @@ html[data-theme='light'] {
   --docsearch-logo-color:var(--ifm-color-primary); 
   --docsearch-modal-background:var(--ifm-color-emphasis-100); 
   --docsearch-modal-shadow: none; 
-  --docsearch-searchbox-background: var(--ifm-color-emphasis-100); 
+  --docsearch-searchbox-background: var(--st-search-background); 
   --docsearch-searchbox-focus-background: var(--ifm-color-white); 
   --docsearch-searchbox-shadow: inset 0 0 0 2px var(--ifm-color-primary); 
   --docsearch-hit-source: var(--blue-700);
@@ -272,8 +320,8 @@ html[data-theme='light'] {
 
 html[data-theme='dark'], html[data-theme='dark'] body {
 
-  --ifm-color-primary: var(--blue-300);
-  --ifm-color-primary-dark: var(--blue-200);
+  --ifm-color-primary: white;
+  --ifm-color-primary-dark: white;
   --ifm-color-primary-darker: var(--blue-100);
   --ifm-color-primary-darkest: var(--blue-50);
   --ifm-color-primary-light: var(--blue-600);
@@ -290,20 +338,20 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-color-emphasis-800: var(--ifm-color-gray-300); 
   --ifm-color-emphasis-900: var(--ifm-color-gray-200); 
   --ifm-color-emphasis-1000: var(--ifm-color-gray-100); 
-  --ifm-background-color: black; 
-  --ifm-background-surface-color: black; 
+  --ifm-background-color: var(--st-background); 
+  --ifm-background-surface-color: var(--st-background); 
   --ifm-hover-overlay: gray; 
-  --ifm-link-color: var(--ifm-color-primary); 
+  --ifm-link-color: var(--st-text-link); 
   --ifm-link-hover-color: var(--ifm-color-primary-dark); 
   --ifm-color-content: white; 
   --ifm-color-content-secondary: white; 
   --ifm-breadcrumb-separator-filter: invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%); 
-  --ifm-code-background: gray; 
+  --ifm-code-background: var(--st-code-highlight-background); 
   --ifm-scrollbar-track-background-color: #444444; 
   --ifm-scrollbar-thumb-background-color: #686868; 
   --ifm-scrollbar-thumb-hover-background-color: #7a7a7a; 
   --ifm-table-stripe-background: rgba(255, 255, 255, 0.07); 
-  --ifm-toc-border-color: var(--ifm-color-emphasis-300); 
+  --ifm-toc-border-color: var(--st-layout-border); 
   --ifm-color-primary-contrast-background: rgb(16, 36, 69); 
   --ifm-color-primary-contrast-foreground: rgb(235, 242, 252); 
   --ifm-color-secondary-contrast-background: rgb(71, 71, 72); 
@@ -327,7 +375,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --docsearch-container-background:rgba(17,28,45,0.8); 
   --docsearch-logo-color:var(--ifm-color-primary); 
   --docsearch-modal-background:var(--gray-900); 
-  --docsearch-searchbox-background: var(--ifm-color-emphasis-100); 
+  --docsearch-searchbox-background: var(--st-search-background); 
   --docsearch-searchbox-focus-background: var(--ifm-color-black); 
   --docsearch-searchbox-shadow: inset 0 0 0 2px var(--ifm-color-primary); 
   --docsearch-hit-source: var(--blue-200);
@@ -344,12 +392,12 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 
     /* announcement bar */
 
-  --announcement-background: black;
+  --announcement-background: var(--st-announcement-bar);
   --announcement-text: white;
 
   /* navbar */
 
-  --ifm-navbar-background-color: black;
+  --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none; 
   
 }
@@ -358,8 +406,16 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   display: none;
 }
 
+html[data-theme='light'] pre.shiki {
+  border-color: var(--st-code-border);
+}
+
 [data-theme='dark'] .shiki.github-light {
   display: none;
+}
+
+html[data-theme='dark'] pre.shiki {
+  border-color: var(--st-code-border);
 }
 
 /* Specific font-variation-settings for web font support */
@@ -443,7 +499,7 @@ code {
 /* Header */
 
 .navbar {
-  border-bottom: 1px solid var(--ifm-toc-border-color);
+  border-bottom: 1px solid var(--st-header-border);
 }
 
 /* force search to align with sidebar by making logo width of sidebar */
@@ -464,7 +520,7 @@ html div[role="banner"][class*="announcementBar"], html div.announcementBarConte
   color: var(--announcement-text);
   font-size: 0.9rem !important;
   height: auto !important; /* override default variable */
-  border-bottom: 1px solid;
+  border-bottom: none;
 }
 
 html div[role="banner"][class*="announcementBar"] [class*="announcementBarContent"], html div.announcementBarContent_node_modules-\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module [class*="announcementBarContent"] {
@@ -545,7 +601,7 @@ html [class*=toggleButton_node_modules] {
 /* Table of contents list */
 
 .table-of-contents__link--active {
-  color: var(--ifm-toc-link-color);
+  color: var(--st-text-link);
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
   font-variation-settings: 'wght' var(--ifm-font-weight-bold);
@@ -610,7 +666,7 @@ html [class*=toggleButton_node_modules] {
 }
 
 .menu__link { 
-  color: var(--ifm-menu-color); 
+  color: var(--st-text-secondary); 
   flex: 1 1 0%; 
 }
 
@@ -732,14 +788,14 @@ html[data-theme=dark] .footer__col:nth-of-type(1) .footer__title {
 }
 
 @media (min-width: 1440px) {
-  footer {
+  footer.footer {
     margin-left: var(--doc-sidebar-width);
   }
-  footer .container {
+  footer.footer .container {
     margin: 0 auto;
   }
 
-  footer .container .row {
+  footer.footer .container .row {
     padding: var(--ifm-global-spacing);
   }
 
