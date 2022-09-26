@@ -24,7 +24,8 @@ createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       callbackActor: (context, event) => (sendBack, onReceive) => {
         // Run any code you want inside here
 
@@ -76,7 +77,8 @@ createMachine(
         console.log('One second passed!');
       },
     },
-    actors: {
+    // `actors` in v5
+    services: {
       callbackActor: (context, event) => (sendBack, onReceive) => {
         const interval = setInterval(() => {
           sendBack({

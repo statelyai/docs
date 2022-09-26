@@ -92,7 +92,8 @@ const machine = createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       submitForm: async (context) => {
         await createUser(context.userName);
       },

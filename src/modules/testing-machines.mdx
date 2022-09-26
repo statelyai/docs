@@ -68,7 +68,8 @@ it('should eventually reach "success"', (done) => {
   let userAlerted = false;
 
   const mockFetchMachine = fetchMachine.withConfig({
-    actors: {
+    // `actors` in v5
+    services: {
       fetchFromAPI: (_, event) =>
         new Promise((resolve) => {
           setTimeout(() => {

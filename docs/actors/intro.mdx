@@ -20,7 +20,8 @@ const machine = createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       /**
        * The actor is defined here
        */
@@ -47,8 +48,8 @@ const machine = createMachine(
     ],
   },
   {
-    actors: {
-      someActor: async () => {},
+    services: {
+      // `actors` in v5      someActor: async () => {},
       someOtherActor: async () => {},
     },
   }

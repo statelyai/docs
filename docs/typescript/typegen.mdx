@@ -102,7 +102,8 @@ import { createMachine } from 'xstate';
 createMachine(
   {
     schema: {
-      actors: {} as {
+      // `actors` in v5
+      services: {} as {
         myActor: {
           // The data that gets returned from the actor
           data: { id: string };
@@ -117,7 +118,8 @@ createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       myActor: async () => {
         // This return type is now type-safe
         return {

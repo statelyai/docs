@@ -98,7 +98,8 @@ const pingPongMachine = createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       pongActor: () => (sendBack, onReceive) => {
         // Whenever parent sends 'PING',
         // send parent 'PONG' event
@@ -170,7 +171,8 @@ const machine = createMachine(
     },
   },
   {
-    actors: {
+    // `actors` in v5
+    services: {
       eventHandler: () => (sendBack, onReceive) => {
         onReceive((event) => {
           // Handle the forwarded event here
