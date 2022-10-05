@@ -140,7 +140,22 @@ const sidebars = {
       type: 'category',
       label: 'Tools',
       items: [
-        'tools/visual-editor',
+        {
+          type: 'category',
+          label: 'Stately Studio',
+          items: [
+            {
+              type: 'doc',
+              label: 'About',
+              id: 'tools/studio',
+            },
+            {
+              type: 'doc',
+              label: 'Tutorials',
+              id: 'tools/tutorials',
+            },
+          ],
+        },
         'tools/developer-tools',
         'packages/xstate-cli',
         'tools/visualizer',
