@@ -38,10 +38,8 @@ The rounded rectangle boxes are states. These states are “finite”; the machi
 
 1. Select your machine or an existing state.
 2. Create a new state inside your machine or existing state:
-    1. Use the **+ State** button that appears above the selected state, or:
-    2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-
-If a state already contains child states, you can double-click inside the state to create another child state.
+    - Use the **+ State** button that appears above the selected state, or:
+    - Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
 
 ## Initial state
 
@@ -57,15 +55,15 @@ In our video player, paused is the initial state because the video player is pau
 
 Each new machine or parent state will set the first new state as its initial state by default.
 
-To change the initial state:
+To change the initial state, first select the parent state or parent machine. Then…
 
-1. Select the parent state or parent machine.
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **Mark as initial state** from the **quick actions** menu.
-    2. Using the **State details** panel:
-        1. Open the **State details** panel from the right tool menu.
-        2. Choose the new initial state from the **initial state** dropdown menu.
+#### Using the **quick actions** menu:
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Mark as initial state** from the **quick actions** menu.
+
+#### Using the **State details** panel:
+1. Open the **State details** panel from the right tool menu.
+2. Choose the new initial state from the **initial state** dropdown menu.
 
 ## Final states
 
@@ -79,14 +77,18 @@ In the video player below, *Stopped* is the final child state in the *Opened*
 
 ### How to make a state a final state
 
-1. Select the state you want to set as the final state
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **Final** from the **Type** options.
-    2. Using the **State details** panel:
-        1. Select the state you want to set as the final state.
-        2. Open the **State details** panel from the right tool menu.
-        3. Choose **Final** from the **Type** dropdown menu.
+First, select the state you want to set as the final state.
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Final** from the **Type** options.
+
+#### Using the **State details** panel
+
+1. Select the state you want to set as the final state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **Final** from the **Type** dropdown menu.
 
 ## Transitions and events
 
@@ -107,16 +109,20 @@ In the video player machine above, the events are *PLAY* and *PAUSE*. The *P
 
 ### How to change the source and target states for a transition or event
 
+First select the transition or event you want to change. Then…
+
+#### Using the **Transition details** panel
+
+1. Select the transition or event you wish to change.
+2. Open the **Transition details** panel from the right tool menu.
+3. Choose a new source state from the **Source** dropdown options.
+4. Choose a new target state from the **Target** dropdown options.
+
+#### Dragging the transition handles
+
 1. Select the transition or event you want to change.
-    1. Using the **Transition details** panel:
-        1. Select the transition or event you wish to change.
-        2. Open the **Transition details** panel from the right tool menu.
-        3. Choose a new source state from the **Source** dropdown options.
-        4. Choose a new target state from the **Target** dropdown options.
-    2. Dragging the transition handles:
-        1. Select the transition or event you want to change.
-        2. Drag the transition’s handle connected to the source state to connect it to a new source state.
-        3. Drag the transition’s handle connected to the target state to connect it to a new target state.
+2. Drag the transition’s handle connected to the source state to connect it to a new source state.
+3. Drag the transition’s handle connected to the target state to connect it to a new target state.
 
 ### How to switch the source and target states for a transition or event
 
@@ -136,16 +142,18 @@ In the video player above, the *Opened* state is a parent state to the *Playi
 
 ### How to add a child state
 
-1. Select your machine or an existing state.
-2. Create a new state inside your machine or existing state:
-    1. Use the **+ State** button that appears above the selected state, or:
+First, select your machine or an existing state where you want to create the child state. Then…
+
+- Use the **+ State** button that appears above the selected state to create a nested child state. Or…
+- If a state already contains child states, you can double-click inside the parent state to create another child state.
 
 ### How to change the parent state of a child state
 
-1. Using the **State details** panel:
-    1. Select the child state you want to reparent.
-    2. Open the **State details** panel from the right tool menu.
-    3. Choose your desired new parent from the **Parent** dropdown menu.
+Using the **State details** panel:
+
+1. Select the child state you want to reparent.
+2. Open the **State details** panel from the right tool menu.
+3. Choose your desired new parent from the **Parent** dropdown menu.
 
 ## Parallel states
 
@@ -157,15 +165,20 @@ A dashed line borders each region.
 
 ### How to make a state a parallel state
 
-1. Select the first state you want to set as a parallel state
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **Parallel** from the **Type** options.
-    2. Using the **State details** panel:
-        1. Select the state you want to set as the final state.
-        2. Open the **State details** panel from the right tool menu.
-        3. Choose **Parallel** from the **Type** dropdown menu.
-2. Other child states that share the same parent state will be automatically set as parallel states.
+First, select the first state you want to set as a parallel state. Then…
+
+#### Using the **quick actions** menu:
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Parallel** from the **Type** options.
+
+#### Using the **State details** panel:
+
+1. Select the state you want to set as the final state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **Parallel** from the **Type** dropdown menu.
+
+Other child states that share the same parent state will be automatically set as parallel states.
 
 ## History states
 
@@ -180,15 +193,19 @@ The history state can be deep or shallow:
 
 ### How to make a state a history state
 
-1. Select the state you want to set as the history state.
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **History** from the **Type** options.
-    2. Using the **State details** panel:
-        1. Select the state you want to set as the final state.
-        2. Open the **State details** panel from the right tool menu.
-        3. Choose **History** from the **Type** dropdown menu.
-        4. Use the **History** toggle that appears when the state has a **History Type** to choose between **Shallow** and **Deep** history options.
+First, select the state you want to set as the history state. Then…
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **History** from the **Type** options.
+
+#### Using the **State details** panel
+
+1. Select the state you want to set as the final state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **History** from the **Type** dropdown menu.
+4. Use the **History** toggle that appears when the state has a **History Type** to choose between **Shallow** and **Deep** history options.
 
 ## Guards
 
@@ -200,18 +217,25 @@ Guards are numbered in the order they are checked and labeled with “if” or �
 
 ### How to add a guard to an event
 
-1. Select the event to which you want to add a guard.
-    1. Using the **+ Transition** button:
-        1. Use the **+ Transition** button to replace your event with a guarded transition.
-        2. Name your guard by replacing the **New guard** text inside the event.
-    2. Using the **quick actions** menu:
-        1. Right-click the event to bring up the **quick actions** menu.
-        2. Choose **Add guard** from the options in the **quick actions** menu to replace your event with a guarded transition.
-        3. Name your guard by replacing the **New guard** text inside the event.
-    3. Using the **Transition details** panel:
-        1. Open the **Transition details** panel from the right tool menu.
-        2. Use the **Guard** text input to name your guard and replace your event with a guarded transition.
-2. Use the **+ Transition** button to create more guards on the same transition.
+First, select the event where you want to add a guard. Then…
+
+#### Using the **+ Transition** button
+
+1. Use the **+ Transition** button to replace your event with a guarded transition.
+2. Name your guard by replacing the **New guard** text inside the event.
+
+#### Using the **quick actions** menu
+
+1. Right-click the event to bring up the **quick actions** menu.
+2. Choose **Add guard** from the options in the **quick actions** menu to replace your event with a guarded transition.
+3. Name your guard by replacing the **New guard** text inside the event.
+
+#### Using the **Transition details** panel
+
+1. Open the **Transition details** panel from the right tool menu.
+2. Use the **Guard** text input to name your guard and replace your event with a guarded transition.
+
+Use the **+ Transition** button to create more guards on the same transition.
 
 ## Eventless (always) transitions
 
@@ -223,13 +247,16 @@ Eventless transitions are labeled “always” and often referred to as “alway
 
 ### How to make an event into an eventless transition
 
-1. Select the event you want to replace with an eventless transition.
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **Always** from the **Event type** options.
-    2. Using the **Transition details** panel:
-        1. Open the **Transition details** panel from the right tool menu.
-        2. Choose **Always** from the **Event type** dropdown menu.
+First, select the event you want to replace with an eventless transition. Then…
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Always** from the **Event type** options.
+
+#### Using the **Transition details** panel
+1. Open the **Transition details** panel from the right tool menu.
+2. Choose **Always** from the **Event type** dropdown menu.
 
 ## Delayed (after) transitions
 
@@ -243,15 +270,19 @@ In a video player, we might want the video to be *Closed* out of fullscreen mo
 
 ### How to make an event into a delayed transition
 
-1. Select the event you want to replace with a delayed transition.
-    1. Using the **quick actions** menu:
-        1. Right-click the event to bring up the **quick actions** menu.
-        2. Choose **After** from the **Event type** options.
-        3. Use the **Transition details** panel to change the delay time.
-    2. Using the **Transition details** panel:
-        1. Open the **Transition details** panel from the right tool menu.
-        2. Choose **After** from the **Event type** dropdown menu.
-        3. Specify the delay time in milliseconds using the **Delay** text input.
+First, select the event you want to replace with a delayed transition. Then…
+
+#### Using the **quick actions** menu
+
+1. Right-click the event to bring up the **quick actions** menu.
+2. Choose **After** from the **Event type** options.
+3. Use the **Transition details** panel to change the delay time.
+
+#### Using the **Transition details** panel
+
+1. Open the **Transition details** panel from the right tool menu.
+2. Choose **After** from the **Event type** dropdown menu.
+3. Specify the delay time in milliseconds using the **Delay** text input.
 
 Delayed transitions are handy if you need to build timeouts and intervals into your application logic.
 
@@ -268,13 +299,17 @@ In the video player above, when the video player reaches the *Stopped* state, 
 1. Check the final child state has its state type set to **Final**. If the parent state doesn’t contain a final child state, the state done event type will not be available for transitions from the parent state.
 2. Select the parent state.
 3. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-4. Select the newly-created event.
-    1. Using the **quick actions** menu:
-        1. Right-click the state to bring up the **quick actions** menu.
-        2. Choose **State done event** from the **Event type** options.
-    2. Using the **Transition details** panel:
-        1. Open the **Transition details** panel from the right tool menu.
-        2. Choose **State done event** from the **Event type** dropdown menu.
+4. Select the newly-created event. Then…
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **State done event** from the **Event type** options.
+
+#### Using the **Transition details** panel
+
+1. Open the **Transition details** panel from the right tool menu.
+2. Choose **State done event** from the **Event type** dropdown menu.
 
 ## Self-transitions
 
@@ -286,12 +321,15 @@ Self-transitions can be used to restart a state.
 
 ### How to make an event into a self-transition
 
-1. Using the **quick actions** menu:
-    1. Right-click the event to bring up the **quick actions** menu.
-    2. Choose **Make self transition** from the **quick actions** menu.
-    3. Dragging the transition arrow:
-        1. Select the event.
-        2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
+#### Using the **quick actions** menu
+
+1. Right-click the event to bring up the **quick actions** menu.
+2. Choose **Make self transition** from the **quick actions** menu.
+
+#### Dragging the transition arrow
+
+1. Select the event.
+2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
 
 ## Entry & exit actions
 
@@ -354,11 +392,13 @@ An **invoke done event** transitions from a state once its invocation has been
 
 1. Select the state with an invoked actor where you want to add an invoke done event.
 2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-    1. The newly-created event will automatically be created as an invoke done event.
-    2. You can also change an existing event into an invoked done event using the **quick actions** menu:
-        1. Select the existing event you wish to change into an invoke done event.
-        2. Right-click the state to bring up the **quick actions** menu.
-        3. Choose **Invocation done event** from the **Event type** options.
+3. The newly-created event will automatically be created as an invoke done event.
+
+You can also change an existing event into an invoked done event using the **quick actions** menu:
+
+1. Select the existing event you wish to change into an invoke done event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Invocation done event** from the **Event type** options.
 
 ## Invoke error events
 
@@ -368,12 +408,14 @@ An **invoke error event** transitions from a state when an error occurs in its
 
 1. Select the state with an invoked actor where you want to add an invoke error event.
 2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-    1. The newly-created event will automatically be created as an invoke done event.
-    2. When an invoke done event already exists from that state, creating another event will automatically create that event as an invoke error event.
-    3. You can also change an existing event into an invoked error event using the **quick actions** menu:
-        1. Select the existing event you wish to change into an invoke error event.
-        2. Right-click the state to bring up the **quick actions** menu.
-        3. Choose **Invocation error event** from the **Event type** options.
+3. The newly-created event will automatically be created as an invoke done event.
+4. When an invoke done event already exists from that state, creating another event will automatically create that event as an invoke error event.
+
+You can also change an existing event into an invoked error event using the **quick actions** menu:
+
+1. Select the existing event you wish to change into an invoke error event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Invocation error event** from the **Event type** options.
 
 [TODO: Why you might use invoke error events with example]
 
