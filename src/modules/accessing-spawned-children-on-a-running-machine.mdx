@@ -1,5 +1,5 @@
 ---
-deps: ["spawning-machines", "intro-to-state-api"]
+deps: ['spawning-machines', 'intro-to-state-api']
 group: power-users
 status: in-progress # in-progress, complete
 needs: content # content, tech-review, copy-review
@@ -27,7 +27,7 @@ To do this, set `{ sync: true }` as an option to `spawn(...)`:
 This will automatically subscribe the machine to the spawned child machine's state, which is kept updated and can be accessed via `getSnapshot()`:
 
 ```js
-someService.onTransition((state) => {
+someActor.onTransition((state) => {
   const { someRef } = state.context;
 
   console.log(someRef.getSnapshot());
@@ -39,7 +39,7 @@ someService.onTransition((state) => {
 ```
 
 ```js
-someService.onTransition((state) => {
+someActor.onTransition((state) => {
   const { someRef } = state.context;
 
   console.log(someRef.state);

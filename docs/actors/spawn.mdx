@@ -4,14 +4,14 @@ title: Spawning actors
 
 # Spawning actors
 
-<!-- deps: ["assign-action", "machine-services"] -->
+<!-- deps: ["assign-action", "machine-actors"] -->
 
-Sometimes invoking services may not be flexible enough for your needs. In such cases, you might want to:
+Sometimes invoking actors may not be flexible enough for your needs. In such cases, you might want to:
 
 - Invoke child machines that last across several states when machines invoked with `invoke` are tied to that state
-- Invoke a dynamic number of services
+- Invoke a dynamic number of actors
 
-You can use a powerful tool called `spawn` to run these services in these cases. Services created with spawn are **spawning actors**, and services created with invoke are **invoking services**.
+You can use a powerful tool called `spawn` to run these actors in these cases. Actors created with spawn are **spawning actors**, and actors created with invoke are **invoking actors**.
 
 Spawning actors puts a reference to the machine in `context`, which means that you must always assign a spawned actor to context via `assign`:
 
@@ -161,7 +161,7 @@ Spawned callbacks behave exactly the same as invoked callbacks but with all the 
 
 ## Spawning observables
 
-<!-- deps: [spawning-machines, "observable-services"] -->
+<!-- deps: [spawning-machines, "observable-actors"] -->
 
 Just like invoking observables, observables can be spawned as actors:
 

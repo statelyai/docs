@@ -1,12 +1,12 @@
 ---
-title: Actions vs. services
+title: Actions vs. actors
 ---
 
-# Actions vs. services
+# Actions vs. actors
 
-<!-- deps: ["services", "actions", "promise-services"] -->
+<!-- deps: ["actors", "actions", "promise-actors"] -->
 
-Sometimes it’s unclear whether you should use an action or a service. Both appear to do similar things, executing side effects. Let’s break down the differences:
+Sometimes it’s unclear whether you should use an action or an actor. Both appear to do similar things, executing side effects. Let’s break down the differences:
 
 Actions are “fire-and-forget”; as soon as their execution starts, the statechart running the actions forgets about them. If you specify an action as `async`, **the action won’t be awaited before moving to the next state**. Below is an example:
 
@@ -55,7 +55,7 @@ Instead, the sequence works like this:
 2. We execute the `submitForm` action and immediately transition to the `submitted` state.
 3. The result of the `submitForm` action is ignored.
 
-To handle `submitForm` properly, we need to use a service:
+To handle `submitForm` properly, we need to use an actor:
 
 ```ts twoslash {13, 17-27}
 const createUser = async (userName: string) => {};
@@ -92,6 +92,7 @@ const machine = createMachine(
     },
   },
   {
+    // `actors` in v5
     services: {
       submitForm: async (context) => {
         await createUser(context.userName);
@@ -104,8 +105,8 @@ const machine = createMachine(
 Now, the sequence in the example above is:
 
 1. In the `collectingFormDetails` state, we receive the `SUBMIT` event.
-2. We go to the `submitting` state, where we execute the `submitForm` service.
-3. When the `submitForm` service is done, we go to the `submitted` state.
-4. If the `submitForm` service errors, we go to the `errored` state.
+2. We go to the `submitting` state, where we execute the `submitForm` actor.
+3. When the `submitForm` actor is done, we go to the `submitted` state.
+4. If the `submitForm` actor errors, we go to the `errored` state.
 
-The main difference between actions and services is that **actions can’t communicate back to the machine. Services can.**
+The main difference between actions and actors is that **actions can’t communicate back to the machine. Actors can.**
