@@ -1,5 +1,5 @@
 ---
-deps: ["states"]
+deps: ['states']
 group: reference
 status: in-progress # in-progress, complete
 needs: content # content, tech-review, copy-review
@@ -14,9 +14,9 @@ const lightMachine = createMachine({
   states: {
     green: {
       /* ... */
-    }
+    },
     // ...
-  }
+  },
 });
 
 console.log(lightMachine.initialState);
@@ -89,7 +89,7 @@ console.log(nextState.changed);
 // => true
 
 const unchangedState = lightMachine.transition(nextState, {
-  type: 'UNKNOWN_EVENT'
+  type: 'UNKNOWN_EVENT',
 });
 
 console.log(unchangedState.changed);
@@ -112,7 +112,7 @@ The `state.toStrings()` method is useful for representing the current state in s
 
 ### `state.children`
 
-`state.children` is an object mapping spawned service/actor IDs to their instances. See [📖 Referencing Services](./communication.md#referencing-services) for more details.
+`state.children` is an object mapping spawned actor/actor IDs to their instances. See [📖 Referencing Actors](./communication.md#referencing-actors) for more details.
 
 #### Example using `state.children`
 
@@ -121,15 +121,15 @@ const machine = createMachine({
   // ...
   invoke: [
     { id: 'notifier', src: createNotifier },
-    { id: 'logger', src: createLogger }
-  ]
+    { id: 'logger', src: createLogger },
+  ],
   // ...
 });
 
-const service = invoke(machine)
+const actor = invoke(machine)
   .onTransition((state) => {
-    state.children.notifier; // service from createNotifier()
-    state.children.logger; // service from createLogger()
+    state.children.notifier; // actor from createNotifier()
+    state.children.logger; // actor from createLogger()
   })
   .start();
 ```
@@ -145,15 +145,15 @@ const machine = createMachine({
   initial: 'green',
   states: {
     green: {
-      tags: 'go' // single tag
+      tags: 'go', // single tag
     },
     yellow: {
-      tags: 'go'
+      tags: 'go',
     },
     red: {
-      tags: ['stop', 'other'] // multiple tags
-    }
-  }
+      tags: ['stop', 'other'], // multiple tags
+    },
+  },
 });
 ```
 
@@ -176,15 +176,15 @@ const machine = createMachine({
   states: {
     inactive: {
       on: {
-        TOGGLE: 'active'
-      }
+        TOGGLE: 'active',
+      },
     },
     active: {
       on: {
-        DO_SOMETHING: { actions: ['something'] }
-      }
-    }
-  }
+        DO_SOMETHING: { actions: ['something'] },
+      },
+    },
+  },
 });
 
 const inactiveState = machine.initialState;
@@ -195,7 +195,7 @@ inactiveState.can('DO_SOMETHING'); // false
 // Also takes in full event objects:
 inactiveState.can({
   type: 'DO_SOMETHING',
-  data: 42
+  data: 42,
 }); // false
 
 const activeState = machine.transition(inactiveState, 'TOGGLE');
@@ -239,13 +239,13 @@ const stateDefinition =
 const previousState = State.create(stateDefinition);
 ```
 
-You can then interpret the machine from this state by passing the `State` into the `.start(...)` method of the interpreted service:
+You can then interpret the machine from this state by passing the `State` into the `.start(...)` method of the interpreted actor:
 
 ```js
 // ...
 
-// This will start the service at the specified State
-const service = interpret(myMachine).start(previousState);
+// This will start the actor at the specified State
+const actor = interpret(myMachine).start(previousState);
 ```
 
 This will also maintain and restore previous [history states](./history.md) and ensures that `.events` and `.nextEvents` represent the correct values.
@@ -256,6 +256,6 @@ Persisting spawned [actors](./actors.md) isn’t yet supported in XState.
 
 ## Notes
 
-- You should never have to create a `State` instance manually. Treat `State` as a read-only object that _only_ comes from `machine.transition(...)` or `service.onTransition(...)`.
+- You should never have to create a `State` instance manually. Treat `State` as a read-only object that _only_ comes from `machine.transition(...)` or `actor.onTransition(...)`.
 - `state.history` will not retain its history in order to prevent memory leaks. `state.history.history === undefined`. Otherwise, you end up creating a huge linked list and reinventing blockchain, which we don’t care to do.
-  - This behavior may be configurable in future versions.
+- This behavior may be configurable in future versions.

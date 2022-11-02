@@ -138,15 +138,19 @@ const machine = createMachine(
 
 In the example above, `sayHello` will be called when the machine is started.
 
-### Services
+### Actors
 
-Services are used for running long-running processes in XState. Some typical processes might be:
+Actors are entities that have their own state and can send and receive events. Actors are useful for processes like:
 
 - Subscribing to a websocket/DOM listener for updates
 - Invoking a promise and waiting for it to resolve
 - Uploading a file
 
+<<<<<<< HEAD
 We’ll revisit services in more depth later. [Take a fast track to learn more about services](/services/intro).
+=======
+We’ll revisit actors in more depth later. [Take a fast track to learn more about actors](/path-to/actors).
+>>>>>>> mellson/docusaurus-2-2
 
 ### Delays
 
@@ -154,7 +158,7 @@ Delays are used in XState to represent timers and intervals. We’ll revisit del
 
 ## Options API
 
-<!-- deps: ["options-intro", "guards-actions-services-delays-intro"] -->
+<!-- deps: ["options-intro", "guards-actions-actors-delays-intro"] -->
 
 You can specify machine options in several places. Firstly, you can set options inside the machine itself:
 
@@ -168,6 +172,7 @@ const machine = createMachine(
   {
     // Set options here:
     actions: {},
+    // `actors` in v5
     services: {},
     guards: {},
     delays: {},
@@ -186,6 +191,7 @@ const machine = createMachine({});
 
 machine.withConfig({
   actions: {},
+  // `actors` in v5
   services: {},
   guards: {},
   delays: {},

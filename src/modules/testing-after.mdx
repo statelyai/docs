@@ -1,5 +1,5 @@
 ---
-deps: ["after"]
+deps: ['after']
 group: power-users
 status: in-progress # in-progress, complete
 needs: content # content, tech-review, copy-review
@@ -10,13 +10,13 @@ needs: content # content, tech-review, copy-review
 With the XState [interpreter](./interpretation.md), delayed actions will use the native`setTimeout` and `clearTimeout` functions:
 
 ```js
-import { interpret } from "xstate";
+import { interpret } from 'xstate';
 
-const service = interpret(lightDelayMachine).onTransition(
-  (state) => console.log(state.value),
+const actor = interpret(lightDelayMachine).onTransition((state) =>
+  console.log(state.value)
 );
 
-service.start();
+actor.start();
 // => 'green'
 
 // (after 1 second)
@@ -27,19 +27,19 @@ service.start();
 For testing, the XState interpreter provides a `SimulatedClock`:
 
 ```js
-import { interpret } from "xstate";
+import { interpret } from 'xstate';
 // import { SimulatedClock } from 'xstate/lib/interpreter'; // < 4.6.0
-import { SimulatedClock } from "xstate/lib/SimulatedClock"; // >= 4.6.0
+import { SimulatedClock } from 'xstate/lib/SimulatedClock'; // >= 4.6.0
 
-const service = interpret(lightDelayMachine, {
+const actor = interpret(lightDelayMachine, {
   clock: new SimulatedClock(),
 }).onTransition((state) => console.log(state.value));
 
-service.start();
+actor.start();
 // => 'green'
 
 // move the SimulatedClock forward by 1 second
-service.clock.increment(1000);
+actor.clock.increment(1000);
 // => 'yellow'
 ```
 

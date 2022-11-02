@@ -6,7 +6,7 @@ title: Typegen
 
 # Typegen
 
-<!-- deps: ["context-typescript","events-typescript","promise-services"] -->
+<!-- deps: ["context-typescript","events-typescript","promise-actors"] -->
 
 **Warning: This feature is in beta!** Read the section below on known limitations to find out what we’re actively looking to improve.
 
@@ -68,7 +68,7 @@ const machine = createMachine({
 });
 ```
 
-5. Add a second parameter into the `createMachine` call. This second parameter is where you implement the machine’s actions, services, guards and delays.
+5. Add a second parameter into the `createMachine` call. This second parameter is where you implement the machine’s actions, actors, guards and delays.
 
 ```ts
 const machine = createMachine(
@@ -90,13 +90,13 @@ const machine = createMachine(
 );
 ```
 
-Now the events in the options are _strongly typed to the events that cause the action to be triggered_, including actions, guards, services and delays.
+Now the events in the options are _strongly typed to the events that cause the action to be triggered_, including actions, guards, actors and delays.
 
 You’ll also notice that `state.matches`, `tags` and other parts of the machine are now type-safe.
 
-## Typing promise services
+## Typing promise actors
 
-You can use the generated types to specify the return type of promise-based services by using the `services` schema property:
+You can use the generated types to specify the return type of promise-based actors by using the `actors` schema property:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -104,23 +104,25 @@ import { createMachine } from 'xstate';
 createMachine(
   {
     schema: {
+      // `actors` in v5
       services: {} as {
-        myService: {
-          // The data that gets returned from the service
+        myActor: {
+          // The data that gets returned from the actor
           data: { id: string };
         };
       },
     },
     invoke: {
-      src: 'myService',
+      src: 'myActor',
       onDone: {
         actions: 'consoleLogId',
       },
     },
   },
   {
+    // `actors` in v5
     services: {
-      myService: async () => {
+      myActor: async () => {
         // This return type is now type-safe
         return {
           id: '1',
@@ -141,11 +143,11 @@ createMachine(
 
 Below are some recommendations to help you get the most out of using typegen.
 
-### Use named actions, guards, and services
+### Use named actions, guards and actors
 
-We recommend using named actions, guards, and services instead of inline actions, guards and services.
+We recommend using named actions, guards and actors instead of inline actions, guards and actors.
 
-Named actions, services and guards allow for:
+Named actions, actors and guards allow for:
 
 - Better visualization with the names appearing in the statechart
 - Easier-to-understand code
@@ -225,7 +227,7 @@ There are a few known limitations with typegen, which we are working to fix.
 
 ### “Always” transitions and raised events
 
-Typegen might incorrectly annotate actions, services, guards and delays if they are called “in response” to [eventless “always” transitions](/transitions-and-choices/always) or raised events. We are working on fixing this, both in XState and in the typegen.
+Typegen might incorrectly annotate actions, actors, guards and delays if they are called “in response” to always transitions or raised events. We are working on fixing this, both in XState and in the typegen.
 
 ## Config Objects
 

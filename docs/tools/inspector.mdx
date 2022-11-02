@@ -50,7 +50,7 @@ const someMachine = createMachine({});
 import { interpret } from 'xstate';
 import { inspect } from '@xstate/inspect';
 
-const service = interpret(someMachine, {
+const actor = interpret(someMachine, {
   devTools: true,
 }).start();
 ```
@@ -111,11 +111,11 @@ inspector?.disconnect();
 
 You can implement your own inspector by creating a **receiver**. A **receiver** is an actor that receives inspector events from a source, like a parent window or a WebSocket connection:
 
-- `"service.register"`
+- `"actor.register"`
 
   ```ts
   {
-    type: 'service.register';
+    type: 'actor.register';
     machine: AnyStateMachine;
     state: AnyState;
     id: string;
@@ -125,33 +125,33 @@ You can implement your own inspector by creating a **receiver**. A **receiver** 
   }
   ```
 
-- `"service.stop"`
+- `"actor.stop"`
 
   ```ts
   {
-    type: 'service.stop';
+    type: 'actor.stop';
     sessionId: string;
   }
   ```
 
-- `"service.state"`
+- `"actor.state"`
 
   ```ts
   {
-    type: 'service.state';
+    type: 'actor.state';
     state: AnyState;
     sessionId: string;
   }
   ```
 
-- `"service.event"`
+- `"actor.event"`
 
   ```ts
   {
-    type: 'service.event';
+    type: 'actor.event';
     event: SCXML.Event<any>;
-    sessionId: string
-  };
+    sessionId: string;
+  }
   ```
 
 To listen to events from an inspected source, create a receiver with the appropriate `create*Receiver(...)` function; for example:
@@ -162,7 +162,7 @@ import { createWindowReceiver } from '@xstate/inspect';
 const windowReceiver = createWindowReceiver(/* options? */);
 
 windowReceiver.subscribe((event) => {
-  // here, you will receive "service.*" events
+  // here, you will receive "actor.*" events
   console.log(event);
 });
 ```
@@ -172,11 +172,11 @@ You can also send events to the receiver:
 ```js
 // ...
 
-// This will send the event to the inspected service
+// This will send the event to the inspected actor
 windowReceiver.send({
   type: 'xstate.event',
   event: JSON.stringify({ type: 'someEvent' }),
-  service: /* session ID of the service this event is sent to */
+  actor: /* session ID of the actor this event is sent to */
 });
 ```
 
@@ -184,12 +184,12 @@ The typical inspection workflow is as follows:
 
 1. The `inspect(/* ... */)` call on the client opens the inspector. For example, in a separate window or creates a WebSocket connection.
 2. The receiver sends an `"xstate.inspecting"` event to the client.
-3. The client sends `"service.register"` events to the receiver.
+3. The client sends `"actor.register"` events to the receiver.
 4. An inspector listening to the receiver via `receiver.subscribe(...)` registers the machine, `event.machine`, by its `event.sessionId`.
 5. The machine is rendered visually, and its current state, `event.state`, is highlighted
-6. As the service at the source receives events and changes state, it will send the receiver `"service.event"` and `"service.state"` events, respectively.
-7. The inspector can use those events to highlight the current state and keep a log of events sent to that service.
-8. When the service stops, a `"service.stop"` event is sent to the receiver with the `event.sessionId` to identify the stopped service.
+6. As the actor at the source receives events and changes state, it will send the receiver `"actor.event"` and `"actor.state"` events, respectively.
+7. The inspector can use those events to highlight the current state and keep a log of events sent to that actor.
+8. When the actor stops, a `"actor.stop"` event is sent to the receiver with the `event.sessionId` to identify the stopped actor.
 
 ### How do I run the inspector in a NextJS app?
 

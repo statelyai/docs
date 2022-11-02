@@ -1,5 +1,5 @@
 ---
-deps: ["transitions-and-events"]
+deps: ['transitions-and-events']
 group: reference
 status: in-progress # in-progress, complete
 needs: content # content, tech-review, copy-review
@@ -8,29 +8,29 @@ needs: content # content, tech-review, copy-review
 State transitions are defined on state nodes, in the `on` property:
 
 ```js {11,14-16}
-import { createMachine } from "xstate";
+import { createMachine } from 'xstate';
 
 const promiseMachine = createMachine({
-  id: "promise",
-  initial: "pending",
+  id: 'promise',
+  initial: 'pending',
   states: {
     pending: {
       on: {
         // state transition (shorthand)
         // this is equivalent to { target: 'resolved' }
-        RESOLVE: "resolved",
+        RESOLVE: 'resolved',
 
         // state transition (object)
         REJECT: {
-          target: "rejected",
+          target: 'rejected',
         },
       },
     },
     resolved: {
-      type: "final",
+      type: 'final',
     },
     rejected: {
-      type: "final",
+      type: 'final',
     },
   },
 });
@@ -41,7 +41,7 @@ console.log(initialState.value);
 // => 'pending'
 
 const nextState = promiseMachine.transition(initialState, {
-  type: "RESOLVE",
+  type: 'RESOLVE',
 });
 
 console.log(nextState.value);
@@ -68,15 +68,15 @@ In a [machine with parent and child states](/states/parent-and-child-states), tr
 
 ```js {10,21-22,27}
 const wizardMachine = createMachine({
-  id: "wizard",
-  initial: "open",
+  id: 'wizard',
+  initial: 'open',
   states: {
     open: {
-      initial: "step1",
+      initial: 'step1',
       states: {
         step1: {
           on: {
-            NEXT: { target: "step2" },
+            NEXT: { target: 'step2' },
           },
         },
         step2: {
@@ -87,17 +87,17 @@ const wizardMachine = createMachine({
         },
       },
       on: {
-        NEXT: { target: "goodbye" },
-        CLOSE: { target: "closed" },
+        NEXT: { target: 'goodbye' },
+        CLOSE: { target: 'closed' },
       },
     },
     goodbye: {
       on: {
-        CLOSE: { target: "closed" },
+        CLOSE: { target: 'closed' },
       },
     },
     closed: {
-      type: "final",
+      type: 'final',
     },
   },
 });
@@ -108,10 +108,7 @@ const { initialState } = wizardMachine;
 // the NEXT transition defined on 'open.step1'
 // supersedes the NEXT transition defined
 // on the parent 'open' state
-const nextStepState = wizardMachine.transition(
-  initialState,
-  { type: "NEXT" },
-);
+const nextStepState = wizardMachine.transition(initialState, { type: 'NEXT' });
 console.log(nextStepState.value);
 // => { open: 'step2' }
 
@@ -119,7 +116,7 @@ console.log(nextStepState.value);
 // so the event is passed up to the parent
 // 'open' state, where it is defined
 const closedState = wizardMachine.transition(initialState, {
-  type: "CLOSE",
+  type: 'CLOSE',
 });
 console.log(closedState.value);
 // => 'closed'
@@ -171,8 +168,8 @@ A transient transition is a transition that is enabled by a [null event](./event
 ```js {14-17}
 const gameMachine = createMachine(
   {
-    id: "game",
-    initial: "playing",
+    id: 'game',
+    initial: 'playing',
     context: {
       points: 0,
     },
@@ -182,9 +179,9 @@ const gameMachine = createMachine(
           // Transient transition
           // Will transition to either 'win' or 'lose' immediately upon
           // (re)entering 'playing' state if the condition is met.
-          "": [
-            { target: "win", cond: "didPlayerWin" },
-            { target: "lose", cond: "didPlayerLose" },
+          '': [
+            { target: 'win', cond: 'didPlayerWin' },
+            { target: 'lose', cond: 'didPlayerLose' },
           ],
           // Self-transition
           AWARD_POINTS: {
@@ -194,8 +191,8 @@ const gameMachine = createMachine(
           },
         },
       },
-      win: { type: "final" },
-      lose: { type: "final" },
+      win: { type: 'final' },
+      lose: { type: 'final' },
     },
   },
   {
@@ -209,10 +206,10 @@ const gameMachine = createMachine(
         return context.points < 0;
       },
     },
-  },
+  }
 );
 
-const gameService = interpret(gameMachine)
+const gameActor = interpret(gameMachine)
   .onTransition((state) => console.log(state.value))
   .start();
 
@@ -223,7 +220,7 @@ const gameService = interpret(gameMachine)
 // When 'AWARD_POINTS' is sent, a self-transition to 'PLAYING' occurs.
 // The transient transition to 'win' is taken because the 'didPlayerWin'
 // condition is satisfied.
-gameService.send("AWARD_POINTS");
+gameActor.send('AWARD_POINTS');
 // => 'win'
 ```
 
@@ -252,8 +249,8 @@ For example, we can model that telemetry can be logged for all events except whe
 
 ```js {15}
 const formMachine = createMachine({
-  id: "form",
-  initial: "firstPage",
+  id: 'form',
+  initial: 'firstPage',
   states: {
     firstPage: {
       /* ... */
@@ -271,7 +268,7 @@ const formMachine = createMachine({
   },
   on: {
     LOG: {
-      actions: "logTelemetry",
+      actions: 'logTelemetry',
     },
   },
 });
