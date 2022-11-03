@@ -5,17 +5,24 @@
  */
 
 @font-face {
-  font-family: 'TTCommons';
-  src: url('/ttcommons.woff2') format('woff2');
+  font-family: 'Inter';
+  src: url('/inter-regular.woff2') format('woff2');
   font-display: swap;
   font-weight: 100 1000;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/inter-italic.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 100 1000;
+  font-style: italic;
 }
 
 html, body {
-  font-weight: 450;
-  font-variation-settings: 'wght' 450;
-  /* fix variable fonts all being italic in Safari */
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-normal);
+  letter-spacing: -0.019;
 }
 
 /* Stately color variables */
@@ -281,16 +288,15 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-font-family-base: 'TTCommons', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  --ifm-font-family-base: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
   --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --ifm-font-size-base: 112%; 
-  --ifm-line-height-base: 1.5; 
-  --ifm-code-font-size: 95%;
+  --ifm-font-size-base: 110%; 
+  --ifm-line-height-base: 1.45; 
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
   --ifm-code-background: var(--st-code-highlight-background); 
-  --ifm-code-font-size: 90%; 
+  --ifm-code-font-size: 100%; 
   --ifm-code-padding-horizontal: 0.1rem; 
   --ifm-code-padding-vertical: 0.1rem; 
 
@@ -569,35 +575,33 @@ html pre.shiki .copy-button {
 /* Specific font-variation-settings for web font support */
 
 :root {
-  --ifm-font-weight-light: 420; 
-  --ifm-font-weight-normal: 450; 
-  --ifm-font-weight-semibold: 500; 
-  --ifm-font-weight-bold: 600;
+  --ifm-font-weight-light: 450; 
+  --ifm-font-weight-normal: 470; 
+  --ifm-font-weight-semibold: 550; 
+  --ifm-font-weight-bold: 700;
 }
 
 .text--light { 
-  font-variation-settings: 'wght' var(--ifm-font-weight-light);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-light);
 }
 .text--normal { 
-  font-variation-settings: 'wght' var(--ifm-font-weight-normal);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-normal);
 }
-h1, h2, h3, h4, h5, h6, .text--semibold { 
-  font-variation-settings: 'wght' var(--ifm-font-weight-semibold);
-  font-variation-settings: 'slnt' 0;
+.text--semibold { 
+  font-weight: var(--ifm-font-weight-semibold);
+}
+h1, h2, h3, h4, h5, h6, .text--bold { 
+  font-weight: var(--ifm-font-weight-bold);
 }
 .text--bold, strong, b {
   font-synthesis: none;
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
-  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
-  font-variation-settings: 'slnt' 0;
 }
 
 .text--italic, em, i {
   font-synthesis: none;
-  font-variation-settings: 'slnt' 10;
+  font-style: italic;
 }
 
 /* Sub lists */
@@ -771,8 +775,7 @@ html [class*=toggleButton_node_modules] {
 .breadcrumbs__item--active .breadcrumbs__link {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
-  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-bold);
 }
 
 .breadcrumbs__item:not(:last-child):after {
@@ -792,8 +795,7 @@ html [class*=toggleButton_node_modules] {
   color: var(--st-text-link);
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
-  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-bold);
 }
 
 .table-of-contents__link:hover {
@@ -862,8 +864,7 @@ html [class*=toggleButton_node_modules] {
   color: var(--ifm-color-emphasis-0);
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
-  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-bold);
 }
 
 .menu__link:hover { 
@@ -996,8 +997,7 @@ html[data-theme=dark] .footer__col:nth-of-type(1) .footer__title {
 .footer__title {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
-  font-variation-settings: 'wght' var(--ifm-font-weight-bold);
-  font-variation-settings: 'slnt' 0;
+  font-weight: var(--ifm-font-weight-bold);
 }
 
 .footer__links {
