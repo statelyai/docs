@@ -4,9 +4,9 @@ require('dotenv').config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'XState Docs',
+  title: 'Stately Docs',
   tagline:
-    'Documentation for XState: State Machines and Statecharts for the Modern Web',
+    'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately-docs.vercel.app',
   baseUrl: '/',
   onBrokenLinks: 'warn',
@@ -59,9 +59,9 @@ const config = {
       navbar: {
         title: '',
         logo: {
-          alt: 'XState',
-          src: '/xstate-logo-black.svg',
-          srcDark: '/xstate-logo-white-nobg.svg',
+          alt: 'Stately',
+          src: '/logo-black.svg',
+          srcDark: '/logo-white-nobg.svg',
         },
         items: [
           {
