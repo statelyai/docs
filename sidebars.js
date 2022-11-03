@@ -26,11 +26,18 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Getting Started',
-      collapsed: false,
+      label: 'Stately Studio',
       items: [
-        'getting-started/installation',
-        'glossary'
+        {
+          type: 'doc',
+          label: 'About',
+          id: 'tools/studio',
+        },
+        {
+          type: 'doc',
+          label: 'Tutorials',
+          id: 'tools/tutorials',
+        },
       ],
     },
     {
@@ -134,57 +141,41 @@ const sidebars = {
           label: 'Advanced Topics',
           items: ['advanced/react-patterns', 'advanced/scxml'],
         },
+        {
+          type: 'doc',
+          id: 'glossary',
+        },
       ],
     },
     {
       type: 'category',
-      label: 'Tools',
+      label: 'XState',
       items: [
-        {
-          type: 'category',
-          label: 'Stately Studio',
-          items: [
-            {
-              type: 'doc',
-              label: 'About',
-              id: 'tools/studio',
-            },
-            {
-              type: 'doc',
-              label: 'Tutorials',
-              id: 'tools/tutorials',
-            },
-          ],
-        },
+        'getting-started/installation',
         'tools/developer-tools',
+        'templates',
         'packages/xstate-cli',
+        'packages/xstate-fsm',
+        'packages/xstate-graph',
+        'packages/xstate-test',
+        'packages/xstate-immer',
+        'packages/xstate-react',
+        'packages/xstate-svelte',
+        'packages/xstate-vue',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Other Stately tools',
+      items: [
         'tools/visualizer',
-        'tools/inspector',
+        'tools/inspector'
       ],
     },
     {
       type: 'category',
       label: 'Templates',
       items: ['templates'],
-    },
-    {
-      type: 'category',
-      label: 'XState add-ons',
-      items: [
-        'packages/xstate-fsm',
-        'packages/xstate-graph',
-        'packages/xstate-test',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Integrations',
-      items: [
-        'packages/xstate-immer',
-        'packages/xstate-react',
-        'packages/xstate-svelte',
-        'packages/xstate-vue',
-      ],
     },
     {
       type: 'category',
