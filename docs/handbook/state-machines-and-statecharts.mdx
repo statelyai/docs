@@ -1,0 +1,99 @@
+---
+title: What are state machines and statecharts?
+---
+
+State machines help us model how a process goes from state to state when an event occurs.
+
+State machines are useful in software development because they help us capture all the states, events and transitions between them. Using state machines makes it easier to find impossible states and spot undesirable transitions.
+
+State machines model your application logic. Below is the logic for a video player. When the video is Played, it is opened into fullscreen mode. When the video is stopped, it closes out of fullscreen mode. When the video player is in fullscreen mode, it can be _Playing_ or _Paused_.
+
+<!-- TODO: Add image for above -->
+
+## What is a statechart?
+
+Statecharts are fancy state machines used to model more complex logic.
+
+Statecharts are a visual extension to state machines that use boxes and arrows, much like flowcharts and sequence diagrams. Statecharts add extra features not available in ordinary state machines, including hierarchy (parent states), concurrency (parallel states) and communication (actors).
+
+When you make a state machine in the Stately Studio, it’s also a statechart!
+
+## States
+
+A state describes the machine’s status or mode, which could be as simple as *Asleep* and *Awake*. A state machine can only be in one state at a time.
+
+<!-- no alt because the image is already described in the surrounding text -->
+
+![](/asleep-awake.svg)
+
+A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
+
+<!-- TODO: -->
+
+:::tip
+
+### States in the Stately Studio
+
+In the Stately Studio, the rounded rectangle boxes are states.
+
+[How to create states in the Stately Studio](#).
+
+:::
+
+### Initial state
+
+When a state machine starts, it enters the **initial state** first. A machine can only have one top-level initial state; if there were multiple initial states, the machine wouldn’t know where to start!
+
+In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
+
+<!-- no alt because the image is already described in the surrounding text -->
+
+![](/initial-state.svg)
+
+<!-- TODO: -->
+
+:::tip
+
+### Initial states in the Stately Studio
+
+In the Stately Studio, the filled circle with an arrow icon represents the initial state.
+
+[How to create initial states in the Stately Studio](#).
+
+:::
+
+
+## Events and transitions
+
+A machine moves from state to state through **transitions**. Transitions are caused by events; when an event happens, the machine transitions to the next state. The dog goes between **asleep** and **awake** through the **wake up** and **fall asleep** events.
+
+Transitions are “deterministic”; each combination of state and event always points to the same next state. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
+
+<!-- no alt because the image is already described in the surrounding text -->
+
+![](/transitions-events.svg)
+
+With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
+
+<!-- TODO: -->
+
+:::tip
+
+### Events and transitions in the Stately Studio
+
+In the Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
+[How to create events and transitions in the Stately Studio](#).
+
+:::
+
+<!-- TODO: -->
+
+:::tip
+### XState basics
+
+Looking for the XState basics? [Read the XState basics section](#).
+
+:::
+
+<!-- TODO: write conclusion -->
