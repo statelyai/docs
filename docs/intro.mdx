@@ -32,11 +32,52 @@ XState is a JavaScript library for [state machines and statecharts](#why-statech
 - [Read our handbook to learn more about state machines and statecharts](/handbook/state-machines-and-statecharts).
 - [Use a template](/templates) for your favorite framework, or go framework-free.
 
+:::tip Here’s a tip
 
-:::caution
+Admonitions are tricky.
 
-## Want docs for XState v4?
+:::
+
+
+:::xstate Want docs for XState v4?
 
 [Check out the previous version of our docs](https://xstate.js.org/docs), including XState v4-specific documentation.
+
+:::
+
+:::studio Events and transitions in the Stately Studio
+
+In the Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
+[How to create events and transitions in the Stately Studio](#).
+
+:::
+
+:::typescript Context in TypeScript
+
+For proper type inference, add the context type to the schema property of the machine:
+
+```ts
+import { createMachine } from 'xstate';
+
+interface CounterContext {
+  count: number;
+  user?: {
+    name: string;
+  };
+}
+
+const machine = createMachine({
+  schema: {
+    context: {} as CounterContext
+  },
+  // ...
+  context: {
+    count: 0,
+    user: undefined
+  }
+  // ...
+});
+```
 
 :::

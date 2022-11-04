@@ -38,6 +38,10 @@ const config = {
 
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
+          admonitions: {
+            tag: ':::',
+            keywords: ['note', 'tip', 'info', 'caution', 'danger', 'typescript', 'xstate', 'studio'],
+          },
         },
         blog: false,
         theme: {
@@ -195,7 +199,7 @@ const config = {
       colorMode: {
         disableSwitch: false,
         respectPrefersColorScheme: true,
-      },
+      }
     }),
 };
 
