@@ -42,17 +42,6 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Handbook',
-      collapsed: false,
-      items: [
-        {
-          type: 'doc',
-          id: 'glossary',
-        },
-      ],
-    },
-    {
-      type: 'category',
       label: 'XState',
       items: [
         'xstate/installation',
@@ -176,6 +165,10 @@ const sidebars = {
       type: 'category',
       label: 'Examples',
       items: ['examples/intro'],
+    },
+    {
+      type: 'doc',
+      id: 'glossary',
     },
   ],
 };
