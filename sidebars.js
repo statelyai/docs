@@ -75,6 +75,11 @@ const sidebars = {
       id: 'projects-and-teams',
     },
     {
+      type: 'doc', 
+      label:'Discover machines',
+      id: 'discover',
+    },
+    {
       type: 'category',
       label: 'XState',
       items: [
