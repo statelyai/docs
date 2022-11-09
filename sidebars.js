@@ -20,25 +20,59 @@ const sidebars = {
 
   tutorialSidebar: [
     {
-      type: 'link',
-      label: 'Home',
-      href: '/',
+      type: 'doc',
+      label: 'Studio overview',
+      id: 'studio',
+    },
+    {
+      type: 'doc', 
+      label:'Basics',
+      id: 'state-machines-and-statecharts',
     },
     {
       type: 'category',
-      label: 'Stately Studio',
+      label: 'States',
       items: [
-        {
-          type: 'doc',
-          label: 'About',
-          id: 'tools/studio',
-        },
-        {
-          type: 'doc',
-          label: 'Tutorials',
-          id: 'tools/tutorials',
-        },
-      ],
+        'states/states',
+        'states/initial-states',
+        'states/parent-states',
+        'states/parallel-states',
+        'states/history-states'
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Transitions and events',
+      items: [
+        'transitions-and-events/transitions-and-events',
+        'transitions-and-events/guards',
+        'transitions-and-events/eventless-transitions',
+        'transitions-and-events/delayed-transitions',
+        'transitions-and-events/self-transitions',
+        'transitions-and-events/state-done-events',
+        'transitions-and-events/invoke-done-events',
+        'transitions-and-events/invoke-error-events'
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Actions and actors',
+      items: [
+        'actions-and-actors/entry-and-exit-actions',
+        'actions-and-actors/actors',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Modeling',
+      items: [
+        'descriptions',
+      ]
+    },
+    {
+      type: 'doc', 
+      label:'Projects and teams',
+      id: 'projects-and-teams',
     },
     {
       type: 'category',

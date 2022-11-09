@@ -1,0 +1,29 @@
+---
+title: Entry & exit actions
+---
+
+While the statechart is running, it can execute other effects called actions.
+
+An action can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+
+You can fire multiple entry and exit actions on a state. Final states cannot have exit actions.
+
+[TODO: Why you might use entry and exit actions with examples.]
+
+### How to add an entry action to a state
+
+1. Select the state you want to have an entry action.
+2. Open the **State details** panel from the right tool menu.
+3. Use the **+** icon alongside the **Entry actions** to add a new action.
+4. Use the **Custom** tab under **Entry actions** to input the **type** for the entry action.
+5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
+6. Save the entry action using the **Save** button.
+
+### How to add an exit action to a state
+
+1. Select the state you want to have an exit action.
+2. Open the **State details** panel from the right tool menu.
+3. Use the **+** icon alongside the **Exit actions** to add a new action.
+4. Use the **Custom** tab under **Exit actions** to input the **type** for the exit action.
+5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
+6. Save the entry action using the **Save** button.

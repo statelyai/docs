@@ -1,0 +1,26 @@
+---
+title: Final states
+---
+
+When a machine reaches the final state, it can no longer receive any events, and anything running inside it is canceled and cleaned up. The box with a surrounding border icon represents the final state.
+
+A machine can have multiple final states or no final states.
+
+In the video player below, *Stopped* is the final child state in the *Opened* state. When the video player is *Stopped*, the video player moves to its *Closed* state.
+
+[Video player 0, highlighting final state]
+
+### How to make a state a final state
+
+First, select the state you want to set as the final state.
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Final** from the **Type** options.
+
+#### Using the **State details** panel
+
+1. Select the state you want to set as the final state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **Final** from the **Type** dropdown menu.
