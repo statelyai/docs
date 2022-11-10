@@ -90,7 +90,7 @@ const AdmonitionConfigs = {
     ),
   },
   tip: {
-    infimaClassName: 'success',
+    infimaClassName: 'tip',
     iconComponent: TipIcon,
     label: (
       <Translate
@@ -223,10 +223,10 @@ export default function Admonition(props) {
         `alert--${typeConfig.infimaClassName}`,
         styles.admonition,
       )}>
-      <h2 className={styles.admonitionHeading}>
+      <div className={styles.admonitionHeading}>
         <span className={styles.admonitionIcon}>{icon}</span>
-        {titleLabel}
-      </h2>
+        <span>{titleLabel}</span>
+      </div>
       <div className={styles.admonitionContent}>{children}</div>
     </aside>
   );

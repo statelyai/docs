@@ -2,10 +2,20 @@
   margin-bottom: 1em;
 }
 
-.admonitionHeading {
-  font: var(--ifm-heading-font-weight) var(--ifm-h3-font-size) /
-    var(--ifm-heading-line-height) var(--ifm-heading-font-family);
-  margin-bottom: 0.3rem;
+/* visually hide admonition headings as we should be using headings inside the admonition content 
+  the heading text will act as alternative text for the icons
+*/
+.admonitionHeading span + span {
+  margin-bottom: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
 
 .admonitionHeading code {
@@ -13,143 +23,22 @@
 }
 
 .admonitionIcon {
-  display: inline-block;
-  vertical-align: middle;
+  height: 100%;
   margin-right: 0.5em;
+  float: left;
 }
 
 .admonitionIcon svg {
-  display: inline-block;
-  height: 1.4em;
-  width: 1.4em;
+  vertical-align: middle;
+  height: 1em;
+  width: 1em;
   fill: var(--ifm-alert-foreground-color);
+}
+
+.admonitionContent > * {
+  margin-bottom: 0.35em;
 }
 
 .admonitionContent > :last-child {
   margin-bottom: 0;
-}
-
-/* Override default styles */
-
-.alert--primary {
-  --ifm-alert-background-color: var(
-    --ifm-color-primary-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(53, 120, 229, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-primary-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-primary-dark);
-}
-
-.alert--secondary {
-  --ifm-alert-background-color: var(
-    --ifm-color-secondary-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(235, 237, 240, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-secondary-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-secondary-dark);
-}
-
-.alert--success, .alert--typescript, .alert--studio, .alert--xstate {
-  --ifm-alert-background-color: var(
-    --ifm-color-success-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(0, 164, 0, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-success-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-success-dark);
-}
-
-.alert--info {
-  --ifm-alert-background-color: var(
-    --ifm-color-info-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(84, 199, 236, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-info-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-info-dark);
-}
-
-.alert--warning {
-  --ifm-alert-background-color: var(
-    --ifm-color-warning-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(255, 186, 0, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-warning-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-warning-dark);
-}
-
-.alert--danger {
-  --ifm-alert-background-color: var(
-    --ifm-color-danger-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(250, 56, 62, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-danger-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-danger-dark);
-}
-
-.alert {
-  --ifm-code-background: var(--ifm-alert-background-color-highlight);
-  --ifm-link-color: var(--ifm-alert-foreground-color);
-  --ifm-link-hover-color: var(--ifm-alert-foreground-color);
-  --ifm-link-decoration: underline;
-  --ifm-tabs-color: var(--ifm-alert-foreground-color);
-  --ifm-tabs-color-active: var(--ifm-alert-foreground-color);
-  --ifm-tabs-color-active-border: var(--ifm-alert-border-color);
-  background-color: var(--ifm-alert-background-color);
-  border: var(--ifm-alert-border-width) solid var(--ifm-alert-border-color);
-  border-left-width: var(--ifm-alert-border-left-width);
-  border-radius: var(--ifm-alert-border-radius);
-  box-shadow: var(--ifm-alert-shadow);
-  color: var(--ifm-alert-foreground-color);
-  padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
-}
-
-.alert__heading {
-  align-items: center;
-  display: flex;
-  font: bold var(--ifm-h5-font-size) / var(--ifm-heading-line-height)
-  var(--ifm-heading-font-family);
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-}
-
-.alert__icon {
-  display: inline-flex;
-  margin-right: 0.4em;
-}
-
-.alert__icon svg {
-  fill: var(--ifm-alert-foreground-color);
-  stroke: var(--ifm-alert-foreground-color);
-  stroke-width: 0;
-}
-
-.alert .close {
-  color: var(--ifm-alert-foreground-color);
-  margin: calc(var(--ifm-alert-padding-vertical) * -1)
-  calc(var(--ifm-alert-padding-horizontal) * -1) 0 0;
-  opacity: 0.75;
-}
-
-.alert .close:hover,
-.alert .close:focus {
-  opacity: 1;
-}
-
-.alert a {
-  text-decoration-color: var(--ifm-alert-border-color);
-}
-
-.alert a:hover {
-  text-decoration-thickness: 2px;
 }
