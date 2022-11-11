@@ -64,7 +64,7 @@ An **enabled transition** is a transition that will be taken conditionally, base
 - the transition [guard](./guards.md) (`cond` property) is satisfied (evaluates to `true`)
 - it is not superseded by a more specific transition.
 
-In a [hierarchical machine](./hierarchical.md), transitions are prioritized by how deep they are in the tree; deeper transitions are more specific and thus have higher priority. This works similar to how DOM events work: if you click a button, the click event handler directly on the button is more specific than a click event handler on the `window`.
+In a [machine with parent and child states](/states/parent-and-child-states), transitions are prioritized by how deep they are in the tree; deeper transitions are more specific and thus have higher priority. This works similar to how DOM events work: if you click a button, the click event handler directly on the button is more specific than a click event handler on the `window`.
 
 ```js {10,21-22,27}
 const wizardMachine = createMachine({
@@ -159,9 +159,9 @@ See [actions on self-transitions](./actions.md#actions-on-self-transitions) for 
 
 ## Transient Transitions
 
-{/* ::: warning \ */}
+<!-- ::: warning \-->
 The empty string syntax (`{ on: { '': ... } }`) will be deprecated in version 5. The new `always` syntax in version 4.11+ should be preferred. See below section on [eventless transitions](#eventless-always-transitions), which are the same as transient transitions.
-:::{/* end tip/warning \ */}
+:::<!-- end tip/warning \-->
 
 A transient transition is a transition that is enabled by a [null event](./events.md#null-events). In other words, it is a transition that is _immediately_ taken (i.e., without a triggering event) as long as any conditions are met:
 
@@ -274,8 +274,8 @@ const formMachine = createMachine({
 });
 ```
 
-{/* ::: tip \ */}
+<!-- ::: tip \-->
 
-Note that when defining multiple transitions with the same event name in a hierarchical ancestor-descendant chain, the most inner transition will exclusively be taken. In the example above, this is why the `logTelemetry` action defined in the parent `LOG` event won't execute as soon as the machine reaches the `userInfoPage` state.
+Note that when defining multiple transitions with the same event name in a child ancestor-descendant chain, the most inner transition will exclusively be taken. In the example above, this is why the `logTelemetry` action defined in the parent `LOG` event won’t execute as soon as the machine reaches the `userInfoPage` state.
 
-{/* ::: end tip/warning \ */}
+<!-- ::: end tip/warning \-->

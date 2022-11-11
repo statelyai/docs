@@ -251,11 +251,11 @@ const actor = interpret(myMachine).start(previousState);
 This will also maintain and restore previous [history states](./history.md) and ensures that `.events` and `.nextEvents` represent the correct values.
 
 ::: warning
-Persisting spawned [actors](./actors.md) isn't yet supported in XState.
+Persisting spawned [actors](./actors.md) isn’t yet supported in XState.
 :::
 
 ## Notes
 
 - You should never have to create a `State` instance manually. Treat `State` as a read-only object that _only_ comes from `machine.transition(...)` or `actor.onTransition(...)`.
-- `state.history` will not retain its history in order to prevent memory leaks. `state.history.history === undefined`. Otherwise, you end up creating a huge linked list and reinventing blockchain, which we don't care to do.
-  - This behavior may be configurable in future versions.
+- `state.history` will not retain its history in order to prevent memory leaks. `state.history.history === undefined`. Otherwise, you end up creating a huge linked list and reinventing blockchain, which we don’t care to do.
+- This behavior may be configurable in future versions.

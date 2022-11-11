@@ -2,19 +2,16 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'XState Docs',
+  title: 'Stately Docs',
   tagline:
-    'Documentation for XState: State Machines and Statecharts for the Modern Web',
+    'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately-docs.vercel.app',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/icon.svg',
+  favicon: 'icon.svg',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -40,6 +37,19 @@ const config = {
 
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
+          admonitions: {
+            tag: ':::',
+            keywords: [
+              'note',
+              'tip',
+              'info',
+              'caution',
+              'danger',
+              'typescript',
+              'xstate',
+              'studio',
+            ],
+          },
         },
         blog: false,
         theme: {
@@ -50,7 +60,8 @@ const config = {
     [
       'docusaurus-preset-shiki-twoslash',
       {
-        themes: ['min-light', 'nord'],
+        alwayRaiseForTwoslashExceptions: true,
+        themes: ['github-light', 'github-dark'],
       },
     ],
   ],
@@ -59,77 +70,144 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'XState',
+        title: '',
         logo: {
-          alt: 'XState Logo',
-          src: 'img/icon.svg',
+          alt: 'Stately',
+          src: '/logo-black.svg',
+          srcDark: '/logo-white-nobg.svg',
         },
         items: [
+          {
+            type: 'search',
+            position: 'left',
+          },
           {
             href: 'https://github.com/statelyai/docusaurus-docs',
             label: 'GitHub',
             position: 'right',
           },
+          {
+            href: 'https://stately.ai/editor',
+            label: 'Editor',
+            position: 'right',
+          },
+          {
+            href: 'https://stately.ai/viz',
+            label: 'Visualizer',
+            position: 'right',
+          },
+          {
+            href: 'https://stately.ai/blog',
+            label: 'Blog',
+            position: 'right',
+          },
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
-            title: 'Links',
+            title: 'Stately',
             items: [
               {
-                label: 'Stately',
-                href: 'https://stately.ai/',
+                label: 'Visual editor',
+                href: 'https://stately.ai/editor',
+                target: '_self',
               },
               {
-                label: 'Blog',
-                href: 'https://stately.ai/blog',
+                label: 'VS Code extension',
+                href: 'https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode',
+                target: '_self',
+              },
+              {
+                label: 'Visualizer',
+                href: 'https://stately.ai/viz',
+                target: '_self',
+              },
+              {
+                label: 'Discover machines',
+                href: 'https://stately.ai/discover',
+                target: '_self',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Find out more',
             items: [
+              {
+                label: 'Stately blog',
+                href: 'https://stately.ai/blog',
+                target: '_self',
+              },
+              {
+                label: 'Roadmap',
+                href: 'https://statelyai.canny.io',
+                target: '_self',
+              },
+              {
+                label: 'Stately RFCs',
+                href: 'https://github.com/statelyai/rfcs',
+                target: '_self',
+              },
+              {
+                label: 'Code of conduct',
+                href: 'https://stately.ai/code-of-conduct',
+                target: '_self',
+              },
+              {
+                label: 'Privacy policy',
+                href: 'https://stately.ai/privacy',
+                target: '_self',
+              },
+            ],
+          },
+          {
+            title: 'Stay updated',
+            items: [
+              {
+                label: 'GitHub',
+                href: 'https://github.com/statelyai/xstate',
+                target: '_self',
+              },
               {
                 label: 'Discord',
                 href: 'https://discord.gg/xstate',
+                target: '_self',
               },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/statelyai',
+                target: '_self',
               },
               {
                 label: 'YouTube',
                 href: 'https://youtube.com/c/statelyai',
-              },
-            ],
-          },
-          {
-            title: 'GitHub',
-            items: [
-              {
-                label: 'XState',
-                href: 'https://github.com/statelyai/xstate',
+                target: '_self',
               },
               {
-                label: 'Tools',
-                href: 'https://github.com/statelyai/xstate-tools',
+                label: 'LinkedIn',
+                href: 'https://www.linkedin.com/company/statelyai/',
+                target: '_self',
               },
             ],
           },
         ],
         copyright: `Copyright © Stately, ${new Date().getFullYear()}`,
       },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
       algolia: {
         appId: process.env.ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
+      },
+      announcementBar: {
+        content:
+          '<strong>🤗 Thank you for reviewing the docs, team!</strong> We can use this bar in future for announcements.',
+        isCloseable: false,
+      },
+      colorMode: {
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
       },
     }),
 };

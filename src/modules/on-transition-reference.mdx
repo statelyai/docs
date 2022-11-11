@@ -17,7 +17,7 @@ actor.onTransition((state) => {
 actor.start();
 ```
 
-{/* ::: tip \ */}
+<!-- ::: tip \-->
 
 If you only want the `.onTransition(...)` handler(s) to be called when the state changes (that is, when the `state.value` changes, the `state.context` changes, or there are new `state.actions`), use [`state.changed`](https://xstate.js.org/docs/guides/states.html#state-changed):
 
@@ -29,9 +29,9 @@ actor.onTransition((state) => {
 });
 ```
 
-{/* ::: tip \ */}
+<!-- ::: tip \-->
 
 The `.onTransition()` callback will not run between eventless ("always") transitions or other microsteps. It only runs on macrosteps.
 Microsteps are the intermediate transitions between macrosteps.
 
-{/* ::: (end tip/warning) \ */}
+<!-- ::: (end tip/warning) \-->

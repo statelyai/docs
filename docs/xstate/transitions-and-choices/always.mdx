@@ -1,0 +1,117 @@
+---
+title: Always
+---
+
+<!-- deps: ["transitions-and-events", "guards", "self-transitions"] -->
+
+Sometimes you’ll need to make checks in your statechart’s current state _without_ receiving an event. You can do this with an eventless transition.
+
+Eventless transitions are transitions without events. These transitions are **always** taken after any transition in their state if enabled; no event is necessary to trigger the transition. Eventless transitions are labeled “always” and often referred to as “always” transitions.
+
+A simple example is a state that always transitions from `a` to `b`:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+
+const machine = createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      always: [
+        {
+          target: 'b',
+        },
+      ],
+    },
+    b: {},
+  },
+});
+```
+
+Using the `always` transition means that `a` will _instantly_ transition to `b` when the machine enters the `a` state.
+
+You can also pair `always` transitions with a guard:
+
+```ts twoslash {7-12}
+// @noErrors
+import { createMachine } from 'xstate';
+
+// ---cut---
+
+const machine = createMachine(
+  {
+    initial: 'a',
+    states: {
+      a: {
+        always: [
+          {
+            cond: 'shouldTransition',
+            target: 'b',
+          },
+        ],
+      },
+      b: {},
+    },
+  },
+  {
+    guards: {
+      isNotAdmin: (ctx) => ctx.user.role !== 'admin',
+    },
+  }
+);
+```
+
+In the example above, the transition will only happen when `shouldTransition` returns true. Otherwise, the machine will stay in the same state.
+
+“Always” transitions are checked immediately when the machine enters the state node, after checking for regular transitions and before checking if there are any transitions for any other queued events.
+
+“Always” transitions are extremely useful for reducing duplication in guards, along with other uses.
+
+<!-- TODO - refine this example to show a before and after, with loads of guards in the before \-->
+
+```ts twoslash {11-14}
+import { createMachine, assign } from 'xstate';
+
+const gameMachine = createMachine(
+  {
+    initial: 'playing',
+    context: {
+      points: 0,
+    },
+    states: {
+      playing: {
+        always: [
+          { target: 'win', cond: 'didPlayerWin' },
+          { target: 'lose', cond: 'didPlayerLose' },
+        ],
+        on: {
+          AWARD_POINTS: {
+            actions: 'awardPoints',
+          },
+        },
+      },
+      win: {},
+      lose: {},
+    },
+  },
+  {
+    actions: {
+      awardPoints: assign({
+        points: (context) => context.points + 100,
+      }),
+    },
+    guards: {
+      didPlayerWin: (context, event) => {
+        return context.points > 99;
+      },
+      didPlayerLose: (context, event) => {
+        return context.points < 0;
+      },
+    },
+  }
+);
+```
+
+<!-- TODO - discuss the dangers of infinite loops with always \-->

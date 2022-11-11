@@ -4,9 +4,12 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 
 ### Installation
 
+1.
 ```
 $ yarn
 ```
+
+2. Copy the contents of the `.env file for docusaurus` from 1Password into a `.env` file in the root of the folder.
 
 ### Local Development
 

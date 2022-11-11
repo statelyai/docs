@@ -1,0 +1,166 @@
+---
+title: Context
+---
+
+# Context
+
+<!-- deps: ["states", "transitions-and-events", "actions"] -->
+
+<!-- TODO: Rewrite with focus on context as a data store vs finite/infinite states-->
+
+Statecharts represent their finite state using `states` but can also handle states which are _not_ finite. These states might be:
+
+- Counters, which can be incremented as many times as required.
+- Text inputs, where the user might enter any value.
+
+This “infinite” state can be stored in a statechart’s **context**, a data store that can be updated only by the statechart itself.
+
+You can pass a machine its context using the `context` property:
+
+```ts twoslash {2-4}
+import { createMachine } from 'xstate';
+// ---cut---
+const machine = createMachine({
+  context: {
+    count: 0,
+  },
+});
+```
+
+## Updating context
+
+<!-- deps: ["context", "actions", "self-transitions"] -->
+
+Assigning new values to the context in XState is done through the `assign` action and is the only way to change a machine’s context. **Never mutate a machine’s `context` externally**. Every context change should happen explicitly due to an event.
+
+The `assign` action takes the context _assigner_, representing how values should be assigned in the current context. The _assigner_ can be an object:
+
+```ts twoslash {16-22}
+// @noErrors
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      INCREMENT: {
+        actions: 'assignToContext',
+      },
+    },
+  },
+  {
+    actions: {
+      assignToContext: assign({
+        // increment the current count by the event value
+        count: (context, event) => context.count + event.value,
+
+        // assign static value to the message (no function needed)
+        message: 'Count changed',
+      }),
+    },
+  }
+);
+```
+
+Or the _assigner_ can be a function that returns the updated state:
+
+```ts twoslash {16-21}
+// @noErrors
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      INCREMENT: {
+        actions: 'assignToContext',
+      },
+    },
+  },
+  {
+    actions: {
+      assignToContext: assign((context) => {
+        return {
+          count: context.count + 1,
+          message: 'Count changed',
+        };
+      }),
+    },
+  }
+);
+```
+
+You can pass several `assign` actions in an array and they’ll be executed sequentially:
+
+```js
+// ...
+  actions: [
+    assign({ count: 3 }), // context.count === 3
+    assign({ count: context => context.count * 2 }) // context.count === 6
+  ],
+// ...
+```
+
+## Using context in actions
+
+<!-- deps: ["actions", "context"] -->
+
+When XState fires an action, the action receives several arguments. The first argument is the current `context` of the machine. The second argument is the most recent `event` sent to the machine.
+
+```ts twoslash {15-19}
+import { createMachine } from 'xstate';
+
+createMachine(
+  {
+    context: {
+      count: 0,
+    },
+    on: {
+      LOG_COUNT: {
+        actions: 'logCountToConsole',
+      },
+    },
+  },
+  {
+    actions: {
+      logCountToConsole: (context, event) => {
+        console.log(`Count is ${context.count}`);
+
+        console.log(event.type); // Logs 'LOG_COUNT'
+      },
+    },
+  }
+);
+```
+
+%{{ events-and-context-in-actions }}
+
+:::info TypeScript
+
+<!-- deps: [context, assign-action] -->
+
+## TypeScript
+
+In TypeScript, you can strongly type your context by passing a type to the `schema` property, which means that wherever you access the context, whether inside actions or when running your machine, the context will be strongly typed.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const lightMachine = createMachine({
+  schema: {
+    context: {} as { value: number },
+  },
+});
+```
+
+:::
+
+## Summary
+
+`States` are used for handling your apps states which you know about in advance. `Context` is a data store that you can use to store any arbitrary values. `assign` can be used to assign values to the context, and the context can be used in any action you call.
+
+Next, we’ll look at some [special built-in actions](/actions/built-in-actions) XState provides to extend its powers.

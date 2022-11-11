@@ -1,0 +1,219 @@
+---
+title: Parent to child communication
+---
+
+<!-- Needs technical review -->
+
+<!-- deps: ["callback-actors", "machine-actors", "send-parent"] -->
+
+We’ve learned that invoked actors can send events to their parent via the invoked machine’s `sendParent` action and the invoked callback’s `sendBack` method. Child actors can also _receive_ events from the parent, allowing for bidirectional communication.
+
+You must give invoked actors a unique id with `invoke.id` to enable parent to child communication:
+
+```ts twoslash {9}
+// @noErrors
+import { createMachine } from 'xstate';
+
+const childMachine = createMachine({
+  /* ... */
+});
+
+const parentMachine = createMachine({
+  invoke: {
+    id: 'child',
+    src: childMachine,
+  },
+});
+```
+
+Once the invoked actor has an id, you can use that ID to send it events via the `send` event.
+
+In the example below, we specify that we want to send the `HELLO_FROM_PARENT` event to the `child` invocation after 3 seconds. The child then logs a message to the console.
+
+```ts twoslash {31-33}
+import { createMachine, send } from 'xstate';
+
+const childMachine = createMachine(
+  {
+    on: {
+      HELLO_FROM_PARENT: {
+        actions: 'logToConsole',
+      },
+    },
+  },
+  {
+    actions: {
+      logToConsole: () => {
+        console.log('Event received!');
+      },
+    },
+  }
+);
+
+const parentMachine = createMachine({
+  invoke: {
+    id: 'child',
+    src: childMachine,
+  },
+  after: {
+    3000: {
+      actions: send(
+        {
+          type: 'HELLO_FROM_PARENT',
+        },
+        {
+          to: 'child',
+        }
+      ),
+    },
+  },
+});
+```
+
+## Receiving events in invoked callbacks
+
+<!-- deps: ["callback-actors", "receiving-events-from-parent"] -->
+
+Invoked callbacks can listen to events from the parent. To manage this, they receive an `onReceive` argument.
+
+In the example below, the parent machine sends the child `ponger` actor a `PING` event. The child actor can listen for that event using `onReceive(listener)` and send a `PONG` event back to the parent in response.
+
+```ts twoslash
+import { createMachine, send } from 'xstate';
+
+const pingPongMachine = createMachine(
+  {
+    initial: 'active',
+    states: {
+      active: {
+        invoke: {
+          id: 'ponger',
+          src: 'pongActor',
+        },
+        entry: send({ type: 'PING' }, { to: 'ponger' }),
+        on: {
+          PONG: { target: 'done' },
+        },
+      },
+      done: {},
+    },
+  },
+  {
+    // `actors` in v5
+    services: {
+      pongActor: () => (sendBack, onReceive) => {
+        // Whenever parent sends 'PING',
+        // send parent 'PONG' event
+        onReceive((e) => {
+          if (e.type === 'PING') {
+            sendBack('PONG');
+          }
+        });
+      },
+    },
+  }
+);
+```
+
+## forwardTo
+
+<!-- deps: ["actions", "receiving-events-from-parent"] -->
+
+You’ll often want to use the parent machine to “forward” events to the child machine. To handle this, XState provides a built-in `forwardTo` action:
+
+```ts twoslash
+import { createMachine, forwardTo } from 'xstate';
+
+const alertMachine = createMachine(
+  {
+    on: {
+      ALERT: {
+        actions: 'soundTheAlarm',
+      },
+    },
+  },
+  {
+    actions: {
+      soundTheAlarm: () => {
+        alert('Oh no!');
+      },
+    },
+  }
+);
+
+const parentMachine = createMachine({
+  id: 'parent',
+  invoke: {
+    id: 'alerter',
+    src: alertMachine,
+  },
+  on: {
+    ALERT: { actions: forwardTo('alerter') },
+  },
+});
+```
+
+## autoForward
+
+<!-- deps: ["forward-to-action", "receiving-events-from-parent"] -->
+
+If you want _all_ events sent to the parent to be forwarded to the child, you can specify `autoForward: true` on an `invoke`.
+
+In the example below, _any_ event the machine receives will be sent on to the `eventHandler`:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine(
+  {
+    invoke: {
+      src: 'eventHandler',
+      autoForward: true,
+    },
+  },
+  {
+    // `actors` in v5
+    services: {
+      eventHandler: () => (sendBack, onReceive) => {
+        onReceive((event) => {
+          // Handle the forwarded event here
+        });
+      },
+    },
+  }
+);
+```
+
+## escalate
+
+<!-- deps: ["actions", "receiving-events-from-parent"] -->
+
+When a parent invokes a child machine, any errors that occur in the child machine will be handled _in the child_. You can use the `escalate` action to send that error to the parent for processing.
+
+In the parent, you can listen for the `escalate` action via the `invoke.onError` transition.
+
+In the example below, the child machine immediately escalates an error to its parent on `entry`. The parent machine then processes the error in an `onError` handler by logging it to the console.
+
+```ts twoslash
+import { createMachine, actions } from 'xstate';
+
+const { escalate } = actions;
+
+const childMachine = createMachine({
+  entry: escalate({ message: 'This is some error' }),
+});
+
+const parentMachine = createMachine({
+  invoke: {
+    src: childMachine,
+    onError: {
+      actions: (context, event) => {
+        console.log(event.data);
+        // data: {
+        //   message: 'This is some error'
+        // }
+      },
+    },
+  },
+});
+```

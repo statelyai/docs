@@ -1,0 +1,31 @@
+---
+title: Guards
+---
+
+A **guard** is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
+
+Guards are numbered in the order they are checked and labeled with “if” or “elseif” along with their condition. Multiple guards on the same events are connected with a dotted line.
+
+[TODO: Why you might use a guard with example.]
+
+### How to add a guard to an event
+
+First, select the event where you want to add a guard. Then…
+
+#### Using the **+ Transition** button
+
+1. Use the **+ Transition** button to replace your event with a guarded transition.
+2. Name your guard by replacing the **New guard** text inside the event.
+
+#### Using the **quick actions** menu
+
+1. Right-click the event to bring up the **quick actions** menu.
+2. Choose **Add guard** from the options in the **quick actions** menu to replace your event with a guarded transition.
+3. Name your guard by replacing the **New guard** text inside the event.
+
+#### Using the **Transition details** panel
+
+1. Open the **Transition details** panel from the right tool menu.
+2. Use the **Guard** text input to name your guard and replace your event with a guarded transition.
+
+Use the **+ Transition** button to create more guards on the same transition.

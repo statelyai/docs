@@ -1,0 +1,153 @@
+---
+title: Built-in actions
+---
+
+# Built-in actions
+
+Along with `assign`, XState has several other built-in actions which can do different things in a state machine. We’ll introduce a couple of built-in actions for now and learn about the others later.
+
+## Send action
+
+<!-- deps:
+  ["actions", "transitions-and-events", "self-transitions"] -->
+
+XState’s built-in `send` action is useful for when statecharts need to send events back to themselves.
+
+When the send action is executed, it sends an event back to the machine _as if it were from an external source_.
+
+This pattern can help compose different flows together. In the example below, the user can either press the `copy` button or press `ctrl + c` to fire a `COPY` event to the machine. Using the `send` action to fire the same event from both actions reduces duplication.
+
+```ts twoslash
+import { createMachine, send } from 'xstate';
+
+const keyboardShortcutMachine = createMachine({
+  on: {
+    PRESS_COPY_BUTTON: {
+      actions: send({ type: 'COPY' }),
+    },
+    PRESS_CTRL_C: {
+      actions: send({ type: 'COPY' }),
+    },
+    COPY: {
+      actions: 'copyToClipboard',
+    },
+  },
+});
+```
+
+You can also dynamically specify the event to send by passing a function to `send`:
+
+```ts twoslash
+import { send } from 'xstate';
+// ---cut---
+send((context, event) => {
+  return {
+    type: 'SOME_EVENT',
+  };
+});
+```
+
+## Pure action
+
+<!-- deps: ["actions", "self-transitions"] -->
+
+The `pure` action is useful when you need to run a dynamic number of actions depending on the current machine’s state.
+
+`pure` lets you pass a function to the machine, which calculates the type and number of actions to be executed.
+
+In the example below, we check `context` to find which actions the machine should run.
+
+<!-- Remove noErrors when pure TS issue (https://github.com/statelyai/xstate/pull/3233) is fixed-->
+
+```ts twoslash
+// @noErrors
+import { actions, createMachine } from 'xstate';
+
+const { pure } = actions;
+
+createMachine({
+  context: {
+    runBothActions: false,
+  },
+  entry: pure((context) => {
+    if (context.runBothActions) {
+      // You can return an array of actions
+      return ['action1', 'action2'];
+    }
+    // Or a single action
+    return 'action1';
+  }),
+});
+```
+
+## Rules of built-in actions
+
+<!-- deps: ["actions", "assign-action"] -->
+
+Built-in actions are _pure functions_. Pure functions don’t execute anything themselves but instead return instructions that tells XState what to do.
+
+For example, the assign function returns an object containing `type: 'xstate.assign'` and an `assigner` function.
+
+<!-- TODO - explain what *this* is-->
+
+```ts twoslash
+import { assign } from 'xstate';
+
+const assignResult = assign((context, event) => ({
+  newValue: true,
+}));
+
+assignResult.type; // 'xstate.assign'
+assignResult.assigner; // (context, event) => ({ newValue: true })
+```
+
+The instruction set above is interpreted by XState, which executes the code. The result of `assign` must be passed directly to `actions`, `entry` or `exit`.
+
+For example, the following code won’t work correctly because the result of the `assign` isn’t being passed into `assignToContext`.
+
+```ts twoslash {8-14}
+// @noErrors
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine(
+  {
+    // ...config
+  },
+  {
+    actions: {
+      assignToContext: (context, event) => {
+        // 🚫 This won’t work!
+        // The result of the assign isn’t being passed
+        // into assignToContext
+        assign({
+          message: 'Hello!',
+        });
+      },
+    },
+  }
+);
+```
+
+The following example works correctly because the result of the `assign` is passed into `assignToContext`:
+
+```ts twoslash {7-11}
+// @noErrors
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine(
+  {
+    // ...config
+  },
+  {
+    actions: {
+      assignToContext: assign((context) => ({
+        message: 'Hello!',
+      })),
+    },
+  }
+);
+```
+
+## Summary
+
+`send` can be used to send events back to your machine. `pure` can be used to dynamically return different actions. Built-in actions must be passed directly to the machine or returned from `pure`.
