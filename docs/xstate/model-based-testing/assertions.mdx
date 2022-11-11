@@ -13,7 +13,7 @@ If you’ve done testing before, you might be familiar with the **setup, then as
 
 The following example shows a whole test for a function that adds a user to a database:
 
-```ts
+```js
 // PSEUDOCODE
 
 describe('addUserToDb', () => {
@@ -51,7 +51,7 @@ You have two main options to run test setup in `@xstate/test`.
 
 If your setup needs to run _before each test path_, run the setup just before calling `path.test()`:
 
-```ts
+```js
 const paths = model.getPaths();
 
 describe('My model', () => {
@@ -81,7 +81,7 @@ describe('My model', () => {
 
 If your setup needs to happen _during_ a test, you pass an implementation to an event. The following example tests a button. The button’s text begins as ‘pending,’ but the text turns into ‘complete’ after the button is clicked.
 
-```ts {17-21}
+```js {17-21}
 const machine = createTestMachine({
   initial: 'buttonIsPending',
   states: {
@@ -118,7 +118,7 @@ When the `testModel` wants to know how to implement the `CLICK` event, it looks 
 
 Once your model can set up your app in each state, you should _assert_ that your app is actually in that state. You can do this by passing `states` to `path.test`:
 
-```ts {10-23}
+```js {10-23}
 createTestModel(machine)
   .getPaths()
   .forEach((path) => {

@@ -25,7 +25,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-  
 
   presets: [
     [
@@ -40,7 +39,16 @@ const config = {
           editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
           admonitions: {
             tag: ':::',
-            keywords: ['note', 'tip', 'info', 'caution', 'danger', 'typescript', 'xstate', 'studio'],
+            keywords: [
+              'note',
+              'tip',
+              'info',
+              'caution',
+              'danger',
+              'typescript',
+              'xstate',
+              'studio',
+            ],
           },
         },
         blog: false,
@@ -52,6 +60,7 @@ const config = {
     [
       'docusaurus-preset-shiki-twoslash',
       {
+        alwayRaiseForTwoslashExceptions: true,
         themes: ['github-light', 'github-dark'],
       },
     ],
@@ -199,7 +208,7 @@ const config = {
       colorMode: {
         disableSwitch: false,
         respectPrefersColorScheme: true,
-      }
+      },
     }),
 };
 
