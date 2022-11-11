@@ -11,6 +11,7 @@ We’ve learned that invoked actors can send events to their parent via the invo
 You must give invoked actors a unique id with `invoke.id` to enable parent to child communication:
 
 ```ts twoslash {9}
+// @noErrors
 import { createMachine } from 'xstate';
 
 const childMachine = createMachine({

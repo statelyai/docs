@@ -239,7 +239,9 @@ When interpreting statecharts, the order of actions should not necessarily matte
 3. `entry` actions - all the entry actions of the entered state node(s), from the parent state down
 
 <!-- ::: warning \-->
+
 In XState version 4.x, `assign` actions have priority and are executed before any other actions. This behavior will be fixed in version 5, as the `assign` actions will be called in order.
+
 <!-- ::: (end tip/warning) \-->
 
 <!-- ::: danger \-->

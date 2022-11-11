@@ -106,6 +106,7 @@ The instruction set above is interpreted by XState, which executes the code. The
 For example, the following code won’t work correctly because the result of the `assign` isn’t being passed into `assignToContext`.
 
 ```ts twoslash {8-14}
+// @noErrors
 import { createMachine, assign } from 'xstate';
 
 const machine = createMachine(
@@ -130,6 +131,7 @@ const machine = createMachine(
 The following example works correctly because the result of the `assign` is passed into `assignToContext`:
 
 ```ts twoslash {7-11}
+// @noErrors
 import { createMachine, assign } from 'xstate';
 
 const machine = createMachine(
