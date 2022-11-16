@@ -33,7 +33,11 @@ const sidebars = {
       type: 'category',
       label: 'States',
       items: [
-        'states/states',
+        {
+          type: 'doc',
+          id: 'states/intro',
+          label: 'Intro'
+        },
         'states/initial-states',
         'states/parent-states',
         'states/parallel-states',
@@ -44,7 +48,11 @@ const sidebars = {
       type: 'category',
       label: 'Transitions and events',
       items: [
-        'transitions-and-events/transitions-and-events',
+        {
+          type: 'doc',
+          id: 'transitions-and-events/intro',
+          label: 'Intro'
+        },
         'transitions-and-events/guards',
         'transitions-and-events/eventless-transitions',
         'transitions-and-events/delayed-transitions',
