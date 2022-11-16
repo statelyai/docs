@@ -751,10 +751,14 @@ code {
   border-bottom: 1px solid var(--st-header-border);
 }
 
-/* force search to align with sidebar by making logo width of sidebar */
+.navbar__items {
+  flex: 1 0 auto;
+}
+
+/* help centre search by making logo width of sidebar */
 .navbar__brand {
-  margin-right: 2rem;
-  width: var(--doc-sidebar-width);
+  margin-right: 0;
+  width: calc(var(--doc-sidebar-width) - 1rem);
 }
 
 .navbar__logo {
@@ -781,6 +785,17 @@ html div[role="banner"][class*="announcementBar"] [class*="announcementBarConten
 }
 
 /* Search */
+
+/* centre-align search bar */
+
+.navbar__items--right {
+  flex: 1 0 auto;
+}
+
+/* make search bar same width as content */
+@media (min-width: 768px) {
+  html body .DocSearch-Button { min-width: 90ch; }
+}
 
 html .DocSearch-Hit-source {
   color: var(--docsearch-hit-source) !important;

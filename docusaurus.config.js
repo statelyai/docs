@@ -79,7 +79,7 @@ const config = {
         items: [
           {
             type: 'search',
-            position: 'left',
+            position: 'right',
           },
           {
             href: 'https://github.com/statelyai/docusaurus-docs',
