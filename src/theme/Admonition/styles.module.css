@@ -5,34 +5,23 @@
 /* visually hide admonition headings as we should be using headings inside the admonition content 
   the heading text will act as alternative text for the icons
 */
-.admonitionHeading span + span {
-  margin-bottom: 0;
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-}
 
 .admonitionHeading code {
   text-transform: none;
 }
 
 .admonitionIcon {
-  height: 100%;
-  margin-right: 0.5em;
+  /* slightly offset vertical alignment */
+  margin-top: -1px;
+  margin-right: 0.5rem;
   float: left;
 }
 
 .admonitionIcon svg {
   vertical-align: middle;
-  height: 1em;
-  width: 1em;
-  fill: var(--ifm-alert-foreground-color);
+  height: 1.2em;
+  width: 1.2em;
+  fill: currentColor;
 }
 
 .admonitionContent > * {

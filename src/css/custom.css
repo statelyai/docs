@@ -205,7 +205,7 @@ html[data-theme='light'] {
 
   --st-background: white;
   --st-background-secondary: var(--st-gray-50);
-  --st-text: var(--st-gray-700);
+  --st-text: var(--st-gray-600);
   --st-heading: var(--st-gray-800);
   --st-text-secondary: var(--st-gray-700);
   --st-text-link: var(--st-blue-500);
@@ -255,6 +255,28 @@ html[data-theme='light'] {
   --st-search-key-shadow: inset 0 -3px 0 0 var(--st-gray-600); 
   --st-search-footer-background: var(--st-gray-200); 
   --st-search-footer-shadow: none; 
+  /* alert colours */
+  --st-tip-background: var(--st-gray-50);
+  --st-tip-accent: var(--st-gray-100);
+  --st-tip-text: var(--st-gray-700);
+  --st-warning-background: var(--st-orange-50);
+  --st-warning-accent: var(--st-orange-100);
+  --st-warning-text: var(--st-orange-600);
+  --st-danger-background: var(--st-red-50);
+  --st-danger-accent: var(--st-red-100);
+  --st-danger-text: var(--st-red-600);
+  --st-typescript-background: var(--st-blue-50);
+  --st-typescript-accent: var(--st-blue-100);
+  --st-typescript-text: var(--st-blue-600);
+  --st-stately-background: var(--st-gray-50);
+  --st-stately-accent: var(--st-gray-100);
+  --st-stately-text: var(--st-gray-600);
+  --st-xstate-background: var(--st-blue-50);
+  --st-xstate-accent: var(--st-blue-100);
+  --st-xstate-text: var(--st-blue-700);
+  --st-success-background: var(--st-green-50);
+  --st-success-accent: var(--st-green-200);
+  --st-success-text: var(--st-green-600);
 }
 
 html[data-theme='dark'], html[data-theme='dark'] body {
@@ -284,6 +306,28 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-icon-filter: invert(100%) brightness(100%);
   --st-header-link: var(--st-gray-200);
   --st-footer-link: var(--st-gray-200);
+  /* alert colours */
+  --st-tip-background: var(--st-gray-700);
+  --st-tip-accent: var(--st-gray-600);
+  --st-tip-text: var(--st-gray-100);
+  --st-warning-background: var(--st-orange-700);
+  --st-warning-accent: var(--st-orange-600);
+  --st-warning-text: var(--st-orange-100);
+  --st-danger-background: var(--st-red-700);
+  --st-danger-accent: var(--st-red-600);
+  --st-danger-text: var(--st-red-100);
+  --st-typescript-background: var(--st-blue-700);
+  --st-typescript-accent: var(--st-blue-600);
+  --st-typescript-text: var(--st-blue-100);
+  --st-stately-background: var(--st-gray-700);
+  --st-stately-accent: var(--st-gray-600);
+  --st-stately-text: var(--st-gray-100);
+  --st-xstate-background: var(--st-blue-700);
+  --st-xstate-accent: var(--st-blue-600);
+  --st-xstate-text: var(--st-blue-100);
+  --st-success-background: var(--st-green-700);
+  --st-success-accent: var(--st-green-600);
+  --st-success-text: var(--st-green-100);
 }
 
 /* You can override the default Infima variables here. */
@@ -436,15 +480,15 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-footer-link-color: var(--st-footer-link);
 
   /* admonitions */
-  --ifm-alert-background-color: ;
-  --ifm-alert-background-color-highlight: ;
-  --ifm-alert-foreground-color: ;
-  --ifm-alert-border-color: ;
-  --ifm-alert-border-width: ;
-  --ifm-alert-border-left-width: ;
-  --ifm-alert-border-radius: ;
-  --ifm-alert-padding-vertical: ;
-  --ifm-alert-padding-horizontal: ;
+  --ifm-alert-background-color: white;
+  --ifm-alert-background-color-highlight: white;
+  --ifm-alert-foreground-color: black;
+  --ifm-alert-border-color: grey;
+  --ifm-alert-border-width: 1px;
+  --ifm-alert-border-left-width: 1px;
+  --ifm-alert-border-radius: 0.5rem;
+  --ifm-alert-padding-vertical: 0.75rem;
+  --ifm-alert-padding-horizontal: 1rem;
 }
 
 /* use extra specificity in selector to override defaults */
@@ -949,74 +993,8 @@ footer [class*=iconExternalLink] {
 
 /* Override default admonition styles */
 
-.alert--primary {
-  --ifm-alert-background-color: var(
-    --ifm-color-primary-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(53, 120, 229, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-primary-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-primary-dark);
-}
-
-.alert--secondary {
-  --ifm-alert-background-color: var(
-    --ifm-color-secondary-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(235, 237, 240, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-secondary-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-secondary-dark);
-}
-
-.alert--success, .alert--typescript, .alert--studio, .alert--xstate {
-  --ifm-alert-background-color: var(
-    --ifm-color-success-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(0, 164, 0, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-success-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-success-dark);
-}
-
-.alert--info {
-  --ifm-alert-background-color: var(
-    --ifm-color-info-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(84, 199, 236, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-info-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-info-dark);
-}
-
-.alert--warning {
-  --ifm-alert-background-color: var(
-    --ifm-color-warning-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(255, 186, 0, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-warning-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-warning-dark);
-}
-
-.alert--danger {
-  --ifm-alert-background-color: var(
-    --ifm-color-danger-contrast-background
-  );
-  --ifm-alert-background-color-highlight: rgba(250, 56, 62, 0.15);
-  --ifm-alert-foreground-color: var(
-    --ifm-color-danger-contrast-foreground
-  );
-  --ifm-alert-border-color: var(--ifm-color-danger-dark);
-}
-
 .alert {
-  --ifm-code-background: var(--ifm-alert-background-color-highlight);
+  --ifm-code-background: var(--ifm-alert-background-color);
   --ifm-link-color: var(--ifm-alert-foreground-color);
   --ifm-link-hover-color: var(--ifm-alert-foreground-color);
   --ifm-link-decoration: underline;
@@ -1029,15 +1007,74 @@ footer [class*=iconExternalLink] {
   border-radius: var(--ifm-alert-border-radius);
   box-shadow: none;
   color: var(--ifm-alert-foreground-color);
+  font-size: 0.95rem;
   padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
+  /* pull admonitions into margins so text aligns with paragraph text */
+  margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
+  margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
 }
 
-.alert__heading {
-  align-items: center;
-  display: flex;
-  font: bold var(--ifm-h5-font-size) / var(--ifm-heading-line-height)
-  var(--ifm-heading-font-family);
-  margin-bottom: 0.5rem;
+.alert--primary {
+  --ifm-alert-background-color: var(--st-tip-background);
+  --ifm-alert-background-color-highlight: var(--st-tip-accent);
+  --ifm-alert-foreground-color: var(--st-tip-text);
+  --ifm-alert-border-color: var(--st-tip-accent);
+}
+
+.alert--secondary {
+  --ifm-alert-background-color: var(--st-tip-background);
+  --ifm-alert-background-color-highlight: var(--st-tip-accent);
+  --ifm-alert-foreground-color: var(--st-tip-text);
+  --ifm-alert-border-color: var(--st-tip-accent);
+}
+
+.alert--success {
+  --ifm-alert-background-color: var(--st-success-background);
+  --ifm-alert-background-color-highlight: var(--st-success-accent);
+  --ifm-alert-foreground-color: var(--st-success-text);
+  --ifm-alert-border-color: var(--st-success-accent);
+}
+
+.alert--studio {
+  --ifm-alert-background-color: var(--st-stately-background);
+  --ifm-alert-background-color-highlight: var(--st-stately-accent);
+  --ifm-alert-foreground-color: var(--st-stately-text);
+  --ifm-alert-border-color: var(--st-stately-accent);
+}
+
+.alert--xstate {
+  --ifm-alert-background-color: var(--st-xstate-background);
+  --ifm-alert-background-color-highlight: var(--st-xstate-accent);
+  --ifm-alert-foreground-color: var(--st-xstate-text);
+  --ifm-alert-border-color: var(--st-xstate-accent);
+}
+
+.alert--typescript {
+  --ifm-alert-background-color: var(--st-typescript-background);
+  --ifm-alert-background-color-highlight: var(--st-typescript-accent);
+  --ifm-alert-foreground-color: var(--st-typescript-text);
+  --ifm-alert-border-color: var(--st-typescript-accent);
+}
+
+.alert--info, .alert--tip {
+  --ifm-alert-background-color: var(--st-tip-background);
+  --ifm-alert-background-color-highlight: var(--st-tip-accent);
+  --ifm-alert-foreground-color: var(--st-tip-text);
+  --ifm-alert-border-color: var(--st-tip-accent);
+}
+
+.alert--danger {
+  --ifm-alert-background-color: var(--st-danger-background);
+  --ifm-alert-background-color-highlight: var(--st-danger-accent);
+  --ifm-alert-foreground-color: var(--st-danger-text);
+  --ifm-alert-border-color: var(--st-danger-accent);
+}
+
+.alert--warning {
+  --ifm-alert-background-color: var(--st-warning-background);
+  --ifm-alert-background-color-highlight: var(--st-warning-accent);
+  --ifm-alert-foreground-color: var(--st-warning-text);
+  --ifm-alert-border-color: var(--st-warning-accent);
 }
 
 .alert__icon {
@@ -1046,16 +1083,26 @@ footer [class*=iconExternalLink] {
 }
 
 .alert__icon svg {
-  fill: var(--ifm-alert-foreground-color);
-  stroke: var(--ifm-alert-foreground-color);
+  fill: currentColor;
+  stroke: currentColor;
   stroke-width: 0;
 }
 
 .alert .close {
-  color: var(--ifm-alert-foreground-color);
+  color: inherit;
   margin: calc(var(--ifm-alert-padding-vertical) * -1)
   calc(var(--ifm-alert-padding-horizontal) * -1) 0 0;
   opacity: 0.75;
+}
+
+.alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
+  color: inherit;
+  font-size: 1.1rem;
+  margin-bottom: calc(var(--ifm-alert-padding-vertical) * .5);
+}
+
+.alert a {
+  color: inherit;
 }
 
 .alert .close:hover,
@@ -1064,11 +1111,11 @@ footer [class*=iconExternalLink] {
 }
 
 .alert a {
-  text-decoration-color: var(--ifm-alert-border-color);
+  text-decoration-color: var(--ifm-alert-foreground-color);
 }
 
 .alert a:hover {
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
 }
 
 /* Footer */
