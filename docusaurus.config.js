@@ -8,7 +8,7 @@ const config = {
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
-  baseUrl: '/docs/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
@@ -32,7 +32,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
+          routeBasePath: '/docs/',
           sidebarPath: require.resolve('./sidebars.js'),
 
           // Remove this to remove the "edit this page" links.
