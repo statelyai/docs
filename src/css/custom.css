@@ -586,10 +586,10 @@ html pre.shiki .copy-button {
 /* Specific font-variation-settings for web font support */
 
 :root {
-  --ifm-font-weight-light: 450; 
-  --ifm-font-weight-normal: 470; 
-  --ifm-font-weight-semibold: 550; 
-  --ifm-font-weight-bold: 700;
+  --ifm-font-weight-light: 440; 
+  --ifm-font-weight-normal: 430; 
+  --ifm-font-weight-semibold: 540; 
+  --ifm-font-weight-bold: 650;
 }
 
 .text--light { 
