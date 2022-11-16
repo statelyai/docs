@@ -7,7 +7,7 @@ const config = {
   title: 'Stately Docs',
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
-  url: 'https://stately.ai',
+  url: 'https://stately-docs.vercel.app',
   baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
