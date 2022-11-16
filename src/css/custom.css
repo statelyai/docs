@@ -22,7 +22,7 @@
 
 html, body {
   font-weight: var(--ifm-font-weight-normal);
-  letter-spacing: -0.019;
+  letter-spacing: -0.011rem;
 }
 
 /* Stately color variables */
@@ -290,7 +290,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 :root {
   --ifm-font-family-base: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
   --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --ifm-font-size-base: 110%; 
+  --ifm-font-size-base: 105%; 
   --ifm-line-height-base: 1.45; 
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
@@ -604,6 +604,19 @@ html pre.shiki .copy-button {
 h1, h2, h3, h4, h5, h6, .text--bold { 
   font-weight: var(--ifm-font-weight-bold);
 }
+
+h1 {
+  letter-spacing: -0.022rem;
+}
+
+h2 {
+  letter-spacing: -0.021rem;
+}
+
+h3 {
+  letter-spacing: -0.019rem;
+}
+
 .text--bold, strong, b {
   font-synthesis: none;
   font-weight: bold;
