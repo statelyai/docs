@@ -31,7 +31,7 @@ function Toggle() {
 
 Our recommended approach for managing global state with XState and React is to use [React Context](https://reactjs.org/docs/context.html).
 
-> There are two versions of 'context': XState’s [context](../guides/context.md) and React’s context. It’s a little confusing!
+> There are two versions of 'context': XState’s [context](/docs/xstate/actions/context) and React’s context. It’s a little confusing!
 
 ### Context Provider
 
@@ -234,7 +234,7 @@ This will send a `DATA_CHANGED` event whenever the result from `useSWR` changes,
 
 If you’re using class components, here's an example implementation that doesn’t rely on hooks.
 
-- The `machine` is [interpreted](../guides/interpretation.md) and its `actor` instance is placed on the component instance.
+- The `machine` is interpreted and its `actor` instance is placed on the component instance.
 - For local state, `this.state.current` will hold the current machine state. You can use a property name other than `.current`.
 - When the component is mounted, the `actor` is started via `this.actor.start()`.
 - When the component will unmount, the `actor` is stopped via `this.actor.stop()`.
