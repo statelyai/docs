@@ -2,6 +2,9 @@
 title: What are state machines and statecharts?
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 State machines help us model how a process goes from state to state when an event occurs.
 
 State machines are useful in software development because they help us capture all the states, events and transitions between them. Using state machines makes it easier to find impossible states and spot undesirable transitions.
@@ -26,7 +29,15 @@ A state describes the machine’s status or mode, which could be as simple as *
 
 <!-- no alt because the image is already described in the surrounding text -->
 
-![](/asleep-awake.svg)
+<p>
+<ThemedImage
+  alt=""
+  sources={{
+    light: useBaseUrl('/state-machines-and-statecharts/asleep-awake-states.png'),
+    dark: useBaseUrl('/state-machines-and-statecharts/asleep-awake-states-dm.png'),
+  }}
+/>
+</p>
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
@@ -47,7 +58,15 @@ In a statechart describing the process of walking the dog, the initial state wou
 
 <!-- no alt because the image is already described in the surrounding text -->
 
-![](/initial-state.svg)
+<p>
+<ThemedImage
+  alt=""
+  sources={{
+    light: useBaseUrl('/state-machines-and-statecharts/waiting.png'),
+    dark: useBaseUrl('/state-machines-and-statecharts/waiting-dm.png'),
+  }}
+/>
+</p>
 
 :::studio 
 
@@ -65,7 +84,15 @@ Transitions are “deterministic”; each combination of state and event always 
 
 <!-- no alt because the image is already described in the surrounding text -->
 
-![](/transitions-events.svg)
+<p>
+<ThemedImage
+  alt=""
+  sources={{
+    light: useBaseUrl('/state-machines-and-statecharts/asleep-awake.png'),
+    dark: useBaseUrl('/state-machines-and-statecharts/asleep-awake-dm.png'),
+  }}
+/>
+</p>
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
