@@ -91,6 +91,11 @@ const sidebars = {
       type: 'category',
       label: 'XState',
       items: [
+        {
+          type: 'doc',
+          id: 'xstate/intro',
+          label: 'Intro',
+        },
         'xstate/installation',
         'tools/developer-tools',
         {
