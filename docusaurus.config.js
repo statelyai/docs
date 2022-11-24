@@ -202,7 +202,7 @@ const config = {
       },
       announcementBar: {
         content:
-          '<strong>🤗 Thank you for reviewing the docs, team!</strong> We can use this bar in future for announcements.',
+          '<strong>👋 Welcome!</strong> These docs are in beta, please give us any feedback in our <a href="https://discord.com/channels/795785288994652170/838444044774277151">Discord Documentation channel</a>.',
         isCloseable: false,
       },
       colorMode: {
