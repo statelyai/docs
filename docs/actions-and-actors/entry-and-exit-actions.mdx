@@ -10,13 +10,18 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 
 While the statechart is running, it can execute other effects called actions.
 
-An action can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
 
-You can fire multiple entry and exit actions on a state. Final states cannot have exit actions.
+You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
-[TODO: Why you might use entry and exit actions with examples.]
+![Entry and exit actions video player](TODO:)
 
-### How to add an entry action to a state
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
+
+In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+
+
+## How to add an entry action to a state
 
 1. Select the state you want to have an entry action.
 2. Open the **State details** panel from the right tool menu.
@@ -25,7 +30,7 @@ You can fire multiple entry and exit actions on a state. Final states cannot hav
 5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
 6. Save the entry action using the **Save** button.
 
-### How to add an exit action to a state
+## How to add an exit action to a state
 
 1. Select the state you want to have an exit action.
 2. Open the **State details** panel from the right tool menu.

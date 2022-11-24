@@ -10,19 +10,21 @@ Watch our [“Using descriptions” video on YouTube](https://www.youtube.com/wa
 
 You can add descriptions to state and event nodes to describe their purpose and share related notes with your team. Descriptions support markdown formatting, including links and images.
 
-The machine object will include your descriptions when you export your statecharts to JSON.
+The machine object will include your descriptions in the state or event's `description` when you export your statecharts to JSON.
 
-[Screenshot of video player 0, with the description highlighted]
+![Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds.](TODO:)
+
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=574ede8a-a328-40fe-a4f9-c80fffb2c30a).
 
 In the video player above, the text “The video player should be in full-screen mode” is a description of the *Opened* event.
 
-### How to add a description to a state
+## How to add a description to a state
 
 1. Select the state.
 2. Open the **State details** panel from the right tool menu.
 3. Write your state’s description in the **Description** text area.
 
-### How to add a description to an event
+## How to add a description to an event
 
 1. Select the event.
 2. Open the **Transition details** panel from the right tool menu.

@@ -12,21 +12,28 @@ A parallel state is a parent state separated into multiple regions of child stat
 
 A dashed line borders each region.
 
-[TODO: Why you might use a parallel state with an example of parallel states.]
+![A state machine containing two region states with dashed borders around the outside. The first region is the video state which is active at the same time as the audio state, and contains a playing and stopped state, with stop and play events. The other region is an audio state, which is active at the same time as the video state, and has muted and unmuted states, and unmute and mute events.](TODO:)
 
-### How to make a state a parallel state
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3).
 
-First, select the first state you want to set as a parallel state. Then…
+In the video player machine above, the video and audio states are active at the same time, which means the following combinations of states can happen simultaneously:
 
-#### Using the **quick actions** menu:
+- video playing, audio muted
+- video playing, audio unmuted
+- video stopped, audio muted
+- video stopped, audio unmuted
+
+## How to make a state a parallel state
+
+First, select the parent state you want to set as a parallel state. Then…
+
+### Using the **quick actions** menu:
 
 1. Right-click the state to bring up the **quick actions** menu.
 2. Choose **Parallel** from the **Type** options.
 
-#### Using the **State details** panel:
+### Using the **State details** panel:
 
-1. Select the state you want to set as the final state.
+1. Select the parent state you want to set as the parallel state.
 2. Open the **State details** panel from the right tool menu.
 3. Choose **Parallel** from the **Type** dropdown menu.
-
-Other child states that share the same parent state will be automatically set as parallel states.
