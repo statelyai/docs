@@ -2,6 +2,9 @@
 title: State done events
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 :::tip
 
 Watch our [“What are state done events?” video on YouTube](https://www.youtube.com/watch?v=3laC3gWBLnM&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=11) (1m16s).
@@ -12,7 +15,15 @@ A **state done event** transitions from a parent state when one of its child s
 
 <!-- TODO: write more about why you might use an onDone event -->
 
-![Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state.](TODO:)
+<p>
+<ThemedImage
+  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
+  sources={{
+    light: useBaseUrl('/transitions-and-events/state-done-events/state-done-events.png'),
+    dark: useBaseUrl('/transitions-and-events/state-done-events/state-done-events-dm.png'),
+  }}
+/>
+</p>
 
 In the video player above, when the video player reaches the *Stopped* state, the *Opened* state transitions through the *onDone* state done event to the *Closed* state.
 
