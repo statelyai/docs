@@ -2,15 +2,38 @@
 title: Entry & exit actions
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+:::tip
+
+Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
+
+:::
+
 While the statechart is running, it can execute other effects called actions.
 
-An action can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
 
-You can fire multiple entry and exit actions on a state. Final states cannot have exit actions.
+You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
-[TODO: Why you might use entry and exit actions with examples.]
+<p>
+<ThemedImage
+  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Playing state has an entry action for starting a video playing indicated by the ‘Entry’ label and the text playVideo, and an exit action for pausing a video indicated by the ‘Exit’ lable and the text pauseVideo. The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
+  sources={{
+    light: useBaseUrl('/actions-and-actors/entry-and-exit-actions/entry-and-exit-actions.png'),
+    dark: useBaseUrl('/actions-and-actors/entry-and-exit-actions/entry-and-exit-actions-dm.png'),
+  }}
+/>
+</p>
 
-### How to add an entry action to a state
+
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
+
+In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+
+
+## How to add an entry action to a state
 
 1. Select the state you want to have an entry action.
 2. Open the **State details** panel from the right tool menu.
@@ -19,7 +42,7 @@ You can fire multiple entry and exit actions on a state. Final states cannot hav
 5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
 6. Save the entry action using the **Save** button.
 
-### How to add an exit action to a state
+## How to add an exit action to a state
 
 1. Select the state you want to have an exit action.
 2. Open the **State details** panel from the right tool menu.
