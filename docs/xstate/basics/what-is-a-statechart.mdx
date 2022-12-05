@@ -1,15 +1,8 @@
 ---
-title: What is a statechart?
+title: XState statechart basics
 ---
 
 # What is a statechart?
-
-<!-- deps: ["installation"] -->
-<!-- loom: 17150699f66c4a00a5987af2867d66e7 -->
-
-Statecharts are a visual language used to describe the states in a process.
-
-You may have used similar diagrams in the past to design user flows, plan databases or map app architecture. Statecharts are another way of using boxes and arrows to represent flows, but with XState, these flows are also executable code you can use to control the logic in your applications.
 
 [Install XState](/getting-started/installation) and create a statechart by importing `createMachine` from `xstate`.
 
@@ -22,17 +15,6 @@ const machine = createMachine({
 ```
 
 ## States
-
-<!-- deps: ["what-is-a-statechart"] -->
-<!-- loom: a49e651da81f4e309d11acce941a8bf0 -->
-
-The _states_ are represented by rounded rectangle boxes. When drawing a statechart for the process of a dog, two states would first come to mind:
-
-<!-- no alt because the image is already described in the surrounding text \-->
-
-![](/asleep-awake.svg)
-
-A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
 You can create these states in XState using the `states` property:
 

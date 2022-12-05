@@ -3,39 +3,58 @@ title: Stately Studio overview
 slug: /
 ---
 
-TODO: this page will be an overview of the Studio and what you can do with it.
-
-Old content:
-
 # Stately Studio
 
+The Stately Studio is a suite of tools for building app logic.
 
-One of XState’s most powerful features is the ability to build and maintain code _visually_. Using statecharts, a visual language using boxes and arrows, we can capture business-critical code in diagrams that are understandable to non-devs and visually editable.
+<!-- TODO: screenshot of the studio -->
 
-Stately’s [visual editor](https://stately.ai/editor?source=docs) has first-class support for XState, meaning you can **build and edit statecharts on a drag-and-drop canvas**.
+## Visual editor
 
-![Visualize your application logic with the Stately Editor](/stately-editor-public-beta.png)
+The visual editor supports everything you need to build state machines and statecharts. The editor currently has two modes:
 
-## Features
+### Editor mode
 
-The editor supports everything you need to build state machines and statecharts.
+Visually add, modify, and delete states, events, and transitions, as well as data including actions, descriptions, and invoked actors.
 
+### Simulation mode
 
+Run the statechart, trigger events, and see the active state nodes.
 
-- Atomic, parent, child, parallel, history, and final states
-- Normal, guarded, and delayed events/transitions
-- Entry, exit, and transition actions
-- Invocations
-- Done and error transitions for states and invocations
-- State and event descriptions
+### Export
 
-The editor currently has two modes:
+You can also **export machines to JSON, JavaScript and TypeScript**, ready to be used in your codebase with XState.
 
-- **Editor mode**: add, modify, and delete states, events, and transitions, as well as data including actions, descriptions, and invocations.
-- **Simulation mode**: run the statechart, trigger events, and see the active state nodes.
+:::caution
 
-You can also **export machines to JSON**, ready to be used in your codebase with XState.
+Don’t confuse our visual editor with our [previous visualizer](https://stately.ai/viz), known as the Stately Viz. The Viz works well and has many valuable features, but it doesn’t have many of the best features of our visual editor, including drag-and-drop, descriptions, and XXX.
 
-### Roadmap
+:::
 
-[Link to Canny]
+## Projects and teams
+
+<!-- TODO: screenshot of the projects -->
+
+Brief intro, then link to [Read more about the Projects and Teams pages](/projects-and-teams).
+
+<!-- TODO: screenshot of teams -->
+
+## Discover machines
+
+Brief intro, then link to [Read more about the Discover page](/discover).
+
+<!-- TODO: screenshot of discover -->
+
+## Our roadmap
+
+Do you want to request a feature in the Stately Studio? [Check out our Canny roadmap](https://statelyai.canny.io) to post your feature idea and upvote other features. Our roadmap also shows you the features we have planned, and those that are already in progress.
+
+You can also keep up with the Stately team’s work in progress at our regular [office hour livestreams](https://youtube.com/statelyai).
+
+:::xstate
+
+## Powered by XState
+
+The Stately Studio is powered by [XState](/xstate/installation), a best-in-class open source library for handling complexity at scale.
+
+:::
