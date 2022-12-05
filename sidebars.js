@@ -39,6 +39,7 @@ const sidebars = {
           label: 'Intro'
         },
         'states/initial-states',
+        'states/final-states',
         'states/parent-states',
         'states/parallel-states',
         'states/history-states'
