@@ -78,6 +78,14 @@ const sidebars = {
       ]
     },
     {
+      type: 'category',
+      label: 'Collaboration and sharing',
+      items: [
+        'import-from-code',
+        'export-as-code'
+      ]
+    },
+    {
       type: 'doc', 
       label:'Projects and teams',
       id: 'projects-and-teams',
