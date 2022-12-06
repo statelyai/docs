@@ -39,6 +39,7 @@ const sidebars = {
           label: 'Intro'
         },
         'states/initial-states',
+        'states/final-states',
         'states/parent-states',
         'states/parallel-states',
         'states/history-states'
@@ -75,6 +76,14 @@ const sidebars = {
       label: 'Modeling',
       items: [
         'descriptions',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Collaboration and sharing',
+      items: [
+        'import-from-code',
+        'export-as-code'
       ]
     },
     {
