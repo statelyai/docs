@@ -39,6 +39,7 @@ const sidebars = {
           label: 'Intro'
         },
         'states/initial-states',
+        'states/final-states',
         'states/parent-states',
         'states/parallel-states',
         'states/history-states'
@@ -83,6 +84,8 @@ const sidebars = {
       items: [
         'projects',
         'teams',
+        'import-from-code',
+        'export-as-code'
       ]
     },
     {
