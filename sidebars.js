@@ -84,14 +84,10 @@ const sidebars = {
       items: [
         'projects',
         'teams',
+        'discover',
         'import-from-code',
         'export-as-code'
       ]
-    },
-    {
-      type: 'doc', 
-      label:'Discover machines',
-      id: 'discover',
     },
     {
       type: 'category',
