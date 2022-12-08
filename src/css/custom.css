@@ -1130,26 +1130,6 @@ html[data-theme='dark'] .footer {
   background: linear-gradient(50deg, rgba(20,35,59,1) 0%, rgba(23,32,43,1) 53%, rgba(27,27,28,1) 92%);
 }
 
-/* Add logo in place of first footer title */
-
-.footer__col:nth-of-type(1) .footer__title {
-  background: url('/stately-logo-black.svg') no-repeat;
-  background-size: auto 4rem;
-  background-position: -11px -16px;
-  height: 0;
-  margin-bottom: 0.5rem;
-  padding-top: 2.3rem;
-  overflow: hidden;
-}
-
-/* pull logo into margin on wider viewports */
-@media (min-width: 997px) {
-  .footer__col:nth-of-type(1) .footer__title {
-    margin-left: -2.8rem;
-    padding-top: 3rem;
-  }
-}
-
 /* Use grid instead of flexbox for footer columns */
 
 .footer__links.row {
@@ -1160,17 +1140,6 @@ html[data-theme='dark'] .footer {
 .footer__links .col {
   max-width: 100%;
   width: auto;
-}
-
-/* vertically align footer titles to logo */
-
-.footer__col:nth-of-type(2) .footer__title,
-.footer__col:nth-of-type(3) .footer__title {
-  padding-top: 0.5rem;
-}
-
-html[data-theme=dark] .footer__col:nth-of-type(1) .footer__title {
-  background-image: url('/stately-logo-white.svg');
 }
 
 @media (min-width: 1440px) {
