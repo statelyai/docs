@@ -203,7 +203,7 @@ const config = {
       announcementBar: {
         content:
           '<strong>👋 Welcome!</strong> These docs are in beta, please give us any feedback in our <a href="https://discord.com/channels/795785288994652170/838444044774277151">Discord Documentation channel</a>.',
-        isCloseable: false,
+        isCloseable: true,
       },
       colorMode: {
         disableSwitch: false,
