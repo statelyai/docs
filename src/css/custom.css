@@ -753,8 +753,8 @@ code {
 
 /* force search to align with sidebar by making logo width of sidebar */
 .navbar__brand {
-  margin-right: 2rem;
-  width: var(--doc-sidebar-width);
+  margin-right: 0;
+  width: calc(var(--doc-sidebar-width) - 1rem);
 }
 
 .navbar__logo {
@@ -781,6 +781,15 @@ html div[role="banner"][class*="announcementBar"] [class*="announcementBarConten
 }
 
 /* Search */
+
+/* centre search bar on widest viewports */
+html .navbar__inner > .navbar__items:first-of-type {
+  flex: 0 0 auto;
+}
+
+html .navbar__items--right {
+  flex: 1 1 auto;
+}
 
 html .DocSearch-Hit-source {
   color: var(--docsearch-hit-source) !important;
@@ -812,17 +821,10 @@ html .DocSearch-Button-Key:nth-of-type(2) {
 }
 
 /* above point where search gets minimised */
+/* centre search */
 
 @media (min-width: 768px) {
-  html .DocSearch-Button { min-width: 50ch; }
-}
-
-/* centre search on homepage */
-
-@media (min-width: 768px) {
-  html.docs-doc-id-intro .DocSearch-Button {
-    margin: 0 auto;
-  }
+  html .DocSearch-Button { width: clamp(21ch, 90ch, 100%); margin: 0 auto; }
 }
 
 @media (min-width: 997px) {
