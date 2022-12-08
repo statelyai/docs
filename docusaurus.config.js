@@ -82,8 +82,8 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/statelyai/docusaurus-docs',
-            label: 'GitHub',
+            href: 'https://stately.ai/registry/projects',
+            label: 'Studio',
             position: 'right',
           },
           {
@@ -92,8 +92,8 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://stately.ai/viz',
-            label: 'Visualizer',
+            href: 'https://stately.ai/registry/discover',
+            label: 'Discover',
             position: 'right',
           },
           {
