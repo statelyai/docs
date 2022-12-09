@@ -199,6 +199,7 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
+        // Navigate using window.location.href on preview urls to make search work
         externalUrlRegex:
           'https:\\/\\/docusaurus-docs-.*-statelyai\\.vercel\\.app',
       },
