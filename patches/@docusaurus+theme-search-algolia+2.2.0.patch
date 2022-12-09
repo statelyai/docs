@@ -32,15 +32,17 @@ index 878dc9b..8393b9b 100644
  let DocSearchModal = null;
  function Hit({hit, children}) {
    return <Link to={hit.url}>{children}</Link>;
-@@ -110,8 +110,9 @@ function DocSearch({contextualSearch, externalUrlRegex, ...props}) {
+@@ -110,8 +110,11 @@ function DocSearch({contextualSearch, externalUrlRegex, ...props}) {
        if (isRegexpStringMatch(externalUrlRegex, item.url)) {
          return item;
        }
 -      // We transform the absolute URL into a relative URL.
 -      const url = new URL(item.url);
 +      // We transform the absolute URL into a relative URL. (patch we remove /docs/ from the url to make it work with preview deploys)
-+      const url = new URL(process.env.VERCEL_ENV === 'preview' ? item.url.replace('/docs/', '/') : item.url);
-+      
++      console.log(item.url);
++      const isPreviewUrl = window.location.href.match('https:\\/\\/docusaurus-docs-.*-statelyai\\.vercel\\.app')?.length > 0
++      const url = new URL(isPreviewUrl ? item.url.replace('/docs/', '/') : item.url);
++      console.log(url);
        return {
          ...item,
          url: withBaseUrl(`${url.pathname}${url.hash}`),
