@@ -215,16 +215,22 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        createRedirects(existingPath) {
-          if (
-            process.env.VERCEL_ENV === 'preview' &&
-            existingPath.includes('/')
-          ) {
-            // Redirect from /docs/* to /
-            return existingPath.replace('/', '/docs');
-          }
-          return undefined; // Return a falsy value: no redirect created
-        },
+        redirects: [
+          {
+            to: '/xstate/typescript/typegen',
+            from: '/docs/xstate/typescript/typegen',
+          },
+        ],
+        // createRedirects(existingPath) {
+        //   if (
+        //     // process.env.VERCEL_ENV === 'preview' &&
+        //     existingPath.includes('/')
+        //   ) {
+        //     // Redirect from /docs/* to /
+        //     return existingPath.replace('/', '/docs');
+        //   }
+        //   return undefined; // Return a falsy value: no redirect created
+        // },
       },
     ],
   ],
