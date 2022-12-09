@@ -218,10 +218,10 @@ const config = {
         createRedirects(existingPath) {
           if (
             process.env.VERCEL_ENV === 'preview' &&
-            existingPath.includes('/docs')
+            existingPath.includes('/')
           ) {
             // Redirect from /docs/* to /
-            return [existingPath.replace('/docs', '/')];
+            return existingPath.replace('/', '/docs');
           }
           return undefined; // Return a falsy value: no redirect created
         },
