@@ -8,7 +8,7 @@ const config = {
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately-docs.vercel.app',
-  baseUrl: process.env.VERCEL_ENV === 'production' ? '/docs/' : '/',
+  baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
@@ -210,6 +210,24 @@ const config = {
         respectPrefersColorScheme: true,
       },
     }),
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        createRedirects(existingPath) {
+          if (
+            process.env.VERCEL_ENV === 'preview' &&
+            existingPath.includes('/docs')
+          ) {
+            // Redirect from /docs/* to /
+            return [existingPath.replace('/docs', '/')];
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
+      },
+    ],
+  ],
 };
 
 module.exports = config;
