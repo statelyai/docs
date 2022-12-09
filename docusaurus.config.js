@@ -201,7 +201,7 @@ const config = {
         contextualSearch: false,
         // Navigate using window.location.href on preview urls to make search work
         externalUrlRegex:
-          'https:\\/\\/docusaurus-docs-.*-statelyai\\.vercel\\.app',
+          'https:\\/\\/docusaurus-docs-.*-statelyai\\.vercel\\.app\\/.*',
       },
       announcementBar: {
         content:
