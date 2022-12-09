@@ -199,8 +199,15 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
-        // Navigate using window.location.href on preview urls to make search work
-        externalUrlRegex: 'vercel.app/.*',
+        transformItems: (items) => {
+          if (process.env.VERCEL_ENV === 'preview') {
+            return items.map((item) => ({
+              ...item,
+              url: item.url.replace('/docs/', '/'),
+            }));
+          }
+          return items;
+        },
       },
       announcementBar: {
         content:
@@ -212,24 +219,6 @@ const config = {
         respectPrefersColorScheme: true,
       },
     }),
-
-  plugins: [
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        createRedirects(existingPath) {
-          if (
-            process.env.VERCEL_ENV === 'preview' &&
-            existingPath.startsWith('/')
-          ) {
-            // Redirect from /docs/* to /
-            return existingPath.replace('/', '/docs/');
-          }
-          return undefined; // Return a falsy value: no redirect created
-        },
-      },
-    ],
-  ],
 };
 
 module.exports = config;
