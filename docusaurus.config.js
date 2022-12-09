@@ -199,7 +199,7 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
-        externalUrlRegex: 'statelyai.vercel\\.app',
+        externalUrlRegex: '/https://docusaurus-docs-.*-statelyai.vercel.app/gm',
       },
       announcementBar: {
         content:
@@ -216,12 +216,6 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          {
-            to: '/xstate/typescript/typegen',
-            from: '/docs/xstate/typescript/typegen',
-          },
-        ],
         createRedirects(existingPath) {
           if (
             process.env.VERCEL_ENV === 'preview' &&
