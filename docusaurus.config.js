@@ -221,16 +221,16 @@ const config = {
             from: '/docs/xstate/typescript/typegen',
           },
         ],
-        // createRedirects(existingPath) {
-        //   if (
-        //     // process.env.VERCEL_ENV === 'preview' &&
-        //     existingPath.includes('/')
-        //   ) {
-        //     // Redirect from /docs/* to /
-        //     return existingPath.replace('/', '/docs');
-        //   }
-        //   return undefined; // Return a falsy value: no redirect created
-        // },
+        createRedirects(existingPath) {
+          if (
+            process.env.VERCEL_ENV === 'preview' &&
+            existingPath.startsWith('/')
+          ) {
+            // Redirect from /docs/* to /
+            return existingPath.replace('/', '/docs/');
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
       },
     ],
   ],
