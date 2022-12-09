@@ -199,15 +199,6 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
-        transformItems: (items) => {
-          if (process.env.VERCEL_ENV === 'preview') {
-            return items.map((item) => ({
-              ...item,
-              url: item.url.replace('/docs/', '/'),
-            }));
-          }
-          return items;
-        },
       },
       announcementBar: {
         content:
