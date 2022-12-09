@@ -199,7 +199,8 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
-        externalUrlRegex: '/https://docusaurus-docs-.*-statelyai.vercel.app/gm',
+        externalUrlRegex:
+          'https:\\/\\/docusaurus-docs-.*-statelyai\\.vercel\\.app',
       },
       announcementBar: {
         content:
