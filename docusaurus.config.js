@@ -8,7 +8,7 @@ const config = {
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately-docs.vercel.app',
-  baseUrl: '/docs/',
+  baseUrl: process.env.VERCEL_ENV === 'production' ? '/docs/' : '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
