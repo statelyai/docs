@@ -669,6 +669,10 @@ code {
   height: 2rem;
 }
 
+.toggleButton_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+   color: var(--st-header-link);
+}
+
 .toggleButton_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module:hover {
   background: var(--st-highlight-background-hover) !important;
 }
