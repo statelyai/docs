@@ -971,9 +971,14 @@ footer [class*=iconExternalLink] {
   color: var(--ifm-alert-foreground-color);
   font-size: 0.95rem;
   padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
-  /* pull admonitions into margins so text aligns with paragraph text */
-  margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
-  margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
+}
+
+@media (min-width: 1300px) {
+  .alert {
+    /* pull admonitions into margins so text aligns with paragraph text */
+    margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
+    margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
+  }
 }
 
 .alert--primary {
