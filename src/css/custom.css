@@ -140,111 +140,111 @@ html, body {
 
   /* Override the default Infima variables here. */
 :root {
-  --ifm-font-family-base: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
-  --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --ifm-font-size-base: 105%; 
-  --ifm-line-height-base: 1.45; 
-  --ifm-link-decoration: underline;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-heading-vertical-rhythm-bottom: 0.75;
-  --ifm-code-background: var(--st-code-highlight-background); 
-  --ifm-code-font-size: 100%; 
-  --ifm-code-padding-horizontal: 0.1rem; 
-  --ifm-code-padding-vertical: 0.1rem; 
+  --ifm-font-family-base:Inter,Helvetica,'Helvetica Neue',Arial,sans-serif;
+  --ifm-font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
+  --ifm-font-size-base:105%;
+  --ifm-line-height-base:1.45;
+  --ifm-link-decoration:underline;
+  --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.1);
+  --ifm-heading-vertical-rhythm-bottom:.75;
+  --ifm-code-background:var(--st-code-highlight-background);
+  --ifm-code-font-size:100%;
+  --ifm-code-padding-horizontal:.1rem;
+  --ifm-code-padding-vertical:.1rem;
+  --ifm-color-secondary:var(--st-text-secondary);
+  --ifm-color-success:#00a400;
+  --ifm-color-info:#54c7ec;
+  --ifm-color-warning:#ffba00;
+  --ifm-color-danger:#fa383e;
+  --ifm-color-primary:var(--st-text);
+  --ifm-color-primary-dark:var(--st-text);
+  --ifm-color-primary-darker:var(--st-text);
+  --ifm-color-primary-darkest:var(--st-text);
+  --ifm-color-primary-light:var(--st-text);
+  --ifm-color-primary-lighter:var(--st-text);
+  --ifm-color-primary-lightest:var(--st-text);
+  --ifm-color-primary-contrast-background:white;
+  --ifm-color-primary-contrast-foreground:var(--st-text);
+  --ifm-color-secondary-dark:var(--st-text);
+  --ifm-color-secondary-darker:var(--st-text);
+  --ifm-color-secondary-darkest:var(--st-text);
+  --ifm-color-secondary-light:white;
+  --ifm-color-secondary-lighter:white;
+  --ifm-color-secondary-lightest:white;
+  --ifm-color-secondary-contrast-background:var(--gray-800);
+  --ifm-color-secondary-contrast-foreground:white;
+  --ifm-color-success-dark:var(--st-turquoise-700);
+  --ifm-color-success-darker:var(--st-turquoise-800);
+  --ifm-color-success-darkest:var(--st-turquoise-900);
+  --ifm-color-success-light:var(--st-green-200);
+  --ifm-color-success-lighter:var(--st-green-100);
+  --ifm-color-success-lightest:var(--st-green-50);
+  --ifm-color-success-contrast-background:var(--ifm-color-success-lightest);
+  --ifm-color-success-contrast-foreground:var(--ifm-color-success-darker);
+  --ifm-color-info-dark:var(--st-blue-700);
+  --ifm-color-info-darker:var(--st-blue-800);
+  --ifm-color-info-darkest:var(--st-blue-900);
+  --ifm-color-info-light:var(--st-blue-200);
+  --ifm-color-info-lighter:var(--st-blue-100);
+  --ifm-color-info-lightest:var(--st-blue-50);
+  --ifm-color-info-contrast-background:var(--ifm-color-info-lightest);
+  --ifm-color-info-contrast-foreground:var(--ifm-color-info-darker);
+  --ifm-color-warning-dark:var(--st-orange-700);
+  --ifm-color-warning-darker:var(--st-orange-800);
+  --ifm-color-warning-darkest:var(--st-orange-900);
+  --ifm-color-warning-light:var(--st-orange-200);
+  --ifm-color-warning-lighter:var(--st-orange-100);
+  --ifm-color-warning-lightest:var(--st-orange-50);
+  --ifm-color-warning-contrast-background:var(--ifm-color-warning-lightest);
+  --ifm-color-warning-contrast-foreground:var(--ifm-color-warning-darker);
+  --ifm-color-danger-dark:var(--st-red-700);
+  --ifm-color-danger-darker:var(--st-red-800);
+  --ifm-color-danger-darkest:var(--st-red-900);
+  --ifm-color-danger-light:var(--st-red-200);
+  --ifm-color-danger-lighter:var(--st-red-100);
+  --ifm-color-danger-lightest:var(--st-red-50);
+  --ifm-color-danger-contrast-background:var(--ifm-color-danger-lightest);
+  --ifm-color-danger-contrast-foreground:var(--ifm-color-danger-darker);
+  --ifm-color-white:#fff;
+  --ifm-color-black:#000;
+  --ifm-color-gray-0:var(--st-gray-50);
+  --ifm-color-gray-100:var(--st-gray-100);
+  --ifm-color-gray-200:var(--st-gray-200);
+  --ifm-color-gray-300:var(--st-gray-300);
+  --ifm-color-gray-400:var(--st-gray-400);
+  --ifm-color-gray-500:var(--st-gray-500);
+  --ifm-color-gray-600:var(--st-gray-600);
+  --ifm-color-gray-700:var(--st-gray-700);
+  --ifm-color-gray-800:var(--st-gray-800);
+  --ifm-color-gray-850:var(--st-gray-900);
+  --ifm-color-gray-900:var(--st-gray-900);
+  --ifm-color-gray-1000:var(--ifm-color-black);
 
-  --ifm-color-secondary: var(--st-text-secondary); 
-  --ifm-color-success: #00a400; 
-  --ifm-color-info: #54c7ec; 
-  --ifm-color-warning: #ffba00; 
-  --ifm-color-danger: #fa383e; 
-  --ifm-color-primary: var(--st-text);
-  --ifm-color-primary-dark: var(--st-text);
-  --ifm-color-primary-darker: var(--st-text);
-  --ifm-color-primary-darkest: var(--st-text);
-  --ifm-color-primary-light: var(--st-text);
-  --ifm-color-primary-lighter: var(--st-text);
-  --ifm-color-primary-lightest: var(--st-text);
-  --ifm-color-primary-contrast-background: white; 
-  --ifm-color-primary-contrast-foreground: var(--st-text); 
-  --ifm-color-secondary-dark: var(--st-text);
-  --ifm-color-secondary-darker: var(--st-text);
-  --ifm-color-secondary-darkest: var(--st-text);
-  --ifm-color-secondary-light: white;
-  --ifm-color-secondary-lighter: white;
-  --ifm-color-secondary-lightest: white;
-  --ifm-color-secondary-contrast-background: var(--gray-800);
-  --ifm-color-secondary-contrast-foreground: white;
-  --ifm-color-success-dark: var(--st-turquoise-700); 
-  --ifm-color-success-darker: var(--st-turquoise-800); 
-  --ifm-color-success-darkest: var(--st-turquoise-900); 
-  --ifm-color-success-light: var(--st-green-200); 
-  --ifm-color-success-lighter: var(--st-green-100); 
-  --ifm-color-success-lightest: var(--st-green-50); 
-  --ifm-color-success-contrast-background: var(--ifm-color-success-lightest); 
-  --ifm-color-success-contrast-foreground: var(--ifm-color-success-darker); 
-  --ifm-color-info-dark: var(--st-blue-700);
-  --ifm-color-info-darker: var(--st-blue-800);
-  --ifm-color-info-darkest: var(--st-blue-900);
-  --ifm-color-info-light: var(--st-blue-200);
-  --ifm-color-info-lighter: var(--st-blue-100);
-  --ifm-color-info-lightest: var(--st-blue-50);
-  --ifm-color-info-contrast-background: var(--ifm-color-info-lightest); 
-  --ifm-color-info-contrast-foreground: var(--ifm-color-info-darker);  
-  --ifm-color-warning-dark: var(--st-orange-700);
-  --ifm-color-warning-darker: var(--st-orange-800);
-  --ifm-color-warning-darkest: var(--st-orange-900);
-  --ifm-color-warning-light: var(--st-orange-200);
-  --ifm-color-warning-lighter: var(--st-orange-100);
-  --ifm-color-warning-lightest: var(--st-orange-50);
-  --ifm-color-warning-contrast-background: var(--ifm-color-warning-lightest); 
-  --ifm-color-warning-contrast-foreground: var(--ifm-color-warning-darker); 
-  --ifm-color-danger-dark: var(--st-red-700);
-  --ifm-color-danger-darker: var(--st-red-800);
-  --ifm-color-danger-darkest: var(--st-red-900);
-  --ifm-color-danger-light: var(--st-red-200);
-  --ifm-color-danger-lighter: var(--st-red-100);
-  --ifm-color-danger-lightest: var(--st-red-50);
-  --ifm-color-danger-contrast-background: var(--ifm-color-danger-lightest); 
-  --ifm-color-danger-contrast-foreground: var(--ifm-color-danger-darker); 
-  --ifm-color-white: #fff; 
-  --ifm-color-black: #000; 
-  --ifm-color-gray-0: var(--st-gray-50); 
-  --ifm-color-gray-100: var(--st-gray-100);
-  --ifm-color-gray-200: var(--st-gray-200);
-  --ifm-color-gray-300: var(--st-gray-300);
-  --ifm-color-gray-400: var(--st-gray-400);
-  --ifm-color-gray-500: var(--st-gray-500);
-  --ifm-color-gray-600: var(--st-gray-600);
-  --ifm-color-gray-700: var(--st-gray-700);
-  --ifm-color-gray-800: var(--st-gray-800);
-  --ifm-color-gray-850: var(--st-gray-900);
-  --ifm-color-gray-900: var(--st-gray-900);
-  --ifm-color-gray-1000: var(--ifm-color-black); 
-  --ifm-color-emphasis-0: var(--ifm-color-gray-900); 
-  --ifm-color-emphasis-100: var(--ifm-color-gray-100); 
-  --ifm-color-emphasis-200: var(--ifm-color-gray-200); 
-  --ifm-color-emphasis-300: var(--ifm-color-gray-300); 
-  --ifm-color-emphasis-400: var(--ifm-color-gray-400); 
-  --ifm-color-emphasis-500: var(--ifm-color-gray-500); 
-  --ifm-color-emphasis-600: var(--ifm-color-gray-600); 
-  --ifm-color-emphasis-700: var(--ifm-color-gray-700); 
-  --ifm-color-emphasis-800: var(--ifm-color-gray-800); 
-  --ifm-color-emphasis-850: var(--ifm-color-gray-900); 
-  --ifm-color-emphasis-900: var(--ifm-color-gray-900); 
-  --ifm-color-emphasis-1000: var(--ifm-color-gray-900); 
-  --ifm-background-color: var(--ifm-color-white); 
-  --ifm-background-surface-color: var(--ifm-color-white); 
-  --ifm-pre-background: var(--st-codeblock-background);
-  --ifm-heading-color: var(--st-heading);
-  --ifm-color-content: var(--st-text); 
-  --ifm-color-content-inverse: var(--ifm-color-white); 
-  --ifm-color-content-secondary: var(--ifm-color-gray-700); 
-  --ifm-hover-overlay: lightgrey; 
-  --ifm-font-color-base: var(--st-text); 
-  --ifm-font-color-base-inverse: var(--ifm-color-content-inverse); 
-  --ifm-font-color-secondary: var(--ifm-color-content-secondary);
-  --ifm-link-color: var(--st-text-link); 
-  --ifm-link-hover-color: var(--ifm-color-primary-dark);  
+  --ifm-color-emphasis-0:var(--ifm-color-gray-900);
+  --ifm-color-emphasis-100:var(--ifm-color-gray-100);
+  --ifm-color-emphasis-200:var(--ifm-color-gray-200);
+  --ifm-color-emphasis-300:var(--ifm-color-gray-300);
+  --ifm-color-emphasis-400:var(--ifm-color-gray-400);
+  --ifm-color-emphasis-500:var(--ifm-color-gray-500);
+  --ifm-color-emphasis-600:var(--ifm-color-gray-600);
+  --ifm-color-emphasis-700:var(--ifm-color-gray-700);
+  --ifm-color-emphasis-800:var(--ifm-color-gray-800);
+  --ifm-color-emphasis-850:var(--ifm-color-gray-900);
+  --ifm-color-emphasis-900:var(--ifm-color-gray-900);
+  --ifm-color-emphasis-1000:var(--ifm-color-gray-900);
+  --ifm-background-color: var(--st-background);
+  --ifm-background-surface-color: var(--st-background);
+  --ifm-hover-overlay:lightgrey;
+  --ifm-link-color:var(--st-text-link);
+  --ifm-link-hover-color:var(--st-text-link-hover);
+  --ifm-pre-background:var(--st-codeblock-background);
+  --ifm-heading-color:var(--st-heading);
+  --ifm-color-content:var(--st-text);
+  --ifm-color-content-inverse:var(--ifm-color-white);
+  --ifm-color-content-secondary:var(--ifm-color-gray-700);
+  --ifm-font-color-base:var(--st-text);
+  --ifm-font-color-base-inverse:var(--ifm-color-content-inverse);
+  --ifm-font-color-secondary:var(--ifm-color-content-secondary);
 
   /* announcement bar */
 
@@ -283,7 +283,6 @@ html, body {
   /* tables */
   --ifm-table-border-color: var(--st-layout-border); 
   --ifm-table-stripe-background: var(--st-background-secondary);
-
   --ifm-footer-link-color: var(--st-footer-link);
 
   /* admonitions */
@@ -328,6 +327,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-header-link: var(--st-gray-700);
   --st-footer-link: var(--st-gray-700);
   --st-link-button-border: var(--st-blue-400);
+  --st-menu-link-hover: var(--st-gray-800);
+  --st-menu-link-active: var(--st-gray-800);
 
   --docsearch-primary-color: var(--st-gray-800);
   --docsearch-text-color: var(--st-text);
@@ -381,51 +382,39 @@ html[data-theme='light'], html[data-theme='light'] body {
 
 html[data-theme='dark'], html[data-theme='dark'] body {
   /* Override Infima dark mode defaults */
-  --ifm-color-primary: white;
-  --ifm-color-primary-dark: white;
-  --ifm-color-primary-darker: var(--blue-100);
-  --ifm-color-primary-darkest: var(--blue-50);
-  --ifm-color-primary-light: var(--blue-600);
-  --ifm-color-primary-lighter: var(--blue-700);
-  --ifm-color-primary-lightest: var(--blue-800);
-  --ifm-color-emphasis-0: var(--ifm-color-white); 
-  --ifm-color-emphasis-100: var(--ifm-color-gray-900); 
-  --ifm-color-emphasis-200: var(--ifm-color-gray-850); 
-  --ifm-color-emphasis-300: var(--ifm-color-gray-800); 
-  --ifm-color-emphasis-400: var(--ifm-color-gray-700); 
-  --ifm-color-emphasis-500: var(--ifm-color-gray-600); 
-  --ifm-color-emphasis-600: var(--ifm-color-gray-500); 
-  --ifm-color-emphasis-700: var(--ifm-color-gray-400); 
-  --ifm-color-emphasis-800: var(--ifm-color-gray-300); 
-  --ifm-color-emphasis-900: var(--ifm-color-gray-200); 
-  --ifm-color-emphasis-1000: var(--ifm-color-gray-100); 
-  --ifm-background-color: var(--st-background); 
-  --ifm-background-surface-color: var(--st-background); 
-  --ifm-hover-overlay: gray; 
-  --ifm-link-color: var(--st-text-link); 
-  --ifm-link-hover-color: var(--ifm-color-primary-dark); 
-  --ifm-color-content: white; 
-  --ifm-color-content-secondary: white; 
-  --ifm-breadcrumb-separator-filter: invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%); 
-  --ifm-code-background: var(--st-code-highlight-background); 
-  --ifm-scrollbar-track-background-color: var(--st-gray-850); 
-  --ifm-scrollbar-thumb-background-color: var(--st-gray-800); 
-  --ifm-scrollbar-thumb-hover-background-color: var(--st-gray-700); 
-  --ifm-table-stripe-background: var(--st-gray-850);
-  --ifm-toc-border-color: var(--st-layout-border); 
-  --ifm-color-primary-contrast-background: rgb(16, 36, 69); 
-  --ifm-color-primary-contrast-foreground: rgb(235, 242, 252); 
-  --ifm-color-secondary-contrast-background: rgb(71, 71, 72); 
-  --ifm-color-secondary-contrast-foreground: rgb(253, 253, 254); 
-  --ifm-color-success-contrast-background: rgb(0, 49, 0); 
-  --ifm-color-success-contrast-foreground: rgb(230, 246, 230); 
-  --ifm-color-info-contrast-background: rgb(25, 60, 71); 
-  --ifm-color-info-contrast-foreground: rgb(238, 249, 253); 
-  --ifm-color-warning-contrast-background: rgb(77, 56, 0); 
-  --ifm-color-warning-contrast-foreground: rgb(255, 248, 230); 
-  --ifm-color-danger-contrast-background: rgb(75, 17, 19); 
-  --ifm-color-danger-contrast-foreground: rgb(255, 235, 236) ; 
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-emphasis-0:white;
+  --ifm-color-emphasis-100:var(--ifm-color-gray-900);
+  --ifm-color-emphasis-200:var(--ifm-color-gray-850);
+  --ifm-color-emphasis-300:var(--ifm-color-gray-800);
+  --ifm-color-emphasis-400:var(--ifm-color-gray-700);
+  --ifm-color-emphasis-500:var(--ifm-color-gray-600);
+  --ifm-color-emphasis-600:var(--ifm-color-gray-500);
+  --ifm-color-emphasis-700:var(--ifm-color-gray-400);
+  --ifm-color-emphasis-800:var(--ifm-color-gray-300);
+  --ifm-color-emphasis-900:var(--ifm-color-gray-200);
+  --ifm-color-emphasis-1000:var(--ifm-color-gray-100);
+  --ifm-hover-overlay:gray;
+  --ifm-color-content:white;
+  --ifm-color-content-secondary:white;
+  --ifm-breadcrumb-separator-filter:invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%);
+  --ifm-code-background:var(--st-code-highlight-background);
+  --ifm-scrollbar-track-background-color:var(--st-gray-850);
+  --ifm-scrollbar-thumb-background-color:var(--st-gray-800);
+  --ifm-scrollbar-thumb-hover-background-color:var(--st-gray-700);
+
+  --ifm-color-primary-contrast-background:rgb(16,36,69);
+  --ifm-color-primary-contrast-foreground:rgb(235,242,252);
+  --ifm-color-secondary-contrast-background:rgb(71,71,72);
+  --ifm-color-secondary-contrast-foreground:rgb(253,253,254);
+  --ifm-color-success-contrast-background:rgb(0,49,0);
+  --ifm-color-success-contrast-foreground:rgb(230,246,230);
+  --ifm-color-info-contrast-background:rgb(25,60,71);
+  --ifm-color-info-contrast-foreground:rgb(238,249,253);
+  --ifm-color-warning-contrast-background:rgb(77,56,0);
+  --ifm-color-warning-contrast-foreground:rgb(255,248,230);
+  --ifm-color-danger-contrast-background:rgb(75,17,19);
+  --ifm-color-danger-contrast-foreground:rgb(255,235,236);
+  --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.3);
 
   --st-background: var(--st-gray-900);
   --st-background-secondary: var(--st-gray-800);
@@ -455,6 +444,9 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-header-link: var(--st-gray-200);
   --st-footer-link: var(--st-gray-200);
   --st-link-button-border: var(--st-gray-700);
+  --st-menu-link-hover: var(--st-gray-100);
+  --st-menu-link-active: var(--st-gray-100);
+
   /* alert colours */
   --st-tip-background: var(--st-gray-800);
   --st-tip-accent: var(--st-gray-700);
@@ -508,6 +500,10 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   /* navbar */
   --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none; 
+
+  /* contents list */
+  --ifm-toc-border-color: var(--st-layout-border); 
+  --ifm-toc-link-color: var(--st-text); 
 }
 
 /* Shiki Twoslash code examples */
@@ -864,11 +860,11 @@ html [class*=toggleButton_node_modules] {
 }
 
 .theme-doc-sidebar-item-link-level-3 {
-  border-left: 1px solid var(--ifm-color-emphasis-0);
+  border-left: 1px solid var(--st-menu-link-active);
 }
 
 .theme-doc-sidebar-item-link-level-3 .menu__link--active {
-  border-left: 3px solid var(--ifm-color-emphasis-0);
+  border-left: 3px solid var(--st-menu-link-active);
   margin-left: -2px;
 }
 
@@ -878,16 +874,14 @@ html [class*=toggleButton_node_modules] {
 }
 
 .menu__link--active {
-  color: var(--ifm-color-emphasis-0);
+  color: var(--st-menu-link-active);
   font-weight: bold;
-  font-weight: var(--ifm-font-weight-bold);
   font-weight: var(--ifm-font-weight-bold);
 }
 
 .menu__link:hover { 
-  color: var(--ifm-link-hover-color); 
-  text-decoration-line: underline;
-  text-decoration-thickness: 1px;
+  color: var(--st-menu-link-hover); 
+  text-decoration: none;
 }
 
 .menu__link--sublist-caret::after, .menu__link--sublist-caret::after {
