@@ -138,139 +138,7 @@ html, body {
   --st-red-50: #FFEDE7;
   }
 
-html[data-theme='light'] {
-
-  --st-background: white;
-  --st-background-secondary: var(--st-gray-50);
-  --st-text: var(--st-gray-800);
-  --st-text-highlight: var(--st-gray-900);
-  --st-heading: var(--st-text-highlight);
-  --st-text-secondary: var(--st-gray-700);
-  --st-text-link: var(--st-blue-700);
-  --st-text-link-hover: var(--st-blue-600);
-  --st-text-link-active: var(--st-blue-500);;
-  --st-announcement-bar-text: var(--st-turquoise-800);
-  --st-announcement-bar-gradient: radial-gradient(circle, var(--st-turquoise-200) 0%, var(--st-blue-200) 67%, var(--st-blue-200) 90%, var(--st-turquoise-200) 100%);
-  --st-navbar-background: white;
-  --st-header-border: var(--st-gray-100);
-  --st-layout-border: var(--st-gray-100);
-  --st-code-border: var(--st-green-100);
-  --st-codeblock-background: white;
-  --st-code-highlight-background: var(--st-green-50);
-  --st-copy-button-background: var(--st-green-100);
-  --st-copy-button-text: var(--st-green-700);
-  --st-highlight-background: var(--st-gray-100);
-  --st-highlight-background-hover: var(--st-gray-50);
-  --st-button-background: var(--st-blue-200);
-  --st-button-background-hover: var(--st-blue-100);
-  --st-button-text: var(--st-blue-800);
-  --st-icon-filter: sepia(100%) saturate(100%) hue-rotate(30deg) brightness(60%);
-  --st-header-link: var(--st-gray-700);
-  --st-footer-link: var(--st-gray-700);
-  --st-link-button-border: var(--st-blue-400);
-
-  --st-search-primary-accent: var(--st-gray-800); 
-  --st-search-text: var(--st-text); 
-  --st-search-highlight: var(--st-gray-300); 
-  --st-search-muted: var(--st-gray-600); 
-  --st-search-container-background:rgba(222,227,232,0.8); /* st-gray-100 rgb */
-  --st-search-logo: var(--st-gray-600); 
-  --st-search-modal-background: var(--st-gray-50); 
-  --st-search-modal-shadow: none; 
-  --st-search-searchbox-background: var(--st-gray-100); 
-  --st-search-searchbox-focus-background: var(--st-gray-50); 
-  /* searchbox hover border */
-  --st-search-searchbox-shadow: inset 0 0 0 2px var(--st-gray-700); 
-  --st-search-hit-source: var(--st-gray-700);
-  --st-search-hit: var(--st-gray-700); 
-  --st-search-hit-active:var(--st-gray-800); 
-  --st-search-hit-background:var(--st-gray-100); 
-  --st-search-hit-shadow: none; 
-  --st-search-hit-mark: var(--st-gray-900); 
-  --st-search-hit-mark-active: var(--blue-50);  
-  --st-search-key-border: solid var(--st-gray-500);
-  --st-search-key-gradient:linear-gradient(-225deg,var(--st-gray-50),var(--st-gray-100)); 
-  --st-search-key-shadow: inset 0 -3px 0 0 var(--st-gray-500); 
-  --st-search-footer-background: var(--st-gray-200); 
-  --st-search-footer-shadow: none; 
-  /* alert colours */
-  --st-tip-background: var(--st-gray-50);
-  --st-tip-accent: var(--st-gray-100);
-  --st-tip-text: var(--st-gray-700);
-  --st-warning-background: var(--st-yellow-50);
-  --st-warning-accent: var(--st-yellow-100);
-  --st-warning-text: var(--st-yellow-800);
-  --st-danger-background: var(--st-red-50);
-  --st-danger-accent: var(--st-red-100);
-  --st-danger-text: var(--st-red-800);
-  --st-typescript-background: var(--st-blue-50);
-  --st-typescript-accent: var(--st-blue-100);
-  --st-typescript-text: var(--st-blue-800);
-  --st-stately-background: var(--st-gray-50);
-  --st-stately-accent: var(--st-gray-100);
-  --st-stately-text: var(--st-gray-700);
-  --st-xstate-background: var(--st-blue-50);
-  --st-xstate-accent: var(--st-blue-100);
-  --st-xstate-text: var(--st-blue-800);
-  --st-success-background: var(--st-green-50);
-  --st-success-accent: var(--st-green-200);
-  --st-success-text: var(--st-green-800);
-}
-
-html[data-theme='dark'], html[data-theme='dark'] body {
-  --st-background: var(--st-gray-900);
-  --st-background-secondary: var(--st-gray-800);
-  --st-text: var(--st-gray-300);
-  --st-text-highlight: var(--st-gray-200);
-  --st-heading: var(--st-text-highlight);
-  --st-text-secondary: var(--st-gray-400);
-  --st-text-link: var(--st-blue-300);
-  --st-text-link-hover: var(--st-blue-400);
-  --st-text-link-active: var(--st-blue-400);
-  --st-announcement-bar-text: var(--st-blue-200);
-  --st-announcement-bar-gradient: radial-gradient(circle, var(--st-violet-700) 0%, var(--st-blue-700) 67%, var(--st-blue-700) 90%, var(--st-violet-700) 100%);
-  --st-navbar-background: var(--st-gray-800);
-  --st-search-background: var(--st-gray-900);
-  --st-search-background-active: var(--st-gray-850);
-  --st-header-border: var(--st-gray-700);
-  --st-layout-border: var(--st-gray-700);
-  --st-code-border: var(--st-background);
-  --st-codeblock-background: var(--st-gray-850);
-  --st-code-highlight-background: var(--st-gray-850);
-  --st-highlight-background: var(--st-gray-700);
-  --st-highlight-background-hover: var(--st-gray-600);
-  --st-button-background: var(--st-blue-800);
-  --st-button-background-hover: var(--st-blue-700);
-  --st-button-text: white;
-  --st-icon-filter: invert(100%) brightness(100%);
-  --st-header-link: var(--st-gray-200);
-  --st-footer-link: var(--st-gray-200);
-  --st-link-button-border: var(--st-gray-700);
-  /* alert colours */
-  --st-tip-background: var(--st-gray-800);
-  --st-tip-accent: var(--st-gray-700);
-  --st-tip-text: var(--st-gray-200);
-  --st-warning-background: var(--st-yellow-900);
-  --st-warning-accent: var(--st-yellow-800);
-  --st-warning-text: var(--st-yellow-200);
-  --st-danger-background: var(--st-red-900);
-  --st-danger-accent: var(--st-red-800);
-  --st-danger-text: var(--st-red-200);
-  --st-typescript-background: var(--st-blue-900);
-  --st-typescript-accent: var(--st-blue-800);
-  --st-typescript-text: var(--st-blue-200);
-  --st-stately-background: var(--st-gray-800);
-  --st-stately-accent: var(--st-gray-700);
-  --st-stately-text: var(--st-gray-200);
-  --st-xstate-background: var(--st-blue-900);
-  --st-xstate-accent: var(--st-blue-800);
-  --st-xstate-text: var(--st-blue-200);
-  --st-success-background: var(--st-green-900);
-  --st-success-accent: var(--st-green-800);
-  --st-success-text: var(--st-green-200);
-}
-
-/* You can override the default Infima variables here. */
+  /* Override the default Infima variables here. */
 :root {
   --ifm-font-family-base: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
   --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
@@ -431,12 +299,61 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-alert-padding-horizontal: 1rem;
 }
 
-/* use extra specificity in selector to override defaults */
+html[data-theme='light'], html[data-theme='light'] body {
 
-html[data-theme='light'] {
-  
-  /* search */
+  --st-background: white;
+  --st-background-secondary: var(--st-gray-50);
+  --st-text: var(--st-gray-800);
+  --st-text-highlight: var(--st-gray-900);
+  --st-heading: var(--st-text-highlight);
+  --st-text-secondary: var(--st-gray-700);
+  --st-text-link: var(--st-blue-700);
+  --st-text-link-hover: var(--st-blue-600);
+  --st-text-link-active: var(--st-blue-500);;
+  --st-announcement-bar-text: var(--st-turquoise-800);
+  --st-announcement-bar-gradient: radial-gradient(circle, var(--st-turquoise-200) 0%, var(--st-blue-200) 67%, var(--st-blue-200) 90%, var(--st-turquoise-200) 100%);
+  --st-navbar-background: white;
+  --st-header-border: var(--st-gray-100);
+  --st-layout-border: var(--st-gray-100);
+  --st-code-border: var(--st-green-100);
+  --st-codeblock-background: white;
+  --st-code-highlight-background: var(--st-green-50);
+  --st-copy-button-background: var(--st-green-100);
+  --st-copy-button-text: var(--st-green-700);
+  --st-highlight-background: var(--st-gray-100);
+  --st-highlight-background-hover: var(--st-gray-50);
+  --st-button-background: var(--st-blue-200);
+  --st-button-background-hover: var(--st-blue-100);
+  --st-button-text: var(--st-blue-800);
+  --st-icon-filter: sepia(100%) saturate(100%) hue-rotate(30deg) brightness(60%);
+  --st-header-link: var(--st-gray-700);
+  --st-footer-link: var(--st-gray-700);
+  --st-link-button-border: var(--st-blue-400);
 
+  --st-search-primary-accent: var(--st-gray-800); 
+  --st-search-text: var(--st-text); 
+  --st-search-highlight: var(--st-gray-300); 
+  --st-search-muted: var(--st-gray-600); 
+  --st-search-container-background:rgba(222,227,232,0.8); /* st-gray-100 rgb */
+  --st-search-logo: var(--st-gray-600); 
+  --st-search-modal-background: var(--st-gray-50); 
+  --st-search-modal-shadow: none; 
+  --st-search-searchbox-background: var(--st-gray-100); 
+  --st-search-searchbox-focus-background: var(--st-gray-50); 
+  /* searchbox hover border */
+  --st-search-searchbox-shadow: inset 0 0 0 2px var(--st-gray-700); 
+  --st-search-hit-source: var(--st-gray-700);
+  --st-search-hit: var(--st-gray-700); 
+  --st-search-hit-active:var(--st-gray-800); 
+  --st-search-hit-background:var(--st-gray-100); 
+  --st-search-hit-shadow: none; 
+  --st-search-hit-mark: var(--st-gray-900); 
+  --st-search-hit-mark-active: var(--blue-50);  
+  --st-search-key-border: solid var(--st-gray-500);
+  --st-search-key-gradient:linear-gradient(-225deg,var(--st-gray-50),var(--st-gray-100)); 
+  --st-search-key-shadow: inset 0 -3px 0 0 var(--st-gray-500); 
+  --st-search-footer-background: var(--st-gray-200); 
+  --st-search-footer-shadow: none; 
   --docsearch-primary-color: var(--st-search-primary-accent);
   --docsearch-text-color: var(--st-search-text);
   --docsearch-highlight-color: var(--st-search-highlight);
@@ -460,12 +377,33 @@ html[data-theme='light'] {
   --docsearch-key-shadow: var(--st-search-key-shadow);
   --docsearch-footer-background: var(--st-search-footer-background);
   --docsearch-footer-shadow: var(--st-search-footer-shadow);
+
+  /* alert colours */
+  --st-tip-background: var(--st-gray-50);
+  --st-tip-accent: var(--st-gray-100);
+  --st-tip-text: var(--st-gray-700);
+  --st-warning-background: var(--st-yellow-50);
+  --st-warning-accent: var(--st-yellow-100);
+  --st-warning-text: var(--st-yellow-800);
+  --st-danger-background: var(--st-red-50);
+  --st-danger-accent: var(--st-red-100);
+  --st-danger-text: var(--st-red-800);
+  --st-typescript-background: var(--st-blue-50);
+  --st-typescript-accent: var(--st-blue-100);
+  --st-typescript-text: var(--st-blue-800);
+  --st-stately-background: var(--st-gray-50);
+  --st-stately-accent: var(--st-gray-100);
+  --st-stately-text: var(--st-gray-700);
+  --st-xstate-background: var(--st-blue-50);
+  --st-xstate-accent: var(--st-blue-100);
+  --st-xstate-text: var(--st-blue-800);
+  --st-success-background: var(--st-green-50);
+  --st-success-accent: var(--st-green-200);
+  --st-success-text: var(--st-green-800);
 }
 
-/* use extra specificity in selector to override defaults */
-
 html[data-theme='dark'], html[data-theme='dark'] body {
-
+  /* Override Infima dark mode defaults */
   --ifm-color-primary: white;
   --ifm-color-primary-dark: white;
   --ifm-color-primary-darker: var(--blue-100);
@@ -512,8 +450,58 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-color-danger-contrast-foreground: rgb(255, 235, 236) ; 
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 
-  /* search */
+  --st-background: var(--st-gray-900);
+  --st-background-secondary: var(--st-gray-800);
+  --st-text: var(--st-gray-300);
+  --st-text-highlight: var(--st-gray-200);
+  --st-heading: var(--st-text-highlight);
+  --st-text-secondary: var(--st-gray-400);
+  --st-text-link: var(--st-blue-300);
+  --st-text-link-hover: var(--st-blue-400);
+  --st-text-link-active: var(--st-blue-400);
+  --st-announcement-bar-text: var(--st-blue-200);
+  --st-announcement-bar-gradient: radial-gradient(circle, var(--st-violet-700) 0%, var(--st-blue-700) 67%, var(--st-blue-700) 90%, var(--st-violet-700) 100%);
+  --st-navbar-background: var(--st-gray-800);
+  --st-search-background: var(--st-gray-900);
+  --st-search-background-active: var(--st-gray-850);
+  --st-header-border: var(--st-gray-700);
+  --st-layout-border: var(--st-gray-700);
+  --st-code-border: var(--st-background);
+  --st-codeblock-background: var(--st-gray-850);
+  --st-code-highlight-background: var(--st-gray-850);
+  --st-highlight-background: var(--st-gray-700);
+  --st-highlight-background-hover: var(--st-gray-600);
+  --st-button-background: var(--st-blue-800);
+  --st-button-background-hover: var(--st-blue-700);
+  --st-button-text: white;
+  --st-icon-filter: invert(100%) brightness(100%);
+  --st-header-link: var(--st-gray-200);
+  --st-footer-link: var(--st-gray-200);
+  --st-link-button-border: var(--st-gray-700);
+  /* alert colours */
+  --st-tip-background: var(--st-gray-800);
+  --st-tip-accent: var(--st-gray-700);
+  --st-tip-text: var(--st-gray-200);
+  --st-warning-background: var(--st-yellow-900);
+  --st-warning-accent: var(--st-yellow-800);
+  --st-warning-text: var(--st-yellow-200);
+  --st-danger-background: var(--st-red-900);
+  --st-danger-accent: var(--st-red-800);
+  --st-danger-text: var(--st-red-200);
+  --st-typescript-background: var(--st-blue-900);
+  --st-typescript-accent: var(--st-blue-800);
+  --st-typescript-text: var(--st-blue-200);
+  --st-stately-background: var(--st-gray-800);
+  --st-stately-accent: var(--st-gray-700);
+  --st-stately-text: var(--st-gray-200);
+  --st-xstate-background: var(--st-blue-900);
+  --st-xstate-accent: var(--st-blue-800);
+  --st-xstate-text: var(--st-blue-200);
+  --st-success-background: var(--st-green-900);
+  --st-success-accent: var(--st-green-800);
+  --st-success-text: var(--st-green-200);
 
+  /* search */
   --docsearch-primary-color:var(--st-text); 
   --docsearch-text-color: var(--st-text-highlight); 
   --docsearch-highlight-color:var(--st-gray-600); 
@@ -536,13 +524,12 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --docsearch-key-shadow: inset 0 -3px 0 0 var(--st-gray-600);  
   --docsearch-footer-background:var(--st-gray-800); 
 
-
   /* navbar */
-
   --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none; 
-  
 }
+
+/* Shiki Twoslash code examples */
 
 [data-theme='light'] .shiki.github-dark {
   display: none;
@@ -741,6 +728,7 @@ html .DocSearch-Prefill {
 
 html .DocSearch-Hits mark {
   color: var(--docsearch-hit-mark) !important;
+  font-weight: bold;
 }
 
 html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-action, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-icon, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-path, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-text, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-title, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-Tree, html .DocSearch-Hit[aria-selected=true] mark, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-action, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-icon, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-path, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-text, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-title, html .DocSearch-Hit[aria-selected=true] html .DocSearch-Hit-Tree, html .DocSearch-Hit[aria-selected=true] mark {
