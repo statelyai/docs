@@ -17,11 +17,9 @@ export default function FooterLinksSimple({links}) {
     <div className="footer__links">
       <ul className="footer__links">
         {links.map((item, i) => (
-          <React.Fragment key={i}>
-            <li>
-              <SimpleLinkItem item={item} />
-            </li>
-          </React.Fragment>
+          <li key={i}>
+            <SimpleLinkItem item={item} />
+          </li>
         ))}
       </ul>
     </div>
