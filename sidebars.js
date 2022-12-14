@@ -192,7 +192,6 @@ const sidebars = {
           ],
         },
         'xstate/templates',
-        'xstate/packages/xstate-cli',
         'xstate/packages/xstate-fsm',
         'xstate/packages/xstate-graph',
         'xstate/packages/xstate-test',
