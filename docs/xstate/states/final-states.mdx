@@ -4,13 +4,13 @@ title: Final states
 
 # Final states
 
-<!-- deps: ["parent-and-child-states", "after"] -->
+When a machine reaches the [final state](/states/final-states), it can no longer receive any events, and anything running inside it is canceled and cleaned up. A machine can have multiple final states or no final states.
 
-Most processes with states will have a _final state_, the last state when the process is finished. The final state is represented by a double border on the state’s rounded rectangle box.
+:::studio
 
-In the dog walking statechart, the final state would be **walk complete**.
+[Read more about how to use final states in the Stately Studio](/states/final-states).
 
-![Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete.](/final-state.svg)
+:::
 
 To indicate that a state node is final, set its `type` property to `final`:
 

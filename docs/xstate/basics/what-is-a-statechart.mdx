@@ -33,12 +33,13 @@ const machine = createMachine({
 
 ### Initial state
 
-Any process with states will also have an _initial state_, the default state in which the process exists until an event changes its state.
-The initial state is represented by a filled circle with an arrow pointing from the circle to the initial state.
+When a state machine starts, it enters the [**initial state**](/states/initial-states) first. A machine can only have one top-level initial state.
 
-<!-- no alt because the image is already described in the surrounding text \-->
+:::studio
 
-![](/initial-state.svg)
+[Read about the basics on initial states](/state-machines-and-statecharts/#initial-state), and [how to use initial states in the Stately Studio](/states/initial-states).
+
+:::
 
 In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
 
@@ -56,20 +57,13 @@ const machine = createMachine({
 
 ## Transitions and events
 
-<!-- deps: ["states"] -->
-<!-- loom: 634d662da24c42c1897be9d92c7acd8c -->
+A machine moves from state to state through [transitions](/transitions-and-events/transitions-and-events). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.
 
-The dog goes between **asleep** and **awake** through _transitions_, symbolized by an arrow pointing from one state to the next state in the process’s sequence.
+:::studio
 
-<!-- no alt because the image is already described in the surrounding text \-->
+[Read about the basics of transitions and events](/state-machines-and-statecharts#transitions-and-events), and [how to use tranisitons and events in the Stately Studio](/transitions-and-events/intro).
 
-![](/transitions-events.svg)
-
-A transition is caused by an _event_ that results in the change of state. Transitions are labeled with their events.
-
-Transitions and events are _deterministic_. Deterministic means that each transition and event always points to the same next state, and always produces the same result from their given starting condition every time the process is run. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
-
-With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
+:::
 
 Use the `on` property inside the desired state to represent its transitions.
 
@@ -143,11 +137,10 @@ const INVALID_EVENTS = [
 ];
 ```
 
-<!-- this will be a flagged TS tip \-->
+:::typescript
 
 ### Events in TypeScript
 
-<!-- deps: ["transitions-and-events"] -->
 
 In TypeScript, you can strongly type your events by passing a _[union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)_ of all the events to the `schema` property.
 
@@ -166,7 +159,7 @@ const machine = createMachine({
 
 Wherever you send an event to a machine, or access the event inside the machine, the event will be strongly typed.
 
-<!-- end flagged TS tip \-->
+:::
 
 ## Summary
 

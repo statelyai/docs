@@ -4,17 +4,13 @@ title: Parent and child states
 
 # Parent and child states
 
-<!-- deps: ["states", "transitions-and-events"] -->
+States can contain more states, also known as [child states](/states/parent-states). These child states are only active when the parent state is active. Child states are nested inside their parent states.
 
-A **parent state** is a state that can contain more states, also known as its child states. These child states can only happen when the parent state is happening. Inside the **on a walk** state, there could be the child states of **walking**, **running** and **stopping to sniff good smells**.
+:::studio
 
-A parent state is symbolized by a labeled rounded rectangle box that acts as a container for its child states.
+[Read more about using parent and child states in the Stately Studio](/docs/states/parent-states).
 
-<!-- no alt because the image is already described in the surrounding text \-->
-
-![](/parent-state.svg)
-
-A parent state must also specify which child state is the initial state. In the **on a walk** parent state, the initial child state is **walking**.
+:::
 
 In XState, you can specify a parent state using the `states` attribute on child nodes:
 
@@ -75,8 +71,6 @@ Note in the example above that transitions can be marked at different levels of 
 However, the machine can only receive the `stop` event inside `on a walk.walking`. Events can be handled differently at different levels of the statechart, which is powerful for handling complex requirements.
 
 ## The root node
-
-<!-- deps: [parent-states, actions] -->
 
 After learning about parent states, you might have noticed that all statecharts are parent states! Every statechart has a single _root state_ which you can treat just like any other state.
 
@@ -171,8 +165,6 @@ If the machine is in the `friendIsNotLookingAtYou` or `friendIsNotWhoYouThoughtT
 Adding transitions in the parent state helps reduce duplication when defining transitions.
 
 ## Wildcard transitions
-
-<!-- deps: ["transitions-and-events", "event-listeners-in-parent-states"] -->
 
 A transition specified with a wildcard `*` is triggered by any event not already handled by the current state.
 
