@@ -294,7 +294,7 @@ html, body {
   --ifm-alert-border-left-width: 1px;
   --ifm-alert-border-radius: 0.5rem;
   --ifm-alert-padding-vertical: 0.75rem;
-  --ifm-alert-padding-horizontal: 1rem;
+  --ifm-alert-padding-horizontal: 0.65rem;
 }
 
 html[data-theme='light'], html[data-theme='light'] body {
@@ -963,12 +963,18 @@ footer [class*=iconExternalLink] {
   border-radius: var(--ifm-alert-border-radius);
   box-shadow: none;
   color: var(--ifm-alert-foreground-color);
+  display: grid; 
+  grid-template-columns: 1.2em 1fr; 
+  grid-template-rows: 1fr; 
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0; 
   font-size: 0.95rem;
   padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
 }
 
 @media (min-width: 1300px) {
   .alert {
+    --ifm-alert-padding-horizontal: 0.85rem;
     /* pull admonitions into margins so text aligns with paragraph text */
     margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
     margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));

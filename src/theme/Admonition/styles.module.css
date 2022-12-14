@@ -10,13 +10,6 @@
   text-transform: none;
 }
 
-.admonitionIcon {
-  /* slightly offset vertical alignment */
-  margin-top: -1px;
-  margin-right: 0.5rem;
-  float: left;
-}
-
 .admonitionIcon svg {
   vertical-align: middle;
   height: 1.2em;
