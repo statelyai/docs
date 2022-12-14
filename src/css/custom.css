@@ -313,11 +313,11 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-navbar-background: white;
   --st-header-border: var(--st-gray-100);
   --st-layout-border: var(--st-gray-100);
-  --st-code-border: var(--st-green-100);
+  --st-code-border: var(--st-gray-100);
   --st-codeblock-background: white;
-  --st-code-highlight-background: var(--st-green-50);
-  --st-copy-button-background: var(--st-green-100);
-  --st-copy-button-text: var(--st-green-700);
+  --st-code-highlight-background: var(--st-blue-50);
+  --st-copy-button-background: var(--st-blue-100);
+  --st-copy-button-text: var(--st-blue-800);
   --st-highlight-background: var(--st-gray-100);
   --st-highlight-background-hover: var(--st-gray-50);
   --st-button-background: var(--st-blue-200);
