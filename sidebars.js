@@ -82,19 +82,12 @@ const sidebars = {
       type: 'category',
       label: 'Collaboration and sharing',
       items: [
+        'projects',
+        'teams',
+        'discover',
         'import-from-code',
         'export-as-code'
       ]
-    },
-    {
-      type: 'doc', 
-      label:'Projects and teams',
-      id: 'projects-and-teams',
-    },
-    {
-      type: 'doc', 
-      label:'Discover machines',
-      id: 'discover',
     },
     {
       type: 'category',
