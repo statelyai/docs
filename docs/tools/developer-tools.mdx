@@ -44,7 +44,15 @@ If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-i
 createMachine({});
 ```
 
-<!-- TODO: What does the layout string mean? -->
+#### Machine Layout Persistence
+
+Upon opening an XState machine in the VSCode Editor, you may notice a long `@xstate-layout` comment inserted in the code just above the call to `createMachine()`.
+
+```js
+/** @xstate-layout N4IgpgJg5mDOIC5QFEA... */
+```
+
+This layout string is for persisting manual changes you make to the machine’s layout and is automatically updated by the XState Extension whenever layout changes occur. It is not intended to be human-readable nor manually edited. When updates to this string are made by the extension, the file is not saved until a manual save is performed. The layout algorithm is able to interpret this string and automatically format the machine's layout whenever it is re-opened in the Editor.
 
 ## Chrome Devtools
 
