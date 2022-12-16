@@ -3,6 +3,9 @@ title: Welcome to the Stately docs
 slug: /
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # Welcome to the Stately docs
 
 Welcome to the Stately docs! Here you can find all the documentation for the Stately Studio and [XState](/xstate). There are a few ways you might want to get started:
@@ -14,7 +17,15 @@ Welcome to the Stately docs! Here you can find all the documentation for the Sta
 
 The Stately Studio is a suite of tools for building app logic, including the Studio Editor, [developer tools for XState](/tools/developer-tools), and much more coming soon. 
 
-<!-- TODO: screenshot of the studio -->
+<p>
+<ThemedImage
+  alt="A dog walk machine open in the Stately Studio Editor. The dog walk machine has cute puppy images for each state, showing a dog walking and running. The speed up event is selected, and information and options for that transition is shown in an inspector panel on the right."
+  sources={{
+    light: useBaseUrl('/studio.png'),
+    dark: useBaseUrl('/studio-dm.png'),
+  }}
+/>
+</p>
 
 You can use the [Studio Editor](#studio-editor) to model your logic using state machines and statecharts visually; no code required! Collaborate on your machines with coworkers and friends with [shared projects in teams](#projects-and-teams). Use the [XState VS Code extension](/tools/developer-tools) to use the Editor with your codebase inside your code editor, or [export](#export) your code from the Studio into your codebase.
 
@@ -30,13 +41,29 @@ The Studio Editor supports everything you need to visually build state machines 
 
 ### Editor mode
 
-<!-- TODO: screenshot of editor mode -->
+<p>
+<ThemedImage
+  alt="A dog walk machine open in the Stately Studio Editor in Edit mode. The running state is selected, with the right panel showing options for a state."
+  sources={{
+    light: useBaseUrl('/editor.png'),
+    dark: useBaseUrl('/editor-dm.png'),
+  }}
+/>
+</p>
 
 Visually add, modify, and delete states, events, and transitions, as well as data, including actions, descriptions, and invoked actors.
 
 ### Simulation mode
 
-<!-- TODO: screenshot of the simulation mode -->
+<p>
+<ThemedImage
+  alt="A dog walk machine open in the Stately Studio Editor in Simulate mode. The walking state is active, with the speed up and arrive home events both highlighted showing which events could be triggered next. The right panel shows an event log of the states and events taken."
+  sources={{
+    light: useBaseUrl('/simulate.png'),
+    dark: useBaseUrl('/simulate-dm.png'),
+  }}
+/>
+</p>
 
 Run the statechart, trigger events, and see the active state nodes.
 
