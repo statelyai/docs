@@ -6,16 +6,27 @@ title: Typegen
 
 <!-- deps: ["context-typescript","events-typescript","promise-actors"] -->
 
-**Warning: This feature is in beta!** Read the section below on known limitations to find out what we’re actively looking to improve.
+:::caution
 
-You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/packages/xstate-cli).
+**This feature is in beta!** Read the section below on [known limitations](#known-limitations) to find out what we’re actively looking to improve.
 
-How to get started:
+:::
 
-1. Download and install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) **or** install the [CLI](/packages/xstate-cli) and run the `xstate typegen` command with the `--watch` flag.
-2. Open a new file and create a new machine, passing the schema attributes:
+You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/xstate/packages/xstate-cli).
 
-```ts
+#### How to get started with VS Code
+
+All you need to do is to install the [Stately XState extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode).
+
+#### How to get started with the CLI (other editors)
+
+Install the [CLI](/xstate/packages/xstate-cli) and run the `xstate typegen` command with the `--watch` flag.
+
+### Typegen in action
+
+Next try to create a machine, make sure to set the `schema` attributes:
+
+```ts twoslash {4-7}
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
@@ -42,7 +53,7 @@ const machine = createMachine({
 
 3. Add `tsTypes: {}` to the machine and save the file:
 
-```ts
+```ts {1}
 const machine = createMachine({
   tsTypes: {},
   schema: {
@@ -59,7 +70,7 @@ const machine = createMachine({
 
 4. The extension should automatically add a generic to the machine:
 
-```ts
+```ts {1}
 const machine = createMachine({
   tsTypes: {} as import('./filename.typegen').Typegen0,
   /* ... */
@@ -68,7 +79,7 @@ const machine = createMachine({
 
 5. Add a second parameter into the `createMachine` call. This second parameter is where you implement the machine’s actions, actors, guards and delays.
 
-```ts
+```ts {4-15}
 const machine = createMachine(
   {
     /* ... */
@@ -184,7 +195,7 @@ createMachine({
 
 We recommend you gitignore the generated files (`*filename*.typegen.ts`) from your repository.
 
-You can use the [CLI](/packages/xstate-cli) to regenerate them on CI, for instance, via a postinstall script:
+You can use the [CLI](/xstate/packages/xstate-cli) to regenerate them on CI (Continuous Integration), for instance, via a postinstall script:
 
 ```json
 {
@@ -219,6 +230,14 @@ With typegen, using enums is no longer necessary as all `state.matches` types ar
 
 Instead of enums, use typegen and rely on the strength of the type-safety provided.
 
+## Nesting typegen files
+
+When you use typegen, you'll notice that it generates new type files.
+If you use VS Code we have made it easy for you to nest these files.
+Our extension will automatically ask you if you want to enable nesting.
+If you want to know more about file-nesting, you can [read the blog post where we introduced nesting typegen files
+](https://stately.ai/blog/nesting-xstate-typegen-files).
+
 ## Known limitations
 
 There are a few known limitations with typegen, which we are working to fix.
@@ -226,25 +245,3 @@ There are a few known limitations with typegen, which we are working to fix.
 ### “Always” transitions and raised events
 
 Typegen might incorrectly annotate actions, actors, guards and delays if they are called “in response” to always transitions or raised events. We are working on fixing this, both in XState and in the typegen.
-
-## Config Objects
-
-The generic types for `MachineConfig<TContext, any, TEvent>` are the same as those for `createMachine<TContext, TEvent>`, which is useful when you are defining a machine config object _outside_ of the `createMachine(...)` function, and helps prevent [inference errors](https://github.com/statelyai/xstate/issues/310):
-
-```ts
-import { MachineConfig } from 'xstate';
-
-const myMachineConfig: MachineConfig<TContext, any, TEvent> = {
-  id: 'controller',
-  initial: 'stopped',
-  states: {
-    stopped: {
-      /* ... */
-    },
-    started: {
-      /* ... */
-    },
-  },
-  // ...
-};
-```
