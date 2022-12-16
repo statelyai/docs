@@ -21,7 +21,7 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: 'doc',
-      label: 'Studio overview',
+      label: 'Start here',
       id: 'studio',
     },
     {
@@ -99,7 +99,6 @@ const sidebars = {
           label: 'Intro',
         },
         'xstate/installation',
-        'tools/developer-tools',
         {
           type: 'category',
           label: 'Basics',
@@ -208,10 +207,16 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Other Stately tools',
+      label: 'Developer tools',
       items: [
+        'tools/xstate-vscode-extension',
         'tools/visualizer',
-        'tools/inspector'
+        'tools/inspector',
+        {
+          type: 'doc',
+          label: 'Other tools',
+          id: 'tools/developer-tools',
+        },
       ],
     },
     {
