@@ -26,7 +26,7 @@ const sidebars = {
     },
     {
       type: 'doc', 
-      label:'Learn the concepts',
+      label:'State machines and statecharts',
       id: 'state-machines-and-statecharts',
     },
     {
