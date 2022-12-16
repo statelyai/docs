@@ -205,7 +205,7 @@ const gameMachine = createMachine(
 
 Since unguarded “always” transitions always run, you should be careful not to create an infinite loop.
 
-Let’s revisit our initial example and add a transition back to `a’ from `b`. Here we add it using an “always” transition, which is not good. This machine will run forever and just keep transitioning between the two states.
+Let’s revisit our initial example and add a transition back to `a` from `b`. Here we add it using an “always” transition, which is not good. This machine will run forever and just keep transitioning between the two states.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
