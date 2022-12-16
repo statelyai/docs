@@ -2,6 +2,8 @@
 title: Always
 ---
 
+# Always
+
 <!-- deps: ["transitions-and-events", "guards", "self-transitions"] -->
 
 Sometimes you’ll need to make checks in your statechart’s current state _without_ receiving an event. You can do this with an eventless transition.
@@ -32,6 +34,8 @@ const machine = createMachine({
 
 Using the `always` transition means that `a` will _instantly_ transition to `b` when the machine enters the `a` state.
 
+## Adding guards
+
 You can also pair `always` transitions with a guard:
 
 ```ts twoslash {7-12}
@@ -57,7 +61,7 @@ const machine = createMachine(
   },
   {
     guards: {
-      isNotAdmin: (ctx) => ctx.user.role !== 'admin',
+      shouldTransition: (ctx) => ctx.user.role === 'admin',
     },
   }
 );
@@ -66,6 +70,8 @@ const machine = createMachine(
 In the example above, the transition will only happen when `shouldTransition` returns true. Otherwise, the machine will stay in the same state.
 
 “Always” transitions are checked immediately when the machine enters the state node, after checking for regular transitions and before checking if there are any transitions for any other queued events.
+
+## Reducing duplication
 
 “Always” transitions are extremely useful for reducing duplication in guards, along with other uses.
 
@@ -195,4 +201,33 @@ const gameMachine = createMachine(
 );
 ```
 
-<!-- TODO - discuss the dangers of infinite loops with always \-->
+## Beware of infinite loops
+
+Since unguarded “always” transitions always run, you should be careful not to create an infinite loop.
+
+Let’s revisit our initial example and add a transition back to `a` from `b`. Here we add it using an “always” transition, which is not good. This machine will run forever and just keep transitioning between the two states.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+/* 🚨 Don't do this at home 🚨 */
+const infiniteLoopMachine = createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      always: [
+        {
+          target: 'b',
+        },
+      ],
+    },
+    b: {
+      always: [
+        {
+          target: 'a',
+        },
+      ],
+    },
+  },
+});
+```
