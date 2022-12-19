@@ -21,17 +21,17 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: 'doc',
-      label: 'Studio overview',
+      label: '➡️ Start here',
       id: 'studio',
     },
     {
       type: 'doc', 
-      label:'Learn the concepts',
+      label:'🧠 State machines and statecharts',
       id: 'state-machines-and-statecharts',
     },
     {
       type: 'category',
-      label: 'States',
+      label: '📫 States',
       items: [
         {
           type: 'doc',
@@ -47,7 +47,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Transitions and events',
+      label: '💥 Transitions and events',
       items: [
         {
           type: 'doc',
@@ -65,7 +65,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Actions and actors',
+      label: '💬 Actions and actors',
       items: [
         'actions-and-actors/entry-and-exit-actions',
         'actions-and-actors/actors',
@@ -73,14 +73,14 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Modeling',
+      label: '🧱 Modeling',
       items: [
         'descriptions',
       ]
     },
     {
       type: 'category',
-      label: 'Collaboration and sharing',
+      label: '👪 Collaboration and sharing',
       items: [
         'projects',
         'teams',
@@ -91,7 +91,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'XState',
+      label: '🛠️ XState',
       items: [
         {
           type: 'doc',
@@ -99,7 +99,6 @@ const sidebars = {
           label: 'Intro',
         },
         'xstate/installation',
-        'tools/developer-tools',
         {
           type: 'category',
           label: 'Basics',
@@ -192,7 +191,6 @@ const sidebars = {
           ],
         },
         'xstate/templates',
-        'xstate/packages/xstate-cli',
         'xstate/packages/xstate-fsm',
         'xstate/packages/xstate-graph',
         'xstate/packages/xstate-test',
@@ -209,19 +207,26 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Other Stately tools',
+      label: '🧰 Developer tools',
       items: [
+        'tools/xstate-vscode-extension',
         'tools/visualizer',
-        'tools/inspector'
+        'tools/inspector',
+        {
+          type: 'doc',
+          label: 'Other tools',
+          id: 'tools/developer-tools',
+        },
       ],
     },
     {
       type: 'category',
-      label: 'Examples',
+      label: '🧑‍🏫 Examples',
       items: ['examples/intro'],
     },
     {
       type: 'doc',
+      label: '📖 Glossary',
       id: 'glossary',
     },
   ],

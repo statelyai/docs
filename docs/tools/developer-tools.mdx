@@ -1,60 +1,45 @@
 ---
-title: Developer tools
+title: 'Developer tools'
+description: 'Find out more about the Stately XState CLI (Command Line Interface) and Chrome Devtools.'
 ---
 
-## IDE extensions
+Find more about our [XState CLI (Command Line Interface)](#xstate-cli-command-line-interface) and [Chrome Devtools](#chrome-devtools) below. We plan to make extensions for more IDEs (Integrated Development Environments) in the future.
 
-Find more about our XState VSCode extension below. We plan to make extensions for more IDEs (Integrated Development Environments) in the future.
+:::xstate
 
-<!-- deps: [stately-editor] -->
+[Read about our XState VS Code extension on its own page](/tools/xstate-vscode-extension).
 
-### XState VSCode extension
+:::
 
-The XState VSCode extension enhances the XState development experience by providing VSCode users with features like visual editing, autocomplete, typegen and linting.
+## XState CLI (Command Line Interface)
 
-#### Installation
+The [@xstate/cli (Command Line Interface) package](https://github.com/statelyai/xstate-tools/tree/master/apps/cli) contains commands for running typegen. The package is small right now, but we plan to add more features.
 
-1. Open the command palette with `shift` + `cmd/ctrl` + `p`.
-2. Search for the Install Extensions command and hit enter to open the Extensions search.
-3. Search for XState to find the XState VSCode extension and install the extension using the Install button.
+### Installation
 
-Once installed, you can run `XState: Open Visual Editor` from the command palette to open any machine at your cursor’s location.
+Run `npm install @xstate/cli`.
 
-If you have code lens enabled (this can be enabled using `editor.codeLens` setting), ‘Open Visual Editor’ will also float above each `createMachine` call.
+### Commands
 
-You can also [download the VSCode extension from the VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or [download the VSCode extension from the Open VSX marketplace](https://open-vsx.org/extension/statelyai/stately-vscode).
+#### `xstate typegen <files>`
 
-#### Features
+Use the following command to run the typegen against a glob.
 
-- **Visually edit machines**. Edit any XState machine with drag-and-drop using the integrated [Stately Visual editor](https://stately.ai/editor).
-- **Autocomplete**. Intelligent suggestions for transition targets and initial states.
-- **Linting**. Highlights errors and potential bugs in your XState machine definitions.
-- **Jump to definition**. Navigate around machines easily with jump to definition on targets, actions, guards, actors and more.
+`xstate typegen "src/**/*.ts?(x)"`
 
-#### Refactors
+Running typegen will scan every targeted file and generate a typegen file to accompany it. It will also import the typegen into your file, as described in [our typegen documentation](/typescript/typegen).
 
-When hovering over a named action, guard or actor in a machine, press the lightbulb icon to view available refactors.
+:::caution
 
-#### Ignoring machines
+Ensure you wrap your glob in quotes for correct execution. If you don’t wrap the glob in quotes, it will be interpreted as a list of files, not a glob, which will give unexpected results.
 
-If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-ignore-next-line` comment on the line above the machine:
+:::
 
-```js
-// xstate-ignore-next-line
-createMachine({});
-```
+#### Options
 
-#### Machine Layout Persistence
+`xstate typegen "src/**/*.ts?(x)" --watch`
 
-Upon opening an XState machine in the VSCode Editor, you may notice a long `@xstate-layout` comment inserted in the code just above the call to `createMachine()`.
-
-```js
-const machine =
-/** @xstate-layout N4IgpgJg5mDOIC5QFEA... */
-createMachine({...});
-```
-
-This layout string is for persisting manual changes you make to the machine’s layout and is automatically updated by the XState Extension whenever layout changes occur. It is not intended to be human-readable nor manually edited. When updates to this string are made by the extension, the file is not saved until a manual save is performed. The layout algorithm is able to interpret this string and automatically format the machine's layout whenever it is re-opened in the Editor.
+Runs the task on a watch, monitoring for changed files and running the typegen script against them.
 
 ## Chrome Devtools
 
@@ -62,7 +47,7 @@ This layout string is for persisting manual changes you make to the machine’s 
 
 ### Quick Start
 
-- Run `npm install`
-- Run `npm start` to build the `/panel` in development mode
-- Go to [`chrome://extensions`](chrome://extensions) and **Load unpacked** this directory (`/packages/xstate-dev`)
-- Select the `XState` extension in the dev tools
+- Run `npm install`.
+- Run `npm start` to build the `/panel` in development mode.
+- Go to [`chrome://extensions`](chrome://extensions) and **Load unpacked** this directory (`/packages/xstate-dev`).
+- Select the `XState` extension in the dev tools.

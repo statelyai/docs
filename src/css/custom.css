@@ -294,7 +294,7 @@ html, body {
   --ifm-alert-border-left-width: 1px;
   --ifm-alert-border-radius: 0.5rem;
   --ifm-alert-padding-vertical: 0.75rem;
-  --ifm-alert-padding-horizontal: 1rem;
+  --ifm-alert-padding-horizontal: 0.65rem;
 }
 
 html[data-theme='light'], html[data-theme='light'] body {
@@ -313,11 +313,11 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-navbar-background: white;
   --st-header-border: var(--st-gray-100);
   --st-layout-border: var(--st-gray-100);
-  --st-code-border: var(--st-green-100);
+  --st-code-border: var(--st-gray-100);
   --st-codeblock-background: white;
-  --st-code-highlight-background: var(--st-green-50);
-  --st-copy-button-background: var(--st-green-100);
-  --st-copy-button-text: var(--st-green-700);
+  --st-code-highlight-background: var(--st-blue-50);
+  --st-copy-button-background: var(--st-blue-100);
+  --st-copy-button-text: var(--st-blue-800);
   --st-highlight-background: var(--st-gray-100);
   --st-highlight-background-hover: var(--st-gray-50);
   --st-button-background: var(--st-blue-200);
@@ -434,7 +434,9 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-layout-border: var(--st-gray-700);
   --st-code-border: var(--st-background);
   --st-codeblock-background: var(--st-gray-850);
-  --st-code-highlight-background: var(--st-gray-850);
+  --st-code-highlight-background: var(--st-gray-800);
+  --st-copy-button-background: var(--st-blue-700);
+  --st-copy-button-text: var(--st-blue-100);
   --st-highlight-background: var(--st-gray-800);
   --st-highlight-background-hover: var(--st-gray-700);
   --st-button-background: var(--st-blue-800);
@@ -524,6 +526,10 @@ html[data-theme='light'] pre.shiki {
 html[data-theme='dark'] pre.shiki {
   background: var(--st-codeblock-background) !important;
   border-color: var(--st-code-border);
+}
+
+html pre.shiki div.highlight {
+  background: var(--st-code-highlight-background) !important;
 }
 
 html pre.shiki .copy-button {
@@ -963,12 +969,18 @@ footer [class*=iconExternalLink] {
   border-radius: var(--ifm-alert-border-radius);
   box-shadow: none;
   color: var(--ifm-alert-foreground-color);
+  display: grid; 
+  grid-template-columns: 1.2em 1fr; 
+  grid-template-rows: 1fr; 
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0; 
   font-size: 0.95rem;
   padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
 }
 
 @media (min-width: 1300px) {
   .alert {
+    --ifm-alert-padding-horizontal: 0.85rem;
     /* pull admonitions into margins so text aligns with paragraph text */
     margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
     margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));

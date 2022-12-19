@@ -4,17 +4,13 @@ title: Parallel states
 
 # Parallel states
 
-<!-- deps: ["states", "parent-and-child-states"] -->
+A [parallel state](/states/parallel-states) is a parent state separated into multiple regions of child states, where each region is active simultaneously.
 
-A parallel state is a parent state separated into multiple regions of child states, where each region is active simultaneously. Regions are represented by a dashed line around each region.
+:::studio
 
-Inside the **on a walk** state, there could be two regions. One region contains the dog’s activity child states of **walking**, **running** and **stopping to sniff good smells**, and the other region contains the dog’s tail states of **wagging** and **not wagging**. The dog can walk and wag its tail, run and wag its tail or stop and sniff while wagging its tail; it can also do any of these activities without wagging its tail.
+[Read more about how to use parallel states in the Stately Studio](/docs/states/parallel-states).
 
-<!-- no alt because the image is already described in the surrounding text-->
-
-![](/parallel-states.svg)
-
-Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
+:::
 
 You can specify a parallel state node on the machine and/or any nested child state by setting `type: 'parallel'`.
 
