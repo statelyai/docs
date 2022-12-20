@@ -21,17 +21,17 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: 'doc',
-      label: '➡️ Start here',
+      label: '➡️  Start here',
       id: 'studio',
     },
     {
       type: 'doc', 
-      label:'🧠 State machines and statecharts',
+      label:'🧠  State machines and statecharts',
       id: 'state-machines-and-statecharts',
     },
     {
       type: 'category',
-      label: '📫 States',
+      label: '📫  States',
       items: [
         {
           type: 'doc',
@@ -47,7 +47,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '💥 Transitions and events',
+      label: '💥  Transitions and events',
       items: [
         {
           type: 'doc',
@@ -65,7 +65,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '💬 Actions and actors',
+      label: '💬  Actions and actors',
       items: [
         'actions-and-actors/entry-and-exit-actions',
         'actions-and-actors/actors',
@@ -73,14 +73,14 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧱 Modeling',
+      label: '🧱  Modeling',
       items: [
         'descriptions',
       ]
     },
     {
       type: 'category',
-      label: '👪 Collaboration and sharing',
+      label: '👪  Collaboration and sharing',
       items: [
         'projects',
         'teams',
@@ -91,7 +91,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🛠️ XState',
+      label: '🛠️  XState',
       items: [
         {
           type: 'doc',
@@ -207,7 +207,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧰 Developer tools',
+      label: '🧰  Developer tools',
       items: [
         'tools/xstate-vscode-extension',
         'tools/visualizer',
@@ -221,12 +221,12 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧑‍🏫 Examples',
+      label: '🧑‍🏫  Examples',
       items: ['examples/intro'],
     },
     {
       type: 'doc',
-      label: '📖 Glossary',
+      label: '📖  Glossary',
       id: 'glossary',
     },
   ],
