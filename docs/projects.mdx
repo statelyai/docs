@@ -2,21 +2,48 @@
 title: Projects
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 A project is a collection of machines that helps you organize your personal machines and collaborate with others on your application logic.
 
-<!-- TODO: screenshot -->
+<p>
+<ThemedImage
+  alt="Stately Studio My Projects page showing three pages of projects along with each project’s name, number of machines, and whether the project is public, private, or unlisted."
+  sources={{
+    light: useBaseUrl('/projects/my-projects.png'),
+    dark: useBaseUrl('/projects/my-projects-dm.png'),
+  }}
+/>
+</p>
 
 You can access your projects from **My Projects** at the left of the Studio’s top bar when you’re signed into the Stately Studio. **My Projects** lists your personal projects and is one of the locations where you can create new projects.
 
 When you select a project, the first machine in the project will open in the Studio Editor. The other machines in your project are accessible from the **Machines** list in the left drawer menu.
 
-<!-- TODO: screenshot -->
+<p>
+<ThemedImage
+  alt="Stately Studio Editor showing the Machines list in the left drawer for the Stately Studio Tutorials project. The selected machine is called ‘Parent states.’"
+  sources={{
+    light: useBaseUrl('/projects/machines-list.png'),
+    dark: useBaseUrl('/projects/machines-list-dm.png'),
+  }}
+/>
+</p>
 
 ### Shared projects
 
 Shared projects are available to [Teams](/teams). Team projects are listed inside their Team in the Stately Studio workspace.
 
-<!-- TODO: screenshot -->
+<p>
+<ThemedImage
+  alt="Stately Studio Projects page for the Voyager team, showing a list of four projects, one with public machines, two with private machines, and one with unlisted machines."
+  sources={{
+    light: useBaseUrl('/projects.png'),
+    dark: useBaseUrl('/projects-dm.png'),
+  }}
+/>
+</p>
 
 :::studio
 
@@ -55,13 +82,21 @@ Only team members with the **Owner**, **Admin**, or **Editor** roles can create 
 
 ### Move a project between teams
 
-You can move projects between your teams if you have an [**Owner**](teams#owner-role), [**Admin**](teams#admin-role), or [**Editor**](teams#editor-role) role on both teams.
-
-<!-- TODO: screenshot -->
+You can move projects between your teams if you have an [**Owner**](teams#owner-role) role on both teams.
 
 1. Use the **Share** button in the Studio’s top bar to open the Share dialog.
 2. Choose the destination team from the dropdown menu in the Move project section.
 3. Confirm that you want to move the project from the project move warning dialog using the **Move to *project name*** button.
+
+<p>
+<ThemedImage
+  alt="Stately Studio Editor page showing the Share modal with the options for changing project visibility and moving projects to another team."
+  sources={{
+    light: useBaseUrl('/projects/move-projects.png'),
+    dark: useBaseUrl('/projects/move-projects-dm.png'),
+  }}
+/>
+</p>
 
 <!-- TODO: ### How to move a machine between projects -->
 
@@ -73,16 +108,12 @@ A project can be **public**, **unlisted**, or **private**. If the project is a s
 - Unlisted projects are visible to everyone with the project’s URL but are not findable on the Discover page or listed on your profile page.
 - Private projects are only visible to you and the team that owns the project.
 
-<!-- TODO: screenshot -->
-
 1. Use the **Share** button in the Studio’s top bar to open the Share dialog.
 2. Toggle the project’s visibility between **public**, **unlisted**, or **private** from the dropdown menu in the Share dialog.
 
 ### Favorite a project
 
 You can favorite your own projects and other people’s projects. Favoriting a project gives you easy access to these projects in the future, as your **Favorites** are listed in the left sidebar of the Studio workspace. You might want to favorite projects you find inspiring or educational so that you can refer back to them later.
-
-<!-- TODO: screenshot -->
 
 You can favorite a project from **My Projects**, **Discover**, and team projects.
 
