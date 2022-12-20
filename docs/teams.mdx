@@ -3,9 +3,20 @@ title: Teams
 description: 'You can create and join teams in the Stately Studio to share and collaborate on team projects.'
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 You can create and join teams in the Stately Studio to share and collaborate on team projects.
 
-<!-- TODO: screenshot -->
+<p>
+<ThemedImage
+  alt="Stately Studio Team page for the Voyager team, showing Captain Janeway with the owner and admin role, Commander Chakotay with an admin role, Lieutenant Tuvok, Lieutenant Torees, and Lieutenant Paris with Editor roles, and Ensign Kim with a Viewer role."
+  sources={{
+    light: useBaseUrl('/teams.png'),
+    dark: useBaseUrl('/teams-dm.png'),
+  }}
+/>
+</p>
 
 :::studio
 
@@ -94,11 +105,23 @@ You need to have [enough seats on your Professional plan](#teams-members-and-pro
 3. Enter the invitee’s email address and choose their role from the dropdown menu.
 4. Use the **Invite to team** button to send the invitation.
 
+<p>
+<ThemedImage
+  alt="Stately Studio Team page for the Voyager team, showing the form to invite members via email and a pending invitation for Seven of Nine with the Viewer role."
+  sources={{
+    light: useBaseUrl('/teams/pending-invitations.png'),
+    dark: useBaseUrl('/teams/pending-invitations-dm.png'),
+  }}
+/>
+</p>
+
 The invitation will be sent to the invitee’s email address. The invitee will appear as a team member in the **Pending** section of the **Members** page until they accept the invitation. Once the invitation is accepted, the team member will be listed on the **Members** page, organized by role. 
 
-*A subscription seat is only taken up at the time of accepting the invitation. Any particular team member is considered to occupy a single seat even if they are a member of more than one team.
+:::studio
 
-<!-- TODO: screenshot -->
+A subscription seat is only taken up at the time of accepting the invitation. Any particular team member is considered to occupy a single seat even if they are a member of more than one team.
+
+:::
 
 ## Change a team member’s role
 
@@ -108,7 +131,15 @@ To change a team member’s role, you must have the [Owner role](#owner-role) or
 2. Navigate to the **Members** tab on the team page.
 2. Use the **...** triple dot contextual menu alongside the team member’s name in the **Members** list to choose from the options **Make a Viewer**, **Make an Editor**, or **Make an Admin**.
 
-<!-- TODO: screenshot -->
+<p>
+<ThemedImage
+  alt="Stately Studio Team page for the Voyager team, showing the options for Lieutenant Tuvok as ‘Make a Viewer’, ‘Make an Editor,’ and ‘Remove from team.’"
+  sources={{
+    light: useBaseUrl('/teams/edit-role.png'),
+    dark: useBaseUrl('/teams/edit-role-dm.png'),
+  }}
+/>
+</p>
 
 ## Remove a member from a team
 
