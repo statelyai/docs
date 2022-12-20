@@ -830,6 +830,14 @@ html [class*=toggleButton_node_modules] {
 
 /* Menu sidebar */
 
+@media (min-width: 997px) {
+  @supports (scrollbar-gutter: stable) {
+    .menu_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
+      padding-top: 1.5rem !important; /* line up vertically with toc menu items */
+    }
+  }
+}
+
 .menu { 
   overflow-x: hidden; 
 }
