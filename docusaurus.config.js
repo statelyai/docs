@@ -9,14 +9,16 @@ const config = {
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
   baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/docs/',
+  baseUrlIssueBanner: false,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
+  staticDirectories: ['static'],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'statelyai', // Usually your GitHub org/user name.
-  projectName: 'docusaurus-docs', // Usually your repo name.
+  projectName: 'docs', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
