@@ -685,16 +685,17 @@ code {
   color: var(--st-text-link);
 }
 
-html div[role="banner"][class*="announcementBar"] {
+html div[class*="announcementBar"] {
   background: var(--announcement-background) !important;
   box-shadow: none;
   color: var(--announcement-text);
-  font-size: 1rem !important;
+  font-size: 0.9rem !important;
   height: auto !important; /* override default variable */
   border-bottom: none;
 }
 
-html div[role="banner"][class*="announcementBar"] [class*="announcementBarContent"] {
+html div[class*="announcementBar"] [class*="announcementBarContent"] {
+  background: none !important;
   padding: 0.35rem 0 !important;
 }
 
