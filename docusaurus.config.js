@@ -36,7 +36,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
 
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/statelyai/tree/main/docusaurus-docs/',
+          editUrl: 'https://github.com/statelyai/docs/tree/main/',
           admonitions: {
             tag: ':::',
             keywords: [
