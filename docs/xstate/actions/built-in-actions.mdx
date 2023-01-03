@@ -48,77 +48,29 @@ send((context, event) => {
 ```
 
 ### Sending events to actors
-With the `send` action, events can be sent to actors via a [target expression](#send-targets):
+With the `sendTo` action, events can be sent to actors:
 
-```ts twoslash {12-16}
+```ts twoslash {13-14}
 // @noErrors
-import { assign, createMachine, send, spawn } from 'xstate';
+import { actions, AnyActorRef, assign, createMachine, spawn } from 'xstate';
+const { sendTo } = actions;
 
 const machine = createMachine({
-  // ...
+  schema: { context: {} as { someRef: AnyActorRef } },
   states: {
     active: {
       entry: assign({
-        someRef: () => spawn(someMachine)
+        someRef: () => spawn(someMachine),
       }),
       on: {
         SOME_EVENT: {
-          // use a target expression to send an event
-          // to the actor reference
-          actions: send(
-            { type: 'PING' },
-            { to: (context) => context.someRef })
-        }
-      }
-    }
-  }
+          actions: (context) =>
+            sendTo(context.someRef, { type: 'PING' }),
+        },
+      },
+    },
+  },
 });
-```
-
-:::tip
-
-If you provide an unique `name` argument to `spawn`, you can reference it in the target expression:
-
-```ts twoslash {4,10}
-// @noErrors
-import { assign, createMachine, send, spawn } from 'xstate';
-// ---cut---
-const loginMachine = createMachine({
-  // ...
-  entry: assign({
-    formRef: () => spawn(formMachine, 'form')
-  }),
-  states: {
-    idle: {
-      on: {
-        LOGIN: {
-          actions: send({ type: 'SUBMIT' }, { to: 'form' })
-        }
-      }
-    }
-  }
-});
-```
-:::
-
-### Send targets
-An event sent from a `send` action creator can signify that it should be sent to specific targets,
-such as [invoked services](../actors/promises) or [spawned actors](../actors/spawn).
-This is done by specifying the `{ to: ... }` property in the `send` action:
-
-```ts twoslash
-// @noErrors
-import { send } from 'xstate';
-// ---cut---
-// ...
-invoke: {
-  id: 'some-service-id',
-  src: 'someService',
-  // ...
-},
-// ...
-// Indicates to send { type: 'SOME_EVENT' } to the invoked service
-actions: send({ type: 'SOME_EVENT' }, { to: 'some-service-id' })
 ```
 
 ## Raise action
