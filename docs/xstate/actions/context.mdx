@@ -27,7 +27,9 @@ const machine = createMachine({
 });
 ```
 
-## Updating context
+Next, we'll see how to update the context using the assign action.
+
+## Assign action
 
 <!-- deps: ["context", "actions", "self-transitions"] -->
 
@@ -35,14 +37,20 @@ Assigning new values to the context in XState is done through the `assign` actio
 
 The `assign` action takes the context _assigner_, representing how values should be assigned in the current context. The _assigner_ can be an object:
 
-```ts twoslash {16-22}
+```ts twoslash {22-40}
 // @noErrors
 import { createMachine, assign } from 'xstate';
 
 const machine = createMachine(
   {
+    // adding a schema for the events will make them typesafe
+    schema: {
+      events: {} as { type: 'INCREMENT'; value: number; time: Date },
+    },
     context: {
       count: 0,
+      updatedAt: new Date(),
+      message: 'Hello World',
     },
     on: {
       INCREMENT: {
@@ -56,8 +64,20 @@ const machine = createMachine(
         // increment the current count by the event value
         count: (context, event) => context.count + event.value,
 
-        // assign static value to the message (no function needed)
-        message: 'Count changed',
+        /*
+         * you can update multiple properties at once
+         * we name the context parameter `_`,
+         * to indicate that we don't use it
+         */
+        updatedAt: (_, event) => event.time,
+
+        /*
+         * to keep typescript happy,
+         * update using a function with the context parameter
+         * again we name it `_`,
+         * to indicate that we don't use it
+         */
+        message: (_) => 'Count changed',
       }),
     },
   }
@@ -66,7 +86,7 @@ const machine = createMachine(
 
 Or the _assigner_ can be a function that returns the updated state:
 
-```ts twoslash {16-21}
+```ts twoslash {16-23}
 // @noErrors
 import { createMachine, assign } from 'xstate';
 
@@ -74,6 +94,7 @@ const machine = createMachine(
   {
     context: {
       count: 0,
+      message: '',
     },
     on: {
       INCREMENT: {
@@ -86,6 +107,8 @@ const machine = createMachine(
       assignToContext: assign((context) => {
         return {
           count: context.count + 1,
+
+          // assign static value to the message (no function needed)
           message: 'Count changed',
         };
       }),
@@ -99,8 +122,11 @@ You can pass several `assign` actions in an array and they’ll be executed sequ
 ```js
 // ...
   actions: [
-    assign({ count: 3 }), // context.count === 3
-    assign({ count: context => context.count * 2 }) // context.count === 6
+    assign({ count: 3 }),
+    // context.count is now 3
+
+    assign({ count: context => context.count * 2 })
+    // context.count is now 6
   ],
 // ...
 ```
@@ -159,6 +185,8 @@ const lightMachine = createMachine({
 
 ## Summary
 
-`States` are used for handling your apps states which you know about in advance. `Context` is a data store that you can use to store any arbitrary values. `assign` can be used to assign values to the context, and the context can be used in any action you call.
+`States` are used for handling your apps states which you know about in advance.
+`Context` is a data store that you can use to store any arbitrary values.
+The `assign` action can be used to assign values to the context, and the context can be used in any action you call.
 
 Next, we’ll look at some [special built-in actions](/xstate/actions/built-in-actions) XState provides to extend its powers.
