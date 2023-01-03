@@ -74,8 +74,7 @@ const machine = createMachine(
         /*
          * to keep typescript happy,
          * update using a function with the context parameter
-         * again we name it `_`,
-         * to indicate that we don't use it
+         * again we name it `_` to indicate that it's unused
          */
         message: (_) => 'Count changed',
       }),
