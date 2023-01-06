@@ -1,5 +1,6 @@
 ---
 title: Context
+description: 'States are used for handling your apps states which you know about in advance. Context is a data store that you can use to store any arbitrary values. The assign action can be used to assign values to the context, and the context can be used in any action you call.'
 ---
 
 # Context
@@ -72,7 +73,8 @@ const machine = createMachine(
         /*
          * to keep TypeScript happy,
          * update using a function with the context parameter
-         * again we name it `_` to indicate that it’s unused
+         * again we use the name `_` to indicate that the 
+         * parameter is unused
          */
         message: (_) => 'Count changed',
       }),
@@ -182,8 +184,6 @@ const lightMachine = createMachine({
 
 ## Summary
 
-`States` are used for handling your apps states which you know about in advance.
-`Context` is a data store that you can use to store any arbitrary values.
-The `assign` action can be used to assign values to the context, and the context can be used in any action you call.
+`States` are used for handling your apps states which you know about in advance. `Context` is a data store that you can use to store any arbitrary values. The `assign` action can be used to assign values to the context, and the context can be used in any action you call.
 
 Next, we’ll look at some [special built-in actions](/xstate/actions/built-in-actions) XState provides to extend its powers.
