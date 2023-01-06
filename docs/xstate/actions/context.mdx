@@ -25,7 +25,7 @@ const machine = createMachine({
 });
 ```
 
-Next, we'll see how to update the context using the assign action.
+Next, we’ll see how to update the context using the assign action.
 
 ## Assign action
 
@@ -65,14 +65,14 @@ const machine = createMachine(
         /*
          * you can update multiple properties at once
          * we name the context parameter `_`,
-         * to indicate that we don't use it
+         * to indicate that we don’t use it
          */
         updatedAt: (_, event) => event.time,
 
         /*
-         * to keep typescript happy,
+         * to keep TypeScript happy,
          * update using a function with the context parameter
-         * again we name it `_` to indicate that it's unused
+         * again we name it `_` to indicate that it’s unused
          */
         message: (_) => 'Count changed',
       }),
