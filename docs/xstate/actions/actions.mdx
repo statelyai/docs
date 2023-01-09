@@ -2,7 +2,11 @@
 title: Actions
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+
 <!-- deps: ['options-intro', 'options-api'] -->
+
+Statecharts give you a great deal of control over running side effects in your app. The first method is through actions.
 
 ## Side effects
 
@@ -14,8 +18,6 @@ You may have come across a type of function called a _[pure function](https://en
 
 We can think of the processes above as [side effects](<https://en.wikipedia.org/wiki/Side_effect_(computer_science)>) of our program running. The name gives them a negative medical connotation, but they’re incredibly important. Processes that don’t have side effects don’t talk to anything external, don’t worry about time, and don’t react to unexpected errors.
 
-Statecharts give you a great deal of control over running side effects in your app. The first method is through actions.
-
 ## Actions
 
 Actions are side effects which are:
@@ -23,6 +25,12 @@ Actions are side effects which are:
 - **Fire-and-forget**: Actions don’t talk back to the statechart.
 - **Unlikely to fail**. Actions are unlikely to impact the system if they fail.
 - Usually **synchronous**. For example, you don’t `await` actions.
+
+:::studio
+
+[Learn more about how actions work in the Stately Studio](/actions-and-actors/entry-and-exit-actions/)
+
+:::
 
 Some examples of actions are:
 
@@ -133,7 +141,15 @@ A helpful way to describe a self-transition is “doing something, not going som
 
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
-![](/self-transition.svg)
+<p>
+<ThemedImage
+  alt="Dog begging machine with one begging state and a ‘gets treat’ transition which leaves and returns to the same state."
+  sources={{
+    light: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
+    dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
+  }}
+/>
+</p>
 
 Self-transitions are helpful when you want to fire an action, but not leave your current state. You can use an action on the transition to fire it whenever that event is received.
 

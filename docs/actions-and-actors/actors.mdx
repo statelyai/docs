@@ -3,7 +3,6 @@ title: Actors
 ---
 
 import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 When you run a statechart, it becomes an actor: a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
 
@@ -23,8 +22,8 @@ You can invoke multiple actors on a single state. Top-level final states cannot 
 <ThemedImage
   alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
   sources={{
-    light: useBaseUrl('/transitions-and-events/state-done-events/state-done-events.png'),
-    dark: useBaseUrl('/transitions-and-events/state-done-events/state-done-events-dm.png'),
+    light: 'https://stately.ai/registry/machines/66f77051-089e-4b0a-9fa9-42e1f7598135.light.png',
+    dark: 'https://stately.ai/registry/machines/66f77051-089e-4b0a-9fa9-42e1f7598135.dark.png',
   }}
 />
 </p>

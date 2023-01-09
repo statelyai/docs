@@ -3,7 +3,6 @@ title: What are state machines and statecharts?
 ---
 
 import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 State machines help us model how a process goes from state to state when an event occurs.
 
@@ -15,8 +14,8 @@ State machines model your application logic. Below is the logic for a video play
 <ThemedImage
   alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/what-is-a-state-machine.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/what-is-a-state-machine-dm.png'),
+    light: 'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.light.png',
+    dark: 'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.dark.png',
   }}
 />
 </p>
@@ -45,10 +44,10 @@ A state describes the machine’s status or mode, which could be as simple as *
 
 <p>
 <ThemedImage
-  alt=""
+  alt="Dog state machine with asleep and awake states. There’s a warning on the awake state because there’s no transitions which means the awake state cannot be reached."
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/asleep-awake-states.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/asleep-awake-states-dm.png'),
+    light: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.light.png',
+    dark: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.dark.png',
   }}
 />
 </p>
@@ -78,8 +77,8 @@ Transitions are “deterministic”; each combination of state and event always 
 <ThemedImage
   alt=""
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/asleep-awake.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/asleep-awake-dm.png'),
+    light: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.light.png',
+    dark: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.dark.png',
   }}
 />
 </p>
@@ -108,8 +107,8 @@ In a statechart describing the process of walking the dog, the initial state wou
 <ThemedImage
   alt=""
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/waiting.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/waiting-dm.png'),
+    light: 'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.light.png',
+    dark: 'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.dark.png',
   }}
 />
 </p>
@@ -134,8 +133,8 @@ In the dog walking statechart, the final state would be **walk complete**.
 <ThemedImage
   alt="Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete."
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/dog-walk-simple.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/dog-walk-simple-dm.png'),
+    light: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.light.png',
+    dark: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.dark.png',
   }}
 />
 </p>
@@ -154,13 +153,13 @@ A parent state is symbolised by a labelled rectangle box that acts as a containe
 <ThemedImage
   alt=""
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/dog-walk.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/dog-walk-dm.png'),
+    light: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.light.png',
+    dark: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.dark.png',
   }}
 />
 </p>
 
-[View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
+[View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066).
 
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
 
@@ -182,8 +181,8 @@ Inside the **on a walk** parallel state, there could be two regions. One region 
 <ThemedImage
   alt=""
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/wagging.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/wagging-dm.png'),
+    light: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.light.png',
+    dark: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.dark.png',
   }}
 />
 </p>
@@ -206,13 +205,13 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
 <ThemedImage
   alt=""
   sources={{
-    light: useBaseUrl('/state-machines-and-statecharts/begging.png'),
-    dark: useBaseUrl('/state-machines-and-statecharts/begging-dm.png'),
+    light: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
+    dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
   }}
 />
 </p>
 
-[View the dog begging machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5).
+[View the dog begging machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
 
 ## What next?
 

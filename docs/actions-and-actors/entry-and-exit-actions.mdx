@@ -3,7 +3,6 @@ title: Entry & exit actions
 ---
 
 import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 :::tip
 
@@ -21,8 +20,8 @@ You can fire multiple entry and exit actions on a state. Top-level final states 
 <ThemedImage
   alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Playing state has an entry action for starting a video playing indicated by the ‘Entry’ label and the text playVideo, and an exit action for pausing a video indicated by the ‘Exit’ lable and the text pauseVideo. The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
   sources={{
-    light: useBaseUrl('/actions-and-actors/entry-and-exit-actions/entry-and-exit-actions.png'),
-    dark: useBaseUrl('/actions-and-actors/entry-and-exit-actions/entry-and-exit-actions-dm.png'),
+    light: 'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.light.png',
+    dark: 'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.dark.png',
   }}
 />
 </p>

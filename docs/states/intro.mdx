@@ -3,7 +3,6 @@ title: States
 ---
 
 import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 
 :::tip
 
@@ -15,10 +14,10 @@ A state describes the machine’s status or mode, which could be as simple as *
 
 <p>
 <ThemedImage
-  alt="Video player state machine with an initial Paused state and a Playing state."
+  alt="Video player state machine with an initial Paused state and a Playing state. There’s a warning on the playing state because there’s no transitions which means the playing state cannot be reached."
   sources={{
-    light: useBaseUrl('/states/intro/states.png'),
-    dark: useBaseUrl('/states/intro/states-dm.png'),
+    light: 'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.light.png',
+    dark: 'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.dark.png',
   }}
 />
 </p>

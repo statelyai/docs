@@ -789,7 +789,7 @@ html .DocSearch-Button-Key:nth-of-type(2) {
 
 /* Light/dark mode button */
 
-html [class*=toggleButton_node_modules] {
+html [class*=toggleButton] {
   height: 2rem;
   width: 2rem;
 }
