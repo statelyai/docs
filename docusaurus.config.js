@@ -28,6 +28,12 @@ const config = {
     locales: ['en'],
   },
 
+  scripts: [
+    {
+      src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'stately.ai/docs'
+    }
+  ],
+
   presets: [
     [
       'classic',
