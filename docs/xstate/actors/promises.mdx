@@ -35,7 +35,7 @@ const userMachine = createMachine(
 );
 ```
 
-When a promise actor resolves, a `done.invoke` event is sent back to the machine with the data the on which the event resolved. The resolved data is placed under the `data` property. For example:
+When a promise actor is resolved, a `done.invoke` event is sent back to the machine which includes its data, placed under the `data` property. For example:
 
 ```js
 {
