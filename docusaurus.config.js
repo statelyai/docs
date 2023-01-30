@@ -30,8 +30,10 @@ const config = {
 
   scripts: [
     {
-      src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'stately.ai/docs'
-    }
+      src: 'https://plausible.io/js/script.js',
+      defer: true,
+      'data-domain': 'stately.ai/docs',
+    },
   ],
 
   presets: [
@@ -152,6 +154,14 @@ const config = {
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX,
         contextualSearch: false,
+        replaceSearchResultPathname:
+          // Remove /docs from the search result pathname when we're in a preview deployment
+          process.env.VERCEL_ENV === 'preview'
+            ? {
+                from: '/docs/',
+                to: '/',
+              }
+            : undefined,
       },
       announcementBar: {
         content:
