@@ -330,6 +330,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-menu-link-hover: var(--st-gray-800);
   --st-menu-link-active: var(--st-gray-800);
 
+  --ifm-breadcrumb-separator: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\"><polygon fill=\"gray\" points=\"79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128\"/></svg>");
+
   --docsearch-primary-color: var(--st-gray-800);
   --docsearch-text-color: var(--st-text);
   --docsearch-highlight-color: var(--st-gray-200);
@@ -396,7 +398,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-hover-overlay:gray;
   --ifm-color-content:white;
   --ifm-color-content-secondary:white;
-  --ifm-breadcrumb-separator-filter:invert(64%) sepia(11%) saturate(0%) hue-rotate(149deg) brightness(99%) contrast(95%);
+  --ifm-breadcrumb-separator-filter: none;
   --ifm-code-background:var(--st-code-highlight-background);
   --ifm-scrollbar-track-background-color:var(--st-gray-850);
   --ifm-scrollbar-thumb-background-color:var(--st-gray-800);
@@ -448,6 +450,8 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-link-button-border: var(--st-gray-700);
   --st-menu-link-hover: var(--st-gray-100);
   --st-menu-link-active: var(--st-gray-100);
+
+  --ifm-breadcrumb-separator: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\"><polygon fill=\"darkgray\" points=\"79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128\"/></svg>");
 
   /* alert colours */
   --st-tip-background: var(--st-gray-800);
@@ -661,6 +665,27 @@ code {
   border-bottom: 1px solid var(--st-header-border);
 }
 
+.navbar__icon {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
+}
+
+.navbar__icon:hover {
+  background-color: var(--st-highlight-background-hover);
+}
+
+.navbar__icon svg {
+  display: block;
+}
+
+.navbar-sidebar--show .navbar-sidebar .navbar__icon {
+  margin-left: 0.5rem;
+}
+
 /* force search to align with sidebar by making logo width of sidebar */
 .navbar__brand {
   margin-right: 0;
@@ -804,8 +829,6 @@ html [class*=toggleButton] {
 
 .breadcrumbs__item:not(:last-child):after {
   color: var(--st-text);
-  --ifm-breadcrumb-separator: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\"><polygon fill=\"black\" points=\"79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128\"/></svg>");
-  --ifm-breadcrumb-separator-filter: var(--st-icon-filter);
   opacity: 1;
 }
 
