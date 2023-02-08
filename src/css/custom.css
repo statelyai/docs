@@ -661,6 +661,27 @@ code {
   border-bottom: 1px solid var(--st-header-border);
 }
 
+.navbar__icon {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
+}
+
+.navbar__icon:hover {
+  background-color: var(--st-highlight-background-hover);
+}
+
+.navbar__icon svg {
+  display: block;
+}
+
+.navbar-sidebar--show .navbar-sidebar .navbar__icon {
+  margin-left: 0.5rem;
+}
+
 /* force search to align with sidebar by making logo width of sidebar */
 .navbar__brand {
   margin-right: 0;
