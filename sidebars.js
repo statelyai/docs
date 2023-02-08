@@ -179,6 +179,11 @@ const sidebars = {
             'xstate/actors/observables',
             'xstate/actors/parent-child-communication',
             'xstate/actors/spawn',
+            {
+              type: 'doc',
+              label: 'Actor cheatsheet',
+              id: 'xstate/actors/cheatsheet',
+            },
           ],
         },
         {
