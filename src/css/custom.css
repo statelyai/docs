@@ -142,13 +142,13 @@ html, body {
 :root {
   --ifm-font-family-base:Inter,Helvetica,'Helvetica Neue',Arial,sans-serif;
   --ifm-font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
-  --ifm-font-size-base:105%;
+  --ifm-font-size-base:100%;
   --ifm-line-height-base:1.45;
   --ifm-link-decoration:underline;
   --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.1);
   --ifm-heading-vertical-rhythm-bottom:.75;
   --ifm-code-background:var(--st-code-highlight-background);
-  --ifm-code-font-size:100%;
+  --ifm-code-font-size:95%;
   --ifm-code-padding-horizontal:.1rem;
   --ifm-code-padding-vertical:.1rem;
   --ifm-color-secondary:var(--st-text-secondary);
@@ -271,7 +271,7 @@ html, body {
   --ifm-menu-color-background-active: var(--st-highlight-background); 
   --ifm-menu-color-background-hover: var(--st-highlight-background-hover); 
   --ifm-menu-link-padding-horizontal: 0.75rem; 
-  --ifm-menu-link-padding-vertical: 0.2em; 
+  --ifm-menu-link-padding-vertical: 0.4em; 
   --ifm-menu-link-sublist-icon: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16px\" height=\"16px\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z\"></path></svg>"); 
 
   /* contents list */
@@ -877,7 +877,7 @@ html [class*=toggleButton] {
 .menu__list .menu__list { 
   flex: 0 0 100%; 
   margin-top: 0; 
-  margin-bottom: 0.1rem; 
+  margin-bottom: 0.2rem; 
 }
 .menu__list-item:not(:first-child) { 
   margin-top: 0; 
@@ -895,6 +895,11 @@ html [class*=toggleButton] {
   border-radius: 0;
   display: flex; 
   transition: background var(--ifm-transition-fast) var(--ifm-transition-timing-default); 
+}
+
+.theme-doc-sidebar-item-link-level-1 .menu__link {
+  padding-top: calc(var(--ifm-menu-link-padding-horizontal)*.5);
+  padding-bottom: calc(var(--ifm-menu-link-padding-horizontal)*.5);
 }
 
 .theme-doc-sidebar-item-link-level-2, .theme-doc-sidebar-item-link-level-3, .theme-doc-sidebar-item-link-level-4 {
