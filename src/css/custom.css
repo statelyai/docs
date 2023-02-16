@@ -620,6 +620,12 @@ a, a:hover {
 }
 
 .pagination-nav__link {
+  border-color: var(--st-layout-border) !important;
+}
+
+.pagination-nav__link:hover,
+.pagination-nav__link:active,
+.pagination-nav__link:focus {
   border-color: var(--st-link-button-border) !important;
 }
 
