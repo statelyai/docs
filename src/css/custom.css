@@ -23,6 +23,8 @@
 html, body {
   font-weight: var(--ifm-font-weight-normal);
   letter-spacing: -0.011rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Nick’s colours */
