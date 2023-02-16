@@ -1,6 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
+const a11yEmoji = require('@fec/remark-a11y-emoji');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -62,6 +63,9 @@ const config = {
               'studio',
             ],
           },
+
+          // Add accessible emoji remark plugin
+          remarkPlugins: [a11yEmoji],
         },
         blog: false,
         theme: {
