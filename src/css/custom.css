@@ -1167,7 +1167,7 @@ ul.content-boxes {
   margin: 0;
 }
 
-.content-boxes li a {
+a.link-box {
   border: 1px solid var(--st-layout-border);
   border-radius: var(--ifm-breadcrumb-border-radius);
   color: var(--st-text);
@@ -1177,13 +1177,13 @@ ul.content-boxes {
   text-decoration: none;
 }
 
-.content-boxes li a:hover,
-.content-boxes li a:active,
-.content-boxes li a:focus {
+a.link-box:hover,
+a.link-box:active,
+a.link-box:focus {
   border-color: var(--st-text-link-active);
 }
 
-.content-boxes li strong {
+a.link-box strong {
   display: block;
   color: var(--st-text-link);
   font-size: 1.1rem;
