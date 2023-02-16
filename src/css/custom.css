@@ -1132,6 +1132,64 @@ footer [class*=iconExternalLink] {
   text-decoration-thickness: 1px;
 }
 
+/* Context boxes (custom HTML used in content pages) */
+
+.content-boxes {
+  display: grid; 
+  grid-template-columns: repeat(1, 1fr); 
+  grid-template-rows: repeat(4, 1fr); 
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem; 
+  padding: 0;
+}
+
+@media (min-width: 400px) {
+  .content-boxes {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows: repeat(2, 1fr); 
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem; 
+    padding: 0;
+  }
+}
+
+ul.content-boxes {
+  margin: 1.5rem 0;
+}
+
+.content-boxes li {
+  display: flex;
+  list-style-type: none;
+}
+
+.content-boxes li + li {
+  margin: 0;
+}
+
+.content-boxes li a {
+  border: 1px solid var(--st-layout-border);
+  border-radius: var(--ifm-breadcrumb-border-radius);
+  color: var(--st-text);
+  display: block;
+  margin: 0;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.content-boxes li a:hover,
+.content-boxes li a:active,
+.content-boxes li a:focus {
+  border-color: var(--st-text-link-active);
+}
+
+.content-boxes li strong {
+  display: block;
+  color: var(--st-text-link);
+  font-size: 1.1rem;
+  margin: 0.25rem 0;
+}
+
 /* Footer */
 
 .footer {
