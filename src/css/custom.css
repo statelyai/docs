@@ -277,7 +277,7 @@ html, body {
   /* contents list */
   --ifm-toc-border-color: var(--st-layout-border); 
   --ifm-toc-link-color: var(--st-text); 
-  --ifm-toc-padding-vertical: 0.35rem; 
+  --ifm-toc-padding-vertical: 0.5rem; 
   --ifm-toc-padding-horizontal: 0.5rem; 
 
   /* tables */
