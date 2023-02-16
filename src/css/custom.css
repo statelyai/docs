@@ -689,7 +689,13 @@ code {
 /* force search to align with sidebar by making logo width of sidebar */
 .navbar__brand {
   margin-right: 0;
-  width: calc(var(--doc-sidebar-width) - 1rem);
+}
+
+@media (min-width: 997px) {
+  .navbar__brand {
+    margin-right: 0;
+    width: calc(var(--doc-sidebar-width) - 1rem);
+  }
 }
 
 .navbar__logo {
