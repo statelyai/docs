@@ -47,6 +47,8 @@ const config = {
 
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/docs/tree/main/',
+
+          // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
             tag: ':::',
             keywords: [
