@@ -27,19 +27,19 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Nick’s colours */
+/* Editor’s colours */
 :root {
   /* Yellow */
-  --st-yellow-900: #2E0D00;
-  --st-yellow-800: #522300;
-  --st-yellow-700: #7D4201;
-  --st-yellow-600: #955701;
-  --st-yellow-500: #AF6600;
-  --st-yellow-400: #DA9500;
-  --st-yellow-300: #F5B900;
-  --st-yellow-200: #FACC40;
-  --st-yellow-100: #FEE17D;
-  --st-yellow-50: #FEF39D;
+  --st-yellow-50: rgba(254, 253, 192, .5);
+  --st-yellow-100: #FEFCBF;
+  --st-yellow-200: #FAF089;
+  --st-yellow-300: #F6E05E;
+  --st-yellow-400: #ECC94B;
+  --st-yellow-500: #D69E2E;
+  --st-yellow-600: #B7791F;
+  --st-yellow-700: #975A16;
+  --st-yellow-800: #744210;
+  --st-yellow-900: #5F370E;
 
   /* Pink */
   --st-pink-900: #370022;
@@ -90,16 +90,16 @@ html, body {
   --st-turquoise-50: #D6F7F9;
 
   /* Blue */
-  --st-blue-900: #0A123A;
-  --st-blue-800: #152972;
-  --st-blue-700: #1E4AAB;
-  --st-blue-600: #005DE6;
-  --st-blue-500: #0074F5;
-  --st-blue-400: #4CA5FF;
-  --st-blue-300: #80C9FF;
-  --st-blue-200: #A4D6FE;
-  --st-blue-100: #C8E7FC;
-  --st-blue-50: #E3F2FF;
+  --st-blue-900: #1A365D;
+  --st-blue-800: #2a4365;
+  --st-blue-700: #2c5282;
+  --st-blue-600: #2b6cb0;
+  --st-blue-500: #3182ce;
+  --st-blue-400: #4299e1;
+  --st-blue-300: #63b3ed;
+  --st-blue-200: #90cdf4;
+  --st-blue-100: #bee3f8;
+  --st-blue-50: #ebf8ff;
 
   /* Violet */
   --st-violet-900: #1A0A41;
@@ -114,18 +114,19 @@ html, body {
   --st-violet-50: #FCECFF;
 
   /* Gray */
-  --st-gray-900: #15151D;
-  --st-gray-850: #21202b;
-  --st-gray-800: #2E2E3D;
-  --st-gray-700: #4C5060;
-  --st-gray-600: #5F647A;
-  --st-gray-500: #71758D;
-  --st-gray-400: #9CA1B3;
-  --st-gray-300: #BCC2CD;
-  --st-gray-200: #CDD1DB;
-  --st-gray-100: #DEE3E8;
-  --st-gray-50: #EEF1F3;
-  --st-gray-25: #F4F7F8;
+  --st-gray-900: #151618;
+  --st-gray-850: #212226;
+  --st-gray-825: #27282A;
+  --st-gray-800: #2D2E34;
+  --st-gray-700: #45464F;
+  --st-gray-600: #5D5F6A;
+  --st-gray-500: #757785;
+  --st-gray-400: #8F919D;
+  --st-gray-300: #ABACB5;
+  --st-gray-200: #C6C7CD;
+  --st-gray-100: #E1E2E5;
+  --st-gray-50: #EFEFF1;
+  --st-gray-25: #F7F8FA;
 
   /* Red */
   --st-red-900: #30060A;
@@ -320,8 +321,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
   --st-copy-button-text: var(--st-blue-800);
-  --st-highlight-background: var(--st-gray-100);
-  --st-highlight-background-hover: var(--st-gray-50);
+  --st-highlight-background: var(--st-yellow-100);
+  --st-highlight-background-hover: var(--st-yellow-50);
   --st-button-background: var(--st-blue-200);
   --st-button-background-hover: var(--st-blue-100);
   --st-button-text: var(--st-blue-800);
@@ -344,9 +345,10 @@ html[data-theme='light'], html[data-theme='light'] body {
   --docsearch-logo-color: var(--st-gray-600);
   --docsearch-modal-background: white;
   --docsearch-modal-shadow: 0 0 1rem 0 var(--st-gray-500);
-  --docsearch-searchbox-background: var(--st-gray-100);
-  --docsearch-searchbox-focus-background: var(--st-gray-50);
+  --docsearch-searchbox-background: white;
+  --docsearch-searchbox-focus-background: white;
   --docsearch-searchbox-shadow: inset 0 0 0 1px var(--st-gray-200);
+  --docsearch-searchbox-shadow-active: inset 0 0 0 1px var(--st-link-button-border);
   --docsearch-hit-source: var(--st-gray-700);
   --docsearch-hit-color: var(--st-gray-700);
   --docsearch-hit-active-color: var(--st-gray-800);
@@ -364,8 +366,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-tip-background: var(--st-gray-50);
   --st-tip-accent: var(--st-gray-100);
   --st-tip-text: var(--st-gray-700);
-  --st-warning-background: var(--st-yellow-50);
-  --st-warning-accent: var(--st-yellow-100);
+  --st-warning-background: var(--st-yellow-100);
+  --st-warning-accent: var(--st-yellow-200);
   --st-warning-text: var(--st-yellow-800);
   --st-danger-background: var(--st-red-50);
   --st-danger-accent: var(--st-red-100);
@@ -422,18 +424,18 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 
   --st-background: var(--st-gray-900);
   --st-background-secondary: var(--st-gray-800);
-  --st-text: var(--st-gray-300);
-  --st-text-highlight: var(--st-gray-200);
+  --st-text: var(--st-gray-200);
+  --st-text-highlight: var(--st-gray-100);
   --st-heading: var(--st-text-highlight);
-  --st-text-secondary: var(--st-gray-400);
+  --st-text-secondary: var(--st-gray-200);
   --st-text-link: var(--st-blue-300);
   --st-text-link-hover: var(--st-blue-400);
   --st-text-link-active: var(--st-blue-400);
   --st-announcement-bar-text: var(--st-blue-200);
   --st-announcement-bar-gradient: radial-gradient(circle, var(--st-blue-800) 0%, var(--st-blue-700) 67%, var(--st-blue-700) 90%, var(--st-blue-800) 100%);
-  --st-navbar-background: var(--st-gray-800);
-  --st-search-background: var(--st-gray-900);
-  --st-search-background-active: var(--st-gray-850);
+  --st-navbar-background: var(--st-gray-900);
+  --st-search-background: var(--st-gray-800);
+  --st-search-background-active: var(--st-gray-800);
   --st-header-border: var(--st-gray-700);
   --st-layout-border: var(--st-gray-700);
   --st-code-border: var(--st-background);
@@ -442,14 +444,14 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-copy-button-background: var(--st-blue-700);
   --st-copy-button-text: var(--st-blue-100);
   --st-highlight-background: var(--st-gray-800);
-  --st-highlight-background-hover: var(--st-gray-700);
+  --st-highlight-background-hover: var(--st-gray-825);
   --st-button-background-hover: var(--st-blue-700);
   --st-button-background: var(--st-gray-800);
   --st-button-text: white;
   --st-icon-filter: invert(100%) brightness(100%);
   --st-header-link: var(--st-gray-200);
   --st-footer-link: var(--st-gray-200);
-  --st-link-button-border: var(--st-gray-700);
+  --st-link-button-border: var(--st-blue-500);
   --st-menu-link-hover: var(--st-gray-100);
   --st-menu-link-active: var(--st-gray-100);
 
@@ -489,9 +491,10 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --docsearch-logo-color: var(--st-gray-500); 
   --docsearch-modal-background:var(--st-gray-900); 
   --docsearch-modal-shadow: 0 0 1rem 0 black;
-  --docsearch-searchbox-background: var(--st-gray-850); 
+  --docsearch-searchbox-background: var(--st-gray-800); 
   --docsearch-searchbox-focus-background: var(--st-gray-800);
-  --docsearch-searchbox-shadow: inset 0 0 0 1px var(--st-gray-400); 
+  --docsearch-searchbox-shadow: inset 0 0 0 1px var(--st-gray-700);
+  --docsearch-searchbox-shadow-active: inset 0 0 0 1px var(--st-link-button-border); 
   --docsearch-hit-source: var(--st-gray-300);
   --docsearch-hit-color: var(--st-gray-300); 
   --docsearch-hit-active-color: white; 
@@ -753,18 +756,20 @@ html .DocSearch-Modal {
   border-radius: 10px !important;
 }
 
+html .DocSearch-Form:has(.DocSearch-Input:focus) {
+  box-shadow: var(--docsearch-searchbox-shadow-active);
+}
+
 html body.DocSearch--active #__docusaurus:not(.DocSearch-Container) {
   filter: blur(2px);
 }
 
-/* only show searchbox border on hover and when modal is open */
-
 html .DocSearch-Button {
-  box-shadow: none;
+  box-shadow: var(--docsearch-searchbox-shadow);
 }
 
-html .DocSearch-Button:active, .DocSearch-Button:focus, .DocSearch-Button:hover {
-  box-shadow: var(--docsearch-searchbox-shadow);
+html .DocSearch-Button:active, html .DocSearch-Button:focus, html .DocSearch-Button:hover {
+  box-shadow: var(--docsearch-searchbox-shadow-active);
 }
 
 html .DocSearch-MagnifierLabel,
@@ -881,6 +886,7 @@ html [class*=toggleButton] {
 }
 
 .menu { 
+  font-weight: var(--ifm-font-weight-normal);
   overflow-x: hidden; 
 }
 .menu__list { 
