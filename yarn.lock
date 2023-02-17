@@ -1601,6 +1601,16 @@
     url-loader "^4.1.1"
     webpack "^5.73.0"
 
+"@fec/remark-a11y-emoji@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@fec/remark-a11y-emoji/-/remark-a11y-emoji-3.1.0.tgz#765ead0e26b6f06878f246c6e920a6edf0a5dc08"
+  integrity sha512-cYjCutvrValbQ2dykKhEE6OBTsEGpAJzeJnDtGKXhk2JYkMNSlKPnUk/kRFHH+PHmrAF+FlNIU28XKD+nYy7jQ==
+  dependencies:
+    emoji-regex "^9.2.0"
+    gemoji "^6.1.0"
+    mdast-util-find-and-replace "^1.0.0"
+    unist-util-visit "^2.0.3"
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
@@ -3522,7 +3532,7 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
-emoji-regex@^9.2.2:
+emoji-regex@^9.2.0, emoji-regex@^9.2.2:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
@@ -3965,6 +3975,11 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
+
+gemoji@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/gemoji/-/gemoji-6.1.0.tgz#268fbb0c81d1a8c32a4bcc39bdfdd66080ba7ce9"
+  integrity sha512-MOlX3doQ1fsfzxQX8Y+u6bC5Ssc1pBUBIPVyrS69EzKt+5LIZAOm0G5XGVNhwXFgkBF3r+Yk88ONyrFHo8iNFA==
 
 gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
@@ -4966,6 +4981,15 @@ mdast-util-definitions@^4.0.0:
   integrity sha512-k8AJ6aNnUkB7IE+5azR9h81O5EQ/cTDXtWdMq9Kk5KcEW/8ritU5CeLg/9HhOC++nALHBlaogJ5jz0Ybk3kPMQ==
   dependencies:
     unist-util-visit "^2.0.0"
+
+mdast-util-find-and-replace@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/mdast-util-find-and-replace/-/mdast-util-find-and-replace-1.1.1.tgz#b7db1e873f96f66588c321f1363069abf607d1b5"
+  integrity sha512-9cKl33Y21lyckGzpSmEQnIDjEfeeWelN5s1kUW1LwdB0Fkuq2u+4GdqcGEygYxJE8GVqCl0741bYXHgamfWAZA==
+  dependencies:
+    escape-string-regexp "^4.0.0"
+    unist-util-is "^4.0.0"
+    unist-util-visit-parents "^3.0.0"
 
 mdast-util-to-hast@10.0.1:
   version "10.0.1"

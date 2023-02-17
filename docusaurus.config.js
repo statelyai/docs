@@ -1,6 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
+const a11yEmoji = require('@fec/remark-a11y-emoji');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -47,6 +48,8 @@ const config = {
 
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/docs/tree/main/',
+
+          // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
             tag: ':::',
             keywords: [
@@ -60,6 +63,9 @@ const config = {
               'studio',
             ],
           },
+
+          // Add accessible emoji remark plugin
+          remarkPlugins: [a11yEmoji],
         },
         blog: false,
         theme: {
