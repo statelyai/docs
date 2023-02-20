@@ -26,6 +26,11 @@ const sidebars = {
     },
     {
       type: 'doc', 
+      label:'⭐️  Studio Pro features',
+      id: 'studio-pro',
+    },
+    {
+      type: 'doc', 
       label:'🧠  State machines and statecharts',
       id: 'state-machines-and-statecharts',
     },
@@ -73,7 +78,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧱  Modeling',
+      label: '🧱  Editor',
       items: [
         'descriptions',
       ]
