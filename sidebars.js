@@ -20,83 +20,101 @@ const sidebars = {
 
   tutorialSidebar: [
     {
-      type: 'doc',
-      label: '➡️  Start here',
-      id: 'studio',
-    },
-    {
-      type: 'doc', 
-      label:'⭐️  Studio Pro features',
-      id: 'studio-pro',
-    },
-    {
-      type: 'doc', 
-      label:'🧠  State machines and statecharts',
-      id: 'state-machines-and-statecharts',
-    },
-    {
       type: 'category',
-      label: '📫  States',
+      label: '➡️  Get started',
       items: [
         {
           type: 'doc',
-          id: 'states/intro',
-          label: 'Intro'
+          label: 'Introduction',
+          id: 'studio',
         },
-        'states/initial-states',
-        'states/final-states',
-        'states/parent-states',
-        'states/parallel-states',
-        'states/history-states'
+        {
+          type: 'doc', 
+          label:'Studio Pro',
+          id: 'studio-pro',
+        },
+        {
+          type: 'doc', 
+          label:'State machines and statecharts',
+          id: 'state-machines-and-statecharts',
+        },
       ]
     },
     {
       type: 'category',
-      label: '💥  Transitions and events',
+      label: '🏁  Core concepts',
+      collapsed: false,
+      collapsible: true,
       items: [
         {
-          type: 'doc',
-          id: 'transitions-and-events/intro',
-          label: 'Intro'
+          type: 'category',
+          label: 'States',
+          items: [
+            {
+              type: 'doc',
+              id: 'states/intro',
+              label: 'Intro'
+            },
+            'states/initial-states',
+            'states/final-states',
+            'states/parent-states',
+            'states/parallel-states',
+            'states/history-states'
+          ]
         },
-        'transitions-and-events/guards',
-        'transitions-and-events/eventless-transitions',
-        'transitions-and-events/delayed-transitions',
-        'transitions-and-events/self-transitions',
-        'transitions-and-events/state-done-events',
-        'transitions-and-events/invoke-done-events',
-        'transitions-and-events/invoke-error-events'
+        {
+          type: 'category',
+          label: 'Transitions and events',
+          items: [
+            {
+              type: 'doc',
+              id: 'transitions-and-events/intro',
+              label: 'Intro'
+            },
+            'transitions-and-events/guards',
+            'transitions-and-events/eventless-transitions',
+            'transitions-and-events/delayed-transitions',
+            'transitions-and-events/self-transitions',
+            'transitions-and-events/state-done-events',
+            'transitions-and-events/invoke-done-events',
+            'transitions-and-events/invoke-error-events'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Actions and actors',
+          items: [
+            'actions-and-actors/entry-and-exit-actions',
+            'actions-and-actors/actors',
+          ]
+        },
       ]
     },
     {
       type: 'category',
-      label: '💬  Actions and actors',
+      label: '⚡️  Using the Studio',
+      collapsed: false,
+      collapsible: true,
       items: [
-        'actions-and-actors/entry-and-exit-actions',
-        'actions-and-actors/actors',
-      ]
-    },
-    {
-      type: 'category',
-      label: '🧱  Editor',
-      items: [
-        'descriptions',
-      ]
-    },
-    {
-      type: 'category',
-      label: '👪  Collaboration and sharing',
-      items: [
+        {
+          type: 'category',
+          label: 'Editor',
+          items: [
+            'descriptions',
+            'import-from-code',
+            'export-as-code',
+          ]
+        },
         'projects',
         'teams',
         'discover',
-        'import-from-code',
-        'export-as-code'
       ]
     },
     {
       type: 'category',
-      label: '🛠️  XState',
+      label: '🛠️  XState library',
+      collapsed: false,
+      collapsible: true,
       items: [
         {
           type: 'doc',
@@ -104,6 +122,7 @@ const sidebars = {
           label: 'Intro',
         },
         'xstate/installation',
+        'xstate/templates',
         {
           type: 'category',
           label: 'Basics',
@@ -200,14 +219,19 @@ const sidebars = {
             'xstate/typescript/troubleshooting',
           ],
         },
-        'xstate/templates',
-        'xstate/packages/xstate-fsm',
-        'xstate/packages/xstate-graph',
-        'xstate/packages/xstate-test',
-        'xstate/packages/xstate-immer',
-        'xstate/packages/xstate-react',
-        'xstate/packages/xstate-svelte',
-        'xstate/packages/xstate-vue',
+        {
+          type: 'category',
+          label: 'Packages',
+          items: [
+            'xstate/packages/xstate-fsm',
+            'xstate/packages/xstate-graph',
+            'xstate/packages/xstate-test',
+            'xstate/packages/xstate-immer',
+            'xstate/packages/xstate-react',
+            'xstate/packages/xstate-svelte',
+            'xstate/packages/xstate-vue',
+          ],
+        },
         {
           type: 'category',
           label: 'Advanced Topics',
@@ -218,6 +242,8 @@ const sidebars = {
     {
       type: 'category',
       label: '🧰  Developer tools',
+      collapsed: false,
+      collapsible: true,
       items: [
         'tools/xstate-vscode-extension',
         'tools/visualizer',
