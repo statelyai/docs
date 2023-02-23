@@ -98,7 +98,7 @@ const sidebars = {
       items: [
         {
           type: 'category',
-          label: 'Editor',
+          label: 'Edit',
           items: [
             'descriptions',
             'import-from-code',
