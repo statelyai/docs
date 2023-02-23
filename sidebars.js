@@ -30,11 +30,6 @@ const sidebars = {
         },
         {
           type: 'doc', 
-          label:'Studio Pro',
-          id: 'studio-pro',
-        },
-        {
-          type: 'doc', 
           label:'State machines and statecharts',
           id: 'state-machines-and-statecharts',
         },
@@ -106,8 +101,46 @@ const sidebars = {
           ]
         },
         'projects',
-        'teams',
+        {
+          type: 'doc', 
+          label:'Teams',
+          className: 'pro-feature',
+          id: 'teams',
+        },
         'discover',
+        {
+          type: 'category',
+          label: 'Accounts',
+          items: [
+            {
+              type: 'doc', 
+              label:'Community plan',
+              id: 'studio-community-plan',
+              className: 'community-feature',
+            },
+            {
+              type: 'doc', 
+              label:'Pro plan',
+              id: 'studio-pro-plan',
+              className: 'pro-feature',
+            },
+            {
+              type: 'doc', 
+              label:'Enterprise plan',
+              id: 'studio-enterprise-plan',
+            },
+            {
+              type: 'doc', 
+              label:'Sign up',
+              id: 'sign-up',
+            },
+            {
+              type: 'doc', 
+              label:'Upgrade',
+              id: 'upgrade',
+            },
+          ]
+        },
       ]
     },
     {
