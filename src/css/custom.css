@@ -944,6 +944,7 @@ html [class*=toggleButton] {
 .menu__list-item .menu__list-item {
   border-left: 1px solid var(--st-menu-link-border);
   margin-left: 1.2rem;
+  padding-left: 2px;
 }
 
 .menu__list-item .menu__list-item .menu__list-item  {
@@ -953,7 +954,7 @@ html [class*=toggleButton] {
 
 .menu__list-item .menu__list-item .menu__link--active {
   border-left: 3px solid var(--st-menu-link-border-active);
-  margin-left: -2px;
+  margin-left: -4px;
 }
 
 .menu__list-item .menu__list-item .menu__list-item .menu__link--active {
