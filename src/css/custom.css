@@ -558,7 +558,7 @@ html pre.shiki .copy-button {
   --ifm-font-weight-light: 440; 
   --ifm-font-weight-normal: 430; 
   --ifm-font-weight-semibold: 540; 
-  --ifm-font-weight-bold: 650;
+  --ifm-font-weight-bold: 690;
 }
 
 .text--light { 
@@ -900,13 +900,23 @@ html [class*=toggleButton] {
 .theme-doc-sidebar-item-category-level-1, 
 .theme-doc-sidebar-item-link-level-1 {
   font-weight: var(--ifm-font-weight-semibold);
-  padding-bottom: calc(var(--ifm-menu-link-padding-vertical)*1.5);
+  padding-bottom: var(--ifm-menu-link-padding-vertical);
+}
+
+.theme-doc-sidebar-item-category-level-1 a, 
+.theme-doc-sidebar-item-link-level-1 a {
+  color: var(--st-text);
 }
 
 .theme-doc-sidebar-item-category-level-1 ul li,
 .theme-doc-sidebar-item-link-level-1 ul li {
   font-weight: var(--ifm-font-weight-normal);
   padding-bottom: 0;
+}
+
+.theme-doc-sidebar-item-category-level-1 ul li a,
+.theme-doc-sidebar-item-link-level-1 ul li a {
+  color: var(--st-text-secondary);
 }
 
 .menu__list { 
