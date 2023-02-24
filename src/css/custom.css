@@ -1213,16 +1213,28 @@ a.link-box strong {
 /* Footer */
 
 .footer {
-  background: var(--st-background-secondary);
+  background: var(--st-background);
+  border-top: 1px solid var(--st-header-border);
+  padding: 0.5rem;
+}
+
+.footer .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: center;
 }
 
 .footer__links {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
+  gap: 0.5rem;
+  justify-content: left;
+  align-content: center;
   align-items: flex-start;
+  margin: 0;
   padding: 0;
 }
 
@@ -1230,12 +1242,23 @@ a.link-box strong {
   list-style-type: none;
 }
 
-.footer__links li:nth-of-type(1), .footer__links li:nth-of-type(2), .footer__links li:nth-of-type(3) {
-  flex: 0 1 33.33%;
-  text-align: center;
+.footer__link-item {
+  line-height: 1;
 }
 
-.footer__link-item {
-  display: block;
-  padding: 0.5rem;
+.footer__link-item a {
+  color: var(--ifm-footer-link-color);
+  padding: 0 0.2rem;
+}
+
+/* only icon links */
+span.footer__link-item a {
+  display: flex;
+  align-content: center;
+}
+
+/* copyright */
+
+.footer__bottom p {
+  margin: 0;
 }
