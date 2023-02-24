@@ -11,13 +11,14 @@ State machines are useful in software development because they help us capture a
 State machines model your application logic. Below is the logic for a video player. When the video is Played, it is opened into fullscreen mode. When the video is stopped, it closes out of fullscreen mode. When the video player is in fullscreen mode, it can be _Playing_ or _Paused_.
 
 <p>
-<ThemedImage
-  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
-  sources={{
-    light: 'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.light.png',
-    dark: 'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.light.png',
+      dark: 'https://stately.ai/registry/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.dark.png',
+    }}
+  />
 </p>
 
 [View the video player machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544).
@@ -26,7 +27,7 @@ State machines model your application logic. Below is the logic for a video play
 
 Statecharts are fancy state machines used to model more complex logic.
 
-Statecharts are a visual extension to state machines that use boxes and arrows, much like flowcharts and sequence diagrams. Statecharts add extra features not available in ordinary state machines, including  [hierarchy](/states/parent-states), [concurrency](/states/parallel-states) and [communication](/actions-and-actors/actors).
+Statecharts are a visual extension to state machines that use boxes and arrows, much like flowcharts and sequence diagrams. Statecharts add extra features not available in ordinary state machines, including [hierarchy](/states/parent-states), [concurrency](/states/parallel-states) and [communication](/actions-and-actors/actors).
 
 When you make a state machine in the [Stately Studio](https://stately.ai/editor), it’s also a statechart!
 
@@ -43,21 +44,21 @@ A state describes the machine’s status or mode, which could be as simple as *
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt="Dog state machine with asleep and awake states. There’s a warning on the awake state because there’s no transitions which means the awake state cannot be reached."
-  sources={{
-    light: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.light.png',
-    dark: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Dog state machine with asleep and awake states. There’s a warning on the awake state because there’s no transitions which means the awake state cannot be reached."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.light.png',
+      dark: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.dark.png',
+    }}
+  />
 </p>
 
 [View the dog states machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87).
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
-
-:::studio 
+:::studio
 
 ### States in the Stately Studio
 
@@ -74,20 +75,21 @@ Transitions are “deterministic”; each combination of state and event always 
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt=""
-  sources={{
-    light: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.light.png',
-    dark: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt=""
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.light.png',
+      dark: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.dark.png',
+    }}
+  />
 </p>
 
 [View the dog states machine with events and transitions in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9).
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
-:::studio 
+:::studio
 
 ### Events and transitions in the Stately Studio
 
@@ -104,18 +106,19 @@ In a statechart describing the process of walking the dog, the initial state wou
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt=""
-  sources={{
-    light: 'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.light.png',
-    dark: 'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt=""
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.light.png',
+      dark: 'https://stately.ai/registry/machines/65cf2bcb-658d-40dc-bb26-80f26c159256.dark.png',
+    }}
+  />
 </p>
 
 [View the dog waiting machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=65cf2bcb-658d-40dc-bb26-80f26c159256).
 
-:::studio 
+:::studio
 
 ### Initial states in the Stately Studio
 
@@ -130,13 +133,14 @@ Most processes with states will have a _final state_, the last state when the pr
 In the dog walking statechart, the final state would be **walk complete**.
 
 <p>
-<ThemedImage
-  alt="Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete."
-  sources={{
-    light: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.light.png',
-    dark: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.light.png',
+      dark: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.dark.png',
+    }}
+  />
 </p>
 
 [View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
@@ -150,13 +154,14 @@ A parent state is symbolised by a labelled rectangle box that acts as a containe
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt=""
-  sources={{
-    light: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.light.png',
-    dark: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt=""
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.light.png',
+      dark: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.dark.png',
+    }}
+  />
 </p>
 
 [View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066).
@@ -178,13 +183,14 @@ Inside the **on a walk** parallel state, there could be two regions. One region 
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt=""
-  sources={{
-    light: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.light.png',
-    dark: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt=""
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.light.png',
+      dark: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.dark.png',
+    }}
+  />
 </p>
 
 [View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
@@ -202,22 +208,23 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
 <!-- no alt because the image is already described in the surrounding text -->
 
 <p>
-<ThemedImage
-  alt=""
-  sources={{
-    light: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
-    dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt=""
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
+      dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
+    }}
+  />
 </p>
 
 [View the dog begging machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
 
 ## What next?
 
-Now you know enough to get started in the [Stately Studio](https://stately.ai/editor). Get an [overview of the Stately Studio and its features](/studio), or [continue to learn more about states in detail](/states/intro).
+Now you know enough to get started in the [Stately Studio](https://stately.ai/editor). Get an [overview of the Stately Studio and its features](/#studio-editor), or [continue to learn more about states in detail](/states/intro).
 
-:::xstate 
+:::xstate
 
 ## XState basics
 

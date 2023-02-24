@@ -142,13 +142,14 @@ A helpful way to describe a self-transition is “doing something, not going som
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
 <p>
-<ThemedImage
-  alt="Dog begging machine with one begging state and a ‘gets treat’ transition which leaves and returns to the same state."
-  sources={{
-    light: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
-    dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Dog begging machine with one begging state and a ‘gets treat’ transition which leaves and returns to the same state."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
+      dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
+    }}
+  />
 </p>
 
 Self-transitions are helpful when you want to fire an action, but not leave your current state. You can use an action on the transition to fire it whenever that event is received.
@@ -183,4 +184,4 @@ createMachine(
 
 You can run actions on `entry` to a state, `exit` from a state, or on a transition. Self-transitions are particularly useful if you want to run an action without leaving the state.
 
-Next, we’ll look at using actions to store arbitrary values in your state machine via [context](/actions/context).
+Next, we’ll look at using actions to store arbitrary values in your state machine via [context](/xstate/actions/context).
