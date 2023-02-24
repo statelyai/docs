@@ -106,7 +106,7 @@ const isLoading = actor.state.hasTag('loading');
 ### Defining tags
 
 - Tags can be specified via an array, as `tag: ['tag1', 'tag2']`, or by a single string: `tag: 'tag1'`.
-- Tags can be made type-safe in TypeScript by using [typegen](/typescript/typegen).
+- Tags can be made type-safe in TypeScript by using [typegen](/xstate/typescript/typegen).
 
 ## State meta
 
@@ -165,7 +165,7 @@ For instance, if the machine above is in the `timedOut` state, the `meta` will b
 
 You can add descriptive text to states with the `description` attribute.
 
-This text is used by the [Visualizer](/tools/visualizer) and the [Studio Editor](/studio) to make the diagrams more descriptive.
+This text is used by the [Visualizer](/tools/visualizer) and the [Studio Editor](/#studio-editor) to make the diagrams more descriptive.
 
 ```ts twoslash
 import { createMachine } from 'xstate';

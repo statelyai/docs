@@ -9,13 +9,13 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 You can create and join teams in the Stately Studio to share and collaborate on team projects.
 
 <p>
-<ThemedImage
-  alt="Stately Studio Team page for the Voyager team, showing Captain Janeway with the owner and admin role, Commander Chakotay with an admin role, Lieutenant Tuvok, Lieutenant Torees, and Lieutenant Paris with Editor roles, and Ensign Kim with a Viewer role."
-  sources={{
-    light: useBaseUrl('/teams.png'),
-    dark: useBaseUrl('/teams-dm.png'),
-  }}
-/>
+  <ThemedImage
+    alt="Stately Studio Team page for the Voyager team, showing Captain Janeway with the owner and admin role, Commander Chakotay with an admin role, Lieutenant Tuvok, Lieutenant Torees, and Lieutenant Paris with Editor roles, and Ensign Kim with a Viewer role."
+    sources={{
+      light: useBaseUrl('/teams.png'),
+      dark: useBaseUrl('/teams-dm.png'),
+    }}
+  />
 </p>
 
 :::studio
@@ -26,22 +26,22 @@ Teams and shared projects are Pro features of the Stately Studio. [Check out the
 
 ## Team roles
 
-Team members can have one of the following roles: [Owner](#owner), [Admin](#admin), [Editor](#editor), or [Viewer](viewer). Team owners or admins assign the role to the new team member when inviting them to join the team.
+Team members can have one of the following roles: [Owner](#owner-role), [Admin](#admin-role), [Editor](#editor-role), or [Viewer](#viewer-role). Team owners or admins assign the role to the new team member when inviting them to join the team.
 
 The following table is an overview of the capabilities of each team role:
 
-| Capability                                | Owner  | Admin   | Editor  | Viewer  |
-|-------------------------------------------|--------|---------|---------|---------|
-| View team projects and machines           | ✅ Yes  | ✅ Yes  | ✅ Yes  | ✅ Yes  |
-| View other team members                   | ✅ Yes  | ✅ Yes  | ✅ Yes  | ✅ Yes  |
-| Fork team projects and machines           | ✅ Yes  | ✅ Yes  | ✅ Yes  | 🚫 No   |
-| Edit existing team projects               | ✅ Yes  | ✅ Yes  | ✅ Yes  | 🚫 No   |
-| Create team projects                      | ✅ Yes  | ✅ Yes  | ✅ Yes  | 🚫 No   |
-| Reassign Admin, Editor, and Viewer roles  | ✅ Yes  | ✅ Yes  | 🚫 No   | 🚫 No   |
-| Invite new team members                   | ✅ Yes  | ✅ Yes  | 🚫 No   | 🚫 No   |
-| Change project visibility                 | ✅ Yes  | ✅ Yes  | 🚫 No   | 🚫 No   |
-| Edit the team name                        | ✅ Yes  | ✅ Yes  | 🚫 No   | 🚫 No   |
-| Delete the team                           | ✅ Yes  | 🚫 No   | 🚫 No   | 🚫 No   |
+| Capability                               | Owner  | Admin  | Editor | Viewer |
+| ---------------------------------------- | ------ | ------ | ------ | ------ |
+| View team projects and machines          | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| View other team members                  | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| Fork team projects and machines          | ✅ Yes | ✅ Yes | ✅ Yes | 🚫 No  |
+| Edit existing team projects              | ✅ Yes | ✅ Yes | ✅ Yes | 🚫 No  |
+| Create team projects                     | ✅ Yes | ✅ Yes | ✅ Yes | 🚫 No  |
+| Reassign Admin, Editor, and Viewer roles | ✅ Yes | ✅ Yes | 🚫 No  | 🚫 No  |
+| Invite new team members                  | ✅ Yes | ✅ Yes | 🚫 No  | 🚫 No  |
+| Change project visibility                | ✅ Yes | ✅ Yes | 🚫 No  | 🚫 No  |
+| Edit the team name                       | ✅ Yes | ✅ Yes | 🚫 No  | 🚫 No  |
+| Delete the team                          | ✅ Yes | 🚫 No  | 🚫 No  | 🚫 No  |
 
 ### Owner role
 
@@ -64,6 +64,7 @@ Creating a team requires the Pro plan of the Stately Studio, including enough se
 ### Admin role
 
 Users with the Admin role can:
+
 - Edit the team name
 - Change project visibility
 - Invite new team members
@@ -110,16 +111,16 @@ You need to have [enough seats on your Pro plan](#teams-members-and-pro-plan-sea
 4. Use the **Invite to team** button to send the invitation.
 
 <p>
-<ThemedImage
-  alt="Stately Studio Team page for the Voyager team, showing the form to invite members via email and a pending invitation for Seven of Nine with the Viewer role."
-  sources={{
-    light: useBaseUrl('/teams/pending-invitations.png'),
-    dark: useBaseUrl('/teams/pending-invitations-dm.png'),
-  }}
-/>
+  <ThemedImage
+    alt="Stately Studio Team page for the Voyager team, showing the form to invite members via email and a pending invitation for Seven of Nine with the Viewer role."
+    sources={{
+      light: useBaseUrl('/teams/pending-invitations.png'),
+      dark: useBaseUrl('/teams/pending-invitations-dm.png'),
+    }}
+  />
 </p>
 
-The invitation will be sent to the invitee’s email address. The invitee will appear as a team member in the **Pending** section of the **Members** page until they accept the invitation. Once the invitation is accepted, the team member will be listed on the **Members** page, organized by role. 
+The invitation will be sent to the invitee’s email address. The invitee will appear as a team member in the **Pending** section of the **Members** page until they accept the invitation. Once the invitation is accepted, the team member will be listed on the **Members** page, organized by role.
 
 :::studio
 
@@ -133,16 +134,16 @@ To change a team member’s role, you must have the [Owner role](#owner-role) or
 
 1. Navigate to the team page from the left sidebar of the Studio workspace.
 2. Navigate to the **Members** tab on the team page.
-2. Use the **...** triple dot contextual menu alongside the team member’s name in the **Members** list to choose from the options **Make a Viewer**, **Make an Editor**, or **Make an Admin**.
+3. Use the **...** triple dot contextual menu alongside the team member’s name in the **Members** list to choose from the options **Make a Viewer**, **Make an Editor**, or **Make an Admin**.
 
 <p>
-<ThemedImage
-  alt="Stately Studio Team page for the Voyager team, showing the options for Lieutenant Tuvok as ‘Make a Viewer’, ‘Make an Editor,’ and ‘Remove from team.’"
-  sources={{
-    light: useBaseUrl('/teams/edit-role.png'),
-    dark: useBaseUrl('/teams/edit-role-dm.png'),
-  }}
-/>
+  <ThemedImage
+    alt="Stately Studio Team page for the Voyager team, showing the options for Lieutenant Tuvok as ‘Make a Viewer’, ‘Make an Editor,’ and ‘Remove from team.’"
+    sources={{
+      light: useBaseUrl('/teams/edit-role.png'),
+      dark: useBaseUrl('/teams/edit-role-dm.png'),
+    }}
+  />
 </p>
 
 ## Remove a member from a team

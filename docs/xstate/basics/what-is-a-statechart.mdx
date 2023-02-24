@@ -4,7 +4,7 @@ title: XState statechart basics
 
 # What is a statechart?
 
-[Install XState](/getting-started/installation) and create a statechart by importing `createMachine` from `xstate`.
+[Install XState](/xstate/installation) and create a statechart by importing `createMachine` from `xstate`.
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -57,7 +57,7 @@ const machine = createMachine({
 
 ## Transitions and events
 
-A machine moves from state to state through [transitions](/transitions-and-events/transitions-and-events). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.
+A machine moves from state to state through [transitions](/transitions-and-events/intro/). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.
 
 :::studio
 
@@ -141,7 +141,6 @@ const INVALID_EVENTS = [
 
 ### Events in TypeScript
 
-
 In TypeScript, you can strongly type your events by passing a _[union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)_ of all the events to the `schema` property.
 
 ```ts twoslash
@@ -165,4 +164,4 @@ Wherever you send an event to a machine, or access the event inside the machine,
 
 A statechart turns boxes and arrows into executable code. The “boxes” are states—the different modes your app can be in. The “arrows” are transitions, letting your statechart know how to move from state to state. Events sent to the statechart can trigger transitions and also pass values to the statechart.
 
-Next, we’ll learn how to make a statechart execute side effects with [Options](/basics/options).
+Next, we’ll learn how to make a statechart execute side effects with [Options](/xstate/basics/options).

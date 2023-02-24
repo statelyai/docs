@@ -8,7 +8,7 @@ The [@xstate/vue package](https://github.com/statelyai/xstate/tree/main/packages
 
 ## Vue 2
 
-If you’re using Vue 2.x, please see [the Vue recipe](../../recipes/vue.html) instead, or use the [`xstate-vue2` package](https://github.com/ChrisShank/xstate-vue2) if you want to use the Vue Composition API.
+If you’re using Vue 2.x, please see [the Vue recipe](https://xstate.js.org/docs/recipes/vue.html) instead, or use the [`xstate-vue2` package](https://github.com/ChrisShank/xstate-vue2) if you want to use the Vue Composition API.
 :::
 
 ## Quick start
@@ -57,12 +57,12 @@ const toggleMachine = createMachine({
   initial: 'inactive',
   states: {
     inactive: {
-      on: { TOGGLE: 'active' }
+      on: { TOGGLE: 'active' },
     },
     active: {
-      on: { TOGGLE: 'inactive' }
-    }
-  }
+      on: { TOGGLE: 'inactive' },
+    },
+  },
 });
 
 export default {
@@ -70,9 +70,9 @@ export default {
     const { state, send } = useMachine(toggleMachine);
     return {
       state,
-      send
+      send,
     };
-  }
+  },
 };
 </script>
 ```
@@ -114,7 +114,7 @@ export default {
   setup(props) {
     const { state, send } = useActor(props.someSpawnedActor);
     return { state, send };
-  }
+  },
 };
 ```
 
@@ -143,7 +143,7 @@ export default {
   setup() {
     const service = useInterpret(someMachine);
     return service;
-  }
+  },
 };
 ```
 
@@ -159,7 +159,7 @@ export default {
       {
         actions: {
           /* ... */
-        }
+        },
       },
       (state) => {
         // subscribes to state changes
@@ -167,7 +167,7 @@ export default {
       }
     );
     // ...
-  }
+  },
 };
 ```
 
@@ -194,7 +194,7 @@ export default {
     const count = useSelector(props.service, selectCount);
     // ...
     return { count };
-  }
+  },
 };
 ```
 
@@ -212,7 +212,7 @@ export default {
     const user = useSelector(props.service, selectUser, compareUser);
     // ...
     return { user };
-  }
+  },
 };
 ```
 
@@ -230,7 +230,7 @@ export default {
     const count = useSelector(service, selectCount);
     // ...
     return { count, service };
-  }
+  },
 };
 ```
 
@@ -249,7 +249,6 @@ This special `useMachine` hook is imported from `@xstate/vue/lib/fsm`
 - `state` - Represents the current state of the machine as an `@xstate/fsm` `StateMachine.State` object.
 - `send` - A function that sends events to the running service.
 - `service` - The created `@xstate/fsm` service.
-
 
 ## Configuring machines
 
@@ -288,11 +287,11 @@ const fetchMachine = createMachine({
   initial: 'idle',
   context: {
     data: undefined,
-    error: undefined
+    error: undefined,
   },
   states: {
     idle: {
-      on: { FETCH: 'loading' }
+      on: { FETCH: 'loading' },
     },
     loading: {
       invoke: {
@@ -300,51 +299,51 @@ const fetchMachine = createMachine({
         onDone: {
           target: 'success',
           actions: assign({
-            data: (_context, event) => event.data
-          })
+            data: (_context, event) => event.data,
+          }),
         },
         onError: {
           target: 'failure',
           actions: assign({
-            error: (_context, event) => event.data
-          })
-        }
-      }
+            error: (_context, event) => event.data,
+          }),
+        },
+      },
     },
     success: {
       entry: 'notifySuccess',
-      type: 'final'
+      type: 'final',
     },
     failure: {
       on: {
-        RETRY: 'loading'
-      }
-    }
-  }
+        RETRY: 'loading',
+      },
+    },
+  },
 });
 
 export default {
   props: {
     onResolve: {
       type: Function,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   setup(props) {
     const { state, send } = useMachine(fetchMachine, {
       actions: {
-        notifySuccess: (ctx) => props.onResolve(ctx.data)
+        notifySuccess: (ctx) => props.onResolve(ctx.data),
       },
       services: {
         fetchData: (_context, event) =>
-          fetch(`some/api/${event.query}`).then((res) => res.json())
-      }
+          fetch(`some/api/${event.query}`).then((res) => res.json()),
+      },
     });
     return {
       state,
-      send
+      send,
     };
-  }
+  },
 };
 </script>
 ```
@@ -377,12 +376,12 @@ const persistedState = JSON.parse(
 export default {
   setup() {
     const { state, send } = useMachine(someMachine, {
-      state: persistedState
+      state: persistedState,
     });
 
     // state will initially be that persisted state, not the machine’s initialState
     return { state, send };
-  }
+  },
 };
 </script>
 ```
