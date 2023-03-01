@@ -2,6 +2,9 @@
 title: Callbacks
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <!-- Needs technical review -->
 
 <!-- deps: ["actors", "promise-actors"] -->
@@ -13,6 +16,30 @@ Promise actors let you model promises declaratively but not every actor will be 
 - Start listeners/processes and clean them up when needed
 
 Callback actors are declared using the `() => () => {}` syntax, which is how XState distinguishes them from promise actors, which are declared as: `() => {}`.
+
+<Tabs>
+<TabItem value="v4" label="XState v4">
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+createMachine(
+  {
+    invoke: {
+      src: 'callbackActor',
+    },
+  }
+);
+```
+
+</TabItem>
+<TabItem value="v5" label="XState v5">
+
+:::warningxstate
+
+XState v5 is in alpha. [Check out XState v5 Alpha on NPM](https://www.npmjs.com/package/xstate/v/5.0.0-alpha.1).
+
+:::
 
 ```ts twoslash
 import { createMachine } from 'xstate';
@@ -38,6 +65,9 @@ createMachine(
   }
 );
 ```
+
+</TabItem>
+</Tabs>
 
 Callbacks are called with:
 
