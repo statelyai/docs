@@ -96,6 +96,12 @@ const sidebars = {
           label: 'Edit',
           items: [
             'descriptions',
+            {
+              type: 'doc', 
+              label:'Machine versions',
+              id: 'versions',
+              className: 'pro-feature',
+            },
             'import-from-code',
             'export-as-code',
           ]
