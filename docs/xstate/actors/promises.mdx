@@ -35,6 +35,12 @@ const userMachine = createMachine(
 );
 ```
 
+:::warningxstate
+
+XState v5 is in alpha. [Check out XState v5 Alpha on NPM](https://www.npmjs.com/package/xstate/v/5.0.0-alpha.1).
+
+:::
+
 When a promise actor is resolved, a `done.invoke` event is sent back to the machine which includes its data, placed under the `data` property. For example:
 
 ```js
