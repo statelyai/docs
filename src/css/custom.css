@@ -1388,7 +1388,10 @@ span.footer__link-item a:active {
     display: grid;
     grid-template-columns: 50% 1fr repeat(6, minmax(auto, 3rem));
     grid-template-rows: repeat(4, minmax(1.5rem, auto));
-    grid-template-areas:  "a . b c d e f g" "h . . . . . . ." "j . i i i i i i" ". . i i i i i i";
+    grid-template-areas:  "a   x01  b   c   d   e   f   g"
+                          "h   x02 x03 x04 x05 x06 x07 x08"
+                          "j   x09  i   i   i   i   i   i"
+                          "x10 x11  i   i   i   i   i   i";
     align-content: start;
     gap: 0;
     margin-top: 1rem;
@@ -1434,7 +1437,10 @@ span.footer__link-item a:active {
 @media (min-width: 997px) {
   ul.footer__links {
     grid-template-columns: var(--doc-sidebar-width) 30% 1fr repeat(6, minmax(auto, 3rem));
-    grid-template-areas:  ". a . b c d e f g" ". h . . . . . . ." ". j . i i i i i i" ". . . i i i i i i";
+    grid-template-areas:  "x01  a  x02  b   c   d   e   f   g "
+                          "x03  h  x04 x05 x06 x07 x08 x09 x10"
+                          "x11  j  x12  i   i   i   i   i   i"
+                          "x13 x14 x15  i   i   i   i   i   i";
   }
 }
 
@@ -1450,7 +1456,10 @@ span.footer__link-item a:active {
 
   ul.footer__links {
     grid-template-columns: 30% 1fr repeat(6, minmax(auto, 3rem));
-    grid-template-areas:  "a . b c d e f g" "h . . . . . . ." "j . i i i i i i" ". . i i i i i i";
+    grid-template-areas:  " a  x01  b   c   d   e   f   g"
+                          " h  x02 x03 x04 x05 x06 x07 x08"
+                          " j  x09  i   i   i   i   i   i"
+                          "x10 x11  i   i   i   i   i   i";
   }
 }
 
