@@ -1171,7 +1171,7 @@ footer [class*=iconExternalLink] {
   --ifm-alert-border-color: var(--st-danger-accent);
 }
 
-.alert--warning {
+.alert--warning, .alert--warningxstate {
   --ifm-alert-background-color: var(--st-warning-background);
   --ifm-alert-background-color-highlight: var(--st-warning-accent);
   --ifm-alert-foreground-color: var(--st-warning-text);
