@@ -1388,45 +1388,48 @@ span.footer__link-item a:active {
     display: grid;
     grid-template-columns: 50% 1fr repeat(6, minmax(auto, 3rem));
     grid-template-rows: repeat(4, minmax(1.5rem, auto));
-    grid-template-areas:  "a   x01  b   c   d   e   f   g"
-                          "h   x02 x03 x04 x05 x06 x07 x08"
-                          "j   x09  i   i   i   i   i   i"
-                          "x10 x11  i   i   i   i   i   i";
+    grid-template-areas:  "link-one . github discord mastodon twitter youtube linkedin"
+                          "link-two . . . . . . ."
+                          "link-thr . form form form form form form"
+                          ". . form form form form form form";
     align-content: start;
     gap: 0;
     margin-top: 1rem;
   }
 
   .footer__links li:nth-of-type(1) {
-    grid-area: a;
-    margin-top: 0;
+    grid-area: link-one;
   }
   .footer__links li:nth-of-type(2) {
-    grid-area: h;
+    grid-area: link-two;
   }
   .footer__links li:nth-of-type(3) {
-    grid-area: j;
+    grid-area: link-thr;
   }
   .footer__links li:nth-of-type(4) {
-    grid-area: b;
+    grid-area: github;
   }
   .footer__links li:nth-of-type(5) {
-    grid-area: c;
+    grid-area: discord;
   }
   .footer__links li:nth-of-type(6) {
-    grid-area: d;
+    grid-area: mastodon;
   }
   .footer__links li:nth-of-type(7) {
-    grid-area: e;
+    grid-area: twitter;
   }
   .footer__links li:nth-of-type(8) {
-    grid-area: f;
+    grid-area: youtube;
   }
   .footer__links li:nth-of-type(9) {
-    grid-area: g;
+    grid-area: linkedin;
   }
   .footer__links li:nth-of-type(10) {
-    grid-area: i;
+    grid-area: form;
+  }
+
+  .footer__links li:nth-of-type(1) {
+    margin-top: 0;
   }
 
   .footer__links form {
@@ -1437,10 +1440,10 @@ span.footer__link-item a:active {
 @media (min-width: 997px) {
   ul.footer__links {
     grid-template-columns: var(--doc-sidebar-width) 30% 1fr repeat(6, minmax(auto, 3rem));
-    grid-template-areas:  "x01  a  x02  b   c   d   e   f   g "
-                          "x03  h  x04 x05 x06 x07 x08 x09 x10"
-                          "x11  j  x12  i   i   i   i   i   i"
-                          "x13 x14 x15  i   i   i   i   i   i";
+    grid-template-areas:  ". link-one . github discord mastodon twitter youtube linkedin"
+                          ". link-two . . . . . . ."
+                          ". link-thr . form form form form form form"
+                          ". . . form form form form form form";
   }
 }
 
@@ -1456,10 +1459,10 @@ span.footer__link-item a:active {
 
   ul.footer__links {
     grid-template-columns: 30% 1fr repeat(6, minmax(auto, 3rem));
-    grid-template-areas:  " a  x01  b   c   d   e   f   g"
-                          " h  x02 x03 x04 x05 x06 x07 x08"
-                          " j  x09  i   i   i   i   i   i"
-                          "x10 x11  i   i   i   i   i   i";
+    grid-template-areas:  "link-one . github discord mastodon twitter youtube linkedin"
+                          "link-two . . . . . . ."
+                          "link-thr . form form form form form form"
+                          ". . form form form form form form";
   }
 }
 
