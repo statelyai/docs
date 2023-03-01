@@ -60,6 +60,7 @@ const config = {
               'danger',
               'typescript',
               'xstate',
+              'warningxstate',
               'studio',
             ],
           },
