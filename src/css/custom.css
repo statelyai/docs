@@ -336,6 +336,9 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-menu-link-border: var(--st-layout-border-secondary);
   --st-menu-link-border-active: var(--st-gray-200);
   --st-menu-icon-filter: invert(100%) sepia(100%) saturate(800%) hue-rotate(175deg) brightness(70%); 
+  --st-badge-background-color: var(--st-blue-50);
+  --st-badge-border-color: none;
+  --st-badge-text: var(--st-blue-800);
 
   --ifm-breadcrumb-separator: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\"><polygon fill=\"gray\" points=\"79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128\"/></svg>");
 
@@ -462,6 +465,9 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-menu-link-border: var(--st-layout-border-secondary);
   --st-menu-link-border-active: var(--st-gray-600);
   --st-menu-icon-filter: invert(100%) sepia(100%) saturate(700%) hue-rotate(175deg) brightness(40%); 
+  --st-badge-background-color: var(--st-blue-900);
+  --st-badge-border-color: none;
+  --st-badge-text: var(--st-blue-200);
 
   --ifm-breadcrumb-separator: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 256 256\"><polygon fill=\"darkgray\" points=\"79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128\"/></svg>");
 
@@ -1217,6 +1223,35 @@ footer [class*=iconExternalLink] {
 
 .alert a:hover {
   text-decoration-thickness: 1px;
+}
+
+/* Version banner */
+
+.alert--version {
+  margin-bottom: 1rem;
+}
+
+.versionBannerIcon svg {
+  vertical-align: middle;
+  height: 1.2em;
+  width: 1.2em;
+  fill: currentColor;
+}
+
+.versionBannerContent > * {
+  margin-bottom: 0.35em;
+}
+
+.versionBannerContent > :last-child {
+  margin-bottom: 0;
+}
+
+/* Version badge */
+
+.badge--secondary {
+  --ifm-badge-border-color: var(--st-badge-border-color);
+  --ifm-badge-background-color: var(--st-badge-background-color);
+  color: var(--st-badge-text);
 }
 
 /* Context boxes (custom HTML used in content pages) */
