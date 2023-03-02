@@ -1,0 +1,63 @@
+---
+title: 'Event cases'
+---
+
+# Event cases
+
+<!-- deps: ["xstate-test-assertions"] -->
+
+Sometimes you want to test your system with a variety of different values. For example, you might be testing a payment system where you can pay with many different currencies, and you need to ensure that `GBP`, `EUR` and `USD` all work.
+
+You can use `eventCases` to test with these different values:
+
+```ts
+const machine = createTestMachine({
+  initial: 'onPaymentPage',
+  states: {
+    onPaymentPage: {
+      on: {
+        SUBMIT_PAYMENT_FORM: 'submitted',
+      },
+    },
+    submitted: {},
+  },
+});
+
+const model = createTestModel({
+  eventCases: {
+    SUBMIT_PAYMENT_FORM: [
+      {
+        currency: 'GBP',
+      },
+      {
+        currency: 'USD',
+      },
+      {
+        currency: 'EUR',
+      },
+    ],
+  },
+});
+
+model.getPaths().forEach((path) => {
+  it(path.description, () => {
+    path.testSync({
+      events: ({ event }) => {
+        /**
+         * Select the currency from the event.currency
+         */
+        cy.findByLabelText('Currency').select(event.currency);
+
+        /**
+         * Submit the form
+         */
+        cy.findByRole('button', {
+          name: 'Submit',
+        }).click();
+      },
+    });
+  });
+});
+```
+
+Using `eventCases` will create a _different path for each case_. In the example above, the test model will test that each currency can be submitted.

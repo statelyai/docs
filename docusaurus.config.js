@@ -49,6 +49,20 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/statelyai/docs/tree/main/',
 
+          lastVersion: 'current',
+          includeCurrentVersion: true,
+          versions: {
+            current: {
+              label: 'XState v4',
+              path: 'xstate-v-4',
+            },
+            5: {
+              label: 'XState v5',
+              path: 'xstate-v5',
+              banner: 'unreleased',
+            }
+          },
+
           // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
             tag: ':::',
@@ -118,6 +132,10 @@ const config = {
           {
             href: 'https://stately.ai/blog',
             label: 'Blog',
+            position: 'right',
+          },
+          {
+            type: 'docsVersionDropdown',
             position: 'right',
           },
           {

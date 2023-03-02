@@ -1,0 +1,31 @@
+---
+title: Playwright in XState Test
+---
+
+# Playwright
+
+<!-- deps: ["testing-intro"] -->
+
+Integrating with [Playwright](https://playwright.dev) is simple with `@xstate/test`.
+
+```ts
+import { createTestMachine, createTestModel } from '@xstate/test';
+import { test } from '@playwright/test';
+
+const machine = createTestMachine({
+  // machine config
+});
+
+describe('My app', () => {
+  createTestModel(machine)
+    .getPaths()
+    .forEach((path) => {
+      test(path.description, async ({ page }) => {
+        await path.test({
+          states: {},
+          events: {},
+        });
+      });
+    });
+});
+```

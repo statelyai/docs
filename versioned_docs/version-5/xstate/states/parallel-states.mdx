@@ -1,0 +1,232 @@
+---
+title: Parallel states
+---
+
+# Parallel states
+
+A [parallel state](/states/parallel-states) is a state separated into multiple regions of child states, where each region is active simultaneously.
+
+:::studio
+
+[Read more about how to use parallel states in the Stately Studio](/states/parallel-states).
+
+:::
+
+You can specify a parallel state node on the machine and/or any nested child state by setting `type: 'parallel'`.
+
+For example, the machine below allows the `upload` and `download` child states to be simultaneously active. This example represents an application where you can download and upload files at the same time:
+
+```ts twoslash {4,6,22}
+import { createMachine } from 'xstate';
+
+const fileMachine = createMachine({
+  type: 'parallel',
+  states: {
+    upload: {
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            INIT_UPLOAD: { target: 'pending' },
+          },
+        },
+        pending: {
+          on: {
+            UPLOAD_COMPLETE: { target: 'success' },
+          },
+        },
+        success: {},
+      },
+    },
+    download: {
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            INIT_DOWNLOAD: { target: 'pending' },
+          },
+        },
+        pending: {
+          on: {
+            DOWNLOAD_COMPLETE: { target: 'success' },
+          },
+        },
+        success: {},
+      },
+    },
+  },
+});
+```
+
+Parallel states allow you to run processes _simultaneously_ for greater flexibility and power.
+
+## Matching parallel states
+
+<!-- deps: ["intro-to-state-api","parent-and-child-states","parallel-states"] -->
+
+The `state.matches` syntax checks if an actor is in a particular state when the machine is run using `interpret` or similar. You can use `state.matches` with parent states using either the string method or the object method.
+
+### `state.matches` string argument
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({});
+const state = machine.initialState;
+
+// ---cut---
+/**
+ * Checks if the machine is in the red.stop
+ * state
+ */
+console.log(state.matches('red.stop'));
+```
+
+### `state.matches` object argument
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({});
+const state = machine.initialState;
+
+// ---cut---
+/**
+ * Checks if the machine is in the red.stop
+ * state
+ */
+state.matches({
+  red: 'stop',
+});
+```
+
+You can also use the object method to check if your machine is in two parallel states at once:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({});
+const state = machine.initialState;
+
+// ---cut---
+/**
+ * Checks if the machine is in the wind.blowing
+ * state AND the rain.raining state
+ */
+state.matches({
+  wind: 'blowing',
+  rain: 'raining',
+});
+```
+
+### Match one of multiple states
+
+If you want to match one of multiple states, you can use [`.some()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) on an array of state values:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({});
+const state = machine.initialState;
+
+// ---cut---
+const isMatch = [{ customer: 'deposit' }, { customer: 'withdrawal' }].some(
+  state.matches
+);
+```
+
+## Targeting multiple parallel states
+
+<!-- deps: ["parallel-states","transitions-and-events","targeting-children"] -->
+
+Sometimes you’ll need a transition to target multiple parts of a parallel state simultaneously. This is useful when you want to affect different parts of a simultaneous process at the same time.
+
+Multiple targets are specified as an array in `target: [...]`.
+
+```ts twoslash {24-26}
+import { createMachine } from 'xstate';
+
+const settingsMachine = createMachine({
+  type: 'parallel',
+  states: {
+    mode: {
+      initial: 'active',
+      states: {
+        inactive: {},
+        pending: {},
+        active: {},
+      },
+    },
+    status: {
+      initial: 'enabled',
+      states: {
+        disabled: {},
+        enabled: {},
+      },
+    },
+  },
+  on: {
+    // Multiple targets
+    DEACTIVATE: {
+      target: ['.mode.inactive', '.status.disabled'],
+    },
+  },
+});
+```
+
+In the example above, the `DEACTIVATE` event simultaneously causes _two_ changes, disabling the `status` and turning the `mode` to `inactive`.
+
+## Final states and parallel states
+
+<!-- deps: ["parallel-states", "state-done-events"] -->
+
+When every child state node in a parallel state node is _done_, the parent parallel state node is also _done_. When every final state node in every child state node is reached, the `done` event will be fired for the parallel state node.
+
+`onDone` is very useful in modeling parallel tasks. For example, below there is a shopping machine where `user` and `items` represent two parallel tasks of the `cart` state:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const shoppingMachine = createMachine({
+  initial: 'cart',
+  states: {
+    cart: {
+      type: 'parallel',
+      states: {
+        user: {
+          initial: 'pending',
+          states: {
+            pending: {
+              entry: 'getUser',
+              on: {
+                RESOLVE_USER: { target: 'success' },
+                REJECT_USER: { target: 'failure' },
+              },
+            },
+            success: { type: 'final' },
+            failure: {},
+          },
+        },
+        items: {
+          initial: 'pending',
+          states: {
+            pending: {
+              entry: 'getItems',
+              on: {
+                RESOLVE_ITEMS: { target: 'success' },
+                REJECT_ITEMS: { target: 'failure' },
+              },
+            },
+            success: { type: 'final' },
+            failure: {},
+          },
+        },
+      },
+      onDone: 'confirm',
+    },
+    confirm: {},
+  },
+});
+```
+
+The `onDone` transition will only happen when all of the child states of `cart` (e.g., `user` and `items`) are in their final states. In the case of the shopping machine, once the `shopping.cart.user.success` and `shopping.cart.items.success` state nodes are reached, the machine will transition from the `cart` to the `confirm` state.

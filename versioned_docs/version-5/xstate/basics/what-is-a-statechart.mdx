@@ -1,0 +1,167 @@
+---
+title: XState statechart basics
+---
+
+# What is a statechart?
+
+[Install XState](/xstate/installation) and create a statechart by importing `createMachine` from `xstate`.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // statechart config goes here
+});
+```
+
+## States
+
+You can create these states in XState using the `states` property:
+
+```ts twoslash {2-5}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {},
+    awake: {},
+  },
+});
+```
+
+### Initial state
+
+When a state machine starts, it enters the [**initial state**](/states/initial-states) first. A machine can only have one top-level initial state.
+
+:::studio
+
+[Read about the basics on initial states](/state-machines-and-statecharts/#initial-state), and [how to use initial states in the Stately Studio](/states/initial-states).
+
+:::
+
+In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
+
+```ts twoslash {2}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'waiting',
+  states: {
+    waiting: {},
+  },
+});
+```
+
+## Transitions and events
+
+A machine moves from state to state through [transitions](/transitions-and-events/intro/). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.
+
+:::studio
+
+[Read about the basics of transitions and events](/state-machines-and-statecharts#transitions-and-events), and [how to use tranisitons and events in the Stately Studio](/transitions-and-events/intro).
+
+:::
+
+Use the `on` property inside the desired state to represent its transitions.
+
+```ts twoslash {5-9, 12-16}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {
+      on: {
+        'wakes up': {
+          target: 'awake',
+        },
+      },
+    },
+    awake: {
+      on: {
+        'falls asleep': {
+          target: 'asleep',
+        },
+      },
+    },
+  },
+});
+```
+
+### Events
+
+Define an event with an object using the `type` attribute to describe the event’s name. Events can also pass in other properties along with their type.
+
+```ts twoslash
+const VALID_EVENTS = [
+  {
+    type: 'LOG_OUT',
+  },
+  {
+    type: 'LOG_IN',
+    /**
+     * Pass in any other properties
+     * along with the event
+     */
+    username: 'myusername',
+  },
+  {
+    /**
+     * The event type key and value
+     * can be any text case
+     */
+    type: 'wake up',
+  },
+];
+
+const INVALID_EVENTS = [
+  {
+    /**
+     * The event type key must
+     * be the same text case as
+     * its first instance
+     */
+    TYPE: 'Some event',
+  },
+  {
+    /**
+     * The event type value must
+     * be a string
+     */
+    type: 123,
+  },
+];
+```
+
+:::typescript
+
+### Events in TypeScript
+
+In TypeScript, you can strongly type your events by passing a _[union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)_ of all the events to the `schema` property.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  schema: {
+    events: {} as
+      | { type: 'LOG_OUT' }
+      | { type: 'LOG_IN'; value: string }
+      | { type: 'COUNTDOWN'; value: number },
+  },
+});
+```
+
+Wherever you send an event to a machine, or access the event inside the machine, the event will be strongly typed.
+
+:::
+
+## Summary
+
+A statechart turns boxes and arrows into executable code. The “boxes” are states—the different modes your app can be in. The “arrows” are transitions, letting your statechart know how to move from state to state. Events sent to the statechart can trigger transitions and also pass values to the statechart.
+
+Next, we’ll learn how to make a statechart execute side effects with [Options](/xstate/basics/options).

@@ -1,0 +1,50 @@
+---
+title: States
+---
+
+import ThemedImage from '@theme/ThemedImage';
+
+:::tip
+
+Watch our [“What are states?” video on YouTube](https://www.youtube.com/watch?v=z-6yhmSWUcc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=2) (53s).
+
+:::
+
+A state describes the machine’s status or mode, which could be as simple as *Paused* and *Playing*. A state machine can only be in one state at a time.
+
+<p>
+  <ThemedImage
+    alt="Video player state machine with an initial Paused state and a Playing state. There’s a warning on the playing state because there’s no transitions which means the playing state cannot be reached."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.light.png',
+      dark: 'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.dark.png',
+    }}
+  />
+</p>
+
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d).
+
+:::studio
+
+In the Stately Studio, the rounded rectangle boxes are states. The **?** question mark icon in the machine above indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](/states/initial-states/) by a [transition](/transitions-and-events/intro/).
+
+:::
+
+These states are “finite”; the machine can only move through the states you’ve pre-defined.
+
+## Create a state
+
+1. Select your machine or an existing state.
+2. Create a new state inside your machine or existing state:
+   - Use the **+ State** button that appears above the selected state, or:
+   - Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+   - Double-click inside your machine or an existing state.
+
+:::xstate
+
+## Looking for how to use states in XState?
+
+Find out [more about states in XState](/xstate/basics/what-is-a-statechart#states) in the XState section of the docs.
+
+:::

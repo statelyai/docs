@@ -1,0 +1,24 @@
+---
+title: Transition descriptions
+---
+
+# Transition descriptions
+
+<!-- deps: ["transitions-and-events", "actions"] -->
+
+You can add descriptions to transitions to illustrate what they do.
+
+This text is used by the [Visualizer](/tools/visualizer) and the [Studio Editor](/#studio-editor) to make the diagrams more descriptive.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    SAY_HELLO: {
+      actions: 'sayHello',
+      description: 'Runs the sayHello action',
+    },
+  },
+});
+```

@@ -1,0 +1,121 @@
+---
+title: After
+---
+
+# After
+
+<!-- deps: ["states", "transitions-and-events"] -->
+
+Timeouts and intervals can be hard to manage in application code. Statecharts make it easy and declarative using the `after` syntax.
+
+The example below is a statechart for a game where you need to push a button within 5 seconds, or you get timed out:
+
+```ts twoslash {7-12}
+import { createMachine } from 'xstate';
+
+const pushTheButtonGame = createMachine({
+  initial: 'waitingForButtonPush',
+  states: {
+    waitingForButtonPush: {
+      after: {
+        5000: {
+          target: 'timedOut',
+          actions: 'logThatYouGotTimedOut',
+        },
+      },
+      on: {
+        PUSH_BUTTON: {
+          actions: 'logSuccess',
+          target: 'success',
+        },
+      },
+    },
+    success: {},
+    timedOut: {},
+  },
+});
+```
+
+The `after` property is a keyed object. The key is the time you want to wait for in milliseconds (ms). You can also do conditional checks and if/else logic on the object, as with any transition.
+
+One useful feature of the `after` declaration is that you don’t need to cancel the timers in your code. For example, if the `PUSH_BUTTON` event is received before the timeout finishes, the **timeout is automatically cancelled**. No `clearTimeout` needed.
+
+You can also specify multiple delayed events on the same `after` declaration:
+
+```ts twoslash {6-8}
+import { createMachine } from 'xstate';
+
+// ---cut---
+const pushTheButtonGame = createMachine({
+  initial: 'waitingForButtonPush',
+  states: {
+    waitingForButtonPush: {
+      after: {
+        4000: {
+          actions: 'warnThatYouAreAboutToLose',
+        },
+        5000: {
+          target: 'timedOut',
+          actions: 'logThatYouGotTimedOut',
+        },
+      },
+      on: {
+        PUSH_BUTTON: {
+          actions: 'logSuccess',
+          target: 'success',
+        },
+      },
+    },
+    success: {},
+    timedOut: {},
+  },
+});
+```
+
+In the example above, the machine warns you when there’s one second remaining and then transitions.
+
+## Dynamic delays
+
+<!-- deps: ["after", "options-api"] -->
+
+Sometimes you’ll want the length of time waited in an `after` transition to be dynamic. A dynamic delay is specified by passing a string reference instead of the number of milliseconds.
+
+Dynamic delays can either pass in a number or pass a function that returns the delay.
+
+In the example below, `YELLOW_DELAY` passes a number, and `GREEN_DELAY` passes a function.
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+const lightDelayMachine = createMachine(
+  {
+    initial: 'green',
+    context: {
+      trafficLevel: 'low',
+    },
+    states: {
+      green: {
+        after: {
+          // after the GREEN_DELAY, transition to yellow
+          GREEN_DELAY: { target: 'yellow' },
+        },
+      },
+      yellow: {
+        after: {
+          // after the YELLOW_DELAY, transition to yellow
+          YELLOW_DELAY: { target: 'red' },
+        },
+      },
+      red: {},
+    },
+  },
+  {
+    delays: {
+      GREEN_DELAY: (context, event) => {
+        return context.trafficLevel === 'low' ? 1000 : 3000;
+      },
+      YELLOW_DELAY: 500,
+    },
+  }
+);
+```

@@ -1,0 +1,288 @@
+{
+  "tutorialSidebar": [
+    {
+      "type": "category",
+      "label": "➡️  Get started",
+      "items": [
+        {
+          "type": "doc",
+          "label": "Introduction",
+          "id": "studio"
+        },
+        {
+          "type": "doc",
+          "label": "State machines and statecharts",
+          "id": "state-machines-and-statecharts"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "🏁  Core concepts",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        {
+          "type": "category",
+          "label": "States",
+          "items": [
+            {
+              "type": "doc",
+              "id": "states/intro",
+              "label": "Intro"
+            },
+            "states/initial-states",
+            "states/final-states",
+            "states/parent-states",
+            "states/parallel-states",
+            "states/history-states"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Transitions and events",
+          "items": [
+            {
+              "type": "doc",
+              "id": "transitions-and-events/intro",
+              "label": "Intro"
+            },
+            "transitions-and-events/guards",
+            "transitions-and-events/eventless-transitions",
+            "transitions-and-events/delayed-transitions",
+            "transitions-and-events/self-transitions",
+            "transitions-and-events/state-done-events",
+            "transitions-and-events/invoke-done-events",
+            "transitions-and-events/invoke-error-events"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Actions and actors",
+          "items": [
+            "actions-and-actors/entry-and-exit-actions",
+            "actions-and-actors/actors"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "⚡️  Using the Studio",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        {
+          "type": "category",
+          "label": "Edit",
+          "items": [
+            "descriptions",
+            "import-from-code",
+            "export-as-code"
+          ]
+        },
+        "projects",
+        {
+          "type": "doc",
+          "label": "Teams",
+          "className": "pro-feature",
+          "id": "teams"
+        },
+        "discover",
+        {
+          "type": "category",
+          "label": "Accounts",
+          "items": [
+            {
+              "type": "doc",
+              "label": "Community plan",
+              "id": "studio-community-plan",
+              "className": "community-feature"
+            },
+            {
+              "type": "doc",
+              "label": "Pro plan",
+              "id": "studio-pro-plan",
+              "className": "pro-feature"
+            },
+            {
+              "type": "doc",
+              "label": "Enterprise plan",
+              "id": "studio-enterprise-plan"
+            },
+            {
+              "type": "doc",
+              "label": "Sign up",
+              "id": "sign-up"
+            },
+            {
+              "type": "doc",
+              "label": "Upgrade",
+              "id": "upgrade"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "🛠️  XState library",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "xstate/intro",
+          "label": "Intro"
+        },
+        "xstate/installation",
+        "xstate/templates",
+        {
+          "type": "category",
+          "label": "Basics",
+          "items": [
+            "xstate/basics/what-is-a-statechart",
+            "xstate/basics/options",
+            "xstate/basics/inline-vs-named-options"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Actions and context",
+          "items": [
+            "xstate/actions/actions",
+            "xstate/actions/context",
+            "xstate/actions/built-in-actions"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Transitions and choices",
+          "items": [
+            "xstate/transitions-and-choices/guards",
+            "xstate/transitions-and-choices/guarded-actions",
+            "xstate/transitions-and-choices/always",
+            "xstate/transitions-and-choices/after",
+            "xstate/transitions-and-choices/internal-external",
+            "xstate/transitions-and-choices/transition-descriptions"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Running machines",
+          "items": [
+            "xstate/running-machines/intro",
+            "xstate/running-machines/react",
+            "xstate/running-machines/node"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Deep dive: states",
+          "items": [
+            "xstate/states/parent-and-child-states",
+            "xstate/states/other-state-attributes",
+            "xstate/states/advanced-transitions",
+            "xstate/states/final-states",
+            "xstate/states/parallel-states",
+            "xstate/states/history-states",
+            "xstate/states/in-state-guards"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Model-based testing",
+          "items": [
+            "xstate/model-based-testing/intro",
+            "xstate/model-based-testing/when-to-use",
+            "xstate/model-based-testing/quickstart",
+            "xstate/model-based-testing/test-paths",
+            "xstate/model-based-testing/assertions",
+            "xstate/model-based-testing/event-cases",
+            "xstate/model-based-testing/jest",
+            "xstate/model-based-testing/vitest",
+            "xstate/model-based-testing/cypress",
+            "xstate/model-based-testing/playwright"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Actors",
+          "items": [
+            "xstate/actors/intro",
+            "xstate/actors/promises",
+            "xstate/actors/actions-vs-actors",
+            "xstate/actors/callbacks",
+            "xstate/actors/machines",
+            "xstate/actors/observables",
+            "xstate/actors/parent-child-communication",
+            "xstate/actors/spawn",
+            {
+              "type": "doc",
+              "label": "Actor cheatsheet",
+              "id": "xstate/actors/cheatsheet"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "TypeScript",
+          "items": [
+            "xstate/typescript/typegen",
+            "xstate/typescript/type-helpers",
+            "xstate/typescript/troubleshooting"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Packages",
+          "items": [
+            "xstate/packages/xstate-fsm",
+            "xstate/packages/xstate-graph",
+            "xstate/packages/xstate-test",
+            "xstate/packages/xstate-immer",
+            "xstate/packages/xstate-react",
+            "xstate/packages/xstate-svelte",
+            "xstate/packages/xstate-vue"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Advanced Topics",
+          "items": [
+            "xstate/advanced/react-patterns",
+            "xstate/advanced/scxml"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "🧰  Developer tools",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "tools/xstate-vscode-extension",
+        "tools/visualizer",
+        "tools/inspector",
+        {
+          "type": "doc",
+          "label": "Other tools",
+          "id": "tools/developer-tools"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "🧑‍🏫  Examples",
+      "items": [
+        "examples/intro"
+      ]
+    },
+    {
+      "type": "doc",
+      "label": "📖  Glossary",
+      "id": "glossary"
+    }
+  ]
+}

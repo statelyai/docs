@@ -1,0 +1,45 @@
+---
+title: Installation
+---
+
+# Installation
+
+You can install XState using your favorite package manager or embed the `<script>` directly from a CDN.
+
+## Installation Snippets
+
+```bash title="using yarn"
+yarn add xstate
+```
+
+```bash title="using npm"
+npm install xstate
+```
+
+```bash title="using pnpm"
+pnpm install xstate
+```
+
+## CDN
+
+You can embed XState from the [unpkg CDN](https://unpkg.com/xstate@4/dist/):
+
+- XState core: [https://unpkg.com/xstate@4/dist/xstate.js](https://unpkg.com/xstate@4/dist/xstate.js)
+- XState web: [https://unpkg.com/xstate@4/dist/xstate.web.js](https://unpkg.com/xstate@4/dist/xstate.web.js)
+  - Browser-friendly, ES module build
+
+```html
+<script src="https://unpkg.com/xstate@4/dist/xstate.js"></script>
+```
+
+The variable `XState` will be available globally, which will give you access to the top-level exports.
+
+```js
+const { createMachine, actions, interpret } = XState; // global variable: window.XState
+
+const lightMachine = createMachine({
+  // ...
+});
+
+const lightActor = interpret(lightMachine);
+```
