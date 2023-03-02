@@ -112,11 +112,11 @@ The machine config has this schema:
 
 - `id` (string) - an identifier for the type of machine this is. Useful for debugging.
 - `initial` (string) - the key of the initial state.
-- `states` (object) - an object mapping state names (keys) to [states](#state-config)
+- `states` (object) - an object mapping state names (keys) to [states](/#state-config)
 
 ### State config
 
-- `on` (object) - an object mapping event types (keys) to [transitions](#transition-config)
+- `on` (object) - an object mapping event types (keys) to [transitions](/#transition-config)
 
 ### Transition config
 
@@ -128,7 +128,7 @@ String syntax:
 Object syntax:
 
 - `target?` (string) - the state name to transition to.
-- `actions?` (Action | Action[]) - the [action(s)](#action-config) to execute when this transition is taken.
+- `actions?` (Action | Action[]) - the [action(s)](/#action-config) to execute when this transition is taken.
 - `cond?` (Guard) - the condition (predicate function) to test. If it returns `true`, the transition will be taken.
 
 ### Machine options
