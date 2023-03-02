@@ -1,0 +1,150 @@
+---
+title: Promises
+---
+
+<!-- Needs technical review -->
+
+<!-- deps: ["actors", "actions", "guards"] -->
+
+The most common type of actors you’ll invoke are **promise actors**. Promise actors allow you to await the result of a promise before deciding what to do next.
+
+```ts twoslash
+import { createMachine, assign } from 'xstate';
+
+// Function that returns a promise
+// This promise might resolve with, e.g.,
+// { name: 'David', location: 'Florida' }
+const fetchUser = (userId: number) =>
+  fetch(`url/to/user/${userId}`).then((response) => response.json());
+
+const userMachine = createMachine(
+  {
+    context: {
+      userId: 42,
+    },
+    invoke: { src: 'fetchUser' },
+  },
+  {
+    // `actors` in v5
+    services: {
+      fetchUser: (context) => {
+        return fetchUser(context.userId);
+      },
+    },
+  }
+);
+```
+
+:::warningxstate
+
+XState v5 is in alpha. [Check out XState v5 Alpha on NPM](https://www.npmjs.com/package/xstate/v/5.0.0-alpha.1).
+
+:::
+
+When a promise actor is resolved, a `done.invoke` event is sent back to the machine which includes its data, placed under the `data` property. For example:
+
+```js
+{
+  type: 'done.invoke.<id>',
+  data: {
+    name: 'David',
+    location: 'Florida'
+  }
+}
+```
+
+You can listen for this event by providing an `onDone` to the invoke attribute:
+
+```ts twoslash
+import { createMachine, assign } from 'xstate';
+
+// Function that returns a promise
+// This promise might resolve with, e.g.,
+// { name: 'David', location: 'Florida' }
+const fetchUser = (userId: number) =>
+  fetch(`url/to/user/${userId}`).then((response) => response.json());
+
+// ---cut---
+
+const userMachine = createMachine(
+  {
+    context: {
+      userId: 42,
+    },
+    invoke: {
+      src: 'fetchUser',
+      onDone: [
+        {
+          cond: 'hasData',
+          actions: 'logUserData',
+        },
+      ],
+    },
+  },
+  {
+    // `actors` in v5
+    services: {
+      fetchUser: (context) => {
+        return fetchUser(context.userId);
+      },
+    },
+    guards: {
+      hasData: (context, event) => {
+        return Boolean(event.data);
+      },
+    },
+    actions: {
+      logUserData: (context, event) => {
+        console.log(event.data);
+      },
+    },
+  }
+);
+```
+
+If the state where the invoked promise is active is exited before the promise settles, the result of the promise is discarded.
+
+If the promise errors, an `error.platform.<id>` event will be fired, with the error on the `data` attribute. You can listen for this error by adding `onError` to your `invoke` attribute:
+
+```ts twoslash
+import { createMachine, assign } from 'xstate';
+
+// Function that returns a promise
+// This promise might resolve with, e.g.,
+// { name: 'David', location: 'Florida' }
+const fetchUser = (userId: number) =>
+  fetch(`url/to/user/${userId}`).then((response) => response.json());
+
+// ---cut---
+
+const userMachine = createMachine(
+  {
+    context: {
+      userId: 42,
+    },
+    invoke: {
+      src: 'fetchUser',
+      onError: {
+        actions: 'consoleLogError',
+      },
+    },
+  },
+  {
+    actions: {
+      consoleLogError: (context, event) => {
+        console.log(event.data.message);
+      },
+    },
+  }
+);
+```
+
+In the example above, if `fetchUser` fails, the error message will be logged to the console.
+
+If the `onError` transition is missing and the Promise is rejected, the error will be ignored, which is why it’s important _always_ to define `onError` transitions.
+
+The `onDone` and `onError` transitions are just like any other transition. You can use conds, fire actions and target other states. These transitions give you a declarative way of handling successes and errors.
+
+### `onDone` in invoke vs. `onDone` in states
+
+Note that the `onDone` in invoke and the `onDone` on states are different. The `onDone` for states is triggered when its child reaches a final state.

@@ -1,0 +1,146 @@
+---
+title: Welcome to the Stately docs
+slug: /
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+# Welcome to the Stately docs
+
+Here you can find all the documentation for the Stately Studio and [XState](/xstate). There are a few ways you might want to get started:
+
+<ul className="content-boxes">
+  <li>
+    <a className="link-box" href="/states/intro">
+      🏁 <strong>Get started</strong> Jump straight into learning how to use the
+      Editor, starting with states.
+    </a>
+  </li>
+  <li>
+    <a className="link-box" href="#studio-editor">
+      ⬇️ <strong>Editor overview</strong> Keep reading to find out more about
+      the Studio Editor.
+    </a>
+  </li>
+  <li>
+    <a className="link-box" href="/state-machines-and-statecharts">
+      🧠 <strong>Learn state machines and statecharts</strong> With our no-code
+      introduction.
+    </a>
+  </li>
+  <li>
+    <a className="link-box" href="/xstate">
+      💻 <strong>Learn XState</strong> Get started with our JavaScript and
+      TypeScript library for state machines and statecharts.
+    </a>
+  </li>
+</ul>
+
+The Stately Studio is a suite of tools for building app logic, including the Studio Editor, [developer tools for XState](/tools/developer-tools), and much more coming soon.
+
+<p>
+  <ThemedImage
+    alt="A dog walk machine open in the Stately Studio Editor. The dog walk machine has cute puppy images for each state, showing a dog walking and running. The speed up event is selected, and information and options for that transition is shown in an inspector panel on the right."
+    sources={{
+      light: useBaseUrl('/studio.png'),
+      dark: useBaseUrl('/studio-dm.png'),
+    }}
+  />
+</p>
+
+You can use the [Studio Editor](#studio-editor) to model your logic using state machines and statecharts visually; no code required! Collaborate on your machines with coworkers and friends with [shared projects in teams](#projects-and-teams). Use the [XState VS Code extension](/tools/xstate-vscode-extension) to use the Editor with your codebase inside your code editor, or [export](#export) your code from the Studio into your codebase.
+
+:::tip
+
+What are state machines and statecharts? We’re glad you asked! [Check out our no-code introduction to state machines and statecharts](/state-machines-and-statecharts).
+
+:::
+
+## Studio Editor
+
+The Studio Editor supports everything you need to visually build state machines and statecharts. The Editor currently has two modes; editor mode for creating your machines and simulation mode for simulating how your machine works.
+
+### Editor mode
+
+<p>
+  <ThemedImage
+    alt="A dog walk machine open in the Stately Studio Editor in Edit mode. The running state is selected, with the right panel showing options for a state."
+    sources={{
+      light: useBaseUrl('/editor.png'),
+      dark: useBaseUrl('/editor-dm.png'),
+    }}
+  />
+</p>
+
+Visually add, modify, and delete states, events, and transitions, as well as data, including actions, descriptions, and invoked actors.
+
+### Simulation mode
+
+<p>
+  <ThemedImage
+    alt="A dog walk machine open in the Stately Studio Editor in Simulate mode. The walking state is active, with the speed up and arrive home events both highlighted showing which events could be triggered next. The right panel shows an event log of the states and events taken."
+    sources={{
+      light: useBaseUrl('/simulate.png'),
+      dark: useBaseUrl('/simulate-dm.png'),
+    }}
+  />
+</p>
+
+Run the statechart, trigger events, and see the active state nodes.
+
+### Export
+
+You can also export machines to JSON, JavaScript and TypeScript, ready to be used in your codebase with [XState](/xstate).
+
+## Projects and teams
+
+<p>
+  <ThemedImage
+    alt="Stately Studio Projects page for the Voyager team, showing a list of four projects, one with public machines, two with private machines, and one with unlisted machines."
+    sources={{
+      light: useBaseUrl('/projects.png'),
+      dark: useBaseUrl('/projects-dm.png'),
+    }}
+  />
+</p>
+
+As a [Pro user](https://stately.ai/pricing), you can create and join teams in the Stately Studio to share your machines and collaborate on private team projects. [Read more about Projects](/projects) and [Teams](/teams).
+
+<p>
+  <ThemedImage
+    alt="Stately Studio Team page for the Voyager team, showing Captain Janeway with the owner and admin role, Commander Chakotay with an admin role, Lieutenant Tuvok, Lieutenant Torees, and Lieutenant Paris with Editor roles, and Ensign Kim with a Viewer role."
+    sources={{
+      light: useBaseUrl('/teams.png'),
+      dark: useBaseUrl('/teams-dm.png'),
+    }}
+  />
+</p>
+
+## Discover machines
+
+Are you seeking inspiration for your machine? Or do you want to learn from how somebody else models their machines? The [Discover page](https://stately.ai/registry/discover) lists all the public machines created with the Stately Studio. [Read more about the Discover page](/discover).
+
+<p>
+  <ThemedImage
+    alt="Stately Studio Discover page showing the search results for “auth”, filtered by Editor machines under 10 states, showing 173 results."
+    sources={{
+      light: useBaseUrl('/discover.png'),
+      dark: useBaseUrl('/discover-dm.png'),
+    }}
+  />
+</p>
+
+## Our roadmap
+
+Do you want to request a feature in the Stately Studio? [Check out our Canny roadmap](https://statelyai.canny.io) to post your feature idea and upvote other features. Our roadmap also shows you the features we have planned and those already in progress.
+
+You can also keep up with the Stately team’s work in progress at our regular [office hour live streams](https://youtube.com/statelyai).
+
+:::xstate
+
+## Powered by XState
+
+The Stately Studio is powered by [XState](/xstate/installation), a best-in-class open source library for handling complexity at scale.
+
+:::

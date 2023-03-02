@@ -1,0 +1,113 @@
+---
+title: Import from code
+---
+
+:::tip
+
+Watch our [“Import from code” video on YouTube](https://www.youtube.com/watch?v=DAoIFaugDLo) (2m24s).
+
+:::
+
+Importing from code is helpful if you’ve already built machines while working with [XState](/xstate/), or have created a machine using our older [Stately Viz](https://stately.ai/viz) but haven’t yet tried the Stately Studio Editor.
+
+## Import code
+
+Your code should be formatted as a [`createMachine()` factory function](https://xstate.js.org/docs/guides/machines.html) before import. The importer has basic validation in case your machine has basic errors, including reminding you if the `createMachine` definition is missing. 
+
+[Check out an importable machine code example at the end of this page](#machine-code-example).
+
+:::caution
+
+**Caution**: importing code will overwrite your current or selected machine unless you create a new machine from the **Machines list** inside a project.
+
+:::
+
+You may have multiple `createMachine`s included in the code you insert in the text area, but the Studio will only import the first machine found in the code. We plan to support importing multiple machines in the future.
+
+### Import code to overwrite your machine from the code panel
+
+1. Open the **Code** panel from the right tool menu.
+2. Use the **Import** button to open the importer.
+3. Paste or type your machine code into the text area.
+4. Use the **Import** button to import your machine, overwriting your current machine.
+
+### Import code to overwrite a machine from the machines list
+
+1. Open the **Machines** list from the left drawer menu.
+2. Use the **...** triple dot icon alongside a machine to open the machine options menu.
+3. Use the **Import Code** option to open the import text area.
+5. Paste or type your machine code into the text area.
+6. Use the **Import** button to import your machine, overwriting the selected machine.
+
+### Create a new machine inside a project using import code
+
+1. Open the **Machines** list from the left drawer menu.
+2. Use the **+** plus icon alongside the **Machines** heading to open the new machine options.
+3. Enter a name for your new machine in the text input.
+4. Select the **Import Code** switch to open the import text area.
+5. Paste or type your machine code into the text area.
+6. Use the **Create machine** button to import your machine as a new machine in your project.
+
+## Machine code example
+
+Below is an example of a `createMachine()` factory function which you can import as a machine without any errors:
+
+```js
+
+createMachine({
+  id: "Video",
+  initial: "Closed",
+  description: "Video player",
+  states: {
+    Closed: {
+      on: {
+        PLAY: {
+          target: "Opened",
+        },
+      },
+    },
+    Opened: {
+      invoke: {
+        src: "startVideo",
+      },
+      initial: "Playing",
+      description: "Fullscreen mode",
+      states: {
+        Playing: {
+          on: {
+            PAUSE: {
+              target: "Paused",
+            },
+          },
+        },
+        Paused: {
+          on: {
+            PLAY: {
+              target: "Playing",
+            },
+          },
+        },
+        Stopped: {
+          type: "final",
+          after: {
+            "5000": {
+              target: "#Video.Closed",
+              actions: [],
+              internal: false,
+            },
+          },
+        },
+      },
+      on: {
+        STOP: {
+          target: ".Stopped",
+        },
+      },
+    },
+  },
+  context: {},
+  predictableActionArguments: true,
+  preserveActionOrder: true,
+});
+
+```

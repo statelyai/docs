@@ -1,0 +1,57 @@
+---
+title: Parallel states
+---
+
+import ThemedImage from '@theme/ThemedImage';
+
+:::tip
+
+Watch our [“What are parallel states?” video on YouTube](https://www.youtube.com/watch?v=CWwgT1TbI4c&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=6) (54s).
+
+:::
+
+A parallel state is a state separated into multiple regions of child states, where each region is active simultaneously.
+
+A dashed line borders each region.
+
+<p>
+<ThemedImage
+  alt="A state machine containing two region states with dashed borders around the outside. The first region is the video state which is active at the same time as the audio state, and contains a playing and stopped state, with stop and play events. The other region is an audio state, which is active at the same time as the video state, and has muted and unmuted states, and unmute and mute events."
+  sources={{
+    light: 'https://stately.ai/registry/machines/733de338-26cb-40a5-a0b5-b76bfc0405c3.light.png',
+    dark: 'https://stately.ai/registry/machines/733de338-26cb-40a5-a0b5-b76bfc0405c3.dark.png',
+  }}
+/>
+</p>
+
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3).
+
+In the video player machine above, the video and audio states are active at the same time, which means the following combinations of states can happen simultaneously:
+
+- video playing, audio muted
+- video playing, audio unmuted
+- video stopped, audio muted
+- video stopped, audio unmuted
+
+## Make a state a parallel state
+
+First, select the parent state you want to set as a parallel state. Then…
+
+### Using the **quick actions** menu:
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **Parallel** from the **Type** options.
+
+### Using the **State details** panel:
+
+1. Select the parent state you want to set as the parallel state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **Parallel** from the **Type** dropdown menu.
+
+:::xstate 
+
+## Looking for how to use parallel states in XState?
+
+Find out [more about parallel states in XState](/xstate/states/parallel-states) in the XState section of the docs.
+
+:::
