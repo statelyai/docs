@@ -54,7 +54,6 @@ const config = {
           versions: {
             current: {
               label: 'XState v4',
-              path: 'xstate-v-4',
             },
             5: {
               label: 'XState v5',
