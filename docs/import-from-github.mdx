@@ -8,8 +8,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 There are currently two ways to import your machines from GitHub into the Stately Studio:
 
-1. Import all machines from a GitHub repository.
-2. Import machines from a GitHub URL.
+1. [Import all machines from a GitHub repository](/import-from-github#import-all-machines-from-a-github-repository).
+2. [Import machines from a GitHub URL.](/docs/import-from-github#import-machine-from-a-github-url)
 
 :::studio
 
@@ -55,6 +55,12 @@ Currently, the **Import from GitHub** feature imports all machines from the *def
 
 If you want to import machines from a different branch or from a pull request, we recommend [importing each machine from a GitHub URL](#import-machine-from-a-github-url).
 
+## GitHub permissions
+
+Importing a machine with **Import from GitHub** or importing a machine with a GitHub URL will prompt you to **Allow integration** to give our GitHub integration access to your GitHub repositories. You will only be prompted if you have not yet given the GitHub integration access on your current device.
+
+Your GitHub token is stored on your own device; we don’t save the token in our database. We do this to keep your data as safe as possible, but it does require that you accept the integration on the initial import for each device you use.
+
 ## Import machine from a GitHub URL
 
 If you want to import a machine, or multiple machines, from a GitHub file, we recommend you use our feature to import from a GitHub URL.
@@ -87,9 +93,3 @@ When your machine is hosted at GitHub:
 Read more in [our blog post about importing a machine from a GitHub URL](https://stately.ai/blog/import-machines-from-github).
 
 :::
-
-## GitHub permissions
-
-Importing a machine with **Import from GitHub** or importing a machine with a GitHub URL will prompt you to **Allow integration** to give our GitHub integration access to your GitHub repositories. You will only be prompted if you have not yet given the GitHub integration access on your current device.
-
-Your GitHub token is stored on your own device; we don’t save the token in our database. We do this to keep your data as safe as possible, but it does require that you accept the integration on the initial import for each device you use.
