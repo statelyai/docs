@@ -86,12 +86,12 @@ const Component = () => {
 
 ```tsx twoslash
 import { createMachine } from 'xstate';
-import { useMachine } from '@xstate/react';
+import { useInterpret } from '@xstate/react';
 
 const machine = createMachine({});
 
 const Component = () => {
-  const actor = useMachine(machine);
+  const actor = useInterpret(machine);
 
   return null;
 };

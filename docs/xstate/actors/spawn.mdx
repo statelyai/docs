@@ -63,7 +63,7 @@ Events can be sent to spawned actors by passing a function to `send` or `forward
 ```ts
 send({ type: 'INC' }, { to: (context) => context.counterRef });
 
-forwardTo({ to: (context) => context.counterRef });
+forwardTo(context => context.counterRef);
 ```
 
 <!-- TODO - are there any other API's which need to be mentioned here?-->
