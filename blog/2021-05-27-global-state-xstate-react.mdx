@@ -9,8 +9,6 @@ category: entry
 ogImage: "https://stately.ai/blog/2021-05-27-global-state-xstate-react.png"
 ---
 
-_This article has become part of the official [XState docs](https://xstate.js.org/docs/recipes/react.html)!_
-
 Many React applications follow the Flux architecture popularised by [Redux](https://redux.js.org/). This setup can be characterised by a few key ideas:
 
 1. It uses a single object at the top of your app which stores all application state, often called the **store**.
@@ -18,6 +16,8 @@ Many React applications follow the Flux architecture popularised by [Redux](http
 3. How the store responds to these messages from the app are expressed in pure functions - most often in **reducers**.
 
 This article won't go into depth on whether the Flux architecture is a good idea. David Khourshid's article [Redux is half a pattern](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7) goes into great detail here. For the purposes of this article, we're going to assume that you like having a global store, and you want to replicate it in XState.
+
+<!--truncate-->
 
 There are many reasons for wanting to do so. XState is second-to-none when it comes to managing complex asynchronous behaviour and modelling difficult problems. Managing this in Redux apps usually involves middleware: either [redux-thunk](https://github.com/reduxjs/redux-thunk), [redux-loop](https://github.com/redux-loop/redux-loop) or [redux-saga](https://github.com/redux-saga/redux-saga). Choosing XState gives you a first-class way to manage complexity.
 

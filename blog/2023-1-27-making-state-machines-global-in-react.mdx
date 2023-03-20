@@ -12,6 +12,8 @@ date: "2023-01-27"
 
 React developers often need to share state between components. While the `useMachine(...)` hook provides a convenient way to represent local state as a state machine, it’s not very feasible for shared or global state. Thankfully, `@xstate/react`’s `createActorContext(machine)` function, released in `@xstate/react@3.1.0`, is a convenient way to share state machines globally in any React application.
 
+<!--truncate-->
+
 The `createActorContext(machine)` function returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that interprets the machine and makes the actor (interpreted machine) available through React Context. The object returned from `createActorContext(...)` has helper methods for accessing state and the actor ref. It takes one argument, `machine`, which is a state machine from `createMachine(...)` or a function that lazily returns a machine.
 
 [▶️ Stately Stream: Simple React todo app with `createActorContext`](https://www.youtube.com/watch?v=M6KjEogxfQE)
