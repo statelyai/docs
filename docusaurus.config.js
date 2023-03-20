@@ -71,6 +71,7 @@ const config = {
         blog: {
           blogTitle: 'Stately Blog',
           blogDescription: 'Stately’s engineering blog',
+          blogSidebarCount: 0,
           postsPerPage: 'ALL'
         },
         theme: {
@@ -102,6 +103,7 @@ const config = {
             type: 'search',
             position: 'right',
           },
+          {to: '/', label: 'Docs', position: 'right'},
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
