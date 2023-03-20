@@ -68,7 +68,11 @@ const config = {
           // Add accessible emoji remark plugin
           remarkPlugins: [a11yEmoji],
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Stately Blog',
+          blogDescription: 'Stately’s engineering blog',
+          postsPerPage: 'ALL'
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -113,11 +117,7 @@ const config = {
             label: 'Discover',
             position: 'right',
           },
-          {
-            href: 'https://stately.ai/blog',
-            label: 'Blog',
-            position: 'right',
-          },
+          {to: 'blog', label: 'Blog', position: 'right'},
           {
             type: 'html',
             position: 'right',

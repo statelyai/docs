@@ -1,0 +1,258 @@
+---
+title: "“Just use props”: An opinionated guide to React and XState"
+description: >-
+  XState is the most powerful tool available for managing complex state. The
+  challenge comes when integrating XState with React…
+tags: [prop, xstate, state machine, react]
+authors:
+  name: Matt Pocock
+excerpt: ""
+date: "2021-01-11"
+ogImage: "https://stately.ai/blog/2021-01-11-just-use-props-an-opinionated-guide-to-react-and-xstate.png"
+---
+
+XState can feel overwhelming. Once you’ve gone through [Kyle](https://egghead.io/courses/introduction-to-state-machines-using-xstate) or [David’s](https://frontendmasters.com/courses/xstate/) courses and read through the [docs](https://xstate.js.org/docs), you’ll get a thorough understanding of the API. You’ll see that XState is the most powerful tool available for managing complex state.
+
+The challenge comes when integrating XState with React. Where should state machines live in my React tree? How should I manage parent and child machines?
+
+<Tweet id="1345085887026106368" />
+
+## Just Use Props
+
+I’d like to propose an architecture for XState and React which prioritises simplicity, readability and type-safety. It’s incrementally adoptable, and gives you a base for exploring more complex solutions. We’ve used it at [Yozobi](https://www.yozobi.com/) in production, and we’re planning to use it for every project moving forward.
+
+It’s called **just use props**. It’s got a few simple rules:
+
+1. Create machines. Not too many. Mostly useMachine
+2. Let React handle the tree
+3. Keep state as local as possible
+
+### Create machines. Not too many. Mostly useMachine
+
+The simplest way to integrate a state machine in your app is with `useMachine`.
+
+```ts
+import { createMachine, interpret } from "xstate";
+import { useMachine } from "@xstate/react";
+
+const machine = createMachine({
+  initial: "open",
+  states: {
+    open: {},
+    closed: {},
+  },
+});
+
+const Component = () => {
+  const [state, send] = useMachine(machine);
+
+  return state.matches("open") ? "Open" : "Closed";
+};
+```
+
+Note that this puts React in charge of the machine. The machine is tied to the component, and it obeys all the normal React rules of the [data flowing down](https://reactjs.org/docs/state-and-lifecycle.html#the-data-flows-down). In other words, you can think of it just like `useState` or `useReducer`, but a [vastly improved version](https://dev.to/mpocock1/usestate-vs-usereducer-vs-xstate-part-1-modals-569e).
+
+### Let React handle the tree
+
+Let’s say you have a parent component and a child component. The parent has some state which it needs to pass to the child. There are several ways to do this.
+
+#### Passing services through props
+
+The first is to pass a running service to the child which the child can subscribe to:
+
+```ts
+import { useMachine, useService } from "@xstate/react";
+import { createMachine, Interpreter } from "xstate";
+
+/**
+ * Types for the machine declaration
+ */
+type MachineContext = {};
+type MachineEvent = { type: "TOGGLE" };
+
+const machine = createMachine<MachineContext, MachineEvent>({});
+
+const ParentComponent = () => {
+  /**
+   * We instantiate the service here...
+   */
+  const [state, send, service] = useMachine(machine);
+
+  return <ChildComponent service={service} />;
+};
+
+interface ChildComponentProps {
+  service: Interpreter<MachineContext, any, MachineEvent>;
+}
+
+const ChildComponent = (props: ChildComponentProps) => {
+  /**
+   * ...and receive it here
+   */
+  const [state, send] = useService(props.service);
+
+  return (
+    <button onClick={() => send("TOGGLE")}>
+      {state.matches("open") ? "Open" : "Closed"}
+    </button>
+  );
+};
+```
+
+I don’t like this pattern. For someone not used to XState, it’s unclear what a ‘service’ is. We don’t get clarity from reading the types, which is a particularly ugly `Interpreter` with multiple generics.
+
+The machine appears to bleed across multiple components. Its service seems to have a life of its own, outside of React's tree. To a newbie, this feels like misdirection.
+
+#### Just pass props
+
+This can be expressed much more cleanly using props:
+
+```ts
+import { useMachine } from "@xstate/react";
+import { createMachine } from "xstate";
+
+/**
+ * Types for the machine declaration
+ */
+type MachineContext = {};
+type MachineEvent = { type: "TOGGLE" };
+
+const machine = createMachine<MachineContext, MachineEvent>({});
+
+const ParentComponent = () => {
+  const [state, send] = useMachine(machine);
+
+  return (
+    <ChildComponent
+      isOpen={state.matches("open")}
+      toggle={() => send("TOGGLE")}
+    />
+  );
+};
+
+/**
+ * Note that the props declarations are
+ * much more specific
+ */
+interface ChildComponentProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+const ChildComponent = (props: ChildComponentProps) => {
+  return (
+    <button onClick={() => props.toggle()}>
+      {props.isOpen ? "Open" : "Closed"}
+    </button>
+  );
+};
+```
+
+Much better. We get several improvements in clarity in the `ChildComponent` - the types are much easier to read. We get to ditch the use of `Interpreter` and `useService` entirely.
+
+The best improvement, though, is in the `ParentComponent`. In the previous example, the machine crossed multiple components by passing its service around. In this example, it’s scoped to the component, and props are derived from its state. This is far easier to grok for someone unused to XState.
+
+### Keep state as local as possible
+
+Unlike tools which require a global store, XState has no opinion on where you keep your state. If you have a piece of state which belongs near the root of your app, you can use React Context to make it globally available:
+
+```ts
+import React, { createContext } from "react";
+import { useMachine } from "@xstate/react";
+import { createMachine } from "xstate";
+
+const globalMachine = createMachine({});
+
+interface GlobalContextType {
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+export const GlobalContext = createContext<GlobalContextType>();
+
+const Provider: React.FC = ({ children }) => {
+  const [state, send] = useMachine(globalMachine);
+
+  return (
+    <GlobalContext.Provider
+      value={{ isOpen: state.matches("open"), toggle: () => send("TOGGLE") }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
+};
+```
+
+_Just as above, we’re not passing a service, but props, into context._
+
+If you have a piece of state which needs to belong lower in your tree, then obey the usual rules by [lifting state up](https://reactjs.org/docs/lifting-state-up.html) to where it’s needed.
+
+If that feels familiar, you’re right. You’re making the same decisions you’re used to: where to store state and how to pass it around.
+
+## Examples and challenges
+
+### Syncing parents and children
+
+Sometimes, you need to use a parent machine _and_ a child machine. Let’s say that you need the child to pay attention to when a prop changes from the parent - for instance to sync some data. Here’s how you can do it:
+
+```ts
+const machine = createMachine({
+  initial: "open",
+  context: {
+    numberToStore: 0,
+  },
+  on: {
+    /**
+     * When REPORT_NEW_NUMBER occurs, sync
+     * the new number to context
+     */
+    REPORT_NEW_NUMBER: {
+      actions: [
+        assign((context, event) => {
+          return {
+            numberToStore: event.newNumber,
+          };
+        }),
+      ],
+    },
+  },
+});
+
+interface ChildComponentProps {
+  someNumber: number;
+}
+
+const ChildComponent = (props: ChildComponentProps) => {
+  const [state, send] = useMachine(machine);
+
+  useEffect(() => {
+    send({
+      type: "REPORT_NEW_NUMBER",
+      newNumber: props.someNumber,
+    });
+  }, [props.someNumber]);
+};
+```
+
+This can also be used to sync data from other sources, such as query hooks:
+
+```ts
+const ChildComponent = () => {
+  const [result] = useSomeDataHook(() => fetchNumber());
+
+  const [state, send] = useMachine(machine);
+
+  useEffect(() => {
+    send({
+      type: "REPORT_NEW_NUMBER",
+      newNumber: result.data.someNumber,
+    });
+  }, [result.data.someNumber]);
+};
+```
+
+## Summary
+
+In the “just use props” approach, XState lets React take charge. We stick to idiomatic React by passing props, not services. We keep machines scoped to components. And we put state at the level it’s needed, just like you’re used to.
+
+This article isn’t finished. I’m sure there will be many more questions about integrating XState with React. My plan is to come back to this article again with more examples and clarifications. Thanks for your time, and I’m looking forward to seeing what you build with XState.

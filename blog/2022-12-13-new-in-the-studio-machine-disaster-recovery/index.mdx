@@ -1,0 +1,41 @@
+---
+title: "New in the Studio: Machine restore"
+description: >-
+  We have introduced a new feature to the Stately Studio, a feature we hope
+  you’ll never see. Let’s call it machine restore, for lack of a better description.
+tags: [recovery, restore, offline, editor, studio]
+authors:
+  name: Anders Bech Mellson
+ogImage: "https://stately.ai/blog/2022-12-22-machine-recovery.png"
+date: "2022-12-13"
+---
+
+We have introduced a new feature to the Stately Studio, a feature we hope you’ll never see. Let’s call it machine restore, for lack of a better description.
+
+### What's the challenge?
+
+At this moment in time, the Studio is using a traditional server-client architecture. Whenever you edit a machine, we will persist these changes to our central database, ready for you to use when you return - on any device with an internet connection.
+
+![Simplified drawing of the Stately Studio architecture described above.](studio_architecture_challenges.png)
+
+But what happens with your edits if your internet connection fails or the Stately backend is having problems? This is where our new feature comes into play.
+
+### Example
+
+In our example, Santa’s delivery machine has a problem; the Christmas-time state is unreachable. So we do as any good Santa’s helper would; we create an event to get to Christmas. But alas, we’re offline, so our changes could get lost. Before this new feature, there was a chance you wouldn’t notice you’d gone offline or that the server returned an error. But as you can see in the GIF below, we’ve introduced new error banners to show you what’s happening.
+
+![Santa’s delivery state machine shows an error while trying to edit offline.](recovery_offline_error.gif)
+
+### How to restore
+
+We try our best to detect any failure or missing connectivity when you edit your machines. If you hit any error state, we will inform you and start saving your work locally on your device. So next time you visit the Studio from that same device, we will compare what we saved with the machine from the server. And if they are different, we will give you the option to restore the safe copy to a new machine.
+
+You can see this in action using our example from above. When I return to the Studio, I can restore the changes I did while offline. Christmas is saved.
+
+![The Stately Studio shows an option to restore changes made to a machine while the user was offline.](recovery_restore_machine.gif)
+
+Hopefully, you’ll never see this feature, but if you do, I hope you find it helpful.
+
+### What's next
+
+We have some exciting plans around an offline-first approach for the Studio which should make this restore feature obsolete and also enable features such as multi-player editing. Stay tuned for more news about this in 2023.
