@@ -124,7 +124,7 @@ const myFunction = (actor: InterpreterFrom<typeof machine>) => {
 
 ## `ActorRefFrom`
 
-`ActorRefFrom` is especially useful when [spawning actors](/xstate/actors/spawn) because it types the reference created by `spawn` when assigning to context.
+`ActorRefFrom` is especially useful when [spawning actors](/xstate/actors/spawn.mdx) because it types the reference created by `spawn` when assigning to context.
 
 ```ts twoslash
 import { createMachine, ActorRefFrom, spawn, assign } from 'xstate';
@@ -149,7 +149,7 @@ const machine = createMachine({
 
 ## `MachineOptionsFrom`
 
-You can use `MachineOptionsFrom` in combination with [typegen](/xstate/typescript/typegen) to get a strongly typed version of the machine’s options.
+You can use `MachineOptionsFrom` in combination with [typegen](/xstate/typescript/typegen.mdx) to get a strongly typed version of the machine’s options.
 
 ```ts twoslash
 // @filename: myMachine.typegen.ts
