@@ -115,6 +115,12 @@ const sidebars = {
         },
         'discover',
         {
+          type: 'doc', 
+          label:'Import from GitHub',
+          className: 'pro-feature',
+          id: 'import-from-github',
+        },
+        {
           type: 'category',
           label: 'Accounts',
           items: [

@@ -182,6 +182,18 @@ const AdmonitionConfigs = {
       </Translate>
     ),
   },
+  warningxstate: {
+    infimaClassName: 'warningxstate',
+    iconComponent: XStateIcon,
+    label: (
+      <Translate
+        id="theme.admonition.warningxstate"
+        description="The default label used for the XState warning admonition (:::warningxstate)"
+      >
+        XState Warning
+      </Translate>
+    ),
+  },
 };
 // Legacy aliases, undocumented but kept for retro-compatibility
 const aliases = {
