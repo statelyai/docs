@@ -98,7 +98,7 @@ const sidebars = {
             'descriptions',
             {
               type: 'doc', 
-              label:'Machine versions',
+              label:'Version history',
               id: 'versions',
               className: 'pro-feature',
             },
@@ -179,12 +179,16 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Actions and context',
+          label: 'Actions',
           items: [
             'xstate/actions/actions',
-            'xstate/actions/context',
             'xstate/actions/built-in-actions',
           ],
+        },
+        {
+          type: 'doc',
+          label: 'Context',
+          id: 'xstate/actions/context',
         },
         {
           type: 'category',
