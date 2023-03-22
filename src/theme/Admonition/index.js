@@ -6,52 +6,35 @@ import styles from './styles.module.css';
 function NoteIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <path d="M12.707 4.222a3 3 0 0 1 4.243 4.242l-7.072 7.072a1 1 0 1 1-1.414-1.415l7.071-7.07-1.414-1.415-7.07 7.071a3 3 0 1 0 4.242 4.243l7.07-7.071a5 5 0 0 0-7.07-7.071l-7.071 7.07a7 7 0 0 0 9.9 9.9l7.07-7.07-1.414-1.415-7.071 7.071a5 5 0 0 1-7.071-7.071l7.07-7.071Z" />
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21.44 11.05-9.19 9.19a6.003 6.003 0 1 1-8.49-8.49l8.57-8.57A4.006 4.006 0 0 1 18 8.84l-8.59 8.57a2.001 2.001 0 1 1-2.83-2.83l8.49-8.48"/>
     </svg>
   );
 }
 function TipIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <path
-        fillRule="evenodd"
-        d="M17.177 15.1c-.68.577-1.177 1.38-1.177 2.272V19H8v-1.628c0-.893-.497-1.695-1.177-2.272a8 8 0 1 1 10.353 0ZM14.105 3.919A5.5 5.5 0 0 0 12 3.5v2A3.5 3.5 0 0 1 15.5 9h2a5.5 5.5 0 0 0-3.395-5.081Z"
-        clipRule="evenodd"
-      />
-      <path d="M8 21v2h8v-2H8Z" />
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6m-5 4h4m1.09-8c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 1 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
     </svg>
   );
 }
 function DangerIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.0001 1L0.453125 21H23.5471L12.0001 1ZM13.0668 9.63182L12.8798 14.0065H11.1252L10.9334 9.63182H13.0668ZM12.0025 17.5746C11.6861 17.5746 11.4144 17.4628 11.1875 17.2391C10.9606 17.0121 10.8488 16.7405 10.8519 16.4241C10.8488 16.1109 10.9606 15.8424 11.1875 15.6187C11.4144 15.395 11.6861 15.2831 12.0025 15.2831C12.3061 15.2831 12.573 15.395 12.8031 15.6187C13.0332 15.8424 13.1499 16.1109 13.1531 16.4241C13.1499 16.635 13.094 16.8284 12.9853 17.0042C12.8798 17.1767 12.7408 17.3158 12.5682 17.4212C12.3956 17.5235 12.2071 17.5746 12.0025 17.5746Z"
-      />
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01m9.72 1-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2.001 2.001 0 0 0 1.73-3Z"/>
     </svg>
   );
 }
 function InfoIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <path
-        fillRule="evenodd"
-        d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Zm-9.998-3.363c-.304 0-.564-.1-.782-.302a.979.979 0 0 1-.32-.733c0-.282.106-.523.32-.724a1.1 1.1 0 0 1 .782-.307c.303 0 .562.102.776.307a.952.952 0 0 1 .326.724.972.972 0 0 1-.326.733 1.093 1.093 0 0 1-.776.302Zm-1.026 8.313v-6.864h2.042v6.864h-2.042Z"
-        clipRule="evenodd"
-      />
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/>
     </svg>
   );
 }
 function CautionIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <path
-        fillRule="evenodd"
-        d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Zm-8.933-4.868-.187 6.375h-1.755l-.192-6.375h2.134Zm-1.065 9.943a1.12 1.12 0 0 1-.815-.336 1.095 1.095 0 0 1-.335-.815 1.074 1.074 0 0 1 .335-.805 1.12 1.12 0 0 1 .815-.336c.304 0 .57.112.801.336a1.1 1.1 0 0 1 .182 1.385 1.24 1.24 0 0 1-.417.417 1.09 1.09 0 0 1-.566.154Z"
-        clipRule="evenodd"
-      />
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/>
     </svg>
   );
 }
@@ -81,6 +64,20 @@ function StatelyIcon() {
       <g fillRule="evenodd">
         <path d="M15.327 5.224a2.362 2.362 0 1 0 0-4.724 2.362 2.362 0 0 0 0 4.724M21.049 13.251v-.002L8.299.5a4.711 4.711 0 0 0 .01 6.67l4.058 4.057-.007.007 2.3 2.3a.463.463 0 0 1 .138.325.46.46 0 0 1-.148.331l-2.682 2.682a.46.46 0 0 1-.65 0l-2.69-2.69a.46.46 0 0 1 0-.65c1.835-1.959.465-4.304-.383-5.098l-.6-.6-5.376 5.377a.919.919 0 0 0 0 1.3l8.72 8.72a.919.919 0 0 0 1.3 0l8.702-8.702a.869.869 0 0 0 .058-1.278" />
       </g>
+    </svg>
+  );
+}
+function PartyIcon() {
+  return (
+    <svg viewBox="0 0 24 24">
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.8 11.3 2 22l10.7-3.79M4 3h.01M22 8h.01M15 2h.01M22 20h.01M22 2l-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10m8 3-.82-.33c-.86-.34-1.82.2-1.98 1.11-.11.7-.72 1.22-1.43 1.22H17M11 2l.33.82c.34.86-.2 1.82-1.11 1.98-.7.1-1.22.72-1.22 1.43V7m2 6c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/>
+    </svg>
+  );
+}
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24">
+      <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 3 14 9-14 9V3Z"/>
     </svg>
   );
 }
@@ -191,6 +188,30 @@ const AdmonitionConfigs = {
         description="The default label used for the XState warning admonition (:::warningxstate)"
       >
         XState Warning
+      </Translate>
+    ),
+  },
+  new: {
+    infimaClassName: 'new',
+    iconComponent: PartyIcon,
+    label: (
+      <Translate
+        id="theme.admonition.new"
+        description="The default label used for the XState warning admonition (:::new)"
+      >
+        New
+      </Translate>
+    ),
+  },
+  video: {
+    infimaClassName: 'video',
+    iconComponent: PlayIcon,
+    label: (
+      <Translate
+        id="theme.admonition.video"
+        description="The default label used for the XState warning admonition (:::video)"
+      >
+        Video
       </Translate>
     ),
   },

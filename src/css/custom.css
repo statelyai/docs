@@ -1129,7 +1129,7 @@ footer [class*=iconExternalLink] {
   --ifm-alert-border-color: var(--st-tip-accent);
 }
 
-.alert--success {
+.alert--success, .alert--new {
   --ifm-alert-background-color: var(--st-success-background);
   --ifm-alert-background-color-highlight: var(--st-success-accent);
   --ifm-alert-foreground-color: var(--st-success-text);
@@ -1157,7 +1157,7 @@ footer [class*=iconExternalLink] {
   --ifm-alert-border-color: var(--st-typescript-accent);
 }
 
-.alert--info, .alert--tip {
+.alert--info, .alert--tip, .alert--video {
   --ifm-alert-background-color: var(--st-tip-background);
   --ifm-alert-background-color-highlight: var(--st-tip-accent);
   --ifm-alert-foreground-color: var(--st-tip-text);
