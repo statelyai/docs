@@ -180,15 +180,15 @@ const config = {
             html: '<a href="https://www.linkedin.com/company/statelyai/"><svg alt="LinkedIn" width="24px" height="24px" viewBox="0 0 24 24"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><path d="M19.0413443,19.0518556 L16.0777608,19.0518556 L16.0777608,14.4108464 C16.0777608,13.3040608 16.0580496,11.8799244 14.5363426,11.8799244 C12.9929532,11.8799244 12.7564185,13.0852661 12.7564185,14.3310159 L12.7564185,19.0518556 L9.79382053,19.0518556 L9.79382053,9.50767779 L12.6391366,9.50767779 L12.6391366,10.8115757 L12.6785591,10.8115757 C13.2590548,9.82010079 14.3372592,9.22777832 15.4854383,9.27015746 C18.4894299,9.27015746 19.0423299,11.2462083 19.0423299,13.8155672 L19.0413443,19.0518556 Z M6.44981028,8.20279433 C5.49972897,8.20279433 4.73000542,7.43307078 4.73000542,6.48298947 C4.73000542,5.53290816 5.49972897,4.76318461 6.44981028,4.76318461 C7.39989159,4.76318461 8.16961514,5.53290816 8.16961514,6.48298947 C8.16961514,7.43307078 7.39989159,8.20279433 6.44981028,8.20279433 L6.44981028,8.20279433 M7.93110925,19.0518556 L4.96456906,19.0518556 L4.96456906,9.50767779 L7.93110925,9.50767779 L7.93110925,19.0518556 Z M20.518701,2.01149684 L3.4753856,2.01149684 C2.67018184,2.00262679 2.00985562,2.64816958 2,3.45337335 L2,20.5666636 C2.00985562,21.372853 2.67018184,22.0183958 3.4753856,22.0096371 L20.518701,22.0096371 C21.3258759,22.0193813 21.9891588,21.3738385 22,20.5666636 L22,3.45238779 C21.9881733,2.6452129 21.3248904,1.9996701 20.518701,2.0103767" id="Path_2520" fill="currentColor" fill-rule="nonzero"></path></g></svg></a>',
           },
           {
-            html: '<form action="https://stately.ai/registry/api/newsletter/signup" method="post" target="popupwindow" class="embeddable-buttondown-form state" data-active><label for="bd-email">Subscribe to our newsletter</label><div class="fields"><input type="email" name="email" id="bd-email" required="" placeholder="your@email.com"><input type="hidden" value="1" name="embed"><input type="submit" class="white" class="copy-button" value="Subscribe"></div></form>'
+            html: '<form action="https://stately.ai/registry/api/newsletter/signup" method="post" target="popupwindow" class="embeddable-buttondown-form state" data-active><label for="bd-email">Subscribe to our newsletter</label><div class="fields"><input type="email" name="email" id="bd-email" required="" placeholder="your@email.com"><input type="hidden" value="1" name="embed"><input type="submit" class="white" class="copy-button" value="Subscribe"></div></form>',
           },
         ],
         copyright: `Copyright © Stately, ${new Date().getFullYear()}`,
       },
       algolia: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX,
+        appId: 'BYNMHHN151',
+        apiKey: 'e2fd3f2a7cd06067674996dd674fb241',
+        indexName: 'stately',
         contextualSearch: false,
         replaceSearchResultPathname:
           // Remove /docs from the search result pathname when we're in a preview deployment
