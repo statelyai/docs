@@ -259,6 +259,9 @@ html, body {
   --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none; 
   --ifm-navbar-link-color: var(--st-header-link);
+  --ifm-dropdown-hover-background-color: var(--st-highlight-background);
+  --ifm-dropdown-link-color: var(--st-navbar-link-color);
+  --ifm-link-color: var(--st-navbar-link-color);
 
   /* breadcrumbs */
   --ifm-breadcrumb-size-multiplier: 1;
@@ -726,6 +729,19 @@ code {
 .navbar__logo {
   height: 2rem;
 }
+
+.navbar__link {
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+
+.dropdown__link--active,
+.dropdown__link--active:hover {
+    --ifm-dropdown-link-color: var(--st-text-highlight);
+    font-weight: var(--ifm-font-weight-bold);
+  }
+
 
 .clean-btn {
    color: var(--st-header-link);
