@@ -22,12 +22,11 @@ const sidebars = {
     {
       type: 'category',
       label: '➡️  Get started',
+      link: {
+        type: 'doc',
+        id: 'studio',
+      },
       items: [
-        {
-          type: 'doc',
-          label: 'Introduction',
-          id: 'studio',
-        },
         {
           type: 'doc', 
           label:'State machines and statecharts',
@@ -44,12 +43,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'States',
+          link: {
+            type: 'doc',
+            id: 'states/intro',
+          },
           items: [
-            {
-              type: 'doc',
-              id: 'states/intro',
-              label: 'Intro'
-            },
             'states/initial-states',
             'states/final-states',
             'states/parent-states',
@@ -60,12 +58,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'Transitions and events',
+          link: {
+            type: 'doc',
+            id: 'transitions-and-events/intro',
+          },
           items: [
-            {
-              type: 'doc',
-              id: 'transitions-and-events/intro',
-              label: 'Intro'
-            },
             'transitions-and-events/guards',
             'transitions-and-events/eventless-transitions',
             'transitions-and-events/delayed-transitions',
@@ -154,12 +151,11 @@ const sidebars = {
       label: '🛠️  XState library',
       collapsed: false,
       collapsible: true,
+      link: {
+        type: 'doc',
+        id: 'xstate/intro',
+      },
       items: [
-        {
-          type: 'doc',
-          id: 'xstate/intro',
-          label: 'Intro',
-        },
         'xstate/installation',
         'xstate/templates',
         {
@@ -195,8 +191,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'Running machines',
+          link: {
+            type: 'doc',
+            id: 'xstate/running-machines/intro',
+          },
           items: [
-            'xstate/running-machines/intro',
             'xstate/running-machines/react',
             'xstate/running-machines/node',
           ],
@@ -217,8 +216,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'Model-based testing',
+          link: {
+            type: 'doc',
+            id: 'xstate/model-based-testing/intro',
+          },
           items: [
-            'xstate/model-based-testing/intro',
             'xstate/model-based-testing/when-to-use',
             'xstate/model-based-testing/quickstart',
             'xstate/model-based-testing/test-paths',
@@ -233,8 +235,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'Actors',
+          link: {
+            type: 'doc',
+            id: 'xstate/actors/intro',
+          },
           items: [
-            'xstate/actors/intro',
             'xstate/actors/promises',
             'xstate/actors/actions-vs-actors',
             'xstate/actors/callbacks',
@@ -295,9 +300,9 @@ const sidebars = {
       ],
     },
     {
-      type: 'category',
+      type: 'doc',
       label: '🧑‍🏫  Examples',
-      items: ['examples/intro'],
+      id: 'examples/intro',
     },
     {
       type: 'doc',
