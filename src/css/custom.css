@@ -147,6 +147,12 @@ html, body {
   --ifm-font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
   --ifm-font-size-base:100%;
   --ifm-line-height-base:1.45;
+  --ifm-h1-vertical-rhythm-top: 3;
+  --ifm-h2-vertical-rhythm-top: 2;
+  --ifm-h3-vertical-rhythm-top: 1.5;
+  --ifm-heading-vertical-rhythm-top: 1.25;
+  --ifm-h1-vertical-rhythm-bottom: 1.25;
+  --ifm-heading-vertical-rhythm-bottom: 1;
   --ifm-link-decoration:underline;
   --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.1);
   --ifm-heading-vertical-rhythm-bottom:.75;
@@ -650,7 +656,7 @@ a, a:hover {
 
 /* Set a maximum width and centre main content (including breadcrumbs) */
 
-article {
+article, .index-page {
   margin: 0 auto;
   max-width: 66ch;
 }
@@ -848,6 +854,14 @@ html [class*=toggleButton] {
 
 /* Breadcrumbs */
 
+.breadcrumbs__link {
+  text-decoration: none;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--st-text-highlight);
+}
+
 .breadcrumbs__item--active .breadcrumbs__link {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
@@ -879,7 +893,7 @@ html [class*=toggleButton] {
 
 /* Add more space above page title */
 
-.markdown h1:first-child {
+.markdown h1:first-child, .index-page h1 {
   margin-top: calc( var(--ifm-h1-vertical-rhythm-top) * var(--ifm-leading) ); 
 }
 
@@ -925,13 +939,20 @@ html [class*=toggleButton] {
   list-style: none; 
   margin: 0px; 
   padding-left: 0px; 
-  padding: 0.2rem 0;
+  padding: 0;
 }
 .menu__list .menu__list { 
   flex: 0 0 100%; 
   margin: 0;
   padding-left: 0px; 
-  padding: 0.2rem 0;
+  padding: 0;
+}
+
+.menu__list-item:first-of-type {
+  padding-top: 0.2rem;
+}
+.menu__list-item:last-of-type {
+  padding-bottom: 0.2rem;
 }
 .menu__list-item:not(:first-child) { 
   margin-top: 0; 
@@ -1004,7 +1025,7 @@ html [class*=toggleButton] {
   text-decoration: none;
 }
 
-.menu__link--sublist-caret::before, .menu__link--sublist-caret::before {
+.menu__caret::before, .menu__link--sublist-caret::before, .menu__link--sublist-caret::before {
   display: none;
 }
 
@@ -1254,14 +1275,16 @@ ul.content-boxes {
   margin: 0;
 }
 
-a.link-box {
+a.link-box, .content-boxes a.link-box {
   border: 1px solid var(--st-layout-border);
   border-radius: var(--ifm-breadcrumb-border-radius);
+  box-shadow: none;
   color: var(--st-text);
   display: block;
   margin: 0;
   padding: 1rem;
   text-decoration: none;
+  width: 100%;
 }
 
 a.link-box:hover,
@@ -1275,6 +1298,13 @@ a.link-box strong {
   color: var(--st-text-link);
   font-size: 1.1rem;
   margin: 0.25rem 0;
+}
+
+/* Index page list */
+
+.index-list {
+  list-style-type: none; 
+  padding: 0;
 }
 
 /* Footer */
