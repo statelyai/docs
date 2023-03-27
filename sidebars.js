@@ -64,47 +64,47 @@ const sidebars = {
         'states/final-states',
         'states/parent-states',
         'states/parallel-states',
-        'states/history-states'
-      ]
-    },
-    {
-      type: 'category',
-      label: 'Transitions and events',
-      link: {
-        type: 'generated-index',
-        title: 'Transitions and events',
-        description: 'Learn about all the possible transitions and events in the Stately Editor.',
-        slug: '/category/transitions-and-events',
-        keywords: ['guides'],
-      },
-      items: [
-        {
-          type: 'doc',
-          label: 'Transitions and events',
-          id: 'transitions-and-events/intro',
+        'states/history-states',
+      {
+        type: 'category',
+        label: 'Transitions and events',
+        link: {
+          type: 'generated-index',
+          title: 'Transitions and events',
+          description: 'Learn about all the possible transitions and events in the Stately Editor.',
+          slug: '/category/transitions-and-events',
+          keywords: ['guides'],
         },
-        'transitions-and-events/guards',
-        'transitions-and-events/eventless-transitions',
-        'transitions-and-events/delayed-transitions',
-        'transitions-and-events/self-transitions',
-        'transitions-and-events/state-done-events',
-        'transitions-and-events/invoke-done-events',
-        'transitions-and-events/invoke-error-events'
-      ]
-    },
-    {
-      type: 'category',
-      label: 'Actions and actors',
-      link: {
-        type: 'generated-index',
-        title: 'Actions and actors',
-        description: 'Learn about actions and actors in the Stately Editor.',
-        slug: '/category/actions-and-actors',
-        keywords: ['guides'],
+        items: [
+          {
+            type: 'doc',
+            label: 'Transitions and events',
+            id: 'transitions-and-events/intro',
+          },
+          'transitions-and-events/guards',
+          'transitions-and-events/eventless-transitions',
+          'transitions-and-events/delayed-transitions',
+          'transitions-and-events/self-transitions',
+          'transitions-and-events/state-done-events',
+          'transitions-and-events/invoke-done-events',
+          'transitions-and-events/invoke-error-events'
+        ]
       },
-      items: [
-        'actions-and-actors/entry-and-exit-actions',
-        'actions-and-actors/actors',
+      {
+        type: 'category',
+        label: 'Actions and actors',
+        link: {
+          type: 'generated-index',
+          title: 'Actions and actors',
+          description: 'Learn about actions and actors in the Stately Editor.',
+          slug: '/category/actions-and-actors',
+          keywords: ['guides'],
+        },
+        items: [
+          'actions-and-actors/entry-and-exit-actions',
+          'actions-and-actors/actors',
+        ]
+      },
       ]
     },
     {
