@@ -854,6 +854,14 @@ html [class*=toggleButton] {
 
 /* Breadcrumbs */
 
+.breadcrumbs__link {
+  text-decoration: none;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--st-text-highlight);
+}
+
 .breadcrumbs__item--active .breadcrumbs__link {
   font-weight: bold;
   font-weight: var(--ifm-font-weight-bold);
