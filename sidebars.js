@@ -161,8 +161,11 @@ const sidebars = {
         {
           type: 'category',
           label: 'Basics',
+          link: {
+            type: 'doc',
+            id: 'xstate/basics/what-is-a-statechart',
+          },
           items: [
-            'xstate/basics/what-is-a-statechart',
             'xstate/basics/options',
             'xstate/basics/inline-vs-named-options',
           ],
