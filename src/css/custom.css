@@ -1265,7 +1265,22 @@ footer [class*=iconExternalLink] {
 /* Version banner */
 
 .alert--version {
+  grid-template-columns: auto 1.2em minmax(auto, 66ch) auto; 
+  grid-template-areas:  'margin icon content'
+                        'margin icon content';
+  grid-template-rows: 1fr; 
+  grid-column-gap: 0.5em;
   margin-bottom: 1rem;
+  padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
+}
+
+@media (min-width: 1300px) {
+  .alert--version {
+    --ifm-alert-padding-horizontal: 0.85rem;
+    /* pull admonitions into margins so text aligns with paragraph text */
+    margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
+    margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
+  }
 }
 
 .versionBannerIcon svg {
@@ -1273,6 +1288,16 @@ footer [class*=iconExternalLink] {
   height: 1.2em;
   width: 1.2em;
   fill: currentColor;
+  /* pull into icon space */
+  margin-left: -1.7em;
+}
+
+.versionBannerHeading {
+  grid-area: content;
+}
+
+.versionBannerContent {
+  grid-area: content;
 }
 
 .versionBannerContent > * {
