@@ -2,7 +2,7 @@
   "tutorialSidebar": [
     {
       "type": "category",
-      "label": "➡️  Get started",
+      "label": "Get started",
       "items": [
         {
           "type": "doc",
@@ -11,75 +11,59 @@
         },
         {
           "type": "doc",
-          "label": "State machines and statecharts",
-          "id": "state-machines-and-statecharts"
+          "label": "Installation",
+          "id": "installation"
+        },
+        {
+          "type": "doc",
+          "label": "Core concepts",
+          "id": "concepts"
+        },
+        {
+          "type": "doc",
+          "label": "Resources",
+          "id": "resources"
+        },
+        {
+          "type": "doc",
+          "label": "Examples",
+          "id": "examples"
         }
       ]
     },
     {
       "type": "category",
-      "label": "🏁  Core concepts",
+      "label": "Core concepts",
       "collapsed": false,
       "collapsible": true,
       "items": [
         {
-          "type": "category",
-          "label": "States",
-          "items": [
-            {
-              "type": "doc",
-              "id": "states/intro",
-              "label": "Intro"
-            },
-            "states/initial-states",
-            "states/final-states",
-            "states/parent-states",
-            "states/parallel-states",
-            "states/history-states"
-          ]
+          "type": "doc",
+          "label": "Events",
+          "id": "concepts/events"
         },
         {
-          "type": "category",
-          "label": "Transitions and events",
-          "items": [
-            {
-              "type": "doc",
-              "id": "transitions-and-events/intro",
-              "label": "Intro"
-            },
-            "transitions-and-events/guards",
-            "transitions-and-events/eventless-transitions",
-            "transitions-and-events/delayed-transitions",
-            "transitions-and-events/self-transitions",
-            "transitions-and-events/state-done-events",
-            "transitions-and-events/invoke-done-events",
-            "transitions-and-events/invoke-error-events"
-          ]
+          "type": "doc",
+          "label": "Actors",
+          "id": "concepts/actors"
         },
         {
-          "type": "category",
-          "label": "Actions and actors",
-          "items": [
-            "actions-and-actors/entry-and-exit-actions",
-            "actions-and-actors/actors"
-          ]
+          "type": "doc",
+          "label": "State machines",
+          "id": "concepts/state-machines"
         }
       ]
     },
     {
       "type": "category",
-      "label": "⚡️  Using the Studio",
+      "label": "Using the Studio",
       "collapsed": false,
       "collapsible": true,
       "items": [
         {
           "type": "category",
           "label": "Edit",
-          "items": [
-            "descriptions",
-            "import-from-code",
-            "export-as-code"
-          ]
+          "items": ["descriptions", "import-from-code", "export-as-code"]
         },
         "projects",
         {
@@ -126,7 +110,7 @@
     },
     {
       "type": "category",
-      "label": "🛠️  XState library",
+      "label": "XState",
       "collapsed": false,
       "collapsible": true,
       "items": [
@@ -137,91 +121,30 @@
         },
         "xstate/installation",
         "xstate/templates",
-        {
-          "type": "category",
-          "label": "Basics",
-          "items": [
-            "xstate/basics/what-is-a-statechart",
-            "xstate/basics/options",
-            "xstate/basics/inline-vs-named-options"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Actions and context",
-          "items": [
-            "xstate/actions/actions",
-            "xstate/actions/context",
-            "xstate/actions/built-in-actions"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Transitions and choices",
-          "items": [
-            "xstate/transitions-and-choices/guards",
-            "xstate/transitions-and-choices/guarded-actions",
-            "xstate/transitions-and-choices/always",
-            "xstate/transitions-and-choices/after",
-            "xstate/transitions-and-choices/internal-external",
-            "xstate/transitions-and-choices/transition-descriptions"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Running machines",
-          "items": [
-            "xstate/running-machines/intro",
-            "xstate/running-machines/react",
-            "xstate/running-machines/node"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Deep dive: states",
-          "items": [
-            "xstate/states/parent-and-child-states",
-            "xstate/states/other-state-attributes",
-            "xstate/states/advanced-transitions",
-            "xstate/states/final-states",
-            "xstate/states/parallel-states",
-            "xstate/states/history-states",
-            "xstate/states/in-state-guards"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Model-based testing",
-          "items": [
-            "xstate/model-based-testing/intro",
-            "xstate/model-based-testing/when-to-use",
-            "xstate/model-based-testing/quickstart",
-            "xstate/model-based-testing/test-paths",
-            "xstate/model-based-testing/assertions",
-            "xstate/model-based-testing/event-cases",
-            "xstate/model-based-testing/jest",
-            "xstate/model-based-testing/vitest",
-            "xstate/model-based-testing/cypress",
-            "xstate/model-based-testing/playwright"
-          ]
-        },
+        "xstate/context",
+        "xstate/states",
+        "xstate/transitions",
+        "xstate/actions",
+        "xstate/guards",
+        "xstate/invoke",
+        "xstate/spawn",
+        "xstate/eventless-transitions",
+        "xstate/delayed-transitions",
+        "xstate/compound-states",
+        "xstate/parallel-states",
+        "xstate/final-states",
+        "xstate/history-states",
         {
           "type": "category",
           "label": "Actors",
           "items": [
             "xstate/actors/intro",
-            "xstate/actors/promises",
-            "xstate/actors/actions-vs-actors",
-            "xstate/actors/callbacks",
-            "xstate/actors/machines",
-            "xstate/actors/observables",
-            "xstate/actors/parent-child-communication",
-            "xstate/actors/spawn",
-            {
-              "type": "doc",
-              "label": "Actor cheatsheet",
-              "id": "xstate/actors/cheatsheet"
-            }
+            "xstate/actors/state-machines",
+            "xstate/actors/promise",
+            "xstate/actors/transition",
+            "xstate/actors/observable",
+            "xstate/actors/callback",
+            "xstate/actors/custom"
           ]
         },
         {
@@ -245,14 +168,6 @@
             "xstate/packages/xstate-svelte",
             "xstate/packages/xstate-vue"
           ]
-        },
-        {
-          "type": "category",
-          "label": "Advanced Topics",
-          "items": [
-            "xstate/advanced/react-patterns",
-            "xstate/advanced/scxml"
-          ]
         }
       ]
     },
@@ -275,9 +190,7 @@
     {
       "type": "category",
       "label": "🧑‍🏫  Examples",
-      "items": [
-        "examples/intro"
-      ]
+      "items": ["examples/intro"]
     },
     {
       "type": "doc",
