@@ -3,20 +3,76 @@ title: XState
 slug: '/xstate'
 ---
 
-XState is a JavaScript and TypeScript library for creating, interpreting, and executing finite state machines and statecharts, as well as managing invocations of those machines as actors.
+XState is a state management & orchestration solution for JavaScript and TypeScript apps.
 
-- [Install XState](installation.mdx)
-- [Learn about the XState basics](basics/what-is-a-statechart.mdx)
+It uses event-driven programming, state machines, statecharts, and the actor model to handle complex logic in predictable, robust, and visual ways. XState can be used in any framework and in the frontend, backend, or anywhere else JavaScript runs.
+
+## Installation
+
+XState is available on [npm](https://www.npmjs.com/package/xstate):
+
+```bash
+# npm
+npm install xstate
+
+# yarn
+yarn add xstate
+```
+
+## Create a machine
+
+```js
+import { createMachine, interpret } from 'xstate';
+
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    INC: {
+      actions: assign({
+        count: (context) => context.count + 1,
+      }),
+    },
+    DEC: {
+      actions: assign({
+        count: (context) => context.count - 1,
+      }),
+    },
+    SET: {
+      actions: assign({
+        count: (_, event) => event.value,
+      }),
+    },
+  },
+});
+
+const countActor = interpret(countMachine).start();
+
+countActor.subscribe((state) => {
+  console.log(state.context.count);
+});
+
+countActor.send({ type: 'INC' }); // logs 1
+
+countActor.send({ type: 'DEC' }); // logs 0
+
+countActor.send({ type: 'SET', value: 10 }); // logs 10
+```
+
+- [Install XState](/xstate/installation)
+- [Learn about the XState basics](/xstate/basics/what-is-a-statechart)
 
 :::xstate
 
 ## Download the XState VS Code extension
+
 - [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode)
 - [Open VSX Registry](https://open-vsx.org/extension/statelyai/stately-vscode)
 
 :::
 
-[Read more about our developer tools](../tools/developer-tools.mdx).
+[Read more about our developer tools](/tools/developer-tools/).
 
 ## Packages
 
