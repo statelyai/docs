@@ -25,7 +25,8 @@ const sidebars = {
       link: {
         type: 'generated-index',
         title: '➡️  Get started with Stately',
-        description: 'Learn about state machines, statecharts, and the Stately Editor',
+        description:
+          'Learn about state machines, statecharts, and the Stately Editor',
         slug: '/category/get-started',
         keywords: ['guides'],
       },
@@ -36,11 +37,11 @@ const sidebars = {
           id: 'studio',
         },
         {
-          type: 'doc', 
-          label:'State machines and statecharts',
+          type: 'doc',
+          label: 'State machines and statecharts',
           id: 'state-machines-and-statecharts',
         },
-      ]
+      ],
     },
     {
       type: 'category',
@@ -48,7 +49,8 @@ const sidebars = {
       link: {
         type: 'generated-index',
         title: '🏁  Stately core concepts',
-        description: 'Learn about states, transitions, events, actions, and actors in the Stately Studio.',
+        description:
+          'Learn about states, transitions, events, actions, and actors in the Stately Studio.',
         slug: '/category/core-concepts',
         keywords: ['guides'],
       },
@@ -65,47 +67,49 @@ const sidebars = {
         'states/parent-states',
         'states/parallel-states',
         'states/history-states',
-      {
-        type: 'category',
-        label: 'Transitions and events',
-        link: {
-          type: 'generated-index',
-          title: 'Transitions and events',
-          description: 'Learn about all the possible transitions and events in the Stately Editor.',
-          slug: '/category/transitions-and-events',
-          keywords: ['guides'],
-        },
-        items: [
-          {
-            type: 'doc',
-            label: 'Transitions and events',
-            id: 'transitions-and-events/intro',
+        {
+          type: 'category',
+          label: 'Transitions and events',
+          link: {
+            type: 'generated-index',
+            title: 'Transitions and events',
+            description:
+              'Learn about all the possible transitions and events in the Stately Editor.',
+            slug: '/category/transitions-and-events',
+            keywords: ['guides'],
           },
-          'transitions-and-events/guards',
-          'transitions-and-events/eventless-transitions',
-          'transitions-and-events/delayed-transitions',
-          'transitions-and-events/self-transitions',
-          'transitions-and-events/state-done-events',
-          'transitions-and-events/invoke-done-events',
-          'transitions-and-events/invoke-error-events'
-        ]
-      },
-      {
-        type: 'category',
-        label: 'Actions and actors',
-        link: {
-          type: 'generated-index',
-          title: 'Actions and actors',
-          description: 'Learn about actions and actors in the Stately Editor.',
-          slug: '/category/actions-and-actors',
-          keywords: ['guides'],
+          items: [
+            {
+              type: 'doc',
+              label: 'Transitions and events',
+              id: 'transitions-and-events/intro',
+            },
+            'transitions-and-events/guards',
+            'transitions-and-events/eventless-transitions',
+            'transitions-and-events/delayed-transitions',
+            'transitions-and-events/self-transitions',
+            'transitions-and-events/state-done-events',
+            'transitions-and-events/invoke-done-events',
+            'transitions-and-events/invoke-error-events',
+          ],
         },
-        items: [
-          'actions-and-actors/entry-and-exit-actions',
-          'actions-and-actors/actors',
-        ]
-      },
-      ]
+        {
+          type: 'category',
+          label: 'Actions and actors',
+          link: {
+            type: 'generated-index',
+            title: 'Actions and actors',
+            description:
+              'Learn about actions and actors in the Stately Editor.',
+            slug: '/category/actions-and-actors',
+            keywords: ['guides'],
+          },
+          items: [
+            'actions-and-actors/entry-and-exit-actions',
+            'actions-and-actors/actors',
+          ],
+        },
+      ],
     },
     {
       type: 'category',
@@ -130,23 +134,19 @@ const sidebars = {
             slug: '/category/edit-mode',
             keywords: ['guides'],
           },
-          items: [
-            'descriptions',
-            'import-from-code',
-            'export-as-code',
-          ]
+          items: ['descriptions', 'import-from-code', 'export-as-code'],
         },
         'projects',
         {
-          type: 'doc', 
-          label:'Teams',
+          type: 'doc',
+          label: 'Teams',
           className: 'pro-feature',
           id: 'teams',
         },
         'discover',
         {
-          type: 'doc', 
-          label:'Import from GitHub',
+          type: 'doc',
+          label: 'Import from GitHub',
           className: 'pro-feature',
           id: 'import-from-github',
         },
@@ -156,41 +156,42 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Accounts',
-            description: 'Learn about the Stately Studio plans and how to manage your account.',
+            description:
+              'Learn about the Stately Studio plans and how to manage your account.',
             slug: '/category/accounts',
             keywords: ['guides'],
           },
           items: [
             {
-              type: 'doc', 
-              label:'Community plan',
+              type: 'doc',
+              label: 'Community plan',
               id: 'studio-community-plan',
               className: 'community-feature',
             },
             {
-              type: 'doc', 
-              label:'Pro plan',
+              type: 'doc',
+              label: 'Pro plan',
               id: 'studio-pro-plan',
               className: 'pro-feature',
             },
             {
-              type: 'doc', 
-              label:'Enterprise plan',
+              type: 'doc',
+              label: 'Enterprise plan',
               id: 'studio-enterprise-plan',
             },
             {
-              type: 'doc', 
-              label:'Sign up',
+              type: 'doc',
+              label: 'Sign up',
               id: 'sign-up',
             },
             {
-              type: 'doc', 
-              label:'Upgrade',
+              type: 'doc',
+              label: 'Upgrade',
               id: 'upgrade',
             },
-          ]
+          ],
         },
-      ]
+      ],
     },
     {
       type: 'category',
@@ -313,7 +314,8 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Model-based testing in XState',
-            description: 'Learn all about when and how to use model-based testing with XState.',
+            description:
+              'Learn all about when and how to use model-based testing with XState.',
             slug: '/category/xstate-model-based-testing',
             keywords: ['guides'],
           },
@@ -422,7 +424,8 @@ const sidebars = {
       link: {
         type: 'generated-index',
         title: 'Stately Developer tools',
-        description: 'Find all the developer tools you can use with XState and the Stately Editor.',
+        description:
+          'Find all the developer tools you can use with XState and the Stately Editor.',
         slug: '/category/developer-tools',
         keywords: ['guides'],
       },
