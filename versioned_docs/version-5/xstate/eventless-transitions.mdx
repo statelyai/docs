@@ -1,1 +1,13 @@
 # Eventless transitions (`always`)
+
+In statecharts, an eventless transition is a transition that occurs without an explicit event. They are taken immediately after normal transitions are taken, if they are enabled (that is, if their guards are true (LINK)).
+
+They are useful for doing things when some condition is true.
+
+Warning: avoid infinite loops by using guards.
+
+<!-- TODO: example `{ always: { ... } }` -->
+
+## When to use
+
+<!-- TODO: examples -->

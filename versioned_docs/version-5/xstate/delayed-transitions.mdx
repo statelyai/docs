@@ -1,1 +1,18 @@
 # Delayed transitions (after)
+
+Delayed transitions are taken after a set amount of time. They are defined on the `after` property:
+
+<!-- TODO: `{ after: ... }` -->
+
+## Delays
+
+- Delays can be inlined as number, e.g. `after: { 1000: ... }`
+- Delays can be referenced; e.g. `after: { timeout: ... }`
+- `.provide({ delays })`
+- Can be defined as expression: `after: [{ delay: () => 1000, target: ... }]`
+
+## Lifecycle
+
+- Canceled when the state is exited
+
+## Cheatsheet

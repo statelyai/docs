@@ -1,1 +1,79 @@
 # Invoke
+
+XState is based on the [actor model](TODO: link). Invoked actors are managed by the state machine.
+
+- Invoked actors are created and started when the state is entered, and stopped when the state is exited.
+
+<!-- TODO: invoking an actor: `{ invoke: { src: ... } }` -->
+
+- Actors can also be invoked on the root of the machine. They last the lifetime of the machine
+
+<!-- TODO: example of invoking an actor at root -->
+
+## API
+
+- `invoke: { src: ... }` - Invokes an actor.
+  - `src` - The actor to invoke.
+  - `id` - The ID of the actor.
+  - `input` - The input to pass to the actor.
+  - `systemId` - system-wide ID
+  - `onDone`
+  - `onSnapshot`
+  - `onError`
+
+## Source
+
+- Represented by `src`
+- Can be inline: `src: fromPromise(...)`
+- Can be referenced: `src: 'fetchUser'`
+- `.provide({ actors: ... })`
+
+## Lifecycle
+
+Invoked actors have a lifecycle that is managed by the parent machine. They are created and started when the state is entered, and stopped when the state is exited.
+
+- Transitions that reenter the state stop invoked actors and start new invoked actors.
+  - Don't want this? Set `reenter: false` or omit `reenter` altogether.
+
+## Actor refs
+
+Actors can be read on `state.children.<actorId>`. The returned value is an `ActorRef` object, and it has these properties:
+
+- `id` - the ID of the actor
+- `send()`
+- `getSnapshot()`
+
+## Actor snapshots
+
+The actor snapshot is the latest emitted value from the actor. It can be read from `actorRef.getSnapshot()`.
+
+- The snapshot is not the same as the internal state; it is what the actor chooses to share with observers.
+
+## `onDone`
+
+- Transitions when invoked actor is complete
+- Event gets `data` with actor's output data
+
+## `onSnapshot`
+
+- Transitions when invoked actor emits a new snapshot
+- Event gets `data` with actor's snapshot
+
+## `onError`
+
+- Transitions when invoked actor throws an error
+- Event gets `data` with actor's error data
+
+## Input
+
+- Actors can receive input. This is an event: `{ type: 'xstate.init', input: ... }`
+
+## Kinds of actors
+
+- Promises (link)
+- Machines (link)
+- Observables (link)
+- Transition functions (link)
+- Callbacks (link)
+
+## Cheatsheet
