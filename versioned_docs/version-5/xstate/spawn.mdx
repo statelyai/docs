@@ -1,1 +1,41 @@
 # Spawn
+
+XState is based on the [actor model](TODO: link). Spawned actors are managed by the state machine.
+
+<!-- TODO: example -->
+
+## API
+
+```ts
+actions: assign({
+  ref: ({ spawn }) => spawn(fromPromise(...), {
+    id: 'some-id',
+  })
+})
+```
+
+- `spawn(actorBehavior, options?)`
+  - `actorBehavior` - The behavior of the actor to spawn. This can be a function, promise, observable, or callback.
+  - `options` - Options for spawning the actor.
+    - `id` - The ID of the actor. This is used to reference the actor in the state machine.
+    - `input`
+
+## Source
+
+- Inline: `spawn(fromPromise(...))`
+- Referenced: `spawn('getUser')`
+  - `.provide({ actors })`
+
+## Lifecycle
+
+- Created & started when spawned
+- Stopped when the machine is stopped
+- Can be manually stopped
+
+## Stopping an actor
+
+- `actions: stop('some-id')`
+
+- Note this does not clear it from the `context`
+
+## Cheatsheet
