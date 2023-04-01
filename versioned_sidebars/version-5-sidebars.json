@@ -39,6 +39,11 @@
       "items": [
         {
           "type": "doc",
+          "label": "States",
+          "id": "concepts/states"
+        },
+        {
+          "type": "doc",
           "label": "Events",
           "id": "concepts/events"
         },
@@ -122,7 +127,7 @@
         "xstate/installation",
         "xstate/templates",
         "xstate/context",
-        "xstate/states",
+        "xstate/finite-states",
         "xstate/transitions",
         "xstate/actions",
         "xstate/guards",

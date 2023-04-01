@@ -1,1 +1,60 @@
 # Transitions
+
+A transition is a change from one finite state to another, triggered by an event.
+
+<!-- TODO: example going from form to closed -->
+
+When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+
+Transitions are represented by `on:` in a state:
+
+<!-- TODO: full feedback example -->
+
+## Self-transitions
+
+A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state.
+
+<!-- TODO: assign example -->
+
+## Transitions between states
+
+Typically, transitions are between two sibling states.
+
+<!-- TODO: example with `{ on: { target: 'sibling' } }` -->
+
+## Parent to child transitions
+
+When a state machine receives an event, it will first check the deepest state (aka atomic state) to see if there is any enabled transition. If not, the parent state is checked, and so on until the root state is reached.
+
+When an event should transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
+
+<!-- TODO: example with `{ on: { target: '.child' } }` -->
+
+## Reentering
+
+By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not reenter the parent state; that is, it will not execute the `exit` and `entry` actions of the parent state (TODO: link for actions).
+
+If reentering is desired, the `reenter` property can be set to `true`. This will cause the parent state to reenter, executing the `exit` and `entry` actions of the parent state.
+
+<!-- TODO: illustration showing no reenter vs. reenter -->
+
+<!-- TODO: example with `{ target: '.child', reenter: true }` -->
+
+## Transitions to any state
+
+Sibling descendent states: `{ target: 'sibling.child.grandchild' }`
+
+Parent to descendent states: `{ target: '.child.grandchild' }`
+
+State to any state: `{ target: '#specificState' }`
+
+## Other transitions
+
+- Eventless (always) transitions - LINK
+- Delayed (after) transitions - LINK
+
+## Shorthands
+
+Instead of `on: { foo: { target: 'bar' } }`, you can use `on: { foo: 'bar' }`, only if there are no actions or guards.
+
+## Cheatsheet

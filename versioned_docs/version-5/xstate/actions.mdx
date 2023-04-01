@@ -1,1 +1,97 @@
 # Actions
+
+Actions are effects that are executed due to a [transition](LINK). Actions are fire-and-forget effects; that is, they are not awaited, and they don't return anything to the state machine.
+
+Examples of actions:
+
+- Logging a message
+- Sending a message to another actor
+- TODO: more examples
+
+Actions are represented on transitions in `actions: ...` property, and can be a single action or an array.
+
+They can also be on states `entry` or `exit`, also as single or array.
+
+<!-- TODO: simple example -->
+
+## Inline actions
+
+Useful for prototyping and simple cases. It's recommended to serialize them instead.
+
+<!-- TODO: `{ actions: () => { ... } } -->
+
+## Action objects
+
+They have a `type` and optional `params`.
+
+<!-- TODO: parameterized action -->
+
+## Implementing actions
+
+Actions are implemented with `.provide(...)`
+
+<!-- TODO: `.provide({ actions })` -->
+
+- Show how `params` can be used in implementation
+
+From there, you can read `{ action }` object, which has `type` and `params`
+
+## Entry and exit actions
+
+Entry actions = actions that occur on any transition that enters a state node
+
+<!-- TODO: illustation -->
+
+Exit actions = actions that occur on any transition that exits a state node
+
+<!-- TODO: illustration -->
+
+Entry and exit actions are defined on `entry: ...` and `exit: ...` of state node.
+
+<!-- TODO: example -->
+
+## Assign action
+
+Assign action is a special action that assigns data to the state context. Special action
+
+Can assign per property: `assign({ foo: 'bar' })` or overall: `assign(() => ({ foo: 'bar' }))`
+
+<!-- TODO: example -->
+
+## Raise action
+
+Raise action is a special action that raises an event. A **raised event** is an event that the machine creates and sends to itself.
+
+<!-- TODO: example -->
+
+Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVENT' }))`
+
+## Send-to action
+
+The `sendTo(...)` action is a special action that sends an event to a specific actor.
+
+<!-- TODO: example -->
+
+- Link to actors
+
+## Pure action
+
+A pure action is a higher-level action that returns an array of actions to be executed, without actually executing any effects (hence the name "pure").
+
+<!-- TODO: example -->
+
+## Log action
+
+A log action is an easy way to log messages to the console.
+
+<!-- TODO: example -->
+
+## Choose action
+
+A choose action is a higher-level action that returns an array of actions to be executed.
+
+<!-- TODO: example -->
+
+## Shorthands
+
+For simple actions, can specify action string instead of object
