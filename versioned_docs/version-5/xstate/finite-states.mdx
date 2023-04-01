@@ -1,0 +1,103 @@
+# Finite states
+
+A finite state is one of the possible states that a state machine can be in at any given time. It's called "finite" because there should be a limited number of possible states that the machine can be in. Finite states define how a machine "behaves" when in a state; e.g. a status or a mode. They represent how a machine "behaves" when in a state; e.g. a status or a mode; a machine can behave differently depending what state it is in.
+
+<!-- TODO: image -->
+
+For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state".
+
+State machines always start at an **initial state**.
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+
+  // Initial state
+  initial: 'prompt',
+
+  // Finite states
+  states: {
+    prompt: {
+      /* ... */
+    },
+    form: {
+      /* ... */
+    },
+    thanks: {
+      /* ... */
+    },
+    closed: {
+      /* ... */
+    },
+  },
+});
+```
+
+You can combine finite states with [context](TODO), which make up the overall state of a machine:
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  context: {
+    name: '',
+    email: '',
+    feedback: '',
+  },
+
+  initial: 'prompt',
+  states: {
+    prompt: {
+      /* ... */
+    },
+  },
+});
+```
+
+<!-- TODO: `.getSnapshot()` and show `.value` and `.context` -->
+
+## Initial state
+
+The initial state is the state that the machine starts in. It is defined by the `initial` property on the machine config:
+
+<!-- TODO: example -->
+
+The initial state can be represented by an object with a `target` and optionally `actions`:
+
+<!-- TODO: example -->
+
+<!-- TODO: link to actions -->
+
+## Transitions
+
+Transitions are how you move from one state to another. They are defined by the `on` property on a state node:
+
+<!-- TODO: example (longhand `target:` syntax) -->
+
+<!-- TODO: link to transitions -->
+
+## Final states
+
+A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
+
+<!-- TODO: example -->
+
+- A machine can have zero or more final states
+- Final states can have output
+- Machine terminates when it reaches a final state (explain what this means)
+
+<!-- TODO: link to final states section -->
+
+## Identifying states
+
+States can be identified with a unique ID: `id: 'myState'`. This is useful for targeting a state from any other state (link to transitions)
+
+- Does not affect the `state.value`
+
+## Other state types
+
+In statecharts, there are other types of states:
+
+- Compound states (link)
+- Parallel states (link)
+- History states (link)
+- Final states (link)

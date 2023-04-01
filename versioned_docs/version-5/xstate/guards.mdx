@@ -1,1 +1,63 @@
-# Guards
+# Guarded transitions
+
+A guarded transition is a transition that is enabled only if has a conditional `guard` that evaluates to `true`. The guard determines whether or not the transition can be enabled.
+
+- Guards should be pure functions that return a boolean
+
+## Inline guards
+
+```ts
+on: {
+  event: {
+    guard: ({ context, event }) => true,
+    target: 'target'
+  }
+}
+```
+
+## Guard object
+
+```ts
+on: {
+  event: {
+    guard: { type: 'isValid', params: { ... } },
+    target: 'target'
+  }
+}
+```
+
+- Show `.provide({ guards })` and how `params` can be accessed there
+
+## Higher-level guards
+
+- `and(...)`
+- `or(...)`
+- `not(...)`
+
+```ts
+on: {
+  event: {
+    guard: and({ type: 'isValid' }, { type: 'isAuthorized' });
+  }
+}
+```
+
+## In-state guards
+
+Most useful for parallel states (TODO: link)
+
+```ts
+on: {
+  event: {
+    guard: stateIn('#state1');
+  }
+}
+```
+
+## Shorthands
+
+For simple guards: `guard: 'something'`
+
+- `and('isValid', 'isAuthorized')`
+
+## Cheatsheet

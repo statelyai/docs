@@ -1,1 +1,54 @@
 # Context
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    feedback: 'Some feedback',
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine);
+
+feedbackActor.subscribe((state) => {
+  console.log(state.context.feedback);
+});
+
+feedbackActor.start();
+// logs 'Some feedback'
+```
+
+```ts
+import { createMachine, assign } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    feedback: 'Some feedback',
+  },
+  on: {
+    'feedback.update': {
+      actions: assign({
+        feedback: ({ event }) => event.feedback,
+      }),
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine);
+
+feedbackActor.subscribe((state) => {
+  console.log(state.context.feedback);
+});
+
+feedbackActor.start();
+
+// logs 'Some feedback'
+
+feedbackActor.send({
+  type: 'feedback.update',
+  feedback: 'Some other feedback',
+});
+
+// logs 'Some other feedback'
+```
