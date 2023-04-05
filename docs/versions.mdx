@@ -2,6 +2,9 @@
 title: Version history
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # Version history
 
 Version history is helpful if you want to save checkpoints while modeling machines or mirror version changes in the rest of your codebase. All users can view versions of public machines. Users on our Pro plan and team members can view and create versions for machines in team projects and their own machines in **My Projects**. [Read more about team roles and versions](#team-roles-and-versions).
@@ -29,13 +32,19 @@ The **Save** button will be disabled unless you have changed your machine since 
 
 Versions are named with their creation time by default and have the version creator’s avatar.
 
-<!-- TODO: ![Version history panel opened from the right tool menu showing a list of versions.]() -->
+<p>
+<ThemedImage
+  alt="Version history panel opened from the right tool menu showing a list of versions."
+  sources={{
+    light: useBaseUrl('/versions/version-toolbox.png'),
+    dark: useBaseUrl('/versions/version-toolbox-dm.png'),
+  }}
+/>
+</p>
 
 ### Initial versions
 
 An initial version is created when a new machine is created or imported. Autosaved machines have a Stately Bot icon. For newer machines, the initial version is named “Initial version.” The initial version’s name for older machines is a timestamp of when the machine was created or imported. Machines created in 2022 may not have an initial version as they were made before the version history existed.
-
-<!-- TODO: ![Version history panel opened from the right tool menu showing the Current Version and an Initial Version with a bot icon.]() -->
 
 ### Rename a version
 
@@ -45,7 +54,15 @@ You can rename any version to something other than the version’s timestamp.
 2. Enter the version’s new name.
 3. The new name will be autosaved when you hit enter or navigate away from the text input.
 
-<!-- TODO: ![Selecting a version name in the Version history panel, showing the text input for the new name.]() -->
+<p>
+<ThemedImage
+  alt="Selecting a version name in the Version history panel, showing the text input for the new name."
+  sources={{
+    light: useBaseUrl('/versions/version-rename.png'),
+    dark: useBaseUrl('/versions/version-rename-dm.png'),
+  }}
+/>
+</p>
 
 The version’s timestamp will still be shown under the version name.
 
@@ -53,7 +70,15 @@ The version’s timestamp will still be shown under the version name.
 
 You can view any version by selecting that version in the **Version history**. The version will be shown in the Editor and read-only unless you restore that version using the **Restore** button.
 
-<!-- TODO: ![A version previewed in the Editor.]() -->
+<p>
+<ThemedImage
+  alt="A version previewed in the Editor which highlights the top bar to show you’re in preview mode."
+  sources={{
+    light: useBaseUrl('/versions/version-preview.png'),
+    dark: useBaseUrl('/versions/version-preview-dm.png'),
+  }}
+/>
+</p>
 
 You can return to viewing the current version of your machine from **Return to current version** in the top bar or by selecting **Current Version** from the **Version history** in the right tool menu.
 
@@ -65,7 +90,15 @@ You can restore your current machine to any version from the version history.
 
 If you restore a version without creating a new version for your current machine, your current machine will be autosaved in your version history. These autosaved machine names start with “Pre-restore” and have a Stately Bot icon instead of your avatar.
 
-<!-- TODO: ![Autosave machine in the Version history panel.]() -->
+<p>
+<ThemedImage
+  alt="Autosave machine in the Version history panel named starting with Pre-restore version."
+  sources={{
+    light: useBaseUrl('/versions/version-auto.png'),
+    dark: useBaseUrl('/versions/version-auto-dm.png'),
+  }}
+/>
+</p>
 
 :::
 
@@ -75,13 +108,30 @@ If you restore a version without creating a new version for your current machine
 2. Hover over the version you want to restore to reveal the restore icon button.
 3. Use the restore icon button to restore to your chosen version.
 
-<!-- TODO: ![Version history panel with the restore icon revealed]() -->
+<p>
+<ThemedImage
+  alt="Version history panel with the restore icon revealed on hover."
+  sources={{
+    light: useBaseUrl('/versions/version-restore.png'),
+    dark: useBaseUrl('/versions/version-restore-dm.png'),
+  }}
+/>
+</p>
 
 ### Restore a version when viewing a version 
 
 When [viewing a version](#view-a-version), you can restore to that version using the **Restore** button in the top bar.
 
-<!-- TODO: ![A version previewed in the Editor with an arrow pointing to the Restore button.]() -->
+<p>
+<ThemedImage
+  alt="A version previewed in the Editor with an arrow pointing to the Restore button."
+  sources={{
+    light: useBaseUrl('/versions/version-restore-button.png'),
+    dark: useBaseUrl('/versions/version-restore-button-dm.png'),
+  }}
+/>
+</p>
+
 
 ## Create a new machine from a version
 
@@ -91,7 +141,16 @@ You can also create a new machine from a version in your version history.
 2. Select the version from which you want to create a new machine. The version will be previewed in the Editor.
 3. Use the copy icon button in the top bar to create a new machine from that version.
 
-<!-- TODO: ![A version previewed in the Editor with an arrow pointing to the Copy button.]() -->
+<p>
+<ThemedImage
+  alt="A version previewed in the Editor with an arrow pointing to the Copy button."
+  sources={{
+    light: useBaseUrl('/versions/version-copy.png'),
+    dark: useBaseUrl('/versions/version-copy-dm.png'),
+  }}
+/>
+</p>
+
 
 Your new machine will be created and opened in the same project with the same name appended with “(copy).”
 
@@ -102,7 +161,16 @@ Your new machine will be created and opened in the same project with the same na
 3. Use the delete icon button in the top bar to delete that version.
 4. The current version will then be opened in the Editor.
 
-<!-- TODO: ![A version previewed in the Editor with an arrow pointing to the Delete button.]() -->
+<p>
+<ThemedImage
+  alt="A version previewed in the Editor with an arrow pointing to the Delete button."
+  sources={{
+    light: useBaseUrl('/versions/version-delete.png'),
+    dark: useBaseUrl('/versions/version-delete-dm.png'),
+  }}
+/>
+</p>
+
 
 ## Team roles and versions
 
