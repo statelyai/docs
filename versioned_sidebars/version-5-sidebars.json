@@ -139,41 +139,22 @@
         "xstate/parallel-states",
         "xstate/final-states",
         "xstate/history-states",
-        {
-          "type": "category",
-          "label": "Actors",
-          "items": [
-            "xstate/actors/intro",
-            "xstate/actors/state-machines",
-            "xstate/actors/promise",
-            "xstate/actors/transition",
-            "xstate/actors/observable",
-            "xstate/actors/callback",
-            "xstate/actors/custom"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "TypeScript",
-          "items": [
-            "xstate/typescript/typegen",
-            "xstate/typescript/type-helpers",
-            "xstate/typescript/troubleshooting"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Packages",
-          "items": [
-            "xstate/packages/xstate-fsm",
-            "xstate/packages/xstate-graph",
-            "xstate/packages/xstate-test",
-            "xstate/packages/xstate-immer",
-            "xstate/packages/xstate-react",
-            "xstate/packages/xstate-svelte",
-            "xstate/packages/xstate-vue"
-          ]
-        }
+        "xstate/actors"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Packages",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "xstate/packages/xstate-fsm",
+        "xstate/packages/xstate-graph",
+        "xstate/packages/xstate-test",
+        "xstate/packages/xstate-immer",
+        "xstate/packages/xstate-react",
+        "xstate/packages/xstate-svelte",
+        "xstate/packages/xstate-vue"
       ]
     },
     {
