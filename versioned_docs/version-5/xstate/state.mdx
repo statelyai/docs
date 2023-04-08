@@ -1,0 +1,24 @@
+# State
+
+## Intro: what is state?
+
+## State object
+
+- Accessed from `actor.subscribe(state => ...)` and `actor.getSnapshot()`
+- Can be accessed from `machine.transition(state, event)` return value
+- Contains `value` and `context`
+- `value` is object representation of all active state nodes
+
+## State value
+
+## State context
+
+## `state.can(eventType)`
+
+## `state.hasTag(tag)`
+
+## `state.matches(stateValue)`
+
+- Prefer `state.hasTag(tag)`
+
+## `state.output`

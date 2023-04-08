@@ -127,6 +127,7 @@
         "xstate/installation",
         "xstate/templates",
         "xstate/context",
+        "xstate/state",
         "xstate/finite-states",
         "xstate/transitions",
         "xstate/actions",
@@ -139,7 +140,8 @@
         "xstate/parallel-states",
         "xstate/final-states",
         "xstate/history-states",
-        "xstate/actors"
+        "xstate/actors",
+        "xstate/system"
       ]
     },
     {
