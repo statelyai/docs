@@ -75,6 +75,7 @@
         "xstate/templates",
         "xstate/context",
         "xstate/state",
+        "xstate/input",
         "xstate/finite-states",
         "xstate/transitions",
         "xstate/actions",

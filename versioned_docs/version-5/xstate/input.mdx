@@ -1,1 +1,230 @@
 # Input
+
+Input refers to the data provided to a state machine that influences its behavior. In XState, input is provided when creating an actor via the 2nd argument of the `interpret(machine, { input })` function:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: ({ input }) => ({
+    userId: input.userId,
+    feedback: '',
+    rating: input.defaultRating,
+  }),
+  // ...
+});
+
+const feedbackActor = interpret(feedbackMachine, {
+  // highlight-start
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+  // highlight-end
+});
+```
+
+## Stately Editor: input
+
+_Coming soon_
+
+## Initial event input
+
+When an actor is started, it will automatically send a special event named `xstate.init` to itself. If `input` is provided to the `interpret` function, it will be included in the `xstate.init` event:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // highlight-start
+  entry: ({ event }) => {
+    console.log(event.input);
+    // logs { userId: '123', defaultRating: 5 }
+  },
+  // highlight-end
+  // ...
+});
+
+const feedbackActor = interpret(feedbackMachine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+}).start();
+```
+
+## Invoking actors with input
+
+Input can be provided to invoked actors via the `input` property of the `invoke` configuration:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  invoke: {
+    src: 'liveFeedback',
+    input: {
+      domain: 'stately.ai',
+    },
+  },
+}).provide({
+  actors: {
+    liveFeedback: fromPromise(({ input }) => {
+      return fetch(`https://${input.domain}/feedback`).then((res) =>
+        res.json()
+      );
+    }),
+  },
+});
+```
+
+The `invoke.input` property can be a static input value or a function that returns the input value. The function will be called with an object that contains the current `context` and `event`:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+    feedback: '',
+    rating: 0,
+  },
+  invoke: {
+    src: 'fetchUser',
+    // highlight-next-line
+    input: ({ context }) => ({ userId: context.userId }),
+  },
+  // ...
+}).provide({
+  actors: {
+    // highlight-start
+    fetchUser: fromPromise(({ input }) => {
+      return fetch(`/users/${input.userId}`).then((res) => res.json());
+    }),
+    // highlight-end
+  },
+});
+```
+
+## Spawning actors with input
+
+Input can be provided to spawned actors via the `input` property of the `spawn` configuration:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+    feedback: '',
+    rating: 0,
+    emailRef: null,
+  },
+  // ...
+  on: {
+    'feedback.submit': {
+      actions: assign({
+        emailRef: ({ context, spawn }) => {
+          return spawn('emailUser', {
+            // highlight-next-line
+            input: { userId: context.userId },
+          });
+        },
+      }),
+    },
+  },
+  // ...
+}).provide({
+  actors: {
+    // highlight-start
+    emailUser: fromPromise(({ input }) => {
+      return fetch(`/users/${input.userId}`, {
+        method: 'POST',
+        // ...
+      });
+    }),
+    // highlight-end
+  },
+});
+```
+
+## TypeScript
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const machine = createMachine({
+  schema: {} as {
+    input: {
+      userId: string;
+      defaultRating: number;
+    };
+    // ...
+  },
+});
+```
+
+## Cheatsheet
+
+**Providing input**
+
+```ts
+const feedbackActor = interpret(feedbackMachine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+});
+```
+
+**Providing input to invoked actors**
+
+```ts
+const feedbackMachine = createMachine({
+  invoke: {
+    src: 'liveFeedback',
+    input: {
+      domain: 'stately.ai',
+    },
+  },
+});
+```
+
+**Providing dynamic input to invoked actors**
+
+```ts
+const feedbackMachine = createMachine({
+  context: {
+    userId: 'some-user-id',
+  },
+  invoke: {
+    src: 'fetchUser',
+    input: ({ context }) => ({ userId: context.userId }),
+  },
+});
+```
+
+**Providing input to spawned actors**
+
+```ts
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+  },
+  // ...
+  on: {
+    'feedback.submit': {
+      actions: assign({
+        emailRef: ({ context, spawn }) => {
+          return spawn('emailUser', {
+            input: { userId: context.userId },
+          });
+        },
+      }),
+    },
+  },
+  // ...
+});
+```
+
+## Resources
