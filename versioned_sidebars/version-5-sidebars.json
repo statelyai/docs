@@ -59,6 +59,38 @@
         }
       ]
     },
+
+    {
+      "type": "category",
+      "label": "XState",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "xstate/intro",
+          "label": "Intro"
+        },
+        "xstate/installation",
+        "xstate/templates",
+        "xstate/context",
+        "xstate/state",
+        "xstate/finite-states",
+        "xstate/transitions",
+        "xstate/actions",
+        "xstate/guards",
+        "xstate/invoke",
+        "xstate/spawn",
+        "xstate/eventless-transitions",
+        "xstate/delayed-transitions",
+        "xstate/compound-states",
+        "xstate/parallel-states",
+        "xstate/final-states",
+        "xstate/history-states",
+        "xstate/actors",
+        "xstate/system"
+      ]
+    },
     {
       "type": "category",
       "label": "Using the Studio",
@@ -111,37 +143,6 @@
             }
           ]
         }
-      ]
-    },
-    {
-      "type": "category",
-      "label": "XState",
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "id": "xstate/intro",
-          "label": "Intro"
-        },
-        "xstate/installation",
-        "xstate/templates",
-        "xstate/context",
-        "xstate/state",
-        "xstate/finite-states",
-        "xstate/transitions",
-        "xstate/actions",
-        "xstate/guards",
-        "xstate/invoke",
-        "xstate/spawn",
-        "xstate/eventless-transitions",
-        "xstate/delayed-transitions",
-        "xstate/compound-states",
-        "xstate/parallel-states",
-        "xstate/final-states",
-        "xstate/history-states",
-        "xstate/actors",
-        "xstate/system"
       ]
     },
     {
