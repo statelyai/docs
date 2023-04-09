@@ -5,7 +5,7 @@ slug: '/xstate'
 
 XState is a state management & orchestration solution for JavaScript and TypeScript apps.
 
-It uses event-driven programming, state machines, statecharts, and the actor model to handle complex logic in predictable, robust, and visual ways. XState can be used in any framework and in the frontend, backend, or anywhere else JavaScript runs.
+It uses event-driven programming, state machines, statecharts, and the actor model to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks, and can be used in the frontend, backend, or anywhere else JavaScript runs.
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm install xstate
 yarn add xstate
 ```
 
-## Create a machine
+## Create a simple machine
 
 ```js
 import { createMachine, interpret } from 'xstate';
@@ -31,17 +31,17 @@ const countMachine = createMachine({
   on: {
     INC: {
       actions: assign({
-        count: (context) => context.count + 1,
+        count: ({ context }) => context.count + 1,
       }),
     },
     DEC: {
       actions: assign({
-        count: (context) => context.count - 1,
+        count: ({ context }) => context.count - 1,
       }),
     },
     SET: {
       actions: assign({
-        count: (_, event) => event.value,
+        count: ({ event }) => event.value,
       }),
     },
   },
@@ -53,12 +53,77 @@ countActor.subscribe((state) => {
   console.log(state.context.count);
 });
 
-countActor.send({ type: 'INC' }); // logs 1
-
-countActor.send({ type: 'DEC' }); // logs 0
-
-countActor.send({ type: 'SET', value: 10 }); // logs 10
+countActor.send({ type: 'INC' });
+// logs 1
+countActor.send({ type: 'DEC' });
+// logs 0
+countActor.send({ type: 'SET', value: 10 });
+// logs 10
 ```
+
+## Create a more complex machine
+
+```js
+import { createMachine, interpret } from 'xstate';
+
+const textMachine = createMachine({
+  context: {
+    committedValue: '',
+    value: '',
+  },
+  initial: 'reading',
+  states: {
+    reading: {
+      on: {
+        // Shorthand for 'text.edit': { target: 'editing' }
+        'text.edit': 'editing',
+      },
+    },
+    editing: {
+      on: {
+        'text.change': {
+          actions: assign({
+            value: ({ event }) => event.value,
+          }),
+        },
+        'text.commit': {
+          actions: assign({
+            committedValue: ({ context }) => context.value,
+          }),
+          target: 'reading',
+        },
+        'text.cancel': {
+          actions: assign({
+            value: ({ context }) => context.committedValue,
+          }),
+          target: 'reading',
+        },
+      },
+    },
+  },
+});
+
+const textActor = interpret(textMachine).start();
+
+textActor.subscribe((state) => {
+  console.log(state.context.value);
+});
+
+textActor.send({ type: 'text.edit' });
+// logs ''
+textActor.send({ type: 'text.change', value: 'Hello' });
+// logs 'Hello'
+textActor.send({ type: 'text.commit' });
+// logs 'Hello'
+textActor.send({ type: 'text.edit' });
+// logs 'Hello'
+textActor.send({ type: 'text.change', value: 'Hello world' });
+// logs 'Hello world'
+textActor.send({ type: 'text.cancel' });
+// logs 'Hello'
+```
+
+## Installation
 
 - [Install XState](/xstate/installation)
 - [Learn about the XState basics](/xstate/basics/what-is-a-statechart)
