@@ -59,7 +59,7 @@ const config = {
               label: 'XState v5',
               path: 'xstate-v5',
               banner: 'unreleased',
-            }
+            },
           },
 
           // Different types of admonitions/“tip boxes” available for our use.
