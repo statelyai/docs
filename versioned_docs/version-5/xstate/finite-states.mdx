@@ -305,43 +305,6 @@ const feedbackMachine = createMachine({
 
 State IDs do not affect the `state.value`. In the above example, the `state.value` would still be `closed` even though the state node is identified as `#finished`.
 
-## Final states
-
-A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
-
-```ts
-import { createMachine, interpret } from 'xstate';
-
-const feedbackMachine = createMachine({
-  initial: 'prompt',
-  states: {
-    prompt: {
-      /* ... */
-    },
-    thanks: {
-      /* ... */
-    },
-    // highlight-start
-    closed: {
-      type: 'final',
-    },
-    // highlight-end
-    // ...
-  },
-  on: {
-    'feedback.close': {
-      target: '.closed',
-    },
-  },
-});
-```
-
-- A state machine can have zero or more final states. Some machines may run indefinitely and not need to terminate.
-- Final states can have `output` data, which is sent to the parent machine when the machine terminates.
-- When a machine reaches a top-level final state, it terminates.
-
-Read more about [final states](TODO).
-
 ## Other state types
 
 In statecharts, there are other types of states:

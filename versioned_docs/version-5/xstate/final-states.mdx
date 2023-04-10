@@ -1,12 +1,53 @@
 # Final states
 
+A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
+
+```ts
+import { createMachine, interpret } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      /* ... */
+    },
+    thanks: {
+      /* ... */
+    },
+    // highlight-start
+    closed: {
+      type: 'final',
+    },
+    // highlight-end
+    // ...
+  },
+  on: {
+    'feedback.close': {
+      target: '.closed',
+    },
+  },
+});
+```
+
+- A state machine can have zero or more final states. Some machines may run indefinitely and not need to terminate.
+- Final states can have `output` data, which is sent to the parent machine when the machine terminates.
+- When a machine reaches a top-level final state, it terminates.
+
 ## Stately Editor: final states
 
-## Top-level final state
+_Coming soon_
+
+## Top-level final states
+
+A top-level final state is a final state that is a direct child state of the machine. When the machine reaches a top-level final state, the machine will terminate. When a machine terminates, it can no longer receive events nor transition.
 
 ## Child final states
 
+When a child final state of a compound state is reached, that compound state is considered "done". The `onDone` transition of that compound state is taken.
+
 ## Final states in parallel states
+
+When all regions of a parallel state are "done", the parallel state is considered "done". The `onDone` transition of the parallel state is taken.
 
 ## Output
 

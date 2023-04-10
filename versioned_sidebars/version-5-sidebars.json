@@ -89,7 +89,8 @@
         "xstate/final-states",
         "xstate/history-states",
         "xstate/actors",
-        "xstate/system"
+        "xstate/system",
+        "xstate/persistence"
       ]
     },
     {
