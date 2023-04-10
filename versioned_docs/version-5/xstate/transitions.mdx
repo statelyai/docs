@@ -50,6 +50,66 @@ Parent to descendent states: `{ target: '.child.grandchild' }`
 
 State to any state: `{ target: '#specificState' }`
 
+## Wildcard transitions
+
+A wildcard transition is a transition that will match any event. The event descriptor (key of the `on: {...}` object) is defined using the `*` wildcard character as the event type:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {
+      on: {
+        // highlight-start
+        // This transition will match any event
+        '*': { target: 'awake' },
+        // highlight-end
+      },
+    },
+    awake: {},
+  },
+});
+```
+
+Wildcard transitions are useful for handling events that are not handled by any other transition, or as a "catch-all" transition that handles any event in a state. A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
+
+## Partial wildcard transitions
+
+A partial wildcard transition is a transition that machines any event that starts with a specific prefix. The event descriptor is defined by using the wildcard character (`*`) after a dot (`.`) as the event type:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      on: {
+        // highlight-start
+        // This will match any event that starts with 'feedback.':
+        // 'feedback.good', 'feedback.bad', etc.
+        'feedback.*': { target: 'form' },
+        // highlight-end
+      },
+    },
+    form: {},
+    // ...
+  },
+});
+```
+
+The wildcard character (`*`) can only be used in the suffix of an event descriptor, following a dot (`.`). Some examples:
+
+- ✅ `mouse.*` - matches `mouse.click`, `mouse.move`, etc.
+- ✅ `mouse.click.*` - matches `mouse.click.left`, `mouse.click.right`, etc.
+- ❌ ~~`mouse*`~~ - invalid; does not match any event
+- ❌ ~~`mouse.*.click`~~ - invalid; cannot be used in the middle of an event descriptor
+- ❌ ~~`*.click`~~ - invalid; cannot be used in the prefix of an event descriptor
+- ❌ ~~`mouse.click*`~~ - invalid; does not match any event
+- ❌ ~~`mouse.*.*`~~ - invalid; cannot be used in the middle of an event descriptor
+
 ## Other transitions
 
 - Eventless (always) transitions - LINK
@@ -57,7 +117,30 @@ State to any state: `{ target: '#specificState' }`
 
 ## Shorthands
 
-Instead of `on: { foo: { target: 'bar' } }`, you can use `on: { foo: 'bar' }`, only if there are no actions or guards.
+If the transition only specifies a `target`, then the string target can be used as a shorthand instead of the entire transition object:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      on: {
+        // highlight-start
+        // This is shorthand for:
+        // 'feedback': { target: 'form' }
+        'feedback.good': 'thanks',
+        // highlight-end
+      },
+    },
+    thanks: {},
+    // ...
+  },
+});
+```
+
+This is useful for quickly prototyping state machines. It is recommended to use the full transition object syntax, as it will be consistent with all other transition objects and will be easier to add actions, guards, and other properties to the transition in the future.
 
 ## Transition descriptions
 
