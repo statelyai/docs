@@ -4,7 +4,9 @@ A finite state is one of the possible states that a state machine can be in at a
 
 For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state".
 
-State machines always start at an [initial state](TODO), and may end at a [final state](TODO). The state machine is always in a finite state.
+<!-- TODO: add links below -->
+
+State machines always start at an [initial state](#), and may end at a [final state](#). The state machine is always in a finite state.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -31,7 +33,9 @@ const feedbackMachine = createMachine({
 });
 ```
 
-You can combine finite states with [context](TODO), which make up the overall state of a machine:
+<!-- TODO: add link below -->
+
+You can combine finite states with [context](#), which make up the overall state of a machine:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -131,7 +135,9 @@ console.log(feedbackActor.getSnapshot().value);
 // logs 'thanks'
 ```
 
-Read more about [transitions](TODO).
+<!-- TODO: add link below -->
+
+Read more about [transitions](#).
 
 ## Targets
 
@@ -272,7 +278,9 @@ const feedbackMachine = createMachine({
 });
 ```
 
-See [identifying states](TODO) for more information.
+<!-- TODO: add link below -->
+
+See [identifying states](#) for more information.
 
 ## Identifying state nodes
 
