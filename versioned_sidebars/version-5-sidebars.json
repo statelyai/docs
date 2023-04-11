@@ -72,7 +72,9 @@
           "label": "Intro"
         },
         "xstate/installation",
+        "xstate/migration",
         "xstate/templates",
+        "xstate/machines",
         "xstate/context",
         "xstate/state",
         "xstate/input",
