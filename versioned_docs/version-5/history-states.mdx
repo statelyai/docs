@@ -1,4 +1,33 @@
-# History states
+---
+title: History states
+---
+
+A history state returns the parent state to its most recently active child state. The box with an **H** inside represents the history state.
+
+The history state can be deep or shallow:
+
+- A shallow history state remembers the immediate child’s state.
+- A deep history state remembers the deepest active state or states inside its child states.
+
+<!--TODO: Why you might use a history state with example.-->
+
+## Using history states in the Studio
+
+### Make a state a history state
+
+First, select the state you want to set as a history state for the parent state. Then…
+
+#### Using the **quick actions** menu
+
+1. Right-click the state to bring up the **quick actions** menu.
+2. Choose **History** from the **Type** options.
+
+#### Using the **State details** panel
+
+1. Select the state you want to set as the final state.
+2. Open the **State details** panel from the right tool menu.
+3. Choose **History** from the **Type** dropdown menu.
+4. Use the **History** toggle that appears when the state has a **History Type** to choose between **Shallow** and **Deep** history options.
 
 A history state is a special type of state (a _pseudostate_) that remembers the last [child state](#) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
 
