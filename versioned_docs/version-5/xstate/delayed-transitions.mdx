@@ -13,9 +13,29 @@ Delayed transitions are taken after a set amount of time. They are defined on th
 - `.provide({ delays })`
 - Can be defined as expression: `after: [{ delay: () => 1000, target: ... }]`
 
+## Delay references
+
+```ts
+createMachine({
+  after: {
+    DELAY: {
+      /* ... */
+    },
+  },
+}).provide({
+  delays: {
+    DELAY: 1000, // or expression
+  },
+});
+```
+
 ## Lifecycle
 
 - Canceled when the state is exited
+
+## Testing
+
+- Simulated clock
 
 ## TypeScript
 
