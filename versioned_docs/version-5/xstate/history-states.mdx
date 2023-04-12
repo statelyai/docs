@@ -1,13 +1,40 @@
 # History states
 
+A history state is a special type of state (a _pseudostate_) that remembers the last [child state](#) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
+
+Essentially, this allows statecharts to "remember" where they left off when exiting and reentering a state.
+
+- If no child state remembered, history goes to `.target` state, if it is specified
+- Otherwise, go to [initial state](#)
+
 ## Stately Editor: History states
 
 ## Shallow vs. deep history
+
+- Shallow history states only remember the last active direct child state.
+- Deep history states remember all active descendant states.
 
 ## History target
 
 ## TypeScript
 
 ## Cheatsheet
+
+```ts
+const machine = createMachine({
+  // ...
+  initial: 'firstState',
+  states: {
+    hist: {
+      type: 'history',
+      history: 'deep', // or 'shallow' (default)
+      target: 'someState', // optional
+    },
+    firstState: {},
+    someState: {},
+    anotherState: {},
+  },
+});
+```
 
 ## Resources

@@ -1,24 +1,68 @@
 # Actors
 
-## Intro: What are actors?
+In the actor model, actors are objects that can talk to each other. They are independent computational entities that communicate via asynchronous message passing (XState refers to these messages as "events").
+
+- An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
+- Actors communicate with other actors by sending and receiving events asynchronously.
+- Actors process one message at a time. They have an internal "mailbox" that acts like an event queue, processing events one at a time.
+- State is not shared between actors. The only way for an actor to share data is by sending events.
+- Actors can spawn new actors.
 
 ## Stately Editor: actors
 
+## Creating actors
+
+- `interpret(machine, options)`
+- Starting actors via `actor.start()`
+- Stopping system actor via `actor.stop()`
+
+## Actor snapshots
+
+- `actor.getSnapshot()`
+
+## Subscribing to actors
+
+- Subscribes to emitted actor snapshots
+
+- `actor.subscribe(observer)`
+- Plain function `(state) => { ... }`
+- Observer `({ next, error, complete }) => { ... }`
+- `subscription.unsubscribe()` for cleanup
+
+## Initializing actor state
+
+- `interpret(machine, { state }).start()`
+- Link to persistence
+
+## Awaiting actors
+
+- `await waitFor(actor, selector)`
+
 ## State machine actors
+
+- `createMachine({ ... })`
 
 ## Promise actors
 
+- `fromPromise(() => new Promise(...))`
+
 ## Transition actors
+
+- `fromTransition((state, event) => { ... }, initialState)`
 
 ## Observable actors
 
+- `fromObservable(() => someObservable)`
+
 ## Event observable actors
+
+- `fromEventObservable(() => someEventObservable)`
 
 ## Callback actors
 
-## Custom actors
+- `fromCallback((sendBack, receive) => { ... })`
 
----
+## Custom actors
 
 ## TypeScript
 

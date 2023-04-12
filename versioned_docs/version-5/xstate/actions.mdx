@@ -66,6 +66,9 @@ Raise action is a special action that raises an event. A **raised event** is an 
 
 <!-- TODO: example -->
 
+- Raise delay `{ delay: 1000 }`
+- Canceling a delay (link)
+
 Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVENT' }))`
 
 ## Send-to action
@@ -73,6 +76,9 @@ Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVEN
 The `sendTo(...)` action is a special action that sends an event to a specific actor.
 
 <!-- TODO: example -->
+
+- Send to delay `{ delay: 1000 }`
+- Canceling a delay (link)
 
 - Link to actors
 
@@ -93,6 +99,10 @@ A log action is an easy way to log messages to the console.
 A choose action is a higher-level action that returns an array of actions to be executed.
 
 <!-- TODO: example -->
+
+## Cancel action
+
+A cancel action cancels a delayed sendTo/raise action.
 
 ## Shorthands
 

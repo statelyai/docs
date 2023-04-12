@@ -1,1 +1,52 @@
 # Persistence
+
+TODO
+
+- What is persistence/restoration?
+- Why is it useful?
+  - Frontend use-case
+  - Backend use-case
+
+## Persisting state
+
+- `actor.getPersistedState()`
+- With machines
+- Other actors can persist state too
+
+## Restoring state
+
+- `interpret(behavior, { state: restoredState }).start()`
+- Actions are not replayed
+  - explain why (because they are already executed)
+- Invocations are restarted
+
+## Recursive persistence
+
+- Invoked actors are persisted/restored recursively
+- Spawned actors are persisted/restored recursively
+
+## Strategies
+
+- Storage
+  - Localstorage
+  - DB
+  - Cookies
+  - Filesystem
+  - URL
+
+# Caveats
+
+- Incompatible state
+- Desire to replay actions
+- Consider [event sourcing](#)
+
+# TypeScript
+
+# Cheatsheet
+
+- Persisting state
+  - `actor.getPersistedState()`
+- Restoring state
+  - `interpret(behavior, { state: restoredState }).start()`
+
+# Resources

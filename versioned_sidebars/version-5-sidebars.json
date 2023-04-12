@@ -75,6 +75,7 @@
         "xstate/migration",
         "xstate/templates",
         "xstate/machines",
+        "xstate/actors",
         "xstate/context",
         "xstate/state",
         "xstate/input",
@@ -86,13 +87,13 @@
         "xstate/spawn",
         "xstate/eventless-transitions",
         "xstate/delayed-transitions",
-        "xstate/compound-states",
+        "xstate/parent-states",
         "xstate/parallel-states",
         "xstate/final-states",
         "xstate/history-states",
-        "xstate/actors",
         "xstate/system",
-        "xstate/persistence"
+        "xstate/persistence",
+        "xstate/testing"
       ]
     },
     {
