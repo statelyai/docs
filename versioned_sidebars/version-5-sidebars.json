@@ -40,22 +40,22 @@
         {
           "type": "doc",
           "label": "States",
-          "id": "concepts/states"
+          "id": "state"
         },
         {
           "type": "doc",
           "label": "Events",
-          "id": "concepts/events"
+          "id": "events"
         },
         {
           "type": "doc",
           "label": "Actors",
-          "id": "concepts/actors"
+          "id": "actors"
         },
         {
           "type": "doc",
           "label": "State machines",
-          "id": "concepts/state-machines"
+          "id": "state-machines-and-statecharts"
         }
       ]
     },
@@ -71,7 +71,6 @@
           "id": "xstate",
           "label": "Intro"
         },
-        "installation",
         "migration",
         "templates",
         "machines",
@@ -80,7 +79,7 @@
         "state",
         "input",
         "finite-states",
-        "transitions",
+        "events",
         "actions",
         "guards",
         "invoke",
@@ -156,13 +155,13 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
-        "packages/xstate-fsm",
-        "packages/xstate-graph",
-        "packages/xstate-test",
-        "packages/xstate-immer",
-        "packages/xstate-react",
-        "packages/xstate-svelte",
-        "packages/xstate-vue"
+        "xstate-fsm",
+        "xstate-graph",
+        "xstate-test",
+        "xstate-immer",
+        "xstate-react",
+        "xstate-svelte",
+        "xstate-vue"
       ]
     },
     {
@@ -171,20 +170,20 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
-        "tools/xstate-vscode-extension",
-        "tools/visualizer",
-        "tools/inspector",
+        "xstate-vscode-extension",
+        "visualizer",
+        "inspector",
         {
           "type": "doc",
           "label": "Other tools",
-          "id": "tools/developer-tools"
+          "id": "developer-tools"
         }
       ]
     },
     {
       "type": "category",
       "label": "Examples",
-      "items": ["examples/intro"]
+      "items": ["examples"]
     },
     {
       "type": "doc",
