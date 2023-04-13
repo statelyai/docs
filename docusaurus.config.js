@@ -5,7 +5,7 @@ const a11yEmoji = require('@fec/remark-a11y-emoji');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Stately Docs',
+  title: 'Stately and XState Docs',
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
