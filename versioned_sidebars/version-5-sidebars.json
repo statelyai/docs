@@ -40,7 +40,7 @@
         {
           "type": "doc",
           "label": "States",
-          "id": "state"
+          "id": "states"
         },
         {
           "type": "doc",
@@ -76,7 +76,7 @@
         "machines",
         "actors",
         "context",
-        "state",
+        "states",
         "input",
         "finite-states",
         "events",

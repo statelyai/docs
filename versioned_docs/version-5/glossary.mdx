@@ -12,11 +12,11 @@ Looking for more detailed information on these concepts? [Read the introduction 
 
 ## Actions
 
-An [action](actions-and-actors/entry-and-exit-actions.mdx) can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+An [action](actions.mdx) can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
 
 ## Actors
 
-When you run a statechart, it becomes an [actor](actions-and-actors/actors.mdx); a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+When you run a statechart, it becomes an [actor](actors.mdx); a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
 
 ## After transitions
 
@@ -26,45 +26,49 @@ See [delayed transitions](/#delayed-transitions).
 
 See [eventless transitions](/#eventless-transitions).
 
+## Compound states
+
+See [parent and child states](/#parent-and-child-states).
+
 ## Delayed transitions
 
-[Delayed transitions](transitions-and-events/delayed-transitions.mdx) are transitions that only happen after a specified interval of time. If another event happens before the end of the timer, the transition doesn’t complete. Delayed transitions are labeled “after” and often referred to as “after” transitions.
+[Delayed transitions](delayed-transitions.mdx) are transitions that only happen after a specified interval of time. If another event happens before the end of the timer, the transition doesn’t complete. Delayed transitions are labeled “after” and often referred to as “after” transitions.
 
 ## Eventless transitions
 
-[Eventless transitions](transitions-and-events/eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled. No event is necessary to trigger the transition. Eventless transitions are labeled “always” and often referred to as “always” transitions.
+[Eventless transitions](eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled. No event is necessary to trigger the transition. Eventless transitions are labeled “always” and often referred to as “always” transitions.
 
 ## Final state
 
-When a machine reaches the [final state](states/final-states.mdx), it can no longer receive any events, and anything running inside it is canceled and cleaned up. A machine can have multiple final states or no final states.
+When a machine reaches the [final state](final-states.mdx), it can no longer receive any events, and anything running inside it is canceled and cleaned up. A machine can have multiple final states or no final states.
 
 ## Guards
 
-A [guard](transitions-and-events/guards.mdx) is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
+A [guard](guards.mdx) is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
 
 ## History state
 
-A [history state](states/history-states.mdx) returns the parent state to its most recently active child state.
+A [history state](history-states.mdx) returns the parent state to its most recently active child state.
 
 ## Initial state
 
-When a state machine starts, it enters the [**initial state**](states/initial-states.mdx) first. A machine can only have one top-level initial state.
+When a state machine starts, it enters the [**initial state**](initial-states.mdx) first. A machine can only have one top-level initial state.
 
 ## Invoked actors
 
-An [invoked actor](actions-and-actors/actors.mdx) is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
+An [invoked actor](actors.mdx) is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
 
 ## Parallel states
 
-A [parallel state](states/parallel-states.mdx) is a state separated into multiple regions of child states, where each region is active simultaneously.
+A [parallel state](parallel-states.mdx) is a state separated into multiple regions of child states, where each region is active simultaneously.
 
 ## Parent and child states
 
-States can contain more states, also known as [child states](states/parent-states.mdx). These child states are only active when the parent state is active. Child states are nested inside their parent states.
+States can contain more states, also known as [child states](parent-states.mdx). These child states are only active when the parent state is active. Child states are nested inside their parent states. Parent states are also known as compound states.
 
 ## States
 
-A [state](states/intro.mdx) describes the status of the machine. A state can be as simple as _active_ and _inactive_. These states are finite; the machine can only move through the pre-defined states. A state machine can only be in one state at a time.
+A [state](states.mdx) describes the status of the machine. A state can be as simple as _active_ and _inactive_. These states are finite; the machine can only move through the pre-defined states. A state machine can only be in one state at a time.
 
 ## Statecharts
 
@@ -76,4 +80,4 @@ A [state machine](state-machines-and-statecharts.mdx) is a model that describes 
 
 ## Transitions and events
 
-A machine moves from state to state through [transitions](transitions-and-events/intro.mdx). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.
+A machine moves from state to state through [transitions](events.mdx). Transitions are caused by events; when an event happens, the machine transitions to the next state. Transitions are “deterministic”; each combination of state and event always points to the same next state.

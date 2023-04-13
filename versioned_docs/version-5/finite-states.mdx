@@ -1,4 +1,6 @@
-# Finite states
+---
+title: 'Finite states'
+---
 
 A finite state is one of the possible states that a state machine can be in at any given time. It's called "finite" because there should be a limited number of possible states that the machine can be in. Finite states define how a machine "behaves" when in a state; e.g. a status or a mode. They represent how a machine "behaves" when in a state; e.g. a status or a mode; a machine can behave differently depending what state it is in.
 
@@ -6,7 +8,7 @@ For example in a feedback form, you can be in a state where you are filling out 
 
 <!-- TODO: add links below -->
 
-State machines always start at an [initial state](#), and may end at a [final state](#). The state machine is always in a finite state.
+State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -137,7 +139,7 @@ console.log(feedbackActor.getSnapshot().value);
 
 <!-- TODO: add link below -->
 
-Read more about [transitions](#).
+Read more about [transitions](events.mdx).
 
 ## Targets
 
