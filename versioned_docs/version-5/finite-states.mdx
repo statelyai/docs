@@ -6,7 +6,7 @@ A finite state is one of the possible states that a state machine can be in at a
 
 For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state".
 
-<!-- TODO: add links below -->
+TODO: add links below
 
 State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
 
@@ -35,7 +35,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-<!-- TODO: add link below -->
+TODO: add link below
 
 You can combine finite states with [context](#), which make up the overall state of a machine:
 
@@ -67,7 +67,7 @@ console.log(feedbackActor.getSnapshot().context);
 // logs { name: '', email: '', feedback: '' }
 ```
 
-<!-- TODO: `.getSnapshot()` and show `.value` and `.context` -->
+TODO: `.getSnapshot()` and show `.value` and `.context`
 
 ## Stately Editor: finite states
 
@@ -76,7 +76,7 @@ console.log(feedbackActor.getSnapshot().context);
 - unreachable states
 - states with same key
 
-<!-- TODO: image -->
+TODO: image
 
 ## Initial state
 
@@ -101,6 +101,14 @@ const feedbackMachine = createMachine({
   },
 });
 ```
+
+## State nodes
+
+A state node is a finite state that is defined by the `states` property on a machine config:
+
+## Tags
+
+## Meta
 
 ## Transitions
 
@@ -137,7 +145,7 @@ console.log(feedbackActor.getSnapshot().value);
 // logs 'thanks'
 ```
 
-<!-- TODO: add link below -->
+TODO: add link below
 
 Read more about [events and transitions](./transitions.mdx).
 
@@ -280,7 +288,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-<!-- TODO: add link below -->
+TODO: add link below
 
 See [identifying states](#) for more information.
 
@@ -327,6 +335,7 @@ In statecharts, there are other types of states:
 ## Modeling states
 
 - Start simple and shallow. Don't create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
+- Can model choice pseudostates
 
 ## TypeScript
 

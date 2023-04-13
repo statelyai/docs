@@ -14,7 +14,10 @@ Examples of actions:
 
 - Logging a message
 - Sending a message to another [actor](actors.mdx)
-<!-- TODO: more examples -->
+
+TODO: more examples
+
+## Editor: actions
 
 :::tip
 
@@ -36,8 +39,6 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 [View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
 
 In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
-
-## Using actions in the Studio
 
 ### Add an entry action to a state
 
@@ -63,25 +64,32 @@ Actions are represented on transitions in `actions: ...` property, and can be a 
 
 They can also be on states `entry` or `exit`, also as single or array.
 
-<!-- TODO: simple example -->
+TODO: simple example
+
+## Action order
+
+- Exit actions
+- Transition actions
+- Entry actions
+- Actions are executed in-order
 
 ## Inline actions
 
 Useful for prototyping and simple cases. It's recommended to serialize them instead.
 
-<!-- TODO: `{ actions: () => { ... } } -->
+TODO: `{ actions: () => { ... } }
 
 ## Action objects
 
 They have a `type` and optional `params`.
 
-<!-- TODO: parameterized action -->
+TODO: parameterized action
 
 ## Implementing actions
 
 Actions are implemented with `.provide(...)`
 
-<!-- TODO: `.provide({ actions })` -->
+TODO: `.provide({ actions })`
 
 - Show how `params` can be used in implementation
 
@@ -91,15 +99,15 @@ From there, you can read `{ action }` object, which has `type` and `params`
 
 Entry actions = actions that occur on any transition that enters a state node
 
-<!-- TODO: illustation -->
+TODO: illustation
 
 Exit actions = actions that occur on any transition that exits a state node
 
-<!-- TODO: illustration -->
+TODO: illustration
 
 Entry and exit actions are defined on `entry: ...` and `exit: ...` of state node.
 
-<!-- TODO: example -->
+TODO: example
 
 ## Assign action
 
@@ -107,13 +115,13 @@ Assign action is a special action that assigns data to the state context. Specia
 
 Can assign per property: `assign({ foo: 'bar' })` or overall: `assign(() => ({ foo: 'bar' }))`
 
-<!-- TODO: example -->
+TODO: example
 
 ## Raise action
 
 Raise action is a special action that raises an event. A **raised event** is an event that the machine creates and sends to itself.
 
-<!-- TODO: example -->
+TODO: example
 
 - Raise delay `{ delay: 1000 }`
 - Canceling a delay (link)
@@ -124,7 +132,7 @@ Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVEN
 
 The `sendTo(...)` action is a special action that sends an event to a specific actor.
 
-<!-- TODO: example -->
+TODO: example
 
 - Send to delay `{ delay: 1000 }`
 - Canceling a delay (link)
@@ -135,23 +143,27 @@ The `sendTo(...)` action is a special action that sends an event to a specific a
 
 A pure action is a higher-level action that returns an array of actions to be executed, without actually executing any effects (hence the name "pure").
 
-<!-- TODO: example -->
+TODO: example
 
 ## Log action
 
 A log action is an easy way to log messages to the console.
 
-<!-- TODO: example -->
+TODO: example
 
 ## Choose action
 
 A choose action is a higher-level action that returns an array of actions to be executed.
 
-<!-- TODO: example -->
+TODO: example
 
 ## Cancel action
 
 A cancel action cancels a delayed sendTo/raise action.
+
+## Modeling
+
+- Actions on self-transitions
 
 ## Shorthands
 

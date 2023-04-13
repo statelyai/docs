@@ -20,6 +20,10 @@ Single-argument functions
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
+`actor.send(eventObject)` no longer accepts a string; must pass full event object `{ type: '...' }`
+
+No more null events; use `always`
+
 2nd argument to `createMachine` is deprecated: `createMachine(config, options)` is now `createMachine(config).provide(options)`
 
 No more `.withConfig()`; use `.provide()` instead
@@ -29,6 +33,8 @@ No more `.withContext()`; use input instead (see below)
 Actions are now in predictable order
 
 No strict mode
+
+`state.history` is removed
 
 ### New features
 

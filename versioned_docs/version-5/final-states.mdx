@@ -8,6 +8,8 @@ When a machine reaches the final state, it can no longer receive any events, and
 
 A machine can have multiple final states or no final states.
 
+## Editor: final states
+
 In the video player below, *Stopped* is the final child state in the *Opened* state. When the video player is *Stopped*, the video player moves to its *Closed* state.
 
 :::tip
@@ -17,18 +19,17 @@ Watch our [“What are final states?” video on YouTube](https://www.youtube.co
 :::
 
 <p>
-<ThemedImage
-  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped, represented by an icon alongside the Stopped label of a square with a double border. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
-  sources={{
-    light: 'https://stately.ai/registry/machines/c6f8ca35-25e3-4fc6-b4fe-c9994715852e.light.png',
-    dark: 'https://stately.ai/registry/machines/c6f8ca35-25e3-4fc6-b4fe-c9994715852e.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped, represented by an icon alongside the Stopped label of a square with a double border. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/c6f8ca35-25e3-4fc6-b4fe-c9994715852e.light.png',
+      dark: 'https://stately.ai/registry/machines/c6f8ca35-25e3-4fc6-b4fe-c9994715852e.dark.png',
+    }}
+  />
 </p>
 
 [View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=c6f8ca35-25e3-4fc6-b4fe-c9994715852e).
-
-## Using final states in the Studio
 
 ### Make a state a final state
 
@@ -44,7 +45,6 @@ First, select the state you want to set as the final state.
 1. Select the state you want to set as the final state.
 2. Open the **State details** panel from the right tool menu.
 3. Choose **Final** from the **Type** dropdown menu.
-
 
 A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
 
@@ -78,10 +78,7 @@ const feedbackMachine = createMachine({
 - A state machine can have zero or more final states. Some machines may run indefinitely and not need to terminate.
 - Final states can have `output` data, which is sent to the parent machine when the machine terminates.
 - When a machine reaches a top-level final state, it terminates.
-
-## Stately Editor: final states
-
-_Coming soon_
+- Final states cannot have transitions
 
 ## Top-level final states
 

@@ -5,9 +5,21 @@ title: Events and transitions
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-A machine moves from state to state through **transitions**. Transitions are caused by events; when an event happens, the machine transitions to the next state.
+A transition is a change from one finite state to another, triggered by an event.
+
+An event is an occurrence (signal, trigger, message, etc.) that can trigger a transition. When an event is received by an actor, its machine will determine if there are any enabled transitions for that event in the current state. If there are, those transitions will be taken, and the actions will be executed.
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state.
+
+TODO: example going from form to closed
+
+When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+
+Transitions are represented by `on:` in a state:
+
+TODO: full feedback example
+
+## Using transitions and events in the Studio
 
 The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
@@ -41,8 +53,6 @@ The arrows are transitions, and the rounded rectangles on the arrow’s lines ar
 
 In the video player machine above, the events are *PLAY* and *PAUSE*. The *Play* event transitions from the *Paused* state to the *Playing* state. The *Pause* event transitions from the *Playing* state to the *Paused* state.
 
-## Using transitions and events in the Studio
-
 ### Add a transition and event
 
 1. Select an existing state.
@@ -71,21 +81,32 @@ First select the transition or event you want to change. Then…
 2. Right-click the state to bring up the **quick actions** menu.
 3. Choose **Switch source and target** from the **quick actions** menu.
 
-A transition is a change from one finite state to another, triggered by an event.
+## Event objects
 
-<!-- TODO: example going from form to closed -->
+In XState, events are represented by event objects with a `type` property and optional payload. The `type` property is a string that represents the event type. The payload is an object that contains additional data about the event.
 
-When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+```ts
+feedbackMachine.send({
+  // The event type
+  type: 'feedback.update',
+  // Additional payload
+  feedback: 'This is great!',
+  rating: 5,
+});
+```
 
-Transitions are represented by `on:` in a state:
+## Selecting transitions
 
-<!-- TODO: full feedback example -->
+- Start on deepest active state nodes (aka atomic states)
+- If transition is enabled (guard passes), take it
+- If no transition is enabled, go up to its parent state and repeat
+- If no transitions are enabled, no transitions will be taken, state remains the same
 
 ## Self-transitions
 
 A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. Self-transitions can also be used to restart a state.
 
-<!--TODO: Why you might use self-transitions with example.-->
+TODO: Why you might use self-transitions with example.
 
 ## Using self-transitions in the Studio
 
@@ -101,13 +122,13 @@ A state can transition to itself. This is known as a **self-transition**, and is
 1. Select the event.
 2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
 
-<!-- TODO: assign example -->
+TODO: assign example
 
 ## Transitions between states
 
 Typically, transitions are between two sibling states.
 
-<!-- TODO: example with `{ on: { target: 'sibling' } }` -->
+TODO: example with `{ on: { target: 'sibling' } }`
 
 ## Parent to child transitions
 
@@ -115,7 +136,7 @@ When a state machine receives an event, it will first check the deepest state (a
 
 When an event should transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
 
-<!-- TODO: example with `{ on: { target: '.child' } }` -->
+TODO: example with `{ on: { target: '.child' } }`
 
 ## Reentering
 
@@ -123,9 +144,9 @@ By default, when a state machine transitions from a parent state to the same par
 
 If reentering is desired, the `reenter` property can be set to `true`. This will cause the parent state to reenter, executing the `exit` and `entry` actions of the parent state.
 
-<!-- TODO: illustration showing no reenter vs. reenter -->
+TODO: illustration showing no reenter vs. reenter
 
-<!-- TODO: example with `{ target: '.child', reenter: true }` -->
+TODO: example with `{ target: '.child', reenter: true }`
 
 ## Transitions to any state
 
@@ -134,6 +155,12 @@ Sibling descendent states: `{ target: 'sibling.child.grandchild' }`
 Parent to descendent states: `{ target: '.child.grandchild' }`
 
 State to any state: `{ target: '#specificState' }`
+
+## Forbidden transitions
+
+- `{ on: { forbidden: {} } }`
+- Different than omitting the transition; transition selection algorithm will stop looking
+- Same as `{ on: { forbidden: { target: undefined } } }`
 
 ## Wildcard transitions
 
@@ -195,10 +222,19 @@ The wildcard character (`*`) can only be used in the suffix of an event descript
 - ❌ ~~`mouse.click*`~~ - invalid; does not match any event
 - ❌ ~~`mouse.*.*`~~ - invalid; cannot be used in the middle of an event descriptor
 
+## Multiple transitions in parallel states
+
+- Advanced topic
+- `target: ['.mode.inactive', '.status.disabled']`
+
 ## Other transitions
 
 - Eventless (always) transitions - LINK
 - Delayed (after) transitions - LINK
+
+## Transition descriptions
+
+- Can add `.description` to transition - rendered in editor
 
 ## Shorthands
 
@@ -226,8 +262,6 @@ const feedbackMachine = createMachine({
 ```
 
 This is useful for quickly prototyping state machines. It is recommended to use the full transition object syntax, as it will be consistent with all other transition objects and will be easier to add actions, guards, and other properties to the transition in the future.
-
-## Transition descriptions
 
 ## TypeScript
 
