@@ -38,11 +38,7 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
-        {
-          "type": "doc",
-          "id": "xstate",
-          "label": "Intro"
-        },
+        "intro",
         "migration",
         "templates",
         "machines",
