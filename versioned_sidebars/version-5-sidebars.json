@@ -27,39 +27,7 @@
         "templates"
       ]
     },
-    {
-      "type": "category",
-      "label": "Core concepts",
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "label": "What are state machines?",
-          "id": "state-machines-and-statecharts"
-        },
-        {
-          "type": "doc",
-          "label": "What is XState?",
-          "id": "xstate"
-        },
-        {
-          "type": "doc",
-          "label": "States",
-          "id": "states"
-        },
-        {
-          "type": "doc",
-          "label": "Events",
-          "id": "events"
-        },
-        {
-          "type": "doc",
-          "label": "Actors",
-          "id": "actors"
-        }
-      ]
-    },
+
     {
       "type": "category",
       "label": "Using the Studio",
