@@ -13,11 +13,6 @@
       "items": [
         {
           "type": "doc",
-          "label": "Stately Studio",
-          "id": "studio"
-        },
-        {
-          "type": "doc",
           "label": "Install XState",
           "id": "installation"
         },
@@ -88,6 +83,11 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
+        {
+          "type": "doc",
+          "label": "Introducing Stately Studio",
+          "id": "studio"
+        },
         {
           "type": "category",
           "label": "Design mode",
