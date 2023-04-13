@@ -126,12 +126,12 @@ const sidebars = {
       items: [
         {
           type: 'category',
-          label: 'Edit',
+          label: 'Design',
           link: {
             type: 'generated-index',
-            title: 'Edit mode',
-            description: 'Learn how to Edit mode in the Stately Editor.',
-            slug: '/category/edit-mode',
+            title: 'Design mode',
+            description: 'Learn how to use Design mode in the Stately Editor.',
+            slug: '/category/design-mode',
             keywords: ['guides'],
           },
           items: ['descriptions', 'import-from-code', 'export-as-code'],
