@@ -6,29 +6,25 @@
       "items": [
         {
           "type": "doc",
-          "label": "Introduction",
+          "label": "Stately Studio",
           "id": "studio"
         },
         {
           "type": "doc",
-          "label": "Installation",
+          "label": "Install XState",
           "id": "installation"
         },
         {
           "type": "doc",
-          "label": "Core concepts",
-          "id": "concepts"
-        },
-        {
-          "type": "doc",
-          "label": "Resources",
-          "id": "resources"
+          "label": "Migrate to XState v5",
+          "id": "migration"
         },
         {
           "type": "doc",
           "label": "Examples",
           "id": "examples"
-        }
+        },
+        "templates"
       ]
     },
     {
@@ -37,6 +33,16 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
+        {
+          "type": "doc",
+          "label": "What are state machines?",
+          "id": "state-machines-and-statecharts"
+        },
+        {
+          "type": "doc",
+          "label": "What is XState?",
+          "id": "xstate"
+        },
         {
           "type": "doc",
           "label": "States",
@@ -51,48 +57,7 @@
           "type": "doc",
           "label": "Actors",
           "id": "actors"
-        },
-        {
-          "type": "doc",
-          "label": "State machines",
-          "id": "state-machines-and-statecharts"
         }
-      ]
-    },
-
-    {
-      "type": "category",
-      "label": "XState",
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "id": "xstate",
-          "label": "Intro"
-        },
-        "migration",
-        "templates",
-        "machines",
-        "actors",
-        "context",
-        "states",
-        "input",
-        "finite-states",
-        "events",
-        "actions",
-        "guards",
-        "invoke",
-        "spawn",
-        "eventless-transitions",
-        "delayed-transitions",
-        "parent-states",
-        "parallel-states",
-        "final-states",
-        "history-states",
-        "system",
-        "persistence",
-        "testing"
       ]
     },
     {
@@ -103,7 +68,7 @@
       "items": [
         {
           "type": "category",
-          "label": "Edit",
+          "label": "Design",
           "items": ["descriptions", "import-from-code", "export-as-code"]
         },
         "projects",
@@ -151,6 +116,66 @@
     },
     {
       "type": "category",
+      "label": "States and machines",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "machines",
+        "states",
+        "finite-states",
+        "events",
+        "guards",
+        "eventless-transitions",
+        "delayed-transitions",
+        "parent-states",
+        "parallel-states",
+        "final-states",
+        "history-states"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Events and transitions",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "events",
+        "guards",
+        "eventless-transitions",
+        "delayed-transitions"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Context and data",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "context",
+        "input",
+        "persistence"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Actors and actions",
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        "actors",
+        "actions",
+        "invoke",
+        "spawn",
+        "system"
+      ]
+    },
+    {
+      "type": "doc",
+      "label": "Testing",
+      "id": "testing"
+    },
+    {
+      "type": "category",
       "label": "Packages",
       "collapsed": false,
       "collapsible": true,
@@ -179,11 +204,6 @@
           "id": "developer-tools"
         }
       ]
-    },
-    {
-      "type": "category",
-      "label": "Examples",
-      "items": ["examples"]
     },
     {
       "type": "doc",
