@@ -3,6 +3,9 @@ title: XState
 slug: '/xstate'
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 XState is a state management & orchestration solution for JavaScript and TypeScript apps.
 
 It uses event-driven programming, state machines, statecharts, and the actor model to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks, and can be used in the frontend, backend, or anywhere else JavaScript runs.
@@ -11,13 +14,31 @@ It uses event-driven programming, state machines, statecharts, and the actor mod
 
 XState is available on [npm](https://www.npmjs.com/package/xstate):
 
-```bash
-# npm
-npm install xstate
+<Tabs>
+<TabItem value="yarn" label="yarn">
 
-# yarn
+```bash
 yarn add xstate
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm install xstate
+```
+
+</TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install xstate
+```
+
+</TabItem>
+</Tabs>
 
 ## Create a simple machine
 
@@ -75,8 +96,7 @@ const textMachine = createMachine({
   states: {
     reading: {
       on: {
-        // Shorthand for 'text.edit': { target: 'editing' }
-        'text.edit': 'editing',
+        'text.edit': { target: 'editing' },
       },
     },
     editing: {

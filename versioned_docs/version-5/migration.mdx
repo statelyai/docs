@@ -1,3 +1,33 @@
 # Migration
 
 ## Migrating from XState v4 to v5
+
+### Breaking changes
+
+`Machine` to `createMachine`
+
+`cond` is now `guard`
+
+Single-argument functions
+
+`(context, event)` => `({ context, event })`
+
+`actor.onTransition` is removed; use `actor.subscribe` instead
+
+`send` is deprecated; use `raise` or `sendTo` instead
+
+`internal: false` is now `reenter: true`
+
+`interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
+
+2nd argument to `createMachine` is deprecated: `createMachine(config, options)` is now `createMachine(config).provide(options)`
+
+Actions are now in predictable order
+
+No strict mode
+
+### New features
+
+Higher-level guards: `and`, `or`, `not`
+
+Partial event wildcards: `on({ 'foo.*': ... })`
