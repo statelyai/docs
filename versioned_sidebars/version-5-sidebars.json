@@ -3,6 +3,13 @@
     {
       "type": "category",
       "label": "Get started",
+      "link": {
+        "type": "generated-index",
+        "title": "Get started",
+        "description": "Get started quickly with XState and the Stately Studio.",
+        "slug": "/category/get-started",
+        "keywords": ["guides"]
+      },
       "items": [
         {
           "type": "doc",
@@ -30,13 +37,67 @@
 
     {
       "type": "category",
+      "label": "Core concepts",
+      "link": {
+        "type": "generated-index",
+        "title": "Core concepts",
+        "description": "Learn the core concepts for XState and the Stately Studio.",
+        "slug": "/category/core-concepts",
+        "keywords": ["guides"]
+      },
+      "collapsed": false,
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "label": "What are state machines?",
+          "id": "state-machines-and-statecharts"
+        },
+        {
+          "type": "doc",
+          "label": "What is XState?",
+          "id": "xstate"
+        },
+        {
+          "type": "doc",
+          "label": "States",
+          "id": "states"
+        },
+        {
+          "type": "doc",
+          "label": "Events",
+          "id": "events"
+        },
+        {
+          "type": "doc",
+          "label": "Actors",
+          "id": "actors"
+        }
+      ]
+    },
+    {
+      "type": "category",
       "label": "Using the Studio",
+      "link": {
+        "type": "generated-index",
+        "title": "Using the Stately Studio",
+        "description": "Learn how to use the Stately Editor and Studio.",
+        "slug": "/category/studio",
+        "keywords": ["guides"]
+      },
       "collapsed": false,
       "collapsible": true,
       "items": [
         {
           "type": "category",
-          "label": "Design",
+          "label": "Design mode",
+          "link": {
+            "type": "generated-index",
+            "title": "Design mode",
+            "description": "Learn how to use Design mode in the Stately Editor.",
+            "slug": "/category/design-mode",
+            "keywords": ["guides"]
+          },
           "items": ["descriptions", "import-from-code", "export-as-code"]
         },
         "projects",
@@ -50,6 +111,13 @@
         {
           "type": "category",
           "label": "Accounts",
+          "link": {
+            "type": "generated-index",
+            "title": "Stately Studio accounts",
+            "description": "Learn about the Stately Studio plans and how to manage your account.",
+            "slug": "/category/accounts",
+            "keywords": ["guides"]
+          },
           "items": [
             {
               "type": "doc",
@@ -85,6 +153,13 @@
     {
       "type": "category",
       "label": "States and machines",
+      "link": {
+        "type": "generated-index",
+        "title": "States and state machines",
+        "description": "Learn how to use states and machines in XState and the Stately Studio.",
+        "slug": "/category/state-machines",
+        "keywords": ["guides"]
+      },
       "collapsed": false,
       "collapsible": true,
       "items": [
@@ -104,6 +179,13 @@
     {
       "type": "category",
       "label": "Events and transitions",
+      "link": {
+        "type": "generated-index",
+        "title": "Events and transitions in state machines",
+        "description": "Learn how to use events and transitions in XState and the Stately Studio.",
+        "slug": "/category/events-and-transitions",
+        "keywords": ["guides"]
+      },
       "collapsed": false,
       "collapsible": true,
       "items": [
@@ -116,6 +198,13 @@
     {
       "type": "category",
       "label": "Context and data",
+      "link": {
+        "type": "generated-index",
+        "title": "Context and data in state machines",
+        "description": "Learn how to use context and data in XState and the Stately Studio.",
+        "slug": "/category/context-and-data",
+        "keywords": ["guides"]
+      },
       "collapsed": false,
       "collapsible": true,
       "items": [
@@ -127,6 +216,13 @@
     {
       "type": "category",
       "label": "Actors and actions",
+      "link": {
+        "type": "generated-index",
+        "title": "Actors and actions in state machines",
+        "description": "Learn how to use actors and actions in XState and the Stately Studio.",
+        "slug": "/category/actors-and-actions",
+        "keywords": ["guides"]
+      },
       "collapsed": false,
       "collapsible": true,
       "items": [
@@ -144,8 +240,15 @@
     },
     {
       "type": "category",
-      "label": "Packages",
-      "collapsed": false,
+      "label": "XState packages",
+      "link": {
+        "type": "generated-index",
+        "title": "XState packages",
+        "description": "Find all the packages in XState.",
+        "slug": "/category/xstate-packages",
+        "keywords": ["guides"]
+      },
+      "collapsed": true,
       "collapsible": true,
       "items": [
         "xstate-fsm",
@@ -162,6 +265,13 @@
       "label": "Developer tools",
       "collapsed": false,
       "collapsible": true,
+      "link": {
+        "type": "generated-index",
+        "title": "Stately developer tools",
+        "description": "Find all the developer tools you can use with XState and the Stately Editor.",
+        "slug": "/category/developer-tools",
+        "keywords": ["guides"]
+      },
       "items": [
         "xstate-vscode-extension",
         "visualizer",
