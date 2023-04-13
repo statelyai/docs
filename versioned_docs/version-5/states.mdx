@@ -48,7 +48,13 @@ These states are “finite”; the machine can only move through the states you�
 - Accessed from `actor.subscribe(state => ...)` and `actor.getSnapshot()`
 - Can be accessed from `machine.transition(state, event)` return value
 - Contains `value` and `context`
+
+Properties
+
 - `value` is object representation of all active state nodes
+- `context` is the other data that is relevant to the state
+- `meta`
+- `output`
 
 ## State value
 

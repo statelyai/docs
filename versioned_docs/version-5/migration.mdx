@@ -22,6 +22,10 @@ Single-argument functions
 
 2nd argument to `createMachine` is deprecated: `createMachine(config, options)` is now `createMachine(config).provide(options)`
 
+No more `.withConfig()`; use `.provide()` instead
+
+No more `.withContext()`; use input instead (see below)
+
 Actions are now in predictable order
 
 No strict mode
