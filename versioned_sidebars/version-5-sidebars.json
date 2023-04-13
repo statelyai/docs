@@ -48,31 +48,29 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
-        {
-          "type": "doc",
-          "label": "What are state machines?",
-          "id": "state-machines-and-statecharts"
-        },
-        {
-          "type": "doc",
-          "label": "What is XState?",
-          "id": "xstate"
-        },
-        {
-          "type": "doc",
-          "label": "States",
-          "id": "states"
-        },
-        {
-          "type": "doc",
-          "label": "Events",
-          "id": "events"
-        },
-        {
-          "type": "doc",
-          "label": "Actors",
-          "id": "actors"
-        }
+        "intro",
+        "migration",
+        "templates",
+        "machines",
+        "actors",
+        "context",
+        "states",
+        "input",
+        "finite-states",
+        "events",
+        "actions",
+        "guards",
+        "invoke",
+        "spawn",
+        "eventless-transitions",
+        "delayed-transitions",
+        "parent-states",
+        "parallel-states",
+        "final-states",
+        "history-states",
+        "system",
+        "persistence",
+        "testing"
       ]
     },
     {
