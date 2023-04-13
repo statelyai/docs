@@ -31,34 +31,6 @@
         }
       ]
     },
-    {
-      "type": "category",
-      "label": "Core concepts",
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        {
-          "type": "doc",
-          "label": "States",
-          "id": "states"
-        },
-        {
-          "type": "doc",
-          "label": "Events",
-          "id": "events"
-        },
-        {
-          "type": "doc",
-          "label": "Actors",
-          "id": "actors"
-        },
-        {
-          "type": "doc",
-          "label": "State machines",
-          "id": "state-machines-and-statecharts"
-        }
-      ]
-    },
 
     {
       "type": "category",
