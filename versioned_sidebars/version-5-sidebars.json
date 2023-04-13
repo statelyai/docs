@@ -65,7 +65,7 @@
         {
           "type": "doc",
           "label": "Events",
-          "id": "events"
+          "id": "transitions"
         },
         {
           "type": "doc",
@@ -164,11 +164,14 @@
       "items": [
         "machines",
         "states",
+        "context",
+        "input",
         "finite-states",
         "parent-states",
         "parallel-states",
         "final-states",
-        "history-states"
+        "history-states",
+        "persistence"
       ]
     },
     {
@@ -184,7 +187,8 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
-        "events",
+        "transitions",
+        "actions",
         "guards",
         "eventless-transitions",
         "delayed-transitions"
@@ -192,41 +196,17 @@
     },
     {
       "type": "category",
-      "label": "Context and data",
+      "label": "Actors ",
       "link": {
         "type": "generated-index",
-        "title": "Context and data in state machines",
-        "description": "Learn how to use context and data in XState and the Stately Studio.",
-        "slug": "/category/context-and-data",
+        "title": "Actors",
+        "description": "Learn how to use actors and the actor model in XState and the Stately Studio.",
+        "slug": "/category/actors",
         "keywords": ["guides"]
       },
       "collapsed": false,
       "collapsible": true,
-      "items": [
-        "context",
-        "input",
-        "persistence"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Actors and actions",
-      "link": {
-        "type": "generated-index",
-        "title": "Actors and actions in state machines",
-        "description": "Learn how to use actors and actions in XState and the Stately Studio.",
-        "slug": "/category/actors-and-actions",
-        "keywords": ["guides"]
-      },
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        "actors",
-        "actions",
-        "invoke",
-        "spawn",
-        "system"
-      ]
+      "items": ["actors", "invoke", "spawn", "system"]
     },
     {
       "type": "doc",

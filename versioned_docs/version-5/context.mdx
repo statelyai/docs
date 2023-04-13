@@ -163,4 +163,59 @@ const machine = createMachine({
 
 ## Cheatsheet
 
+**Initial context**
+
+```ts
+const machine = createMachine({
+  context: {
+    feedback: '',
+  },
+});
+```
+
+**Lazy initial context**
+
+```ts
+const machine = createMachine({
+  context: () => ({
+    feedback: '',
+    createdAt: Date.now(),
+  }),
+});
+```
+
+**Updating context with `assign(...)`**
+
+```ts
+const machine = createMachine({
+  context: {
+    feedback: '',
+  },
+  on: {
+    'feedback.update': {
+      actions: assign({
+        feedback: ({ event }) => event.feedback,
+      }),
+    },
+  },
+});
+```
+
+**Input**
+
+```ts
+const machine = createMachine({
+  context: ({ input }) => ({
+    feedback: '',
+    rating: input.defaultRating,
+  }),
+});
+
+const feedbackActor = interpret(machine, {
+  input: {
+    defaultRating: 5,
+  },
+});
+```
+
 ## Resources
