@@ -4,23 +4,15 @@ title: 'Actions'
 
 import ThemedImage from '@theme/ThemedImage';
 
-While the statechart is running, it can execute other effects called actions.
+While the state machine is running, it can execute other effects called actions.
 
 An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. Actions are not awaited and don’t return anything to the state machine. You can also fire actions on transitions.
-
-You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
 Examples of actions:
 
 - Logging a message
 - Sending a message to another [actor](actors.mdx)
 <!-- TODO: more examples -->
-
-:::tip
-
-Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
-
-:::
 
 <p>
   <ThemedImage
@@ -35,11 +27,37 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 
 [View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
 
-In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
 
-## Using actions in the Studio
+In XState, actions are represented on transitions in the `actions: ...` property. Anywhere you can use an action, you can also declare it as an array to express multiple actions.
 
-### Add an entry action to a state
+Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
+
+<!-- TODO: simple example -->
+
+## Entry and exit actions
+
+Entry actions are actions that occur on any transition that enters a state node.
+
+<!-- TODO: illustation -->
+
+Exit actions are actions that occur on any transition that exits a state node.
+
+<!-- TODO: illustration -->
+
+Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+
+<!-- TODO: example -->
+
+### In the Studio
+
+:::tip
+
+Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
+
+:::
+
+#### Add an entry action to a state
 
 1. Select the state you want to have an entry action.
 2. Open the **State details** panel from the right tool menu.
@@ -48,7 +66,7 @@ In our video player, we have entry and exit actions on the Playing state. We use
 5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
 6. Save the entry action using the **Save** button.
 
-### Add an exit action to a state
+#### Add an exit action to a state
 
 1. Select the state you want to have an exit action.
 2. Open the **State details** panel from the right tool menu.
@@ -57,19 +75,35 @@ In our video player, we have entry and exit actions on the Playing state. We use
 5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
 6. Save the entry action using the **Save** button.
 
-## Actions in XState
-
-Actions are represented on transitions in `actions: ...` property, and can be a single action or an array.
-
-They can also be on states `entry` or `exit`, also as single or array.
-
-<!-- TODO: simple example -->
-
 ## Inline actions
 
-Useful for prototyping and simple cases. It's recommended to serialize them instead.
+In XState we usually pass options into the config using serialized (also known as *named*) actions:
 
-<!-- TODO: `{ actions: () => { ... } } -->
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  entry: ['sayHello'],
+});
+```
+
+You can also declare actions inline:
+
+```ts twoslash
+import { createMachine } from 'xstate';
+
+// ---cut---
+const machine = createMachine({
+  entry: [
+    () => {
+      console.log('Hello!');
+    },
+  ],
+});
+```
+
+Inline actions are useful for prototyping and simple cases but we generally recommended using serialized actions.
 
 ## Action objects
 
@@ -77,7 +111,7 @@ They have a `type` and optional `params`.
 
 <!-- TODO: parameterized action -->
 
-## Implementing actions
+### Implementing actions
 
 Actions are implemented with `.provide(...)`
 
@@ -87,21 +121,7 @@ Actions are implemented with `.provide(...)`
 
 From there, you can read `{ action }` object, which has `type` and `params`
 
-## Entry and exit actions
-
-Entry actions = actions that occur on any transition that enters a state node
-
-<!-- TODO: illustation -->
-
-Exit actions = actions that occur on any transition that exits a state node
-
-<!-- TODO: illustration -->
-
-Entry and exit actions are defined on `entry: ...` and `exit: ...` of state node.
-
-<!-- TODO: example -->
-
-## Assign action
+### Assign action
 
 Assign action is a special action that assigns data to the state context. Special action
 
@@ -120,7 +140,7 @@ Raise action is a special action that raises an event. A **raised event** is an 
 
 Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVENT' }))`
 
-## Send-to action
+## `send-to` action
 
 The `sendTo(...)` action is a special action that sends an event to a specific actor.
 
