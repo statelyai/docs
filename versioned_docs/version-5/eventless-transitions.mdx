@@ -6,6 +6,24 @@ title: Eventless (always) transitions
 
 Eventless transitions are labeled “always” and often referred to as “always” transitions.
 
+```ts
+{
+  states: {
+    form: {
+      initial: 'valid',
+      states: {
+        valid: {},
+        invalid: {}
+      },
+      always: {
+        guard: 'isValid',
+        target: 'valid',
+      }
+    }
+  }
+}
+```
+
 ## Usign eventless transitions in the Studio
 
 ### Make an event into an eventless transition
