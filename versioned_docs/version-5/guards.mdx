@@ -7,6 +7,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 A **guard** is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
 
+## Editor: guards
+
 <p>
   <ThemedImage
     alt="A video player state machine with an initial Paused State and a Playing state. The transition from Playing to Paused has a guard numbered 1 and labeled ‘If time left is zero’. The first guard is joined to a second guard by a dotted line. The second guard is numbered 2 and is labeled ‘Else if time left is more than zero.’ The second guard’s transition targets the Playing state."
@@ -23,9 +25,7 @@ In the Stately Studio, guards are numbered in the order they are checked and lab
 
 :::
 
-<!--TODO: Why you might use a guard with example.-->
-
-## Using guards in the Studio
+TODO: Why you might use a guard with example.
 
 ### Add a guard to an event
 
@@ -76,6 +76,7 @@ on: {
 ```
 
 - Show `.provide({ guards })` and how `params` can be accessed there
+- Useful for custom guards
 
 ## Higher-level guards
 
@@ -106,7 +107,7 @@ on: {
 
 ## In-state guards
 
-<!-- TODO: add link below -->
+TODO: add link below
 
 Most useful for parallel states (TODO: link)
 
