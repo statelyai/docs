@@ -27,7 +27,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Editor’s colours */
+/* editor’s colours */
 :root {
   /* Yellow */
   --st-yellow-50: rgba(254, 253, 192, .5);
