@@ -6,9 +6,15 @@ import ThemedImage from '@theme/ThemedImage';
 
 While the statechart is running, it can execute other effects called actions.
 
-An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. Actions are not awaited and don’t return anything to the state machine. You can also fire actions on transitions.
 
 You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+
+Examples of actions:
+
+- Logging a message
+- Sending a message to another [actor](actors.mdx)
+<!-- TODO: more examples -->
 
 :::tip
 
@@ -51,15 +57,7 @@ In our video player, we have entry and exit actions on the Playing state. We use
 5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
 6. Save the entry action using the **Save** button.
 
-<!-- TODO: add link below -->
-
-Actions are effects that are executed due to a [transition](events.mdx). Actions are fire-and-forget effects; that is, they are not awaited, and they don't return anything to the state machine.
-
-Examples of actions:
-
-- Logging a message
-- Sending a message to another actor
-- TODO: more examples
+## Actions in XState
 
 Actions are represented on transitions in `actions: ...` property, and can be a single action or an array.
 
