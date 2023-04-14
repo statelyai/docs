@@ -1383,6 +1383,30 @@ a.link-box strong {
   padding: 0;
 }
 
+/* Docs intro page */
+
+.docs-intro {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.docs-intro-studio, .docs-intro-xstate {
+  flex: 0 1 calc(50% - 0.5rem);
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.docs-intro-logo-heading img {
+  height: 3rem;
+  display: block;
+  margin: 0 auto;
+}
+
 /* Footer */
 
 .footer {
