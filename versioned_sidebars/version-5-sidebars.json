@@ -1,6 +1,11 @@
 {
   "tutorialSidebar": [
     {
+      "type": "doc",
+      "label": "About Stately and XState",
+      "id": "about"
+    },
+    {
       "type": "category",
       "label": "Get started",
       "link": {
