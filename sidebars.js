@@ -21,10 +21,10 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: 'category',
-      label: '➡️  Get started',
+      label: 'Get started',
       link: {
         type: 'generated-index',
-        title: '➡️  Get started with Stately',
+        title: 'Get started with Stately',
         description:
           'Learn about state machines, statecharts, and the Stately Editor',
         slug: '/category/get-started',
@@ -45,10 +45,10 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🏁  Core concepts',
+      label: 'Core concepts',
       link: {
         type: 'generated-index',
-        title: '🏁  Stately core concepts',
+        title: 'Stately core concepts',
         description:
           'Learn about states, transitions, events, actions, and actors in the Stately Studio.',
         slug: '/category/core-concepts',
@@ -113,10 +113,10 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '⚡️  Using the Studio',
+      label: 'Using the Studio',
       link: {
         type: 'generated-index',
-        title: '⚡️  Using the Studio',
+        title: 'Using the Studio',
         description: 'Learn how to use the Stately Editor and Studio.',
         slug: '/category/using-the-studio',
         keywords: ['guides'],
@@ -134,7 +134,17 @@ const sidebars = {
             slug: '/category/design-mode',
             keywords: ['guides'],
           },
-          items: ['descriptions', 'import-from-code', 'export-as-code'],
+          items: [
+            'descriptions',
+            {
+              type: 'doc', 
+              label:'Version history',
+              id: 'versions',
+              className: 'pro-feature',
+            },
+            'import-from-code',
+            'export-as-code',
+          ]
         },
         'projects',
         {
@@ -195,10 +205,10 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🛠️  XState library',
+      label: 'XState library',
       link: {
         type: 'generated-index',
-        title: '🛠️  XState library',
+        title: 'XState library',
         description: 'Learn about XState.',
         slug: '/category/xstate',
         keywords: ['guides'],
@@ -235,7 +245,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Actions and context',
+          label: 'Actions',
           link: {
             type: 'generated-index',
             title: 'Actions in XState',
@@ -245,9 +255,13 @@ const sidebars = {
           },
           items: [
             'xstate/actions/actions',
-            'xstate/actions/context',
             'xstate/actions/built-in-actions',
           ],
+        },
+        {
+          type: 'doc',
+          label: 'Context',
+          id: 'xstate/actions/context',
         },
         {
           type: 'category',
@@ -418,7 +432,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🧰  Developer tools',
+      label: 'Developer tools',
       collapsed: false,
       collapsible: true,
       link: {
@@ -442,12 +456,12 @@ const sidebars = {
     },
     {
       type: 'doc',
-      label: '🧑‍🏫  Examples',
+      label: 'Examples',
       id: 'examples/intro',
     },
     {
       type: 'doc',
-      label: '📖  Glossary',
+      label: 'Glossary',
       id: 'glossary',
     },
   ],

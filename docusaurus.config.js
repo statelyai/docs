@@ -62,6 +62,8 @@ const config = {
               'xstate',
               'warningxstate',
               'studio',
+              'new',
+              'video'
             ],
           },
 
