@@ -49,28 +49,18 @@
       "items": [
         {
           "type": "doc",
-          "label": "What are state machines?",
+          "label": "Actor model",
+          "id": "actor-model"
+        },
+        {
+          "type": "doc",
+          "label": "State machines",
           "id": "state-machines-and-statecharts"
         },
         {
           "type": "doc",
           "label": "What is XState?",
           "id": "xstate"
-        },
-        {
-          "type": "doc",
-          "label": "States",
-          "id": "states"
-        },
-        {
-          "type": "doc",
-          "label": "Events",
-          "id": "transitions"
-        },
-        {
-          "type": "doc",
-          "label": "Actors",
-          "id": "actors"
         }
       ]
     },
