@@ -44,6 +44,8 @@ Batched events `actor.batch([...])` is removed
 
 No more `in: '...'` guards; use `stateIn(...)` instead
 
+Properties on action and guard objects other than `type` should be nested under a `params` object; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`
+
 ### New features
 
 Higher-level guards: `and`, `or`, `not`
