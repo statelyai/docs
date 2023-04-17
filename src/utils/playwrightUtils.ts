@@ -7,11 +7,13 @@ export async function takeScreenshot({
   page,
   url,
   options,
+  actions,
 }: {
   title: string;
   page: Page;
   url?: string;
   options?: PageScreenshotOptions;
+  actions?: (page: Page) => Promise<void>;
 }) {
   await loginHelper({ page, redirectTo: url });
 
@@ -30,6 +32,7 @@ export async function takeScreenshot({
       // Ensure the user menu is fully closed
       await page.waitForTimeout(500);
     }
+    if (actions) await actions(page);
     await page.screenshot({
       path: `${screenshotDir}/${title}.${colorMode}.png`,
       ...options,
