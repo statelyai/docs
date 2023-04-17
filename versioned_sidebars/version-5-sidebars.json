@@ -141,11 +141,11 @@
     },
     {
       "type": "category",
-      "label": "States and machines",
+      "label": "State machines",
       "link": {
         "type": "generated-index",
-        "title": "States and state machines",
-        "description": "Learn how to use states and machines in XState and the Stately Studio.",
+        "title": "State machines",
+        "description": "Learn how to use state machines in XState and the Stately Studio.",
         "slug": "/category/state-machines",
         "keywords": ["guides"]
       },
@@ -156,32 +156,17 @@
         "states",
         "context",
         "input",
+        "transitions",
+        "eventless-transitions",
+        "delayed-transitions",
+        "actions",
+        "guards",
         "finite-states",
         "parent-states",
         "parallel-states",
         "final-states",
         "history-states",
         "persistence"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Events and transitions",
-      "link": {
-        "type": "generated-index",
-        "title": "Events and transitions in state machines",
-        "description": "Learn how to use events and transitions in XState and the Stately Studio.",
-        "slug": "/category/events-and-transitions",
-        "keywords": ["guides"]
-      },
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
-        "transitions",
-        "actions",
-        "guards",
-        "eventless-transitions",
-        "delayed-transitions"
       ]
     },
     {
