@@ -5,11 +5,10 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 ### Installation
 
 1.
+
 ```
 $ yarn
 ```
-
-2. Copy the contents of the `.env file for docusaurus` from 1Password into a `.env` file in the root of the folder.
 
 ### Local Development
 
@@ -18,6 +17,21 @@ $ yarn start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+### Creating screenshots
+
+```
+$ yarn create:screenshots
+```
+
+This will run the Playwright tests defined in `/create-screenshots`.
+You need to add a few variables to your `.env` file for this to work.
+
+```
+TEST_BASE_URL="https://stately.ai"
+TEST_USER_EMAIL="email of the user you use at the env defined in TEST_BASE_URL"
+TEST_USER_PASSWORD=""
+```
 
 ### Build
 
