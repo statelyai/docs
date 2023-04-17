@@ -22,6 +22,8 @@ export async function takeScreenshot({
   for (const colorMode of ['dark', 'light']) {
     // We always start in dark mode, so it's only necessary to switch to light mode after the first screenshot
     if (colorMode === 'light') {
+      // reload page to close panels and modals that may be open
+      await page.reload();
       await page
         .getByRole('button', { name: process.env.TEST_USER_NAME })
         .click();
