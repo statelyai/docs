@@ -21,7 +21,7 @@ export async function takeScreenshot({
     // We always start in dark mode, so it's only necessary to switch to light mode after the first screenshot
     if (colorMode === 'light') {
       await page
-        .getByRole('button', { name: process.env.TEST_USER_EMAIL })
+        .getByRole('button', { name: process.env.TEST_USER_NAME })
         .click();
       await page
         .getByRole('menuitem', { name: 'Switch to light mode' })

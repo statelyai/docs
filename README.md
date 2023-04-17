@@ -31,6 +31,7 @@ You need to add a few variables to your `.env` file for this to work.
 TEST_BASE_URL="https://stately.ai"
 TEST_USER_EMAIL="email of the user you use at the env defined in TEST_BASE_URL"
 TEST_USER_PASSWORD=""
+TEST_USER_NAME="name of the user (same as email unless you’ve changed it)"
 ```
 
 ### Build
