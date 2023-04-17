@@ -17,11 +17,13 @@ export async function takeScreenshot({
 }) {
   await loginHelper({ page, redirectTo: url });
 
-  const screenshotDir = 'screenshots';
+  const screenshotDir = 'static/screenshots';
   // Take a screenshot of the page in both dark and light mode
   for (const colorMode of ['dark', 'light']) {
     // We always start in dark mode, so it's only necessary to switch to light mode after the first screenshot
     if (colorMode === 'light') {
+      // escape to close panels that may be open and prevent reload
+      await page.keyboard.press('Escape');
       // reload page to close panels and modals that may be open
       await page.reload();
       await page
