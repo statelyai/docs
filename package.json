@@ -12,12 +12,15 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "install:playwright": "npx playwright install chromium",
+    "create:screenshots": "npx playwright test"
   },
   "dependencies": {
     "@docusaurus/core": "^2.4.0",
     "@docusaurus/preset-classic": "^2.4.0",
     "@mdx-js/react": "^1.6.22",
+    "@playwright/test": "^1.32.3",
     "@xstate/inspect": "^0.7.0",
     "@xstate/machine-extractor": "^0.7.1",
     "@xstate/react": "^3.0.1",
