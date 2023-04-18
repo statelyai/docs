@@ -28,7 +28,7 @@ No more null events; use `always`
 
 No more `.withConfig()`; use `.provide()` instead
 
-No more `.withContext()`; use input instead (see below)
+No more `.withContext()`; use [input](#todo) instead
 
 Actions are now in predictable order
 
@@ -41,6 +41,10 @@ Batched events `actor.batch([...])` is removed
 `config.schema` is now `config.types`
 
 `config.tsTypes` is now in `config.types.typegen`
+
+No more `in: '...'` guards; use `stateIn(...)` instead
+
+Properties on action and guard objects other than `type` should be nested under a `params` object; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`
 
 ### New features
 

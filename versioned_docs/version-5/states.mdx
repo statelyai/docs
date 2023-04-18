@@ -12,6 +12,11 @@ Watch our [“What are states?” video on YouTube](https://www.youtube.com/watc
 
 :::
 
+<details>
+<summary>
+Stately Studio: states
+</summary>
+
 <p>
   <ThemedImage
     alt="Video player state machine with an initial Paused state and a Playing state. There’s a warning on the playing state because there’s no transitions which means the playing state cannot be reached."
@@ -33,7 +38,7 @@ In the Stately Studio, the rounded rectangle boxes are states. The **?** questio
 
 These states are “finite”; the machine can only move through the states you’ve pre-defined.
 
-## Using states in the Studio
+## Using states in Stately Studio
 
 ### Create a state
 
@@ -43,20 +48,99 @@ These states are “finite”; the machine can only move through the states you�
    - Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
    - Double-click inside your machine or an existing state.
 
+</details>
+
 ## State object
 
-- Accessed from `actor.subscribe(state => ...)` and `actor.getSnapshot()`
-- Can be accessed from `machine.transition(state, event)` return value
-- Contains `value` and `context`
+The state object represents the current state of a running machine (actor). It contains the following properties:
 
-Properties
+- `value` - the current state value, which is either a string representing a simple state like `'playing'` or an object representing nested states like `{ paused: 'buffering' }`
+- `context` - the current [context](#todo) (extended state)
+- `meta` - an object containing state node meta data
 
-- `value` is object representation of all active state nodes
-- `context` is the other data that is relevant to the state
-- `meta`
-- `output`
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'question',
+  context: {
+    feedback: '',
+  },
+  states: {
+    question: {
+      meta: {
+        question: 'How was your experience?',
+      },
+    },
+  },
+});
+
+const actor = interpret(feedbackMachine);
+actor.start();
+
+console.log(actor.getSnapshot());
+// Logs an object containing:
+// {
+//   value: 'question',
+//   context: {
+//     feedback: ''
+//   },
+//   meta: {
+//     'feedback.question': {
+//       question: 'How was your experience?'
+//     }
+//   }
+// }
+```
+
+## Accessing state snapshots
+
+You can access the snapshot of an actor (its emitted state) by subscribing to it or reading from the actor’s `.getSnapshot()` method.
+
+```ts
+const actor = interpret(feedbackMachine);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+  // logs the current snapshot state, e.g.:
+  // { value: 'question', ... }
+  // { value: 'thanks', ... }
+});
+
+actor.start();
+
+console.log(actor.getSnapshot());
+// logs { value: 'question', ... }
+```
 
 ## State value
+
+A state machine with nested states (statechart) is a tree-like structure, where each node is a "state node". The root state node is the top-level state node that represents the entire machine. It may have child state nodes, and those may have child state nodes, and so on.
+
+The **state value** is an object that represents all of the active state nodes in a machine. For state machines that have state nodes without child state nodes, the state value is a string:
+
+TODO: make this a visual example
+
+- `state.value === 'question'`
+- `state.value === 'thanks'`
+- `state.value === 'closed'`
+
+For state machines with parent state nodes, the state value is an object:
+
+TODO: make this a visual example
+
+- `state.value === { form: 'invalid' }` - this represents a state machine with an active child node with key `form` that has an active child node with key `invalid`
+
+For state machines with [parallel state nodes](#todo), the state value contains object(s) with multiple keys for each state node region:
+
+```ts
+state.value ===
+  {
+    monitor: 'on',
+    mode: 'dark',
+  };
+```
+
+State machines may also have no state nodes other than the root state node. For these state machines, the state value is `null`.
 
 ## State context
 

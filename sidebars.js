@@ -26,7 +26,7 @@ const sidebars = {
         type: 'generated-index',
         title: 'Get started with Stately',
         description:
-          'Learn about state machines, statecharts, and the Stately Editor',
+          'Learn about state machines, statecharts, and Stately Studio’s editor',
         slug: '/category/get-started',
         keywords: ['guides'],
       },
@@ -74,7 +74,7 @@ const sidebars = {
             type: 'generated-index',
             title: 'Transitions and events',
             description:
-              'Learn about all the possible transitions and events in the Stately Editor.',
+              'Learn about all the possible transitions and events in Stately Studio’s editor.',
             slug: '/category/transitions-and-events',
             keywords: ['guides'],
           },
@@ -100,7 +100,7 @@ const sidebars = {
             type: 'generated-index',
             title: 'Actions and actors',
             description:
-              'Learn about actions and actors in the Stately Editor.',
+              'Learn about actions and actors in Stately Studio’s editor.',
             slug: '/category/actions-and-actors',
             keywords: ['guides'],
           },
@@ -113,11 +113,11 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Using the Studio',
+      label: 'Using Stately Studio',
       link: {
         type: 'generated-index',
-        title: 'Using the Studio',
-        description: 'Learn how to use the Stately Editor and Studio.',
+        title: 'Using Stately Studio',
+        description: 'Learn how to use Stately Studio and our editor.',
         slug: '/category/using-the-studio',
         keywords: ['guides'],
       },
@@ -130,7 +130,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Design mode',
-            description: 'Learn how to use Design mode in the Stately Editor.',
+            description: 'Learn how to use Design mode in Stately Studio’s editor.',
             slug: '/category/design-mode',
             keywords: ['guides'],
           },
@@ -425,7 +425,7 @@ const sidebars = {
         type: 'generated-index',
         title: 'Stately Developer tools',
         description:
-          'Find all the developer tools you can use with XState and the Stately Editor.',
+          'Find all the developer tools you can use with XState and Stately Studio’s editor.',
         slug: '/category/developer-tools',
         keywords: ['guides'],
       },
