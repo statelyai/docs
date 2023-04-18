@@ -4,7 +4,7 @@ title: 'XState VS Code extension'
 
 # XState VS Code extension
 
-The [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) enhances the XState development experience by providing VS Code users with autocomplete, typegen, linting, and Studio Editor visual editing from inside VS Code.
+The [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) enhances the XState development experience by providing VS Code users with autocomplete, typegen, linting, and a visual editor inside VS Code.
 
 :::tip
 
@@ -56,7 +56,7 @@ createMachine({});
 
 ## Machine layout persistence
 
-Upon opening an XState machine in the VSCode Editor, you may notice a long `@xstate-layout` comment inserted in the code just above the call to `createMachine()`.
+Upon opening an XState machine in VS Code, you may notice a long `@xstate-layout` comment inserted in the code just above the call to `createMachine()`.
 
 ```js
 const machine =
@@ -64,6 +64,6 @@ const machine =
 createMachine({...});
 ```
 
-This layout string is for persisting manual changes you make to the machine’s layout and is automatically updated by the XState Extension whenever layout changes occur. It is not intended to be human-readable nor manually edited. When updates to this string are made by the extension, the file is not saved until a manual save is performed. The layout algorithm is able to interpret this string and automatically format the machine's layout whenever it is re-opened in the Editor.
+This layout string is for persisting manual changes you make to the machine’s layout and is automatically updated by the XState Extension whenever layout changes occur. It is not intended to be human-readable nor manually edited. When updates to this string are made by the extension, the file is not saved until a manual save is performed. The layout algorithm is able to interpret this string and automatically format the machine's layout whenever it is re-opened in Stately Studio’s editor.
 
 :::

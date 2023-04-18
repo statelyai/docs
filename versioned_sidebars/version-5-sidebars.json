@@ -66,11 +66,11 @@
     },
     {
       "type": "category",
-      "label": "Using the Studio",
+      "label": "Using Stately Studio",
       "link": {
         "type": "generated-index",
-        "title": "Using the Stately Studio",
-        "description": "Learn how to use the Stately Editor and Studio.",
+        "title": "Using Stately Studio",
+        "description": "Learn how to use the Stately Studio and our editor.",
         "slug": "/category/studio",
         "keywords": ["guides"]
       },
@@ -83,7 +83,7 @@
           "link": {
             "type": "generated-index",
             "title": "Design mode",
-            "description": "Learn how to use Design mode in the Stately Editor.",
+            "description": "Learn how to use Design mode in the Stately Studio’s editor.",
             "slug": "/category/design-mode",
             "keywords": ["guides"]
           },
@@ -218,7 +218,7 @@
       "link": {
         "type": "generated-index",
         "title": "Stately developer tools",
-        "description": "Find all the developer tools you can use with XState and the Stately Editor.",
+        "description": "Find all the developer tools you can use with XState and Stately Studio’s editor.",
         "slug": "/category/developer-tools",
         "keywords": ["guides"]
       },
