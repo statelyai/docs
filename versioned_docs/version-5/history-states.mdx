@@ -43,6 +43,10 @@ First, select the state you want to set as a history state for the parent state.
 
 ## History target
 
+- Normally, history states target the most recent child state of its parent state
+- If the history state is entered but the parent state was never visited, the parent's initial state is entered.
+- However, you can add a `target: 'childKey'` to specify the default child state that should be entered
+
 ## TypeScript
 
 ## Cheatsheet

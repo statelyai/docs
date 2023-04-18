@@ -17,6 +17,36 @@ Examples of actions:
 
 TODO: more examples
 
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          actions: [{ type: 'track', data: { response: 'good' } }]
+        }
+      },
+      exit: 'exitAction'
+    }
+    thanks: {
+      entry: 'showConfetti',
+    }
+  }
+}).provide({
+  actions: {
+    track: ({ action }) => {
+      track(action.params.data);
+      // tracks { response: 'good' }
+    },
+    showConfetti: () => {
+      // ...
+    }
+  }
+})
+```
+
 ## Editor: actions
 
 :::tip

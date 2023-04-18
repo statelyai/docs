@@ -4,11 +4,45 @@ title: Final states
 
 import ThemedImage from '@theme/ThemedImage';
 
+A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
+
+```ts
+import { createMachine, interpret } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      /* ... */
+    },
+    thanks: {
+      /* ... */
+    },
+    // highlight-start
+    closed: {
+      type: 'final',
+    },
+    // highlight-end
+    // ...
+  },
+  on: {
+    'feedback.close': {
+      target: '.closed',
+    },
+  },
+});
+```
+
 When a machine reaches the final state, it can no longer receive any events, and anything running inside it is canceled and cleaned up. The box with a surrounding border icon represents the final state.
 
 A machine can have multiple final states or no final states.
 
-## Editor: final states
+- A state machine can have zero or more final states. Some machines may run indefinitely and not need to terminate.
+- Final states can have `output` data, which is sent to the parent machine when the machine terminates.
+- When a machine reaches a top-level final state, it terminates.
+- Final states cannot have transitions
+
+## Stately Studio: final states
 
 In the video player below, *Stopped* is the final child state in the *Opened* state. When the video player is *Stopped*, the video player moves to its *Closed* state.
 
@@ -45,40 +79,6 @@ First, select the state you want to set as the final state.
 1. Select the state you want to set as the final state.
 2. Open the **State details** panel from the right tool menu.
 3. Choose **Final** from the **Type** dropdown menu.
-
-A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
-
-```ts
-import { createMachine, interpret } from 'xstate';
-
-const feedbackMachine = createMachine({
-  initial: 'prompt',
-  states: {
-    prompt: {
-      /* ... */
-    },
-    thanks: {
-      /* ... */
-    },
-    // highlight-start
-    closed: {
-      type: 'final',
-    },
-    // highlight-end
-    // ...
-  },
-  on: {
-    'feedback.close': {
-      target: '.closed',
-    },
-  },
-});
-```
-
-- A state machine can have zero or more final states. Some machines may run indefinitely and not need to terminate.
-- Final states can have `output` data, which is sent to the parent machine when the machine terminates.
-- When a machine reaches a top-level final state, it terminates.
-- Final states cannot have transitions
 
 ## Top-level final states
 

@@ -7,6 +7,25 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 A **guard** is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
 
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    form: {
+      on: {
+        'feedback.submit': {
+          guard: 'isValid',
+          target: 'submitting',
+        },
+      },
+    },
+    submitting: {
+      // ...
+    },
+  },
+});
+```
+
 ## Editor: guards
 
 <p>
@@ -80,14 +99,14 @@ on: {
 
 ## Higher-level guards
 
-- `and(...)`
-- `or(...)`
-- `not(...)`
+- `and(...)` - evaluates to `true` if all guards in `and([...guards])` evaluate to `true`
+- `or(...)` - evaluates to `true` if _any_ guards in `or([...guards])` evaluate to `true`
+- `not(...)` - evaluates to `true` if the guard in `not(guard)` evaluates to `false`
 
 ```ts
 on: {
   event: {
-    guard: and({ type: 'isValid' }, { type: 'isAuthorized' });
+    guard: and(['isValid', 'isAuthorized']);
   }
 }
 ```
@@ -97,10 +116,7 @@ Can be combined:
 ```ts
 on: {
   event: {
-    guard: and([
-      { type: 'isValid' },
-      or([{ type: 'isAuthorized' }, { type: 'isGuest' }]),
-    ]);
+    guard: and(['isValid', or(['isAuthorized', 'isGuest'])]);
   }
 }
 ```
@@ -123,7 +139,7 @@ on: {
 
 For simple guards: `guard: 'something'`
 
-- `and('isValid', 'isAuthorized')`
+- `and(['isValid', 'isAuthorized'])`
 
 ## TypeScript
 
