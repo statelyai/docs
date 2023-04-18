@@ -1383,6 +1383,45 @@ a.link-box strong {
   padding: 0;
 }
 
+/* Docs intro page */
+
+.docs-intro {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 2rem 0 1rem 0;
+}
+
+.docs-intro + h2 {
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.docs-intro-studio, .docs-intro-xstate {
+  flex: 0 1 18rem;
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+@media (min-width: 570px) {
+  .docs-intro-studio, .docs-intro-xstate {
+    flex: 0 1 calc(50% - 0.5rem);
+  }
+}
+
+.docs-intro img {
+  display: block;
+  margin: 0 1rem;
+  width: 75%;
+}
+
+.docs-intro p {
+  padding: 0 1rem;
+}
+
 /* Footer */
 
 .footer {
@@ -1576,4 +1615,16 @@ span.footer__link-item a:active {
 
 .footer__bottom p {
   margin: 0;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }

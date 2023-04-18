@@ -1,6 +1,11 @@
 {
   "tutorialSidebar": [
     {
+      "type": "doc",
+      "label": "About Stately and XState",
+      "id": "about"
+    },
+    {
       "type": "category",
       "label": "Get started",
       "link": {
@@ -11,11 +16,6 @@
         "keywords": ["guides"]
       },
       "items": [
-        {
-          "type": "doc",
-          "label": "Stately Studio",
-          "id": "studio"
-        },
         {
           "type": "doc",
           "label": "Install XState",
@@ -77,6 +77,11 @@
       "collapsed": false,
       "collapsible": true,
       "items": [
+        {
+          "type": "doc",
+          "label": "Introducing Stately Studio",
+          "id": "studio"
+        },
         {
           "type": "category",
           "label": "Design mode",
