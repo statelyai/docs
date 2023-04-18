@@ -54,7 +54,9 @@ These states are “finite”; the machine can only move through the states you�
 
 The state object represents the current state of a running machine (actor). It contains the following properties:
 
-- `value` - the current state value, which is either a string representing a simple state like `'playing'` or an object representing nested states like `{ paused: 'buffering' }`
+- `value` - the current state value, which is either a string representing:
+  - a simple state, e.g. `'playing'`
+  - or an object representing nested states, e.g. `{ paused: 'buffering' }`
 - `context` - the current [context](#todo) (extended state)
 - `meta` - an object containing state node meta data
 
@@ -144,23 +146,126 @@ State machines may also have no state nodes other than the root state node. For 
 
 ## State context
 
+State machines can have [context](#todo), which is an object that represents the extended state of the machine. The context is immutable, and can only be updated by [assigning](#todo) to it in an action. You can read the `state.context` property to get the current context.
+
+```ts
+const currentState = feedbackActor.getSnapshot();
+
+console.log(currentState.context);
+// logs { feedback: '' }
+```
+
+- Object is empty `{}` (default) if context is not specified in the machine config
+- Never mutate this object; should be treated as immutable/read-only
+
+## State children
+
+The `state.children` property represents all currently spawned/invoked actors in the current state. It is an object with keys representing the actor IDs and values representing the `ActorRef` instances.
+
+- This is where you access spawned/invoked actors by their ID
+- This is why you should give spawned/invoked actors IDs
+- Stopped actors will not appear here
+
 ## `state.can(eventType)`
+
+The `state.can(event)` method determines whether an `event` object will cause a state change if sent to the interpreted machine. The method will return `true` if the state will change due to the `event` being sent; otherwise the method will return `false`:
+
+```js
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    form: {
+      // ...
+      on: {
+        'feedback.submit': {
+          guard: 'isValid',
+          target: 'thanks',
+        },
+      },
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+
+// ...
+
+const currentState = feedbackActor.getSnapshot();
+
+console.log(currentState.can({ type: 'feedback.submit' }));
+// logs `true` if the 'feedback.submit' event will cause a transition, which will occur if:
+// - the current state is 'form'
+// - the 'isValid' guard evaluates to `true`
+```
+
+A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
+
+::: danger
+The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
+:::
 
 ## `state.hasTag(tag)`
 
+The `state.hasTag(tag)` method determines whether any state nodes in the current state value have the given `tag`. This is useful for determining whether a state is a particular state, or whether a state is a member of a particular state group.
+
+```js
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    submitting: {
+      tags: ['loading'],
+      // ...
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+
+const currentState = feedbackActor.getSnapshot();
+
+const showLoadingSpinner = currentState.hasTag('loading');
+```
+
+Prefer using `state.hasTag(tag)` over `state.matches(stateValue)`, as `state.hasTag(tag)` is more resilient to changes in the machine.
+
 ## `state.matches(stateValue)`
 
-- Prefer `state.hasTag(tag)`
+The `state.matches(stateValue)` method determines whether the current `state.value` _matches_ the given `stateValue`. If the current `state.value` is a "subset" of the provided `stateValue`, then the method will return `true`.
+
+```ts
+// state.value === 'question'
+state.matches('question'); // true
+
+// state.value === { form: 'invalid' }
+state.matches('form'); // true
+state.matches('question'); // false
+state.matches({ form: 'invalid' }); // true
+state.matches({ form: 'valid' }); // false
+```
 
 ## `state.output`
 
-- `state.done` will be `true`
+The `state.output` property represents the output data of a state machine in its final state.
 
-## `state.nextEvents`
+- `state.done` will be `true`
 
 ## `state.meta`
 
+The `state.meta` property represents the metadata of all the state nodes in the `state`. It is an object with keys that represent the state node IDs, and values that are the metadata of that state node.
+
 ## `state.toStrings`
+
+The `state.toStrings()` method returns an array of strings that represent _all_ of the state value paths. For example, assuming the current `state.value` is `{ red: 'stop' }`:
+
+```js
+console.log(state.value);
+// => { red: 'stop' }
+
+console.log(state.toStrings());
+// => ['red', 'red.stop']
+```
+
+The `state.toStrings()` method is useful for representing the current state in string-based environments, such as in CSS classes or data-attributes.
 
 ## TypeScript
 

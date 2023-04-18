@@ -2,12 +2,27 @@
 title: 'Persistence'
 ---
 
-<!-- TODO: -->
-
 - What is persistence/restoration?
 - Why is it useful?
   - Frontend use-case
   - Backend use-case
+
+```ts
+const feedbackActor = interpret(feedbackMachine).start();
+
+// Get state to be persisted
+const persistedState = feedbackActor.getPersistedState();
+
+// Persist state
+localStorage.setItem('feedback', JSON.stringify(persistedState));
+
+// Restore state
+const restoredState = JSON.parse(localStorage.getItem('feedback'));
+
+const restoredFeedbackActor = interpret(feedbackMachine, {
+  state: restoredState,
+}).start();
+```
 
 ## Persisting state
 
@@ -18,8 +33,7 @@ title: 'Persistence'
 ## Restoring state
 
 - `interpret(behavior, { state: restoredState }).start()`
-- Actions are not replayed
-  - explain why (because they are already executed)
+- Actions are not replayed, because they are already executed
 - Invocations are restarted
 
 ## Recursive persistence
