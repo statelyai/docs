@@ -49,13 +49,13 @@
       "items": [
         {
           "type": "doc",
-          "label": "Actor model",
-          "id": "actor-model"
+          "label": "State machines",
+          "id": "state-machines-and-statecharts"
         },
         {
           "type": "doc",
-          "label": "State machines",
-          "id": "state-machines-and-statecharts"
+          "label": "Actor model",
+          "id": "actor-model"
         },
         {
           "type": "doc",
