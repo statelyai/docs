@@ -4,14 +4,21 @@ title: 'State machines'
 
 A state machine is a model that describes how the state of an actor transitions to another state when an event occurs.
 
-- Benefits of state machines
-  State machines help build reliable software by making it easier to prevent impossible states and undesired transitions.
+:::tip
 
-- How are state machines useful?
+Read our [introduction to state machines and statecharts](state-machines-and-statecharts.mdx) if you haven’t already!
+
+:::
+
+## Benefits of state machines
+
+State machines help build reliable software by making it easier to prevent impossible states and undesired transitions.
+
+How are state machines useful?
 
 ## Creating a state machine
 
-In XState, a state machine (referred to as a "machine") is created using the `createMachine(config)` function:
+In [XState](xstate.mdx), a state machine (referred to as a “machine”) is created using the `createMachine(config)` function:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -37,7 +44,7 @@ const feedbackMachine = createMachine({
 
 ## Interpreting machines
 
-A machine is just a blueprint for an actor. An [actor](#todo) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
+A machine is just a blueprint for an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
 
 To create an actor, interpret the machine using the `interpret(machine)` function:
 
@@ -56,14 +63,14 @@ feedbackActor.start();
 
 ## Providing implementations
 
-Machine implementations refer to the language-specific code that is executed that is not directly related to the state machine's logic. This includes:
+Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic. This includes:
 
-- [Actions](#todo)
-- [Actors](#todo)
-- [Guards](#todo)
-- [Delays](#todo)
+- [Actions](actions.mdx)
+- [Actors](actors.mdx)
+- [Guards](guards.mdx)
+- [Delays](delayed-transitions.mdx)
 
-Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with the provided implementations via `machine.provide({...})`:
+Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with the provided implementations using `machine.provide({...})`:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -111,7 +118,7 @@ const feedbackActor = interpret(
 
 ## Specifying types
 
-TypeScript types can be specified inside the machine config, in the `.types` property:
+You can specify TypeScript types inside the machine config using the `.types` property:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -123,11 +130,11 @@ const feedbackMachine = createMachine({
 });
 ```
 
-These types will be inferred throughout the machine config, as well as in the created machine and actor, so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
+These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
 ## Transition method
 
-A machine's `.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
+A machine’s `.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -158,13 +165,17 @@ The `machine.transition(...)` method is useful for testing or building a custom 
 
 ## API
 
-Link to API
+TODO: Link to API
 
 ## TypeScript
 
+TODO:
+
 ## Cheatsheet
 
-**Create a machine**
+Use our XState cheatsheet below to get started quickly. We recommend you save [the cheatsheet URL](machines.mdx#cheatsheet) to your bookmarks for future reference!
+
+### Create a machine
 
 ```ts
 import { createMachine } from 'xstate';
@@ -178,7 +189,7 @@ const machine = createMachine({
 });
 ```
 
-**Provide implementations**
+### Provide implementations
 
 ```ts
 import { createMachine } from 'xstate';
@@ -203,4 +214,6 @@ const machineWithImpls = machine.provide({
 });
 ```
 
-## Resources
+### Further resources
+
+TODO:
