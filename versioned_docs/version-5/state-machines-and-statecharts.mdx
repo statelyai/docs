@@ -27,13 +27,13 @@ State machines model your application logic. Below is the logic for a video play
 
 Statecharts are fancy state machines used to model more complex logic.
 
-Statecharts are a visual extension to state machines that use boxes and arrows, much like flowcharts and sequence diagrams. Statecharts add extra features not available in ordinary state machines, including [hierarchy](parent-states.mdx), [concurrency](parallel-states.mdx) and [communication](actors.mdx).
+Statecharts are a visual extension to state machines that use boxes and arrows, much like flowcharts and sequence diagrams. Statecharts add extra features not available in ordinary state machines, including [hierarchy](parent-states.mdx), [concurrency](parallel-states.mdx) and [communication](actor-model.mdx).
 
-When you make a state machine in the [Stately Studio](https://stately.ai/editor), it’s also a statechart!
+When you make a state machine in [Stately Studio](https://stately.ai/editor), it’s also a statechart!
 
 :::studio
 
-In the Stately Studio, we refer to both state machines and statecharts as **machines**.
+In Stately Studio, we refer to both state machines and statecharts as **machines**.
 
 :::
 
@@ -57,6 +57,9 @@ A state describes the machine’s status or mode, which could be as simple as *
 [View the dog states machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87).
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
+
+- [More about states](states.mdx).
+- [More about finite states](finite-states.mdx).
 
 :::studio
 
@@ -89,6 +92,8 @@ Transitions are “deterministic”; each combination of state and event always 
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
+[Read more about transitions and events](transitions.mdx).
+
 :::studio
 
 ### Events and transitions in the Stately Studio
@@ -118,6 +123,8 @@ In a statechart describing the process of walking the dog, the initial state wou
 
 [View the dog waiting machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=65cf2bcb-658d-40dc-bb26-80f26c159256).
 
+[Read more about initial states](initial-states.mdx).
+
 :::studio
 
 ### Initial states in the Stately Studio
@@ -145,11 +152,13 @@ In the dog walking statechart, the final state would be **walk complete**.
 
 [View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
 
+[Read more about final states](final-states.mdx)
+
 ## Parent states
 
 A parent state is a state that can contain more states, also known as child states. These child states can only happen when the parent state is happening. Inside the **on a walk** state, there could be the child states of **walking** and **running**.
 
-A parent state is symbolised by a labelled rectangle box that acts as a container for its child states.
+A parent state is symbolised by a labelled rectangle box that acts as a container for its child states. Parent states are sometimes known as *compound states*.
 
 <!-- no alt because the image is already described in the surrounding text -->
 
@@ -169,6 +178,8 @@ A parent state is symbolised by a labelled rectangle box that acts as a containe
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
 
 Parent and child states are one of the features that make statecharts capable of handling more complexity than an everyday state machine.
+
+[Read more about parent states](parent-states.mdx).
 
 ## Atomic states
 
@@ -197,6 +208,8 @@ Inside the **on a walk** parallel state, there could be two regions. One region 
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
 
+[Read more about parallel states](parallel-states.mdx).
+
 ## Self-transition
 
 A self-transition is when an event happens, but the transition returns to the same state. The transition arrow exits and re-enters the same state.
@@ -220,6 +233,8 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
 
 [View the dog begging machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
 
+[Read more about self transitions](transitions.mdx/#self-transitions)
+
 ## What next?
 
-Now you know enough to get started in the [Stately Studio](https://stately.ai/editor). Get an [overview of the Stately Studio and its features](/#studio-editor), or [continue to learn more about states in detail](states.mdx).
+Now you know enough to get started in the [Stately Studio](https://stately.ai/editor?source=docs). Get an [overview of the Stately Studio and its features](studio.mdx), or [continue to learn about XState](xstate.mdx).
