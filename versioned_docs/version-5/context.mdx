@@ -4,7 +4,9 @@ title: 'Context'
 
 In XState, `context` is how you store data in a state machine actor.
 
-It is a special property that is available in all states and is used to store data that is relevant to the state machine. The `context` object is immutable, so you cannot directly modify it. Instead, you use the `assign(...)` action to update `context`.
+`context` is a special property available in all states and used to store data relevant to the state machine. The `context` object is immutable, so you cannot directly modify it. Instead, use the `assign(...)` action to update `context`.
+
+The `context` property is _optional_; if the state machine only specifies [finite states](finite-states.mdx), it may not need `context`.
 
 ```ts
 import { createMachine } from 'xstate';
@@ -26,19 +28,20 @@ feedbackActor.start();
 // logs 'Some feedback'
 ```
 
-<!-- TODO: add link below -->
+<details>
+<summary>
+Using context in Stately Studio
+</summary>
 
-The `context` property is _optional_; if the state machine only specifies [finite states](#), then it may not need `context`.
+- TODO: Setting initial values
+- TODO: Updating context with assign
+- TODO: JS/TS export
 
-## Stately Studio’s editor: context
-
-- Setting initial values
-- Updating context with assign
-- JS/TS export
+</details>
 
 ## Initial context
 
-The initial context of a machine is set in the `context` property of the machine config.
+Set the initial context of a machine in the `context` property of the machine config:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -52,11 +55,11 @@ const feedbackMachine = createMachine({
 });
 ```
 
-The object that you pass to `context` will be the initial `context` value for any actor that is created from this machine.
+The object you pass to `context` will be the initial `context` value for any actor created from this machine.
 
 :::warningxstate
 
-It is important that you do not mutate the `context` object. Instead, you should use the `assign(...)` action to update `context` immutably. If you mutate the `context` object, you may get unexpected behavior, such as mutating the `context` of other actors.
+Do not mutate the `context` object. Instead, you should use the `assign(...)` action to update `context` immutably. If you mutate the `context` object, you may get unexpected behavior, such as mutating the `context` of other actors.
 
 :::
 
@@ -82,7 +85,7 @@ Lazy initial context is evaluated per actor, so each actor will have its own `co
 
 ### Input
 
-You can provide input data to a machine's initial `context` by passing an `input` property to the `interpret(machine, { input })` function and using the `input` property from the first argument in the `context` function:
+You can provide input data to a machine’s initial `context` by passing an `input` property to the `interpret(machine, { input })` function and using the `input` property from the first argument in the `context` function:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -102,13 +105,11 @@ console.log(feedbackActor.getSnapshot().context.rating);
 // logs 5
 ```
 
-<!-- TODO: add link below -->
-
-Learn more about [input](#).
+Learn more about [input](input.mdx).
 
 ## Updating context with `assign(...)`
 
-Context is updated by using the `assign(...)` action in a transition:
+Use the `assign(...)` action in a transition to update context:
 
 ```ts
 import { createMachine, assign } from 'xstate';
@@ -146,6 +147,8 @@ feedbackActor.send({
 
 ## TypeScript
 
+TODO: explain this example
+
 ```ts
 const machine = createMachine({
   schema: {} as {
@@ -161,9 +164,11 @@ const machine = createMachine({
 });
 ```
 
-## Cheatsheet
+## Context cheatsheet
 
-**Initial context**
+Use our XState context cheatsheet below to get started quickly.
+
+### Initial context
 
 ```ts
 const machine = createMachine({
@@ -173,7 +178,7 @@ const machine = createMachine({
 });
 ```
 
-**Lazy initial context**
+### Lazy initial context
 
 ```ts
 const machine = createMachine({
@@ -184,7 +189,7 @@ const machine = createMachine({
 });
 ```
 
-**Updating context with `assign(...)`**
+### Updating context with `assign(...)`
 
 ```ts
 const machine = createMachine({
@@ -201,7 +206,7 @@ const machine = createMachine({
 });
 ```
 
-**Input**
+### Input
 
 ```ts
 const machine = createMachine({
@@ -218,4 +223,4 @@ const feedbackActor = interpret(machine, {
 });
 ```
 
-## Resources
+## Further resources
