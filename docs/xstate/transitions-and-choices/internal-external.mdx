@@ -10,7 +10,7 @@ Transitions in statecharts can be one of two types: **internal** or **external**
 
 In the example below, `a -> FOO -> b` is an external transition.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 createMachine({
@@ -30,7 +30,7 @@ The transition leaves the `a` state and goes to the `b` state, making it an exte
 
 Internal transitions do not leave the current state. For example, self-transitions are internal transitions:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(
@@ -60,7 +60,7 @@ The `FOO` transition never leaves the `a` state, which makes it an internal tran
 
 However, you can _force_ an internal transition to become an external transition. For self-transitions, you can specify the target on the transition to force it to be an external transition:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(

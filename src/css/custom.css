@@ -543,7 +543,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 
 /* Shiki Twoslash code examples */
 
-[data-theme='light'] .shiki.github-dark {
+/* [data-theme='light'] .shiki.github-dark {
   display: none;
 }
 
@@ -568,7 +568,7 @@ html pre.shiki div.highlight {
 html pre.shiki .copy-button {
   background: var(--st-copy-button-background);
   color: var(--st-copy-button-text);
-}
+} */
 
 /* Specific font-variation-settings for web font support */
 

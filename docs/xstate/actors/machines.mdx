@@ -10,7 +10,7 @@ Callback actors are one way to start invoking long-lived actors and are useful f
 
 _Machine actors_ are valuable for such use cases. You can pass a machine directly to the `invoke` `src` property to invoke the machine in that state.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const childMachine = createMachine({
@@ -34,7 +34,7 @@ Machine actors enable you to create machines that can act as reusable modules ac
 
 Child machines can communicate to the parent that invoked them via the `sendParent` action.
 
-```ts twoslash
+```ts
 import { createMachine, sendParent } from 'xstate';
 
 const childMachine = createMachine({
@@ -79,10 +79,7 @@ If the child machine doesn’t have a parent, for instance, if the machine is ru
 
 When a child machine reaches a final state, it reports that it’s done to its parent. The parent can listen for this event with the `invoke.onDone` property:
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
-// ---cut---
+```ts
 const childMachine = createMachine({
   initial: 'waiting',
   states: {
@@ -120,13 +117,8 @@ const parentMachine = createMachine(
 
 You can also send data along with this `onDone` event. This “done data” is specified on the final state’s `data` property:
 
-<!-- TODO: remove @noErrors when this is fixed: https://github.com/statelyai/xstate/pull/3217-->
 
-```ts twoslash {15-17, 29-34}
-// @noErrors
-import { createMachine, assign } from 'xstate';
-
-// ---cut---
+```ts
 
 const secretMachine = createMachine({
   initial: 'wait',
@@ -141,9 +133,11 @@ const secretMachine = createMachine({
     },
     reveal: {
       type: 'final',
+      // highlight-start
       data: {
         secret: (context, event) => context.secret,
       },
+      // highlight-end
     },
   },
 });
@@ -155,12 +149,14 @@ const parentMachine = createMachine({
   invoke: {
     src: secretMachine,
     onDone: {
+      // highlight-start
       actions: assign({
         revealedSecret: (context, event) => {
           // { type: 'done.invoke.<id>', data: { secret: '42' } }
           return event.data.secret;
         },
       }),
+      // highlight-end
     },
   },
 });

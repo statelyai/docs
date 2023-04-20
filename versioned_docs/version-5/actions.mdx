@@ -78,10 +78,9 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 
 In XState we usually pass options into the config using serialized (also known as *named*) actions:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
-// ---cut---
 const machine = createMachine({
   entry: ['sayHello'],
 });
@@ -89,10 +88,9 @@ const machine = createMachine({
 
 You can also declare actions inline:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
-// ---cut---
 const machine = createMachine({
   entry: [
     () => {

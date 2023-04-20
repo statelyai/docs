@@ -87,13 +87,6 @@ const config = {
         },
       }),
     ],
-    [
-      'docusaurus-preset-shiki-twoslash',
-      {
-        alwayRaiseForTwoslashExceptions: true,
-        themes: ['github-light', 'github-dark'],
-      },
-    ],
   ],
 
   themeConfig:

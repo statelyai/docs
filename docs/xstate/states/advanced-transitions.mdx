@@ -14,7 +14,7 @@ Use the `.target` syntax to transition to a child state from a parent state.
 
 The following machine uses the `.target` syntax for `.hovered`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
@@ -40,7 +40,7 @@ Transition directly into a node’s children using the `a.b` syntax.
 
 The following machine uses the `a.b` syntax for `.hovered`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
@@ -79,7 +79,7 @@ The approach above works for transitioning to any state node from any state node
 
 The example below shows the `paused` state with an `id` of `playerPaused` and that `id` targeted using `#playerPaused`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const musicMachine = createMachine({
@@ -108,7 +108,7 @@ You can also give the root of your machine an `id` and combine the use of the ro
 
 The example below shows the machine’s root with an `id` of `player` and the `paused` state targeted using `#player.paused`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const musicMachine = createMachine({

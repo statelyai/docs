@@ -24,7 +24,7 @@ npm install @xstate/inspect
 
 2. Import @xstate/inspect at the beginning of your project before any other code is called:
 
-```ts twoslash
+```ts
 import { inspect } from '@xstate/inspect';
 
 inspect({
@@ -36,11 +36,10 @@ inspect({
 
 3. Add `{ devTools: true }` to any interpreted machines you want to visualize:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 const someMachine = createMachine({});
 
-// ---cut---
 import { interpret } from 'xstate';
 import { inspect } from '@xstate/inspect';
 
@@ -98,7 +97,7 @@ Use the `url` property (string) to specify the URL of the inspector you want to 
 
 `inspect` returns a function, `disconnect`, you can use to disconnect the inspector.
 
-```ts twoslash
+```ts
 import { inspect } from '@xstate/inspect';
 
 const inspector = inspect();
