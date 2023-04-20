@@ -21,7 +21,7 @@ State machines model your application logic. Below is the logic for a video play
   />
 </p>
 
-[View the video player machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544).
+[View the video player machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544).
 
 ## What is a statechart?
 
@@ -54,7 +54,7 @@ A state describes the machine’s status or mode, which could be as simple as *
   />
 </p>
 
-[View the dog states machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87).
+[View the dog states machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87).
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
@@ -63,9 +63,9 @@ A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at 
 
 :::studio
 
-### States in the Stately Studio
+### States in Stately Studio
 
-The rounded rectangle boxes are states. [Read how to create states in the Stately Studio](states.mdx).
+The rounded rectangle boxes are states. [Read how to create states in Stately Studio](states.mdx).
 
 :::
 
@@ -88,7 +88,7 @@ Transitions are “deterministic”; each combination of state and event always 
   />
 </p>
 
-[View the dog states machine with events and transitions in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9).
+[View the dog states machine with events and transitions in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9).
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
@@ -96,9 +96,9 @@ With its two finite states and transitions, this tiny dog process is a _Finite S
 
 :::studio
 
-### Events and transitions in the Stately Studio
+### Events and transitions in Stately Studio
 
-In the Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state. [Read how to create events and transitions in the Stately Studio](transitions.mdx).
+In Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state. [Read how to create events and transitions in Stately Studio](transitions.mdx).
 
 :::
 
@@ -121,15 +121,15 @@ In a statechart describing the process of walking the dog, the initial state wou
   />
 </p>
 
-[View the dog waiting machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=65cf2bcb-658d-40dc-bb26-80f26c159256).
+[View the dog waiting machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=65cf2bcb-658d-40dc-bb26-80f26c159256).
 
 [Read more about initial states](initial-states.mdx).
 
 :::studio
 
-### Initial states in the Stately Studio
+### Initial states in Stately Studio
 
-The filled circle with an arrow icon represents the initial state. [Read how to create initial states in the Stately Studio](initial-states.mdx).
+The filled circle with an arrow icon represents the initial state. [Read how to create initial states in Stately Studio](initial-states.mdx).
 
 :::
 
@@ -150,7 +150,7 @@ In the dog walking statechart, the final state would be **walk complete**.
   />
 </p>
 
-[View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
+[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
 
 [Read more about final states](final-states.mdx)
 
@@ -173,7 +173,7 @@ A parent state is symbolised by a labelled rectangle box that acts as a containe
   />
 </p>
 
-[View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066).
+[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066).
 
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
 
@@ -204,7 +204,7 @@ Inside the **on a walk** parallel state, there could be two regions. One region 
   />
 </p>
 
-[View the dog walk machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
+[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
 
@@ -231,10 +231,10 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
   />
 </p>
 
-[View the dog begging machine in the Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
+[View the dog begging machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
 
 [Read more about self transitions](transitions.mdx/#self-transitions)
 
 ## What next?
 
-Now you know enough to get started in the [Stately Studio](https://stately.ai/editor?source=docs). Get an [overview of the Stately Studio and its features](studio.mdx), or [continue to learn about XState](xstate.mdx).
+Now you know enough to get started in the [Stately Studio](https://stately.ai/editor?source=docs). Get an [overview of Stately Studio and its features](studio.mdx), or [continue to learn about XState](xstate.mdx).
