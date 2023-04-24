@@ -18,7 +18,7 @@ The history state can be deep or shallow:
 
 TODO: Why you might use a history state with example.
 
-## Stately Studio: history states
+## Using history states in Stately Studio
 
 ### Make a state a history state
 
@@ -35,6 +35,15 @@ First, select the state you want to set as a history state for the parent state.
 2. Open the **State details** panel from the right tool menu.
 3. Choose **History** from the **Type** dropdown menu.
 4. Use the **History** toggle that appears when the state has a **History Type** to choose between **Shallow** and **Deep** history options.
+
+A history state is a special type of state (a _pseudostate_) that remembers the last [child state](parent-states.mdx) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
+
+Essentially, this allows statecharts to "remember" where they left off when exiting and reentering a state.
+
+- If no child state remembered, history goes to `.target` state, if it is specified
+- Otherwise, go to [initial state](initial-states.mdx)
+
+## Stately Studio’s editor: History states
 
 ## Shallow vs. deep history
 
