@@ -125,6 +125,16 @@ function withUndoRedo(actorLogic) {
 
 ## Custom actors
 
+## Empty actors
+
+Actor that does nothing and only has a single emitted snapshot: `undefined`
+
+Useful for testing or when an integration (e.g. `@xstate/react`) needs an actor that may not be available yet.
+
+```ts
+const emptyActor = createEmptyActor();
+```
+
 ## TypeScript
 
 ## Cheatsheet
