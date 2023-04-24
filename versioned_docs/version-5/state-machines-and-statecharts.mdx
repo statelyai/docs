@@ -10,6 +10,21 @@ State machines are useful in software development because they help us capture a
 
 State machines model your application logic. Below is the logic for a video player. When the video is Played, it is opened into fullscreen mode. When the video is stopped, it closes out of fullscreen mode. When the video player is in fullscreen mode, it can be _Playing_ or _Paused_.
 
+## Benefits of state machines
+
+- **Easy to understand.** State machines are visual and easy to understand. They’re a great way to communicate with your team and stakeholders.
+- **Easy to test.** State machines are deterministic, which means they’re easy to test. You can test all the possible states and transitions between them.
+- **Easy to implement.** State machines are easy to implement in any programming language. You can use a library or write your own.
+- **Easy to maintain.** State machines are easy to maintain because they’re easy to understand, test and implement.
+- They provide a clear and concise way to model complex user interfaces and manage application state.
+- State machines can help reduce complexity and improve maintainability by providing a structured way to manage state transitions and handle events.
+- They can also help prevent bugs and improve code quality by enforcing a clear separation of concerns between different parts of the application.
+- Additionally, state machines can be highly maintainable and offer a way to make very complex front-end processes much more manageable.
+
+Backend
+
+- State machines simplify the design and implementation of complex workflows, which can help reduce complexity and improve maintainability. https://developers.redhat.com/articles/2021/11/23/how-design-state-machines-microservices
+
 <p>
   <ThemedImage
     alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."

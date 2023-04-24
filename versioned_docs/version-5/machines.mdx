@@ -2,7 +2,7 @@
 title: 'State machines'
 ---
 
-A state machine is a model that describes how the state of an actor transitions to another state when an event occurs.
+A state machine is a model that describes the behavior of something (e.g. an [actor](#todo)). Finite state machines describe how the state of an actor transitions to another state when an event occurs.
 
 - Benefits of state machines
   State machines help build reliable software by making it easier to prevent impossible states and undesired transitions.
@@ -35,9 +35,25 @@ const feedbackMachine = createMachine({
 });
 ```
 
+In this example, the machine has two states: `question` and `thanks`. The `question` state has a transition to the `thanks` state when the `feedback.good` event is sent to the machine:
+
+```ts
+const feedbackActor = interpret(feedbackMachine);
+
+feedbackActor.subscribe((state) => {
+  console.log(state.value);
+});
+
+feedbackActor.start();
+// logs 'question'
+
+feedbackActor.send({ type: 'feedback.good' });
+// logs 'thanks'
+```
+
 ## Interpreting machines
 
-A machine is just a blueprint for an actor. An [actor](#todo) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
+A machine can be considered a "blueprint" for an actor. An [actor](#todo) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
 
 To create an actor, interpret the machine using the `interpret(machine)` function:
 
@@ -63,29 +79,34 @@ Machine implementations refer to the language-specific code that is executed tha
 - [Guards](#todo)
 - [Delays](#todo)
 
-Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with the provided implementations via `machine.provide({...})`:
+Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with default implementations in the 2nd argument:
 
 ```ts
 import { createMachine } from 'xstate';
 
-const feedbackMachine = createMachine({
-  // ...
-});
-
-const feedbackMachineWithImpls = feedbackMachine.provide({
-  actions: {
-    /* ... */
+const feedbackMachine = createMachine(
+  // Machine config
+  {
+    // ...
   },
-  actors: {
-    /* ... */
-  },
-  guards: {
-    /* ... */
-  },
-  delays: {
-    /* ... */
-  },
-});
+  // Default implementations
+  {
+    actions: {
+      doSomething: () => {
+        console.log('Doing something!');
+      },
+    },
+    actors: {
+      /* ... */
+    },
+    guards: {
+      /* ... */
+    },
+    delays: {
+      /* ... */
+    },
+  }
+);
 ```
 
 Those references are then resolved to the actual provided implementation:
@@ -96,17 +117,25 @@ const feedbackMachine = createMachine({
   // ...
 });
 
-const feedbackActor = interpret(
-  feedbackMachine.provide({
-    actions: {
-      doSomething: () => {
-        console.log('Doing something!');
-      },
-    },
-  })
-).start();
+const feedbackActor = interpret(feedbackMachine).start();
 
 // logs 'Doing something!'
+```
+
+You can override default implementations by _providing_ implementations via `machine.provide(...)`. This function will create a new machine with the same config, but with the provided implementations:
+
+```ts
+const customFeedbackMachine = feedbackMachine.provide({
+  actions: {
+    doSomething: () => {
+      console.log('Doing something custom!');
+    },
+  },
+});
+
+const feedbackActor = interpret(customFeedbackMachine).start();
+
+// logs 'Doing something custom!'
 ```
 
 ## Specifying types
@@ -125,9 +154,13 @@ const feedbackMachine = createMachine({
 
 These types will be inferred throughout the machine config, as well as in the created machine and actor, so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
+## Typegen
+
+_Coming soon_
+
 ## Transition method
 
-A machine's `.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
+A machine's `machine.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -155,6 +188,9 @@ const nextState = feedbackMachine.transition(initialState, {
 ```
 
 The `machine.transition(...)` method is useful for testing or building a custom interpreter.
+
+- [Testing](#todo)
+- [Custom interpreters](#todo)
 
 ## API
 
