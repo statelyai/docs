@@ -12,7 +12,7 @@ Observables can be invoked, sending events to the parent machine. An observable 
 
 In the example below, the `intervalMachine` will receive the events from `interval(...)` mapped to event objects until the observable is “completed” when it’s done emitting values. If the `CANCEL` event happens, the observable will be disposed of as `.unsubscribe()` will be called internally.
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 import { interval } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -46,7 +46,7 @@ const intervalMachine = createMachine({
 
 You don’t necessarily need to create observables for every invocation. You could reference a “hot observable” instead:
 
-```ts twoslash
+```ts
 import { fromEvent } from 'rxjs';
 import { createMachine } from 'xstate';
 

@@ -6,16 +6,13 @@ import ThemedImage from '@theme/ThemedImage';
 
 A state describes the machine’s status or mode, which could be as simple as *Paused* and *Playing*. A state machine can only be in one state at a time.
 
+These states are “finite”; the machine can only move through the states you’ve pre-defined.
+
 :::tip
 
 Watch our [“What are states?” video on YouTube](https://www.youtube.com/watch?v=z-6yhmSWUcc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=2) (53s).
 
 :::
-
-<details>
-<summary>
-Stately Studio: states
-</summary>
 
 <p>
   <ThemedImage
@@ -28,17 +25,17 @@ Stately Studio: states
   />
 </p>
 
-[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d).
+[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d).
 
-:::studio
 
-In the Stately Studio, the rounded rectangle boxes are states. The **?** question mark icon in the machine above indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](initial-states.mdx) by a [transition](transitions.mdx).
-
-:::
-
-These states are “finite”; the machine can only move through the states you’ve pre-defined.
+<details>
+<summary>
+Using states in Stately Studio
+</summary>
 
 ## Using states in Stately Studio
+
+In Stately Studio, the rounded rectangle boxes are states. The **?** question mark icon in the machine above indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](initial-states.mdx) by a [transition](transitions.mdx).
 
 ### Create a state
 
@@ -52,13 +49,13 @@ These states are “finite”; the machine can only move through the states you�
 
 ## State object
 
-The state object represents the current state of a running machine (actor). It contains the following properties:
+The state object represents the current state of a running machine ([actor](actor-model.mdx)) and contains the following properties:
 
-- `value` - the current state value, which is either a string representing:
-  - a simple state, e.g. `'playing'`
-  - or an object representing nested states, e.g. `{ paused: 'buffering' }`
-- `context` - the current [context](#todo) (extended state)
-- `meta` - an object containing state node meta data
+- **`value`**: the current state value, which is either: 
+  - a string representing a simple state like `'playing'`, or:
+  - an object representing nested states like `{ paused: 'buffering' }`.
+- **`context`**: the current [context](context.mdx) (extended state.)
+- **`meta`**: an object containing state node meta data.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -96,7 +93,7 @@ console.log(actor.getSnapshot());
 
 ## Accessing state snapshots
 
-You can access the snapshot of an actor (its emitted state) by subscribing to it or reading from the actor’s `.getSnapshot()` method.
+You can access an actor’s the emitted state (or *snapshot*) by subscribing to or reading from the actor’s `.getSnapshot()` method.
 
 ```ts
 const actor = interpret(feedbackMachine);
@@ -116,9 +113,9 @@ console.log(actor.getSnapshot());
 
 ## State value
 
-A state machine with nested states (statechart) is a tree-like structure, where each node is a "state node". The root state node is the top-level state node that represents the entire machine. It may have child state nodes, and those may have child state nodes, and so on.
+A state machine with nested states (or *[statechart](state-machines-and-statecharts.mdx#what-is-a-statechart)*) is a tree-like structure where each node is a *state node*. The root state node is the top-level state node that represents the entire machine. The root node may have child state nodes, which may have child state nodes, and so on.
 
-The **state value** is an object that represents all of the active state nodes in a machine. For state machines that have state nodes without child state nodes, the state value is a string:
+The **state value** is an object that represents all the active state nodes in a machine. For state machines that have state nodes without child state nodes, the state value is a string:
 
 TODO: make this a visual example
 
@@ -132,7 +129,7 @@ TODO: make this a visual example
 
 - `state.value === { form: 'invalid' }` - this represents a state machine with an active child node with key `form` that has an active child node with key `invalid`
 
-For state machines with [parallel state nodes](#todo), the state value contains object(s) with multiple keys for each state node region:
+For state machines with [parallel state nodes](parallel-states.mdx), the state value contains object(s) with multiple keys for each state node region:
 
 ```ts
 state.value ===
@@ -271,6 +268,6 @@ The `state.toStrings()` method is useful for representing the current state in s
 
 ## Cheatsheet
 
-## Resources
+## Further resources
 
 - Persisting state

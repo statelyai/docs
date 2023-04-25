@@ -8,7 +8,7 @@ title: Guarded actions
 
 You can use actions and guards together to run actions conditionally on transitions.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const atmMachine = createMachine(
@@ -47,10 +47,8 @@ In the example above, when the user withdraws ten dollars via `WITHDRAW_TEN_DOLL
 
 We can add an else condition to `WITHDRAW_TEN_DOLLARS` too:
 
-```ts twoslash {11-19}
+```ts
 import { createMachine } from 'xstate';
-
-// ---cut---
 
 const atmMachine = createMachine(
   {
@@ -61,6 +59,7 @@ const atmMachine = createMachine(
     states: {
       showingBalance: {
         on: {
+          // highlight-start
           WITHDRAW_TEN_DOLLARS: [
             {
               cond: 'hasAtLeastTenDollars',
@@ -70,6 +69,7 @@ const atmMachine = createMachine(
               actions: 'sayThereIsNotEnoughInTheAccount',
             },
           ],
+          // highlight-end
         },
       },
     },
@@ -106,7 +106,7 @@ The `choose()` built-in action is an alternative API for guarded actions. `choos
 
 The `choose()` approach helps you be more flexible with where you run actions. For example, you can run actions inside an entry action:
 
-```ts twoslash
+```ts
 import { actions, createMachine } from 'xstate';
 
 const logMachine = createMachine(
@@ -141,10 +141,8 @@ const logMachine = createMachine(
 
 Like all built-in actions, you must apply the result of `choose()` directly to an `actions` attribute. The following example will not work:
 
-```ts twoslash
+```ts
 import { actions, createMachine } from 'xstate';
-
-// ---cut---
 const logMachine = createMachine({
   entry: () => {
     // 🚫 The following action just returns an object,

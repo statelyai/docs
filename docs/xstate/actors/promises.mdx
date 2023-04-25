@@ -8,7 +8,7 @@ title: Promises
 
 The most common type of actors you’ll invoke are **promise actors**. Promise actors allow you to await the result of a promise before deciding what to do next.
 
-```ts twoslash
+```ts
 import { createMachine, assign } from 'xstate';
 
 // Function that returns a promise
@@ -55,7 +55,7 @@ When a promise actor is resolved, a `done.invoke` event is sent back to the mach
 
 You can listen for this event by providing an `onDone` to the invoke attribute:
 
-```ts twoslash
+```ts
 import { createMachine, assign } from 'xstate';
 
 // Function that returns a promise
@@ -63,8 +63,6 @@ import { createMachine, assign } from 'xstate';
 // { name: 'David', location: 'Florida' }
 const fetchUser = (userId: number) =>
   fetch(`url/to/user/${userId}`).then((response) => response.json());
-
-// ---cut---
 
 const userMachine = createMachine(
   {
@@ -106,7 +104,7 @@ If the state where the invoked promise is active is exited before the promise se
 
 If the promise errors, an `error.platform.<id>` event will be fired, with the error on the `data` attribute. You can listen for this error by adding `onError` to your `invoke` attribute:
 
-```ts twoslash
+```ts
 import { createMachine, assign } from 'xstate';
 
 // Function that returns a promise
@@ -114,8 +112,6 @@ import { createMachine, assign } from 'xstate';
 // { name: 'David', location: 'Florida' }
 const fetchUser = (userId: number) =>
   fetch(`url/to/user/${userId}`).then((response) => response.json());
-
-// ---cut---
 
 const userMachine = createMachine(
   {

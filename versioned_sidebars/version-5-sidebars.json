@@ -11,7 +11,7 @@
       "link": {
         "type": "generated-index",
         "title": "Get started",
-        "description": "Get started quickly with XState and the Stately Studio.",
+        "description": "Get started quickly with XState and Stately Studio.",
         "slug": "/category/get-started",
         "keywords": ["guides"]
       },
@@ -40,7 +40,7 @@
       "link": {
         "type": "generated-index",
         "title": "Core concepts",
-        "description": "Learn the core concepts for XState and the Stately Studio.",
+        "description": "Learn the core concepts for XState and Stately Studio.",
         "slug": "/category/core-concepts",
         "keywords": ["guides"]
       },
@@ -49,13 +49,13 @@
       "items": [
         {
           "type": "doc",
-          "label": "Actor model",
-          "id": "actor-model"
+          "label": "State machines",
+          "id": "state-machines-and-statecharts"
         },
         {
           "type": "doc",
-          "label": "State machines",
-          "id": "state-machines-and-statecharts"
+          "label": "Actor model",
+          "id": "actor-model"
         },
         {
           "type": "doc",
@@ -70,7 +70,7 @@
       "link": {
         "type": "generated-index",
         "title": "Using Stately Studio",
-        "description": "Learn how to use the Stately Studio and our editor.",
+        "description": "Learn how to use Stately Studio’s editor.",
         "slug": "/category/studio",
         "keywords": ["guides"]
       },
@@ -88,7 +88,7 @@
           "link": {
             "type": "generated-index",
             "title": "Design mode",
-            "description": "Learn how to use Design mode in the Stately Studio’s editor.",
+            "description": "Learn how to use Design mode in Stately Studio’s editor.",
             "slug": "/category/design-mode",
             "keywords": ["guides"]
           },
@@ -108,7 +108,7 @@
           "link": {
             "type": "generated-index",
             "title": "Stately Studio accounts",
-            "description": "Learn about the Stately Studio plans and how to manage your account.",
+            "description": "Learn about Stately Studio plans and how to manage your account.",
             "slug": "/category/accounts",
             "keywords": ["guides"]
           },
@@ -150,7 +150,7 @@
       "link": {
         "type": "generated-index",
         "title": "State machines",
-        "description": "Learn how to use state machines in XState and the Stately Studio.",
+        "description": "Learn how to use state machines in XState and Stately Studio.",
         "slug": "/category/state-machines",
         "keywords": ["guides"]
       },
@@ -180,7 +180,7 @@
       "link": {
         "type": "generated-index",
         "title": "Actors",
-        "description": "Learn how to use actors and the actor model in XState and the Stately Studio.",
+        "description": "Learn how to use actors and the actor model in XState and Stately Studio.",
         "slug": "/category/actors",
         "keywords": ["guides"]
       },

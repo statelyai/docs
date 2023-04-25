@@ -6,9 +6,15 @@ slug: '/xstate'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-XState is a state management & orchestration solution for JavaScript and TypeScript apps.
+XState is a state management and orchestration solution for JavaScript and TypeScript apps.
 
-It uses event-driven programming, state machines, statecharts, and the actor model to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks, and can be used in the frontend, backend, or anywhere else JavaScript runs.
+It uses [event-driven](transitions.mdx) programming, [state machines, statecharts](state-machines-and-statecharts.mdx), and the [actor model](actor-model.mdx) to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks and can be used in the frontend, backend, or wherever JavaScript runs.
+
+:::tip
+
+Want to find out more about state machines? [Read our introduction](state-machines-and-statecharts.mdx).
+
+:::
 
 ## Installation
 
@@ -143,19 +149,10 @@ textActor.send({ type: 'text.cancel' });
 // logs 'Hello'
 ```
 
-## Installation
-
-- [Install XState](./installation.mdx)
-- [Learn about the XState basics](/xstate/basics/what-is-a-statechart)
-
-:::xstate
-
 ## Download the XState VS Code extension
 
 - [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode)
 - [Open VSX Registry](https://open-vsx.org/extension/statelyai/stately-vscode)
-
-:::
 
 [Read more about our developer tools](/tools/developer-tools/).
 

@@ -87,13 +87,6 @@ const config = {
         },
       }),
     ],
-    [
-      'docusaurus-preset-shiki-twoslash',
-      {
-        alwayRaiseForTwoslashExceptions: true,
-        themes: ['github-light', 'github-dark'],
-      },
-    ],
   ],
 
   themeConfig:
@@ -207,6 +200,10 @@ const config = {
       colorMode: {
         disableSwitch: false,
         respectPrefersColorScheme: true,
+      },
+      prism: {
+        theme: require('prism-react-renderer/themes/dracula'),
+        darkTheme: require('prism-react-renderer/themes/dracula'),
       },
     }),
 };

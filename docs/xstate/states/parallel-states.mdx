@@ -16,13 +16,17 @@ You can specify a parallel state node on the machine and/or any nested child sta
 
 For example, the machine below allows the `upload` and `download` child states to be simultaneously active. This example represents an application where you can download and upload files at the same time:
 
-```ts twoslash {4,6,22}
+```ts
 import { createMachine } from 'xstate';
 
 const fileMachine = createMachine({
+  // highlight-start
   type: 'parallel',
+  // highlight-end
   states: {
+    // highlight-start
     upload: {
+    // highlight-end
       initial: 'idle',
       states: {
         idle: {
@@ -38,7 +42,9 @@ const fileMachine = createMachine({
         success: {},
       },
     },
+    // highlight-start
     download: {
+    // highlight-end
       initial: 'idle',
       states: {
         idle: {
@@ -68,13 +74,12 @@ The `state.matches` syntax checks if an actor is in a particular state when the 
 
 ### `state.matches` string argument
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({});
 const state = machine.initialState;
 
-// ---cut---
 /**
  * Checks if the machine is in the red.stop
  * state
@@ -84,13 +89,12 @@ console.log(state.matches('red.stop'));
 
 ### `state.matches` object argument
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({});
 const state = machine.initialState;
 
-// ---cut---
 /**
  * Checks if the machine is in the red.stop
  * state
@@ -102,13 +106,12 @@ state.matches({
 
 You can also use the object method to check if your machine is in two parallel states at once:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({});
 const state = machine.initialState;
 
-// ---cut---
 /**
  * Checks if the machine is in the wind.blowing
  * state AND the rain.raining state
@@ -123,13 +126,12 @@ state.matches({
 
 If you want to match one of multiple states, you can use [`.some()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) on an array of state values:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({});
 const state = machine.initialState;
 
-// ---cut---
 const isMatch = [{ customer: 'deposit' }, { customer: 'withdrawal' }].some(
   state.matches
 );
@@ -143,7 +145,7 @@ Sometimes you’ll need a transition to target multiple parts of a parallel stat
 
 Multiple targets are specified as an array in `target: [...]`.
 
-```ts twoslash {24-26}
+```ts
 import { createMachine } from 'xstate';
 
 const settingsMachine = createMachine({
@@ -167,9 +169,11 @@ const settingsMachine = createMachine({
   },
   on: {
     // Multiple targets
+    // highlight-start
     DEACTIVATE: {
       target: ['.mode.inactive', '.status.disabled'],
     },
+    // highlight-end
   },
 });
 ```
@@ -184,7 +188,7 @@ When every child state node in a parallel state node is _done_, the parent paral
 
 `onDone` is very useful in modeling parallel tasks. For example, below there is a shopping machine where `user` and `items` represent two parallel tasks of the `cart` state:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const shoppingMachine = createMachine({

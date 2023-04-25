@@ -29,7 +29,7 @@ npm install xstate @xstate/react
 
 The simplest way to get started with interpreting actors in React is `useMachine`. `useMachine` is a [React hook](https://reactjs.org/hooks) that interprets the given `machine` and starts an actor that runs for the lifetime of the component.
 
-```tsx twoslash
+```tsx
 import { createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
@@ -51,9 +51,8 @@ const Component = () => {
 
 You can also pass machine options to the second argument of `useMachine`. These options will be kept up to date when the component re-renders, which means they can safely access variables inside the component’s scope:
 
-```tsx twoslash
+```tsx
 const useLoggedInUserId = (): string => '123';
-// ---cut---
 
 import { createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
@@ -85,7 +84,7 @@ const Component = () => {
 
 `useInterpret` allows you to interpret a machine without subscribing to its updates, which means that by default, it won’t cause any re-rendering in the component.
 
-```tsx twoslash
+```tsx
 import { createMachine } from 'xstate';
 import { useInterpret } from '@xstate/react';
 
@@ -100,9 +99,8 @@ const Component = () => {
 
 `useInterpret` accepts the same arguments as `useMachine`, and follows the same rules with `options`:
 
-```tsx twoslash
+```tsx
 const useLoggedInUserId = (): string => '123';
-// ---cut---
 
 import { createMachine } from 'xstate';
 import { useInterpret } from '@xstate/react';
@@ -132,7 +130,7 @@ const Component = () => {
 
 You can use `useSelector` to subscribe to a machine created with `useInterpret` or `interpret`. `useSelector` gives you fine-grained control over when your components should re-render and is particularly valuable for good performance.
 
-```tsx twoslash
+```tsx
 import { createMachine, StateFrom } from 'xstate';
 import { useInterpret, useSelector } from '@xstate/react';
 
@@ -161,7 +159,7 @@ Internally, `useSelector` compares the previous value (`prev`) and the next valu
 
 You can customize the check by passing a `compare` function to `useSelector`:
 
-```tsx twoslash
+```tsx
 import { createMachine, StateFrom } from 'xstate';
 import { useInterpret, useSelector } from '@xstate/react';
 
@@ -195,7 +193,7 @@ The compare function is needed in the example above because comparing two arrays
 
 Use `useActor` if you want to subscribe to _all_ updates to an actor from `useInterpret`:
 
-```tsx twoslash
+```tsx
 import { createMachine, StateFrom } from 'xstate';
 import { useInterpret, useActor } from '@xstate/react';
 

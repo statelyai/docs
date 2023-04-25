@@ -177,6 +177,7 @@ html, body {
   --ifm-color-secondary-dark:var(--st-text);
   --ifm-color-secondary-darker:var(--st-text);
   --ifm-color-secondary-darkest:var(--st-text);
+  --docusaurus-details-decoration-color: var(--st-text);
   --ifm-color-secondary-light:white;
   --ifm-color-secondary-lighter:white;
   --ifm-color-secondary-lightest:white;
@@ -542,7 +543,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
 
 /* Shiki Twoslash code examples */
 
-[data-theme='light'] .shiki.github-dark {
+/* [data-theme='light'] .shiki.github-dark {
   display: none;
 }
 
@@ -567,7 +568,7 @@ html pre.shiki div.highlight {
 html pre.shiki .copy-button {
   background: var(--st-copy-button-background);
   color: var(--st-copy-button-text);
-}
+} */
 
 /* Specific font-variation-settings for web font support */
 
@@ -1149,12 +1150,34 @@ footer [class*=iconExternalLink] {
   padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
 }
 
+details.alert {
+  display: block;
+}
+
+details > div > div {
+  padding: calc(var(--ifm-alert-padding-vertical)*2) var(--ifm-alert-padding-horizontal) var(--ifm-alert-padding-vertical);
+}
+
+details summary::before {
+  --docusaurus-details-decoration-color: var(--st-text);
+  top: 0.35rem !important;
+}
+
 @media (min-width: 1300px) {
-  .alert {
+  .alert:not(details) {
     --ifm-alert-padding-horizontal: 0.85rem;
     /* pull admonitions into margins so text aligns with paragraph text */
     margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
     margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
+  }
+}
+
+@media (min-width: 1300px) {
+  details {
+    --ifm-alert-padding-horizontal: 1rem;
+    /* pull admonitions into margins so text aligns with paragraph text */
+    margin-left: calc(-1 * var(--ifm-alert-padding-horizontal)) !important;
+    margin-right: calc(-1 * var(--ifm-alert-padding-horizontal)) !important;
   }
 }
 
@@ -1239,13 +1262,13 @@ footer [class*=iconExternalLink] {
   opacity: 0.75;
 }
 
-.alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
+.alert:not(details) h2, .alert:not(details) h3, .alert:not(details) h4, .alert:not(details) h5, .alert:not(details) h6 {
   color: inherit;
   font-size: 1.1rem;
   margin-bottom: calc(var(--ifm-alert-padding-vertical) * .5);
 }
 
-.alert a {
+.alert:not(details) a {
   color: inherit;
 }
 
@@ -1254,11 +1277,11 @@ footer [class*=iconExternalLink] {
   opacity: 1;
 }
 
-.alert a {
+.alert:not(details) a {
   text-decoration-color: var(--ifm-alert-foreground-color);
 }
 
-.alert a:hover {
+.alert:not(details) a:hover {
   text-decoration-thickness: 1px;
 }
 

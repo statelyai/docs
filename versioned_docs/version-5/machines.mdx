@@ -2,16 +2,27 @@
 title: 'State machines'
 ---
 
-A state machine is a model that describes the behavior of something (e.g. an [actor](#todo)). Finite state machines describe how the state of an actor transitions to another state when an event occurs.
+A [state machine](state-machines-and-statecharts.mdx) is a model that describes the behavior of something, for example an [actor](actors.mdx). [Finite state](finite-states.mdx) machines describe how the state of an actor transitions to another state when an event occurs.
 
-- Benefits of state machines
-  State machines help build reliable software by making it easier to prevent impossible states and undesired transitions.
+:::tip
 
-- How are state machines useful?
+Read our [introduction to state machines and statecharts](state-machines-and-statecharts.mdx) if you haven’t already!
+
+:::
+
+## Benefits of state machines
+
+State machines help build reliable and robust software:
+
+- Use state machines to implement complex state-based logic in a modular and efficient way.
+- You can easily extend and modify state machines as your system’s requirements change over time.
+- State machines provide a clear and concise representation of complex behavior, making it easier for you to reason about and understand code.
+- State machines help avoid errors and bugs in code by making it easier to prevent impossible states and undesired transitions.
+- You can use state machines to model the behavior of real-world systems, making it easier to test and debug software.
 
 ## Creating a state machine
 
-In XState, a state machine (referred to as a "machine") is created using the `createMachine(config)` function:
+In [XState](xstate.mdx), a state machine (referred to as a “machine”) is created using the `createMachine(config)` function:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -72,14 +83,14 @@ feedbackActor.start();
 
 ## Providing implementations
 
-Machine implementations refer to the language-specific code that is executed that is not directly related to the state machine's logic. This includes:
+Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic. This includes:
 
-- [Actions](#todo)
-- [Actors](#todo)
-- [Guards](#todo)
-- [Delays](#todo)
+- [Actions](actions.mdx)
+- [Actors](actors.mdx)
+- [Guards](guards.mdx)
+- [Delays](delayed-transitions.mdx)
 
-Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with default implementations in the 2nd argument:
+Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with default implementations in the second argument:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -140,7 +151,7 @@ const feedbackActor = interpret(customFeedbackMachine).start();
 
 ## Specifying types
 
-TypeScript types can be specified inside the machine config, in the `.types` property:
+You can specify TypeScript types inside the machine config using the `.types` property:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -152,7 +163,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-These types will be inferred throughout the machine config, as well as in the created machine and actor, so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
+These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
 ## Typegen
 
@@ -160,7 +171,7 @@ _Coming soon_
 
 ## Transition method
 
-A machine's `machine.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
+A machine’s `machine.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -194,13 +205,17 @@ The `machine.transition(...)` method is useful for testing or building a custom 
 
 ## API
 
-Link to API
+TODO: Link to API
 
 ## TypeScript
 
-## Cheatsheet
+TODO:
 
-**Create a machine**
+## Machine cheatsheet
+
+Use our XState machine cheatsheet below to get started quickly.
+
+### Create a machine
 
 ```ts
 import { createMachine } from 'xstate';
@@ -214,7 +229,7 @@ const machine = createMachine({
 });
 ```
 
-**Provide implementations**
+### Provide implementations
 
 ```ts
 import { createMachine } from 'xstate';
@@ -239,4 +254,6 @@ const machineWithImpls = machine.provide({
 });
 ```
 
-## Resources
+### Further resources
+
+TODO:

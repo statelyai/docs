@@ -16,12 +16,12 @@ This “infinite” state can be stored in a statechart’s **context**, a data 
 
 You can pass a machine its context using the `context` property:
 
-```ts twoslash {2-4}
-import { createMachine } from 'xstate';
-// ---cut---
+```ts
 const machine = createMachine({
+  // highlight-start
   context: {
     count: 0,
+  // highlight-end
   },
 });
 ```
@@ -36,8 +36,7 @@ Assigning new values to the context in XState is done through the `assign` actio
 
 The `assign` action takes the context _assigner_, representing how values should be assigned in the current context. The _assigner_ can be an object:
 
-```ts twoslash {22-40}
-// @noErrors
+```ts
 import { createMachine, assign } from 'xstate';
 
 const machine = createMachine(
@@ -59,6 +58,7 @@ const machine = createMachine(
   },
   {
     actions: {
+      // highlight-start
       assignToContext: assign({
         // increment the current count by the event value
         count: (context, event) => context.count + event.value,
@@ -78,6 +78,7 @@ const machine = createMachine(
          */
         message: (_) => 'Count changed',
       }),
+      // highlight-end
     },
   }
 );
@@ -85,8 +86,7 @@ const machine = createMachine(
 
 Or the _assigner_ can be a function that returns the updated state:
 
-```ts twoslash {16-23}
-// @noErrors
+```ts
 import { createMachine, assign } from 'xstate';
 
 const machine = createMachine(
@@ -102,6 +102,7 @@ const machine = createMachine(
     },
   },
   {
+  // highlight-start
     actions: {
       assignToContext: assign((context) => {
         return {
@@ -112,6 +113,7 @@ const machine = createMachine(
         };
       }),
     },
+  // highlight-end
   }
 );
 ```
@@ -136,7 +138,7 @@ You can pass several `assign` actions in an array and they’ll be executed sequ
 
 When XState fires an action, the action receives several arguments. The first argument is the current `context` of the machine. The second argument is the most recent `event` sent to the machine.
 
-```ts twoslash {15-19}
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(
@@ -151,6 +153,7 @@ createMachine(
     },
   },
   {
+    // highlight-start
     actions: {
       logCountToConsole: (context, event) => {
         console.log(`Count is ${context.count}`);
@@ -158,6 +161,7 @@ createMachine(
         console.log(event.type); // Logs 'LOG_COUNT'
       },
     },
+    // highlight-end
   }
 );
 ```
@@ -170,9 +174,7 @@ createMachine(
 
 In TypeScript, you can strongly type your context by passing a type to the `schema` property, which means that wherever you access the context, whether inside actions or when running your machine, the context will be strongly typed.
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
+```ts
 const lightMachine = createMachine({
   schema: {
     context: {} as { value: number },

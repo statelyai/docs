@@ -2,7 +2,7 @@
 title: 'Input'
 ---
 
-Input refers to the data provided to a state machine that influences its behavior. In XState, input is provided when creating an actor via the 2nd argument of the `interpret(machine, { input })` function:
+Input refers to the data provided to a state machine that influences its behavior. In [XState](xstate.mdx), you provide input when creating an [actor](actors.mdx) using the second argument of the `interpret(machine, { input })` function:
 
 ```ts
 import { interpret, createMachine } from 'xstate';
@@ -26,9 +26,11 @@ const feedbackActor = interpret(feedbackMachine, {
 });
 ```
 
-## Stately Studio’s editor: input
+:::studio
 
-_Coming soon_
+Input is coming to Stately Studio’s editor soon…
+
+:::
 
 ## Initial event input
 
@@ -57,7 +59,7 @@ const feedbackActor = interpret(feedbackMachine, {
 
 ## Invoking actors with input
 
-Input can be provided to invoked actors via the `input` property of the `invoke` configuration:
+You can provide input to invoked actors via the `input` property of the `invoke` configuration:
 
 ```ts
 import { interpret, createMachine } from 'xstate';
@@ -110,7 +112,7 @@ const feedbackMachine = createMachine({
 
 ## Spawning actors with input
 
-Input can be provided to spawned actors via the `input` property of the `spawn` configuration:
+You can provide input to spawned actors via the `input` property of the `spawn` configuration:
 
 ```ts
 import { interpret, createMachine } from 'xstate';
@@ -168,7 +170,9 @@ const machine = createMachine({
 
 ## Cheatsheet
 
-**Providing input**
+Use our XState input cheatsheet below to get started quickly.
+
+### Providing input
 
 ```ts
 const feedbackActor = interpret(feedbackMachine, {
@@ -179,7 +183,7 @@ const feedbackActor = interpret(feedbackMachine, {
 });
 ```
 
-**Providing input to invoked actors**
+### Providing input to invoked actors
 
 ```ts
 const feedbackMachine = createMachine({
@@ -192,7 +196,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-**Providing dynamic input to invoked actors**
+### Providing dynamic input to invoked actors
 
 ```ts
 const feedbackMachine = createMachine({
@@ -206,7 +210,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-**Providing input to spawned actors**
+### Providing input to spawned actors
 
 ```ts
 const feedbackMachine = createMachine({
@@ -229,4 +233,4 @@ const feedbackMachine = createMachine({
 });
 ```
 
-## Resources
+## Further resources

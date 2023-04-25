@@ -24,14 +24,16 @@ Install the [CLI](developer-tools.mdx/#xstate-cli-command-line-interface) and ru
 
 Next try to create a machine, make sure to set the `schema` attributes:
 
-```ts twoslash {4-7}
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
+  // highlight-start
   schema: {
     context: {} as { value: string },
     events: {} as { type: 'FOO'; value: string } | { type: 'BAR' },
   },
+  // highlight-end
   initial: 'a',
   states: {
     a: {

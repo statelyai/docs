@@ -12,10 +12,8 @@ Eventless transitions are transitions without events. These transitions are **al
 
 A simple example is a state that always transitions from `a` to `b`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
-
-// ---cut---
 
 const machine = createMachine({
   initial: 'a',
@@ -38,23 +36,22 @@ Using the `always` transition means that `a` will _instantly_ transition to `b` 
 
 You can also pair `always` transitions with a guard:
 
-```ts twoslash {7-12}
-// @noErrors
+```ts
 import { createMachine } from 'xstate';
-
-// ---cut---
 
 const machine = createMachine(
   {
     initial: 'a',
     states: {
       a: {
+        // highlight-start
         always: [
           {
             cond: 'shouldTransition',
             target: 'b',
           },
         ],
+        // highlight-end
       },
       b: {},
     },
@@ -77,8 +74,7 @@ In the example above, the transition will only happen when `shouldTransition` re
 
 Example without `always`:
 
-```ts twoslash {11-14}
-// @noErrors
+```ts
 
 import { createMachine, assign } from 'xstate';
 
@@ -89,9 +85,11 @@ const gameMachine = createMachine(
       points: 0,
     },
     states: {
+      // highlight-start
       playing: {
         on: {
           AWARD_POINTS: [
+          // highlight-end
             {
               cond: 'didPlayerWin',
               actions: 'awardPoints',
@@ -150,8 +148,7 @@ const gameMachine = createMachine(
 
 Example with `always`:
 
-```ts twoslash {11-14}
-// @noErrors
+```ts
 
 import { createMachine, assign } from 'xstate';
 
@@ -162,11 +159,13 @@ const gameMachine = createMachine(
       points: 0,
     },
     states: {
+      // highlight-start
       playing: {
         always: [
           { target: 'win', cond: 'didPlayerWin' },
           { target: 'lose', cond: 'didPlayerLose' },
         ],
+      // highlight-end
         on: {
           AWARD_POINTS: {
             actions: 'awardPoints',
@@ -207,7 +206,7 @@ Since unguarded “always” transitions always run, you should be careful not t
 
 Let’s revisit our initial example and add a transition back to `a` from `b`. Here we add it using an “always” transition, which is not good. This machine will run forever and just keep transitioning between the two states.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 /* 🚨 Don't do this at home 🚨 */
