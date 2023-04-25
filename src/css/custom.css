@@ -157,9 +157,11 @@ html, body {
   --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.1);
   --ifm-heading-vertical-rhythm-bottom:.75;
   --ifm-code-background:var(--st-code-highlight-background);
+  --ifm-code-border-radius: 0.5em;
   --ifm-code-font-size:95%;
   --ifm-code-padding-horizontal:.1rem;
   --ifm-code-padding-vertical:.1rem;
+  --ifm-global-shadow-lw: none;
   --ifm-color-secondary:var(--st-text-secondary);
   --ifm-color-success:#00a400;
   --ifm-color-info:#54c7ec;
@@ -456,7 +458,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-header-border: var(--st-gray-700);
   --st-layout-border: var(--st-gray-700);
   --st-layout-border-secondary: var(--st-gray-700);
-  --st-code-border: var(--st-background);
+  --st-code-border: transparent;
   --st-codeblock-background: var(--st-gray-850);
   --st-code-highlight-background: var(--st-gray-800);
   --st-copy-button-background: var(--st-blue-700);
@@ -541,24 +543,24 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --ifm-toc-link-color: var(--st-text); 
 }
 
-/* Shiki Twoslash code examples */
+/* Code examples */
 
-/* [data-theme='light'] .shiki.github-dark {
-  display: none;
-}
-
-html[data-theme='light'] pre.shiki {
+html[data-theme='light'] .theme-code-block, html[data-theme='light'] .theme-code-block pre {
   background: var(--st-codeblock-background) !important;
-  border-color: var(--st-code-border);
+  --ifm-pre-background: var(--st-codeblock-background) !important;
 }
 
-[data-theme='dark'] .shiki.github-light {
-  display: none;
+html[data-theme='light'] .theme-code-block {
+  border: 1px solid var(--st-code-border);
 }
 
-html[data-theme='dark'] pre.shiki {
+html[data-theme='dark'] .theme-code-block, html[data-theme='dark'] .theme-code-block pre {
   background: var(--st-codeblock-background) !important;
-  border-color: var(--st-code-border);
+  --ifm-pre-background: var(--st-codeblock-background) !important;
+}
+
+html[data-theme='dark'] .theme-code-block {
+  border: 1px solid var(--st-code-border);
 }
 
 html pre.shiki div.highlight {
@@ -568,7 +570,7 @@ html pre.shiki div.highlight {
 html pre.shiki .copy-button {
   background: var(--st-copy-button-background);
   color: var(--st-copy-button-text);
-} */
+}
 
 /* Specific font-variation-settings for web font support */
 
