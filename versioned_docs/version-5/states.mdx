@@ -269,12 +269,11 @@ The `state.toStrings()` method is useful for representing the current state in s
 You can add `.description` to states to describe their purpose and share related notes with your team. In Stately Studio’s editor, these descriptions are rendered in the machine and support markdown including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
 
 ```ts
-
 states: {
   "Loading Move Destinations": {
     // highlight-start
     description:
-      "Load data from the server baed on the entity's id and type (project or machine).\nResult includes the entity's current location, and the list or tree of valid destination options to wich the user may move that entity.",
+      "Load data from the server based on the entity's id and type (project or machine).\nResult includes the entity's current location, and the list or tree of valid destination options to which the user may move that entity.",
     // highlight-end
     invoke: {
       src: "loadMoveData",
@@ -293,7 +292,6 @@ states: {
     },
   },
 }
-
 ```
 
 ## TypeScript
