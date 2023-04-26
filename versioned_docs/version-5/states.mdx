@@ -197,7 +197,7 @@ console.log(currentState.can({ type: 'feedback.submit' }));
 
 A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
 
-::: danger
+:::danger
 The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
 :::
 
