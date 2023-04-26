@@ -564,15 +564,6 @@ html[data-theme='dark'] .theme-code-block {
   border: 1px solid var(--st-code-border);
 }
 
-html pre.shiki div.highlight {
-  background: var(--st-code-highlight-background) !important;
-}
-
-html pre.shiki .copy-button {
-  background: var(--st-copy-button-background);
-  color: var(--st-copy-button-text);
-}
-
 /* Specific font-variation-settings for web font support */
 
 :root {
