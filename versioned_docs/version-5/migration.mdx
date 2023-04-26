@@ -26,6 +26,11 @@ Single-argument functions
 
 `actor.send(eventObject)` no longer accepts a string; must pass full event object `{ type: '...' }`
 
+```diff
+- actor.send('SOME_EVENT');
++ actor.send({ type: 'SOME_EVENT' });
+```
+
 No more null events; use `always`
 
 2nd argument to `createMachine` is deprecated: `createMachine(config, options)` is now `createMachine(config).provide(options)`

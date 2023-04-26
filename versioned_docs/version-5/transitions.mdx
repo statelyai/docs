@@ -10,9 +10,42 @@ A **transition** is a change from one finite state to another, triggered by an e
 
 An **event** is a signal, trigger, or message that causes a transition. 
 
-When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
+When an event is received by an actor, its machine will determine if there are any enabled transitions for that event in the current state. If there are, those transitions will be taken, and the actions will be executed.
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+
+Transitions are represented by `on:` in a state:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'question',
+  states: {
+    question: {
+      on: {
+        'feedback.good': {
+          target: 'thanks'
+        }
+      }
+    }
+    thanks: {}
+  },
+});
+```
+
+## Using transitions and events in Stately Studio
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
+:::tip
+
+Watch our [“Transitions and events” video on YouTube](https://www.youtube.com/watch?v=0qgP4RZyq58&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=4) (1m50s).
+
+:::
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
 <p>
   <ThemedImage
@@ -86,11 +119,11 @@ First select the transition or event you want to change. Then…
 
 In XState, events are represented by event objects with a `type` property and optional payload:
 
-- The `type` property is a string that represents the event type. 
+- The `type` property is a string that represents the event type.
 - The payload is an object that contains additional data about the event.
 
 ```ts
-feedbackMachine.send({
+feedbackActor.send({
   // The event type
   type: 'feedback.update',
   // Additional payload
@@ -101,10 +134,12 @@ feedbackMachine.send({
 
 ## Selecting transitions
 
-- Start on deepest active state nodes (aka atomic states)
-- If transition is enabled (guard passes), take it
-- If no transition is enabled, go up to its parent state and repeat
-- If no transitions are enabled, no transitions will be taken, state remains the same
+Transitions are selected by checking the deepest child states first. If the transition is enabled (i.e. if its guard passes), it will be taken. If not, the parent state will be checked, and so on.
+
+1. Start on the deepest active state nodes (aka atomic state nodes)
+2. If the transition is enabled (no `guard` or its `guard` evaluates to `true`), select it.
+3. If no transition is enabled, go up to the parent state node and repeat step 1.
+4. Finally, if no transitions are enabled, no transitions will be taken, and the state will not change.
 
 ## Self-transitions
 
@@ -130,9 +165,29 @@ TODO: assign example
 
 ## Transitions between states
 
-Typically, transitions are between two sibling states.
+Usually, transitions are between two sibling states. These transitions are defined by setting the `target` as the sibling state key.
 
-TODO: example with `{ on: { target: 'sibling' } }`
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    form: {
+      on: {
+        submit: {
+          // highlight-start
+          // Target is the key of the sibling state
+          target: 'submitting',
+          // highlight-end
+        },
+      },
+    },
+    // highlight-next-line
+    submitting: {
+      // ...
+    },
+  },
+});
+```
 
 ## Parent to child transitions
 
@@ -196,8 +251,9 @@ const feedbackMachine = createMachine({
 ```
 
 Wildcard transitions are useful for:
+
 - handling events that are not handled by any other transition.
-- as a “catch-all” transition that handles any event in a state. 
+- as a “catch-all” transition that handles any event in a state.
 
 A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
 
@@ -243,27 +299,38 @@ The wildcard character (`*`) can only be used in the suffix of an event descript
 
 ## Multiple transitions in parallel states
 
-- Advanced topic
-- `target: ['.mode.inactive', '.status.disabled']`
+Since parallel states have multiple regions that can be active at the same time, it is possible for multiple transitions to be enabled at the same time. In this case, all enabled transitions to these regions will be taken.
+
+Multiple targets are specified as an array of strings:
+
+```ts
+import { createMachine } from 'xstate';
+
+// todo: example
+```
 
 ## Other transitions
 
-- [Eventless (always) transitions](eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
-- [Delayed (after) transitions](delayed-transitions.mdx) are transitions that only happen after a specified interval of time.
+- [Eventless (always) transitions](#todo) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
+- [Delayed (after) transitions](#todo) are transitions that are enabled after a specified duration.
 
 ## Transition descriptions
 
 You can add `.description` to transitions to describe their purpose and share related notes with your team. Stately Studio’s editor renders these descriptions in the machine and supports markdown, including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
 
 ```ts
-"MOVE TO PROJECT": {
-  target: "#MoveModal Machine.Closed",
-  actions: "moveToProject",
-  // highlight-start
-  description:
-    "`moveToProject` requests to move a machine to a different project using the `editorPageMachine`.",
-  // highlight-end
-},
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // ...
+  on: {
+    exit: {
+      // highlight-next-line
+      description: 'Closes the feedback form',
+      target: '.closed',
+    },
+  },
+});
 ```
 
 ## Shorthands
@@ -295,6 +362,71 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 ## TypeScript
 
+_Coming soon_
+
 ## Cheatsheet
 
+**Event objects**
+
+```ts
+feedbackActor.send({
+  // Event type
+  type: 'feedback.update',
+  // Event payload
+  feedback: 'A+ would use state machines again',
+  rating: 5,
+});
+```
+
+**Transition targets**
+
+```ts
+const machine = createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      on: {
+        // Sibling target
+        event: {
+          target: 'b',
+        },
+        // Sibling child target
+        otherEvent: {
+          target: 'b.c',
+        },
+      },
+    },
+    b: {
+      on: {
+        // ID target
+        event: {
+          target: '#c',
+        },
+      },
+    },
+    c: {
+      id: 'c',
+      on: {
+        // Child target
+        event: {
+          target: '.child',
+        },
+      },
+      initial: 'child',
+      states: {
+        child: {},
+      },
+    },
+  },
+  on: {
+    // Child target
+    someEvent: {
+      target: '.b',
+    },
+  },
+});
+```
+
 ## Resources
+
+_Coming soon_
