@@ -4,6 +4,7 @@ title: Events and transitions
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import SkipDownLink from '@site/src/components/SkipDownLink';
 
 A **transition** is a change from one finite state to another, triggered by an event.
 
@@ -35,11 +36,9 @@ Transitions are represented by `on:` in a state:
 
 TODO: full feedback example
 
+<SkipDownLink text="Jump to learning more about event objects in XState" link="#event-objects"/>
 
-<details>
-<summary>
-Using transitions and events in Stately Studio
-</summary>
+## Using transitions and events in Stately Studio
 
 The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
@@ -80,8 +79,6 @@ First select the transition or event you want to change. Then…
 1. Select the transition or event.
 2. Right-click the state to bring up the **quick actions** menu.
 3. Choose **Switch source and target** from the **quick actions** menu.
-
-</details>
 
 ## Event objects
 
