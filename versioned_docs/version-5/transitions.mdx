@@ -8,9 +8,11 @@ import SkipDownLink from '@site/src/components/SkipDownLink';
 
 A **transition** is a change from one finite state to another, triggered by an event.
 
-An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
+An **event** is a signal, trigger, or message that causes a transition. 
 
-Transitions are “deterministic”; each combination of state and event always points to the same next state.
+When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
+
+Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
 
 <p>
   <ThemedImage
