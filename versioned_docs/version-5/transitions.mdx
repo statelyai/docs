@@ -7,7 +7,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 A **transition** is a change from one finite state to another, triggered by an event.
 
-An **event** is an occurrence (signal, trigger, message, etc.) that can trigger a transition.
+An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
 
 When an event is received by an actor, its machine will determine if there are any enabled transitions for that event in the current state. If there are, those transitions will be taken, and the actions will be executed.
 
@@ -66,6 +66,29 @@ The arrows are transitions, and the rounded rectangles on the arrow’s lines ar
 
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7).
 
+TODO: example going from form to closed
+
+When a state machine receives an event, it only checks the active finite states to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition’s actions and then transition to the target state.
+
+Transitions are represented by `on:` in a state:
+
+TODO: full feedback example
+
+<details>
+<summary>
+Using transitions and events in Stately Studio
+</summary>
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
+:::tip
+
+Watch our [“Transitions and events” video on YouTube](https://www.youtube.com/watch?v=0qgP4RZyq58&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=4) (1m50s).
+
+:::
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
 In the video player machine above, the events are *PLAY* and *PAUSE*. The *Play* event transitions from the *Paused* state to the *Playing* state. The *Pause* event transitions from the *Playing* state to the *Paused* state.
 
 ### Add a transition and event
@@ -96,9 +119,14 @@ First select the transition or event you want to change. Then…
 2. Right-click the state to bring up the **quick actions** menu.
 3. Choose **Switch source and target** from the **quick actions** menu.
 
+</details>
+
 ## Event objects
 
-In XState, events are represented by event objects with a `type` property and optional payload. The `type` property is a string that represents the event type. The payload is an object that contains additional data about the event.
+In XState, events are represented by event objects with a `type` property and optional payload:
+
+- The `type` property is a string that represents the event type.
+- The payload is an object that contains additional data about the event.
 
 ```ts
 feedbackActor.send({
@@ -121,20 +149,20 @@ Transitions are selected by checking the deepest child states first. If the tran
 
 ## Self-transitions
 
-A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. Self-transitions can also be used to restart a state.
+A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. You can also use self-transitions to restart a state.
 
 TODO: Why you might use self-transitions with example.
 
-## Using self-transitions in Stately Studio
+### Using self-transitions in Stately Studio
 
-### Make an event into a self-transition
+#### Make an event into a self-transition
 
-#### Using the **quick actions** menu
+##### Using the **quick actions** menu
 
 1. Right-click the event to bring up the **quick actions** menu.
 2. Choose **Make self transition** from the **quick actions** menu.
 
-#### Dragging the transition arrow
+##### Dragging the transition arrow
 
 1. Select the event.
 2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
@@ -169,19 +197,25 @@ const feedbackMachine = createMachine({
 
 ## Parent to child transitions
 
-When a state machine receives an event, it will first check the deepest state (aka atomic state) to see if there is any enabled transition. If not, the parent state is checked, and so on until the root state is reached.
+When a state machine receives an event, it will first check the deepest ([atomic](state-machines-and-statecharts.mdx#atomic-states)) state to see if there is any enabled transition. If not, the parent state is checked, and so on, until the machine reaches the root state.
 
-When an event should transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
+When you want an event to transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
 
 TODO: example with `{ on: { target: '.child' } }`
 
-## Reentering
+## Re-entering
 
-By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not reenter the parent state; that is, it will not execute the `exit` and `entry` actions of the parent state (TODO: link for actions).
+By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not re-enter the parent state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state.
 
-If reentering is desired, the `reenter` property can be set to `true`. This will cause the parent state to reenter, executing the `exit` and `entry` actions of the parent state.
+If you want the parent state to be re-entered, you can set the `reenter` property to `true`. This will cause the parent state to re-enter, executing the `exit` and `entry` actions of the parent state.
 
-TODO: illustration showing no reenter vs. reenter
+:::tip
+
+In XState v4, re-entering transitions were known as **external transitions**, and the default transitions were known as **internal transitions**.
+
+:::
+
+TODO: illustration showing no re-enter vs. re-enter
 
 TODO: example with `{ target: '.child', reenter: true }`
 
@@ -222,11 +256,16 @@ const feedbackMachine = createMachine({
 });
 ```
 
-Wildcard transitions are useful for handling events that are not handled by any other transition, or as a "catch-all" transition that handles any event in a state. A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
+Wildcard transitions are useful for:
+
+- handling events that are not handled by any other transition.
+- as a “catch-all” transition that handles any event in a state.
+
+A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
 
 ## Partial wildcard transitions
 
-A partial wildcard transition is a transition that machines any event that starts with a specific prefix. The event descriptor is defined by using the wildcard character (`*`) after a dot (`.`) as the event type:
+A partial wildcard transition is a transition that matches any event that starts with a specific prefix. The event descriptor is defined by using the wildcard character (`*`) after a dot (`.`) as the event type:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -249,15 +288,20 @@ const feedbackMachine = createMachine({
 });
 ```
 
-The wildcard character (`*`) can only be used in the suffix of an event descriptor, following a dot (`.`). Some examples:
+The wildcard character (`*`) can only be used in the suffix of an event descriptor, following a dot (`.`):
 
-- ✅ `mouse.*` - matches `mouse.click`, `mouse.move`, etc.
-- ✅ `mouse.click.*` - matches `mouse.click.left`, `mouse.click.right`, etc.
-- ❌ ~~`mouse*`~~ - invalid; does not match any event
-- ❌ ~~`mouse.*.click`~~ - invalid; cannot be used in the middle of an event descriptor
-- ❌ ~~`*.click`~~ - invalid; cannot be used in the prefix of an event descriptor
-- ❌ ~~`mouse.click*`~~ - invalid; does not match any event
-- ❌ ~~`mouse.*.*`~~ - invalid; cannot be used in the middle of an event descriptor
+### Valid wildcard examples
+
+- ✅ `mouse.*`: matches `mouse.click`, `mouse.move`, etc.
+- ✅ `mouse.click.*`: matches `mouse.click.left`, `mouse.click.right`, etc.
+
+### Invalid wildcard
+
+- 🚫 ~~`mouse*`~~: invalid; does not match any event.
+- 🚫 ~~`mouse.*.click`~~: invalid; `*` cannot be used in the middle of an event descriptor.
+- 🚫 ~~`*.click`~~: invalid; `*` cannot be used in the prefix of an event descriptor.
+- 🚫 ~~`mouse.click*`~~: invalid; does not match any event.
+- 🚫 ~~`mouse.*.*`~~: invalid; `*` cannot be used in the middle of an event descriptor.
 
 ## Multiple transitions in parallel states
 
@@ -273,12 +317,12 @@ import { createMachine } from 'xstate';
 
 ## Other transitions
 
-- [Eventless (always) transitions](#todo) are transitions that do not have an event, and are instead taken immediately when the transition is enabled.
+- [Eventless (always) transitions](#todo) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
 - [Delayed (after) transitions](#todo) are transitions that are enabled after a specified duration.
 
 ## Transition descriptions
 
-You can add a `.description` string to a transition to describe the transition. This is useful for explaining the purpose of the transition in the visualized state machine.
+You can add `.description` to transitions to describe their purpose and share related notes with your team. Stately Studio’s editor renders these descriptions in the machine and supports markdown, including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
 
 ```ts
 import { createMachine } from 'xstate';
@@ -320,7 +364,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-This is useful for quickly prototyping state machines. It is recommended to use the full transition object syntax, as it will be consistent with all other transition objects and will be easier to add actions, guards, and other properties to the transition in the future.
+Using the string target shorthand is useful for quickly prototyping state machines. Generally, we recommended using the full transition object syntax as it will be consistent with all other transition objects and will be easier to add actions, guards, and other properties to the transition in the future.
 
 ## TypeScript
 

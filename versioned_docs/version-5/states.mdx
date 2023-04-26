@@ -197,7 +197,7 @@ console.log(currentState.can({ type: 'feedback.submit' }));
 
 A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
 
-::: danger
+:::danger
 The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
 :::
 
@@ -263,6 +263,36 @@ console.log(state.toStrings());
 ```
 
 The `state.toStrings()` method is useful for representing the current state in string-based environments, such as in CSS classes or data-attributes.
+
+## State descriptions
+
+You can add `.description` to states to describe their purpose and share related notes with your team. In Stately Studio’s editor, these descriptions are rendered in the machine and support markdown including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
+
+```ts
+states: {
+  "Loading Move Destinations": {
+    // highlight-start
+    description:
+      "Load data from the server based on the entity's id and type (project or machine).\nResult includes the entity's current location, and the list or tree of valid destination options to which the user may move that entity.",
+    // highlight-end
+    invoke: {
+      src: "loadMoveData",
+      id: "loadMoveData",
+      onDone: [
+        {
+          target: "Destination Menu",
+          actions: "setDestinations",
+        },
+      ],
+      onError: [
+        {
+          target: "Data Loading Error",
+        },
+      ],
+    },
+  },
+}
+```
 
 ## TypeScript
 
