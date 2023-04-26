@@ -154,7 +154,7 @@ html, body {
   --ifm-h1-vertical-rhythm-bottom: 1.25;
   --ifm-heading-vertical-rhythm-bottom: 1;
   --ifm-link-decoration:underline;
-  --docusaurus-highlighted-code-line-bg:rgba(0,0,0,0.1);
+  --docusaurus-highlighted-code-line-bg:var(--st-code-highlight-background);
   --ifm-heading-vertical-rhythm-bottom:.75;
   --ifm-code-background:var(--st-code-highlight-background);
   --ifm-code-border-radius: 0.5em;
@@ -334,8 +334,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
   --st-copy-button-text: var(--st-blue-800);
-  --st-highlight-background: var(--st-yellow-100);
-  --st-highlight-background-hover: var(--st-yellow-50);
+  --st-highlight-background: var(--st-blue-100);
+  --st-highlight-background-hover: var(--st-blue-50);
   --st-button-background: var(--st-blue-200);
   --st-button-background-hover: var(--st-blue-100);
   --st-button-text: var(--st-blue-800);
@@ -461,6 +461,7 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-code-border: transparent;
   --st-codeblock-background: var(--st-gray-850);
   --st-code-highlight-background: var(--st-gray-800);
+  --docusaurus-highlighted-code-line-bg:var(--st-code-highlight-background);
   --st-copy-button-background: var(--st-blue-700);
   --st-copy-button-text: var(--st-blue-100);
   --st-highlight-background: var(--st-gray-800);
