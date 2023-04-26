@@ -334,8 +334,8 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
   --st-copy-button-text: var(--st-blue-800);
-  --st-highlight-background: var(--st-yellow-100);
-  --st-highlight-background-hover: var(--st-yellow-50);
+  --st-highlight-background: var(--st-blue-100);
+  --st-highlight-background-hover: var(--st-blue-50);
   --st-button-background: var(--st-blue-200);
   --st-button-background-hover: var(--st-blue-100);
   --st-button-text: var(--st-blue-800);
