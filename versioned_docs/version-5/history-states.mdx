@@ -16,7 +16,29 @@ The history state can be deep or shallow:
 - A shallow history state remembers the immediate child’s state.
 - A deep history state remembers the deepest active state or states inside its child states.
 
-Coming soon… Why you might use a history state.
+```ts
+const checkoutMachine = createMachine({
+  // ...
+  states: {
+    payment: {
+      initial: 'card',
+      states: {
+        card: {},
+        paypal: {},
+        // highlight-next-line
+        hist: { type: 'history' },
+      },
+    },
+    address: {
+      on: {
+        back: {
+          target: 'payment.hist',
+        },
+      },
+    },
+  },
+});
+```
 
 ## Using history states in Stately Studio
 
