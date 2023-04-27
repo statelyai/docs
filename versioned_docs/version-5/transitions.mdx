@@ -8,7 +8,7 @@ import SkipDownLink from '@site/src/components/SkipDownLink';
 
 A **transition** is a change from one finite state to another, triggered by an event.
 
-An **event** is a signal, trigger, or message that causes a transition. 
+An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
 
 When an event is received by an actor, its machine will determine if there are any enabled transitions for that event in the current state. If there are, those transitions will be taken, and the actions will be executed.
 
@@ -18,7 +18,6 @@ Transitions are represented by `on:` in a state:
 
 ```ts
 import { createMachine } from 'xstate';
-
 const feedbackMachine = createMachine({
   id: 'feedback',
   initial: 'question',
@@ -35,9 +34,11 @@ const feedbackMachine = createMachine({
 });
 ```
 
+<SkipDownLink text="Jump to learning more about event objects in XState" link="#event-objects"/>
+
 ## Using transitions and events in Stately Studio
 
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
 :::tip
 
@@ -45,7 +46,11 @@ Watch our [“Transitions and events” video on YouTube](https://www.youtube.co
 
 :::
 
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+A machine moves from state to state through **transitions**. Transitions are caused by events; when an event happens, the machine transitions to the next state.
+
+Transitions are “deterministic”; each combination of state and event always points to the same next state.
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
 <p>
   <ThemedImage
@@ -62,58 +67,6 @@ The arrows are transitions, and the rounded rectangles on the arrow’s lines ar
 </p>
 
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7).
-
-TODO: example going from form to closed
-
-When a state machine receives an event, it only checks the active finite states to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition’s actions and then transition to the target state.
-
-Transitions are represented by `on:` in a state:
-
-TODO: full feedback example
-
-<SkipDownLink text="Jump to learning more about event objects in XState" link="#event-objects"/>
-
-## Using transitions and events in Stately Studio
-
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
-
-:::tip
-
-Watch our [“Transitions and events” video on YouTube](https://www.youtube.com/watch?v=0qgP4RZyq58&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=4) (1m50s).
-
-:::
-
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
-
-In the video player machine above, the events are *PLAY* and *PAUSE*. The *Play* event transitions from the *Paused* state to the *Playing* state. The *Pause* event transitions from the *Playing* state to the *Paused* state.
-
-### Add a transition and event
-
-1. Select an existing state.
-2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-
-### Change the source and target states for a transition or event
-
-First select the transition or event you want to change. Then…
-
-#### Using the **Transition details** panel
-
-1. Select the transition or event you wish to change.
-2. Open the **Transition details** panel from the right tool menu.
-3. Choose a new source state from the **Source** dropdown options.
-4. Choose a new target state from the **Target** dropdown options.
-
-#### Dragging the transition handles
-
-1. Select the transition or event you want to change.
-2. Drag the transition’s handle connected to the source state to connect it to a new source state.
-3. Drag the transition’s handle connected to the target state to connect it to a new target state.
-
-### Switch the source and target states for a transition or event
-
-1. Select the transition or event.
-2. Right-click the state to bring up the **quick actions** menu.
-3. Choose **Switch source and target** from the **quick actions** menu.
 
 ## Event objects
 
@@ -316,7 +269,7 @@ import { createMachine } from 'xstate';
 
 ## Transition descriptions
 
-You can add `.description` to transitions to describe their purpose and share related notes with your team. Stately Studio’s editor renders these descriptions in the machine and supports markdown, including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
+You can add a `.description` string to a transition to describe the transition. This is useful for explaining the purpose of the transition in the visualized state machine.
 
 ```ts
 import { createMachine } from 'xstate';
