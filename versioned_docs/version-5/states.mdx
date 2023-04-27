@@ -112,7 +112,7 @@ A state machine with nested states (or *[statechart](state-machines-and-statecha
 
 The **state value** is an object that represents all the active state nodes in a machine. For state machines that have state nodes without child state nodes, the state value is a string:
 
-TODO: make this a visual example
+Coming soon… a visual example.
 
 - `state.value === 'question'`
 - `state.value === 'thanks'`
@@ -120,7 +120,7 @@ TODO: make this a visual example
 
 For state machines with parent state nodes, the state value is an object:
 
-TODO: make this a visual example
+Coming soon… a visual example.
 
 - `state.value === { form: 'invalid' }` - this represents a state machine with an active child node with key `form` that has an active child node with key `invalid`
 
@@ -138,7 +138,7 @@ State machines may also have no state nodes other than the root state node. For 
 
 ## State context
 
-State machines can have [context](#todo), which is an object that represents the extended state of the machine. The context is immutable, and can only be updated by [assigning](#todo) to it in an action. You can read the `state.context` property to get the current context.
+State machines can have [context](context.mdx), which is an object that represents the extended state of the machine. The context is immutable, and can only be updated by [assigning](actions.mdx#assign-action) to it in an action. You can read the `state.context` property to get the current context.
 
 ```ts
 const currentState = feedbackActor.getSnapshot();
