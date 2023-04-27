@@ -58,17 +58,51 @@ Essentially, this allows statecharts to "remember" where they left off when exit
 
 ## TypeScript
 
+_Coming soon_
+
 ## Cheatsheet
+
+**Create a history state (shallow by default)**
 
 ```ts
 const machine = createMachine({
   // ...
-  initial: 'firstState',
+  states: {
+    hist: { type: 'history' },
+    firstState: {},
+    someState: {},
+    anotherState: {},
+  },
+});
+```
+
+**Create a deep history state**
+
+```ts
+const machine = createMachine({
+  // ...
   states: {
     hist: {
       type: 'history',
-      history: 'deep', // or 'shallow' (default)
-      target: 'someState', // optional
+      history: 'deep',
+    },
+    firstState: {},
+    someState: {},
+    anotherState: {},
+  },
+});
+```
+
+**Create a history state with a target**
+
+```ts
+const machine = createMachine({
+  // ...
+  initialState: 'firstState',
+  states: {
+    hist: {
+      type: 'history',
+      target: 'someState',
     },
     firstState: {},
     someState: {},
@@ -78,3 +112,5 @@ const machine = createMachine({
 ```
 
 ## Resources
+
+_Coming soon_
