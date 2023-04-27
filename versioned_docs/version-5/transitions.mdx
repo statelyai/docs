@@ -2,15 +2,15 @@
 title: Events and transitions
 ---
 
-import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import SkipDownLink from '@site/src/components/SkipDownLink';
+import EmbedMachine from '@site/src/components/EmbedMachine';
 
 A **transition** is a change from one finite state to another, triggered by an event.
 
 An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
 
-When an event is received by an actor, its machine will determine if there are any enabled transitions for that event in the current state. If there are, those transitions will be taken, and the actions will be executed.
+<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7"/>
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
 
@@ -46,27 +46,33 @@ Watch our [“Transitions and events” video on YouTube](https://www.youtube.co
 
 :::
 
-A machine moves from state to state through **transitions**. Transitions are caused by events; when an event happens, the machine transitions to the next state.
+### Add a transition and event
 
-Transitions are “deterministic”; each combination of state and event always points to the same next state.
+1. Select an existing state.
+2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
 
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+### Change the source and target states for a transition or event
 
-<p>
-  <ThemedImage
-    alt="A video player state machine with an initial Paused State and a Playing state. The Play event transitions from Paused to Playing. The Pause event transitions from Playing to Paused."
-    sources={{
-      light: useBaseUrl(
-        '/transitions-and-events/intro/transitions-and-events.png'
-      ),
-      dark: useBaseUrl(
-        '/transitions-and-events/intro/transitions-and-events-dm.png'
-      ),
-    }}
-  />
-</p>
+First select the transition or event you want to change. Then…
 
-[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7).
+#### Using the **Transition details** panel
+
+1. Select the transition or event you wish to change.
+2. Open the **Transition details** panel from the right tool menu.
+3. Choose a new source state from the **Source** dropdown options.
+4. Choose a new target state from the **Target** dropdown options.
+
+#### Dragging the transition handles
+
+1. Select the transition or event you want to change.
+2. Drag the transition’s handle connected to the source state to connect it to a new source state.
+3. Drag the transition’s handle connected to the target state to connect it to a new target state.
+
+### Switch the source and target states for a transition or event
+
+1. Select the transition or event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Switch source and target** from the **quick actions** menu.
 
 ## Event objects
 
