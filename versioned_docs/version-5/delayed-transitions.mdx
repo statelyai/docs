@@ -4,16 +4,47 @@ title: Delayed (after) transitions
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import SkipDownLink from '@site/src/components/SkipDownLink';
 
-**Delayed transitions** are transitions that only happen after a specified duration. If another event happens before the end of the timer, the transition doesn’t complete. Delayed transitions are handy if you need to build timeouts and intervals into your application logic.
+**Delayed transitions** are transitions that only happen after a set amount of time. Delayed transitions are handy for building timeouts and intervals into your application logic. If another event occurs before the end of the timer, the transition doesn’t complete.
 
-Delayed transitions are labeled “after” and often referred to as “after” transitions.
+Delayed transitions are defined on the `after` property in milliseconds. They are often referred to as “after” transitions.
+
+```ts
+import { createMachine } from 'xstate';
+
+const pushTheButtonGame = createMachine({
+  initial: 'waitingForButtonPush',
+  states: {
+    waitingForButtonPush: {
+      // highlight-start
+      after: {
+        5000: {
+          target: 'timedOut',
+          actions: 'logThatYouGotTimedOut',
+        },
+      },
+      // highlight-end
+      on: {
+        PUSH_BUTTON: {
+          actions: 'logSuccess',
+          target: 'success',
+        },
+      },
+    },
+    success: {},
+    timedOut: {},
+  },
+});
+```
 
 :::tip
 
 Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtube.com/watch?v=5RE_eazRhrw&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=12) (1m17s).
 
 :::
+
+<SkipDownLink text="Jump to learning more about delays in XState" link="#delays"/>
 
 <p>
   <ThemedImage
@@ -31,9 +62,11 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=5671366b-05cf-43f5-a09a-b88373ea27c1).
 
-In a video player, we might want the video to be *Closed* out of fullscreen mode a few seconds after the video has *Stopped*, instead of closing the fullscreen mode suddenly as soon as the video is stopped. The eventless transition above transitions from the *Stopped* state to the *Closed* state after 5 seconds.
+In a video player, want the video to be *Closed* out of fullscreen mode a few seconds after the video has *Stopped*, instead of closing the fullscreen mode suddenly as soon as the video is stopped. The eventless transition above transitions from the *Stopped* state to the *Closed* state after 5 seconds.
 
 ## Using delayed transitions in Stately Studio
+
+In Stately Studio, delayed transitions are labeled “after.”
 
 ### Make an event into a delayed transition
 
@@ -51,18 +84,41 @@ First, select the event you want to replace with a delayed transition. Then…
 2. Choose **After** from the **Event type** dropdown menu.
 3. Specify the delay time in milliseconds using the **Delay** text input.
 
-Delayed transitions are taken after a set amount of time. They are defined on the `after` property:
-
-<!-- TODO: `{ after: ... }` -->
-
 ## Delays
 
-- Delays can be inlined as number, e.g. `after: { 1000: ... }`
-- Delays can be referenced; e.g. `after: { timeout: ... }`
-- `.provide({ delays })`
-- Can be defined as expression: `after: [{ delay: () => 1000, target: ... }]`
+You can define delays in a few ways: [inlined](#inlined-delays), [referenced](#referenced-delays), and [as an expression](#delay-expressions).
 
-## Delay references
+### Inlined delays
+
+- Inlined as number, for example `after: { 1000: ... }`
+
+### Reference delays
+
+- Referenced, for example `after: { timeout: ... }`
+
+- `.provide({ delays })`
+
+### Delay expressions
+
+The delay option can be evaluated as a delay expression. This function that takes in the current `context` and `event` that triggered the `send()` action and returns the resolved `delay` (in milliseconds).
+
+```ts
+`after: [{ delay: () => 1000, target: ... }]`
+```
+
+## Lifecycle
+
+Delayed transition timers are canceled when the state is exited.
+
+## Testing
+
+- Simulated clock
+
+## TypeScript
+
+## Cheatsheet
+
+Use our XState delayed transitions cheatsheet below to get started quickly.
 
 ```ts
 createMachine({
@@ -77,17 +133,5 @@ createMachine({
   },
 });
 ```
-
-## Lifecycle
-
-- Canceled when the state is exited
-
-## Testing
-
-- Simulated clock
-
-## TypeScript
-
-## Cheatsheet
 
 ## Resources
