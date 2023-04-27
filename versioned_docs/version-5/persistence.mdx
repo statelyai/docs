@@ -111,33 +111,7 @@ An alternative to persisting state is **event sourcing**, which is a way of rest
 
 To implement event sourcing, you persist the events as they happen, and then replay them to restore the state of the actor:
 
-```ts
-const events = [];
-
-const feedbackActor = interpret(feedbackMachine);
-
-feedbackActor.subscribe((state) => {
-  // Persist events
-  events.push(state.event);
-});
-
-feedbackActor.start();
-
-// Persist events
-localStorage.setItem('feedbackEvents', JSON.stringify(events));
-
-// ...
-
-// Restore state
-const restoredEvents = JSON.parse(localStorage.getItem('feedbackEvents'));
-
-// Replay events
-const restoredFeedbackActor = interpret(feedbackMachine);
-
-for (const event of restoredEvents) {
-  restoredFeedbackActor.send(event);
-}
-```
+_Code example coming soon_
 
 - Useful for replaying actions
 
