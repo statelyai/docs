@@ -15,13 +15,14 @@ Watch our [“Parent and child states” video on YouTube](https://www.youtube.c
 :::
 
 <p>
-<ThemedImage
-  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
-  sources={{
-    light: 'https://stately.ai/registry/machines/9ba5377c-aab3-4465-8909-4eea499622fa.light.png',
-    dark: 'https://stately.ai/registry/machines/9ba5377c-aab3-4465-8909-4eea499622fa.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/9ba5377c-aab3-4465-8909-4eea499622fa.light.png',
+      dark: 'https://stately.ai/registry/machines/9ba5377c-aab3-4465-8909-4eea499622fa.dark.png',
+    }}
+  />
 </p>
 
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9ba5377c-aab3-4465-8909-4eea499622fa).
@@ -43,13 +44,66 @@ Using the **State details** panel:
 2. Open the **State details** panel from the right tool menu.
 3. Choose your desired new parent from the **Parent** dropdown menu.
 
+---
+
 ## Root state
 
-_Coming soon_
+The state machine itself is a parent state! It’s the root state, and it’s always active.
+
+It's normal to have a state machine that has no other states. This is useful for modeling a simple state machine that only handles events via transitions:
+
+Example of a simple counting machine with increment, decrement, reset, and no states:
+
+```ts
+import { createMachine } from 'xstate';
+
+const countingMachine = createMachine({
+  id: 'counting',
+  initial: 'active',
+  on: {
+    increment: {
+      actions: assign({ count: ({ context }) => context.count + 1 }),
+    },
+    decrement: {
+      actions: assign({ count: ({ context }) => context.count - 1 }),
+    },
+    reset: {
+      actions: assign({ count: 0 }),
+    },
+  },
+  // No child states!
+});
+```
 
 ## Initial state
 
-_Coming soon_
+The initial state of a parent state is the state that is entered when the parent state is entered. Parent states _must_ have an initial states.
+
+You specify the initial state via the `initial` property of the parent state, which is the key of the initial state in the `states` object:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // highlight-next-line
+  initial: 'question',
+  states: {
+    // highlight-start
+    question: {
+      // ...
+    },
+    // highlight-end
+    form: {
+      // ...
+    },
+    thanks: {
+      // ...
+    },
+  },
+});
+```
+
+- Even if the parent state is never directly targeted and its child states are instead targeted, specifying the initial state in the `.initial` property is required. In this case, the `.initial` property can be any of the child states.
 
 ## Transitions on compound states
 
