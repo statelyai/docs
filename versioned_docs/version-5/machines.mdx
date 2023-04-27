@@ -64,7 +64,7 @@ feedbackActor.send({ type: 'feedback.good' });
 
 ## Interpreting machines
 
-A machine can be considered a "blueprint" for an actor. An [actor](#todo) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
+A machine can be considered a "blueprint" for an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
 
 To create an actor, interpret the machine using the `interpret(machine)` function:
 
@@ -200,16 +200,16 @@ const nextState = feedbackMachine.transition(initialState, {
 
 The `machine.transition(...)` method is useful for testing or building a custom interpreter.
 
-- [Testing](#todo)
-- [Custom interpreters](#todo)
+- [Testing](testing.mdx)
+- Coming soon… Custom interpreters
 
 ## API
 
-TODO: Link to API
+Coming soon… Link to API
 
 ## TypeScript
 
-TODO:
+_Coming soon_
 
 ## Machine cheatsheet
 
@@ -253,7 +253,3 @@ const machineWithImpls = machine.provide({
   },
 });
 ```
-
-### Further resources
-
-TODO:

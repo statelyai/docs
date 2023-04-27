@@ -2,7 +2,9 @@
 title: Eventless (always) transitions
 ---
 
-**Eventless transitions** are transitions that are not enabled by an event. These transitions are *always* taken when the transition is enabled.
+import SkipDownLink from '@site/src/components/SkipDownLink';
+
+**Eventless transitions** are transitions that happen without an explicit event. These transitions are *always* taken when the transition is enabled.
 
 Eventless transitions are labeled “always” and often referred to as “always” transitions.
 
@@ -24,7 +26,9 @@ Eventless transitions are labeled “always” and often referred to as “alway
 }
 ```
 
-## Usign eventless transitions in Stately Studio
+<SkipDownLink text="Jump to learning more about eventless transitions in XState" link="#eventless-transitions-and-guards"/>
+
+## Using eventless transitions in Stately Studio
 
 ### Make an event into an eventless transition
 
@@ -40,20 +44,41 @@ First, select the event you want to replace with an eventless transition. Then�
 1. Open the **Transition details** panel from the right tool menu.
 2. Choose **Always** from the **Event type** dropdown menu.
 
-In statecharts, an eventless transition is a transition that occurs without an explicit event. They are taken immediately after normal transitions are taken, if they are enabled (that is, if their guards are true (LINK)).
+## Eventless transitions and guards
 
-They are useful for doing things when some condition is true.
+Eventless transitions are taken immediately after normal transitions are taken. They are only taken if enabled, for example, if their [guards](guards.mdx) are true. This makes eventless transitions helpful in doing things when some condition is true.
 
-Warning: avoid infinite loops by using guards.
+## Avoid infinite loops
 
-<!-- TODO: example `{ always: { ... } }` -->
+:::warningxstate
+
+Since unguarded “always” transitions always run, you should be careful not to create an infinite loop.
+
+:::
+
+Eventless transitions with no `target` nor `guard` will cause an infinite loop. Transitions using `guard` and `actions` may run into an infinite loop if its `guard` keeps returning true.
+
+You should define eventless transitions either with:
+
+- `target`
+- `guard` + `target`
+- `guard` + `actions`
+- `guard` + `target` + `actions`
+
+If `target` is declared, the value should differ from the current state node.
+
+Coming soon… example `{ always: { ... } }`
 
 ## When to use
 
-<!-- TODO: examples -->
+Eventless transitions can be helpful when a state change is necessary, but there is no specific trigger for that change.
+
+Coming soon… examples
 
 ## TypeScript
 
+_Coming soon_
+
 ## Cheatsheet
 
-## Resources
+_Coming soon_

@@ -57,7 +57,7 @@ userFetcherActor.onDone((data) => {
 });
 ```
 
-TODO: show examples for `fromTransition`, `fromObservable`, etc.
+Coming soon… show examples for `fromTransition`, `fromObservable`, etc.
 
 ## Initial event input
 
@@ -222,12 +222,14 @@ const feedbackActor = interpret(feedbackMachine, {
 });
 ```
 
-- TODO: Usage with `@xstate/react`
-- TODO: Usage with `@xstate/vue`
-- TODO: Usage with `@xstate/svelte`
-- TODO: Usage with `@xstate/solid`
+- Coming soon… Usage with `@xstate/react`
+- Coming soon… Usage with `@xstate/vue`
+- Coming soon… Usage with `@xstate/svelte`
+- Coming soon… Usage with `@xstate/solid`
 
-TODO: Note: changing the input will not cause the actor to be restarted. You need to send an event to the actor to pass the new data to the actor:
+### Passing new data to an actor
+
+Changing the input will not cause the actor to be restarted. You need to send an event to the actor to pass the new data to the actor:
 
 ```tsx
 const Component = (props) => {
@@ -329,5 +331,3 @@ const feedbackMachine = createMachine({
   // ...
 });
 ```
-
-## Further resources

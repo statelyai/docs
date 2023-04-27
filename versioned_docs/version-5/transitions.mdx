@@ -98,8 +98,6 @@ Transitions are selected by checking the deepest child states first. If the tran
 
 A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. You can also use self-transitions to restart a state.
 
-TODO: Why you might use self-transitions with example.
-
 ### Using self-transitions in Stately Studio
 
 #### Make an event into a self-transition
@@ -113,8 +111,6 @@ TODO: Why you might use self-transitions with example.
 
 1. Select the event.
 2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
-
-TODO: assign example
 
 ## Transitions between states
 
@@ -142,13 +138,15 @@ const feedbackMachine = createMachine({
 });
 ```
 
+Coming soon… assign example
+
 ## Parent to child transitions
 
 When a state machine receives an event, it will first check the deepest ([atomic](state-machines-and-statecharts.mdx#atomic-states)) state to see if there is any enabled transition. If not, the parent state is checked, and so on, until the machine reaches the root state.
 
 When you want an event to transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
 
-TODO: example with `{ on: { target: '.child' } }`
+Coming soon… example with `{ on: { target: '.child' } }`
 
 ## Re-entering
 
@@ -162,9 +160,9 @@ In XState v4, re-entering transitions were known as **external transitions**, an
 
 :::
 
-TODO: illustration showing no re-enter vs. re-enter
+Coming soon… illustration showing no re-enter vs. re-enter
 
-TODO: example with `{ target: '.child', reenter: true }`
+Coming soon…  example with `{ target: '.child', reenter: true }`
 
 ## Transitions to any state
 
@@ -256,16 +254,12 @@ Since parallel states have multiple regions that can be active at the same time,
 
 Multiple targets are specified as an array of strings:
 
-```ts
-import { createMachine } from 'xstate';
-
-// todo: example
-```
+Coming soon…  example.
 
 ## Other transitions
 
-- [Eventless (always) transitions](#todo) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
-- [Delayed (after) transitions](#todo) are transitions that are enabled after a specified duration.
+- [**Eventless (always) transitions**](eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
+- [**Delayed (after) transitions**](delayed-transitions.mdx) are transitions that are enabled after a specified duration.
 
 ## Transition descriptions
 
@@ -319,7 +313,9 @@ _Coming soon_
 
 ## Cheatsheet
 
-**Event objects**
+Use our XState events and transitions cheatsheet below to get started quickly.
+
+### Event objects
 
 ```ts
 feedbackActor.send({
@@ -331,7 +327,7 @@ feedbackActor.send({
 });
 ```
 
-**Transition targets**
+### Transition targets
 
 ```ts
 const machine = createMachine({
@@ -379,7 +375,3 @@ const machine = createMachine({
   },
 });
 ```
-
-## Resources
-
-_Coming soon_

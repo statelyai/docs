@@ -13,7 +13,7 @@ Examples of actions:
 - Logging a message
 - Sending a message to another [actor](actors.mdx)
 
-TODO: more examples
+Coming soon… more examples
 
 ```ts
 const feedbackMachine = createMachine({
@@ -72,21 +72,21 @@ In XState, actions are represented on transitions in the `actions: ...` property
 
 Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
 
-<!-- TODO: simple example -->
+Coming soon… simple example
 
 ## Entry and exit actions
 
 Entry actions are actions that occur on any transition that enters a state node.
 
-<!-- TODO: illustation -->
+Coming soon… illustation
 
 Exit actions are actions that occur on any transition that exits a state node.
 
-<!-- TODO: illustration -->
+Coming soon… illustration
 
 Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
-<!-- TODO: example -->
+Coming soon… example
 
 ### In the Studio
 
@@ -146,13 +146,13 @@ Inline actions are useful for prototyping and simple cases but we generally reco
 
 They have a `type` and optional `params`.
 
-TODO: parameterized action
+Coming soon… parameterized action
 
 ### Implementing actions
 
 Actions are implemented with `.provide(...)`
 
-TODO: `.provide({ actions })`
+Coming soon… `.provide({ actions })`
 
 - Show how `params` can be used in implementation
 
@@ -164,13 +164,13 @@ Assign action is a special action that assigns data to the state context. Specia
 
 Can assign per property: `assign({ foo: 'bar' })` or overall: `assign(() => ({ foo: 'bar' }))`
 
-TODO: example
+Coming soon… example
 
 ## Raise action
 
 Raise action is a special action that raises an event. A **raised event** is an event that the machine creates and sends to itself.
 
-TODO: example
+Coming soon… example
 
 - Raise delay `{ delay: 1000 }`
 - Canceling a delay (link)
@@ -181,7 +181,7 @@ Raised events can be dynamic: `raise(({ context, event }) => ({ type: 'SOME_EVEN
 
 The `sendTo(...)` action is a special action that sends an event to a specific actor.
 
-TODO: example
+Coming soon… example
 
 - Send to delay `{ delay: 1000 }`
 - Canceling a delay (link)
@@ -192,19 +192,19 @@ TODO: example
 
 A pure action is a higher-level action that returns an array of actions to be executed, without actually executing any effects (hence the name "pure").
 
-TODO: example
+Coming soon… example
 
 ## Log action
 
 A log action is an easy way to log messages to the console.
 
-TODO: example
+Coming soon… example
 
 ## Choose action
 
 A choose action is a higher-level action that returns an array of actions to be executed.
 
-TODO: example
+Coming soon… example
 
 ## Cancel action
 
@@ -221,6 +221,8 @@ A cancel action cancels a delayed sendTo/raise action.
 
 ## TypeScript
 
+_Coming soon_
+
 ## Cheatsheet
 
-## Resources
+_Coming soon_
