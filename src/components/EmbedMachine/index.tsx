@@ -10,7 +10,6 @@ export default function EmbedMachine({name, embedURL}: Embed) {
   return (
     <p>
         <iframe
-            name={name}
             loading="lazy"
             src={embedURL}
             className={styles.embed}
