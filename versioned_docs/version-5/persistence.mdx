@@ -2,10 +2,11 @@
 title: 'Persistence'
 ---
 
-- What is persistence/restoration?
-- Why is it useful?
-  - Frontend use-case
-  - Backend use-case
+Actors can persist their internal state and restore it later. **Persistence** refers to storing the state of an actor in persistent storage, such as [localStorage](#todo) or a database. **Restoration** refers to restoring the state of an actor from persistent storage.
+
+In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable & traceable.
+
+In XState, you can obtain the state to be persisted via `actor.getPersistedState()` and restore state via `interpret(behavior, { state: restoredState }).start()`:
 
 ```ts
 const feedbackActor = interpret(feedbackMachine).start();
@@ -26,20 +27,119 @@ const restoredFeedbackActor = interpret(feedbackMachine, {
 
 ## Persisting state
 
-- `actor.getPersistedState()`
-- With machines
-- Other actors can persist state too
+You can obtain the state to be persisted via `actor.getPersistedState()`:
+
+```ts
+const feedbackActor = interpret(feedbackMachine).start();
+
+// Get state to be persisted
+const persistedState = feedbackActor.getPersistedState();
+```
+
+The internal state can be persisted from any actor, not only machines. Note that the persisted state is _not_ the same as the snapshot from `actor.getSnapshot()`; persisted state represents the internal state of the actor, while snapshots represent the actor's last emitted value:
+
+```ts
+const promiseActor = fromPromise(() => Promise.resolve(42));
+
+// Get the last emitted value
+const snapshot = promiseActor.getSnapshot();
+console.log(snapshot);
+// logs 42
+
+// Get the persisted state
+const persistedState = promiseActor.getPersistedState();
+console.log(persistedState);
+// logs { status: 'done', data: 42 }
+```
 
 ## Restoring state
 
-- `interpret(behavior, { state: restoredState }).start()`
-- Actions are not replayed, because they are already executed
-- Invocations are restarted
+You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `interpret(logic, { state: restoredState })`:
 
-## Recursive persistence
+```ts
+// Get persisted state
+const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
-- Invoked actors are persisted/restored recursively
-- Spawned actors are persisted/restored recursively
+// Restore state
+const feedbackActor = interpret(feedbackMachine, {
+  state: restoredState,
+});
+
+feedbackActor.start();
+```
+
+Actions from machine actors will _not_ be re-executed, because they are assumed to have been already executed. However, invocations will be restarted, and spawned actors will be restored recursively.
+
+## Deep persistence
+
+Persisting & restoring state from machine actors is deep; all invoked & spawned actors will be persisted & restored recursively.
+
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    form: {
+      invoke: {
+        id: 'form',
+        src: formMachine,
+      },
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+
+// Persist state
+const persistedState = feedbackActor.getPersistedState();
+localStorage.setItem('feedback', JSON.stringify(persistedState));
+
+//  ...
+
+// Restore state
+const restoredState = JSON.parse(localStorage.getItem('feedback'));
+
+const restoredFeedbackActor = interpret(feedbackMachine, {
+  state: restoredState,
+}).start();
+// Will restore both the feedbackActor and the invoked form actor at
+// their persisted states
+```
+
+## Event sourcing
+
+An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the events that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats).
+
+To implement event sourcing, you persist the events as they happen, and then replay them to restore the state of the actor:
+
+```ts
+const events = [];
+
+const feedbackActor = interpret(feedbackMachine);
+
+feedbackActor.subscribe((state) => {
+  // Persist events
+  events.push(state.event);
+});
+
+feedbackActor.start();
+
+// Persist events
+localStorage.setItem('feedbackEvents', JSON.stringify(events));
+
+// ...
+
+// Restore state
+const restoredEvents = JSON.parse(localStorage.getItem('feedbackEvents'));
+
+// Replay events
+const restoredFeedbackActor = interpret(feedbackMachine);
+
+for (const event of restoredEvents) {
+  restoredFeedbackActor.send(event);
+}
+```
+
+- Useful for replaying actions
 
 ## Strategies
 
@@ -50,19 +150,36 @@ const restoredFeedbackActor = interpret(feedbackMachine, {
   - Filesystem
   - URL
 
-# Caveats
+## Caveats
 
-- Incompatible state
-- Desire to replay actions
-- Consider [event sourcing](#)
+There are some caveats to persisting & restoring state that you should be aware of:
 
-# TypeScript
+- Incompatible state: if the machine or actor logic changes, the restored state may be incompatible with the new logic.
+- Replaying actions: actions that have already been executed will not be re-executed. [Event sourcing] is preferred for this use-case.
+- Serialization: the state must be serializable, which means that it must be JSON-serializable. This means that you cannot persist functions, classes, or other non-serializable values.
 
-# Cheatsheet
+## TypeScript
 
-- Persisting state
-  - `actor.getPersistedState()`
-- Restoring state
-  - `interpret(behavior, { state: restoredState }).start()`
+_Coming soon_
 
-# Resources
+## Cheatsheet
+
+**Persisting state**
+
+```ts
+const persistedState = actor.getPersistedState();
+```
+
+**Restoring state**
+
+```ts
+const restoredState = JSON.parse(localStorage.getItem('feedback'));
+
+const restoredActor = interpret(actorMachine, {
+  state: restoredState,
+}).start();
+```
+
+## Resources
+
+_Coming soon_
