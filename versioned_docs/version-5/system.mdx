@@ -1,0 +1,115 @@
+---
+title: 'Systems'
+---
+
+An actor system is a collection of actors that can communicate with each other. Actors can invoke/spawn other actors, which forms a natural hierarchy of actors that belong to the same system.
+
+In XState, a system is implicitly created from the root actor, which is the actor that is returned from `interpret(machine).start()`. The system can be accessed from the `actor.system` property of actors, and from the destructured `{ system }` property from state machine actions:
+
+```ts
+import { createMachine, interpret } from 'xstate';
+
+const machine = createMachine({
+  // highlight-next-line
+  entry: ({ system }) => {
+    // ...
+  },
+});
+
+const actor = interpret(machine).start();
+// highlight-next-line
+actor.system;
+```
+
+Coming soon… systems in Stately Studio’s editor
+
+## Actor registration
+
+Actors can be registered with the system so that any other actor in the system can obtain a reference to it.
+
+Invoked actors are registered with a system-wide `systemId` in the `invoke` object:
+
+```ts
+import { createMachine, interpret } from 'xstate';
+
+const formMachine = createMachine({
+  // ...
+  on: {
+    submit: {
+      // highlight-next-line
+      actions: sendTo(({ system }) => system.get('notifier'), {
+        type: 'notify',
+        message: 'Form submitted!',
+      }),
+    },
+  },
+});
+
+const feedbackMachine = createMachine({
+  invoke: {
+    // highlight-next-line
+    systemId: 'notifier',
+    src: notifierMachine,
+  },
+  // ...
+  states: {
+    // ...
+    form: {
+      invoke: formMachine,
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+```
+
+Spawned actors are registered with a system-wide `systemId` in the 2nd argument of the `spawn` function:
+
+```ts
+import { createMachine, interpret, assign } from 'xstate';
+
+const todoMachine = createMachine({
+  // ...
+});
+
+const todosMachine = createMachine({
+  // ...
+  on: {
+    'todo.add': {
+      actions: assign({
+        todos: ({ context, spawn }) => {
+          const newTodo = spawn(todoMachine, {
+            // highlight-next-line
+            systemId: `todo-${context.todos.length}`,
+          });
+
+          return context.todos.concat(newTodo);
+        },
+      }),
+    },
+  },
+});
+```
+
+- `systemId: 'actorId'`
+
+## Actor communication
+
+- Reference actor from system `system.get('actorId')`
+
+## Stopping a system
+
+- Stop from root actor: `actor.stop()`
+- Cannot stop from descendant actors
+  - Warning will be logged
+
+## TypeScript
+
+- `invoke.systemId`
+- `spawn(thing, { systemId })`
+- `system.get('actorId')`
+- `rootActor.stop()`
+
+## Cheatsheet
+
+_Coming soon_

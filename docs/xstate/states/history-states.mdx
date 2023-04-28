@@ -10,7 +10,7 @@ When using statecharts, sometimes you’ll want to relaunch a process in a previ
 
 In the example below, when you turn the fan off via `POWER_OFF`, then turn it back on, it will _always_ start in the `lowPower` state.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const fanMachine = createMachine({
@@ -53,7 +53,7 @@ The example above isn’t a great user experience. Ideally, the fan would start 
 
 We can use a **history state** inside the `powerOn` state to enable that behavior. A history state, when reached, tells the machine to go to the last recorded child of its parent. In our case, when the machine returns to `powerOn`, it will select `lowPower`, `mediumPower` or `highPower`.
 
-```ts twoslash {23-25, 33-38}
+```ts
 import { createMachine } from 'xstate';
 
 const fanMachine = createMachine({
@@ -76,9 +76,11 @@ const fanMachine = createMachine({
       },
       initial: 'lowPower',
       states: {
+        // highlight-start
         hist: {
           type: 'history',
         },
+        // highlight-end
         lowPower: {},
         mediumPower: {},
         highPower: {},
@@ -86,12 +88,14 @@ const fanMachine = createMachine({
     },
     powerOff: {
       on: {
+        // highlight-start
         TURN_ON: {
           /**
            * Target the history node directly
            */
           target: 'powerOn.hist',
         },
+        // highlight-end
       },
     },
   },
@@ -126,7 +130,7 @@ The default behavior of the history state is `shallow`, but `deep` is useful whe
 
 In the example below, the user can hide/show their video AND mute/unmute their microphone. When they leave the call to go to the `notOnCall` state, they can then rejoin the call via `JOIN_CALL`, which targets `onCall.hist`.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const callMachine = createMachine({

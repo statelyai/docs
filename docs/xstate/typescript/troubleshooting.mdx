@@ -12,8 +12,7 @@ Here are some known issues, all of which have workarounds:
 
 When you use `createMachine`, you can pass in implementations to named actions, actors and guards in your config. For example:
 
-```ts twoslash
-// @errors: 2339
+```ts
 import { createMachine } from 'xstate';
 
 interface Context {}
@@ -49,7 +48,7 @@ createMachine(
 
 The example above errors because inside the `consoleLogData` function, XState doesn’t know which event caused it to fire. The cleanest way to manage this issue is to assert the event type yourself:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 interface Context {}
@@ -72,14 +71,12 @@ const config = {
   },
 };
 
-// ---cut---
 
 createMachine(config, {
   actions: {
     consoleLogData: (context, event) => {
       if (event.type !== 'EVENT_WITH_FLAG') return;
       console.log(event.flag);
-      //                ^?
     },
   },
 });
@@ -89,8 +86,7 @@ Sometimes it’s also possible to move the implementation inline.
 
 <!-- TODO - remove the noErrors tag below when https://github.com/statelyai/xstate/pull/3217 is fixed-->
 
-```ts twoslash
-// @noErrors
+```ts
 import { createMachine } from 'xstate';
 interface Context {}
 
@@ -100,7 +96,6 @@ type Event =
       type: 'EVENT_WITHOUT_FLAG';
     };
 
-// ---cut---
 
 createMachine({
   schema: {
@@ -111,7 +106,7 @@ createMachine({
     EVENT_WITH_FLAG: {
       actions: (context, event) => {
         console.log(event.flag);
-        //                ^?
+
       },
     },
   },
@@ -124,8 +119,7 @@ Moving the implementation inline doesn’t work for all cases. The action loses 
 
 Event types in inline entry actions are not currently typed to the event that led to them. Consider the following example:
 
-```ts twoslash
-// @errors: 2339
+```ts
 import { createMachine } from 'xstate';
 
 interface Context {}
@@ -163,7 +157,7 @@ createMachine({
 
 In the example above, XState doesn’t know which event led to the `entry` action on `state2`. The only fix similar to the fix for events in machine options above:
 
-```ts twoslash {19-20}
+```ts
 import { createMachine } from 'xstate';
 
 interface Context {}
@@ -174,7 +168,6 @@ type Event =
       type: 'EVENT_WITHOUT_FLAG';
     };
 
-// ---cut---
 
 createMachine({
   schema: {
@@ -193,9 +186,10 @@ createMachine({
     state2: {
       entry: [
         (context, event) => {
+          // highlight-start
           if (event.type !== 'EVENT_WITH_FLAG') return;
           console.log(event.flag);
-          //                ^?
+          // highlight-end
         },
       ],
     },
@@ -209,9 +203,8 @@ createMachine({
 
 When run in `strict: true` mode, assign actions can sometimes behave strangely.
 
-```ts twoslash
+```ts
 import { createMachine, assign } from 'xstate';
-// ---cut---
 
 interface Context {
   something: boolean;
@@ -226,7 +219,6 @@ createMachine({
     assign({
       skip: true,
       something: (context) => context.something,
-      //                               ^?
     }),
   ],
 });
@@ -234,15 +226,13 @@ createMachine({
 
 In this case, it may appear that nothing you try works and all syntaxes seem buggy. The fix is strange but works consistently: add an unused `context` argument to the first argument of your assigner function.
 
-```ts twoslash
-// @noErrors
+```ts
 import { createMachine, assign } from 'xstate';
 
 interface Context {
   something: boolean;
   skip: boolean;
 }
-// ---cut---
 
 createMachine({
   schema: {
@@ -252,7 +242,6 @@ createMachine({
     assign({
       skip: (context) => true,
       something: (context) => context.something,
-      //                               ^?
     }),
   ],
 });

@@ -16,7 +16,7 @@ You can use a powerful tool called `spawn` to run these actors in these cases. A
 
 Spawning actors puts a reference to the machine in `context`, which means that you must always assign a spawned actor to context via `assign`:
 
-```ts twoslash
+```ts
 import { createMachine, spawn, assign } from 'xstate';
 
 const childMachine = createMachine({
@@ -34,21 +34,22 @@ const parentMachine = createMachine({
 
 In the example above, the spawned actor can now be referenced on the `context` of the machine. You can spawn as many actors as you need:
 
-```ts twoslash {5-7}
+```ts
 import { createMachine, spawn, assign } from 'xstate';
 
 const childMachine = createMachine({
   /* ... */
 });
 
-// ---cut---
 const parentMachine = createMachine({
   entry: [
     assign({
       childMachineRefs: () => [
+        // highlight-start
         spawn(childMachine),
         spawn(childMachine),
         spawn(childMachine),
+        // highlight-end
       ],
     }),
   ],
@@ -71,12 +72,11 @@ forwardTo(context => context.counterRef);
 
 You can also forward _all_ events to the child by passing `autoForward` as an option to `spawn`:
 
-```ts twoslash
+```ts
 import { spawn, createMachine, assign } from 'xstate';
 
 const childMachine = createMachine({});
 
-// ---cut---
 const machine = createMachine({
   entry: assign((context) => ({
     counterRef: spawn(childMachine, {
@@ -94,15 +94,15 @@ Passing `autoForward` will ensure that every event sent to the `machine` also ge
 
 When you want to stop a spawned actor, you can either stop the parent machine, which will stop all child actors automatically, or stop the actor via the `stop` action.
 
-```ts twoslash {9, 35-37}
+```ts
 const childMachine = createMachine({
   /* ... */
 });
 
-// ---cut---
 import { createMachine, spawn, assign, actions, ActorRefFrom } from 'xstate';
-
+// highlight-start
 const { stop } = actions;
+// highlight-end
 
 const parentMachine = createMachine(
   {
@@ -121,9 +121,11 @@ const parentMachine = createMachine(
       }),
     ],
     on: {
+      // highlight-start
       STOP: {
         actions: 'stopMachine',
       },
+      // highlight-end
     },
   },
   {
@@ -140,13 +142,15 @@ const parentMachine = createMachine(
 
 Just like invoking callbacks, callbacks can be spawned as actors.
 
-```ts twoslash {22}
+```ts
 import { createMachine, assign, spawn } from 'xstate';
 
 const machine = createMachine({
   entry: assign({
     counterRef: (context, event) =>
+      // highlight-start
       spawn((sendBack, receive) => {
+      // highlight-end
         // Run any code you want inside here
 
         return () => {
@@ -166,7 +170,7 @@ Spawned callbacks behave exactly the same as invoked callbacks but with all the 
 
 Just like invoking observables, observables can be spawned as actors:
 
-```ts twoslash
+```ts
 import { createMachine, assign, spawn } from 'xstate';
 import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
