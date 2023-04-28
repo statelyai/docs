@@ -44,7 +44,10 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 
 :::
 
-<SkipDownLink text="Jump to learning more about delays in XState" link="#delays"/>
+<SkipDownLink
+  text="Jump to learning more about delays in XState"
+  link="#delays"
+/>
 
 <p>
   <ThemedImage
@@ -84,26 +87,67 @@ First, select the event you want to replace with a delayed transition. Then…
 2. Choose **After** from the **Event type** dropdown menu.
 3. Specify the delay time in milliseconds using the **Delay** text input.
 
+---
+
 ## Delays
 
 You can define delays in a few ways: [inlined](#inlined-delays), [referenced](#referenced-delays), and [as an expression](#delay-expressions).
 
 ### Inlined delays
 
-- Inlined as number, for example `after: { 1000: ... }`
+You can define an inlined delay by specifying the delay time (in milliseconds) directly:
 
-### Reference delays
+```ts
+const machine = createMachine({
+  initial: 'idle',
+  states: {
+    idle: {
+      after: {
+        1000: { target: 'nextState' },
+      },
+    },
+    nextState: {},
+  },
+});
+```
 
-- Referenced, for example `after: { timeout: ... }`
+This will transition to the `nextState` state after 1000ms.
 
-- `.provide({ delays })`
+### Referenced delays
+
+You can also define referenced delays by specifying a string delay key, and providing the actual delay time separately.
+
+For example:
+
+```ts
+const machine = createMachine(
+  {
+    initial: 'idle',
+    states: {
+      idle: {
+        after: {
+          timeout: { target: 'nextState' },
+        },
+      },
+      nextState: {},
+    },
+  },
+  {
+    // highlight-start
+    delays: {
+      timeout: 1000,
+    },
+    // highlight-end
+  }
+);
+```
 
 ### Delay expressions
 
-The delay option can be evaluated as a delay expression. This function that takes in the current `context` and `event` that triggered the `send()` action and returns the resolved `delay` (in milliseconds).
+The delay option can be evaluated as a delay expression. The delay expression function takes in an object that contains `context` and `event` properties and returns the resolved `delay` (in milliseconds).
 
 ```ts
-`after: [{ delay: () => 1000, target: ... }]`
+`after: [{ delay: () => 1000, target: ... }]`;
 ```
 
 ## Lifecycle
