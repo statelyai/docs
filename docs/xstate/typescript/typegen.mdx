@@ -9,11 +9,11 @@ description: 'You can automatically generate intelligent typings for XState usin
 
 :::caution
 
-**This feature is in beta!** Read the section below on [known limitations](#known-limitations) to find out what we’re actively looking to improve.
+**This feature is in beta!** Read the section below on [known limitations](/#known-limitations) to find out what we’re actively looking to improve.
 
 :::
 
-You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/tools/developer-tools#xstate-cli-command-line-interface).
+You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](tools/developer-tools#xstate-cli-command-line-interface).
 
 #### How to get started with VS Code
 
@@ -27,14 +27,16 @@ Install the [CLI](/tools/developer-tools.mdx#xstate-cli-command-line-interface) 
 
 Next try to create a machine, make sure to set the `schema` attributes:
 
-```ts twoslash {4-7}
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
+  // highlight-start
   schema: {
     context: {} as { value: string },
     events: {} as { type: 'FOO'; value: string } | { type: 'BAR' },
   },
+  // highlight-end
   initial: 'a',
   states: {
     a: {
