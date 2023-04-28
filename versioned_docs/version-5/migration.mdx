@@ -2,25 +2,268 @@
 title: 'Migrating from XState v4 to v5'
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Following our guide below, migrating from XState version 4 to version 5 should be straightforward. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
 
 This guide is for users who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
 
 ## Breaking changes
 
-`Machine` to `createMachine`
+The ~~`Machine(config)`~~ function is now called `createMachine(config)`:
 
-`cond` is now `guard`
+<Tabs>
+<TabItem value="v5" label="XState v5">
 
-Single-argument functions
+```ts
+import { createMachine } from 'xstate';
 
-`(context, event)` => `({ context, event })`
+const machine = createMachine({
+  // ...
+});
+```
 
-`actor.onTransition` is removed; use `actor.subscribe` instead
+</TabItem>
 
-`send` is deprecated; use `raise` or `sendTo` instead
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { Machine } from 'xstate';
+
+const machine = Machine({
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+const machine = createMachine({
+  on: {
+    someEvent: {
+      guard: 'someGuard',
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // renamed to `guard` in v5
+      cond: 'someGuard',
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  entry: ({ context, event }) => {
+    // ...
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  entry: (context, event) => {
+    // ...
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const actor = interpret(machine);
+actor.subscribe((state) => {
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.onTransition((state) => {
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const actor = interpret(machine);
+actor.start();
+
+const initialState = actor.getSnapshot();
+
+actor.subscribe((state) => {
+  // Snapshots from when the subscription was created
+  // Will not emit the current snapshot until a transition happens
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.start();
+
+actor.subscribe((state) => {
+  // Current snapshot immediately emitted
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
+
+See [send-to action](#todo) and [raise action](#todo) documentation for more information.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  entry: [
+    // Send an event to self
+    raise({ type: 'someEvent' }),
+
+    // Send an event to another actor
+    sendTo('someActor', { type: 'someEvent' }),
+  ],
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  entry: [
+    // Send an event to self
+    send({ type: 'someEvent' }),
+
+    // Send an event to another actor
+    send({ type: 'someEvent' }, { to: 'someActor' }),
+  ],
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
 
 `internal: false` is now `reenter: true`
+
+External transitions previously specified with `internal: false` are now specified with `reenter: true`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  on: {
+    someEvent: {
+      target: 'sameState',
+      reenter: true,
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  on: {
+    someEvent: {
+      target: 'sameState',
+      internal: false,
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
