@@ -15,6 +15,8 @@
         "slug": "/category/get-started",
         "keywords": ["guides"]
       },
+      "collapsed": false,
+      "collapsible": true,
       "items": [
         {
           "type": "doc",
