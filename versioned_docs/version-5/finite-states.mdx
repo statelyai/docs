@@ -74,6 +74,8 @@ Coming soon… `.getSnapshot()` and show `.value` and `.context`
 
 Coming soon… image
 
+---
+
 ## Initial state
 
 The initial state is the state that the machine starts in. It is defined by the `initial` property on the machine config:
@@ -100,15 +102,115 @@ const feedbackMachine = createMachine({
 
 ## State nodes
 
-A state node is a finite state that is defined by the `states` property on a machine config:
+In XState, a **state node** is a finite state "nodes" that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
+
+```ts
+// The machine is the root state node
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'prompt',
+
+  // State nodes
+  states: {
+    // State node
+    prompt: {
+      /* ... */
+    },
+    // State node
+    form: {
+      /* ... */
+    },
+    // State node
+    thanks: {
+      /* ... */
+    },
+    // State node
+    closed: {
+      /* ... */
+    },
+  },
+});
+```
 
 ## Tags
 
-_Coming soon_
+State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a "loading" tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'prompt',
+  states: {
+    prompt: {
+      tags: ['visible'],
+      // ...
+    },
+    form: {
+      tags: ['visible'],
+      // ...
+    },
+    thanks: {
+      tags: ['visible', 'confetti'],
+      // ...
+    },
+    closed: {
+      tags: ['hidden'],
+    },
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+
+console.log(feedbackActor..getSnapshot().hasTag('visible'));
+// logs true
+```
 
 ## Meta
 
-_Coming soon_
+Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation.
+
+The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'prompt',
+  meta: {
+    title: 'Feedback',
+  },
+  states: {
+    prompt: {
+      meta: {
+        content: 'How was your experience?',
+      },
+    },
+    form: {
+      meta: {
+        content: 'Please fill out the form below.',
+      },
+    },
+    thanks: {
+      meta: {
+        content: 'Thank you for your feedback!',
+      },
+    },
+    closed: {},
+  },
+});
+
+const feedbackActor = interpret(feedbackMachine).start();
+
+console.log(feedbackActor.getSnapshot().meta);
+// logs the object:
+// {
+//   feedback: {
+//     title: 'Feedback',
+//   },
+//   'feedback.prompt': {
+//     content: 'How was your experience?',
+//   }
+// }
+```
 
 ## Transitions
 

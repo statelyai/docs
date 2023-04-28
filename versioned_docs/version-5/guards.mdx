@@ -5,25 +5,41 @@ title: Guards
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-A **guard** is a condition that the machine checks when it goes through an event. If the condition is true, the machine follows the transition to the next state. If the condition is false, the machine follows the rest of the conditions to the next state. Any transition can be a guarded transition.
+A **guard** is a condition function that the machine checks when it goes through an event. If the condition is `true`, the machine follows the transition to the next state. If the condition is `false`, the machine follows the rest of the conditions to the next state.
+
+A **guarded transition** is a transition that is enabled only if its `guard` evaluates to `true`. The guard determines whether or not the transition can be enabled. Any transition can be a guarded transition.
+
+Guards should be pure, synchronous functions that return either `true` or `false`.
 
 ```ts
-const feedbackMachine = createMachine({
-  // ...
-  states: {
-    form: {
-      on: {
-        'feedback.submit': {
-          guard: 'isValid',
-          target: 'submitting',
+const feedbackMachine = createMachine(
+  {
+    // ...
+    states: {
+      form: {
+        on: {
+          'feedback.submit': {
+            // highlight-next-line
+            guard: 'isValid',
+            target: 'submitting',
+          },
         },
       },
-    },
-    submitting: {
-      // ...
+      submitting: {
+        // ...
+      },
     },
   },
-});
+  {
+    // highlight-start
+    guards: {
+      isValid: ({ context }) => {
+        return context.feedback.length > 0;
+      },
+    },
+    // highlight-end
+  }
+);
 ```
 
 ## Using guards in Stately Studio
@@ -68,39 +84,117 @@ First, select the event where you want to add a guard. Then…
 
 Use the **+ Transition** button to create more guards on the same transition.
 
-A guarded transition is a transition that is enabled only if has a conditional `guard` that evaluates to `true`. The guard determines whether or not the transition can be enabled.
+---
 
-- Guards should be pure functions that return a boolean
+## Multiple guarded transitions
+
+If you want to have a single event transition to different states in certain situations, you can supply an array of guarded transitions. Each transition will be tested in order, and the first transition whose `guard` evaluates to `true` will be taken.
+
+You can specify a default transition to be taken as the last transition in the array. If none of the guards evaluate to `true`, the default transition will be taken.
+
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  prompt: {
+    on: {
+      // highlight-start
+      'feedback.provide': [
+        // Taken if 'sentimentGood' guard evaluates to `true`
+        {
+          guard: 'sentimentGood',
+          target: 'thanks',
+        },
+        // Taken if none of the above guarded transitions are taken
+        // and if 'sentimentBad' guard evaluates to `true`
+        {
+          guard: 'sentimentBad',
+          target: 'form',
+        },
+        // Default transition
+        { target: 'form' },
+      ],
+      // highlight-end
+    },
+  },
+});
+```
 
 ## Inline guards
+
+You can define guards as an inline function. This is useful for quickly prototyping logic but we generally recommended using serialized guards (strings or objects) for better reusability and visualization.
 
 ```ts
 on: {
   event: {
     guard: ({ context, event }) => true,
-    target: 'target'
+    target: 'someState'
   }
 }
 ```
 
 ## Guard object
 
+A guard can be defined as an object with a `type`, which is the type of guard that references the provided guard implementation, and optional `params`, which can be read by the implemented guard:
+
 ```ts
-on: {
-  event: {
-    guard: { type: 'isValid', params: { ... } },
-    target: 'target'
+const feedbackMachine = createMachine(
+  {
+    // ...
+    states: {
+      // ...
+      form: {
+        on: {
+          submit: {
+            // highlight-next-line
+            guard: { type: 'isValid', params: { maxLength: 50 } },
+            target: 'submitting',
+          },
+        },
+      },
+      // ...
+    },
+  },
+  {
+    // highlight-start
+    guards: {
+      isValid: ({ context, guard }) => {
+        return (
+          context.feedback.length > 0 &&
+          context.feedback.length <= guard.maxLength
+        );
+      },
+    },
+    // highlight-end
   }
-}
+);
 ```
 
-- Show `.provide({ guards })` and how `params` can be accessed there
-- Useful for custom guards
+Guards can later be provided or overridden by providing custom guard implementations in the `.provide()` method:
+
+```ts
+const feedbackActor = interpret(
+  // highlight-start
+  feedbackMachine.provide({
+    guards: {
+      isValid: ({ context, guard }) => {
+        return (
+          context.feedback.length > 0 &&
+          context.feedback.length <= guard.maxLength &&
+          isNotSpam(context.feedback)
+        );
+      },
+    },
+  })
+  // highlight-end
+).start();
+```
 
 ## Higher-level guards
 
-- `and(...)` - evaluates to `true` if all guards in `and([...guards])` evaluate to `true`
-- `or(...)` - evaluates to `true` if _any_ guards in `or([...guards])` evaluate to `true`
+XState provides higher-level guards, which are guards that compose other guards. There are three higher-level guards – `and`, `or`, and `not`:
+
+- `and([...])` - evaluates to `true` if all guards in `and([...guards])` evaluate to `true`
+- `or([...])` - evaluates to `true` if _any_ guards in `or([...guards])` evaluate to `true`
 - `not(...)` - evaluates to `true` if the guard in `not(guard)` evaluates to `false`
 
 ```ts
@@ -111,7 +205,7 @@ on: {
 }
 ```
 
-Can be combined:
+Higher-level guards can be combined:
 
 ```ts
 on: {
@@ -123,21 +217,35 @@ on: {
 
 ## In-state guards
 
-Most useful for [parallel states](parallel-states.mdx):
+You can use the `stateIn(stateValue)` guard to check if the current state matches the provided `stateValue`. This is most useful for [parallel states](parallel-states.mdx).
 
 ```ts
 on: {
   event: {
     guard: stateIn('#state1');
+  },
+  anotherEvent: {
+    guard: stateIn({ form: 'submitting' })
   }
 }
 ```
 
+In-state guards match the state of the entire machine, not the state node. There usually isn't a need to use in-state guards for regular states. Try to model transitions in your state machines so that you don't need to use in-state guards first.
+
 ## Shorthands
 
-For simple guards: `guard: 'something'`
+It is recommended to define guards as guard objects, e.g. `{ type: 'someGuard', params: { ... } }`. However, if a guard has no params, you can specify it as a string:
 
-- `and(['isValid', 'isAuthorized'])`
+```ts
+on: {
+  someEvent: {
+    // Equivalent to:
+    // guard: { type: 'someGuard' }
+    // highlight-next-line
+    guard: 'someGuard';
+  }
+}
+```
 
 ## TypeScript
 
