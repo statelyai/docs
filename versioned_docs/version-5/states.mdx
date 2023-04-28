@@ -2,31 +2,20 @@
 title: State
 ---
 
-import ThemedImage from '@theme/ThemedImage';
 import SkipDownLink from '@site/src/components/SkipDownLink';
+import EmbedMachine from '@site/src/components/EmbedMachine';
 
 A state describes the machine’s status or mode, which could be as simple as *Paused* and *Playing*. A state machine can only be in one state at a time.
 
 These states are “finite”; the machine can only move through the states you’ve pre-defined.
+
+<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d"/>
 
 :::tip
 
 Watch our [“What are states?” video on YouTube](https://www.youtube.com/watch?v=z-6yhmSWUcc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=2) (53s).
 
 :::
-
-<p>
-  <ThemedImage
-    alt="Video player state machine with an initial Paused state and a Playing state. There’s a warning on the playing state because there’s no transitions which means the playing state cannot be reached."
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.light.png',
-      dark: 'https://stately.ai/registry/machines/741f69fd-7f01-4932-9407-6871e225bb6d.dark.png',
-    }}
-  />
-</p>
-
-[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d).
 
 <SkipDownLink text="Jump to learning more about the state object in XState" link="#state-object"/>
 
