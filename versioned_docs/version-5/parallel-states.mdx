@@ -2,7 +2,7 @@
 title: Parallel states
 ---
 
-import ThemedImage from '@theme/ThemedImage';
+import EmbedMachine from '@site/src/components/EmbedMachine';
 
 In statecharts, a parallel state is a state that has multiple child states (also known as **regions**) that are all active at the same time. This is different from a parent state, where only _one_ child state is active at a time.
 
@@ -48,6 +48,8 @@ const playerMachine = createMachine({
 });
 ```
 
+<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3" />
+
 ## Using states in Stately Studio
 
 A dashed line borders each region.
@@ -57,19 +59,6 @@ A dashed line borders each region.
 Watch our [“What are parallel states?” video on YouTube](https://www.youtube.com/watch?v=CWwgT1TbI4c&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=6) (54s).
 
 :::
-
-<p>
-  <ThemedImage
-    alt="A state machine containing two region states with dashed borders around the outside. The first region is the video state which is active at the same time as the audio state, and contains a playing and stopped state, with stop and play events. The other region is an audio state, which is active at the same time as the video state, and has muted and unmuted states, and unmute and mute events."
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/733de338-26cb-40a5-a0b5-b76bfc0405c3.light.png',
-      dark: 'https://stately.ai/registry/machines/733de338-26cb-40a5-a0b5-b76bfc0405c3.dark.png',
-    }}
-  />
-</p>
-
-[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3).
 
 In the video player machine above, the video and audio states are active at the same time, which means the following combinations of states can happen simultaneously:
 
@@ -97,7 +86,7 @@ First, select the parent state you want to set as a parallel state. Then…
 
 ## Parallel state value
 
-The [state value](#todo) of a parallel state is an object with the state values of each of its regions.
+The [state value](states.mdx#state-value) of a parallel state is an object with the state values of each of its regions.
 
 ```ts
 const playerActor = interpret(playerMachine);
