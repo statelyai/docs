@@ -61,17 +61,13 @@ function LatestVersionSuggestionLabel({versionLabel, to, onClick}) {
         latestVersionLink: (
           <b>
             <Link to={to} onClick={onClick}>
-              <Translate
-                id="theme.docs.versions.latestVersionLinkLabel"
-                description="The label used for the latest version suggestion link label">
-                latest version
-              </Translate>
+              {versionLabel}
             </Link>
           </b>
         ),
       }}>
       {
-        'For up-to-date documentation, see the {latestVersionLink} ({versionLabel}).'
+        'For {versionLabel}, see the {latestVersionLink} documentation.'
       }
     </Translate>
   );
