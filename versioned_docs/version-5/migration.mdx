@@ -646,12 +646,80 @@ const machine = createMachine({
 
 ---
 
-No more `in: '...'` guards; use `stateIn(...)` instead
+The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
-Properties on action and guard objects other than `type` should be nested under a `params` object; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  on: {
+    someEvent: {
+      guard: stateIn({ form: 'submitting' }),
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  on: {
+    someEvent: {
+      in: '#someMachine.form.submitting'
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  entry: {
+    type: 'greet',
+    params: {
+      message: 'Hello world',
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  entry: {
+    type: 'greet',
+    message: 'Hello world',
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
 
 ## New features
 
-Higher-level guards: `and`, `or`, `not`
-
-Partial event wildcards: `on({ 'foo.*': ... })`
+_List coming soon_
