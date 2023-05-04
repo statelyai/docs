@@ -25,9 +25,7 @@ In XState, the separation is divided between:
 
 Below is an example where we describe in our config that when the machine first starts, it 'says hello', using the `sayHello` action.
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
+```ts
 const helloMachine = createMachine({
   /**
    * Below is an 'action' — we’ll
@@ -43,9 +41,7 @@ As a visualization, the config is readable. But the machine doesn’t _do_ anyth
 
 **Options** let us pass an implementation for the `sayHello` action.
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
+```ts
 const helloMachine = createMachine(
   {
     entry: ['sayHello'],
@@ -75,7 +71,7 @@ Guards allow you to check something before you proceed, enabling you to implemen
 
 Below is an example of a guard:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 let iAmHappyAndIKnowIt = true;
@@ -117,7 +113,7 @@ In the example above, the guard is activated when the machine is in the `notClap
 
 Actions allow you to perform simple actions, such as assigning to a variable or calling synchronous actions:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -144,11 +140,11 @@ Actors are entities that have their own state and can send and receive events. A
 - Invoking a promise and waiting for it to resolve
 - Uploading a file
 
-We’ll revisit actors in more depth later. [Take a fast track to learn more about actors](/actions-and-actors/actors).
+We’ll revisit actors in more depth later. [Take a fast track to learn more about actors](/actions-and-actors/actors.mdx).
 
 ### Delays
 
-Delays are used in XState to represent timers and intervals. We’ll revisit delays in more depth later. [Take a fast track to learn more about delays](/xstate/transitions-and-choices/after).
+Delays are used in XState to represent timers and intervals. We’ll revisit delays in more depth later. [Take a fast track to learn more about delays](/xstate/transitions-and-choices/after.mdx).
 
 ## Options API
 
@@ -156,7 +152,7 @@ Delays are used in XState to represent timers and intervals. We’ll revisit del
 
 You can specify machine options in several places. Firstly, you can set options inside the machine itself:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -182,7 +178,7 @@ XState v5 is in alpha. [Check out XState v5 Alpha on NPM](https://www.npmjs.com/
 
 Or, you can specify options later with a `.withConfig` call:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({});

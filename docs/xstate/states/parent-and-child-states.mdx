@@ -4,18 +4,17 @@ title: Parent and child states
 
 # Parent and child states
 
-States can contain more states, also known as [child states](/states/parent-states). These child states are only active when the parent state is active. Child states are nested inside their parent states.
+States can contain more states, also known as [child states](/states/parent-states.mdx). These child states are only active when the parent state is active. Child states are nested inside their parent states.
 
 :::studio
 
-[Read more about using parent and child states in the Stately Studio](/states/parent-states).
+[Read more about using parent and child states in the Stately Studio](/states/parent-states.mdx).
 
 :::
 
 In XState, you can specify a parent state using the `states` attribute on child nodes:
 
-```ts twoslash
-import { createMachine } from 'xstate';
+```ts
 
 const machine = createMachine({
   initial: 'waiting',
@@ -76,9 +75,7 @@ After learning about parent states, you might have noticed that all statecharts 
 
 For example, you can listen to events on the root state:
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
+```ts
 const machine = createMachine({
   on: {
     GREETED: {
@@ -97,10 +94,7 @@ Any time the machine receives the `GREETED` event, no matter which state it’s 
 
 Entry and exit actions are also useful in the root state:
 
-```ts twoslash
-import { createMachine } from 'xstate';
-
-// ---cut---
+```ts
 const machine = createMachine({
   entry: ['sayHello'],
   exit: ['sayGoodbye'],
@@ -116,10 +110,9 @@ In the example above, the machine will `sayHello` when it starts running and `sa
 
 You can also omit all states altogether! Sometimes you just need a root state, some events and some actions:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
-// ---cut---
 const machine = createMachine({
   entry: ['sayHello'],
   exit: ['sayGoodbye'],
@@ -136,7 +129,7 @@ When a child state cannot handle an `event`, that `event` is propagated up to it
 
 In the example below, when you wave at your friend and the machine is in the `friendIsLookingAtYou` state, the `friendWavesBack` action is fired.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const waveMachine = createMachine({
@@ -170,7 +163,7 @@ A transition specified with a wildcard `*` is triggered by any event not already
 
 The following example shows a few different cases of when the wildcard `*` is triggered or not.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({

@@ -1,5 +1,6 @@
 ---
 title: Typegen
+description: 'You can automatically generate intelligent typings for XState using our VS Code extension or our CLI.'
 ---
 
 <!-- Needs technical review -->
@@ -8,11 +9,11 @@ title: Typegen
 
 :::caution
 
-**This feature is in beta!** Read the section below on [known limitations](#known-limitations) to find out what we’re actively looking to improve.
+**This feature is in beta!** Read the section below on [known limitations](/#known-limitations) to find out what we’re actively looking to improve.
 
 :::
 
-You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](/tools/developer-tools#xstate-cli-command-line-interface).
+You can automatically generate intelligent typings for XState using our [VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or our [CLI](tools/developer-tools#xstate-cli-command-line-interface).
 
 #### How to get started with VS Code
 
@@ -20,20 +21,22 @@ All you need to do is to install the [Stately XState extension](https://marketpl
 
 #### How to get started with the CLI (other editors)
 
-Install the [CLI](/tools/developer-tools#xstate-cli-command-line-interface) and run the `xstate typegen` command with the `--watch` flag.
+Install the [CLI](/tools/developer-tools.mdx#xstate-cli-command-line-interface) and run the `xstate typegen` command with the `--watch` flag.
 
 ### Typegen in action
 
 Next try to create a machine, make sure to set the `schema` attributes:
 
-```ts twoslash {4-7}
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
+  // highlight-start
   schema: {
     context: {} as { value: string },
     events: {} as { type: 'FOO'; value: string } | { type: 'BAR' },
   },
+  // highlight-end
   initial: 'a',
   states: {
     a: {
@@ -201,7 +204,7 @@ createMachine({
 
 We recommend you gitignore the generated files (`*filename*.typegen.ts`) from your repository.
 
-You can use the [CLI](/tools/developer-tools#xstate-cli-command-line-interface) to regenerate them on CI (Continuous Integration), for instance, via a postinstall script:
+You can use the [CLI](/tools/developer-tools.mdx#xstate-cli-command-line-interface) to regenerate them on CI (Continuous Integration), for instance, via a postinstall script:
 
 ```json
 {

@@ -1,0 +1,423 @@
+---
+title: 'Actions'
+---
+
+import ThemedImage from '@theme/ThemedImage';
+
+Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined in transitions:
+
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          actions: [
+            { type: 'track', params: { response: 'good' } }
+          ]
+        }
+      },
+      exit: ['exitAction']
+    }
+    thanks: {
+      entry: ['showConfetti'],
+    }
+  }
+}, {
+  actions: {
+    track: ({ action }) => {
+      track(action.params);
+      // tracks { response: 'good' }
+    },
+    showConfetti: () => {
+      // ...
+    }
+  }
+})
+```
+
+Examples of actions:
+
+- Logging a message
+- Sending a message to another [actor](actors.mdx)
+- _Coming soon: more examples_
+
+## Editor: using actions
+
+:::tip
+
+Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
+
+:::
+
+<p>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Playing state has an entry action for starting a video playing indicated by the ‘Entry’ label and the text playVideo, and an exit action for pausing a video indicated by the ‘Exit’ lable and the text pauseVideo. The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.light.png',
+      dark: 'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.dark.png',
+    }}
+  />
+</p>
+
+[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
+
+In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+
+In XState, actions are represented on transitions in the `actions: ...` property. Anywhere you can use an action, you can also declare it as an array to express multiple actions.
+
+Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
+
+Coming soon… simple example
+
+## Entry and exit actions
+
+Entry actions are actions that occur on any transition that enters a state node.
+
+Coming soon… illustation
+
+Exit actions are actions that occur on any transition that exits a state node.
+
+Coming soon… illustration
+
+Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+
+Coming soon… example
+
+### In the Studio
+
+:::tip
+
+Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
+
+:::
+
+#### Add an entry action to a state
+
+1. Select the state you want to have an entry action.
+2. Open the **State details** panel from the right tool menu.
+3. Use the **+** plus icon alongside the **Entry actions** to add a new action.
+4. Use the **Custom** tab under **Entry actions** to input the **type** for the entry action.
+5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
+6. Save the entry action using the **Save** button.
+
+#### Add an exit action to a state
+
+1. Select the state you want to have an exit action.
+2. Open the **State details** panel from the right tool menu.
+3. Use the **+** plus icon alongside the **Exit actions** to add a new action.
+4. Use the **Custom** tab under **Exit actions** to input the **type** for the exit action.
+5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
+6. Save the entry action using the **Save** button.
+
+---
+
+## Inline actions
+
+You can declare actions as inline functions:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  entry: [
+    ({ context, event }) => {
+      console.log(/* ... */);
+    },
+  ],
+});
+```
+
+Inline actions are useful for prototyping and simple cases but we generally recommended using serialized actions.
+
+## Action objects
+
+Action objects have an action `type` and an optional `params` object:
+
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          actions: [
+            // highlight-start
+            {
+              // Action type
+              type: 'track',
+              // Action params
+              params: { response: 'good' },
+            },
+            // highlight-end
+          ],
+        },
+      },
+    },
+  },
+});
+```
+
+## Implementing actions
+
+You can add the implementations for named actions in the `actions` property of the 2nd argument of `createMachine(config, implementations)`:
+
+```ts
+const feedbackMachine = createMachine(
+  {
+    // ...
+  },
+  {
+    // highlight-start
+    actions: {
+      track: ({ context, event }) => {
+        // Implement action here
+      },
+    },
+    // highlight-end
+  }
+);
+```
+
+These implementations can later be overridden by providing implementations in the `machine.provide(implementations)` method, which creates a new machine with the same config but with the provided implementations:
+
+```ts
+const feedbackActor = interpret(
+  // highlight-start
+  feedbackMachine.provide({
+    actions: {
+      track: () => {
+        // Override action here
+      },
+    },
+  })
+  // highlight-end
+);
+```
+
+## Assign action
+
+The `assign(...)` action is a special action that assigns data to the state context. The `assignments` argument in `assign(assignments)` can be an object of key-value pairs where the keys are `context` keys and the values are either static values or expressions that return the new value:
+
+```ts
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      actions: assign({
+        count: ({ context, event }) => context.count + event.value,
+      }),
+    },
+  },
+});
+
+const countActor = interpret(countMachine);
+countActor.subscribe((state) => {
+  console.log(state.context.count);
+});
+countActor.start();
+// logs 0
+
+countActor.send({ type: 'increment', value: 3 });
+// logs 3
+
+countActor.send({ type: 'increment', value: 2 });
+// logs 5
+```
+
+## Raise action
+
+The raise action is a special action that _raises_ an event that is received by the same machine. Raising an event is how a machine can "send" an event to itself:
+
+```ts
+actions: raise({ type: 'someEvent', data: 'someData' });
+```
+
+Internally, when an event is raised, it is placed into an "internal event queue". These events are processed in insertion order (FIFO) after the current transition is finished. External events are not processed until all events in the internal event queue are processed.
+
+Raised events can be dynamic:
+
+```ts
+raise(({ context, event }) => ({ type: 'SOME_EVENT' }));
+```
+
+Events can also be raised with a delay, which will not place them in the internal event queue, since they will not be immediately processed:
+
+```ts
+actions: raise(
+  { type: 'someEvent' },
+  {
+    delay: 1000,
+  }
+);
+```
+
+## Send-to action
+
+The `sendTo(...)` action is a special action that sends an event to a specific actor.
+
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      actions: sendTo('someActor', { type: 'someEvent' }),
+    },
+  },
+});
+```
+
+The event can be dynamic:
+
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      actions: sendTo('someActor', ({ context, event }) => {
+        return { type: 'someEvent', data: context.someData };
+      }),
+    },
+  },
+});
+```
+
+The destination actor can be the actor ID or the actor reference itself:
+
+```ts
+const machine = createMachine({
+  context: ({ spawn }) => ({
+    someActorRef: spawn(fromPromise(/* ... */)),
+  }),
+  on: {
+    transmit: {
+      actions: sendTo(({ context }) => context.someActorRef, {
+        type: 'someEvent',
+      }),
+    },
+  },
+});
+```
+
+Other options, such as `delay` and `id`, can be passed as the 3rd argument:
+
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      actions: sendTo(
+        'someActor',
+        { type: 'someEvent' },
+        // highlight-start
+        {
+          id: 'transmission',
+          delay: 1000,
+        }
+        // highlight-end
+      ),
+    },
+  },
+});
+```
+
+## Pure action
+
+The `pure(...)` action is a higher-level action that returns an array of actions to be executed, without actually executing any effects (hence the name "pure").
+
+_Example coming soon_
+
+## Log action
+
+The `log(...)` action is an easy way to log messages to the console.
+
+_Example coming soon_
+
+## Choose action
+
+The `choose(...)` action is a higher-level action that returns an array of actions to be executed.
+
+_Example coming soon_
+
+## Cancel action
+
+The `cancel(...)` action cancels a delayed `sendTo(...)`/`raise(...)` action by their IDs:
+
+```ts
+import { createMachine, sendTo, cancel } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    event: {
+      actions: sendTo(
+        'someActor',
+        { type: 'someEvent' },
+        { id: 'someId', delay: 1000 }
+      ),
+    },
+    cancelEvent: {
+      actions: cancel('someId'),
+    },
+  },
+});
+```
+
+## Stop action
+
+The `stop(...)` action stops a child actor. Actors can only be stopped from the parent actor:
+
+```ts
+const machine = createMachine({
+  context: ({ spawn }) => ({
+    spawnedRef: spawn(fromPromise(/* ... */), { id: 'spawnedId' }),
+  }),
+  on: {
+    stopById: {
+      actions: stop('spawnedId'),
+    },
+    stopByRef: {
+      actions: stop(({ context }) => context.spawnedRef),
+    },
+  },
+});
+```
+
+## Modeling
+
+If you only need to execute actions in response to events, you can create a [self-transition](transitions.mdx#self-transitions) that only has `actions: [ ... ]` defined:
+
+```ts
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      actions: assign({
+        count: ({ context, event }) => context.count + event.value,
+      }),
+    },
+    decrement: {
+      actions: assign({
+        count: ({ context, event }) => context.count - event.value,
+      }),
+    },
+  },
+});
+```
+
+## Shorthands
+
+- For simple actions, can specify action string instead of object
+- Objects preferred for consistency
+
+## TypeScript
+
+_Coming soon_
+
+## Cheatsheet
+
+_Coming soon_

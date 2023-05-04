@@ -10,7 +10,7 @@ When you run a statechart, it becomes an _actor_, a running process that can rec
 
 We use the `invoke` attribute on a state to _invoke_ an actor in our machine. You can invoke an actor on any state, including the root node.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -39,7 +39,7 @@ XState v5 is in alpha. [Check out XState v5 Alpha on NPM](https://www.npmjs.com/
 
 You can also run several invocations at the same time by specifying `invoke` as an array:
 
-```ts twoslash
+```ts 
 import { createMachine } from 'xstate';
 
 const machine = createMachine(

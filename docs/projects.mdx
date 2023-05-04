@@ -17,13 +17,13 @@ A project is a collection of machines that helps you organize your personal mach
 />
 </p>
 
-You can access your projects from **My Projects** at the left of the Studio’s top bar when you’re signed in to the Stately Studio. **My Projects** lists your personal projects and is one of the locations where you can create new projects.
+You can access your projects from **My Projects** at the left of the top bar when you’re signed in to Stately Studio. **My Projects** lists your personal projects and is one of the locations where you can create new projects.
 
-When you select a project, the first machine in the project will open in the Studio Editor. The other machines in your project are accessible from the **Machines** list in the left drawer menu.
+When you select a project, the first machine in the project will open in the editor. The other machines in your project are accessible from the **Machines** list in the left drawer menu.
 
 <p>
 <ThemedImage
-  alt="Stately Studio Editor showing the Machines list in the left drawer for the Stately Studio Tutorials project. The selected machine is called ‘Parent states.’"
+  alt="Stately Studio editor showing the Machines list in the left drawer for the Stately Studio Tutorials project. The selected machine is called ‘Parent states.’"
   sources={{
     light: useBaseUrl('/projects/machines-list.png'),
     dark: useBaseUrl('/projects/machines-list-dm.png'),
@@ -33,7 +33,7 @@ When you select a project, the first machine in the project will open in the Stu
 
 ### Shared projects
 
-Shared projects are available to [Teams](/teams). Team projects are listed inside their Team in the Stately Studio workspace.
+Shared projects are available to [Teams](teams.mdx). Team projects are listed inside their Team in the Stately Studio workspace.
 
 <p>
 <ThemedImage
@@ -47,7 +47,7 @@ Shared projects are available to [Teams](/teams). Team projects are listed insid
 
 :::studio
 
-Teams and shared projects are [Pro features](/studio-pro-plan) of the Stately Studio.
+Teams and shared projects are [Pro features](/studio-pro-plan.mdx) of the Stately Studio.
 
 We offer a **30-day free trial** on the [Stately Studio Pro account](https://stately.ai/pricing) so you can explore how our Pro features work for you and your team.
 
@@ -55,20 +55,20 @@ We offer a **30-day free trial** on the [Stately Studio Pro account](https://sta
 
 ### Create a new project
 
-You can create a new project when you first save a machine or from the **Create project** button in [**My Projects**](#my-projects). You must be signed in to the Stately Studio to access **My Projects** and shared team projects, or to create new projects.
+You can create a new project when you first save a machine or from the **Create project** button in [**My Projects**](/#my-projects). You must be signed in to the Stately Studio to access **My Projects** and shared team projects, or to create new projects.
 
 #### Create a new project from **My Projects**
 
-1. Open **My Projects** from the link at the left of the Studio’s top bar.
+1. Open **My Projects** from the link at the left of Stately Studio’s top bar.
 2. Use the **Create project** button.
-3. Name the project. The description and keyword fields are optional.
+3. Name the project and choose the [project visibility](#change-a-projects-visibility). The description and keyword fields are optional.
 4. Use the **Submit** button to create the new project.
 
-#### Create a new project from the Studio Editor
+#### Create a new project from the editor
 
 The **Save** button will save your machine or prompt you to sign into Stately Studio before saving. Your project will have the same name as your current machine name.
 
-1. From the Studio Editor, use the **Save** button to save your current machine in a project.
+1. From the editor, use the **Save** button to save your current machine in a project.
 2. Choose **New Project** from the dropdown menu in the Save machine dialog.
 3. Use **Save** to save your machine and create your new project.
 
@@ -76,23 +76,23 @@ The **Save** button will save your machine or prompt you to sign into Stately St
 
 Only team members with the **Owner**, **Admin**, or **Editor** roles can create team projects.
 
-1. Navigate to the team page from the left sidebar of the Studio workspace.
+1. Navigate to the team page from the left sidebar of Stately Studio’s workspace.
 2. Navigate to the **Projects** tab on the team page.
 3. Use the **Create project** button.
-3. Name the project. The description and keyword fields are optional.
+3. Name the project and choose the [project visibility](#change-a-projects-visibility). The description and keyword fields are optional.
 4. Use the **Submit** button to create the new project.
 
 ### Move a project between teams
 
-You can move projects between your teams if you have an [**Owner**](teams#owner-role) role on both teams.
+You can move projects between your teams if you have an [**Owner**](teams.mdx#owner-role) role on both teams.
 
-1. Use the **Share** button in the Studio’s top bar to open the Share dialog.
+1. Use the **Share** button in Stately Studio’s top bar to open the Share dialog.
 2. Choose the destination team from the dropdown menu in the Move project section.
 3. Confirm that you want to move the project from the project move warning dialog using the **Move to *project name*** button.
 
 <p>
 <ThemedImage
-  alt="Stately Studio Editor page showing the Share modal with the options for changing project visibility and moving projects to another team."
+  alt="Stately Studio editor page showing the Share modal with the options for changing project visibility and moving projects to another team."
   sources={{
     light: useBaseUrl('/projects/move-projects.png'),
     dark: useBaseUrl('/projects/move-projects-dm.png'),
@@ -104,7 +104,7 @@ You can move projects between your teams if you have an [**Owner**](teams#owner-
 
 ### Change a project’s name, description, and keywords
 
-A [project owner or admin](/projects#team-roles) can change a project’s name, description, and keywords anytime.
+A [project owner or admin](/projects.mdx#team-roles) can change a project’s name, description, and keywords anytime.
 
 1. Find the project in My Projects or under the team’s Projects.
 2. Choose **Settings** from the **...** triple dot contextual menu alongside the project name.
@@ -114,21 +114,29 @@ A [project owner or admin](/projects#team-roles) can change a project’s name, 
 
 A project can be **public**, **unlisted**, or **private**. If the project is a shared team project, only team members with the **Owner** or **Admin** roles can change its visibility.
 
-- Public projects are visible to everyone. They are discoverable on the [Discover](/discover) page and listed on your profile page.
+- Public projects are visible to everyone. They are discoverable on the [Discover](/discover.mdx) page and listed on your profile page.
 - Unlisted projects are visible to everyone with the project’s URL but are not findable on the Discover page or listed on your profile page.
 - Private projects are only visible to you and the team that owns the project.
+
+### Change a project’s visibility from the Project Settings
+
+1. Navigate to **My Projects** or the team page **Projects** tab from the left sidebar of the Studio workspace.
+2. Choose **Settings** from the **...** triple dot contextual menu alongside the project name.
+3. Toggle the project’s visibility between **public**, **unlisted**, or **private** from the dropdown menu and use the **Submit** button to save those changes.
+
+### Change a project’s visibility using the share button
 
 1. Use the **Share** button in the Studio’s top bar to open the Share dialog.
 2. Toggle the project’s visibility between **public**, **unlisted**, or **private** from the dropdown menu in the Share dialog.
 
 ### Favorite a project
 
-You can favorite your own projects and other people’s projects. Favoriting a project gives you easy access to these projects in the future, as your **Favorites** are listed in the left sidebar of the Studio workspace. You might want to favorite projects you find inspiring or educational so that you can refer back to them later.
+You can favorite your own projects and other people’s projects. Favoriting a project gives you easy access to these projects in the future, as your **Favorites** are listed in the left sidebar of Stately Studio’s workspace. You might want to favorite projects you find inspiring or educational so that you can refer back to them later.
 
 You can favorite a project from **My Projects**, **Discover**, and team projects.
 
 1. Choose **Add to favorites** from the **...** triple dot contextual menu alongside the project’s name.
-2. Find your **Favorites** in the left sidebar of the Studio workspace.
+2. Find your **Favorites** in the left sidebar of Stately Studio’s workspace.
 
 #### Remove a project from your favorites
 
