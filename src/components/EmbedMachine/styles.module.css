@@ -1,5 +1,6 @@
 iframe.embed {
   display: block;
+  margin: 0 0 var(--ifm-paragraph-margin-bottom);
   width: 100%;
   aspect-ratio: 6 / 4;
 }
