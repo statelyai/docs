@@ -94,7 +94,17 @@
             "slug": "/category/design-mode",
             "keywords": ["guides"]
           },
-          "items": ["descriptions", "import-from-code", "export-as-code"]
+          "items": [
+            "descriptions", 
+            "import-from-code", 
+            "export-as-code", 
+            {
+              "type": "doc", 
+              "label":"Version history",
+              "id": "versions",
+              "className": "pro-feature"
+            }
+          ]
         },
         "projects",
         {
@@ -104,6 +114,18 @@
           "id": "teams"
         },
         "discover",
+        {
+          "type": "category",
+          "label": "Share",
+          "link": {
+            "type": "generated-index",
+            "title": "Share",
+            "description": "Learn how to share machines created in Stately Studio.",
+            "slug": "/category/share",
+            "keywords": ["guides"]
+          },
+          "items": ["embed", "image", "url"]
+        },
         {
           "type": "category",
           "label": "Accounts",
