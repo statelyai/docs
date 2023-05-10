@@ -1,5 +1,5 @@
 ---
-title: 'Migrating from XState v4 to v5'
+title: 'Migrating XState v4 to v5'
 ---
 
 import Tabs from '@theme/Tabs';
@@ -51,6 +51,54 @@ const machine = createMachine({
 import { Machine } from 'xstate';
 
 const machine = Machine({
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `machine.withConfig()` -> `machine.provide()`
+
+The `machine.withConfig()` method has been renamed to `machine.provide()`, and `services` has been renamed to `actors`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const specificMachine = machine.provide({
+  actions: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  actors: {
+    /* ... */
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const specificMachine = machine.withConfig({
+  actions: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  services: {
+    /* ... */
+  },
   // ...
 });
 ```
@@ -395,52 +443,6 @@ const machine = createMachine({
       },
     },
   },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `machine.withConfig()` method has been renamed to `machine.provide()`, and `services` has been renamed to `actors`:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const specificMachine = machine.provide({
-  actions: {
-    /* ... */
-  },
-  guards: {
-    /* ... */
-  },
-  actors: {
-    /* ... */
-  },
-  // ...
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const specificMachine = machine.withConfig({
-  actions: {
-    /* ... */
-  },
-  guards: {
-    /* ... */
-  },
-  services: {
-    /* ... */
-  },
-  // ...
 });
 ```
 
