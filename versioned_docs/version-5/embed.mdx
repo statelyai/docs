@@ -4,12 +4,29 @@ title: Embed machines
 
 import EmbedMachine from '@site/src/components/EmbedMachine';
 
-You can embed your machines anywhere that supports [`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). We love to use embedded machines in our docs! Below is an example of an embedded machine:
+You can embed your machines anywhere that supports [`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
+
+We love to use embedded machines in our docs! Below is an example of an embedded machine:
 
 <EmbedMachine
   name="Embed feature machine"
   embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?mode=Design&machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
 />
+
+Your machine will only be embeddable if:
+
+- the project visibility is **public**
+- the project visibility is **unlisted**
+
+Embed URLs are not available for private machines.
+
+Read [how to change a project’s visibility settings](projects.mdx#change-a-projects-visibility).
+
+:::tip
+
+You can also [get your machine as an image](image.mdx) for platforms where `<iframe>` is not supported.
+
+:::
 
 ## Copy the embed URL
 
