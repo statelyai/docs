@@ -108,6 +108,50 @@ const specificMachine = machine.withConfig({
 
 ---
 
+#### `machine.withContext()` -> `input`
+
+The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  context: ({ input }) => ({
+    actualMoney: Math.min(input.money, 42),
+  }),
+});
+
+const actor = interpret(machine, {
+  input: {
+    money: 1000,
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  context: {
+    actualMoney: 0,
+  },
+});
+
+const moneyMachine = machine.withContext({
+  actualMoney: 1000,
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
 The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
 
 <Tabs>
@@ -443,48 +487,6 @@ const machine = createMachine({
       },
     },
   },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const machine = createMachine({
-  context: ({ input }) => ({
-    actualMoney: Math.min(input.money, 42),
-  }),
-});
-
-const actor = interpret(machine, {
-  input: {
-    money: 1000,
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  context: {
-    actualMoney: 0,
-  },
-});
-
-const moneyMachine = machine.withContext({
-  actualMoney: 1000,
 });
 ```
 
