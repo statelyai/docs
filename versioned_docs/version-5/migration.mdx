@@ -804,9 +804,53 @@ actor.batch(events);
 
 ## TypeScript
 
-### ~~`machineConfig.schema`~~ is now `machineConfig.types`
+### ~~`schema`~~ Use `types` instead
 
-The `machineConfig.schema` property is renamed to `machineConfig.types`, and `machineConfig.tsTypes` is now in `machineConfig.types.typegen`:
+The `machineConfig.schema` property is renamed to `machineConfig.types`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  types: {} as {
+    context: {
+      /* ...*/
+    };
+    events: {
+      /* ...*/
+    };
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  schema: {} as {
+    context: {
+      /* ...*/
+    };
+    events: {
+      /* ...*/
+    };
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+### ~~`tsTypes`~~ Use `types.typegen`
+
+`machineConfig.tsTypes` has been renamed and is now nested as `machineConfig.types.typegen`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
