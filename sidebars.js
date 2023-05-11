@@ -142,6 +142,12 @@ const sidebars = {
               id: 'versions',
               className: 'pro-feature',
             },
+            {
+              type: 'doc', 
+              label:'Live simulation',
+              id: 'live-sim',
+              className: 'pro-feature',
+            },
             'import-from-code',
             'export-as-code',
           ]
