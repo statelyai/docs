@@ -110,7 +110,7 @@ const specificMachine = machine.withConfig({
 
 ---
 
-### ~~`machine.withContext()`~~ Inject context with `input`
+### ~~`machine.withContext()`~~ Set context with `input`
 
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
 
@@ -154,7 +154,7 @@ const moneyMachine = machine.withContext({
 
 ---
 
-### ~~`predictableActionArguments`~~ Stable order by default
+### ~~`predictableActionArguments`~~ Actions ordered by default
 
 Actions are now in predictable order by default. Assign actions will always run in the order they are defined.
 
@@ -209,7 +209,7 @@ const machine = createMachine({
 
 ## Events and transitions
 
-### Implementation functions receive a single argument
+### Implementation functions receive a single arg
 
 Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
 
@@ -554,7 +554,7 @@ const machine = createMachine({
 
 ---
 
-### ~~`in`~~ Use `guard: stateIn()` to validate state transitions
+### ~~`in`~~ Use `stateIn()` to validate state transitions
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -594,7 +594,7 @@ const machine = createMachine({
 
 ---
 
-### ~~`state.history`~~ Track history with `actor.subscribe()`
+### ~~`state.history`~~ Use `actor.subscribe()`
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
@@ -627,7 +627,7 @@ actor.subscribe((state) => {
 
 ## Actors
 
-### ~~`services`~~ Define an `actors` property on `options` object
+### ~~`services`~~ Use `actors` property on `options` object
 
 `services` has been renamed to `actors`:
 
@@ -675,7 +675,7 @@ const specificMachine = machine.withConfig({
 
 ---
 
-### ~~`onTransition()`~~ Use `subscribe()` to listen for changes
+### ~~`onTransition()`~~ Use `subscribe()` for changes
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
@@ -707,7 +707,7 @@ actor.onTransition((state) => {
 
 ---
 
-### `interpret()` now accepts a second arg to restore state
+### `interpret()` accepts a second arg to restore state
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
@@ -737,7 +737,7 @@ actor.start(someState);
 
 ---
 
-### Use `actor.getSnapshot()` to get actor's current state
+### Use `actor.getSnapshot()` to get actor's state
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -776,7 +776,7 @@ actor.subscribe((state) => {
 
 ---
 
-### ~~`actor.batch()`~~ Iterate over events with a loop instead
+### ~~`actor.batch()`~~ Loop over events instead
 
 The `actor.batch([...])` method for batching events is removed.
 
