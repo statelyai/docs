@@ -15,19 +15,21 @@ This guide is for users who want to update their codebase from v4 to v5 and shou
 
 XState version 5 is in beta, and compared to XState version 4, it is [feature complete](https://en.wikipedia.org/wiki/Software_release_life_cycle#Feature_complete) with all the features of V4 and more. But as V5 is still in beta, some slight breaking changes may occur with future beta versions. So go ahead, but proceed with caution!
 
-:::
+:::warningxstate
 
-:::video
+---
 
-[Watch the Migrating to XState v5 beta video (1h4m)](https://www.youtube.com/watch?v=s-nqoIbIZac).
-
-:::
+:::caution
 
 ## Breaking changes
 
-### Creating machines
+The following are breaking changes from XState v4 to v5.
 
-#### `Machine()` -> `createMachine()`
+:::
+
+## Creating machines
+
+### `Machine()` -> `createMachine()`
 
 The ~~`Machine(config)`~~ function is now called `createMachine(config)`:
 
@@ -60,7 +62,7 @@ const machine = Machine({
 
 ---
 
-#### `machine.withConfig()` -> `machine.provide()`
+### `machine.withConfig()` -> `machine.provide()`
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
@@ -108,7 +110,7 @@ const specificMachine = machine.withConfig({
 
 ---
 
-#### `machine.withContext()` -> `input`
+### `machine.withContext()` -> `input`
 
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
 
@@ -152,7 +154,7 @@ const moneyMachine = machine.withContext({
 
 ---
 
-#### `predictableActionArguments` flag removed (now the default behavior)
+### `predictableActionArguments` flag removed (now the default behavior)
 
 Actions are now in predictable order by default. Assign actions will always run in the order they are defined.
 
@@ -205,9 +207,9 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### Events and transitions
+## Events and transitions
 
-#### Implementation functions now receive a single argument
+### Implementation functions now receive a single argument
 
 Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
 
@@ -241,7 +243,7 @@ const machine = createMachine({
 
 ---
 
-#### `send()` -> `raise()` or `sendTo()`
+### `send()` -> `raise()` or `sendTo()`
 
 The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
 
@@ -287,7 +289,7 @@ const machine = createMachine({
 
 ---
 
-#### `actor.send()` no longer accepts string types
+### `actor.send()` no longer accepts string types
 
 String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
 
@@ -313,7 +315,7 @@ actor.send('someEvent');
 
 ---
 
-#### `state.can()` no longer accepts string types
+### `state.can()` no longer accepts string types
 
 String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
 
@@ -339,7 +341,7 @@ state.can('someEvent');
 
 ---
 
-#### `cond` -> `guard`
+### `cond` -> `guard`
 
 The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
 
@@ -379,7 +381,7 @@ const machine = createMachine({
 
 ---
 
-#### Use `params` to pass custom event data
+### Use `params` to pass custom event data
 
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
 
@@ -417,7 +419,7 @@ const machine = createMachine({
 
 ---
 
-#### Strict mode (removed) -> Use `*` (wildcard) transitions
+### Strict mode (removed) -> Use `*` (wildcard) transitions
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
@@ -462,7 +464,7 @@ const machine = createMachine({
 
 ---
 
-#### Use explicit `always` transitions
+### Use explicit `always` transitions
 
 Eventless ("always") events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
@@ -508,7 +510,7 @@ const machine = createMachine({
 
 ---
 
-#### `internal: false` -> `reenter: true`
+### `internal: false` -> `reenter: true`
 
 `internal: false` is now `reenter: true`
 
@@ -552,7 +554,7 @@ const machine = createMachine({
 
 ---
 
-#### `in` property -> `stateIn()`
+### `in` property -> `stateIn()`
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -592,7 +594,7 @@ const machine = createMachine({
 
 ---
 
-#### `state.history` removed -> track with `actor.subscribe()` instead
+### `state.history` removed -> track with `actor.subscribe()` instead
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
@@ -623,9 +625,9 @@ actor.subscribe((state) => {
 </TabItem>
 </Tabs>
 
-### Actors
+## Actors
 
-#### `services` -> `actors`
+### `services` -> `actors`
 
 `services` has been renamed to `actors`:
 
@@ -673,7 +675,7 @@ const specificMachine = machine.withConfig({
 
 ---
 
-#### `onTransition()` -> `subscribe()`
+### `onTransition()` -> `subscribe()`
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
@@ -705,7 +707,7 @@ actor.onTransition((state) => {
 
 ---
 
-#### `interpret()` now accepts a second options argument
+### `interpret()` now accepts a second options argument
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
@@ -735,7 +737,7 @@ actor.start(someState);
 
 ---
 
-#### `Use actor.getSnapshot()` to get an actor's current state
+### `Use actor.getSnapshot()` to get an actor's current state
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -774,7 +776,7 @@ actor.subscribe((state) => {
 
 ---
 
-#### `actor.batch()` removed -> iterate with loop instead
+### `actor.batch()` removed -> iterate with loop instead
 
 The `actor.batch([...])` method for batching events is removed.
 
@@ -800,9 +802,9 @@ actor.batch(events);
 </TabItem>
 </Tabs>
 
-### TypeScript
+## TypeScript
 
-#### `machineConfig.schema` (and `tsTypes`) -> machineConfig.types (and `typegen`)
+### `machineConfig.schema` (and `tsTypes`) -> machineConfig.types (and `typegen`)
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`, and `machineConfig.tsTypes` is now in `machineConfig.types.typegen`:
 
