@@ -62,7 +62,7 @@ const machine = Machine({
 
 #### `machine.withConfig()` -> `machine.provide()`
 
-The `machine.withConfig()` method has been renamed to `machine.provide()`, and `services` has been renamed to `actors`:
+The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -152,348 +152,7 @@ const moneyMachine = machine.withContext({
 
 ---
 
-The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-const machine = createMachine({
-  on: {
-    someEvent: {
-      guard: 'someGuard',
-      target: 'someState',
-    },
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  on: {
-    someEvent: {
-      // renamed to `guard` in v5
-      cond: 'someGuard',
-      target: 'someState',
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const machine = createMachine({
-  entry: ({ context, event }) => {
-    // ...
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  entry: (context, event) => {
-    // ...
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const actor = interpret(machine);
-actor.subscribe((state) => {
-  // ...
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const actor = interpret(machine);
-actor.onTransition((state) => {
-  // ...
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const actor = interpret(machine);
-actor.start();
-
-const initialState = actor.getSnapshot();
-
-actor.subscribe((state) => {
-  // Snapshots from when the subscription was created
-  // Will not emit the current snapshot until a transition happens
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const actor = interpret(machine);
-actor.start();
-
-actor.subscribe((state) => {
-  // Current snapshot immediately emitted
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
-
-See [send-to action](#todo) and [raise action](#todo) documentation for more information.
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const machine = createMachine({
-  // ...
-  entry: [
-    // Send an event to self
-    raise({ type: 'someEvent' }),
-
-    // Send an event to another actor
-    sendTo('someActor', { type: 'someEvent' }),
-  ],
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  // ...
-  entry: [
-    // Send an event to self
-    send({ type: 'someEvent' }),
-
-    // Send an event to another actor
-    send({ type: 'someEvent' }, { to: 'someActor' }),
-  ],
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-`internal: false` is now `reenter: true`
-
-External transitions previously specified with `internal: false` are now specified with `reenter: true`:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const machine = createMachine({
-  // ...
-  on: {
-    someEvent: {
-      target: 'sameState',
-      reenter: true,
-    },
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  // ...
-  on: {
-    someEvent: {
-      target: 'sameState',
-      internal: false,
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-`interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
-
-To restore an actor at a specific state, you should now pass the state into the `state` property of the `options` argument of `interpret(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const actor = interpret(machine, { state: someState });
-actor.start();
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const actor = interpret(machine);
-actor.start(someState);
-```
-
-</TabItem>
-</Tabs>
-
----
-
-String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-actor.send({ type: 'someEvent' });
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-actor.send('someEvent');
-```
-
-</TabItem>
-</Tabs>
-
----
-
-String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-state.can({ type: 'someEvent' });
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-state.can('someEvent');
-```
-
-</TabItem>
-</Tabs>
-
----
-
-Eventless ("always") events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-const machine = createMachine({
-  // ...
-  states: {
-    someState: {
-      always: {
-        target: 'anotherState',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-const machine = createMachine({
-  // ...
-  states: {
-    someState: {
-      on: {
-        '': {
-          target: 'anotherState',
-        },
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
----
+#### `predictableActionArguments` flag removed (now the default behavior)
 
 Actions are now in predictable order by default. Assign actions will always run in the order they are defined.
 
@@ -546,7 +205,219 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### Events and transitions
+
+#### Implementation functions now receive a single argument
+
+Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  entry: ({ context, event }) => {
+    // ...
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  entry: (context, event) => {
+    // ...
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 ---
+
+#### `send()` -> `raise()` or `sendTo()`
+
+The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
+
+See [send-to action](#todo) and [raise action](#todo) documentation for more information.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  entry: [
+    // Send an event to self
+    raise({ type: 'someEvent' }),
+
+    // Send an event to another actor
+    sendTo('someActor', { type: 'someEvent' }),
+  ],
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  entry: [
+    // Send an event to self
+    send({ type: 'someEvent' }),
+
+    // Send an event to another actor
+    send({ type: 'someEvent' }, { to: 'someActor' }),
+  ],
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `actor.send()` no longer accepts string types
+
+String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+actor.send({ type: 'someEvent' });
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+actor.send('someEvent');
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `state.can()` no longer accepts string types
+
+String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+state.can({ type: 'someEvent' });
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+state.can('someEvent');
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `cond` -> `guard`
+
+The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+const machine = createMachine({
+  on: {
+    someEvent: {
+      guard: 'someGuard',
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // renamed to `guard` in v5
+      cond: 'someGuard',
+      target: 'someState',
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### Use `params` to pass custom event data
+
+Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  entry: {
+    type: 'greet',
+    params: {
+      message: 'Hello world',
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  entry: {
+    type: 'greet',
+    message: 'Hello world',
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### Strict mode (removed) -> Use `*` (wildcard) transitions
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
@@ -591,64 +462,9 @@ const machine = createMachine({
 
 ---
 
-The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
+#### Use explicit `always` transitions
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-let previousSnapshot = actor.getSnapshot();
-
-actor.subscribe((snapshot) => {
-  doSomeComparison(previousSnapshot, snapshot);
-  previousSnapshot = snapshot;
-});
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-actor.subscribe((state) => {
-  doSomeComparison(state.history, state);
-});
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `actor.batch([...])` method for batching events is removed.
-
-<Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-// ✅
-for (const event of events) {
-  actor.send(event);
-}
-```
-
-</TabItem>
-
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-actor.batch(events);
-```
-
-</TabItem>
-</Tabs>
-
----
-
-The `machineConfig.schema` property is renamed to `machineConfig.types`, and `machineConfig.tsTypes` is now in `machineConfig.types.typegen`:
+Eventless ("always") events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -656,14 +472,13 @@ The `machineConfig.schema` property is renamed to `machineConfig.types`, and `ma
 ```ts
 // ✅
 const machine = createMachine({
-  types: {} as {
-    typegen: {};
-    context: {
-      /* ...*/
-    };
-    events: {
-      /* ...*/
-    };
+  // ...
+  states: {
+    someState: {
+      always: {
+        target: 'anotherState',
+      },
+    },
   },
 });
 ```
@@ -675,14 +490,15 @@ const machine = createMachine({
 ```ts
 // ❌ DEPRECATED
 const machine = createMachine({
-  tsTypes: {};
-  schema: {} as {
-    context: {
-      /* ...*/
-    };
-    events: {
-      /* ...*/
-    };
+  // ...
+  states: {
+    someState: {
+      on: {
+        '': {
+          target: 'anotherState',
+        },
+      },
+    },
   },
 });
 ```
@@ -691,6 +507,52 @@ const machine = createMachine({
 </Tabs>
 
 ---
+
+#### `internal: false` -> `reenter: true`
+
+`internal: false` is now `reenter: true`
+
+External transitions previously specified with `internal: false` are now specified with `reenter: true`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  on: {
+    someEvent: {
+      target: 'sameState',
+      reenter: true,
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  on: {
+    someEvent: {
+      target: 'sameState',
+      internal: false,
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `in` property -> `stateIn()`
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -730,7 +592,219 @@ const machine = createMachine({
 
 ---
 
-Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
+#### `state.history` removed -> track with `actor.subscribe()` instead
+
+The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+let previousSnapshot = actor.getSnapshot();
+
+actor.subscribe((snapshot) => {
+  doSomeComparison(previousSnapshot, snapshot);
+  previousSnapshot = snapshot;
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+actor.subscribe((state) => {
+  doSomeComparison(state.history, state);
+});
+```
+
+</TabItem>
+</Tabs>
+
+### Actors
+
+#### `services` -> `actors`
+
+`services` has been renamed to `actors`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const specificMachine = machine.provide({
+  actions: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  actors: {
+    /* ... */
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const specificMachine = machine.withConfig({
+  actions: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  services: {
+    /* ... */
+  },
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `onTransition()` -> `subscribe()`
+
+The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const actor = interpret(machine);
+actor.subscribe((state) => {
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.onTransition((state) => {
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `interpret()` now accepts a second options argument
+
+`interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
+
+To restore an actor at a specific state, you should now pass the state into the `state` property of the `options` argument of `interpret(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const actor = interpret(machine, { state: someState });
+actor.start();
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.start(someState);
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `Use actor.getSnapshot()` to get an actor's current state
+
+Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const actor = interpret(machine);
+actor.start();
+
+const initialState = actor.getSnapshot();
+
+actor.subscribe((state) => {
+  // Snapshots from when the subscription was created
+  // Will not emit the current snapshot until a transition happens
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.start();
+
+actor.subscribe((state) => {
+  // Current snapshot immediately emitted
+});
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+#### `actor.batch()` removed -> iterate with loop instead
+
+The `actor.batch([...])` method for batching events is removed.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+for (const event of events) {
+  actor.send(event);
+}
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+actor.batch(events);
+```
+
+</TabItem>
+</Tabs>
+
+### TypeScript
+
+#### `machineConfig.schema` (and `tsTypes`) -> machineConfig.types (and `typegen`)
+
+The `machineConfig.schema` property is renamed to `machineConfig.types`, and `machineConfig.tsTypes` is now in `machineConfig.types.typegen`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -738,11 +812,14 @@ Properties other than `type` on action objects and guard objects should be neste
 ```ts
 // ✅
 const machine = createMachine({
-  entry: {
-    type: 'greet',
-    params: {
-      message: 'Hello world',
-    },
+  types: {} as {
+    typegen: {};
+    context: {
+      /* ...*/
+    };
+    events: {
+      /* ...*/
+    };
   },
 });
 ```
@@ -754,9 +831,14 @@ const machine = createMachine({
 ```ts
 // ❌ DEPRECATED
 const machine = createMachine({
-  entry: {
-    type: 'greet',
-    message: 'Hello world',
+  tsTypes: {};
+  schema: {} as {
+    context: {
+      /* ...*/
+    };
+    events: {
+      /* ...*/
+    };
   },
 });
 ```
