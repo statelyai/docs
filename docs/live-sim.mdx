@@ -19,8 +19,19 @@ Live simulation is a Pro feature of the Studio. [Check out the features on our P
 
 ## Simulate your machine with others
 
-1. Select the **Simulate** mode from the center of the visual editor. When in the Simulate mode, you'll see your machine with the initial state turn the color blue. Blue means your machine is not currently being editted or shared, but you are simulating the logic flow of the current machine. In Simulate mode, this is where you can go through each state and transition to thoroughly review your logic. 
-2. While in Simulate mode, you'll notice a button **Live mode** on the bottom left corner. When clicking the **Live mode** button, you'll have the options: 
+1. Select the **Simulate** mode from the center of the visual editor. When in the **Simulate** mode, you'll see your machine with the initial state turn the color blue. Blue means your machine is not currently being editted or shared, but you are simulating the logic flow of the current machine. In **Simulate** mode, this is where you can go through each state and transition to thoroughly review your logic.
+
+<p>
+<ThemedImage
+  alt="Simulate mode is selected in the center menu and now the machine can not be edited."
+  sources={{
+    light: useBaseUrl('/live-sim/live-sim-menu.png'),
+    dark: useBaseUrl('/live-sim/live-sim-menu-dm.png'),
+  }}
+/>
+</p>
+
+2. While in **Simulate** mode, you'll notice a button **Live mode** on the bottom left corner. When clicking the **Live mode** button, you'll have the options: 
 - **Join a Live simulation** session
 - **Start a live simulation** session.
 
@@ -28,20 +39,21 @@ Live simulation is a Pro feature of the Studio. [Check out the features on our P
 
 The **Live mode** button will only be displayed when you are using the Simulate mode in the Studio. To know if you're in the Simulate mode, you'll see your states and transitions light up in blue color.
 
+:::
+
+3. When selecting the option **Start a live simulation**, you'll notice the machine is orange. Then, the bottom left corner will show **Copy link** or **Stop** buttons, along with a 6 character code (for example: 3KNYII). 
+You can share your machine when in Live simulation mode by selecting the option **copy link** and then a modal will pop up to confirm the link was copied to your clipboard. Go ahead and share that link to other participants! 
+The link can also be accessed by users who are not logged in to the Studio.
+
 <p>(TODO:add screenshot here)
 <ThemedImage
-  alt="Version history panel opened from the right tool menu showing a list of versions."
+  alt="When selecting Start a live simulation, you are actively sharing the machine and others can access the same simulation with a custom generated link."
   sources={{
-    light: useBaseUrl('/versions/version-toolbox.png'),
-    dark: useBaseUrl('/versions/version-toolbox-dm.png'),
+    light: useBaseUrl('/live-sim/live-sim-start.png'),
+    dark: useBaseUrl('/live-sim/live-sim-start-dm.png'),
   }}
 />
 </p>
-
-:::
-
-3. When selecting the option **Start a live simulation**, you'll notice the machine is orange. Then, the bottom left corner will show **Copy link** or **Stop** buttons, along with a 6 character code (for example: Z3TGBC). 
-You can share your machines when in Live simulation mode by selecting the option **copy link** and then share that link to other participants. The link can also be accesed by users who are not logged into the Studio.
 
 ::: tip
 
@@ -49,37 +61,38 @@ To recognize you're in a Live simulation mode, you'll notice the blue states hav
 
 :::
 
-<p>(TODO:add screenshot here)
+4. When selecting the option **Join a Live simulation**, you'll be prompted to enter a code to reference which machine simulation session you'll be joining.
+If you were given a link to join the Live simulation session, you would only need to copy and paste that link into your browser.
+The two buttons that pop up are to **Cancel** or **Join**, when you have joined a Live simulation session. 
+
+<p>
 <ThemedImage
-  alt="Version history panel opened from the right tool menu showing a list of versions."
+  alt="Joining a Live simulation session will all you to select the states or watch them trasniton to other states with others in the session."
   sources={{
-    light: useBaseUrl('/versions/version-toolbox.png'),
-    dark: useBaseUrl('/versions/version-toolbox-dm.png'),
+    light: useBaseUrl('/live-sim/live-sim-join.png'),
+    dark: useBaseUrl('/live-sim/live-sim-join-dm.png'),
   }}
 />
 </p>
-
-4. When selecting the option **Join a live simulation**, you'll be prompted to enter a code to reference which machine simulation session you'll be joining. The two buttons that pop up are to **Cancel** or **Join**. 
-If you were given a link to join the Live simulation session, you would only need to copy and paste that link into your browser.
 
 ### Benefits
 
 Being able to have live participants and discussions while simulating the logic flow of your application is so important. How would you know if everyone is on the same page, unless there's a visual diagram to guide each process in a machine? 
 With Live Simulation mode, each user with the machine link can provide valuable feedback on how the machine is accurately representing the logic or is missing some states that can be easily added in using the Design mode of the Studio.
 
-<p> (TODO:add screenshot here)
+<p>
 <ThemedImage
-  alt="Selecting a version name in the Version history panel, showing the text input for the new name."
+  alt="Two views of the Studio, left is the user sharing the Live simualtion and right is the user who joins the Live simulation."
   sources={{
-    light: useBaseUrl('/versions/version-rename.png'),
-    dark: useBaseUrl('/versions/version-rename-dm.png'),
+    light: useBaseUrl('/live-sim/live-sim-side-by-side.png'),
+    dark: useBaseUrl('/live-sim/live-sim-side-by-side.png'),
   }}
 />
 </p>
 
-### Why is this better than screensharing?
-
-Testing you application logic, collaboratively is very powerful.
+Testing your application logic, collaboratively is very powerful.
 Each participant is able to interact with the machine, while other members with the shared link are able to see in real time, which part of the machine is being discussed in detail. With scrensharing, we risk having low quality images, small fonts, or pixelated text, and only one user has control over the machine at a time. Live Simulation mode is an easy solution for all of your team, whether they have a technical background or not. 
+Live Simulation mode is just the beginning or our collaborative features. If you have any ideas, suggestions, or feedback, please submit them to feedback.stately.ai 
 
-## (TODO:add details about PartyKit? Ask for details)
+Happy Modeling!
+
