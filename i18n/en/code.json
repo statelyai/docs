@@ -139,7 +139,7 @@
     "message": "Version: {versionLabel}"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "The {siteTitle} for {versionLabel} are in alpha",
+    "message": "{siteTitle} for {versionLabel} are in progress",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
