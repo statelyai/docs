@@ -124,7 +124,23 @@
             "slug": "/category/share",
             "keywords": ["guides"]
           },
-          "items": ["embed", "image", "url"]
+          "items": [
+            {
+              "type": "doc",
+              "label": "Embed URL",
+              "id": "embed"
+            }, 
+            {
+              "type": "doc",
+              "label": "Image URL",
+              "id": "image"
+            }, 
+            {
+              "type": "doc",
+              "label": "Share URL",
+              "id": "url"
+            }
+          ]
         },
         {
           "type": "category",
