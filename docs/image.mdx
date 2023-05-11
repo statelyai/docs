@@ -1,0 +1,62 @@
+---
+title: Share machine images using their image URL
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+You can share an image of your machine anywhere that supports images. You can use the image URL for live-updating images where the machine is always updated with your latest changes.
+
+The image below is embedded using the copy image URL. Try switching between light and dark mode in the docs top bar; the image will change color mode too.
+
+<p>
+<ThemedImage
+  alt="State machine for the Copy image URL flow. An initial state of Viewing machine which transitions to Left drawer open via an event of Open left drawer. The use … icon event transitions from left drawer open to Machine options menu open."
+  sources={{
+    light: 'https://stately.ai/registry/machines/1b050e43-c8a5-4e28-b881-71eadcc5b8a1.light.png',
+    dark: 'https://stately.ai/registry/machines/1b050e43-c8a5-4e28-b881-71eadcc5b8a1.dark.png',
+  }}
+/>
+</p>
+
+Your machine image will only be available if:
+
+- the project visibility is **public**
+- the project visibility is **unlisted**
+
+Machine images are not available for private machines.
+
+Read [how to change a project’s visibility settings](projects.mdx#change-a-projects-visibility).
+
+:::tip
+
+You can also [embed your machine](embed.mdx) for a focused non-editable view of your machine in Stately Studio’s editor.
+
+:::
+
+## Copy the image URL
+
+1. Open the **Machines** list from the left drawer menu.
+2. Use the **...** triple dot icon alongside your machine name to open the machine options menu.
+3. Use the **Copy image URL** option to copy the image URL to your clipboard.
+4. Paste the URL wherever you want it used.
+
+## Color mode
+
+By default, the image’s color mode will be the same as your chosen Stately Studio color mode. Add `.light.png` or `.dark.png` to the URL to force that color mode.
+
+## Examples
+
+The examples below show how you can use the image URL.
+
+### Markdown
+
+```md
+![State machine for the copy image URL flow in light mode.](https://stately.ai/registry/machines/1b050e43-c8a5-4e28-b881-71eadcc5b8a1.light.png)
+```
+
+### HTML
+
+```html
+<img src="https://stately.ai/registry/machines/1b050e43-c8a5-4e28-b881-71eadcc5b8a1.dark.png" alt="State machine for the copy image URL flow in dark mode." />
+```
