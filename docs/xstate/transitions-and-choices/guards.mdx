@@ -12,7 +12,7 @@ A common pattern in any program is if/else logic — the ability to make decisio
 
 In the following example, we’ll imagine you want to order a decaf coffee at a cafe. You can send the `ORDER_DECAF` event to the barista, but the cafe might not have decaf coffee available! The machine for the ordering process could be as follows:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const baristaMachine = createMachine(
@@ -54,10 +54,9 @@ The machine above will only go to the `makingDecafCoffee` state if the `hasDecaf
 
 You can also provide multiple guards to the same transition. In the example below, the machine checks if the customer is okay with regular coffee if decaf is unavailable:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
-// ---cut---
 const baristaMachine = createMachine(
   {
     initial: 'receivingOrder',
@@ -91,13 +90,12 @@ const baristaMachine = createMachine(
 
 The code above is similar to a normal JavaScript function:
 
-```ts twoslash
+```ts
 const makeDecafCoffee = () => {};
 const makeRegularCoffee = () => {};
 const hasDecaf = false;
 const customerIsOKWithRegularCoffee = false;
 
-// ---cut---
 
 if (hasDecaf) {
   makeDecafCoffee();
@@ -108,10 +106,9 @@ if (hasDecaf) {
 
 To add an `else` condition, you can create a transition without a `cond` at the end of the array:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
-// ---cut---
 const baristaMachine = createMachine(
   {
     initial: 'receivingOrder',

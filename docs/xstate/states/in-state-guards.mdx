@@ -10,7 +10,7 @@ You can check if the machine is in a certain state using an `in` property on a t
 
 In the example below, when the machine receives the `LOG_WHEN_ACTIVE` event, we check if the machine is in the `active` state, specified by id, then `logIsActive`.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const lightMachine = createMachine(

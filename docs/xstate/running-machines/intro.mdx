@@ -15,7 +15,7 @@ Next, we need to learn how to _execute_ our machines in code. Depending on where
 
 The `interpret` interpreter provides us with a “running” and _interactive_ version of our machine.
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine({});
@@ -25,7 +25,7 @@ const actor = interpret(machine).start();
 
 In XState, we call that “running” machine an **actor**. The most common way to interact with an actor is to send it events:
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine(
@@ -56,7 +56,7 @@ actor.send({
 
 You can also subscribe to the actor via `actor.subscribe`:
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine(
@@ -77,8 +77,6 @@ const machine = createMachine(
 );
 
 const actor = interpret(machine).start();
-
-// ---cut---
 
 // Fires whenever the state changes
 const { unsubscribe } = actor.subscribe((state) => {
@@ -91,7 +89,7 @@ const { unsubscribe } = actor.subscribe((state) => {
 
 You can also stop the actor by running `actor.stop()` which cleans up the actor and runs any relevant exit actions:
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine(
@@ -112,8 +110,6 @@ const machine = createMachine(
 );
 
 const actor = interpret(machine).start();
-
-// ---cut---
 
 actor.stop();
 ```
@@ -132,12 +128,10 @@ Check out the reference docs on the interpret API for a full deep dive into ever
 
 When running your machine, you’ll want to query the machine to understand which state it’s in. When you run a machine using `interpret`, you can find the state as follows:
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine({});
-
-// ---cut---
 
 const actor = interpret(machine).start();
 
@@ -146,14 +140,12 @@ const state = actor.state;
 
 You can also get an updated version when you subscribe to the state:
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine({});
 
 const actor = interpret(machine).start();
-
-// ---cut---
 
 actor.subscribe((state) => {
   console.log(state);
@@ -166,7 +158,7 @@ This `State` class has a bunch of useful attributes and methods.
 
 First, you can find the state’s context using `state.context`.
 
-```ts twoslash
+```ts
 import { createMachine, interpret, assign } from 'xstate';
 
 const machine = createMachine(
@@ -204,7 +196,7 @@ actor.send({ type: 'INCREMENT' });
 
 You can query which state the machine is in by running `state.matches()`. `state.matches()` returns a boolean depending on whether you’re in a matching state.
 
-```ts twoslash
+```ts
 import { createMachine, interpret, assign } from 'xstate';
 
 const machine = createMachine({
@@ -233,7 +225,7 @@ actor.subscribe((state) => {
 });
 ```
 
-You can also use `state.value` to check your machine’s state, but we recommend using `state.matches` because of how it works with parent and child states. We’ll talk more about parent states later. [Jump directly to parent and child states](/xstate/states/advanced-transitions).
+You can also use `state.value` to check your machine’s state, but we recommend using `state.matches` because of how it works with parent and child states. We’ll talk more about parent states later. [Jump directly to parent and child states](../states/advanced-transitions.mdx).
 
 ### Changed
 

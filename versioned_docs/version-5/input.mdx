@@ -1,0 +1,333 @@
+---
+title: 'Input'
+---
+
+Input refers to the data provided to a state machine that influences its behavior. In [XState](xstate.mdx), you provide input when creating an [actor](actors.mdx) using the second argument of the `interpret(machine, { input })` function:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: ({ input }) => ({
+    userId: input.userId,
+    feedback: '',
+    rating: input.defaultRating,
+  }),
+  // ...
+});
+
+const feedbackActor = interpret(feedbackMachine, {
+  // highlight-start
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+  // highlight-end
+});
+```
+
+:::studio
+
+Input is coming to Stately Studio’s editor soon…
+
+:::
+
+## Interpreting actors with input
+
+You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, etc.:
+
+```ts
+import { interpret, fromPromise } from 'xstate';
+
+const userFetcher = fromPromise(({ input }) => {
+  return fetch(`/users/${input.userId}`).then((res) => res.json());
+});
+
+const userFetcherActor = interpret(userFetcher, {
+  // highlight-start
+  input: {
+    userId: '123',
+  },
+  // highlight-end
+}).start();
+
+userFetcherActor.onDone((data) => {
+  console.log(data);
+  // logs the user data for userId 123
+});
+```
+
+Coming soon… show examples for `fromTransition`, `fromObservable`, etc.
+
+## Initial event input
+
+When an actor is started, it will automatically send a special event named `xstate.init` to itself. If `input` is provided to the `interpret` function, it will be included in the `xstate.init` event:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // highlight-start
+  entry: ({ event }) => {
+    console.log(event.input);
+    // logs { userId: '123', defaultRating: 5 }
+  },
+  // highlight-end
+  // ...
+});
+
+const feedbackActor = interpret(feedbackMachine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+}).start();
+```
+
+## Invoking actors with input
+
+You can provide input to invoked actors via the `input` property of the `invoke` configuration:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  invoke: {
+    src: 'liveFeedback',
+    // highlight-start
+    input: {
+      domain: 'stately.ai',
+    },
+    // highlight-end
+  },
+}).provide({
+  actors: {
+    liveFeedback: fromPromise(({ input }) => {
+      return fetch(`https://${input.domain}/feedback`).then((res) =>
+        res.json()
+      );
+    }),
+  },
+});
+```
+
+The `invoke.input` property can be a static input value or a function that returns the input value. The function will be called with an object that contains the current `context` and `event`:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+    feedback: '',
+    rating: 0,
+  },
+  invoke: {
+    src: 'fetchUser',
+    // highlight-next-line
+    input: ({ context }) => ({ userId: context.userId }),
+  },
+  // ...
+}).provide({
+  actors: {
+    // highlight-start
+    fetchUser: fromPromise(({ input }) => {
+      return fetch(`/users/${input.userId}`).then((res) => res.json());
+    }),
+    // highlight-end
+  },
+});
+```
+
+## Spawning actors with input
+
+You can provide input to spawned actors via the `input` property of the `spawn` configuration:
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+    feedback: '',
+    rating: 0,
+    emailRef: null,
+  },
+  // ...
+  on: {
+    'feedback.submit': {
+      actions: assign({
+        emailRef: ({ context, spawn }) => {
+          return spawn('emailUser', {
+            // highlight-next-line
+            input: { userId: context.userId },
+          });
+        },
+      }),
+    },
+  },
+  // ...
+}).provide({
+  actors: {
+    // highlight-start
+    emailUser: fromPromise(({ input }) => {
+      return fetch(`/users/${input.userId}`, {
+        method: 'POST',
+        // ...
+      });
+    }),
+    // highlight-end
+  },
+});
+```
+
+## Use-cases
+
+Input is useful for creating reusable machines that can be configured with different input values.
+
+- Replaces the old way of writing a factory function for machines:
+
+```ts
+// Old way: using a factory function
+const createFeedbackMachine = (userId, defaultRating) => {
+  return createMachine({
+    context: {
+      userId,
+      feedback: '',
+      rating: defaultRating,
+    },
+    // ...
+  });
+};
+
+const feedbackMachine1 = createFeedbackMachine('123', 5);
+
+const feedbackActor1 = interpret(feedbackMachine1).start();
+
+// New way: using input
+const feedbackMachine = createMachine({
+  context: ({ input }) => ({
+    userId: input.userId,
+    feedback: '',
+    rating: input.defaultRating,
+  }),
+  // ...
+});
+
+const feedbackActor = interpret(feedbackMachine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+});
+```
+
+- Coming soon… Usage with `@xstate/react`
+- Coming soon… Usage with `@xstate/vue`
+- Coming soon… Usage with `@xstate/svelte`
+- Coming soon… Usage with `@xstate/solid`
+
+### Passing new data to an actor
+
+Changing the input will not cause the actor to be restarted. You need to send an event to the actor to pass the new data to the actor:
+
+```tsx
+const Component = (props) => {
+  const feedbackActor = useActor(feedbackMachine, {
+    input: {
+      userId: props.userId,
+      defaultRating: props.defaultRating,
+    },
+  });
+
+  useEffect(() => {
+    feedbackActor.send({
+      type: 'userId.change',
+      userId: props.userId,
+    });
+  }, [props.userId]);
+
+  // ...
+};
+```
+
+## TypeScript
+
+```ts
+import { interpret, createMachine } from 'xstate';
+
+const machine = createMachine({
+  types: {} as {
+    input: {
+      userId: string;
+      defaultRating: number;
+    };
+    // ...
+  },
+});
+```
+
+## Cheatsheet
+
+Use our XState input cheatsheet below to get started quickly.
+
+### Providing input
+
+```ts
+const feedbackActor = interpret(feedbackMachine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
+  },
+});
+```
+
+### Providing input to invoked actors
+
+```ts
+const feedbackMachine = createMachine({
+  invoke: {
+    src: 'liveFeedback',
+    input: {
+      domain: 'stately.ai',
+    },
+  },
+});
+```
+
+### Providing dynamic input to invoked actors
+
+```ts
+const feedbackMachine = createMachine({
+  context: {
+    userId: 'some-user-id',
+  },
+  invoke: {
+    src: 'fetchUser',
+    input: ({ context }) => ({ userId: context.userId }),
+  },
+});
+```
+
+### Providing input to spawned actors
+
+```ts
+const feedbackMachine = createMachine({
+  context: {
+    userId: '',
+  },
+  // ...
+  on: {
+    'feedback.submit': {
+      actions: assign({
+        emailRef: ({ context, spawn }) => {
+          return spawn('emailUser', {
+            input: { userId: context.userId },
+          });
+        },
+      }),
+    },
+  },
+  // ...
+});
+```

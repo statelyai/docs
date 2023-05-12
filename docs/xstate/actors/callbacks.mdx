@@ -14,7 +14,7 @@ Promise actors let you model promises declaratively but not every actor will be 
 
 Callback actors are declared using the `() => () => {}` syntax, which is how XState distinguishes them from promise actors, which are declared as: `() => {}`.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(
@@ -52,7 +52,7 @@ Callbacks are called with:
 
 Callbacks also receive a `sendBack` function, which you can use to send events back to its parent machine.
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 createMachine(

@@ -4,17 +4,17 @@ title: Final states
 
 # Final states
 
-When a machine reaches the [final state](/states/final-states), it can no longer receive any events, and anything running inside it is canceled and cleaned up. A machine can have multiple final states or no final states.
+When a machine reaches the [final state](../../states/final-states.mdx), it can no longer receive any events, and anything running inside it is canceled and cleaned up. A machine can have multiple final states or no final states.
 
 :::studio
 
-[Read more about how to use final states in the Stately Studio](/states/final-states).
+[Read more about how to use final states in the Stately Studio](../../states/final-states.mdx).
 
 :::
 
 To indicate that a state node is final, set its `type` property to `final`:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
@@ -49,7 +49,7 @@ Final states can be used with parent states to make elegant, modular statecharts
 
 Inside a parent state, reaching a final child state node will fire a `done` event back to the machine. The machine can listen for the `done` event by declaring `onDone` on the state:
 
-```ts twoslash
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
@@ -101,7 +101,7 @@ The `onDone` transition cannot be defined on the machine’s root because `onDon
 
 When running a machine, you can check `state.done` to find out if an actor has reached its final state.
 
-```ts twoslash
+```ts
 import { createMachine, interpret } from 'xstate';
 
 const answeringMachine = createMachine({
