@@ -8,6 +8,8 @@ When you run a state machine, it becomes an actor: a running process that can re
 
 An invoked actor is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
 
+A spawned actor represents multiple entities that can be started at any time and stopped at any time. 
+
 :::tip
 
 Watch our [“What are invoked actors?” video on YouTube](https://www.youtube.com/watch?v=TRMS8NYKWnA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=9) (1m57s).
@@ -34,10 +36,16 @@ In the actor model, actors are objects that can talk to each other. They are ind
 - Starting actors via `actor.start()`
 - Stopping system actor via `actor.stop()`
 
-Inside machines:
+### Invoking and spawning actors
 
-- [invoke](invoke.mdx)
-- [spawn](spawn.mdx)
+An invoked actor represents a state-based actor, so it is stopped when the invoking state is exited. Invoked actors are used for a finite/known number of actors.
+
+A spawned actor represents multiple entities that can be started at any time and stopped at any time. Spawed actors are action-based and used for a dynamic or unknown number of actors.
+
+An example of the difference between invoking and spawning actors could occur in a todo app. When loading todos, a `loadTodos` actor would be an invoked actor; it represents a single state-based task. In comparison, each of the todos can themselves be spawned actors, and there can be a dynamic number of these actors.
+
+- [Read more about invoking actors](invoke.mdx)
+- [Read more about spawning actors](spawn.mdx)
 
 ## Actor snapshots
 
