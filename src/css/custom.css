@@ -314,7 +314,10 @@ html, body {
   /* tabs */
   --ifm-tabs-padding-horizontal: 0.75rem;
   --ifm-tabs-padding-vertical: 0.5rem;
-  --ifm-tabs-color-active-border: var(--st-highlight-background);
+  --ifm-tabs-color: var(--st-text);
+  --ifm-tabs-color-active: var(--st-text-highlight);
+  --ifm-tabs-panel-background: var(--st-background-secondary);
+  --ifm-tabs-color-active-border: var(--st-background-secondary);
 }
 
 html[data-theme='light'], html[data-theme='light'] body {
@@ -1456,7 +1459,7 @@ a.link-box strong {
 }
 
 .tabs__item {
-  background: var(--st-codeblock-background);
+  background: var(--ifm-tabs);
   border: 1px solid var(--ifm-tabs-color-active-border);
   border-bottom: none;
   border-radius: var(--ifm-global-radius);
@@ -1469,7 +1472,7 @@ a.link-box strong {
 }
 
 .tabs__item--active {
-  background: var(--ifm-tabs-color-active-border);
+  background: var(--ifm-tabs-panel-background);
   border-bottom-color: transparent;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -1477,7 +1480,7 @@ a.link-box strong {
 }
 
 .tabs__item:hover {
-  background-color: var(--ifm-tabs-color-active-border);
+  background-color: var(--ifm-tabs-panel-background);
 }
 
 html[data-theme='light'] [role='tabpanel'] .theme-code-block,
@@ -1489,8 +1492,8 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
 }
 
 .tabs-container .padding-top--s {
-  background: var(--st-codeblock-background);
-  border: 1px solid var(--ifm-tabs-color-active-border);
+  background: var(--ifm-tabs-panel-background);
+  border: 1px solid var(--ifm-tabs-panel-background);
   border-radius: var(--ifm-global-radius);
   border-top-left-radius: 0;
 }
