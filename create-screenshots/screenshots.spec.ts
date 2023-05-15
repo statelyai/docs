@@ -3,6 +3,25 @@ import { takeScreenshot } from '@site/src/utils/playwrightUtils';
 
 test('my_projects', ({ page }, { title }) => takeScreenshot({ title, page }));
 
+test('discover--search', ({ page }, { title }) =>
+  takeScreenshot({
+    title,
+    page,
+    url: 'discover',
+actions: async(page: Page)=>{
+      // for full screen screenshots, make the browser a good size to capture the whole viewport without losing details
+      await page.setViewportSize({
+        width: 1620, // has to be this wide because otherwise we get a horizontal scrollbar
+        height: 900,
+      });
+      // search for auth
+      await page.getByPlaceholder('Search machines...').fill('auth');
+      // can’t filter right now, need more accessible filter options
+      // wait for everything to load
+      await page.waitForTimeout(3000)
+    }
+  }));
+
 test('version-history--versions', ({ page }, { title }) =>
   takeScreenshot({
     title,
