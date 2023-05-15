@@ -10,11 +10,7 @@ Sometimes it’s unclear whether you should use an action or an actor. Both appe
 
 Actions are “fire-and-forget”; as soon as their execution starts, the statechart running the actions forgets about them. If you specify an action as `async`, **the action won’t be awaited before moving to the next state**. Below is an example:
 
-```ts twoslash
-const createUser = async (userName: string) => {};
-// ---cut---
-import { createMachine } from 'xstate';
-
+```ts
 const machine = createMachine(
   {
     context: {
@@ -57,11 +53,7 @@ Instead, the sequence works like this:
 
 To handle `submitForm` properly, we need to use an actor:
 
-```ts twoslash {13, 17-27}
-const createUser = async (userName: string) => {};
-// ---cut---
-import { createMachine } from 'xstate';
-
+```ts
 const machine = createMachine(
   {
     context: {
@@ -72,10 +64,13 @@ const machine = createMachine(
       collectingFormDetails: {
         on: {
           SUBMIT: {
+            // highlight-start
             target: 'submitting',
+            // highlight-end
           },
         },
       },
+      // highlight-start
       submitting: {
         invoke: {
           src: 'submitForm',
@@ -87,6 +82,7 @@ const machine = createMachine(
           },
         },
       },
+      // highlight-end
       errored: {},
       submitted: {},
     },

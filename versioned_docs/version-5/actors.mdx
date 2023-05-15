@@ -1,0 +1,126 @@
+---
+title: 'Actors'
+---
+
+import ThemedImage from '@theme/ThemedImage';
+
+When you run a state machine, it becomes an actor: a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+
+An invoked actor is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
+
+A spawned actor represents multiple entities that can be started at any time and stopped at any time. 
+
+:::tip
+
+Watch our [“What are invoked actors?” video on YouTube](https://www.youtube.com/watch?v=TRMS8NYKWnA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=9) (1m57s).
+
+:::
+
+## Using actors in Stately Studio
+
+[Read about using invoked actors in Stately Studio](invoke.mdx#using-invoked-actors-in-stately-studio).
+
+## Actor model
+
+In the actor model, actors are objects that can talk to each other. They are independent computational entities that communicate via asynchronous message passing (XState refers to these messages as "events").
+
+- An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
+- Actors communicate with other actors by sending and receiving events asynchronously.
+- Actors process one message at a time. They have an internal "mailbox" that acts like an event queue, processing events one at a time.
+- State is not shared between actors. The only way for an actor to share data is by sending events.
+- Actors can spawn new actors.
+
+## Creating actors
+
+- `interpret(machine, options)`
+- Starting actors via `actor.start()`
+- Stopping system actor via `actor.stop()`
+
+### Invoking and spawning actors
+
+An invoked actor represents a state-based actor, so it is stopped when the invoking state is exited. Invoked actors are used for a finite/known number of actors.
+
+A spawned actor represents multiple entities that can be started at any time and stopped at any time. Spawed actors are action-based and used for a dynamic or unknown number of actors.
+
+An example of the difference between invoking and spawning actors could occur in a todo app. When loading todos, a `loadTodos` actor would be an invoked actor; it represents a single state-based task. In comparison, each of the todos can themselves be spawned actors, and there can be a dynamic number of these actors.
+
+- [Read more about invoking actors](invoke.mdx)
+- [Read more about spawning actors](spawn.mdx)
+
+## Actor snapshots
+
+- `actor.getSnapshot()`
+
+## Subscribing to actors
+
+- Subscribes to emitted actor snapshots
+
+- `actor.subscribe(observer)`
+- Plain function `(state) => { ... }`
+- Observer `({ next, error, complete }) => { ... }`
+- `subscription.unsubscribe()` for cleanup
+
+## Initializing actor state
+
+- `interpret(machine, { state }).start()`
+- [Persistence](persistence.mdx)
+
+## Awaiting actors
+
+- `await waitFor(actor, selector)`
+
+## State machine actors
+
+- `createMachine({ ... })`
+
+## Promise actors
+
+- `fromPromise(() => new Promise(...))`
+
+## Transition actors
+
+- `fromTransition((state, event) => { ... }, initialState)`
+
+## Observable actors
+
+- `fromObservable(() => someObservable)`
+
+## Event observable actors
+
+- `fromEventObservable(() => someEventObservable)`
+
+## Callback actors
+
+- `fromCallback((sendBack, receive) => { ... })`
+
+## Higher-level actor logic
+
+```ts
+function withUndoRedo(actorLogic) {
+  return {
+    ...actorLogic,
+  };
+}
+```
+
+## Custom actors
+
+_Coming soon_
+
+## Empty actors
+
+Actor that does nothing and only has a single emitted snapshot: `undefined`
+
+Useful for testing or when an integration (e.g. `@xstate/react`) needs an actor that may not be available yet.
+
+```ts
+const emptyActor = createEmptyActor();
+```
+
+## TypeScript
+
+_Coming soon_
+
+## Cheatsheet
+
+_Coming soon_

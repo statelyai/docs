@@ -1,0 +1,382 @@
+---
+title: Events and transitions
+---
+
+import EmbedMachine from '@site/src/components/EmbedMachine';
+import SkipDownLink from '@site/src/components/SkipDownLink';
+
+A **transition** is a change from one finite state to another, triggered by an event.
+
+An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
+
+<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7"/>
+
+Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+
+Transitions are represented by `on:` in a state:
+
+```ts
+import { createMachine } from 'xstate';
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  initial: 'question',
+  states: {
+    question: {
+      on: {
+        'feedback.good': {
+          target: 'thanks'
+        }
+      }
+    }
+    thanks: {}
+  },
+});
+```
+
+<SkipDownLink text="Jump to learning more about event objects in XState" link="#event-objects"/>
+
+## Using transitions and events in Stately Studio
+
+The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+
+:::tip
+
+Watch our [“Transitions and events” video on YouTube](https://www.youtube.com/watch?v=0qgP4RZyq58&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=4) (1m50s).
+
+:::
+
+### Add a transition and event
+
+1. Select an existing state.
+2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+
+### Change the source and target states for a transition or event
+
+First select the transition or event you want to change. Then…
+
+#### Using the **Transition details** panel
+
+1. Select the transition or event you wish to change.
+2. Open the **Transition details** panel from the right tool menu.
+3. Choose a new source state from the **Source** dropdown options.
+4. Choose a new target state from the **Target** dropdown options.
+
+#### Dragging the transition handles
+
+1. Select the transition or event you want to change.
+2. Drag the transition’s handle connected to the source state to connect it to a new source state.
+3. Drag the transition’s handle connected to the target state to connect it to a new target state.
+
+### Switch the source and target states for a transition or event
+
+1. Select the transition or event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Switch source and target** from the **quick actions** menu.
+
+## Event objects
+
+In XState, events are represented by event objects with a `type` property and optional payload:
+
+- The `type` property is a string that represents the event type.
+- The payload is an object that contains additional data about the event.
+
+```ts
+feedbackActor.send({
+  // The event type
+  type: 'feedback.update',
+  // Additional payload
+  feedback: 'This is great!',
+  rating: 5,
+});
+```
+
+## Selecting transitions
+
+Transitions are selected by checking the deepest child states first. If the transition is enabled (i.e. if its guard passes), it will be taken. If not, the parent state will be checked, and so on.
+
+1. Start on the deepest active state nodes (aka atomic state nodes)
+2. If the transition is enabled (no `guard` or its `guard` evaluates to `true`), select it.
+3. If no transition is enabled, go up to the parent state node and repeat step 1.
+4. Finally, if no transitions are enabled, no transitions will be taken, and the state will not change.
+
+## Self-transitions
+
+A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. You can also use self-transitions to restart a state.
+
+### Using self-transitions in Stately Studio
+
+#### Make an event into a self-transition
+
+##### Using the **quick actions** menu
+
+1. Right-click the event to bring up the **quick actions** menu.
+2. Choose **Make self transition** from the **quick actions** menu.
+
+##### Dragging the transition arrow
+
+1. Select the event.
+2. Grab the circular handle at the arrow end of the transition and drag the handle to connect it back to the source state.
+
+## Transitions between states
+
+Usually, transitions are between two sibling states. These transitions are defined by setting the `target` as the sibling state key.
+
+```ts
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    form: {
+      on: {
+        submit: {
+          // highlight-start
+          // Target is the key of the sibling state
+          target: 'submitting',
+          // highlight-end
+        },
+      },
+    },
+    // highlight-next-line
+    submitting: {
+      // ...
+    },
+  },
+});
+```
+
+Coming soon… assign example
+
+## Parent to child transitions
+
+When a state machine receives an event, it will first check the deepest ([atomic](state-machines-and-statecharts.mdx#atomic-states)) state to see if there is any enabled transition. If not, the parent state is checked, and so on, until the machine reaches the root state.
+
+When you want an event to transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
+
+Coming soon… example with `{ on: { target: '.child' } }`
+
+## Re-entering
+
+By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not re-enter the parent state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state.
+
+If you want the parent state to be re-entered, you can set the `reenter` property to `true`. This will cause the parent state to re-enter, executing the `exit` and `entry` actions of the parent state.
+
+:::tip
+
+In XState v4, re-entering transitions were known as **external transitions**, and the default transitions were known as **internal transitions**.
+
+:::
+
+Coming soon… illustration showing no re-enter vs. re-enter
+
+Coming soon…  example with `{ target: '.child', reenter: true }`
+
+## Transitions to any state
+
+Sibling descendent states: `{ target: 'sibling.child.grandchild' }`
+
+Parent to descendent states: `{ target: '.child.grandchild' }`
+
+State to any state: `{ target: '#specificState' }`
+
+## Forbidden transitions
+
+- `{ on: { forbidden: {} } }`
+- Different than omitting the transition; transition selection algorithm will stop looking
+- Same as `{ on: { forbidden: { target: undefined } } }`
+
+## Wildcard transitions
+
+A wildcard transition is a transition that will match any event. The event descriptor (key of the `on: {...}` object) is defined using the `*` wildcard character as the event type:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'asleep',
+  states: {
+    asleep: {
+      on: {
+        // highlight-start
+        // This transition will match any event
+        '*': { target: 'awake' },
+        // highlight-end
+      },
+    },
+    awake: {},
+  },
+});
+```
+
+Wildcard transitions are useful for:
+
+- handling events that are not handled by any other transition.
+- as a “catch-all” transition that handles any event in a state.
+
+A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
+
+## Partial wildcard transitions
+
+A partial wildcard transition is a transition that matches any event that starts with a specific prefix. The event descriptor is defined by using the wildcard character (`*`) after a dot (`.`) as the event type:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      on: {
+        // highlight-start
+        // This will match any event that starts with 'feedback.':
+        // 'feedback.good', 'feedback.bad', etc.
+        'feedback.*': { target: 'form' },
+        // highlight-end
+      },
+    },
+    form: {},
+    // ...
+  },
+});
+```
+
+The wildcard character (`*`) can only be used in the suffix of an event descriptor, following a dot (`.`):
+
+### Valid wildcard examples
+
+- ✅ `mouse.*`: matches `mouse.click`, `mouse.move`, etc.
+- ✅ `mouse.click.*`: matches `mouse.click.left`, `mouse.click.right`, etc.
+
+### Invalid wildcard
+
+- 🚫 ~~`mouse*`~~: invalid; does not match any event.
+- 🚫 ~~`mouse.*.click`~~: invalid; `*` cannot be used in the middle of an event descriptor.
+- 🚫 ~~`*.click`~~: invalid; `*` cannot be used in the prefix of an event descriptor.
+- 🚫 ~~`mouse.click*`~~: invalid; does not match any event.
+- 🚫 ~~`mouse.*.*`~~: invalid; `*` cannot be used in the middle of an event descriptor.
+
+## Multiple transitions in parallel states
+
+Since parallel states have multiple regions that can be active at the same time, it is possible for multiple transitions to be enabled at the same time. In this case, all enabled transitions to these regions will be taken.
+
+Multiple targets are specified as an array of strings:
+
+Coming soon…  example.
+
+## Other transitions
+
+- [**Eventless (always) transitions**](eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
+- [**Delayed (after) transitions**](delayed-transitions.mdx) are transitions that are enabled after a specified duration.
+
+## Transition descriptions
+
+You can add a `.description` string to a transition to describe the transition. This is useful for explaining the purpose of the transition in the visualized state machine.
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // ...
+  on: {
+    exit: {
+      // highlight-next-line
+      description: 'Closes the feedback form',
+      target: '.closed',
+    },
+  },
+});
+```
+
+## Shorthands
+
+If the transition only specifies a `target`, then the string target can be used as a shorthand instead of the entire transition object:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      on: {
+        // highlight-start
+        // This is shorthand for:
+        // 'feedback': { target: 'form' }
+        'feedback.good': 'thanks',
+        // highlight-end
+      },
+    },
+    thanks: {},
+    // ...
+  },
+});
+```
+
+Using the string target shorthand is useful for quickly prototyping state machines. Generally, we recommended using the full transition object syntax as it will be consistent with all other transition objects and will be easier to add actions, guards, and other properties to the transition in the future.
+
+## TypeScript
+
+_Coming soon_
+
+## Cheatsheet
+
+Use our XState events and transitions cheatsheet below to get started quickly.
+
+### Event objects
+
+```ts
+feedbackActor.send({
+  // Event type
+  type: 'feedback.update',
+  // Event payload
+  feedback: 'A+ would use state machines again',
+  rating: 5,
+});
+```
+
+### Transition targets
+
+```ts
+const machine = createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      on: {
+        // Sibling target
+        event: {
+          target: 'b',
+        },
+        // Sibling child target
+        otherEvent: {
+          target: 'b.c',
+        },
+      },
+    },
+    b: {
+      on: {
+        // ID target
+        event: {
+          target: '#c',
+        },
+      },
+    },
+    c: {
+      id: 'c',
+      on: {
+        // Child target
+        event: {
+          target: '.child',
+        },
+      },
+      initial: 'child',
+      states: {
+        child: {},
+      },
+    },
+  },
+  on: {
+    // Child target
+    someEvent: {
+      target: '.b',
+    },
+  },
+});
+```

@@ -11,7 +11,7 @@ When running machines in Node, a few common patterns emerge.
 
 The first pattern is running XState to coordinate a long-running process, for instance, a file watcher in a CLI (Command Line Interface):
 
-```ts twoslash
+```ts
 import { interpret, createMachine } from "xstate";
 import { watch } from "chokidar";
 
@@ -54,13 +54,13 @@ Lots of backend code relies on short-running processes, such as backend function
 
 Much of this type of code relies on `async` functions:
 
-```ts twoslash
+```ts
 const myFunc = async () => {};
 ```
 
 The best pattern to use for async functions is `waitFor`, which allows you to `await` a state machine being in a particular state.
 
-```ts twoslash
+```ts
 import { interpret, createMachine } from "xstate";
 import { waitFor } from "xstate/lib/waitFor";
 
@@ -93,7 +93,7 @@ In the example above, the machine waits for three seconds before moving on to it
 
 By default, `waitFor` will time out after 10 seconds if the desired state is not reached. You can customize this timeout by passing `timeout` in the options:
 
-```ts twoslash {8-11}
+```ts
 import { interpret, createMachine } from "xstate";
 import { waitFor } from "xstate/lib/waitFor";
 
@@ -111,18 +111,18 @@ const machine = createMachine({
   },
 });
 
-// ---cut---
-
 const myFunc = async () => {
   const actor = interpret(machine).start();
 
   const doneState = await waitFor(
     actor,
     (state) => state.matches("done"),
+    // highlight-start
     {
       // 20 seconds in ms
       timeout: 20_000,
     },
+    // highlight-end
   );
 };
 ```

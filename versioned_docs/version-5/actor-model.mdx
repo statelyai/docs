@@ -1,0 +1,38 @@
+---
+title: The actor model
+---
+
+When you run a state machine, it becomes an actor. In the actor model, actors are objects that can talk to each other via asynchronous messages. In XState, we refer to these messages as [**events**](transitions.mdx).
+
+Coming soon… what are some good examples of actors in software development?
+
+## State
+
+An actor has its own internal, encapsulated state that the actor itself can only update. An actor may update its internal state in response to a message it receives, but it cannot be updated by any other entity. Actors do not share state. The only way for an actor to share data is by sending events.
+
+[Read more about actors and state](actors.mdx).
+
+## Communication with events
+
+Actors communicate with other actors by sending and receiving events asynchronously. Actors use an internal “mailbox” that acts like an event queue, processing events one at a time.
+
+[Read more about actors and events](actors.mdx).
+
+## Spawning
+
+Actors can spawn new actors. Actors will spawn new actors in situations where they need to delegate work to another actor or when they need to create a new actor to handle a new task. Spawning allows for a flexible and dynamic system where actors can be created and destroyed as needed to handle the workload efficiently.
+
+- [Read more about spawning actors](spawn.mdx).
+- [Read about the difference between invoking and spawning actors](actors.mdx#invoking-and-spawning-actors).
+
+## Backend development
+
+Coming soon… how do you use the actor model in backend dev?
+
+## Frontend development
+
+Coming soon… how do you use the actor model in frontend dev?
+
+## XState
+
+Coming soon… how does the actor model work in XState?

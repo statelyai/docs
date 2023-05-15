@@ -12,7 +12,7 @@ XState makes several type helpers available to you for composing types in TypeSc
 
 `StateFrom` can be used to extract the `State` from a machine.
 
-```ts twoslash
+```ts
 import { createMachine, StateFrom } from 'xstate';
 
 const machine = createMachine({
@@ -25,7 +25,6 @@ const machine = createMachine({
 
 const myFunction = (state: StateFrom<typeof machine>) => {
   const context = state.context;
-  //    ^?
 };
 ```
 
@@ -33,7 +32,7 @@ const myFunction = (state: StateFrom<typeof machine>) => {
 
 `ContextFrom` can be used to extract the `context` from a machine.
 
-```ts twoslash
+```ts
 import { createMachine, ContextFrom } from 'xstate';
 
 const machine = createMachine({
@@ -46,7 +45,6 @@ const machine = createMachine({
 
 const myFunction = (context: ContextFrom<typeof machine>) => {
   console.log(context);
-  //          ^?
 };
 ```
 
@@ -54,7 +52,7 @@ const myFunction = (context: ContextFrom<typeof machine>) => {
 
 `EventFrom` can be used to extract the `event` types from a machine
 
-```ts twoslash
+```ts
 import { createMachine, EventFrom } from 'xstate';
 
 const machine = createMachine({
@@ -72,13 +70,12 @@ const machine = createMachine({
 
 const myFunction = (event: EventFrom<typeof machine>) => {
   console.log(event);
-  //          ^?
 };
 ```
 
 You can also extract _specific_ events by passing the type to the second generic slot.
 
-```ts twoslash
+```ts
 import { createMachine, EventFrom } from 'xstate';
 
 const machine = createMachine({
@@ -94,10 +91,8 @@ const machine = createMachine({
   },
 });
 
-// ---cut---
 const myFunction = (event: EventFrom<typeof machine, 'BAR'>) => {
   console.log(event);
-  //          ^?
 };
 ```
 
@@ -105,7 +100,7 @@ const myFunction = (event: EventFrom<typeof machine, 'BAR'>) => {
 
 `InterpreterFrom` gives you the type of the actor returned from `interpret` or `useInterpret`.
 
-```ts twoslash
+```ts
 import { createMachine, InterpreterFrom } from 'xstate';
 
 const machine = createMachine({
@@ -118,7 +113,6 @@ const machine = createMachine({
 
 const myFunction = (actor: InterpreterFrom<typeof machine>) => {
   const context = actor.state.context;
-  //    ^?
 };
 ```
 
@@ -126,7 +120,7 @@ const myFunction = (actor: InterpreterFrom<typeof machine>) => {
 
 `ActorRefFrom` is especially useful when [spawning actors](/xstate/actors/spawn.mdx) because it types the reference created by `spawn` when assigning to context.
 
-```ts twoslash
+```ts
 import { createMachine, ActorRefFrom, spawn, assign } from 'xstate';
 
 const childMachine = createMachine({});
@@ -151,8 +145,7 @@ const machine = createMachine({
 
 You can use `MachineOptionsFrom` in combination with [typegen](/xstate/typescript/typegen.mdx) to get a strongly typed version of the machine’s options.
 
-```ts twoslash
-// @filename: myMachine.typegen.ts
+```ts
 export interface Typegen0 {
   '@@xstate/typegen': true;
   eventsCausingActions: {
@@ -175,8 +168,6 @@ export interface Typegen0 {
   tags: never;
 }
 
-// @filename: myMachine.ts
-// ---cut---
 import { createMachine, MachineOptionsFrom } from 'xstate';
 
 const machine = createMachine({
@@ -192,7 +183,7 @@ const machine = createMachine({
 const options: MachineOptionsFrom<typeof machine> = {
   actions: {
     sayHello: (context) => {
-      //          ^?
+  
     },
   },
 };
@@ -200,8 +191,7 @@ const options: MachineOptionsFrom<typeof machine> = {
 
 You can also pass `true` to the second element of the generic to ensure that all missing implementations are passed. In the example below, `sayGoodbye` is missing, so **must** be passed when you pass `true` to `MachineOptionsFrom`.
 
-```ts twoslash
-// @filename: myMachine.typegen.ts
+```ts
 export interface Typegen0 {
   '@@xstate/typegen': true;
   eventsCausingActions: {
@@ -224,8 +214,6 @@ export interface Typegen0 {
   tags: never;
 }
 
-// @filename: myMachine.ts
-// ---cut---
 import { createMachine, MachineOptionsFrom } from 'xstate';
 
 const machine = createMachine(
