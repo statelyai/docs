@@ -113,7 +113,12 @@
           "className": "pro-feature",
           "id": "teams"
         },
-        "discover",
+        {
+          "type": "doc",
+          "label": "Import from GitHub",
+          "id": "import-from-github",
+          "className": "pro-feature"
+        },
         {
           "type": "category",
           "label": "Share",
@@ -142,6 +147,7 @@
             }
           ]
         },
+        "discover",
         {
           "type": "category",
           "label": "Accounts",
