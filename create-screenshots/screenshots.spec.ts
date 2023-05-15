@@ -116,3 +116,29 @@ test('version-history--rename-version', ({ page }, { title }) =>
       await page.waitForTimeout(3000)
     }
   }));
+
+test('import-from-github--import-from-github-button', ({ page }, { title }) =>
+  takeScreenshot({
+    title,
+    page,
+    url: '/projects', // version history feature machine
+    options: {
+      clip: {
+        width: 1344, // crop the width so the details are easier to see
+        height: 400, // doesn’t need to be that tall, the button is near the top
+        x: 135,
+        y: 0
+      }
+    },
+    actions: async(page: Page)=>{
+      // for full screen screenshots, make the browser a good size to capture the whole viewport without losing details
+      await page.setViewportSize({
+        width: 1620, // has to be this wide because otherwise we get a horizontal scrollbar
+        height: 960, // viewport still needs to be tall, otherwise we get a vertical scrollbar
+      });
+      // target the button with the exact name “Import from GitHub”
+      await page.getByRole('button', { name: 'Import from GitHub', exact: true }).hover()
+      // wait a few seconds to ensure the hover is transitioned
+      await page.waitForTimeout(1000)
+    }
+  }));
