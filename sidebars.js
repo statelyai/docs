@@ -158,7 +158,12 @@ const sidebars = {
           "className": "pro-feature",
           "id": "teams"
         },
-        "discover",
+        {
+          "type": "doc",
+          "label": "Import from GitHub",
+          "id": "import-from-github",
+          "className": "pro-feature"
+        },
         {
           "type": "category",
           "label": "Share",
@@ -226,7 +231,8 @@ const sidebars = {
               "id": "upgrade"
             }
           ]
-        }
+        },
+        "discover",
       ]
     },
     {
