@@ -1,5 +1,5 @@
 .tabList {
-  margin-bottom: calc(var(--ifm-leading)*2);
+  margin-bottom: calc(var(--ifm-leading) * 3);
 }
 
 .tabItem {
