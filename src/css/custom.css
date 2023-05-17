@@ -598,12 +598,36 @@ h1 {
   letter-spacing: -0.022rem;
 }
 
+.markdown h1, .markdown h1:first-child, .index-page h1 {
+  --ifm-h1-font-size: 2.5rem;
+}
+
 h2 {
   letter-spacing: -0.021rem;
 }
 
+.markdown h2 {
+  --ifm-h2-font-size: 1.5rem;
+}
+
 h3 {
   letter-spacing: -0.019rem;
+}
+
+.markdown h3 {
+  --ifm-h3-font-size: 1.2rem;
+}
+
+.markdown h4 {
+  --ifm-h4-font-size: 1.1rem;
+}
+
+.markdown h5 {
+  --ifm-h5-font-size: 1.05rem;
+}
+
+.markdown h6 {
+  --ifm-h6-font-size: 1rem;
 }
 
 .text--bold, strong, b {
