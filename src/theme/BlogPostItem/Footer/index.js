@@ -18,7 +18,7 @@ export default function BlogPostItemFooter() {
   return (
     <div
       className={clsx(
-        'row post-footer docusaurus-mt-lg',
+        'row post-footer margin-top--sm',
         isBlogPostPage && styles.blogPostFooterDetailsFull,
       )}>
 

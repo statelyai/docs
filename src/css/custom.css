@@ -1498,6 +1498,13 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
   border-top-left-radius: 0;
 }
 
+/* Blog */
+
+ul.blog-list {
+  list-style-type: none;
+  padding: 0;
+}
+
 /* Footer */
 
 .footer {

@@ -3,13 +3,11 @@ import Translate, {translate} from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
 function ReadMoreLabel() {
   return (
-    <b>
-      <Translate
-        id="theme.blog.post.readMore"
-        description="The label used in blog post item excerpts to link to full blog posts">
-        Read More
-      </Translate>
-    </b>
+    <Translate
+      id="theme.blog.post.readMore"
+      description="The label used in blog post item excerpts to link to full blog posts">
+      Read More
+    </Translate>
   );
 }
 export default function BlogPostItemFooterReadMoreLink(props) {
