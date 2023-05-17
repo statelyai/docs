@@ -35,7 +35,7 @@ function Date({date, formattedDate}) {
   );
 }
 function Spacer() {
-  return <>{' · '}</>;
+  return <>{' — '}</>;
 }
 export default function BlogPostItemHeaderInfo({className}) {
   const {metadata} = useBlogPost();
