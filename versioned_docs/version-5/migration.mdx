@@ -60,8 +60,6 @@ const machine = Machine({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`machine.withConfig()`~~ Use `machine.provide()`
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
@@ -108,8 +106,6 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`machine.withContext()`~~ Set context with `input`
 
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
@@ -151,8 +147,6 @@ const moneyMachine = machine.withContext({
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~`predictableActionArguments`~~ Actions ordered by default
 
@@ -241,8 +235,6 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`send()`~~ Use either `raise()` or `sendTo()`
 
 The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
@@ -287,8 +279,6 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ### `actor.send()` no longer accepts string types
 
 String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
@@ -313,8 +303,6 @@ actor.send('someEvent');
 </TabItem>
 </Tabs>
 
----
-
 ### `state.can()` no longer accepts string types
 
 String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
@@ -338,8 +326,6 @@ state.can('someEvent');
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~`cond`~~ Guarded transitions use `guard` instead
 
@@ -379,8 +365,6 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ### Use `params` to pass custom event data
 
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
@@ -416,8 +400,6 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~Strict mode~~ Use wildcard `*` transitions
 
@@ -461,8 +443,6 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
-
----
 
 ### Use explicit `always` transitions
 
@@ -508,8 +488,6 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`internal: false`~~ Use `reenter: true` instead
 
 `internal: false` is now `reenter: true`
@@ -552,8 +530,6 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`in`~~ Use `stateIn()` to validate state transitions
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
@@ -591,8 +567,6 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~`state.history`~~ Use `actor.subscribe()`
 
@@ -673,8 +647,6 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
----
-
 ### ~~`onTransition()`~~ Use `subscribe()` for changes
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
@@ -705,8 +677,6 @@ actor.onTransition((state) => {
 </TabItem>
 </Tabs>
 
----
-
 ### `interpret()` accepts a second arg to restore state
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
@@ -734,8 +704,6 @@ actor.start(someState);
 
 </TabItem>
 </Tabs>
-
----
 
 ### Use `actor.getSnapshot()` to get actor's state
 
@@ -773,8 +741,6 @@ actor.subscribe((state) => {
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~`actor.batch()`~~ Loop over events instead
 
@@ -845,8 +811,6 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
-
----
 
 ### ~~`tsTypes`~~ Use `types.typegen`
 

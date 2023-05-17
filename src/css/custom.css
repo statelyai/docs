@@ -310,6 +310,14 @@ html, body {
   --ifm-alert-border-radius: 0.5rem;
   --ifm-alert-padding-vertical: 0.75rem;
   --ifm-alert-padding-horizontal: 0.65rem;
+
+  /* tabs */
+  --ifm-tabs-padding-horizontal: 0.75rem;
+  --ifm-tabs-padding-vertical: 0.5rem;
+  --ifm-tabs-color: var(--st-text);
+  --ifm-tabs-color-active: var(--st-text-highlight);
+  --ifm-tabs-panel-background: var(--st-background-secondary);
+  --ifm-tabs-color-active-border: var(--st-background-secondary);
 }
 
 html[data-theme='light'], html[data-theme='light'] body {
@@ -385,9 +393,9 @@ html[data-theme='light'], html[data-theme='light'] body {
   --st-tip-background: var(--st-gray-50);
   --st-tip-accent: var(--st-gray-100);
   --st-tip-text: var(--st-gray-700);
-  --st-warning-background: var(--st-yellow-100);
-  --st-warning-accent: var(--st-yellow-200);
-  --st-warning-text: var(--st-yellow-800);
+  --st-warning-background: var(--st-orange-100);
+  --st-warning-accent: var(--st-orange-200);
+  --st-warning-text: var(--st-orange-800);
   --st-danger-background: var(--st-red-50);
   --st-danger-accent: var(--st-red-100);
   --st-danger-text: var(--st-red-800);
@@ -488,12 +496,12 @@ html[data-theme='dark'], html[data-theme='dark'] body {
   --st-tip-background: var(--st-gray-800);
   --st-tip-accent: var(--st-gray-700);
   --st-tip-text: var(--st-gray-200);
-  --st-warning-background: var(--st-yellow-900);
-  --st-warning-accent: var(--st-yellow-800);
-  --st-warning-text: var(--st-yellow-200);
-  --st-danger-background: var(--st-red-900);
-  --st-danger-accent: var(--st-red-800);
-  --st-danger-text: var(--st-red-200);
+  --st-warning-background: var(--st-orange-700);
+  --st-warning-accent: var(--st-orange-500);
+  --st-warning-text: var(--st-orange-100);
+  --st-danger-background: var(--st-red-700);
+  --st-danger-accent: var(--st-red-500);
+  --st-danger-text: var(--st-red-100);
   --st-typescript-background: var(--st-blue-900);
   --st-typescript-accent: var(--st-blue-800);
   --st-typescript-text: var(--st-blue-200);
@@ -1437,6 +1445,57 @@ a.link-box strong {
 
 .docs-intro p {
   padding: 0 1rem;
+}
+
+/* Tabs */
+
+.tabs {
+  color: var(--ifm-tabs-color);
+  display: flex;
+  font-weight: var(--ifm-font-weight-bold);
+  margin-bottom: 0;
+  overflow-x: auto;
+  padding-left: 0;
+}
+
+.tabs__item {
+  background: var(--ifm-tabs);
+  border: 1px solid var(--ifm-tabs-color-active-border);
+  border-bottom: none;
+  border-radius: var(--ifm-global-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  display: inline-flex;
+  padding: var(--ifm-tabs-padding-vertical) var(--ifm-tabs-padding-horizontal);
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.tabs__item--active {
+  background: var(--ifm-tabs-panel-background);
+  border-bottom-color: transparent;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: var(--ifm-tabs-color-active);
+}
+
+.tabs__item:hover {
+  background-color: var(--ifm-tabs-panel-background);
+}
+
+html[data-theme='light'] [role='tabpanel'] .theme-code-block,
+html[data-theme='dark'] [role='tabpanel'] .theme-code-block,
+html[data-theme='light'] [role='tabpanel'] .theme-code-block pre,
+html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
+  background: none !important;
+  border: none !important;
+}
+
+.tabs-container .padding-top--s {
+  background: var(--ifm-tabs-panel-background);
+  border: 1px solid var(--ifm-tabs-panel-background);
+  border-radius: var(--ifm-global-radius);
+  border-top-left-radius: 0;
 }
 
 /* Footer */
