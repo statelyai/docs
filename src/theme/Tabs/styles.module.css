@@ -1,0 +1,7 @@
+.tabList {
+  margin-bottom: calc(var(--ifm-leading) * 3);
+}
+
+.tabItem {
+  margin-top: 0 !important;
+}
