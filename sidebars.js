@@ -140,8 +140,6 @@ const sidebars = {
             "keywords": ["guides"]
           },
           "items": [
-            "annotations",
-            "descriptions", 
             "import-from-code", 
             "export-as-code", 
             {
@@ -149,7 +147,9 @@ const sidebars = {
               "label":"Version history",
               "id": "versions",
               "className": "pro-feature"
-            }
+            },
+            "annotations",
+            "descriptions", 
           ]
         },
         "projects",
