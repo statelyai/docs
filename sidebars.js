@@ -140,6 +140,7 @@ const sidebars = {
             "keywords": ["guides"]
           },
           "items": [
+            "annotations",
             "descriptions", 
             "import-from-code", 
             "export-as-code", 
