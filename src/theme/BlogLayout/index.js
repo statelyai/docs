@@ -18,7 +18,7 @@ export default function BlogLayout(props) {
             itemScope
             itemType="http://schema.org/Blog"
           >
-            <ul className="blog-list">{children}</ul>
+            {children}
           </main>
           {toc && <div className="col col--2">{toc}</div>}
         </div>

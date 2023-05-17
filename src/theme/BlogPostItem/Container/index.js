@@ -6,7 +6,6 @@ export default function BlogPostItemContainer({ children, className }) {
   const { withBaseUrl } = useBaseUrlUtils();
   const image = assets.image ?? frontMatter.image;
   return (
-    <li>
       <article
         className={className}
         itemProp="blogPost"
@@ -21,6 +20,5 @@ export default function BlogPostItemContainer({ children, className }) {
         )}
         {children}
       </article>
-    </li>
   );
 }
