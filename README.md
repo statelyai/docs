@@ -9,7 +9,7 @@ Our docs are built using [Docusaurus 2](https://docusaurus.io/).
 $ yarn
 ```
 
-### Local Development
+### Local development
 
 ```
 $ yarn start
