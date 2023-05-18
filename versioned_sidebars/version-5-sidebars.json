@@ -103,7 +103,9 @@
               "label": "Version history",
               "id": "versions",
               "className": "pro-feature"
-            }
+            },
+            "annotations",
+            "descriptions"
           ]
         },
         "projects",
