@@ -73,8 +73,8 @@ A [React hook](https://reactjs.org/hooks) that interprets the given `machine` an
 
 #### Arguments
 
-- `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html)
-- `options?` - [Interpreter options](https://xstate.js.org/docs/guides/interpretation.html#options).
+- `machine` - An [XState machine](machines.mdx)
+- `options?` - [Interpreter options](machines.mdx#interpreting-machines).
 
 **Returns** a tuple of `[state, send, actor]`:
 
@@ -217,12 +217,12 @@ Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-dee
 
 #### Arguments
 
-- `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html)
+- `machine` - An [XState machine](machines.mdx)
 
 Returns a React Context object that contains the following properties:
 
 - `Provider` - a React Context Provider component with the following props:
-  - `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html) that must be of the same type as the machine passed to `createActorContext(...)`
+  - `machine` - An [XState machine](machines.mdx) that must be of the same type as the machine passed to `createActorContext(...)`
 - `useSelector(selector, compare?)` - a React hook that takes in a `selector` function and optional `compare` function and returns the selected value from the actor snapshot
 - `useActorRef()` - a React hook that returns the actor ref of the interpreted `machine`
 
@@ -325,13 +325,13 @@ const App = () => {
 
 ### `useMachine(machine)` with `@xstate/fsm`
 
-A [React hook](https://reactjs.org/hooks) that interprets the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
+A [React hook](https://reactjs.org/hooks) that interprets the given finite state `machine` from [`@xstate/fsm`](xstate-fsm.mdx) and starts a service that runs for the lifetime of the component.
 
 This special `useMachine` hook is imported from `@xstate/react/fsm`
 
 #### Arguments
 
-- `machine` - An [XState finite state machine (FSM)](https://xstate.js.org/docs/packages/xstate-fsm/).
+- `machine` - An [XState finite state machine (FSM)](xstate-fsm.mdx).
 - `options` - An optional `options` object.
 
 **Returns** a tuple of `[state, send, service]`:
@@ -489,7 +489,7 @@ const Fetcher = ({ onResolve }) => {
 
 ## Matching states
 
-When using [hierarchical](https://xstate.js.org/docs/guides/hierarchical.html) and [parallel](https://xstate.js.org/docs/guides/parallel.html) machines, the state values will be objects, not strings. In this case, it is best to use [`state.matches(...)`](https://xstate.js.org/docs/guides/states.html#state-methods-and-getters).
+When using [hierarchical](parent-states.mdx) and [parallel](parallel-states.mdx) machines, the state values will be objects, not strings. In this case, it is best to use [`state.matches(...)`](states.mdx#statematchesstatevalue).
 
 We can do this with `if/else if/else` blocks:
 
@@ -506,7 +506,7 @@ if (state.matches('idle')) {
 }
 ```
 
-We can also continue to use `switch`, but we must make an adjustment to our approach. By setting the expression of the `switch` to `true`, we can use [`state.matches(...)`](https://xstate.js.org/docs/guides/states.html#state-methods-and-getters) as a predicate in each `case`:
+We can also continue to use `switch`, but we must make an adjustment to our approach. By setting the expression of the `switch` to `true`, we can use [`state.matches(...)`](states.mdx#statematchesstatevalue) as a predicate in each `case`:
 
 ```js
 switch (true) {
