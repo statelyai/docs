@@ -1498,6 +1498,11 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
   border-top-left-radius: 0;
 }
 
+/* Add more space above headings that follow tab panels */
+.tabs-container + h2, .tabs-container + h3, .tabs-container + h4 {
+  margin-top: calc(var(--ifm-leading) * 3);
+}
+
 /* Footer */
 
 .footer {
