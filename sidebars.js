@@ -149,14 +149,27 @@ const sidebars = {
               id: 'versions',
               className: 'pro-feature',
             },
+            'import-from-code',
+            'export-as-code',
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Simulate mode",
+          "link": {
+            "type": "generated-index",
+            "title": "Simulate mode",
+            "description": "Learn how to use Simulate mode in Stately Studio’s editor.",
+            "slug": "/category/simulate-mode",
+            "keywords": ["guides"]
+          },
+          "items": [
             {
               type: 'doc', 
               label:'Live simulation',
-              id: 'live-sim',
+              id: 'live-simulation',
               className: 'pro-feature',
             },
-            'import-from-code',
-            'export-as-code',
           ]
         },
         "projects",
