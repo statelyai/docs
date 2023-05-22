@@ -112,152 +112,153 @@ const sidebars = {
       ],
     },
     {
-      "type": "category",
-      "label": "Using Stately Studio",
-      "link": {
-        "type": "generated-index",
-        "title": "Using Stately Studio",
-        "description": "Learn how to use Stately Studio’s editor.",
-        "slug": "/category/studio",
-        "keywords": ["guides"]
+      type: 'category',
+      label: 'Using Stately Studio',
+      link: {
+        type: 'generated-index',
+        title: 'Using Stately Studio',
+        description: 'Learn how to use Stately Studio’s editor.',
+        slug: '/category/studio',
+        keywords: ['guides'],
       },
-      "collapsed": false,
-      "collapsible": true,
-      "items": [
+      collapsed: false,
+      collapsible: true,
+      items: [
         {
-          "type": "doc",
-          "label": "Introducing Stately Studio",
-          "id": "studio"
+          type: 'doc',
+          label: 'Introducing Stately Studio',
+          id: 'studio',
         },
         {
-          "type": "category",
-          "label": "Design mode",
-          "link": {
-            "type": "generated-index",
-            "title": "Design mode",
-            "description": "Learn how to use Design mode in Stately Studio’s editor.",
-            "slug": "/category/design-mode",
-            "keywords": ["guides"]
+          type: 'category',
+          label: 'Design mode',
+          link: {
+            type: 'generated-index',
+            title: 'Design mode',
+            description:
+              'Learn how to use Design mode in Stately Studio’s editor.',
+            slug: '/category/design-mode',
+            keywords: ['guides'],
           },
-          "items": [
-            "import-from-code", 
-            "export-as-code", 
+          items: [
+            'import-from-code',
+            'export-as-code',
             {
-              type: 'doc', 
-              label:'Version history',
+              type: 'doc',
+              label: 'Version history',
               id: 'versions',
               className: 'pro-feature',
             },
             'import-from-code',
             'export-as-code',
-          ]
+          ],
         },
         {
-          "type": "category",
-          "label": "Simulate mode",
-          "link": {
-            "type": "generated-index",
-            "title": "Simulate mode",
-            "description": "Learn how to use Simulate mode in Stately Studio’s editor.",
-            "slug": "/category/simulate-mode",
-            "keywords": ["guides"]
+          type: 'category',
+          label: 'Simulate mode',
+          link: {
+            type: 'generated-index',
+            title: 'Simulate mode',
+            description:
+              'Learn how to use Simulate mode in Stately Studio’s editor.',
+            slug: '/category/simulate-mode',
+            keywords: ['guides'],
           },
-          "items": [
+          items: [
             {
-              type: 'doc', 
-              label:'Live simulation',
+              type: 'doc',
+              label: 'Live simulation',
               id: 'live-simulation',
               className: 'pro-feature',
             },
             {
-            "type": "doc", 
-            "label":"Version history",
-            "id": "versions",
-            "className": "pro-feature"
-            }
-          ]
-          },
-            "annotations",
-            "descriptions", 
-          ]
+              type: 'doc',
+              label: 'Version history',
+              id: 'versions',
+              className: 'pro-feature',
+            },
+          ],
         },
-        "projects",
+        'annotations',
+        'descriptions',
+      ],
+    },
+    'projects',
+    {
+      type: 'doc',
+      label: 'Teams',
+      className: 'pro-feature',
+      id: 'teams',
+    },
+    'discover',
+    {
+      type: 'category',
+      label: 'Share',
+      link: {
+        type: 'generated-index',
+        title: 'Share',
+        description: 'Learn how to share machines created in Stately Studio.',
+        slug: '/category/share',
+        keywords: ['guides'],
+      },
+      items: [
         {
-          "type": "doc",
-          "label": "Teams",
-          "className": "pro-feature",
-          "id": "teams"
-        },
-        "discover",
-        {
-          "type": "category",
-          "label": "Share",
-          "link": {
-            "type": "generated-index",
-            "title": "Share",
-            "description": "Learn how to share machines created in Stately Studio.",
-            "slug": "/category/share",
-            "keywords": ["guides"]
-          },
-          "items": [
-            {
-              "type": "doc",
-              "label": "Embed URL",
-              "id": "embed"
-            }, 
-            {
-              "type": "doc",
-              "label": "Image URL",
-              "id": "image"
-            }, 
-            {
-              "type": "doc",
-              "label": "Share URL",
-              "id": "url"
-            }
-          ]
+          type: 'doc',
+          label: 'Embed URL',
+          id: 'embed',
         },
         {
-          "type": "category",
-          "label": "Accounts",
-          "link": {
-            "type": "generated-index",
-            "title": "Stately Studio accounts",
-            "description": "Learn about Stately Studio plans and how to manage your account.",
-            "slug": "/category/accounts",
-            "keywords": ["guides"]
-          },
-          "items": [
-            {
-              "type": "doc",
-              "label": "Community plan",
-              "id": "studio-community-plan",
-              "className": "community-feature"
-            },
-            {
-              "type": "doc",
-              "label": "Pro plan",
-              "id": "studio-pro-plan",
-              "className": "pro-feature"
-            },
-            {
-              "type": "doc",
-              "label": "Enterprise plan",
-              "id": "studio-enterprise-plan"
-            },
-            {
-              "type": "doc",
-              "label": "Sign up",
-              "id": "sign-up"
-            },
-            {
-              "type": "doc",
-              "label": "Upgrade",
-              "id": "upgrade"
-            }
-          ]
-        }
-      ]
+          type: 'doc',
+          label: 'Image URL',
+          id: 'image',
+        },
+        {
+          type: 'doc',
+          label: 'Share URL',
+          id: 'url',
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Accounts',
+      link: {
+        type: 'generated-index',
+        title: 'Stately Studio accounts',
+        description:
+          'Learn about Stately Studio plans and how to manage your account.',
+        slug: '/category/accounts',
+        keywords: ['guides'],
+      },
+      items: [
+        {
+          type: 'doc',
+          label: 'Community plan',
+          id: 'studio-community-plan',
+          className: 'community-feature',
+        },
+        {
+          type: 'doc',
+          label: 'Pro plan',
+          id: 'studio-pro-plan',
+          className: 'pro-feature',
+        },
+        {
+          type: 'doc',
+          label: 'Enterprise plan',
+          id: 'studio-enterprise-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Sign up',
+          id: 'sign-up',
+        },
+        {
+          type: 'doc',
+          label: 'Upgrade',
+          id: 'upgrade',
+        },
+      ],
     },
     {
       type: 'category',
@@ -309,10 +310,7 @@ const sidebars = {
             slug: '/category/xstate-actions',
             keywords: ['guides'],
           },
-          items: [
-            'xstate/actions/actions',
-            'xstate/actions/built-in-actions',
-          ],
+          items: ['xstate/actions/actions', 'xstate/actions/built-in-actions'],
         },
         {
           type: 'doc',
