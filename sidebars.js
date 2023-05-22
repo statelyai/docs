@@ -169,13 +169,14 @@ const sidebars = {
               id: 'live-simulation',
               className: 'pro-feature',
             },
-          ],
             {
-              "type": "doc", 
-              "label":"Version history",
-              "id": "versions",
-              "className": "pro-feature"
-            },
+            "type": "doc", 
+            "label":"Version history",
+            "id": "versions",
+            "className": "pro-feature"
+            }
+          ]
+          },
             "annotations",
             "descriptions", 
           ]
