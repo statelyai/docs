@@ -76,7 +76,7 @@ const config = {
               'warningxstate',
               'studio',
               'new',
-              'video'
+              'video',
             ],
           },
 
@@ -184,7 +184,7 @@ const config = {
         appId: 'BYNMHHN151',
         apiKey: 'e2fd3f2a7cd06067674996dd674fb241',
         indexName: 'stately',
-        contextualSearch: false,
+        contextualSearch: true,
         replaceSearchResultPathname:
           // Remove /docs from the search result pathname when we're in a preview deployment
           process.env.VERCEL_ENV === 'preview'

@@ -1,17 +1,20 @@
-# Website
+# Welcome to the Stately docs for Stately Studio and XState
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Our docs are built using [Docusaurus 2](https://docusaurus.io/). 
 
-### Installation
+We welcome any contributions to the documentation and code base.
 
-1.
+- ✨ [Contribution guide](https://github.com/statelyai/xstate/blob/main/CONTRIBUTING.md)
+- 🖊️ [The Stately Guide to Writing Docs](https://github.com/statelyai/docs/wiki)
+- 🙋 [Code of conduct](https://github.com/statelyai/docs/blob/main/CODE_OF_CONDUCT.md)
+
+## Installation
+
 ```
 $ yarn
 ```
 
-2. Copy the contents of the `.env file for docusaurus` from 1Password into a `.env` file in the root of the folder.
-
-### Local Development
+## Local development
 
 ```
 $ yarn start
@@ -19,26 +22,14 @@ $ yarn start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-### Build
+## Build
 
 ```
 $ yarn build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+This command generates static content into the `build` directory.
 
-### Deployment
+## Deployment
 
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The docs are built and deployed when merged into `main`.
