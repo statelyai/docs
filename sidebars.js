@@ -149,8 +149,6 @@ const sidebars = {
               id: 'versions',
               className: 'pro-feature',
             },
-            'import-from-code',
-            'export-as-code',
           ],
         },
         {
@@ -169,12 +167,6 @@ const sidebars = {
               type: 'doc',
               label: 'Live simulation',
               id: 'live-simulation',
-              className: 'pro-feature',
-            },
-            {
-              type: 'doc',
-              label: 'Version history',
-              id: 'versions',
               className: 'pro-feature',
             },
           ],
