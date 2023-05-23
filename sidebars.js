@@ -248,6 +248,11 @@ const sidebars = {
           label: 'Introducing XState',
           id: 'xstate/intro',
         },
+        {
+          type: 'link',
+          label: 'Migrate to XState v5 beta',
+          href: '/xstate-v5/migration',
+        },
         'xstate/installation',
         'xstate/templates',
         {
