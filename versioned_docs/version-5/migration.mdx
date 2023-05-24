@@ -150,7 +150,7 @@ const moneyMachine = machine.withContext({
 
 ### ~~`predictableActionArguments`~~ Actions ordered by default
 
-Actions are now in predictable order by default. Assign actions will always run in the order they are defined.
+Actions are now in predictable order by default so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -203,7 +203,7 @@ const machine = createMachine({
 
 ## Events and transitions
 
-### Implementation functions receive a single arg
+### Implementation functions receive a single argument
 
 Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
 
@@ -677,7 +677,7 @@ actor.onTransition((state) => {
 </TabItem>
 </Tabs>
 
-### `interpret()` accepts a second arg to restore state
+### `interpret()` accepts a second argument to restore state
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
