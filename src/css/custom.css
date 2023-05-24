@@ -1337,8 +1337,8 @@ aside.alert {
 }
 
 .alert--v4compatible {
-  width: 165px;
-  height: 45px;
+  width: 160px;
+  padding: 4px 10px;
 }
 
 .alert__icon {
