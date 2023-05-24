@@ -262,7 +262,7 @@ const AdmonitionConfigs = {
         "
         description="The default label used for the XState v4 compatibility admonition (:::v5compatibility)"
       >
-        v5 compatibile
+        v4 compatible
       </Translate>
     ),
   },
