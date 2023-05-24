@@ -281,6 +281,12 @@ const machine = createMachine({
 
 ### `actor.send()` no longer accepts string types
 
+:::v4compatible
+
+XState v4 compatible
+
+:::
+
 String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
 
 <Tabs>
@@ -304,6 +310,12 @@ actor.send('someEvent');
 </Tabs>
 
 ### `state.can()` no longer accepts string types
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
 
@@ -366,6 +378,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use `params` to pass custom event data
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
 
@@ -445,6 +463,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use explicit `always` transitions
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 Eventless ("always") events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
@@ -569,6 +593,12 @@ const machine = createMachine({
 </Tabs>
 
 ### ~~`state.history`~~ Use `actor.subscribe()`
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
@@ -743,6 +773,12 @@ actor.subscribe((state) => {
 </Tabs>
 
 ### ~~`actor.batch()`~~ Loop over events instead
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 The `actor.batch([...])` method for batching events is removed.
 
