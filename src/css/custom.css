@@ -1337,7 +1337,7 @@ aside.alert {
 }
 
 .alert--v4compatible {
-  width: 205px;
+  width: fit-content;
   padding: 4px 10px;
 }
 
