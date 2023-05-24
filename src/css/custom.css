@@ -1426,6 +1426,10 @@ a.link-box strong {
   text-align: center;
 }
 
+.docs-intro h2:hover a.hash-link  {
+ opacity: 0;
+}
+
 .docs-intro-studio, .docs-intro-xstate {
   flex: 0 1 18rem;
   font-weight: var(--ifm-font-weight-semibold);
