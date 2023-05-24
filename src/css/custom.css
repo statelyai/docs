@@ -1263,6 +1263,11 @@ details summary::before {
   }
 }
 
+aside.alert {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .alert--primary {
   --ifm-alert-background-color: var(--st-tip-background);
   --ifm-alert-background-color-highlight: var(--st-tip-accent);
