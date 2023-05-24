@@ -23,6 +23,7 @@
           "label": "Install XState",
           "id": "installation"
         },
+        "quickstart",
         {
           "type": "doc",
           "label": "Migrate to XState v5",
