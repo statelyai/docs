@@ -159,10 +159,10 @@ body {
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
   --ifm-code-background: var(--st-code-highlight-background);
-  --ifm-code-border-radius: 0.5em;
+  --ifm-code-border-radius: 0.25em;
   --ifm-code-font-size: 95%;
-  --ifm-code-padding-horizontal: 0.1rem;
-  --ifm-code-padding-vertical: 0.1rem;
+  --ifm-code-padding-horizontal: 0.3rem;
+  --ifm-code-padding-vertical: 0.2rem;
   --ifm-global-shadow-lw: none;
   --ifm-color-secondary: var(--st-text-secondary);
   --ifm-color-success: #00a400;
@@ -347,6 +347,8 @@ html[data-theme='light'] body {
   --st-layout-border-secondary: var(--st-gray-100);
   --st-code-border: var(--st-gray-100);
   --st-codeblock-background: white;
+  --st-code-inline-border: 1px solid rgba(191, 227, 248, .5);/* var(--st-blue-100) in rgba */
+  --st-code-inline-text: var(--st-blue-900);
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
   --st-copy-button-text: var(--st-blue-800);
@@ -493,6 +495,8 @@ html[data-theme='dark'] body {
   --st-layout-border: var(--st-gray-700);
   --st-layout-border-secondary: var(--st-gray-700);
   --st-code-border: transparent;
+  --st-code-inline-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
+  --st-code-inline-text: var(--st-gray-50);
   --st-codeblock-background: var(--st-gray-850);
   --st-code-highlight-background: var(--st-gray-800);
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
@@ -772,7 +776,8 @@ article,
 /* Inline code */
 
 code {
-  border: none;
+  border: var(--st-code-inline-border);
+  color: var(--st-code-inline-text);
   vertical-align: baseline;
 }
 
