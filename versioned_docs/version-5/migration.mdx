@@ -367,6 +367,12 @@ state.can('someEvent');
 
 ### Guarded transitions use `guard`, not `cond`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 The `cond` transition property for guarded transitions is now called `guard`:
 
 <Tabs>
@@ -404,6 +410,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use `params` to pass custom event data
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 :::v4compatible
 
@@ -447,6 +459,12 @@ const machine = createMachine({
 
 ### Use wildcard `*` transitions, not strict mode
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
 <Tabs>
@@ -489,6 +507,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use explicit `always` transitions
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 :::v4compatible
 
@@ -540,6 +564,12 @@ const machine = createMachine({
 
 ### Use `reenter: true`, not `internal: false`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 `internal: false` is now `reenter: true`
 
 External transitions previously specified with `internal: false` are now specified with `reenter: true`:
@@ -582,6 +612,12 @@ const machine = createMachine({
 
 ### Use `stateIn()` to validate state transitions, not `in`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
 <Tabs>
@@ -619,6 +655,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use `actor.subscribe()` instead of `state.history`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 :::v4compatible
 
@@ -658,6 +700,12 @@ actor.subscribe((state) => {
 ## Actors
 
 ### Use `actors` property on `options` object instead of `services`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 `services` have been renamed to `actors`:
 
@@ -705,6 +753,12 @@ const specificMachine = machine.withConfig({
 
 ### Use `subscribe()` for changes, not `onTransition()`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
 <Tabs>
@@ -735,6 +789,12 @@ actor.onTransition((state) => {
 
 ### `interpret()` accepts a second argument to restore state
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
 To restore an actor at a specific state, you should now pass the state into the `state` property of the `options` argument of `interpret(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
@@ -762,6 +822,12 @@ actor.start(someState);
 </Tabs>
 
 ### Use `actor.getSnapshot()` to get actor’s state
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -800,6 +866,12 @@ actor.subscribe((state) => {
 
 ### Loop over events instead of using `actor.batch()`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 :::v4compatible
 
 XState v4 compatible
@@ -833,6 +905,12 @@ actor.batch(events);
 ## TypeScript
 
 ### Use `types` instead of `schema`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
@@ -875,6 +953,12 @@ const machine = createMachine({
 </Tabs>
 
 ### Use `types.typegen` instead of `tsTypes`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 `machineConfig.tsTypes` has been renamed and is now nested as `machineConfig.types.typegen`:
 
@@ -947,12 +1031,12 @@ Upvote or comment on [Stately Studio + XState V5 compatibility in our roadmap](h
 
 ### When will the XState VS Code extension be compatible with XState V5?
 
-The [XState VS Code extension](xstate-vscode-extension.mdx) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway. 
+The [XState VS Code extension](xstate-vscode-extension.mdx) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway.
 
 Upvote or comment on [XState V5 compatibility for VS Code extension in our roadmap](https://statelyai.canny.io/devtools/p/xstate-v5-compatibility-for-vs-code-extension) to stay updated on our progress.
 
 ### When will XState V5 have typegen?
 
-[Typegen](typegen.mdx) automatically generates intelligent typings for XState and is not yet compatible with XState v5. We’re working on Typegen alongside the VS Code extension. 
+[Typegen](typegen.mdx) automatically generates intelligent typings for XState and is not yet compatible with XState v5. We’re working on Typegen alongside the VS Code extension.
 
 Upvote or comment on [Typegen for XState V5 in our roadmap](https://statelyai.canny.io/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
