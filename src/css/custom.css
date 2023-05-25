@@ -643,12 +643,36 @@ h1 {
   letter-spacing: -0.022rem;
 }
 
+.markdown h1, .markdown h1:first-child, .index-page h1 {
+  --ifm-h1-font-size: 2.5rem;
+}
+
 h2 {
   letter-spacing: -0.021rem;
 }
 
+.markdown h2 {
+  --ifm-h2-font-size: 1.75rem;
+}
+
 h3 {
   letter-spacing: -0.019rem;
+}
+
+.markdown h3 {
+  --ifm-h3-font-size: 1.5rem;
+}
+
+.markdown h4 {
+  --ifm-h4-font-size: 1.2rem;
+}
+
+.markdown h5 {
+  --ifm-h5-font-size: 1.1rem;
+}
+
+.markdown h6 {
+  --ifm-h6-font-size: 1.05rem;
 }
 
 .text--bold,
@@ -1610,7 +1634,7 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
 .tabs-container + h2,
 .tabs-container + h3,
 .tabs-container + h4 {
-  margin-top: calc(var(--ifm-leading) * 3);
+  margin-top: calc(var(--ifm-leading) * 2.5);
 }
 
 /* Footer */
