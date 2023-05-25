@@ -162,7 +162,7 @@ body {
   --ifm-code-border-radius: 0.25em;
   --ifm-code-font-size: 95%;
   --ifm-code-padding-horizontal: 0.3rem;
-  --ifm-code-padding-vertical: 0.2rem;
+  --ifm-code-padding-vertical: 0.1rem;
   --ifm-global-shadow-lw: none;
   --ifm-color-secondary: var(--st-text-secondary);
   --ifm-color-success: #00a400;
