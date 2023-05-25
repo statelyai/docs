@@ -656,12 +656,6 @@ Breaking change
 
 :::
 
-:::v4compatible
-
-XState v4 compatible
-
-:::
-
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
 <Tabs>
@@ -690,6 +684,8 @@ actor.subscribe((state) => {
 
 </TabItem>
 </Tabs>
+
+**Pre-migration tip:** Update v4 projects to track history using `actor.subscribe()`.
 
 ## Actors
 
