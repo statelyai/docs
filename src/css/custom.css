@@ -410,6 +410,11 @@ html[data-theme='light'] body {
   --docsearch-footer-background: var(--st-gray-50);
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-100);
 
+  /* tags */
+  --st-tag-border: 1px solid rgba(191, 227, 248, .5);/* var(--st-blue-100) in rgba */
+  --st-tag-text: var(--st-blue-900);
+  --st-tag-background: var(--st-blue-50);
+
   /* alert colours */
   --st-tip-background: var(--st-gray-50);
   --st-tip-accent: var(--st-gray-100);
@@ -591,6 +596,11 @@ html[data-theme='dark'] body {
   /* contents list */
   --ifm-toc-border-color: var(--st-layout-border-secondary);
   --ifm-toc-link-color: var(--st-text);
+
+  /* tags */
+  --st-tag-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
+  --st-tag-text: var(--st-gray-50);
+  --st-tag-background: var(--st-gray-850);
 }
 
 /* Code examples */

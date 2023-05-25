@@ -18,14 +18,14 @@ export default function BlogPostItemFooter() {
   return (
     <div
       className={clsx(
-        'row post-footer margin-top--sm',
+        'row post-footer',
         isBlogPostPage && styles.blogPostFooterDetailsFull,
       )}>
 
       {isBlogPostPage && tagsExists && (
-        <p className={clsx('col', {'col--9': truncatedPost})}>
+        <div className={clsx('col', {'col--9': truncatedPost})}>
           <TagsListInline tags={tags} />
-        </p>
+        </div>
       )}
 
       {isBlogPostPage && editUrl && (
@@ -35,12 +35,12 @@ export default function BlogPostItemFooter() {
       )}
 
       {truncatedPost && (
-        <p
+        <div
           className={clsx('col', {
             'col--3': tagsExists,
           })}>
           <ReadMoreLink blogPostTitle={title} to={metadata.permalink} />
-        </p>
+        </div>
       )}
     </div>
   );
