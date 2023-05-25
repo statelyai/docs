@@ -95,15 +95,17 @@
             "keywords": ["guides"]
           },
           "items": [
-            "descriptions", 
-            "import-from-code", 
-            "export-as-code", 
+            "descriptions",
+            "import-from-code",
+            "export-as-code",
             {
-              "type": "doc", 
-              "label":"Version history",
+              "type": "doc",
+              "label": "Version history",
               "id": "versions",
               "className": "pro-feature"
-            }
+            },
+            "annotations",
+            "descriptions"
           ]
         },
         "projects",
@@ -129,12 +131,12 @@
               "type": "doc",
               "label": "Embed URL",
               "id": "embed"
-            }, 
+            },
             {
               "type": "doc",
               "label": "Image URL",
               "id": "image"
-            }, 
+            },
             {
               "type": "doc",
               "label": "Share URL",
@@ -235,10 +237,10 @@
     },
     {
       "type": "category",
-      "label": "XState packages",
+      "label": "Packages",
       "link": {
         "type": "generated-index",
-        "title": "XState packages",
+        "title": "Packages",
         "description": "Find all the packages in XState.",
         "slug": "/category/xstate-packages",
         "keywords": ["guides"]
@@ -246,13 +248,13 @@
       "collapsed": true,
       "collapsible": true,
       "items": [
+        "xstate-react",
+        "xstate-vue",
+        "xstate-svelte",
         "xstate-fsm",
         "xstate-graph",
         "xstate-test",
-        "xstate-immer",
-        "xstate-react",
-        "xstate-svelte",
-        "xstate-vue"
+        "xstate-immer"
       ]
     },
     {

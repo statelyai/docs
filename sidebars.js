@@ -140,7 +140,6 @@ const sidebars = {
             "keywords": ["guides"]
           },
           "items": [
-            "descriptions", 
             "import-from-code", 
             "export-as-code", 
             {
@@ -148,7 +147,9 @@ const sidebars = {
               "label":"Version history",
               "id": "versions",
               "className": "pro-feature"
-            }
+            },
+            "annotations",
+            "descriptions", 
           ]
         },
         "projects",
@@ -246,6 +247,11 @@ const sidebars = {
           type: 'doc',
           label: 'Introducing XState',
           id: 'xstate/intro',
+        },
+        {
+          type: 'link',
+          label: 'Migrate to XState v5 beta',
+          href: '/xstate-v5/migration',
         },
         'xstate/installation',
         'xstate/templates',
