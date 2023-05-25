@@ -512,12 +512,6 @@ Breaking change
 
 :::
 
-:::v4compatible
-
-XState v4 compatible
-
-:::
-
 Eventless (“always”) events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
 <Tabs>
@@ -559,6 +553,8 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
+
+**Pre-migration tip:** Update v4 projects to use `always` for _eventless_ transitions.
 
 ### Use `reenter: true`, not `internal: false`
 
