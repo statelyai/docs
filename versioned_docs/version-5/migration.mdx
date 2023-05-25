@@ -15,21 +15,17 @@ This guide is for users who want to update their codebase from v4 to v5 and shou
 
 XState version 5 is in beta, and compared to XState version 4, it is [feature complete](https://en.wikipedia.org/wiki/Software_release_life_cycle#Feature_complete) with all the features of V4 and more. But as V5 is still in beta, some slight breaking changes may occur with future beta versions. So go ahead, but proceed with caution!
 
-:::warningxstate
-
----
-
-:::danger
-
-## Breaking changes
-
-The following are breaking changes from XState v4 to v5.
-
 :::
 
 ## Creating machines
 
 ### ~~`Machine()`~~ Use `createMachine()`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The ~~`Machine(config)`~~ function is now called `createMachine(config)`:
 
@@ -61,6 +57,12 @@ const machine = Machine({
 </Tabs>
 
 ### ~~`machine.withConfig()`~~ Use `machine.provide()`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
@@ -108,6 +110,12 @@ const specificMachine = machine.withConfig({
 
 ### ~~`machine.withContext()`~~ Set context with `input`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
 
 <Tabs>
@@ -149,6 +157,12 @@ const moneyMachine = machine.withContext({
 </Tabs>
 
 ### ~~`predictableActionArguments`~~ Actions ordered by default
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 Actions are now in predictable order by default so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
@@ -205,6 +219,12 @@ const machine = createMachine({
 
 ### Implementation functions receive a single argument
 
+:::breakingchange
+
+Breaking change
+
+:::
+
 Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
 
 <Tabs>
@@ -236,6 +256,12 @@ const machine = createMachine({
 </Tabs>
 
 ### ~~`send()`~~ Use either `raise()` or `sendTo()`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
 

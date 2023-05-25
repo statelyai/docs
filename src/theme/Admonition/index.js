@@ -266,6 +266,19 @@ const AdmonitionConfigs = {
       </Translate>
     ),
   },
+  breakingchange: {
+    infimaClassName: 'breakingchange',
+    iconComponent: DangerIcon,
+    label: (
+      <Translate
+        id="
+        "
+        description="The default label used for the breaking change admonition (:::breakingchange)"
+      >
+        Breaking change
+      </Translate>
+    ),
+  },
   video: {
     infimaClassName: 'video',
     iconComponent: PlayIcon,

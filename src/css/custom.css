@@ -1345,7 +1345,7 @@ aside.alert {
   --ifm-alert-border-color: var(--st-tip-accent);
 }
 
-.alert--danger {
+.alert--danger, .alert--breakingchange {
   --ifm-alert-background-color: var(--st-danger-background);
   --ifm-alert-background-color-highlight: var(--st-danger-accent);
   --ifm-alert-foreground-color: var(--st-danger-text);
@@ -1360,7 +1360,7 @@ aside.alert {
   --ifm-alert-border-color: var(--st-warning-accent);
 }
 
-.alert--v4compatible {
+.alert--v4compatible, .alert--breakingchange {
   width: fit-content;
   padding: 4px 10px;
 }
