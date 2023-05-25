@@ -419,12 +419,6 @@ Breaking change
 
 :::
 
-:::v4compatible
-
-XState v4 compatible
-
-:::
-
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
 
 <Tabs>
@@ -458,6 +452,8 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
+
+**Pre-migration tip:** Update v4 projects to include a `params` object on [event objects](#actorsend-no-longer-accepts-string-types) passed to `.send()`
 
 ### Use wildcard `*` transitions, not strict mode
 
