@@ -19,7 +19,7 @@ XState version 5 is in beta, and compared to XState version 4, it is [feature co
 
 ## Creating machines
 
-### ~~`Machine()`~~ Use `createMachine()`
+### Use `createMachine()`, not `Machine()`
 
 :::breakingchange
 
@@ -27,7 +27,7 @@ Breaking change
 
 :::
 
-The ~~`Machine(config)`~~ function is now called `createMachine(config)`:
+The `Machine(config)` function is now called `createMachine(config)`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -56,7 +56,7 @@ const machine = Machine({
 </TabItem>
 </Tabs>
 
-### ~~`machine.withConfig()`~~ Use `machine.provide()`
+### Use `machine.provide()`, not `machine.withConfig()`
 
 :::breakingchange
 
@@ -108,7 +108,7 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
-### ~~`machine.withContext()`~~ Set context with `input`
+### Set context with `input`, not `machine.withContext()`
 
 :::breakingchange
 
@@ -156,7 +156,7 @@ const moneyMachine = machine.withContext({
 </TabItem>
 </Tabs>
 
-### ~~`predictableActionArguments`~~ Actions ordered by default
+### Actions ordered by default, `predictableActionArguments` no longer needed
 
 :::breakingchange
 
@@ -255,7 +255,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`send()`~~ Use either `raise()` or `sendTo()`
+### Use either `raise()` or `sendTo()`, not `send()`
 
 :::breakingchange
 
@@ -365,9 +365,9 @@ state.can('someEvent');
 </TabItem>
 </Tabs>
 
-### ~~`cond`~~ Guarded transitions use `guard` instead
+### Guarded transitions use `guard`, not `cond`
 
-The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
+The `cond` transition property for guarded transitions is now called `guard`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -445,7 +445,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~Strict mode~~ Use wildcard `*` transitions
+### Use wildcard `*` transitions, not strict mode
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
@@ -538,7 +538,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`internal: false`~~ Use `reenter: true` instead
+### Use `reenter: true`, not `internal: false`
 
 `internal: false` is now `reenter: true`
 
@@ -580,7 +580,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`in`~~ Use `stateIn()` to validate state transitions
+### Use `stateIn()` to validate state transitions, not `in`
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -618,7 +618,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`state.history`~~ Use `actor.subscribe()`
+### Use `actor.subscribe()` instead of `state.history`
 
 :::v4compatible
 
@@ -657,7 +657,7 @@ actor.subscribe((state) => {
 
 ## Actors
 
-### ~~`services`~~ Use `actors` property on `options` object
+### Use `actors` property on `options` object instead of `services`
 
 `services` has been renamed to `actors`:
 
@@ -703,7 +703,7 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
-### ~~`onTransition()`~~ Use `subscribe()` for changes
+### Use `subscribe()` for changes, not `onTransition()`
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
@@ -761,7 +761,7 @@ actor.start(someState);
 </TabItem>
 </Tabs>
 
-### Use `actor.getSnapshot()` to get actor's state
+### Use `actor.getSnapshot()` to get actor’s state
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -798,7 +798,7 @@ actor.subscribe((state) => {
 </TabItem>
 </Tabs>
 
-### ~~`actor.batch()`~~ Loop over events instead
+### Loop over events instead instead of using `actor.batch()`
 
 :::v4compatible
 
@@ -832,7 +832,7 @@ actor.batch(events);
 
 ## TypeScript
 
-### ~~`schema`~~ Use `types` instead
+### Use `types` instead of `schema`
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
@@ -874,7 +874,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`tsTypes`~~ Use `types.typegen`
+### Use `types.typegen` instead of `tsTypes`
 
 `machineConfig.tsTypes` has been renamed and is now nested as `machineConfig.types.typegen`:
 
