@@ -778,6 +778,7 @@ article,
 code {
   border: var(--st-code-inline-border);
   color: var(--st-code-inline-text);
+  overflow-wrap: break-word;
   vertical-align: baseline;
 }
 
