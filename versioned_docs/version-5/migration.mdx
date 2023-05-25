@@ -862,12 +862,6 @@ Breaking change
 
 :::
 
-:::v4compatible
-
-XState v4 compatible
-
-:::
-
 The `actor.batch([...])` method for batching events is removed.
 
 <Tabs>
@@ -891,6 +885,8 @@ actor.batch(events);
 
 </TabItem>
 </Tabs>
+
+**Pre-migration tip:** Update v4 projects to loop over events to send them as a batch.
 
 ## TypeScript
 
