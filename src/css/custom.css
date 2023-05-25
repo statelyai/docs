@@ -1270,26 +1270,12 @@ details summary::before {
 }
 
 @media (min-width: 1300px) {
-  .alert:not(details) {
-    --ifm-alert-padding-horizontal: 0.85rem;
-    /* pull admonitions into margins so text aligns with paragraph text */
-    margin-left: calc(-1 * var(--ifm-alert-padding-horizontal));
-    margin-right: calc(-1 * var(--ifm-alert-padding-horizontal));
-  }
-}
-
-@media (min-width: 1300px) {
   details {
     --ifm-alert-padding-horizontal: 1rem;
     /* pull admonitions into margins so text aligns with paragraph text */
     margin-left: calc(-1 * var(--ifm-alert-padding-horizontal)) !important;
     margin-right: calc(-1 * var(--ifm-alert-padding-horizontal)) !important;
   }
-}
-
-aside.alert {
-  margin-left: 0;
-  margin-right: 0;
 }
 
 .alert--primary {
