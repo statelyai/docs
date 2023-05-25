@@ -24,6 +24,7 @@ html,
 body {
   font-weight: var(--ifm-font-weight-normal);
   letter-spacing: -0.011rem;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1637,6 +1638,14 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
 ul.blog-list {
   list-style-type: none;
   padding: 0;
+}
+
+.post-footer {
+  margin-top: 1rem;
+}
+
+.post-tags {
+  margin-top: 2rem;
 }
 
 /* Add more space above headings that follow tab panels */
