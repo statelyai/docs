@@ -75,6 +75,7 @@ const config = {
               'xstate',
               'warningxstate',
               'v4compatible',
+              'breakingchange',
               'studio',
               'new',
               'video',
