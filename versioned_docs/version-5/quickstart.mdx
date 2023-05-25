@@ -6,7 +6,7 @@ description: 'Want to jump straight into XState and Stately Studio? Start here!'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Want to jump straight into XState version 5 and Stately Studio? Start here! Below you’ll find the quickest way to get started with XState using the example of a multi-step feedback form and links to more detailed documentation.
+Want to jump straight into XState version 5 and Stately Studio? Start here! Below you’ll find the quickest way to get started with XState using the example of a toggle feature and links to more detailed documentation.
 
 :::studio
 
@@ -38,90 +38,120 @@ npm install xstate@beta
 </TabItem>
 </Tabs>
 
-## Using XState
+## Create a machine
 
-TODO: Add link to this example template when it’s in the examples folder
+[Read our introduction to state machines and statecharts](state-machines-and-statecharts.mdx).
 
-The following feedback form example uses TypeScript. TypeScript isn’t necessary for XState, but it is advantageous!
+```js
+import { createMachine } from 'xstate';
 
-```ts
-import { assign, createMachine } from 'xstate';
-
-// TypeScript types
-const types = {
-  context: {} as { feedback: string },
-  events: {} as
-    | {
-        type: 'feedback.good';
-      }
-    | {
-        type: 'feedback.bad';
-      }
-    | {
-        type: 'feedback.update';
-        value: string;
-      }
-    | { type: 'submit' }
-    | {
-        type: 'close';
-      }
-    | { type: 'back' }
-    | { type: 'restart' },
-};
-
-export const feedbackMachine = createMachine({
-  id: 'feedback',
-  // initial state
-  initial: 'prompt',
-  types,
-  context: {
-    feedback: '',
-  },
+const toggleMachine = createMachine({
+  id: 'toggle',
+  initial: 'Inactive',
   states: {
-    prompt: {
-      on: {
-        'feedback.good': 'thanks',
-        'feedback.bad': 'form',
-      },
+    Inactive: {
+      on: { toggle: 'Active' }
     },
-    form: {
-      on: {
-        'feedback.update': {
-          // feedback.update does not transition
-          // it updates the feedback value in the context
-          actions: assign({
-            feedback: ({event}) => event.value,
-          }),
-        },
-        back: { target: 'prompt' },
-        // guarded transition
-        submit: {
-          guard: ({ context }) => context.feedback.length > 0,
-          target: 'thanks',
-        },
-      },
-    },
-    submitting: {
-      invoke: {
-          // fromPromise is an XState logic creator
-          src: fromPromise(submitFeedback),
-          onDone: 'thanks'
-      } 
-    },
-    thanks: {},
-    closed: {
-      on: {
-        restart: 'prompt',
-      },
-    },
-  },
-  on: {
-    // targeting a child state
-    close: '.closed',
-  },
+    Active: {
+      on: { toggle: 'Inactive' }
+    }
+  }
 });
 ```
 
+## Interpret your machine and send it events
+
+When you run a state machine, it becomes an [actor](actors.mdx): a running process that can receive messages (events), send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+
+```js
+import { createMachine, interpret } from 'xstate';
+
+// ...
+
+// Creates an actor that you can send events to; not started yet!
+const actor = interpret(machine);
+
+// Subscribe to updated snapshots (emitted state changes) from the actor
+actor.subscribe(snapshot => {
+  console.log('Value:', snapshot.value);
+});
+
+// Start the actor!
+actor.start(); // logs 'Inactive'
+
+// Send events
+actor.send({ type: 'toggle' }); // logs 'Active'
+actor.send({ type: 'toggle' }); // logs 'Inactive'
+```
+
+## Use delayed transitions
+
+[Delayed transitions](delayed-transitions.mdx) are transitions that only happen after a specified interval of time.
+
+```js
+export const toggleMachine = createMachine({
+  id: 'toggle',
+  initial: 'Inactive',
+  states: {
+    Inactive: {
+      on: { toggle: 'Active' }
+    },
+    Active: {
+      on: { toggle: 'Inactive' },
+      after: { 2000: 'Inactive' }
+    }
+  }
+});
+```
+
+## Handle context data
+
+[Context](context.mdx) is how you store data in a state machine actor.
+
+```js
+import { assign, createMachine } from 'xstate';
+
+export const toggleMachine = createMachine({
+  id: 'toggle',
+  context: { count: 0 },
+  initial: 'Inactive',
+  states: {
+    Inactive: {
+      on: { toggle: 'Active' }
+    },
+    Active: {
+      entry: assign({ count: ({ context }) => context.count + 1 }),
+      on: { toggle: 'Inactive' },
+      after: { 2000: 'Inactive' }
+    }
+  }
+});
+```
+
+## Use your machine with a framework
+
+- [Check out all our packages](/category/xstate-packages)
+- [Find out more about the @xstate/react package](xstate-react.mdx)
+
+```js
+import { useMachine } from '@xstate/react';
+import { toggleMachine } from './toggleMachine';
+
+const App = () => {
+  const [state, send] = useMachine(toggleMachine);
+
+  return (
+    <div>
+      <div>Value: {state.value}</div>
+      <button onClick={() => send({ type: 'toggle' })}>
+        Toggle
+      </button>
+    </div>
+  );
+}
+```
+
+- [Get the template for this example from the XState repo on GitHub](https://github.com/statelyai/xstate/tree/main/examples/template-js)
 - [Find more examples](examples.mdx)
 - [Migrate from XState V4 to XState V5](migration.mdx)
 - [More about XState logic creators and exports](installation.mdx#exports)
