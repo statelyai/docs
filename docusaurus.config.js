@@ -74,6 +74,7 @@ const config = {
               'typescript',
               'xstate',
               'warningxstate',
+              'v4compatible',
               'studio',
               'new',
               'video',
