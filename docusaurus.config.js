@@ -152,12 +152,12 @@ const config = {
           },
           {
             label: 'Code of conduct',
-            href: 'https://stately.ai/code-of-conduct',
+            href: '/code-of-conduct',
             target: '_self',
           },
           {
             label: 'Privacy policy',
-            href: 'https://stately.ai/privacy',
+            href: '/privacy',
             target: '_self',
           },
           {
