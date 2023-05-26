@@ -15,6 +15,7 @@
   height: 1.2em;
   width: 1.2em;
   fill: currentColor;
+  margin-top: -2px; /* pull icon to align vertically with text */
 }
 
 .admonitionContent > * {

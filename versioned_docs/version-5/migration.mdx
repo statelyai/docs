@@ -15,23 +15,19 @@ This guide is for users who want to update their codebase from v4 to v5 and shou
 
 XState version 5 is in beta, and compared to XState version 4, it is [feature complete](https://en.wikipedia.org/wiki/Software_release_life_cycle#Feature_complete) with all the features of V4 and more. But as V5 is still in beta, some slight breaking changes may occur with future beta versions. So go ahead, but proceed with caution!
 
-:::warningxstate
-
----
-
-:::danger
-
-## Breaking changes
-
-The following are breaking changes from XState v4 to v5.
-
 :::
 
 ## Creating machines
 
-### ~~`Machine()`~~ Use `createMachine()`
+### Use `createMachine()`, not `Machine()`
 
-The ~~`Machine(config)`~~ function is now called `createMachine(config)`:
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `Machine(config)` function is now called `createMachine(config)`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -60,7 +56,13 @@ const machine = Machine({
 </TabItem>
 </Tabs>
 
-### ~~`machine.withConfig()`~~ Use `machine.provide()`
+### Use `machine.provide()`, not `machine.withConfig()`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
@@ -106,9 +108,15 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
-### ~~`machine.withContext()`~~ Set context with `input`
+### Set context with `input`, not `machine.withContext()`
 
-The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overriden in this manner. Use [input](input.mdx) instead:
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden in this manner. Use [input](input.mdx) instead:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -148,9 +156,15 @@ const moneyMachine = machine.withContext({
 </TabItem>
 </Tabs>
 
-### ~~`predictableActionArguments`~~ Actions ordered by default
+### Actions ordered by default, `predictableActionArguments` no longer needed
 
-Actions are now in predictable order by default. Assign actions will always run in the order they are defined.
+:::breakingchange
+
+Breaking change
+
+:::
+
+Actions are now in predictable order by default, so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -203,9 +217,15 @@ const machine = createMachine({
 
 ## Events and transitions
 
-### Implementation functions receive a single arg
+### Implementation functions receive a single argument
 
-Implementation functions now take in a single argument, which is an object with `context`, `event`, and other properties.
+:::breakingchange
+
+Breaking change
+
+:::
+
+Implementation functions now take in a single argument: an object with `context`, `event`, and other properties.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -235,11 +255,17 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`send()`~~ Use either `raise()` or `sendTo()`
+### Use either `raise()` or `sendTo()`, not `send()`
+
+:::breakingchange
+
+Breaking change
+
+:::
 
 The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
 
-See [send-to action](#todo) and [raise action](#todo) documentation for more information.
+Read the documentation on the [`sendTo` action](actions.mdx#send-to-action) and [`raise` action](actions.mdx#raise-action) for more information.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -281,7 +307,13 @@ const machine = createMachine({
 
 ### `actor.send()` no longer accepts string types
 
-String event types can no longer be sent to e.g. `actor.send(event)`; you must send an event object instead:
+:::v4compatible
+
+XState v4 compatible
+
+:::
+
+String event types can no longer be sent to, e.g., `actor.send(event)`; you must send an event object instead:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -305,7 +337,13 @@ actor.send('someEvent');
 
 ### `state.can()` no longer accepts string types
 
-String event types can no longer be sent to e.g. `state.can(event)`; you must send an event object instead:
+:::v4compatible
+
+XState v4 compatible
+
+:::
+
+String event types can no longer be sent to, e.g., `state.can(event)`; you must send an event object instead:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -327,9 +365,9 @@ state.can('someEvent');
 </TabItem>
 </Tabs>
 
-### ~~`cond`~~ Guarded transitions use `guard` instead
+### Guarded transitions use `guard`, not `cond`
 
-The ~~`cond`~~ transition property for guarded transitions is now called `guard`:
+The `cond` transition property for guarded transitions is now called `guard`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -367,6 +405,12 @@ const machine = createMachine({
 
 ### Use `params` to pass custom event data
 
+:::v4compatible
+
+XState v4 compatible
+
+:::
+
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
 
 <Tabs>
@@ -401,7 +445,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~Strict mode~~ Use wildcard `*` transitions
+### Use wildcard `*` transitions, not strict mode
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
@@ -446,7 +490,13 @@ const machine = createMachine({
 
 ### Use explicit `always` transitions
 
-Eventless ("always") events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
+:::v4compatible
+
+XState v4 compatible
+
+:::
+
+Eventless (“always”) events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -488,7 +538,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`internal: false`~~ Use `reenter: true` instead
+### Use `reenter: true`, not `internal: false`
 
 `internal: false` is now `reenter: true`
 
@@ -530,7 +580,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`in`~~ Use `stateIn()` to validate state transitions
+### Use `stateIn()` to validate state transitions, not `in`
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -568,7 +618,13 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`state.history`~~ Use `actor.subscribe()`
+### Use `actor.subscribe()` instead of `state.history`
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
@@ -601,9 +657,9 @@ actor.subscribe((state) => {
 
 ## Actors
 
-### ~~`services`~~ Use `actors` property on `options` object
+### Use `actors` property on `options` object instead of `services`
 
-`services` has been renamed to `actors`:
+`services` have been renamed to `actors`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -647,7 +703,7 @@ const specificMachine = machine.withConfig({
 </TabItem>
 </Tabs>
 
-### ~~`onTransition()`~~ Use `subscribe()` for changes
+### Use `subscribe()` for changes, not `onTransition()`
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
@@ -677,7 +733,7 @@ actor.onTransition((state) => {
 </TabItem>
 </Tabs>
 
-### `interpret()` accepts a second arg to restore state
+### `interpret()` accepts a second argument to restore state
 
 `interpret(machine).start(state)` is now `interpret(machine, { state }).start()`
 
@@ -705,7 +761,7 @@ actor.start(someState);
 </TabItem>
 </Tabs>
 
-### Use `actor.getSnapshot()` to get actor's state
+### Use `actor.getSnapshot()` to get actor’s state
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -742,7 +798,13 @@ actor.subscribe((state) => {
 </TabItem>
 </Tabs>
 
-### ~~`actor.batch()`~~ Loop over events instead
+### Loop over events instead of using `actor.batch()`
+
+:::v4compatible
+
+XState v4 compatible
+
+:::
 
 The `actor.batch([...])` method for batching events is removed.
 
@@ -770,7 +832,7 @@ actor.batch(events);
 
 ## TypeScript
 
-### ~~`schema`~~ Use `types` instead
+### Use `types` instead of `schema`
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
@@ -812,7 +874,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### ~~`tsTypes`~~ Use `types.typegen`
+### Use `types.typegen` instead of `tsTypes`
 
 `machineConfig.tsTypes` has been renamed and is now nested as `machineConfig.types.typegen`:
 
@@ -856,8 +918,41 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
----
-
 ## New features
 
 _List coming soon_
+
+## Timeline
+
+XState V5 is in beta, so there’s still work to be done. We anticipate the tools will be fully compatible with XState V5 beta by summer/fall 2023, with XState V5 stable being released by the end of 2023.
+
+### When will XState V5 be out of beta?
+
+We hope to release XState V5 as a stable major release this year (2023) but can’t provide any exact estimates. The rough timeline is:
+
+1. Get early feedback on XState V5 beta (`xstate@beta`)
+2. Ensure all related packages (e.g. `@xstate/react`, `@xstate/vue`) are fully compatible with XState V5
+3. Support V5 in typegen, `@xstate/inspect`, and related tools
+4. Support V5 (importing & exporting) in Stately Studio
+5. Release candidates
+6. Release XState V5 stable
+
+Upvote or comment on [XState V5 in our roadmap](https://statelyai.canny.io/xstate/p/xstate-v5) to be the first to find out when V5 is released.
+
+### When will Stately Studio be compatible with XState V5?
+
+We are currently working on [Stately Studio](studio.mdx) compatibility with XState V5. Exporting to XState V5 (JavaScript or TypeScript) will happen soonest, followed by support for new XState V5 features, such as higher-order guards, partial event wildcards, and machine input/output.
+
+Upvote or comment on [Stately Studio + XState V5 compatibility in our roadmap](https://statelyai.canny.io/editor/p/stately-studio-xstate-v5-compatibility) to stay updated on our progress.
+
+### When will the XState VS Code extension be compatible with XState V5?
+
+The [XState VS Code extension](xstate-vscode-extension.mdx) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway. 
+
+Upvote or comment on [XState V5 compatibility for VS Code extension in our roadmap](https://statelyai.canny.io/devtools/p/xstate-v5-compatibility-for-vs-code-extension) to stay updated on our progress.
+
+### When will XState V5 have typegen?
+
+[Typegen](typegen.mdx) automatically generates intelligent typings for XState and is not yet compatible with XState v5. We’re working on Typegen alongside the VS Code extension. 
+
+Upvote or comment on [Typegen for XState V5 in our roadmap](https://statelyai.canny.io/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
