@@ -9,7 +9,7 @@ const config = {
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
-  baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/docs/',
+  baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/',
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -43,7 +43,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
+          routeBasePath: '/docs',
           sidebarPath: require.resolve('./sidebars.js'),
 
           // Remove this to remove the "edit this page" links.
@@ -113,7 +113,7 @@ const config = {
             type: 'search',
             position: 'right',
           },
-          {to: '/', label: 'Docs', position: 'right'},
+          {to: '/docs', label: 'Docs', position: 'right'},
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
@@ -189,14 +189,6 @@ const config = {
         apiKey: 'e2fd3f2a7cd06067674996dd674fb241',
         indexName: 'stately',
         contextualSearch: true,
-        replaceSearchResultPathname:
-          // Remove /docs from the search result pathname when we're in a preview deployment
-          process.env.VERCEL_ENV === 'preview'
-            ? {
-                from: '/docs/',
-                to: '/',
-              }
-            : undefined,
       },
       announcementBar: {
         content:
