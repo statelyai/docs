@@ -109,6 +109,25 @@
             "descriptions"
           ]
         },
+        {
+          "type": "category",
+          "label": "Simulate mode",
+          "link": {
+            "type": "generated-index",
+            "title": "Simulate mode",
+            "description": "Learn how to use Simulate mode in Stately Studio’s editor.",
+            "slug": "/category/simulate-mode",
+            "keywords": ["guides"]
+          },
+          "items": [
+            {
+              "type": "doc", 
+              "label":"Live simulation",
+              "id": "live-simulation",
+              "className": "pro-feature"
+            }
+          ]
+        },
         "projects",
         {
           "type": "doc",
