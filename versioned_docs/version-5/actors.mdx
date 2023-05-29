@@ -4,11 +4,12 @@ title: 'Actors'
 
 import ThemedImage from '@theme/ThemedImage';
 
-When you run a state machine, it becomes an actor: a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+When you run a state machine, it becomes an actor: a running process that can receive events, send events and change its behavior based on the events it receives, which can cause effects outside of the actor.
 
-An invoked actor is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
+In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the lifecycle of the actor is controlled.
 
-A spawned actor represents multiple entities that can be started at any time and stopped at any time. 
+- An **invoked actor** is an actor that is started when its parent machine enters the [state](#todo) it is invoked in, and stopped when that state is exited.
+- A **spawned actor** is an actor that is started in a [transition](#todo) and stopped either with a [`stop(...)` action](#todo) or when its parent machine is stopped.
 
 :::tip
 
@@ -22,19 +23,55 @@ Watch our [“What are invoked actors?” video on YouTube](https://www.youtube.
 
 ## Actor model
 
-In the actor model, actors are objects that can talk to each other. They are independent computational entities that communicate via asynchronous message passing (XState refers to these messages as "events").
+In the actor model, actors are objects that can communicate each other. They are independent "live" entities that communicate via asynchronous message passing. In XState, these messages are referred to as "events".
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
 - Actors process one message at a time. They have an internal "mailbox" that acts like an event queue, processing events one at a time.
-- State is not shared between actors. The only way for an actor to share data is by sending events.
-- Actors can spawn new actors.
+- Internal actor state is not shared between actors. The only way for an actor to share any part of its internal state is by:
+  - Sending events to other actors
+  - Or emitting snapshots, which can be considered implicit events sent to subscribers.
+- Actors can create (spawn/invoke) new actors.
+
+## Creating actor logic
+
+Actor logic is the logical "model" (brain, blueprint, DNA, etc.) of the actor. It describes how the actor should change its behavior when it receives an event. You can create actor logic using **actor logic creators**. The types of actor logic you can create from XState are:
+
+- [State machine logic (`createMachine(...)`)](#TODO)
+- [Promise logic (`fromPromise(...)`)](#TODO)
+- [Transition logic (`fromTransition(...)`)](#TODO)
+- [Observable logic (`fromObservable(...)`)](#TODO)
+- [Event observable logic (`fromEventObservable(...)`)](#TODO)
+- [Callback logic (`fromCallback(...)`)](#TODO)
+
+In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor's internal state when it receives an event, as well as which effects to execute (if any).
 
 ## Creating actors
 
-- `interpret(machine, options)`
-- Starting actors via `actor.start()`
-- Stopping system actor via `actor.stop()`
+You can create an actor, which is a "live" instance of some actor logic, via `interpret(actorLogic, options?)`. The `interpret(...)` function takes the following arguments:
+
+- `actorLogic` - The [actor logic](#TODO) to interpret
+- `options` (optional) - Interpreter options
+
+When you `interpret(...)` actor logic, you implicitly create an [actor system](#TODO) where the created actor is the root actor. Any actors that are spawned from this root actor and its descendents are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
+
+```ts
+import { interpret } from 'xstate';
+import { someActorLogic } from './someActorLogic.ts';
+
+const actor = interpret(someActorLogic);
+actor.start();
+
+// Now the actor can receive events
+actor.send({ type: 'someEvent' });
+```
+
+You can stop root actors by calling `actor.stop()`. This will also stop the actor system and all actors in that system:
+
+```ts
+// Stops the root actor, actor system, and actors in the system
+actor.stop();
+```
 
 ### Invoking and spawning actors
 
@@ -49,21 +86,86 @@ An example of the difference between invoking and spawning actors could occur in
 
 ## Actor snapshots
 
-- `actor.getSnapshot()`
+When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor's snapshot synchronously via `actor.getSnapshot()`. An actor's snapshot is not necessarily the same as its internal state; rather, it is a value that it wants to _share_ with subscribers. For example, a promise actor has an internal state consisting of `data`, `status`, and other internal properties, but only the `data` is emitted as its snapshot.
+
+```ts
+import { fromPromise, interpret } from 'xstate';
+
+const countLogic = fromPromise(async () => {
+  const count = await fetchCount();
+
+  return count;
+});
+
+const countActor = interpret(countLogic);
+countActor.start();
+
+countActor.getSnapshot(); // logs undefined
+
+// After the promise resolves...
+countActor.getSnapshot(); // logs 42
+```
 
 ## Subscribing to actors
 
-- Subscribes to emitted actor snapshots
+You can subscribe to an actor's snapshot values via `actor.subscribe(observer)`. The observer will receive the actor's snapshot value when it is emitted. The observer can be:
 
-- `actor.subscribe(observer)`
-- Plain function `(state) => { ... }`
-- Observer `({ next, error, complete }) => { ... }`
-- `subscription.unsubscribe()` for cleanup
+- A plain function that receives the latest snapshot
+- Or an observer object whose `.next(snapshot)` method receives the latest snapshot
+
+```ts
+// Observer as a plain function
+const subscription = actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+```
+
+```ts
+// Observer as an object
+const subscription = actor.subscribe({
+  next(snapshot) {
+    console.log(snapshot);
+  },
+  error(data) {
+    // ...
+  },
+  complete() {
+    // ...
+  },
+});
+```
+
+The return value of `actor.subscribe(observer)` is a subscription object that has an `.unsubscribe()` method. You can call `subscription.unsubscribe()` to unsubscribe the observer:
+
+```ts
+const subscription = actor.subscribe((snapshot) => {
+  /* ... */
+});
+
+// Unsubscribe the observer
+subscription.unsubscribe();
+```
+
+When the actor is stopped, all observers will automatically be unsubscribed.
 
 ## Initializing actor state
 
-- `interpret(machine, { state }).start()`
-- [Persistence](persistence.mdx)
+You can initialize actor logic at a specific persisted internal state by passing the state in the 2nd `options` argument of `interpret(logic, options)`. This will create an actor that will be started at that persisted state, if the state is compatible with the actor logic:
+
+```ts
+const persistedState = JSON.parse(localStorage.get('some-persisted-state'));
+
+const actor = interpret(someLogic, {
+  // highlight-start
+  state: persistedState,
+  // highlight-end
+});
+
+// Actor will start at persisted state
+actor.start();
+```
+
+See [persistence](persistence.mdx) for more details.
 
 ## Awaiting actors
 
