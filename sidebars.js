@@ -149,6 +149,7 @@ const sidebars = {
               id: 'versions',
               className: 'pro-feature',
             },
+            'machine-restore',
           ],
         },
         {
