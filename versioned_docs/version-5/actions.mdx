@@ -425,7 +425,7 @@ const machine = createMachine({
 
 ## Modeling
 
-If you only need to execute actions in response to events, you can create a [self-transition](transitions.mdx#self-transitions) that only has `actions: [ ... ]` defined. Fir example, a machine that only needs to assign to `context` in transitions may look like this:
+If you only need to execute actions in response to events, you can create a [self-transition](transitions.mdx#self-transitions) that only has `actions: [ ... ]` defined. For example, a machine that only needs to assign to `context` in transitions may look like this:
 
 ```ts
 const countMachine = createMachine({
