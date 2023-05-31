@@ -6,7 +6,7 @@ import ThemedImage from '@theme/ThemedImage';
 
 When you run a state machine, it becomes an actor: a running process that can receive events, send events and change its behavior based on the events it receives, which can cause effects outside of the actor.
 
-In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the lifecycle of the actor is controlled.
+In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the actor’s lifecycle is controlled.
 
 - An **invoked actor** is started when its parent machine enters the [state](states.mdx) it is invoked in, and stopped when that state is exited.
 - A **spawned actor** is started in a [transition](transitions.mdx) and stopped either with a [`stop(...)` action](actions.mdx#stop-action) or when its parent machine is stopped.
