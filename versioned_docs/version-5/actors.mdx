@@ -23,7 +23,7 @@ Watch our [“What are invoked actors?” video on YouTube](https://www.youtube.
 
 ## Actor model
 
-In the actor model, actors are objects that can communicate with each other. They are independent “live” entities that communicate via asynchronous message passing. In XState, these messages are referred to as *[events](transitions.mdx)*.
+In the actor model, actors are objects that can communicate with each other. They are independent “live” entities that communicate via asynchronous message passing. In XState, these messages are referred to as _[events](transitions.mdx)_.
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
@@ -51,9 +51,9 @@ In XState, actor logic is defined by an object containing methods like `.transit
 You can create an actor, which is a “live” instance of some actor logic, via `interpret(actorLogic, options?)`. The `interpret(...)` function takes the following arguments:
 
 - `actorLogic`: the [actor logic](actors.mdx#creating-actor-logic) to interpret
-- `options` (optional) - Interpreter options
+- `options` (optional): interpreter options
 
-When you `interpret(...)` actor logic, you implicitly create an [actor system](#TODO) where the created actor is the root actor. Any actors that are spawned from this root actor and its descendents are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
+When you `interpret(...)` actor logic, you implicitly create an [actor system](system.mdx) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
 
 ```ts
 import { interpret } from 'xstate';
@@ -66,7 +66,7 @@ actor.start();
 actor.send({ type: 'someEvent' });
 ```
 
-You can stop root actors by calling `actor.stop()`. This will also stop the actor system and all actors in that system:
+You can stop root actors by calling `actor.stop()`, which will also stop the actor system and all actors in that system:
 
 ```ts
 // Stops the root actor, actor system, and actors in the system
@@ -86,7 +86,9 @@ An example of the difference between invoking and spawning actors could occur in
 
 ## Actor snapshots
 
-When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor's snapshot synchronously via `actor.getSnapshot()`. An actor's snapshot is not necessarily the same as its internal state; rather, it is a value that it wants to _share_ with subscribers. For example, a promise actor has an internal state consisting of `data`, `status`, and other internal properties, but only the `data` is emitted as its snapshot.
+When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor’s snapshot synchronously via `actor.getSnapshot()`.
+
+An actor’s snapshot is not necessarily the same as its internal state; instead, it is a value the actor wants to _share_ with subscribers. For example, a promise actor has an internal state consisting of `data`, `status`, and other internal properties, but only the `data` is emitted as its snapshot.
 
 ```ts
 import { fromPromise, interpret } from 'xstate';
@@ -106,10 +108,10 @@ countActor.getSnapshot(); // logs undefined
 countActor.getSnapshot(); // logs 42
 ```
 
-## Subscribing to actors
+You can subscribe to an actor’s snapshot values via `actor.subscribe(observer)`. The observer will receive the actor’s snapshot value when it is emitted. The observer can be:
 
-You can subscribe to an actor's snapshot values via `actor.subscribe(observer)`. The observer will receive the actor's snapshot value when it is emitted. The observer can be:
-
+- A plain function that receives the latest snapshot, or
+- An observer object whose `.next(snapshot)` method receives the latest snapshot
 - A plain function that receives the latest snapshot
 - Or an observer object whose `.next(snapshot)` method receives the latest snapshot
 
@@ -148,9 +150,9 @@ subscription.unsubscribe();
 
 When the actor is stopped, all observers will automatically be unsubscribed.
 
-## Initializing actor state
+You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `interpret(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
-You can initialize actor logic at a specific persisted internal state by passing the state in the 2nd `options` argument of `interpret(logic, options)`. This will create an actor that will be started at that persisted state, if the state is compatible with the actor logic:
+You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `interpret(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
 ```ts
 const persistedState = JSON.parse(localStorage.get('some-persisted-state'));
@@ -167,9 +169,9 @@ actor.start();
 
 See [persistence](persistence.mdx) for more details.
 
-## Awaiting actors
+You can wait for an actor’s snapshot to satisfy a predicate using the `waitFor(actor, predicate, options?)` helper function. The `waitFor(...)` function returns a promise that is:
 
-You can wait for an actor's snapshot to satisfy a predicate using the `waitFor(actor, predicate, options?)` helper function. The `waitFor(...)` function returns a promise that is:
+You can wait for an actor’s snapshot to satisfy a predicate using the `waitFor(actor, predicate, options?)` helper function. The `waitFor(...)` function returns a promise that is:
 
 - Resolved when the emitted snapshot satisfies the `predicate` function
 - Resolved immediately if the current snapshot already satisfies the `predicate` function
