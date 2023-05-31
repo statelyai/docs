@@ -354,12 +354,22 @@ const callbackLogic = fromCallback((sendBack, receive) => {
 
 ## Higher-level actor logic
 
+Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
+
 ```ts
-function withUndoRedo(actorLogic) {
-  return {
+function withLogging(actorLogic) {
+  const enhancedLogic = {
     ...actorLogic,
+    transition: (state, event, actorCtx) => {
+      console.log('State:', state);
+      return actorLogic.transition(state, event, actorCtx);
+    },
   };
+
+  return enhancedLogic;
 }
+
+const loggingToggleLogic = withLogging(toggleLogic);
 ```
 
 ## Custom actors
@@ -370,10 +380,26 @@ _Coming soon_
 
 Actor that does nothing and only has a single emitted snapshot: `undefined`
 
-Useful for testing or when an integration (e.g. `@xstate/react`) needs an actor that may not be available yet.
+In XState, an empty actor is an actor that does nothing and only has a single emitted snapshot: `undefined`.
+
+This is useful for testing, such as stubbing out an actor that is not yet implemented. It can also be useful in framework integrations, such as `@xstate/react`, where an actor may not be available yet:
 
 ```ts
+import { createEmptyActor, AnyActorRef } from 'xstate';
+import { useSelector } from '@xstate/react';
 const emptyActor = createEmptyActor();
+
+function Component(props: { actor?: AnyActorRef }) {
+  const data = useSelector(
+    props.actor ?? emptyActor,
+    (snapshot) => snapshot.context.data,
+  );
+
+  // data is `undefined` if `props.actor` is undefined
+  // Otherwise, it is the data from the actor
+
+  // ...
+}
 ```
 
 ## TypeScript
