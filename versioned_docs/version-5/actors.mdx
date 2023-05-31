@@ -23,7 +23,7 @@ Watch our [“What are invoked actors?” video on YouTube](https://www.youtube.
 
 ## Actor model
 
-In the actor model, actors are objects that can communicate each other. They are independent "live" entities that communicate via asynchronous message passing. In XState, these messages are referred to as "events".
+In the actor model, actors are objects that can communicate with each other. They are independent “live” entities that communicate via asynchronous message passing. In XState, these messages are referred to as *[events](transitions.mdx)*.
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
