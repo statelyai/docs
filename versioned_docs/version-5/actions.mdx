@@ -271,7 +271,7 @@ The raise action is a special action that _raises_ an event that is received by 
 actions: raise({ type: 'someEvent', data: 'someData' });
 ```
 
-Internally, when an event is raised, it is placed into an "internal event queue". These events are processed in insertion order (first-in first-out, or FIFO) after the current transition is finished. External events are not processed until all events in the internal event queue are processed.
+Internally, when an event is raised, it is placed into an “internal event queue”. After the current transition is finished, these events are processed in insertion order ([first-in first-out, or FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))). External events are only processed once all events in the internal event queue are processed.
 
 Raised events can be dynamic:
 
