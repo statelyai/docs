@@ -106,7 +106,8 @@
               "className": "pro-feature"
             },
             "annotations",
-            "descriptions"
+            "descriptions",
+            "machine-restore"
           ]
         },
         {
@@ -121,8 +122,8 @@
           },
           "items": [
             {
-              "type": "doc", 
-              "label":"Live simulation",
+              "type": "doc",
+              "label": "Live simulation",
               "id": "live-simulation",
               "className": "pro-feature"
             }

@@ -155,6 +155,7 @@ const sidebars = {
               id: 'colors',
               className: 'pro-feature',
             },
+            'machine-restore',
           ],
         },
         {
