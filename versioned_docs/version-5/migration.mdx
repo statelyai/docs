@@ -510,7 +510,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### Use explicit `always` transitions
+### Use explicit eventless (`always`) transitions
 
 :::breakingchange
 
@@ -518,7 +518,7 @@ Breaking change
 
 :::
 
-Eventless (“always”) events must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
+Eventless (“always”) transitions must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
