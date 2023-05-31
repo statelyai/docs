@@ -50,7 +50,7 @@ In XState, actor logic is defined by an object containing methods like `.transit
 
 You can create an actor, which is a “live” instance of some actor logic, via `interpret(actorLogic, options?)`. The `interpret(...)` function takes the following arguments:
 
-- `actorLogic` - The [actor logic](#TODO) to interpret
+- `actorLogic`: the [actor logic](actors.mdx#creating-actor-logic) to interpret
 - `options` (optional) - Interpreter options
 
 When you `interpret(...)` actor logic, you implicitly create an [actor system](#TODO) where the created actor is the root actor. Any actors that are spawned from this root actor and its descendents are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
