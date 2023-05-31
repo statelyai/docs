@@ -74,7 +74,6 @@ const config = {
               'typescript',
               'xstate',
               'warningxstate',
-              'v4compatible',
               'breakingchange',
               'studio',
               'new',

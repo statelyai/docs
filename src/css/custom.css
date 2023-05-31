@@ -667,6 +667,10 @@ h3 {
   --ifm-h3-font-size: 1.5rem;
 }
 
+.markdown > h3 {
+    margin-top: calc(var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading));
+}
+
 .markdown h4 {
   --ifm-h4-font-size: 1.2rem;
 }
