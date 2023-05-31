@@ -347,7 +347,7 @@ html[data-theme='light'] body {
   --st-layout-border-secondary: var(--st-gray-100);
   --st-code-border: var(--st-gray-100);
   --st-codeblock-background: white;
-  --st-code-inline-border: 1px solid rgba(191, 227, 248, 0.5); /* var(--st-blue-100) in rgba */
+  --st-code-inline-border: 1px solid rgba(191, 227, 248, .5);/* var(--st-blue-100) in rgba */
   --st-code-inline-text: var(--st-blue-900);
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
@@ -495,7 +495,7 @@ html[data-theme='dark'] body {
   --st-layout-border: var(--st-gray-700);
   --st-layout-border-secondary: var(--st-gray-700);
   --st-code-border: transparent;
-  --st-code-inline-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
+  --st-code-inline-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
   --st-code-inline-text: var(--st-gray-50);
   --st-codeblock-background: var(--st-gray-850);
   --st-code-highlight-background: var(--st-gray-800);
@@ -647,9 +647,7 @@ h1 {
   letter-spacing: -0.022rem;
 }
 
-.markdown h1,
-.markdown h1:first-child,
-.index-page h1 {
+.markdown h1, .markdown h1:first-child, .index-page h1 {
   --ifm-h1-font-size: 2.5rem;
 }
 
@@ -667,6 +665,10 @@ h3 {
 
 .markdown h3 {
   --ifm-h3-font-size: 1.5rem;
+}
+
+.markdown > h3 {
+    margin-top: calc(var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading));
 }
 
 .markdown h4 {
@@ -1301,7 +1303,8 @@ details summary::before {
 }
 
 .alert--success,
-.alert--new {
+.alert--new,
+.alert--v4compatible {
   --ifm-alert-background-color: var(--st-success-background);
   --ifm-alert-background-color-highlight: var(--st-success-accent);
   --ifm-alert-foreground-color: var(--st-success-text);
@@ -1338,8 +1341,7 @@ details summary::before {
   --ifm-alert-border-color: var(--st-tip-accent);
 }
 
-.alert--danger,
-.alert--breakingchange {
+.alert--danger, .alert--breakingchange {
   --ifm-alert-background-color: var(--st-danger-background);
   --ifm-alert-background-color-highlight: var(--st-danger-accent);
   --ifm-alert-foreground-color: var(--st-danger-text);
@@ -1354,7 +1356,7 @@ details summary::before {
   --ifm-alert-border-color: var(--st-warning-accent);
 }
 
-.alert--breakingchange {
+.alert--v4compatible, .alert--breakingchange {
   width: fit-content;
   padding: 4px 10px;
 }
@@ -1545,8 +1547,8 @@ a.link-box strong {
   text-align: center;
 }
 
-.docs-intro h2:hover a.hash-link {
-  opacity: 0;
+.docs-intro h2:hover a.hash-link  {
+ opacity: 0;
 }
 
 .docs-intro-studio,
