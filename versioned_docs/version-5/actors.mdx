@@ -8,7 +8,7 @@ When you run a state machine, it becomes an actor: a running process that can re
 
 In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the lifecycle of the actor is controlled.
 
-- An **invoked actor** is an actor that is started when its parent machine enters the [state](#todo) it is invoked in, and stopped when that state is exited.
+- An **invoked actor** is started when its parent machine enters the [state](states.mdx) it is invoked in, and stopped when that state is exited.
 - A **spawned actor** is an actor that is started in a [transition](#todo) and stopped either with a [`stop(...)` action](#todo) or when its parent machine is stopped.
 
 :::tip
