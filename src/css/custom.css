@@ -678,6 +678,10 @@ h3 {
   --ifm-h3-font-size: 1.5rem;
 }
 
+.markdown > h3 {
+    margin-top: calc(var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading));
+}
+
 .markdown h4 {
   --ifm-h4-font-size: 1.2rem;
 }
@@ -1653,6 +1657,13 @@ ul.blog-list {
 .tabs-container + h3,
 .tabs-container + h4 {
   margin-top: calc(var(--ifm-leading) * 2.5);
+}
+
+/* Inline Lucide icons */
+
+.markdown svg.lucide {
+  margin-top: -0.1rem;
+  vertical-align: middle;
 }
 
 /* Footer */

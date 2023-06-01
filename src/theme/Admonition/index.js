@@ -253,19 +253,6 @@ const AdmonitionConfigs = {
       </Translate>
     ),
   },
-  v4compatible: {
-    infimaClassName: 'v4compatible',
-    iconComponent: XStateIcon,
-    label: (
-      <Translate
-        id="
-        "
-        description="The default label used for the XState v4 compatibility admonition (:::v5compatibility)"
-      >
-        XState v4 compatible
-      </Translate>
-    ),
-  },
   breakingchange: {
     infimaClassName: 'breakingchange',
     iconComponent: DangerIcon,
