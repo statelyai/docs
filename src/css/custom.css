@@ -1633,6 +1633,13 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
   margin-top: calc(var(--ifm-leading) * 2.5);
 }
 
+/* Inline Lucide icons */
+
+.markdown svg.lucide {
+  margin-top: -0.1rem;
+  vertical-align: middle;
+}
+
 /* Footer */
 
 .footer {
