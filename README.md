@@ -24,8 +24,7 @@ This command starts a local development server and opens up a browser window. Mo
 
 ### Note on the index page
 
-Currently we serve the root from a static `index.html` file under `static`.
-This does not work when running `yarn start`, but it does work after a build when you run `yarn serve`.
+Currently we serve the root landing page from a static `index.html` file under `static`.
 
 ## Build
 
