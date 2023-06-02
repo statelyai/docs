@@ -1666,6 +1666,12 @@ ul.blog-list {
   vertical-align: middle;
 }
 
+/* embedded content in blog */
+
+.mdx-embed {
+  margin: var(--ifm-leading) 0;
+}
+
 /* Footer */
 
 .footer {
