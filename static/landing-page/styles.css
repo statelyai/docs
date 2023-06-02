@@ -326,6 +326,27 @@ body.code-of-conduct main h2 {
   margin-top: 2em;
 }
 
+/* overwrite Docusaurus styling */
+
+h1 {
+  font-family: 'TTCommons', Arial, sans-serif;
+  font-size: 2em;
+  font-weight: 750;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-family: 'TTCommons', Arial, sans-serif;
+  font-weight: 750;
+  margin: 0.83em 0;
+} 
+
+p {
+  margin: 1em 0;
+}
+
+/* end overwrite Docusaurus styling */
+
 a {
   color: var(--text-link);
   -webkit-transition: all 300ms ease-out;
