@@ -24,7 +24,10 @@ This command starts a local development server and opens up a browser window. Mo
 
 ### Note on the index page
 
-Currently we serve the root landing page from a static `index.html` file under `static`.
+Currently we serve the root landing page from a static file.
+
+- During server side rendering (SSR) we use [`/static/index.html`](./static/index.html)
+- During client side rendering (CSR) we use [`/static/landing-page/index.html`](./static/landing-page/index.html)
 
 ## Build
 
