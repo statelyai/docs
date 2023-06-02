@@ -16,7 +16,7 @@ export const Announcement: React.FC<AnnouncementProps> = ({
   return (
     <section
       style={{
-        backgroundColor: 'RGBA(255, 255, 255, 0.08)',
+        backgroundColor: 'RGBA(144, 205, 244, .15)',
         marginBlock: '16px',
         marginInline: '-16px',
         paddingInline: '16px',
