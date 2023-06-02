@@ -1,6 +1,6 @@
 # Welcome to the Stately docs for Stately Studio and XState
 
-Our docs are built using [Docusaurus 2](https://docusaurus.io/). 
+Our docs are built using [Docusaurus 2](https://docusaurus.io/).
 
 We welcome any contributions to the documentation and code base.
 
@@ -21,6 +21,11 @@ $ yarn start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+### Note on the index page
+
+Currently we serve the root from a static `index.html` file under `static`.
+This does not work when running `yarn start`, but it does work after a build when you run `yarn serve`.
 
 ## Build
 

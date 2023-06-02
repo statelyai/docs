@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stately | Visualize your application logic</title>
+    <link rel="stylesheet" href="./landing-page/styles.css" />
+    <meta
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      name="viewport"
+    />
+    <meta
+      name="description"
+      content="Stately is building tools to visualize your application logic using XState. Learn more about our visualizer, visual editor and XState."
+    />
+    <meta
+      property="og:title"
+      content="Stately - Visualize your application logic"
+    />
+    <meta property="og:site_name" content="Stately - Privacy policy" />
+    <meta property="og:url" content="https://stately.ai" />
+    <meta
+      property="og:description"
+      content="Stately is building tools to visualize your application logic using XState. Learn more about our visualizer, visual editor and XState."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/stately-landing-page.png" />
+    <link rel="icon" href="./landing-page/favicon.ico" sizes="any" />
+    <link rel="icon" href="./landing-page/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./landing-page/apple-touch-icon.png" />
+    <link rel="manifest" href="./landing-page/manifest.webmanifest" />
+    <script
+      defer
+      data-domain="stately.ai"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+    <script defer src="./landing-page/bundle.js"></script>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h2 class="logo">
+        <a aria-label="Navigate home" href="/">
+          <img
+            src="./landing-page/stately.svg"
+            alt="Stately"
+            width="145"
+            height="40"
+          />
+        </a>
+      </h2>
+      <nav class="navigation">
+        <a href="/editor?source=landing-page" class="button-link orange"
+          >Try the editor</a
+        >
+        <a href="/registry/login?source=landing-page" class="button-link blue"
+          >Sign in</a
+        >
+        <ul class="navigation-list">
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/docs">Docs</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="content" class="landing-page">
+      <h1
+        class="intro-title"
+        data-edge-source="first-heading"
+        data-edge-target="cta-1"
+        data-edge-target-side="left"
+      >
+        Visualize your application logic
+      </h1>
+
+      <p class="subtitle fadeout-box">
+        A suite of visual tools for building app logic. Powered by
+        <a href="https://xstate.js.org">XState</a>, a best-in-class open source
+        library for handling complexity at scale.
+      </p>
+
+      <div
+        class="initial-state duo-buttons"
+        data-edge-source="cta-1"
+        data-edge-source-side="right"
+        data-edge-target="editor"
+        data-edge-target-position="0.7"
+      >
+        <a
+          class="button-link button-link-cta-primary"
+          href="/editor?source=landing-page"
+        >
+          Try the editor
+        </a>
+        <a
+          class="button-link button-link-cta-secondary"
+          href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
+        >
+          Book a demo
+        </a>
+      </div>
+
+      <section class="feature editor">
+        <div
+          class="video-wrap"
+          style="--aspect-ratio: 320/213"
+          data-edge-source="editor"
+          data-edge-target="used-in-production"
+          data-edge-source-position="0.85"
+          data-edge-target-position="0.5"
+        >
+          <video
+            muted
+            preload="metadata"
+            autoplay
+            poster="assets/visual-editor-v1-poster-image.png"
+          >
+            <source
+              src="./landing-page/assets/visual-editor-v1.mp4"
+              type="video/mp4"
+              width="640"
+              height="426"
+            />
+            <p>Video is unavailable in your browser.</p>
+          </video>
+        </div>
+
+        <div class="description">
+          <div class="grid-background"></div>
+          <h2>
+            <span class="eyebrow"
+              >Visual editor<span class="colon visually-hidden">: </span></span
+            >Visualize your application logic
+          </h2>
+          <p>
+            Use our drag-and-drop visual editor to build your application logic,
+            then export it directly into your XState project.
+          </p>
+
+          <p>
+            <a class="arrow-link" href="/editor?source=landing-page"
+              >Try the editor</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="used-in-production">
+        <div
+          class="grid-background"
+          data-edge-source="used-in-production"
+          data-edge-target="feature-statecharts"
+        ></div>
+        <h2 class="center-small">XState in production</h2>
+        <ul class="logo-list fadeout-box">
+          <li>
+            <img
+              src="./landing-page/assets/aws.svg"
+              alt="AWS"
+              height="62"
+              width="63"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/ted.svg"
+              alt="TED"
+              height="62"
+              width="78"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/netflix.svg"
+              alt="Netflix"
+              height="62"
+              width="119"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/lyft.svg"
+              alt="Lyft"
+              height="62"
+              width="56"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/centered.svg"
+              alt="Centered"
+              height="62"
+              width="90"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/microsoft.svg"
+              alt="Microsoft"
+              height="62"
+              width="150"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/epic-games.svg"
+              alt="Epic Games"
+              height="62"
+              width="44"
+            />
+          </li>
+          <li>
+            <img
+              src="./landing-page/assets/cisco.svg"
+              alt="Cisco"
+              height="62"
+              width="72"
+            />
+          </li>
+        </ul>
+      </section>
+
+      <section class="feature statecharts">
+        <div
+          class="screenshot"
+          data-edge-source="feature-statecharts"
+          data-edge-source-position="0.75"
+          data-edge-source-position="0.75"
+          data-edge-target="feature-vscode"
+          data-edge-target-position="0.9"
+        >
+          <!-- TODO: replace with generated images -->
+          <picture>
+            <img
+              src="./landing-page/assets/collaborate-narrow-v1.png"
+              height="615"
+              width="607"
+              alt="Player statechart in the Stately visual editor with min and full states transitioning to each other on toggle. The full state contains playing and paused states which transition to each other on play and pause."
+          /></picture>
+          <!-- <picture>
+            <source
+              sizes="(min-width: 1280px) 616px, (min-width: 960px) 516px, (min-width: 800px) calc(50vw - 24px), 87.5vw"
+              srcset="
+                ./landing-page/assets/collaborate-narrow-616.webp   616w,
+                ./landing-page/assets/collaborate-narrow-1032.webp 1032w,
+                ./landing-page/assets/collaborate-narrow-1232.webp 1232w,
+                ./landing-page/assets/collaborate-narrow-1370.webp 1370w
+              "
+              type="image/webp"
+            />
+            <source
+              sizes="(min-width: 1280px) 616px, (min-width: 960px) 516px, (min-width: 800px) calc(50vw - 24px), 87.5vw"
+              srcset="
+                ./landing-page/assets/collaborate-narrow-616.png   616w,
+                ./landing-page/assets/collaborate-narrow-1032.png 1032w,
+                ./landing-page/assets/collaborate-narrow-1232.png 1232w,
+                ./landing-page/assets/collaborate-narrow-1370.png 1370w
+              "
+              type="image/png"
+            />
+            <img
+              src="./landing-page/assets/collaborate-narrow.png"
+              sizes="(min-width: 1280px) 616px, (min-width: 960px) 516px, (min-width: 800px) calc(50vw - 24px), 87.5vw"
+              srcset="
+                ./landing-page/assets/collaborate-narrow-616.png   616w,
+                ./landing-page/assets/collaborate-narrow-1032.png 1032w,
+                ./landing-page/assets/collaborate-narrow-1232.png 1232w,
+                ./landing-page/assets/collaborate-narrow-1370.png 1370w
+              "
+              height="615"
+              width="607"
+              alt="Player statechart in the Stately visual editor with min and full states transitioning to each other on toggle. The full state contains playing and paused states which transition to each other on play and pause."
+            />
+          </picture> -->
+        </div>
+
+        <div class="comment comment-1" role="presentation">
+          Here’s the new logic for the video player…
+        </div>
+        <div class="comment comment-2" role="presentation">
+          Should the video stop playing when fullscreen is exited?
+        </div>
+        <div class="comment comment-3" role="presentation">
+          Looks great to me!
+        </div>
+
+        <div class="grid-background"></div>
+
+        <div class="description">
+          <h2>
+            <span class="eyebrow" class="fadeout-box"
+              >Statecharts<span class="colon visually-hidden">: </span></span
+            >Collaborate with everyone on the team
+          </h2>
+          <p class="fadeout-box">
+            Not just for developers. Statecharts are a visual language that
+            everyone on the team can understand. Our editor and visualizer make
+            it easy for anyone to create and edit application logic.
+          </p>
+
+          <p>
+            <a class="arrow-link" href="/docs/state-machines-and-statecharts"
+              >Learn more about statecharts</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="feature vscode">
+        <!-- TODO: replace with generated images -->
+        <picture
+          class="screenshot fadeout"
+          data-edge-source="feature-vscode"
+          data-edge-source-position="0.9"
+          data-edge-target="feature-state-management"
+          data-edge-target-position="0.2"
+          data-edge-bend-position="0.85"
+        >
+          <img
+            src="./landing-page/assets/vscode-v1.png"
+            height="563"
+            width="947"
+            alt="Stately VS Code extension showing a split screen inside VS Code with the code editor on the left and the Stately visual Editor on the right."
+          />
+        </picture>
+        <!-- <picture
+          class="screenshot fadeout"
+          data-edge-source="feature-vscode"
+          data-edge-source-position="0.9"
+          data-edge-target="feature-state-management"
+          data-edge-target-position="0.2"
+          data-edge-bend-position="0.85"
+        >
+          <source
+            sizes="(min-width: 1520px) 960px, (min-width: 1280px) 1120px, (min-width: 960px) 944px, 87.5vw"
+            srcset="
+              ./landing-page/assets/vscode-265.webp   265w,
+              ./landing-page/assets/vscode-700.webp   700w,
+              ./landing-page/assets/vscode-960.webp   960w,
+              ./landing-page/assets/vscode-1370.webp 1370w,
+              ./landing-page/assets/vscode-1760.webp 1760w,
+              ./landing-page/assets/vscode-2048.webp 2048w
+            "
+            type="image/webp"
+          />
+          <source
+            sizes="(min-width: 1520px) 960px, (min-width: 1280px) 1120px, (min-width: 960px) 944px, 87.5vw"
+            srcset="
+              ./landing-page/assets/vscode-265.png   265w,
+              ./landing-page/assets/vscode-700.png   700w,
+              ./landing-page/assets/vscode-960.png   960w,
+              ./landing-page/assets/vscode-1370.png 1370w,
+              ./landing-page/assets/vscode-1760.png 1760w,
+              ./landing-page/assets/vscode-2048.png 2048w
+            "
+            type="image/png"
+          />
+          <img
+            src="./landing-page/assets/vscode.png"
+            sizes="(min-width: 1520px) 960px, (min-width: 1280px) 1120px, (min-width: 960px) 944px, 87.5vw"
+            srcset="
+              ./landing-page/assets/vscode-265.png   265w,
+              ./landing-page/assets/vscode-700.png   700w,
+              ./landing-page/assets/vscode-960.png   960w,
+              ./landing-page/assets/vscode-1370.png 1370w,
+              ./landing-page/assets/vscode-1760.png 1760w,
+              ./landing-page/assets/vscode-2048.png 2048w
+            "
+            height="563"
+            width="947"
+            alt="Stately VS Code extension showing a split screen inside VS Code with the code editor on the left and the Stately visual Editor on the right."
+          />
+        </picture> -->
+
+        <div class="grid-background"></div>
+
+        <div class="description">
+          <h2>
+            <span class="eyebrow"
+              >IDE Extension<span class="colon visually-hidden">: </span></span
+            >Upgrade your workflow
+          </h2>
+          <p class="fadeout-box">
+            Bring the power of Stately’s tools directly into your development
+            environment. Edit statecharts visually in JavaScript and TypeScript
+            with our VS Code extension.
+          </p>
+
+          <p>
+            <a
+              class="arrow-link"
+              href="https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode"
+              >Download the VS Code extension</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="feature state-management">
+        <figure
+          data-edge-source="feature-state-management"
+          data-edge-source-position="0.05"
+          data-edge-target="feature-registry"
+          data-edge-target-side="left"
+        >
+          <figcaption class="before"><p>Before</p></figcaption>
+          <picture>
+            <source
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/booleans-256.webp   256w,
+                ./landing-page/assets/booleans-640.webp   640w,
+                ./landing-page/assets/booleans-1010.webp 1010w,
+                ./landing-page/assets/booleans-1280.webp 1280w,
+                ./landing-page/assets/booleans-1480.webp 1480w,
+                ./landing-page/assets/booleans-1660.webp 1660w
+              "
+              type="image/webp"
+            />
+            <source
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/booleans-256.png   256w,
+                ./landing-page/assets/booleans-640.png   640w,
+                ./landing-page/assets/booleans-1010.png 1010w,
+                ./landing-page/assets/booleans-1280.png 1280w,
+                ./landing-page/assets/booleans-1480.png 1480w,
+                ./landing-page/assets/booleans-1660.png 1660w
+              "
+              type="image/png"
+            />
+            <img
+              src="./landing-page/assets/booleans.png"
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/booleans-256.png   256w,
+                ./landing-page/assets/booleans-640.png   640w,
+                ./landing-page/assets/booleans-1010.png 1010w,
+                ./landing-page/assets/booleans-1280.png 1280w,
+                ./landing-page/assets/booleans-1480.png 1480w,
+                ./landing-page/assets/booleans-1660.png 1660w
+              "
+              width="823"
+              height="854"
+              alt="Boolean-based code showing a lot of if else statements and repetition."
+            />
+          </picture>
+        </figure>
+        <figure>
+          <figcaption class="after"><p>After</p></figcaption>
+          <!-- TODO: replace with generated images -->
+          <picture>
+            <img
+              src="./landing-page/assets/statechart-v1.png"
+              width="823"
+              height="854"
+              alt="Statechart equivalent for the previous code which is much easier to read at-a-glance."
+            />
+          </picture>
+          <!-- <picture>
+            <source
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/statechart-256.webp   256w,
+                ./landing-page/assets/statechart-640.webp   640w,
+                ./landing-page/assets/statechart-1010.webp 1010w,
+                ./landing-page/assets/statechart-1280.webp 1280w,
+                ./landing-page/assets/statechart-1480.webp 1480w,
+                ./landing-page/assets/statechart-1660.webp 1660w
+              "
+              type="image/webp"
+            />
+            <source
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/statechart-256.png   256w,
+                ./landing-page/assets/statechart-640.png   640w,
+                ./landing-page/assets/statechart-1010.png 1010w,
+                ./landing-page/assets/statechart-1280.png 1280w,
+                ./landing-page/assets/statechart-1480.png 1480w,
+                ./landing-page/assets/statechart-1660.png 1660w
+              "
+              type="image/png"
+            />
+            <img
+              src="./landing-page/assets/statechart.png"
+              sizes="(min-width: 1520px) 640px, (min-width: 960px) calc(52.41vw + 44px), 50vw"
+              srcset="
+                ./landing-page/assets/statechart-256.png   256w,
+                ./landing-page/assets/statechart-640.png   640w,
+                ./landing-page/assets/statechart-1010.png 1010w,
+                ./landing-page/assets/statechart-1280.png 1280w,
+                ./landing-page/assets/statechart-1480.png 1480w,
+                ./landing-page/assets/statechart-1660.png 1660w
+              "
+              width="823"
+              height="854"
+              alt="Statechart equivalent for the previous code which is much easier to read at-a-glance."
+            />
+          </picture> -->
+        </figure>
+        <div class="grid-background"></div>
+        <div class="description">
+          <h2>
+            <span class="eyebrow"
+              >State management<span class="colon visually-hidden"
+                >:
+              </span></span
+            >Make complexity manageable
+          </h2>
+          <p class="fadeout-box">
+            Statecharts make state management simpler. Get an overview of how
+            your application works at a glance. Find states that are often
+            missed, including unwanted states, impossible states and unnecessary
+            error states. As well as eliminating bugs and other issues caused by
+            boolean-based state management.
+          </p>
+
+          <p>
+            <a class="arrow-link" href="/docs/xstate/installation"
+              >Get started with our quickstart guide</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="feature registry">
+        <picture
+          class="screenshot fadeout"
+          data-edge-source="feature-registry"
+          data-edge-target="powered-by-xstate"
+          data-edge-target-position="0.5"
+        >
+          <source
+            sizes="(min-width: 1280px) 800px, (min-width: 960px) 674px, (min-width: 720px) 81.36vw, 87.5vw"
+            srcset="
+              ./landing-page/assets/registry-265.webp   265w,
+              ./landing-page/assets/registry-800.webp   800w,
+              ./landing-page/assets/registry-1110.webp 1110w,
+              ./landing-page/assets/registry-1348.webp 1348w,
+              ./landing-page/assets/registry-1600.webp 1600w
+            "
+            type="image/webp"
+          />
+          <source
+            sizes="(min-width: 1280px) 800px, (min-width: 960px) 674px, (min-width: 720px) 81.36vw, 87.5vw"
+            srcset="
+              ./landing-page/assets/registry-265.png   265w,
+              ./landing-page/assets/registry-800.png   800w,
+              ./landing-page/assets/registry-1110.png 1110w,
+              ./landing-page/assets/registry-1348.png 1348w,
+              ./landing-page/assets/registry-1600.png 1600w
+            "
+            type="image/png"
+          />
+          <img
+            src="./landing-page/assets/registry.png"
+            sizes="(min-width: 1280px) 800px, (min-width: 960px) 674px, (min-width: 720px) 81.36vw, 87.5vw"
+            srcset="
+              ./landing-page/assets/registry-265.png   265w,
+              ./landing-page/assets/registry-800.png   800w,
+              ./landing-page/assets/registry-1110.png 1110w,
+              ./landing-page/assets/registry-1348.png 1348w,
+              ./landing-page/assets/registry-1600.png 1600w
+            "
+            height="598"
+            width="789"
+            alt="Stately Registry’s Discover section, featuring a list of the latest public machines built by the community. Machine names include Chess Moves, eiv-form-statechart, login, searchBoxMachine, tldrawcore, users-search-engine, Address Autocompletea and Matt’s Beta System."
+          />
+        </picture>
+        <div class="grid-background"></div>
+        <div class="description">
+          <h2>
+            <span class="eyebrow"
+              >Registry<span class="colon visually-hidden">: </span></span
+            >Explore and share
+          </h2>
+          <p class="fadeout-box">
+            Share your machines with the community, get feedback and kudos for
+            your work.
+          </p>
+
+          <p>
+            <a class="arrow-link" href="/registry?source=landing-page"
+              >Visit the machine registry</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="powered-by-xstate">
+        <div class="grid-background" data-edge-source="powered-by-xstate"></div>
+        <h2 class="powered-by-xstate-heading">Powered by XState</h2>
+        <p
+          data-edge-source="powered-by-xstate-subhead"
+          data-edge-target="testimonial-1"
+        >
+          <a href="https://github.com/statelyai/xstate">XState</a> is a robust,
+          production-proven library for building application logic with state
+          machines.
+        </p>
+        <ul class="powered-by-xstate-list">
+          <li class="extra-feature js">
+            <h3 class="fadeout-box">No framework required</h3>
+            <p class="fadeout-box">
+              Only JavaScript is required. Get started quickly with our
+              <a href="https://xstate.js.org/docs/#templates"
+                >JavaScript-only template</a
+              >.
+            </p>
+          </li>
+
+          <li class="extra-feature packages">
+            <h3 class="fadeout-box">
+              Packages and templates for React, Vue and Svelte
+            </h3>
+            <p class="fadeout-box">
+              Speedy integration with React, Vue, Svelte and more, with our
+              dedicated <a href="https://xstate.js.org/docs/">packages</a> and
+              <a href="https://xstate.js.org/docs/#templates">templates</a>.
+            </p>
+          </li>
+
+          <li class="extra-feature stack">
+            <h3 class="fadeout-box">Works anywhere in your stack</h3>
+            <p class="fadeout-box">
+              Use state machines to orchestrate state in both frontend and
+              backend environments.
+              <a href="https://youtu.be/-Ve1ZUPipDs?t=253"
+                >Watch us discuss interesting uses of state machines</a
+              >
+              in our office hours.
+            </p>
+          </li>
+
+          <li class="extra-feature robust">
+            <h3 class="fadeout-box">Robust and production-proven</h3>
+            <p class="fadeout-box">
+              Used in production by many big and small teams across the world.
+              <a href="/blog/how-do-you-convince-your-teammates-to-use-xstate"
+                >Convince your team to use XState</a
+              >.
+            </p>
+          </li>
+
+          <li class="extra-feature github">
+            <h3 class="fadeout-box">Mature project with 22k+ GitHub stars</h3>
+            <p class="fadeout-box">
+              3+ years of development and a dedicated full-time team improving
+              the tooling every day.
+              <a href="https://github.com/statelyai/xstate"
+                >Check out the GitHub repository</a
+              >.
+            </p>
+          </li>
+
+          <li class="extra-feature discord">
+            <h3 class="fadeout-box">Friendly and helpful community</h3>
+            <p class="fadeout-box">
+              <a href="https://discord.gg/xstate">Join our Discord</a> to give
+              us feedback and get support.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="loved-by-teams">
+        <div class="grid-background"></div>
+        <h2 class="fadeout-box">Loved by teams</h2>
+        <p class="testimonial-subhead visually-hidden">User’s testimonials</p>
+        <div class="grid-background grid-background-two"></div>
+        <ul class="testimonials" data-edge-source="testimonial-1">
+          <li class="testimonial">
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/amy.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/amy.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/amy.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Amy Pellegrini</h3>
+              <p class="works-with">@ Thoughtworks</p>
+            </div>
+            <p class="testimonial-text">
+              Every team where I introduced XState has been more effective at
+              handling state management with complex user interfaces. It fills a
+              gap in the JS ecosystem no other tool did before.
+            </p>
+          </li>
+          <li
+            class="testimonial"
+            data-edge-source="testimonial-2"
+            data-edge-target="testimonial-3"
+            data-edge-source-side="left"
+            data-edge-source-position="0.5"
+            data-edge-target-side="top"
+            data-edge-target-position="0.1"
+          >
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/natalie.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/natalie.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/natalie.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Natalie Cuthbert</h3>
+              <p class="works-with">@ Stitch</p>
+            </div>
+            <p class="testimonial-text">
+              We've been using XState for our new payments product. Shout out to
+              the team that is making designing complex front-end flows a dream.
+            </p>
+          </li>
+          <li
+            class="testimonial"
+            data-edge-source="testimonial-3"
+            data-edge-target="testimonial-4"
+            data-edge-source-side="right"
+            data-edge-source-position="0.5"
+            data-edge-target-side="top"
+            data-edge-target-position="0.92"
+          >
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/patrick.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/patrick.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/patrick.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Patrick Cavit</h3>
+              <p class="works-with">@ Netflix</p>
+            </div>
+            <p class="testimonial-text">
+              XState is a revelation. It makes complex tasks easier to build and
+              debug while also making the code more straightforward and
+              approachable
+            </p>
+          </li>
+          <li
+            class="testimonial"
+            data-edge-source="testimonial-4"
+            data-edge-target="testimonial-5"
+            data-edge-source-side="bottom"
+            data-edge-source-position="0.05"
+            data-edge-target-side="left"
+            data-edge-target-position="0.5"
+          >
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/santi.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/santi.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/santi.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Santi Cros</h3>
+              <p class="works-with">@ Domestic Data Streamers</p>
+            </div>
+            <p class="testimonial-text">
+              Thinking and building with XState has been a revolution in how I
+              develop robust business logic. But being able to visualize that in
+              real time, has been a game changer in how I model and communicate
+              any logic!
+            </p>
+          </li>
+          <li
+            class="testimonial"
+            data-edge-source="testimonial-5"
+            data-edge-target="testimonial-6"
+            data-edge-source-side="bottom"
+            data-edge-source-position="0.9"
+            data-edge-target-side="right"
+            data-edge-target-position="0.5"
+          >
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/presley.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/presley.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/presley.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Presley Pizzo</h3>
+              <p class="works-with">@ Coder</p>
+            </div>
+            <p class="testimonial-text">
+              XState naturally separates the logic and makes it simple to mock
+              out API calls, so it's easier to test the code and organize it!
+            </p>
+          </li>
+          <li class="testimonial" data-edge-source="testimonial-6">
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/maya.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/maya.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/maya.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">Maya Shavin</h3>
+              <p class="works-with">@ Microsoft</p>
+            </div>
+            <p class="testimonial-text">
+              Advantages of XState: Visually clear view of the code flow, code
+              reusability, test coverage, easy to debug/ spot bugs, code
+              scalability & maintenance, and better code design & planning
+            </p>
+          </li>
+          <li
+            class="testimonial"
+            data-edge-source="testimonial-7"
+            data-edge-source-side="left"
+            data-edge-target="make-your-code-do-more"
+            data-edge-target-side="left"
+          >
+            <div class="testimonial-about">
+              <picture>
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/james.webp"
+                  type="image/webp"
+                />
+                <source
+                  class="avatar"
+                  srcset="./landing-page/assets/james.png"
+                  type="image/png"
+                />
+                <img
+                  class="avatar"
+                  src="./landing-page/assets/james.png"
+                  alt=""
+                  height="62"
+                  width="62"
+                />
+              </picture>
+              <h3 class="name">James Tharpe</h3>
+              <p class="works-with">@ T-Mobile</p>
+            </div>
+            <p class="testimonial-text">
+              We use XState to implement business workflows as statecharts. The
+              visualizer helps us collaborate more closely with customers, the
+              ability to externalize workflows as JSON configuration makes
+              complex workflow changes surprisingly simple to roll out, and test
+              case generation makes it easier than ever to move forward with
+              confidence. XState makes it all possible!
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="tagline center-small">
+        <h2
+          data-edge-source="make-your-code-do-more"
+          data-edge-target="final-cta"
+        >
+          Make your code do more.
+        </h2>
+        <p class="duo-buttons" data-edge-source="final-cta">
+          <a
+            class="button-link button-link-cta-primary"
+            href="/editor?source=landing-page"
+          >
+            Try the editor
+          </a>
+          <a
+            class="button-link button-link-cta-secondary"
+            href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
+          >
+            Book a demo
+          </a>
+        </p>
+      </section>
+    </main>
+
+    <aside id="newsletter" class="email-signup">
+      <form
+        action="registry/api/newsletter/signup"
+        method="post"
+        target="popupwindow"
+        class="embeddable-buttondown-form state"
+        data-active
+      >
+        <h2>Get updates by email</h2>
+        <label for="bd-email">Subscribe to our newsletter</label>
+        <div class="fields">
+          <input
+            type="email"
+            name="email"
+            id="bd-email"
+            required
+            placeholder="your@email.com"
+          />
+          <input type="hidden" value="1" name="embed" />
+          <input type="submit" class="white" value="Subscribe" />
+        </div>
+      </form>
+    </aside>
+
+    <footer class="site-footer">
+      <nav>
+        <ul class="footer-list">
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li>
+            <a href="/code-of-conduct/">Code of Conduct</a>
+          </li>
+          <li><a href="https://twitter.com/statelyai">Twitter</a></li>
+          <li><a href="https://youtube.com/c/statelyai">YouTube</a></li>
+          <li><a href="https://discord.gg/xstate">Discord community</a></li>
+        </ul>
+      </nav>
+      <p class="copyright"><small>Copyright &copy; Stately, 2023</small></p>
+    </footer>
+  </body>
+</html>

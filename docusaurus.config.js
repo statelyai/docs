@@ -9,7 +9,7 @@ const config = {
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
-  baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/',
+  baseUrl: '/',
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -33,7 +33,7 @@ const config = {
     {
       src: 'https://plausible.io/js/script.js',
       defer: true,
-      'data-domain': 'stately.ai/docs',
+      'data-domain': 'stately.ai',
     },
   ],
 
@@ -88,7 +88,7 @@ const config = {
           blogTitle: 'Stately Blog',
           blogDescription: 'Stately’s engineering blog',
           blogSidebarCount: 0,
-          postsPerPage: 'ALL'
+          postsPerPage: 'ALL',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -112,7 +112,7 @@ const config = {
             type: 'search',
             position: 'right',
           },
-          {to: '/docs', label: 'Docs', position: 'right'},
+          { to: '/docs', label: 'Docs', position: 'right' },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
@@ -128,7 +128,7 @@ const config = {
             label: 'Discover',
             position: 'right',
           },
-          {to: 'blog', label: 'Blog', position: 'right'},
+          { to: 'blog', label: 'Blog', position: 'right' },
           {
             type: 'docsVersionDropdown',
             position: 'right',
