@@ -50,12 +50,12 @@ const toggleMachine = createMachine({
   initial: 'Inactive',
   states: {
     Inactive: {
-      on: { toggle: 'Active' }
+      on: { toggle: 'Active' },
     },
     Active: {
-      on: { toggle: 'Inactive' }
-    }
-  }
+      on: { toggle: 'Inactive' },
+    },
+  },
 });
 ```
 
@@ -74,7 +74,7 @@ const toggleMachine = createMachine({
 const actor = interpret(machine);
 
 // Subscribe to updated snapshots (emitted state changes) from the actor
-actor.subscribe(snapshot => {
+actor.subscribe((snapshot) => {
   console.log('Value:', snapshot.value);
 });
 
@@ -96,13 +96,13 @@ export const toggleMachine = createMachine({
   initial: 'Inactive',
   states: {
     Inactive: {
-      on: { toggle: 'Active' }
+      on: { toggle: 'Active' },
     },
     Active: {
       on: { toggle: 'Inactive' },
-      after: { 2000: 'Inactive' }
-    }
-  }
+      after: { 2000: 'Inactive' },
+    },
+  },
 });
 ```
 
@@ -119,20 +119,20 @@ export const toggleMachine = createMachine({
   initial: 'Inactive',
   states: {
     Inactive: {
-      on: { toggle: 'Active' }
+      on: { toggle: 'Active' },
     },
     Active: {
       entry: assign({ count: ({ context }) => context.count + 1 }),
       on: { toggle: 'Inactive' },
-      after: { 2000: 'Inactive' }
-    }
-  }
+      after: { 2000: 'Inactive' },
+    },
+  },
 });
 ```
 
 ## Use your machine with a framework
 
-- [Check out all our packages](/category/xstate-packages)
+- [Check out all our packages](category/xstate-packages)
 - [Find out more about the `@xstate/react` package](xstate-react.mdx)
 
 ```jsx
@@ -145,12 +145,10 @@ const App = () => {
   return (
     <div>
       <div>Value: {state.value}</div>
-      <button onClick={() => send({ type: 'toggle' })}>
-        Toggle
-      </button>
+      <button onClick={() => send({ type: 'toggle' })}>Toggle</button>
     </div>
   );
-}
+};
 ```
 
 - [Use the XState v5 templates](https://github.com/statelyai/xstate/tree/next/templates)
