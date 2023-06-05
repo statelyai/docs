@@ -758,6 +758,80 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { fromCallback, createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: fromCallback((sendBack, receive, { input }) => {
+      // ...
+    }),
+    input: ({ context, event }) => ({
+      userId: context.userId,
+    }),
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: (context, event) => (sendBack, receive) => {
+      // context.userId
+      // ...
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { fromPromise, createMachine } from 'xstate';
+import { interval } from 'rxjs';
+
+const machine = createMachine({
+  invoke: {
+    src: fromObservable(() => interval(1000)),
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+import { interval } from 'rxjs';
+
+const machine = createMachine({
+  invoke: {
+    src: () => interval(1000),
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 ### Use `actors` property on `options` object instead of `services`
 
 :::breakingchange
