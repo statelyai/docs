@@ -803,12 +803,14 @@ const machine = createMachine({
 
 ```ts
 // ✅
-import { fromPromise, createMachine } from 'xstate';
-import { interval } from 'rxjs';
+import { fromEventObservable, createMachine } from 'xstate';
+import { interval, mapTo } from 'rxjs';
 
 const machine = createMachine({
   invoke: {
-    src: fromObservable(() => interval(1000)),
+    src: fromEventObservable(() =>
+      interval(1000).pipe(mapTo({ type: 'tick' })),
+    ),
   },
 });
 ```
@@ -820,11 +822,11 @@ const machine = createMachine({
 ```ts
 // ❌ DEPRECATED
 import { createMachine } from 'xstate';
-import { interval } from 'rxjs';
+import { interval, mapTo } from 'rxjs';
 
 const machine = createMachine({
   invoke: {
-    src: () => interval(1000),
+    src: () => interval(1000).pipe(mapTo({ type: 'tick' })),
   },
 });
 ```
