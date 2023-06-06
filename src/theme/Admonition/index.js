@@ -1,5 +1,5 @@
-import { ThemeClassNames } from '@docusaurus/theme-common';
 import Translate from '@docusaurus/Translate';
+import { ThemeClassNames } from '@docusaurus/theme-common';
 import clsx from 'clsx';
 import React from 'react';
 import styles from './styles.module.css';
@@ -9,9 +9,9 @@ function NoteIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="m21.44 11.05-9.19 9.19a6.003 6.003 0 1 1-8.49-8.49l8.57-8.57A4.006 4.006 0 0 1 18 8.84l-8.59 8.57a2.001 2.001 0 1 1-2.83-2.83l8.49-8.48"
       />
     </svg>
@@ -23,9 +23,9 @@ function TipIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M9 18h6m-5 4h4m1.09-8c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 1 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"
       />
     </svg>
@@ -37,9 +37,9 @@ function DangerIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M12 9v4m0 4h.01m9.72 1-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2.001 2.001 0 0 0 1.73-3Z"
       />
     </svg>
@@ -51,9 +51,9 @@ function InfoIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M12 16v-4m0-4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"
       />
     </svg>
@@ -65,9 +65,9 @@ function CautionIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"
       />
     </svg>
@@ -108,9 +108,9 @@ function PartyIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M5.8 11.3 2 22l10.7-3.79M4 3h.01M22 8h.01M15 2h.01M22 20h.01M22 2l-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10m8 3-.82-.33c-.86-.34-1.82.2-1.98 1.11-.11.7-.72 1.22-1.43 1.22H17M11 2l.33.82c.34.86-.2 1.82-1.11 1.98-.7.1-1.22.72-1.22 1.43V7m2 6c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"
       />
     </svg>
@@ -122,9 +122,9 @@ function PlayIcon() {
       <path
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="m5 3 14 9-14 9V3Z"
       />
     </svg>
