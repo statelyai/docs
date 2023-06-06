@@ -1,6 +1,6 @@
-# Welcome to the Stately docs for Stately Studio and XState
+# Welcome to the Stately landing page, including our blog and docs for Stately Studio and XState
 
-Our docs are built using [Docusaurus 2](https://docusaurus.io/).
+The site is built using [Docusaurus 2](https://docusaurus.io/).
 
 We welcome any contributions to the documentation and code base.
 
