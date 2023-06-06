@@ -109,14 +109,13 @@ A [React hook](https://reactjs.org/hooks) that interprets the given `actorLogic`
 - `options?` (optional) - Interpreter options
 
 ```js
-const [state, send] = useActor(someSpawnedActor);
-
-// with custom actors
-const [state, send] = useActor(fromPromise(async () => {
+const promiseLogic = fromPromise(async () => {
   const data = await getData(...);
 
   return data;
-}));
+});
+
+const [state, send] = useActor(promiseLogic);
 ```
 
 ### `useActorRef(machine, options?, observer?)`
@@ -136,33 +135,28 @@ To use a piece of state from the actorRef inside a render, use the `useSelector(
   - or a listener (e.g., `(snapshot) => {/* ... */}`)
 
 ```js
-import { useInterpret } from '@xstate/react';
+import { useActorRef } from '@xstate/react';
 import { someMachine } from '../path/to/someMachine';
 
 const App = () => {
-  const service = useInterpret(someMachine);
+  const actorRef = useActorRef(someMachine);
 
   // ...
 };
 ```
 
-With options + listener:
+Providing machine implementations:
 
 ```js
 // ...
 
 const App = () => {
-  const service = useInterpret(
-    someMachine,
-    {
+  const actorRef = useActorRef(
+    someMachine.provide({
       actions: {
-        /* ... */
+        // ...
       },
-    },
-    (state) => {
-      // subscribes to state changes
-      console.log(state);
-    },
+    }),
   );
 
   // ...
@@ -171,9 +165,7 @@ const App = () => {
 
 ### `useSelector(actorRef, selector, compare?, getSnapshot?)`
 
-A React hook that returns the selected value from the snapshot of an `actorRef`, such as a service. This hook will only cause a rerender if the selected value changes, as determined by the optional `compare` function.
-
-_Since 1.3.0_
+A React hook that returns the selected value from the snapshot of an `actorRef`, such as a actor ref. This hook will only cause a rerender if the selected value changes, as determined by the optional `compare` function.
 
 #### Arguments
 
@@ -181,7 +173,7 @@ _Since 1.3.0_
 - `selector` - a function that takes in an actor’s snapshot as an argument and returns the desired selected value.
 - `compare` (optional) - a function that determines if the current selected value is the same as the previous selected value.
 - `getSnapshot` (optional) - a function that should return the latest emitted value from the `actor`.
-  - Defaults to attempting to get the `actor.state`, or returning `undefined` if that does not exist. Will automatically pull the state from services.
+  - Defaults to attempting to get the `actor.state`, or returning `undefined` if that does not exist. Will automatically pull the state from actor refs.
 
 ```js
 import { useSelector } from '@xstate/react';
@@ -204,8 +196,8 @@ With `compare` function:
 const selectUser = (snapshot) => snapshot.context.user;
 const compareUser = (prevUser, nextUser) => prevUser.id === nextUser.id;
 
-const App = ({ actorREf }) => {
-  const user = useSelector(actorREf, selectUser, compareUser);
+const App = ({ actorRef }) => {
+  const user = useSelector(actorRef, selectUser, compareUser);
 
   // ...
 };
@@ -250,12 +242,12 @@ import { SomeMachineContext } from '../path/to/SomeMachineContext';
 
 function SomeComponent() {
   const count = SomeMachineContext.useSelector((state) => state.context.count);
-  const someActorRef = SomeMachineContext.useActor();
+  const someactorRef = SomeMachineContext.useActor();
 
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => someActorRef.send({ type: 'inc' })}>
+      <button onClick={() => someactorRef.send({ type: 'inc' })}>
         Increment
       </button>
     </div>
@@ -273,10 +265,10 @@ function SomeComponent() {
   return (
     <SomeMachineContext.Provider
       machine={someMachine.provide({
-        // ...
         actions: {
           someAction: differentImplementation,
         },
+        // ... More implementations
       })}
     >
       <SomeOtherComponent />
@@ -323,91 +315,11 @@ const App = () => {
 };
 ```
 
-### `useMachine(machine)` with `@xstate/fsm`
-
-A [React hook](https://reactjs.org/hooks) that interprets the given finite state `machine` from [`@xstate/fsm`](xstate-fsm.mdx) and starts a service that runs for the lifetime of the component.
-
-This special `useMachine` hook is imported from `@xstate/react/fsm`
-
-#### Arguments
-
-- `machine` - An [XState finite state machine (FSM)](xstate-fsm.mdx).
-- `options` - An optional `options` object.
-
-**Returns** a tuple of `[state, send, service]`:
-
-- `state` - Represents the current state of the machine as an `@xstate/fsm` `StateMachine.State` object.
-- `send` - A function that sends events to the running service.
-- `service` - The created `@xstate/fsm` service.
-
-#### Example
-
-```js
-import { useEffect } from 'react';
-import { useMachine } from '@xstate/react/fsm';
-import { createMachine } from '@xstate/fsm';
-
-const context = {
-  data: undefined,
-};
-const fetchMachine = createMachine({
-  id: 'fetch',
-  initial: 'idle',
-  context,
-  states: {
-    idle: {
-      on: { FETCH: 'loading' },
-    },
-    loading: {
-      entry: ['load'],
-      on: {
-        RESOLVE: {
-          target: 'success',
-          actions: assign({
-            data: (context, event) => event.data,
-          }),
-        },
-      },
-    },
-    success: {},
-  },
-});
-
-const Fetcher = ({
-  onFetch = () => new Promise((res) => res('some data')),
-}) => {
-  const [state, send] = useMachine(fetchMachine, {
-    actions: {
-      load: () => {
-        onFetch().then((res) => {
-          send({ type: 'RESOLVE', data: res });
-        });
-      },
-    },
-  });
-
-  switch (state.value) {
-    case 'idle':
-      return <button onClick={(_) => send('FETCH')}>Fetch</button>;
-    case 'loading':
-      return <div>Loading...</div>;
-    case 'success':
-      return (
-        <div>
-          Success! Data: <div data-testid="data">{state.context.data}</div>
-        </div>
-      );
-    default:
-      return null;
-  }
-};
-```
-
 ## Configuring machines
 
 Existing machines can be customized by providing different implementations in `machine.provide(implementations)`.
 
-Example: the `'fetchData'` service and `'notifySuccess'` action are both configurable:
+Example: the `'fetchData'` actor ref and `'notifySuccess'` action are both configurable:
 
 ```js
 const fetchMachine = createMachine({
@@ -427,13 +339,13 @@ const fetchMachine = createMachine({
         onDone: {
           target: 'success',
           actions: assign({
-            data: (_, event) => event.data,
+            data: ({ event }) => event.output,
           }),
         },
         onError: {
           target: 'failure',
           actions: assign({
-            error: (_, event) => event.data,
+            error: ({ event }) => event.data,
           }),
         },
       },
@@ -454,11 +366,12 @@ const Fetcher = ({ onResolve }) => {
   const [state, send] = useMachine(
     fetchMachine.provide({
       actions: {
-        notifySuccess: (ctx) => onResolve(ctx.data),
+        notifySuccess: ({ context }) => onResolve(context.data),
       },
-      services: {
-        fetchData: (_, e) =>
+      actors: {
+        fetchData: fromPromise(() =>
           fetch(`some/api/${e.query}`).then((res) => res.json()),
+        ),
       },
     }),
   );
@@ -543,7 +456,7 @@ const Loader = () => {
 
 ## Persisted and rehydrated State
 
-You can persist and rehydrate state with `useMachine(...)` via `options.state`:
+You can persist and rehydrate state with `useMachine(...)` via `options.state` in the 2nd argument:
 
 ```js
 // ...
@@ -577,13 +490,13 @@ You can subscribe to that actor ref's state changes with the [`useEffect` hook](
 // ...
 
 useEffect(() => {
-  const subscription = service.subscribe((state) => {
-    // simple state logging
-    console.log(state);
+  const subscription = actorRef.subscribe((snapshot) => {
+    // simple logging
+    console.log(snapshot);
   });
 
   return subscription.unsubscribe;
-}, [service]); // note: service should never change
+}, [service]); // note: actor ref should never change
 ```
 
 ## Resources
