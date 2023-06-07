@@ -125,11 +125,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'doc',
-          label: 'Introducing Stately Studio',
-          id: 'studio',
-        },
-        {
           type: 'category',
           label: 'Design mode',
           link: {
