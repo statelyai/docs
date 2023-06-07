@@ -2,9 +2,30 @@
 title: Initial states
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-
 When a state machine starts, it enters the **initial state** first. A machine can only have one top-level initial state; if there were multiple initial states, the machine wouldn’t know where to start!
+
+In XState, the initial state is defined by the `initial` property on the machine config:
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+
+  // highlight-start
+  // Initial state
+  initial: 'prompt',
+  // highlight-end
+
+  // Finite states
+  states: {
+    // highlight-next-line
+    prompt: {
+      /* ... */
+    },
+    // ...
+  },
+});
+```
+
 
 In our video player, paused is the initial state because the video player is paused by default and requires user interaction to start playing.
 
@@ -14,17 +35,10 @@ Watch our [“What are initial states?” video on YouTube](https://www.youtube.
 
 :::
 
-<p>
-<ThemedImage
-  alt="State machine with an initial state of Paused, transitioning through a Play event to the Playing state. From the Playing state back to the Paused state is a Pause event."
-  sources={{
-    light: 'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.light.png',
-    dark: 'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.dark.png',
-  }}
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=3ebc8874-2294-480b-a06e-74845337cd8d"
 />
-</p>
-
-[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=3ebc8874-2294-480b-a06e-74845337cd8d).
 
 :::studio
 
@@ -46,4 +60,6 @@ Each new machine or parent state will set the first new state as its initial sta
 2. Open the **State details** panel from the right tool menu.
 3. Choose the desired initial state from the Initial state dropdown menu.
 
-Coming soon… initial states in XState.
+## Initial states in XState
+
+Coming soon…
