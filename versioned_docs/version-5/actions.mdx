@@ -4,7 +4,9 @@ title: 'Actions'
 
 import ThemedImage from '@theme/ThemedImage';
 
-Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined in transitions:
+Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined on transitions in the `actions: ...` property. Anywhere you can use an action, you can also declare it as an array to express multiple actions.
+
+Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -44,13 +46,20 @@ Examples of actions:
 - Sending a message to another [actor](actors.mdx)
 - _Coming soon: more examples_
 
-## Editor: using actions
+<SkipDownLink
+  text="Jump to learning more about entry and exit actions in XState"
+  link="#entry-and-exit-actions"
+/>
+
+## Using actions in Stately Studio
 
 :::tip
 
 Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
 
 :::
+
+In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
 
 <p>
   <ThemedImage
@@ -64,36 +73,6 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 </p>
 
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
-
-In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
-
-In XState, actions are represented on transitions in the `actions: ...` property. Anywhere you can use an action, you can also declare it as an array to express multiple actions.
-
-Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
-
-Coming soon… simple example
-
-## Entry and exit actions
-
-Entry actions are actions that occur on any transition that enters a state node.
-
-Coming soon… illustation
-
-Exit actions are actions that occur on any transition that exits a state node.
-
-Coming soon… illustration
-
-Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
-
-Coming soon… example
-
-### In the Studio
-
-:::tip
-
-Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
-
-:::
 
 #### Add an entry action to a state
 
@@ -113,7 +92,22 @@ Watch our [“Entry actions and exit actions” video on YouTube](https://www.yo
 5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
 6. Save the entry action using the **Save** button.
 
----
+In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+
+## Entry and exit actions
+
+Entry actions are actions that occur on any transition that enters a state node.
+
+Coming soon… illustation
+
+Exit actions are actions that occur on any transition that exits a state node.
+
+Coming soon… illustration
+
+Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+
+Coming soon… example
+
 
 ## Inline actions
 
