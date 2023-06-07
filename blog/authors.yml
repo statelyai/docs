@@ -1,17 +1,49 @@
-endi:
-  name: Endilie Yacop Sucipto
-  title: Maintainer of Docusaurus
-  url: https://github.com/endiliey
-  image_url: https://github.com/endiliey.png
+anders:
+  name: Anders Bech Mellson
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/anders.png
+  title: Stately Team
 
-yangshun:
-  name: Yangshun Tay
-  title: Front End Engineer @ Facebook
-  url: https://github.com/yangshun
-  image_url: https://github.com/yangshun.png
+david:
+  name: David Khourshid
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/david.png
+  title: Stately Team
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
+farzad:
+  name: Farzad Yousefzadeh
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/farzad.png
+  title: Stately Team
+
+gavin:
+  name: Gavin Bauman
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/gavin.png
+  title: Stately Team
+
+jenny:
+  name: Jenny Truong
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/jenny.png
+  title: Stately Team
+
+kevin:
+  name: Kevin Maes
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/kevin.png
+  title: Stately Team
+
+laura:
+  name: Laura Kalbag
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/laura.png
+  title: Stately Team
+
+mateusz:
+  name: Mateusz Burzynski
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/mateusz.png
+  title: Stately Team
+  
+matt:
+  name: Matt Pocock
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/matt.png
+  title: Stately Team
+
+nick:
+  name: Nick Perich
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/nick.png
+  title: Stately Team

@@ -5,11 +5,11 @@ const a11yEmoji = require('@fec/remark-a11y-emoji');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Stately Docs',
+  title: 'Stately',
   tagline:
     'Documentation for Stately: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
-  baseUrl: process.env.VERCEL_ENV === 'preview' ? '/' : '/docs/',
+  baseUrl: '/',
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -33,7 +33,7 @@ const config = {
     {
       src: 'https://plausible.io/js/script.js',
       defer: true,
-      'data-domain': 'stately.ai/docs',
+      'data-domain': 'stately.ai',
     },
   ],
 
@@ -43,7 +43,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
+          routeBasePath: '/docs',
           sidebarPath: require.resolve('./sidebars.js'),
 
           // Remove this to remove the "edit this page" links.
@@ -84,7 +84,12 @@ const config = {
           // Add accessible emoji remark plugin
           remarkPlugins: [a11yEmoji],
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Stately Blog',
+          blogDescription: 'Stately’s engineering blog',
+          blogSidebarCount: 0,
+          postsPerPage: 'ALL',
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -107,6 +112,7 @@ const config = {
             type: 'search',
             position: 'right',
           },
+          { to: '/docs', label: 'Docs', position: 'right' },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
@@ -122,11 +128,7 @@ const config = {
             label: 'Discover',
             position: 'right',
           },
-          {
-            href: 'https://stately.ai/blog',
-            label: 'Blog',
-            position: 'right',
-          },
+          { to: 'blog', label: 'Blog', position: 'right' },
           {
             type: 'docsVersionDropdown',
             position: 'right',
@@ -149,12 +151,12 @@ const config = {
           },
           {
             label: 'Code of conduct',
-            href: 'https://stately.ai/code-of-conduct',
+            href: '/code-of-conduct',
             target: '_self',
           },
           {
             label: 'Privacy policy',
-            href: 'https://stately.ai/privacy',
+            href: '/privacy',
             target: '_self',
           },
           {
@@ -186,14 +188,6 @@ const config = {
         apiKey: 'e2fd3f2a7cd06067674996dd674fb241',
         indexName: 'stately',
         contextualSearch: true,
-        replaceSearchResultPathname:
-          // Remove /docs from the search result pathname when we're in a preview deployment
-          process.env.VERCEL_ENV === 'preview'
-            ? {
-                from: '/docs/',
-                to: '/',
-              }
-            : undefined,
       },
       announcementBar: {
         content:

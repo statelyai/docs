@@ -2,11 +2,7 @@
 title: Delayed (after) transitions
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
 **Delayed transitions** are transitions that only happen after a specified interval of time. If another event happens before the end of the timer, the transition doesn’t complete. Delayed transitions are handy if you need to build timeouts and intervals into your application logic.
-
 
 Delayed transitions are labeled “after” and often referred to as “after” transitions.
 
@@ -17,13 +13,14 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 :::
 
 <p>
-<ThemedImage
-  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
-  sources={{
-    light: useBaseUrl('/transitions-and-events/delayed-transitions/delayed-transitions.png'),
-    dark: useBaseUrl('/transitions-and-events/delayed-transitions/delayed-transitions-dm.png'),
-  }}
-/>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
+    sources={{
+      light:
+        '/transitions-and-events/delayed-transitions/delayed-transitions.png',
+      dark: '/transitions-and-events/delayed-transitions/delayed-transitions-dm.png',
+    }}
+  />
 </p>
 
 [View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=5671366b-05cf-43f5-a09a-b88373ea27c1).
@@ -46,7 +43,7 @@ First, select the event you want to replace with a delayed transition. Then…
 2. Choose **After** from the **Event type** dropdown menu.
 3. Specify the delay time in milliseconds using the **Delay** text input.
 
-:::xstate 
+:::xstate
 
 ## Looking for how to use delayed transitions in XState?
 

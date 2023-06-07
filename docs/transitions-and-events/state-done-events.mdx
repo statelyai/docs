@@ -2,9 +2,6 @@
 title: State done events
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
 A **state done event** transitions from a parent state when one of its child states reaches its final state. State done events are labeled “onDone.”
 
 :::video
@@ -16,13 +13,13 @@ Watch our [“What are state done events?” video on YouTube](https://www.youtu
 <!-- TODO: write more about why you might use an onDone event -->
 
 <p>
-<ThemedImage
-  alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
-  sources={{
-    light: useBaseUrl('/transitions-and-events/state-done-events/state-done-events.png'),
-    dark: useBaseUrl('/transitions-and-events/state-done-events/state-done-events-dm.png'),
-  }}
-/>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
+    sources={{
+      light: '/transitions-and-events/state-done-events/state-done-events.png',
+      dark: '/transitions-and-events/state-done-events/state-done-events-dm.png',
+    }}
+  />
 </p>
 
 In the video player above, when the video player reaches the *Stopped* state, the *Opened* state transitions through the *onDone* state done event to the *Closed* state.
@@ -43,4 +40,3 @@ In the video player above, when the video player reaches the *Stopped* state, 
 
 1. Open the **Transition details** panel from the right tool menu.
 2. Choose **State done event** from the **Event type** dropdown menu.
-
