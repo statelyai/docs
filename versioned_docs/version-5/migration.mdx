@@ -697,6 +697,145 @@ actor.subscribe((state) => {
 
 ## Actors
 
+### Use actor logic creators for `invoke.src` instead of functions
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The available actor logic creators are:
+
+- `createMachine`
+- `fromPromise`
+- `fromObservable`
+- `fromEventObservable`
+- `fromTransition`
+- `fromCallback`
+
+See [Actors](actors.mdx) for more information.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { fromPromise, createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: fromPromise(async ({ input }) => {
+      const data = await getData(input.userId);
+      // ...
+      return data;
+    }),
+    input: ({ context, event }) => ({
+      userId: context.userId,
+    }),
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: (context) => async () => {
+      const data = await getData(context.userId);
+
+      // ...
+      return data;
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { fromCallback, createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: fromCallback((sendBack, receive, { input }) => {
+      // ...
+    }),
+    input: ({ context, event }) => ({
+      userId: context.userId,
+    }),
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  invoke: {
+    src: (context, event) => (sendBack, receive) => {
+      // context.userId
+      // ...
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { fromEventObservable, createMachine } from 'xstate';
+import { interval, mapTo } from 'rxjs';
+
+const machine = createMachine({
+  invoke: {
+    src: fromEventObservable(() =>
+      interval(1000).pipe(mapTo({ type: 'tick' })),
+    ),
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+import { interval, mapTo } from 'rxjs';
+
+const machine = createMachine({
+  invoke: {
+    src: () => interval(1000).pipe(mapTo({ type: 'tick' })),
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 ### Use `actors` property on `options` object instead of `services`
 
 :::breakingchange
