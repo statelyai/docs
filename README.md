@@ -1,4 +1,6 @@
-# Welcome to the Stately landing page, including our blog and docs for Stately Studio and XState
+# Welcome to the Stately docs
+
+This repo contains the Stately landing page, including our blog and docs for Stately Studio and XState.
 
 The site is built using [Docusaurus 2](https://docusaurus.io/).
 
