@@ -89,7 +89,6 @@ const config = {
           blogDescription: 'Stately’s engineering blog',
           blogSidebarCount: 0,
           postsPerPage: 'ALL',
-          image: 'static/blog-default.png',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
