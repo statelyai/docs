@@ -96,7 +96,6 @@
             "keywords": ["guides"]
           },
           "items": [
-            "descriptions",
             "import-from-code",
             "export-as-code",
             {
