@@ -101,4 +101,5 @@ const todosMachine = createMachine({
 
 With the use of `spawn()` and `assign()`, we create a new actor instance when provided the machine logic and a unique identifier.
 By their nature, actions are ["fire and forget" effects](https://xstate.js.org/docs/guides/actions.html), meaning they are executed with no expectation of receiving events back to the actor. This makes sense for creating a new actor, but we may still want the parent actor to have a reference to its child, so we save that in its context using `assign()`. `spawn()` is the function called that actually creates the new actor. The parent can access this state easily by calling `getSnapshot()` on the reference to the child.
-For more detailed examples around working with actors in XState, like callback or promised-based actor spawning, sending updates, and communicating between actors, [check out our guides](https://xstate.js.org/docs/guides/actors.html).
+
+For more detailed examples around working with actors in XState, like callback or promised-based actor spawning, sending updates, and communicating between actors, [check out our docs on actors](actors.mdx).
