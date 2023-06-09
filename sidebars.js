@@ -125,11 +125,6 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'doc',
-          label: 'Introducing Stately Studio',
-          id: 'studio',
-        },
-        {
           type: 'category',
           label: 'Design mode',
           link: {
@@ -280,7 +275,7 @@ const sidebars = {
         {
           type: 'link',
           label: 'Migrate to XState v5 beta',
-          href: '/xstate-v5/migration',
+          href: '/docs/xstate-v5/migration',
         },
         'xstate/installation',
         'xstate/templates',

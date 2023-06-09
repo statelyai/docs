@@ -1,0 +1,92 @@
+---
+title: Import from GitHub
+description: 'Import your machines from GitHub into the Stately Studio.'
+---
+
+There are currently two ways to import your machines from GitHub into the Stately Studio:
+
+1. [Import all machines from a GitHub repository](#import-all-machines-from-a-github-repository).
+2. [Import machines from a GitHub URL.](#import-machine-from-a-github-url)
+
+:::studio
+
+Import from GitHub is a [Pro feature](/studio-pro-plan.mdx) of the Stately Studio.
+
+We offer a **30-day free trial** on the [Stately Studio Pro account](https://stately.ai/pricing) so you can explore how our Pro features work for you and your team.
+
+:::
+
+## Import all machines from a GitHub repository
+
+Use **Import from GitHub** to import all the machines from your GitHub repository into one project in the Stately Studio.
+
+:::info
+
+[Watch Anders demo Import from Github during our office hours](https://www.youtube.com/watch?v=k-ymwkyUBao&t=365s).
+
+:::
+
+How to import all machines from a GitHub repository into a project:
+
+1. Navigate to **My Projects** from the sidebar or the Stately menu.
+2. Use **Import from GitHub** to open the Import repo from GitHub modal.
+3. The GitHub integration will fetch all available repositories (public and private). The search bar helps you filter the available repositories.
+4. Choose the repository from which you wish to import machines.
+5. Stately Studio will import your machines into a new private project using the same name as your repository and open your project in the editor.
+
+<p>
+  <ThemedImage
+    alt="Stately Studio My Projects page showing a list of projects. Above the list is an Import from GitHub button, alongside the Create project button."
+    sources={{
+      light: '/import-from-github/import.png',
+      dark: '/import-from-github/import-dm.png',
+    }}
+  />
+</p>
+
+You can [rename the project from the Project settings](projects#change-a-projects-name-description-and-keywords) and [change the project’s visibility from the editor’s share dialog](projects#change-a-projects-visibility).
+
+### Import from a specific branch
+
+Currently, the **Import from GitHub** feature imports all machines from the _default branch_ in your GitHub repository.
+
+If you want to import machines from a different branch or from a pull request, we recommend [importing each machine from a GitHub URL](#import-machine-from-a-github-url).
+
+## GitHub permissions
+
+Importing a machine with **Import from GitHub** or importing a machine with a GitHub URL will prompt you to **Allow integration** to give our GitHub integration access to your GitHub repositories. You will only be prompted if you have not yet given the GitHub integration access on your current device.
+
+Your GitHub token is stored on your own device; we don’t save the token in our database. We do this to keep your data as safe as possible, but it does require that you accept the integration on the initial import for each device you use.
+
+## Import machine from a GitHub URL
+
+If you want to import a machine, or multiple machines, from a GitHub file, we recommend you use our feature to import from a GitHub URL.
+
+1. Open a file containing one or more machines on GitHub.
+2. Modify the URL in the browser’s address bar to replace the `.com` with `.stately.ai`.
+3. The editor will then display your imported machine.
+4. **Save** the machine to enable editing and easily find your machine in your projects later.
+
+Importing from a GitHub URL works with files in any branch in your private repositories, any public repositories, and any files in pull requests.
+
+### Example
+
+When your machine is hosted at GitHub:
+`https://github.com/username/repo/blob/main/apps/superMachine.ts`, update the URL to
+`https://github.stately.ai/username/repo/blob/main/apps/superMachine.ts` and Stately Studio will start the import.
+
+<p>
+  <ThemedImage
+    alt="Two URL bars with identical URLs except the first URL has github.com highlighted and the second URL has github.stately.ai highlighted."
+    sources={{
+      light: '/import-from-github/import-url.png',
+      dark: '/import-from-github/import-url-dm.png',
+    }}
+  />
+</p>
+
+:::info
+
+Read more in [our blog post about importing a machine from a GitHub URL](https://stately.ai/blog/import-machines-from-github).
+
+:::

@@ -1,0 +1,67 @@
+:root {
+  --docusaurus-tag-list-border: var(--st-tag-border);
+}
+
+.tag {
+  background: var(--st-tag-background);
+  border: var(--st-tag-border);
+  color: var(--st-tag-text);
+  transition: border var(--ifm-transition-fast);
+  text-decoration: none;
+}
+
+.tag:hover {
+  border: var(--st-tag-border);
+  text-decoration: underline;
+}
+
+.tagRegular {
+  background: var(--st-tag-background);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.2rem 0.5rem 0.3rem;
+  font-size: 90%;
+}
+
+.tagWithCount {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 0.5rem 0 1rem;
+  border-left: 0;
+}
+
+.tagWithCount::before,
+.tagWithCount::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  border: var(--st-tag-border);
+  transition: inherit;
+}
+
+.tagWithCount::before {
+  right: 100%;
+  transform: translate(50%, -50%) rotate(-45deg);
+  width: 1.18rem;
+  height: 1.18rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.tagWithCount::after {
+  left: 0;
+  transform: translateY(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.tagWithCount span {
+  background: var(--ifm-color-secondary);
+  color: var(--ifm-color-black);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  border-radius: var(--ifm-global-radius);
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.3rem;
+}

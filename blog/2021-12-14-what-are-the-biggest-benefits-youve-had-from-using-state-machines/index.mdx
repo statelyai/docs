@@ -1,0 +1,85 @@
+---
+title: What are the biggest benefits you’ve had from using state machines?
+description: >-
+  At Stately we’re fans of state machines, but we wanted to ask our
+  community… what are the benefits that you’ve experienced from using state machines?
+tags: [weekly question, community, state machine]
+authors: [laura]
+image: /blog/2021-12-14-what-are-the-biggest-benefits-youve-had-from-using-state-machines/share.png
+slug: 2021-12-14-what-are-the-biggest-benefits-youve-had-from-using-state-machines
+date:  2021-12-14
+---
+
+Last week we asked our community, “What are the biggest benefits you’ve had from using state machines?”
+
+At Stately, we’re obviously fans of state machines. Still, we wanted to ask our community the benefits they’ve experienced, whether they were working on a specific project or incorporating state machines into their everyday workflow.
+
+<!--truncate-->
+
+## Reusability
+
+Nowadays, so much of tech is component-oriented, so it was fascinating to hear from Martin that he reused the same state machines across different frameworks.
+
+<Tweet id="1469042301783654417" />
+
+> I think that **the biggest benefit comes from being able to use the same state machine across different frameworks**. With XState, even if you just use React on your projects, you can share your state machine with your [insert framework name here] friends.
+
+## Maintaining complex app logic
+
+<Tweet id="1468992722686017540" />
+
+Pat’s blog post goes into fascinating depth on his work with Crucible. The section on XState starts with Pat’s realization that he needed a state machine and ends with him moving much of their application logic into statecharts.
+
+> **We didn't start Crucible using XState but by the end of the project it was one of our most valuable tools…**
+>
+> …
+>
+> I was still new to statecharts and sort of overwhelmed by the whole idea so I needed to find a small feature I could prototype XState with where it would make sense and add recognizable value to a flow/process that could use more structure to it…
+>
+> …
+>
+> I built out the flow based on the services’ state and UI state, I defined all the valid transitions and where they’d go, I wired up the inputs/outputs to it, and then I turned it loose on matchmaking in an actual client and it worked beautifully.
+>
+> **I could look at the statechart and see the entire flow through the states**, I could see every valid transition that the statechart could take and where it would go, I could paste it into the XState visualizer and actually see a DIAGRAM OF ALL THE STATES AND WALK THROUGH THEM INTERACTIVELY.
+
+[Read all of Pat’s post on his blog](https://tivac.com/2020/10/19/crucible-rip/).
+
+## Maintainability
+
+Maintainability is a popular feature of state machines, and Joshua is a fan.
+
+<Tweet id="1468958231028326419" />
+
+Matt’s article on ‘[useState vs useReducer vs XState - Part 1: Modals](/blog/2021-07-28-usestate-vs-usereducer-vs-xstate-part-1-modals/index.mdx)’ shares examples of these different approaches and their maintainability. And he followed it up with his [React Finland talk, ‘Make legacy code delightful with statecharts’](https://www.youtube.com/watch?v=zll9uDQOOq0).
+
+## Getting to the core of your logic
+
+The [discussion on our Discord](https://discord.com/channels/795785288994652170/795785288994652174/918546073268670534) focused on mindset and how state machines can help us better understand our app logic. Jan got the conversation started.
+
+> Certainly for me it must be that **it allows me to very quickly get to the essence and core behaviour of what I'm building**. Playing with boxes and arrows allow me to not get caught up in implementation details while figuring out how I want stuff to work.
+>
+> Afterwards, implementing actions and services just feels like filling in the blanks. Likewise hooking the machine up with my component is equally trivial: throw some `state.hasTag`, `state.context` and `send` in there, and you’ve got a stew going
+
+And Steve continued.
+
+> State machines make complex behaviors tractable; they help you think about the problem.
+>
+> State machines reveal complexities in ostensibly simple behaviors; they make you think about the problem.
+>
+> Yin and yang. Good cop, bad cop. **Thinking about your application behavior as a set of state machines focuses your mind on what's really going on inside that tangled mass of behaviors**.
+
+## Robustness
+
+Horacio also explained how the robustness of apps built with state machines could give us more faith in our work.
+
+> Programming is all about confidence, and for me, **working with state machines gives me the same confidence on my code as writing tests**, with the addition to have a visual representation of my system that I can discuss, show and modify with all my teammates.
+>
+> Also having the confidence of refactoring code without the fear of breaking other parts of my app!!
+>
+> Definitely XState is one of my top additions of 2021 to my dev toolbelt! 💪
+
+That’s just what we like to hear!
+
+Thank you, everyone, for your responses. We love to hear about how you’re using state machines in your projects. If you’ve got any feedback you want to share with the Stately team, you can [find us on Twitter](https://twitter.com/statelyai) and join the community on [our Discord server](https://discord.gg).
+
+_Note: quotes have been minimally edited to add emphasis and clarity._

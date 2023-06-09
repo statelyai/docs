@@ -2,8 +2,6 @@
 title: Initial states
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-
 When a state machine starts, it enters the **initial state** first. A machine can only have one top-level initial state; if there were multiple initial states, the machine wouldn’t know where to start!
 
 :::video
@@ -15,13 +13,14 @@ Watch our [“What are initial states?” video on YouTube](https://www.youtube.
 In our video player, paused is the initial state because the video player is paused by default and requires user interaction to start playing.
 
 <p>
-<ThemedImage
-  alt="State machine with an initial state of Paused, transitioning through a Play event to the Playing state. From the Playing state back to the Paused state is a Pause event."
-  sources={{
-    light: 'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.light.png',
-    dark: 'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.dark.png',
-  }}
-/>
+  <ThemedImage
+    alt="State machine with an initial state of Paused, transitioning through a Play event to the Playing state. From the Playing state back to the Paused state is a Pause event."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.light.png',
+      dark: 'https://stately.ai/registry/machines/3ebc8874-2294-480b-a06e-74845337cd8d.dark.png',
+    }}
+  />
 </p>
 
 [View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=3ebc8874-2294-480b-a06e-74845337cd8d).
@@ -37,16 +36,18 @@ In the Stately Studio, the filled circle with an arrow icon represents the initi
 Each new machine or parent state will set the first new state as its initial state by default.
 
 ### Using the **quick actions** menu:
+
 1. Select the state you wish to make the new initial state.
 2. Right-click the state to bring up the **quick actions** menu.
 3. Choose **Mark as initial state** from the **quick actions** menu.
 
 ### Using the **State details** panel:
+
 1. Select the parent state or parent machine.
 2. Open the **State details** panel from the right tool menu.
 3. Choose the desired initial state from the Initial state dropdown menu.
 
-:::xstate 
+:::xstate
 
 ## Looking for how to use initial states in XState?
 

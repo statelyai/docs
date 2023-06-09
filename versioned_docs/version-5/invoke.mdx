@@ -14,24 +14,21 @@ Coming soon… example of invoking an actor at root.
 [Read about the difference between invoking and spawning actors](actors.mdx#invoking-and-spawning-actors).
 :::
 
+<SkipDownLink
+  text="Jump to learning more about the invoked actors API in XState"
+  link="#api"
+/>
+
 ## Using invoked actors in Stately Studio
 
 Invoked actors are are labeled on their invoking state with “Invoke /” followed by the actor’s source name and ID.
 
 You can invoke multiple actors on a single state. Top-level final states cannot have invoked actors.
 
-<p>
-  <ThemedImage
-    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Opened state invokes a startVideo actor and has a description of “The video player should be in full-screen mode.” The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s a delayed transition from the Stopped state back to the Closed state after 5 seconds."
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/66f77051-089e-4b0a-9fa9-42e1f7598135.light.png',
-      dark: 'https://stately.ai/registry/machines/66f77051-089e-4b0a-9fa9-42e1f7598135.dark.png',
-    }}
-  />
-</p>
-
-[View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=66f77051-089e-4b0a-9fa9-42e1f7598135).
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=66f77051-089e-4b0a-9fa9-42e1f7598135"
+  name="video player"
+/>
 
 In the video player above, the *startVideo* actor is invoked when the video player is in the *Opened* state.
 
@@ -43,6 +40,39 @@ In the video player above, the *startVideo* actor is invoked when the video pl
 4. Add the source for the actor using the **src** text input.
 5. Add the ID for the actor using the **ID** text input.
 6. Save the invoked actor using the **Save** button.
+
+### Invoke done events
+
+An **invoke done event** transitions from a state once its invocation has been completed. An invoke done event is labeled “done:” followed by the invocation’s ID.
+
+#### How to create invoke done events in Stately Studio
+
+1. Select the state with an invoked actor where you want to add an invoke done event.
+2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+3. The newly-created event will automatically be created as an invoke done event.
+
+You can also change an existing event into an invoked done event using the **quick actions** menu:
+
+1. Select the existing event you wish to change into an invoke done event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Invocation done event** from the **Event type** options.
+
+### Invoke error events
+
+An **invoke error event** transitions from a state when an error occurs in its invocation. An invoke error event is labeled “error:” followed by the invocation’s ID.
+
+#### How to create invoke error events in Stately Studio
+
+1. Select the state with an invoked actor where you want to add an invoke error event.
+2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+3. The newly-created event will automatically be created as an invoke done event.
+4. When an invoke done event already exists from that state, creating another event will automatically create that event as an invoke error event.
+
+You can also change an existing event into an invoked error event using the **quick actions** menu:
+
+1. Select the existing event you wish to change into an invoke error event.
+2. Right-click the state to bring up the **quick actions** menu.
+3. Choose **Invocation error event** from the **Event type** options.
 
 ## API
 

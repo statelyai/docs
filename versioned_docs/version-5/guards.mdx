@@ -2,9 +2,6 @@
 title: Guards
 ---
 
-import ThemedImage from '@theme/ThemedImage';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
 A **guard** is a condition function that the machine checks when it goes through an event. If the condition is `true`, the machine follows the transition to the next state. If the condition is `false`, the machine follows the rest of the conditions to the next state.
 
 A **guarded transition** is a transition that is enabled only if its `guard` evaluates to `true`. The guard determines whether or not the transition can be enabled. Any transition can be a guarded transition.
@@ -38,7 +35,7 @@ const feedbackMachine = createMachine(
       },
     },
     // highlight-end
-  }
+  },
 );
 ```
 
@@ -48,8 +45,8 @@ const feedbackMachine = createMachine(
   <ThemedImage
     alt="A video player state machine with an initial Paused State and a Playing state. The transition from Playing to Paused has a guard numbered 1 and labeled ‘If time left is zero’. The first guard is joined to a second guard by a dotted line. The second guard is numbered 2 and is labeled ‘Else if time left is more than zero.’ The second guard’s transition targets the Playing state."
     sources={{
-      light: useBaseUrl('/transitions-and-events/guards/guards.png'),
-      dark: useBaseUrl('/transitions-and-events/guards/guards-dm.png'),
+      light: '/assets/transitions-and-events/guards/guards.png',
+      dark: '/assets/transitions-and-events/guards/guards-dm.png',
     }}
   />
 </p>
@@ -165,7 +162,7 @@ const feedbackMachine = createMachine(
       },
     },
     // highlight-end
-  }
+  },
 );
 ```
 
@@ -184,7 +181,7 @@ const feedbackActor = interpret(
         );
       },
     },
-  })
+  }),
   // highlight-end
 ).start();
 ```

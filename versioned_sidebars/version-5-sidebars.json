@@ -232,6 +232,7 @@
         "finite-states",
         "parent-states",
         "parallel-states",
+        "initial-states",
         "final-states",
         "history-states",
         "persistence"

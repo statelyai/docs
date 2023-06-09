@@ -1,0 +1,186 @@
+---
+title: Why I love invoked callbacks
+description: >-
+  I’ve written a bit about services, but today I wanted to talk about my
+  favourite way of expressing services: the Invoked Callback.
+tags: [services, invoked callback, state machine, xstate]
+authors: [matt]
+image: /blog/2021-05-13-why-i-love-invoked-callbacks/share.png
+slug: 2021-05-13-why-i-love-invoked-callbacks
+date:  2021-05-13
+---
+
+XState offers several primitives for representing long-running application processes. These are usually expressed as [services](https://xstate.js.org/docs/guides/communication.html). I’ve written a bit about services [here](https://dev.to/mpocock1/xstate-should-this-be-an-action-or-a-service-2cp0) - but today I wanted to talk about my favourite way of expressing services: the Invoked Callback.
+
+<!--truncate-->
+
+The [Invoked Callback](https://xstate.js.org/docs/guides/communication.html#invoking-callbacks) combines immense flexibility with good readability and a solid Typescript experience. They look like this:
+
+```ts
+createMachine({
+  invoke: {
+    src: (context, event) => (send, onReceive) => {
+      // Run any code you like inside here
+
+      return () => {
+        // Any code inside here will be called when
+        // you leave this state, or the machine is stopped
+      };
+    },
+  },
+});
+```
+
+Let’s break this down. You get access to `context` and `event`, just like promise-based services. But `send` is where things really get interesting. Let’s break down what makes `send` useful with an example.
+
+## File Uploads
+
+Imagine you need to build a file uploader, and you have a handy function called `startUpload` that uploads some data, and exposes an `onProgressUpdate` parameter to update the progress.
+
+```ts
+createMachine({
+  context: {
+    progress: 0,
+  },
+  initial: "idle",
+  states: {
+    idle: {
+      on: {
+        START: "pending",
+      },
+    },
+    pending: {
+      on: {
+        PROGRESS_UPDATED: {
+          assign: assign({
+            progress: (context, event) => event.progress,
+          }),
+        },
+        CANCEL: {
+          target: "idle",
+        },
+      },
+      invoke: {
+        src: (context) => (send) => {
+          const uploader = startUpload({
+            onProgressUpdate: (progress) => {
+              send({
+                type: "PROGRESS_UPDATED",
+                progress,
+              });
+            },
+          });
+
+          return () => {
+            uploader.cancel();
+          };
+        },
+      },
+    },
+  },
+});
+```
+
+This machine starts in the `idle` state, but on the `START` event begins its invoked service, which uploads the file. It then listens for `PROGRESS_UPDATED` events, and updates the context based on its updates.
+
+The `CANCEL` event will trigger the `uploader.cancel()` function, which gets called when the state is left. React users may recognise this syntax - it’s the same as the cleanup function in the [useEffect hook](https://reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect).
+
+Note how simple and idiomatic it is to cancel the uploader - just exit the state, and the service gets cleaned up.
+
+## Event Listeners
+
+The invoked callback’s cleanup function makes it very useful for event listeners, for instance `window.addEventListener()`. XState Catalogue’s [Tab Focus Machine](https://xstate-catalogue.com/machines/tab-focus) is a perfect example of this - copied here for ease:
+
+```ts
+createMachine(
+  {
+    initial: "userIsOnTab",
+    states: {
+      userIsOnTab: {
+        invoke: {
+          src: "checkForDocumentBlur",
+        },
+        on: {
+          REPORT_TAB_BLUR: "userIsNotOnTab",
+        },
+      },
+      userIsNotOnTab: {
+        invoke: {
+          src: "checkForDocumentFocus",
+        },
+        on: {
+          REPORT_TAB_FOCUS: "userIsOnTab",
+        },
+      },
+    },
+  },
+  {
+    services: {
+      checkForDocumentBlur: () => (send) => {
+        const listener = () => {
+          send("REPORT_TAB_BLUR");
+        };
+
+        window.addEventListener("blur", listener);
+
+        return () => {
+          window.removeEventListener("blur", listener);
+        };
+      },
+      checkForDocumentFocus: () => (send) => {
+        const listener = () => {
+          send("REPORT_TAB_FOCUS");
+        };
+
+        window.addEventListener("focus", listener);
+
+        return () => {
+          window.removeEventListener("focus", listener);
+        };
+      },
+    },
+  }
+);
+```
+
+When in the `userIsOnTab` state, we listen for the window’s `blur` event. When that happens, and `REPORT_TAB_BLUR` is fired, we clean up the event listener and head right on over to `userIsNotOnTab`, where we fire up the other service.
+
+## Websockets
+
+Invoked callbacks can also receive events via the `onReceive` function. This is perfect when you need to communicate to your service, such as sending events to websockets.
+
+```ts
+import { createMachine, forwardTo } from "xstate";
+
+createMachine({
+  on: {
+    SEND: {
+      actions: forwardTo("websocket"),
+    },
+  },
+  invoke: {
+    id: "websocket",
+    src: () => (send, onReceive) => {
+      const websocket = connectWebsocket();
+
+      onReceive((event) => {
+        if (event.type === "SEND") {
+          websocket.send(event.message);
+        }
+      });
+
+      return () => {
+        websocket.disconnect();
+      };
+    },
+  },
+});
+```
+
+In order to receive events, services need an `id`. Not all events are forwarded to the invoked service, only those which we select via the `forwardTo` action.
+
+Here, we can connect to the websocket, establish two-way communication, and clean it up all in a few lines of code.
+
+## My Love Letter
+
+Invoked callbacks are a concise, flexible method of invoking services in XState. There isn’t a case they can’t cover - and they’re one of my favourite parts of the XState API.

@@ -2,16 +2,16 @@
 title: What are state machines and statecharts?
 ---
 
-import EmbedMachine from '@site/src/components/EmbedMachine';
-import ThemedImage from '@theme/ThemedImage';
-
 State machines help us model how a process goes from state to state when an event occurs.
 
 State machines are useful in software development because they help us capture all the states, events and transitions between them. Using state machines makes it easier to find impossible states and spot undesirable transitions.
 
 State machines model your application logic. Below is the logic for a video player. When the video is Played, it is opened into fullscreen mode. When the video is stopped, it closes out of fullscreen mode. When the video player is in fullscreen mode, it can be _Playing_ or _Paused_.
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544"/>
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544"
+/>
 
 ## What is a statechart?
 

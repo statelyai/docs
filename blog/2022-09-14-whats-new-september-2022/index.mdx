@@ -1,0 +1,41 @@
+---
+title: "What’s new in September 2022?"
+description: "The Stately team has got some huge features to share with you soon. Here’s what we’ve been working hard on through the summer!"
+tags: [stately, xstate, studio]
+authors: [laura]
+image: /blog/2022-09-14-whats-new-september-2022/share.png
+slug: 2022-09-14-whats-new-september-2022
+date:  2022-09-14
+---
+
+The Stately team has got some huge features to share with you soon. We’ve been working hard through the summer, which is why we’re already halfway into September by the time I’ve gotten around to this update post.
+
+<!--truncate-->
+
+## Human-readable timers
+
+When building after events, the convention is to specify the delay length in milliseconds, which is great for computers, but less easy for humans to understand. Now we display the timers in more human-friendly terms, including years, weeks, minutes, and seconds. You can still access the delay in milliseconds from the right panel when the event is selected.
+
+![An after event in the studio showing “after 3 mins” as the event label and 180000 milliseconds in the delay field in the side panel.](human-readable-timers.png)
+
+## New version alerts in the Stately studio
+
+We will now notify you in the browser when there is a new version of the studio. You’ll likely have seen other platforms with similar notifications in the past. This alert is our way of getting you the latest changes to the studio without the risk of losing your work in progress.
+
+[Watch the office hours from August 26 for more on the new version alerts](https://youtu.be/HI8LbL5Yu74?t=150).
+
+## XState 4.33.6 patch release
+
+We’re all looking forward to the XState version 5 release. In the meantime, we’ve got some migratory moves towards v5 in the form of the [XState 4.33.6 patch release](https://github.com/statelyai/xstate/releases/tag/xstate%404.33.6).
+
+Reading state directly from `someService.state` is now deprecated, and we encourage you to use `someService.getSnapshot()` instead. `.getSnapshot()` will become the go-to way to read the current snapshot from any actor.
+
+We’re also deprecating the `send()` action in favor of the new `sendTo()` action. `sendTo(actorName, event)` allows you to send to a specific, named actor with the `actorName` string. `sendTo()` paves the way for more improved typings and making the terms and concepts we use easier to understand for folks new to XState.
+
+[Find out more in David’s update on the 4.33.6 patch release from last week’s office hours](https://youtu.be/H0uTQbaW9rk?t=115).
+
+## Have you attended our office hours?
+
+If you want more regular updates from the Stately team, check out the [Stately office hours](https://youtube.com/playlist?list=PLvWgkXBB3dd6PXbSoctwDXjWX-AQrxhds). Every Friday at 10 AM ET, we live stream demos and discussions of our recent work at Stately and on XState. Live streaming on YouTube, Twitter, LinkedIn and Twitch, they’re a real highlight of our week, and we’re nearing our 50th edition 🎉.
+
+Be sure to join us at [our next office hours this Friday](https://www.youtube.com/watch?v=37YVzAjhDHA)!
