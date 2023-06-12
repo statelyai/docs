@@ -100,6 +100,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: 'static/docs-default.png',
       navbar: {
         title: '',
         logo: {
