@@ -110,7 +110,7 @@ const feedbackMachine = createMachine(
     delays: {
       /* ... */
     },
-  }
+  },
 );
 ```
 
@@ -141,6 +141,26 @@ const customFeedbackMachine = feedbackMachine.provide({
 const feedbackActor = interpret(customFeedbackMachine).start();
 
 // logs 'Doing something custom!'
+```
+
+Note: `machine.provide()` is not imperative but rather returns a new machine that includes the implementation overrides.
+
+Modifying the previous example, if we were to imperatively call `.provide()` on an existing machine, that would not change the machine’s behavior with our implementations.
+
+```ts
+const feedbackMachine = createMachine({...});
+
+feedbackMachine.provide({
+  actions: {
+    doSomething: () => {
+      console.log('Doing something custom!');
+    },
+  },
+});
+
+// This will NOT utilize the provided implementations.
+const feedbackActor = interpret(feedbackMachine).start();
+
 ```
 
 ## Specifying types
