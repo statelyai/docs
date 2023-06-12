@@ -21,6 +21,16 @@ const actor = interpret(machine).start();
 actor.system;
 ```
 
+The root of a system can also be explicitly assigned a `systemId` in the `interpret` function:
+
+```ts
+import { interpret } from 'xstate';
+
+const actor = interpret(machine, { systemId: 'root-id' }).start();
+```
+
+This is useful for actors in the system to be able send events to the root actor.
+
 Coming soon… systems in Stately Studio’s editor
 
 ## Actor registration
