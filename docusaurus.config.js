@@ -89,6 +89,8 @@ const config = {
           blogDescription: 'Stately’s engineering blog',
           blogSidebarCount: 0,
           postsPerPage: 'ALL',
+          editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
+            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -100,6 +102,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: 'static/docs-default.png',
       navbar: {
         title: '',
         logo: {
