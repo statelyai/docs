@@ -144,12 +144,6 @@ const sidebars = {
               id: 'versions',
               className: 'pro-feature',
             },
-            {
-              type: 'doc',
-              label: 'Colors',
-              id: 'colors',
-              className: 'pro-feature',
-            },
             'machine-restore',
           ],
         },
