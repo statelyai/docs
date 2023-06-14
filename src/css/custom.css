@@ -718,6 +718,17 @@ ol ul {
   margin-top: var(--ifm-list-item-margin);
 }
 
+/* Keyboard shortcuts */
+/* Match docsearch keys */
+
+kbd {
+  border: var(--docsearch-key-border);
+  background: var(--docsearch-key-gradient);
+  box-shadow: var(--docsearch-key-shadow);
+  color: var(--docsearch-muted-color);
+  padding: 0.1rem 0.3rem 0.3rem 0.3rem;
+}
+
 /* Make secondary (not content) text a consistent size */
 
 .menu__link,
