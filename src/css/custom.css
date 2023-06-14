@@ -300,7 +300,8 @@ body {
 
   /* tables */
   --ifm-table-border-color: var(--st-layout-border);
-  --ifm-table-stripe-background: var(--st-background-secondary);
+  --ifm-table-background: transparent;
+  --ifm-table-stripe-background: rgba(255,255,255,0.6);
   --ifm-footer-link-color: var(--st-footer-link);
 
   /* admonitions */
