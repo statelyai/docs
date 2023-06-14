@@ -401,13 +401,13 @@ html[data-theme='light'] body {
   --docsearch-hit-shadow: none;
   --docsearch-hit-mark: var(--st-gray-900);
   --docsearch-hit-mark-active: var(--st-gray-800);
-  --docsearch-key-border: solid var(--st-gray-500);
+  --docsearch-key-border: solid var(--st-gray-300);
   --docsearch-key-gradient: linear-gradient(
     -225deg,
     var(--st-gray-50),
     var(--st-gray-100)
   );
-  --docsearch-key-shadow: inset 0 -3px 0 0 var(--st-gray-500);
+  --docsearch-key-shadow: inset 0 -3px 0 0 var(--st-gray-300);
   --docsearch-footer-background: var(--st-gray-50);
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-100);
 
