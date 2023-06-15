@@ -209,7 +209,10 @@
               "id": "upgrade"
             }
           ]
-        }
+        },
+        "keyboard-shortcuts",
+        "canvas-view-controls",
+        "user-preferences"
       ]
     },
     {
