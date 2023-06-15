@@ -112,7 +112,8 @@
             },
             "annotations",
             "descriptions",
-            "machine-restore"
+            "machine-restore",
+            "autolayout"
           ]
         },
         {
@@ -210,7 +211,6 @@
             }
           ]
         },
-        "autolayout",
         "keyboard-shortcuts",
         "canvas-view-controls",
         "user-preferences"
