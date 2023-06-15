@@ -41,15 +41,7 @@ const feedbackMachine = createMachine(
 
 ## Using guards in Stately Studio
 
-<p>
-  <ThemedImage
-    alt="A video player state machine with an initial Paused State and a Playing state. The transition from Playing to Paused has a guard numbered 1 and labeled ‘If time left is zero’. The first guard is joined to a second guard by a dotted line. The second guard is numbered 2 and is labeled ‘Else if time left is more than zero.’ The second guard’s transition targets the Playing state."
-    sources={{
-      light: '/assets/transitions-and-events/guards/guards.png',
-      dark: '/assets/transitions-and-events/guards/guards-dm.png',
-    }}
-  />
-</p>
+<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=96f3bfce-147a-4aa0-ae2d-674cdfcb14ec"/>
 
 :::studio
 
@@ -61,25 +53,21 @@ Coming soon… Why you might use guards.
 
 ### Add a guard to an event
 
-First, select the event where you want to add a guard. Then…
+When multiple guard conditions are added to one transition, the guards will be numbered in order. The first guard will be labeled **IF** and subsequent guards will be labeled **ELSE**.
 
-#### Using the **+ Transition** button
+#### Using the edit menu
 
-1. Use the **+ Transition** button to replace your event with a guarded transition.
-2. Name your guard by replacing the **New guard** text inside the event.
+1. Select the event you want to replace with a guarded transition.
+2. Use the <Plus size={18} /> plus icon button to open the menu.
+3. Choose **Guard condition** from the menu to add a guarded transition.
+4. Enter your condition into the text input.
 
-#### Using the **quick actions** menu
+#### Using the transition Details panel
 
-1. Right-click the event to open the **quick actions** menu.
-2. Choose **Add guard** from the options in the **quick actions** menu to replace your event with a guarded transition.
-3. Name your guard by replacing the **New guard** text inside the event.
+1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **Guard** text input to name your guard’s condition and replace your event with a guarded transition.
 
-#### Using the **Transition details** panel
-
-1. Open the **Transition details** panel from the right tool menu.
-2. Use the **Guard** text input to name your guard and replace your event with a guarded transition.
-
-Use the **+ Transition** button to create more guards on the same transition.
+[Use the edit menu](#using-the-edit-menu) to create more guards on the same transition.
 
 ---
 
