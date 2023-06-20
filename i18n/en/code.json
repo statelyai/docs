@@ -262,7 +262,7 @@
     "description": "The search page title for non-empty query"
   },
   "theme.SearchPage.emptyResultsTitle": {
-    "message": "Search the documentation",
+    "message": "Search the Stately documentation and blog",
     "description": "The search page title for empty query"
   },
   "theme.SearchPage.inputPlaceholder": {
@@ -378,7 +378,7 @@
     "description": "The text for the link to report missing results"
   },
   "theme.SearchModal.placeholder": {
-    "message": "Search docs",
+    "message": "Search docs and blog",
     "description": "The placeholder of the input of the DocSearch pop-up modal"
   }
 }
