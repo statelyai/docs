@@ -139,6 +139,10 @@
     "message": "{nDocsTagged} with “{tagName}”",
     "description": "The title of the page for a docs tag"
   },
+  "theme.blog.tagListPageDescription": {
+      "message": "From A-Z, browse all the tags used in the blog posts on the Stately Blog.",
+      "description": "The description of the page for the blog tags list"
+  },
   "theme.docs.versionBadge.label": {
     "message": "Version: {versionLabel}"
   },
