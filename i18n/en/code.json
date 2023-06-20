@@ -99,6 +99,10 @@
     "message": "{nPosts} tagged with “{tagName}”",
     "description": "The title of the page for a blog tag"
   },
+  "theme.blog.tagDescription": {
+    "message": "Browse all posts tagged with “{tagName}” on the Stately blog. {nPosts} tagged with “{tagName}.”",
+    "description": "The description of the page for a blog tag"
+  },
   "theme.tags.tagsPageLink": {
     "message": "View all tags",
     "description": "The label of the link targeting the tag list page"
