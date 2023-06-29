@@ -92,7 +92,7 @@ We think we’ve built something that will increasingly be able to support howev
 
 ## Translucency reduces ambiguities
 
-Another part of the improved design is translucency. Because Stately handles the complex, nonlinear flows that are often required when building apps, it is not always possible to lay out your logic in a nice straight line. This means that arrows can go underneath of other items, making it difficult to read. Also, when working on a canvas sometimes it’s nice to casually toss items into overlapping piles as your work comes together. But statecharts can get pretty detailed! And this means sometimes states can cover each other up and it’s hard to even tell anything is underneath.
+Another part of the improved design is translucency. Because Stately handles the complex, nonlinear flows that are often required when building apps, it is not always possible to lay out your logic in a nice straight line. This means that arrows can go underneath of other items, making the content difficult to read. Also, when working on a canvas sometimes it’s nice to casually toss items into overlapping piles as your work comes together. But statecharts can get pretty detailed! And this means sometimes states can cover each other up and it’s hard to even tell anything is underneath.
 
 That’s why we we made some canvas elements translucent by default, including state details and transition labels. 
 
@@ -143,9 +143,9 @@ And it doesn’t just look pretty. There are so many ways that color can help yo
 - Use different colors for different user personas or stories
 - Mark popular paths with colors based on usage data
 
-We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a very useful way for conveying new layers of meaning. And a colorful image makes the modelling which Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
+We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a nice way to convey new layers of meaning. And a colorful image makes the modelling which Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
 
-Because of the dynamic way color will be used in diagrams, we implemented our approach using a perceptually uniform color space. This means that no matter which color you choose, in light mode or dark mode, you don’t have to worry about contrast changes affecting legibility. This is because all colors in any group are perceived as being the same lightness. 
+Because color will be used in diagrams in dynamic and varied ways, we implemented our approach using a perceptually uniform color space. This means that no matter which color you choose, in light mode or dark mode, you don’t have to worry about contrast changes affecting legibility. This is because all colors in any group are perceived as being the same lightness. 
 
 Set a color by selecting a state or transition and choosing the one you want from the Edit Menu above it. You can set colors separately on states and on transitions. Effect blocks and other attached details inherit their color. 
 
