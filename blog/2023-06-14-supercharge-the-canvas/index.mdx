@@ -1,6 +1,6 @@
 ---
 title: Supercharge the canvas
-description: 'Today we are excited to release an update to the Stately Studio that takes a huge step towards making complexity more manageable. '
+description: 'Today we are excited to release an update to Stately that takes a huge step towards making complexity more manageable. '
 tags:
   [
     canvas,
@@ -17,15 +17,15 @@ date: 2023-06-14
 Today we are excited to release an update to the Stately Studio that takes a huge step towards making complexity more manageable. 
 
 - Bring color into your flows! 🌈
-- Create more logic directly on the canvas 📝
+- Design more logic directly on the canvas 📝
 - Interact with effects like entry actions and invoked actors as visual blocks 🧩
 - Understand complex flows with a refined design for statecharts 🔥
 - Hide the UI to help focus on your content 🎧
-- Use tags, `assign`, `raise`, and other XState actions in the Studio 💪<!--truncate-->
+- Use tags and many XState actions in the Studio 💪<!--truncate-->
 
 ## Making complexity manageable
 
-We believe that making logic explicit using state machines, statecharts, and other visual flows can bring huge benefits like
+We believe that making logic explicit using state machines, statecharts, and other visual flows can bring huge benefits like:
 
 - Improving collaboration through a shared understanding.
 - Tapping into our innate visual processing capacities with a spatial format.
@@ -44,17 +44,19 @@ Today we are launching an updated design for Stately Studio’s visual canvas th
 
 You can now do much more work on the canvas itself. 
 
-Being able to stay on the canvas lets interactions be more intuitive, lets you stay closer to your content, can help keep you focused, and even can give you more room to work. 
+Being able to stay on the canvas lets interactions be more intuitive, lets you stay closer to your content, can help keep you focused, and can even give you more room to work. 
 
-For example, we enhanced the Edit Menu to support adding actions, tags, and other data to states and transitions. And most items on the canvas can be edited directly.
+For example, we enhanced the Edit Menu to support adding actions, tags, and other data to states and transitions. And most items on the canvas can then be edited directly.
 
 - [ ]  gif adding a tag from quick actions and editing the name
 
 ## Effect blocks make it easy to say what happens when
 
-The most important addition we’ve made is that effects (invoked actors, entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside of states and transitions. 
+Statecharts are great for modeling how a process goes from state to state when an event occurs. Especially since you can also make things happen by having effects run at specific times. 
 
-This will make it easy to define, understand, and modify what happens as users step through your flow. 
+The most important addition we’ve made with this release is that effects (invoked actors, entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside of states and transitions. 
+
+This will make it easy to define, understand, and modify your app's behavior as users step through your flow. 
 
 - [ ]  image of blocks
 
@@ -66,7 +68,7 @@ Speaking of upcoming features, if you follow [our live streams](https://youtube.
 
 One bit of feedback we consistently get is that statecharts are helpful, but that sometimes it can be difficult to understand what’s happening when a lot of content is visible at once. We also think it’s important that even non-technical contributors be able to use statecharts to build and understand their products. 
 
-So we’ve turned over every aspect of how statecharts are represented on the canvas, trying to figure out how to balance showing various kinds of information in a way that is not overwhelming. 
+So we’ve turned over every aspect of how statecharts are represented on the canvas, trying to figure out how to balance the need to show a dense variety of information in a way that is not overwhelming. 
 
 One change is that the name of the state is now a header and most of the other data on it (tags, description, effects, and so on) are grouped together as part of a new detail section.
 
@@ -86,7 +88,7 @@ And you may notice many other small and not-so-small details. For example, a chu
 
 And one principle we used to guide us was that, because statecharts already involve so many boxes and arrows, any sharply defined line should be significant for the flow. That means we generally looked for other solutions for separating sections.
 
-We think we’ve built something that will increasingly be able to support however you want to use the Stately Studio, smoothly growing from casual brainstorming sessions to business-critical production actor systems filled with multi-leveled machines.
+We think we’ve built something that will increasingly be able to support however you want to use Stately, smoothly growing from casual brainstorming sessions to business-critical production actor systems filled with multi-leveled machines.
 
 ## Translucency reduces ambiguities
 
@@ -102,37 +104,11 @@ For when you just want to focus on the content, we’ve added a way to hide the 
 
 - [ ]  hide UI image
 
-Try hiding the UI from the menu in the top left of the editor, or just press `⌘` + `.`  to toggle it instantly. We also support `⌘` + `\` for the same behavior if you prefer using that shortcut.
-
-## Design with color
-
-We have an enthusiastic community, and one request we’ve heard again and again was the need for color in flows. 
-
-Color is finally here! 🌈
-
-- [ ]  image
-
-And it doesn’t just look pretty. There are so many ways that color can help you. For example you can try:
-
-- Setting transition colors to help identify a common target
-- Setting transition colors to show a shared source
-- Connect a color to a meaning, such as making error states red
-- Organize flows into regions with distinct colors
-- Use different colors for different user personas or to mark popular paths based on usage data
-
-We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a very useful way for conveying new layers of meaning. And a colorful image makes the Studio more appealing for non-developers, getting people on board and building an attractive bridge between different audiences.
-
-We implemented our approach to color using a perceptually uniform color space. This means that no matter which color you choose, in light mode or dark mode, you don’t have to worry about contrast changes affecting legibility. This is because all colors in any group are perceived as being the same lightness. 
-
-Set a color by selecting a state or transition and choosing the one you want from the Edit Menu above it. You can set colors separately on states and on transitions. Effect blocks and other attached details inherit their color. 
-
-- [ ]  image of adding color from Edit Menu
-
-Colors are just for Pro subscribers. So if you haven’t signed up yet, [try it out with a free 30 day trial](https://stately.ai/pricing)!
+Try hiding the UI from the Stately menu in the top left of the editor, or just press `⌘` + `.`  to toggle it instantly. We also support `⌘` + `\` for the same behavior if you prefer using that shortcut.
 
 ## Get more of XState’s power inside the Stately Studio
 
-Finally, we are continuing to bring more of XState into the visual Studio. 
+We are continuing to bring more of XState into the visual Studio. 
 
 Tags are now supported in the Studio to help you categorize different state nodes. For example, you can add a “loading” tag to each state that represents loading data. 
 
@@ -150,8 +126,35 @@ And the Studio now supports several categories of actions which are built into X
 
 You can [learn more about tags and the actions that are built into XState in our documentation](../docs/xstate/actions).
 
+## Design with color
+
+Finally, we have an enthusiastic community, and one request we’ve heard again and again was the need for color in flows. 
+
+Color is finally here! 🌈
+
+- [ ]  image
+
+And it doesn’t just look pretty. There are so many ways that color can help you. For example you can try:
+
+- Setting transition colors to help identify a common target
+- Setting transition colors to show a shared source
+- Connect a color to a meaning, such as making error states red
+- Organize flows into regions with distinct colors
+- Use different colors for different user personas or stories
+- Mark popular paths with colors based on usage data
+
+We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a very useful way for conveying new layers of meaning. And a colorful image makes the modelling which Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
+
+Because of the dynamic way color will be used in diagrams, we implemented our approach using a perceptually uniform color space. This means that no matter which color you choose, in light mode or dark mode, you don’t have to worry about contrast changes affecting legibility. This is because all colors in any group are perceived as being the same lightness. 
+
+Set a color by selecting a state or transition and choosing the one you want from the Edit Menu above it. You can set colors separately on states and on transitions. Effect blocks and other attached details inherit their color. 
+
+- [ ]  image of adding color from Edit Menu
+
+Colors are just for Pro subscribers. So if you haven’t signed up yet, [try it out with a free 30 day trial](https://stately.ai/pricing)!
+
 ## Try out Stately now
 
 With the improved design and new functionality, Stately is even more useful for teams throughout the entire product lifecycle. But this is still just the start of what we’ve been working on this year. 
 
-[Stately is free to try, so check it out](https://stately.ai). We’re sure you’ll find many ways it can help you out. And if there is anything you would love to see added, please [join our Discord community](https://discord.gg/xstate) or [reach out directly](mailto:support@stately.ai) and let us know!
+[Stately is free to try, so check it out](https://stately.ai). We’re sure you’ll find many ways it can help you. And if there is anything you would love to see added, please [join our Discord community](https://discord.gg/xstate) or [reach out directly](mailto:support@stately.ai) and let us know!
