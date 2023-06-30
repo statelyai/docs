@@ -14,7 +14,7 @@ date: 2023-06-14
 
 # Supercharge the canvas
 
-Today we are excited to release an update to Stately that takes a huge step towards making complexity more manageable. 
+Today we are excited to release an update to Stately that takes a huge step toward making complexity more manageable. 
 
 - Bring color into your flows! 🌈
 - Design more logic directly on the canvas 📝
@@ -36,7 +36,7 @@ But much of what we build is complex. And when we represent it visually, the res
 
 One of our goals at Stately is to make this inherent complexity you face more manageable. We want to help you simplify where possible, automate when useful, and elevate your thinking and communication. 
 
-Today we are launching an updated design for Stately Studio’s visual canvas that lays a foundation we will be building on over the next wave of releases.
+Today we are launching an updated design for Stately Studio’s visual canvas that lays a foundation we will build on over the next wave of releases.
 
 - [ ]  overview image
 
@@ -54,15 +54,15 @@ For example, we enhanced the Edit Menu to support adding [actions](/docs/xstate-
 
 Statecharts are great for modeling how a process goes from state to state when an event occurs. Especially since you can also make things happen by having effects run at specific times. 
 
-The most important addition we’ve made with this release is that effects ([invoked actors](/docs/xstate-v5/invoke#using-invoked-actors-in-stately-studio), entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside of states and transitions. 
+The most important addition we’ve made with this release is that effects ([invoked actors](/docs/xstate-v5/invoke#using-invoked-actors-in-stately-studio), entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside states and transitions. 
 
 This will make it easy to define, understand, and modify your app’s behavior as users step through your flow. 
 
 - [ ]  image of blocks
 
-Effect blocks are editable, can be copied, and handle standard keyboard interactions, just as you’d expect. And rumor is, soon you’ll be able to drag them around, enhancing your codebase with a new spatial dimension. Imagine changing when a javascript function is called simply by dragging it to a new place in the flow. 🤫
+Effect blocks are editable, can be copied, and handle standard keyboard interactions, just as you’d expect. And rumor is, soon you’ll be able to drag them around, enhancing your codebase with a new spatial dimension. Imagine changing when a JavaScript function is called simply by dragging it to a new place in the flow. 🤫
 
-Speaking of upcoming features, if you follow [our live streams](https://youtube.com/statelyai/?source=blog), you’ve already seen [a preview of writing code inside the Studio using the new effect blocks](https://www.youtube.com/live/FY030no59Y4?feature=share&t=1876). But we decided to take this functionality even further before releasing, so stay tuned!
+Speaking of upcoming features, if you follow [our live streams](https://youtube.com/statelyai/?source=blog), you’ve already seen [a preview of writing code inside the Studio using the new effect blocks](https://www.youtube.com/live/FY030no59Y4?feature=share&t=1876). But we decided to take this functionality even further before releasing it, so stay tuned!
 
 ## Streamlined visualization makes complex flows easier to understand
 
@@ -70,19 +70,19 @@ One bit of feedback we consistently get is that statecharts are helpful, but tha
 
 So we’ve turned over every aspect of how statecharts are represented on the canvas, trying to figure out how to balance the need to show a dense variety of information in a way that is not overwhelming. 
 
-One change is that the name of the state is now a header and most of the other data on it (tags, [description](/docs/xstate-v5/descriptions), effects, and so on) are grouped together as part of a new detail section.
+One change is that the name of the state is now a header, and most of the other data on it (tags, [description](/docs/xstate-v5/descriptions), effects, and so on) are grouped together as part of a new detail section.
 
 - [ ]  image
 
-This means that when you first open the flow it’s easy to focus on the state names for a quick overview of how they are connected. Then when you want more detail, you can narrow your attention to what interests you.
+This means that when you first open the flow, it’s easy to focus on the state names for a quick overview of how they are connected. Then when you want more detail, you can narrow your attention to what interests you.
 
-We’ve also heard feedback that sometimes it can be hard to tell a state from a transition. One reason is that with Stately, unlike other diagramming tools, transitions can have many of the same properties as states (such as actions and descriptions). This gives a powerful option for modeling, but can introduce challenges with ambiguity. We mitigated this, however, by adopting a style where states “pop out” while transitions “blend in”.
+We’ve also heard feedback that sometimes it can be hard to tell a state from a transition. One reason is that with Stately, unlike other diagramming tools, transitions can have many of the same properties as states (such as actions and descriptions). This gives a powerful option for modeling but can introduce challenges with ambiguity. We mitigated this, however, by adopting a style where states “pop out” while transitions “blend in”.
 
 - [ ]  image
 
 Effect blocks, on the other hand, have the same style no matter where they are placed since their location simply says when they are executed. This consistency makes it easy for contributors with various backgrounds to intuitively understand “what happens”.
 
-And you may notice many other small and not-so-small details. For example, a chunky border around each level in the hierarchy gives a new sectioned off look. This will be useful in the future as we add support for more dynamic views. 
+And you may notice many other small and not-so-small details. For example, a chunky border around each level in the hierarchy gives a new sectioned-off look. This will be useful in the future as we add support for more dynamic views. 
 
 - [ ]  image
 
@@ -92,9 +92,9 @@ We think we’ve built something that will increasingly be able to support howev
 
 ## Translucency reduces ambiguities
 
-Another part of the improved design is translucency. Because Stately handles the complex, nonlinear flows that are often required when building apps, it is not always possible to lay out your logic in a nice straight line. This means that arrows can go underneath of other items, making the content difficult to read. Also, when working on a canvas sometimes it’s nice to casually toss items into overlapping piles as your work comes together. But statecharts can get pretty detailed! And this means sometimes states can cover each other up and it’s hard to even tell anything is underneath.
+Another part of the improved design is translucency. Because Stately handles the complex, nonlinear flows often required when building apps, it is not always possible to lay out your logic in a nice straight line. This means that arrows can go underneath other items, making the content difficult to read. Also, when working on a canvas, sometimes it’s nice to casually toss items into overlapping piles as your work comes together. But statecharts can get pretty detailed! And this means sometimes states can cover each other up, and it’s hard to even tell anything is underneath.
 
-That’s why we we made some canvas elements translucent by default, including state details and transition labels. 
+That’s why we made some canvas elements translucent by default, including state details and transition labels. 
 
 - [ ]  translucency image with arrows going underneath
 
@@ -110,11 +110,11 @@ Try hiding the UI from the Stately menu in the top left of the editor, or just p
 
 We are continuing to bring more of XState into the visual Studio. 
 
-Tags are now supported in the Studio to help you categorize different state nodes. For example, you can add a “loading” tag to each state that represents loading data. 
+Tags are now supported in the Studio to help you categorize different state nodes. For example, you can add a “loading” tag to each state representing loading data. 
 
 - [ ]  tag image
 
-And the Studio now supports several categories of [actions which are built into XState](/docs/xstate/actions/built-in-actions):
+And the Studio now supports several categories of [actions that are built into XState](/docs/xstate/actions/built-in-actions):
 
 - assign
 - raise
@@ -124,7 +124,7 @@ And the Studio now supports several categories of [actions which are built into 
     
 ![Write alt text here](actions.png)
 
-You can [learn more about tags and the actions that are built into XState in our documentation](../docs/xstate/actions).
+You can [learn more about tags and the actions built into XState in our documentation](../docs/xstate/actions).
 
 ## Design with color
 
@@ -134,7 +134,7 @@ Color is finally here! 🌈
 
 - [ ]  image
 
-And it doesn’t just look pretty. There are so many ways that color can help you. For example you can try:
+And it doesn’t just look pretty. There are so many ways that color can help you. For example, you can try:
 
 - Setting transition colors to help identify a common target
 - Setting transition colors to show a shared source
@@ -143,7 +143,7 @@ And it doesn’t just look pretty. There are so many ways that color can help yo
 - Use different colors for different user personas or stories
 - Mark popular paths with colors based on usage data
 
-We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a nice way to convey new layers of meaning. And a colorful image makes the modelling which Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
+We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a nice way to convey new layers of meaning. And a colorful image makes the modeling that Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
 
 Because color will be used in diagrams in dynamic and varied ways, we implemented our approach using a perceptually uniform color space. This means that no matter which color you choose, in light mode or dark mode, you don’t have to worry about contrast changes affecting legibility. This is because all colors in any group are perceived as being the same lightness. 
 
@@ -151,7 +151,7 @@ Set a color by selecting a state or transition and choosing the one you want fro
 
 - [ ]  image of adding color from Edit Menu
 
-Colors are just for Pro subscribers. So if you haven’t signed up yet, [try it out with a free 30 day trial](https://stately.ai/pricing)!
+Colors are just for Pro subscribers. So if you haven’t signed up yet, [try it out with a free 30-day trial](https://stately.ai/pricing)!
 
 ## Try out Stately now
 
