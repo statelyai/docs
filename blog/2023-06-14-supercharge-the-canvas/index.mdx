@@ -46,7 +46,7 @@ You can now do much more work on the canvas itself.
 
 Being able to stay on the canvas lets interactions be more intuitive, lets you stay closer to your content, can help keep you focused, and can even give you more room to work. 
 
-For example, we enhanced the Edit Menu to support adding actions, tags, and other data to states and transitions. And most items on the canvas can then be edited directly.
+For example, we enhanced the Edit Menu to support adding [actions](/docs/xstate-v5/actions#using-actions-in-stately-studio), tags, and other data to [states](/docs/xstate-v5/states#using-states-in-stately-studio) and [transitions](/docs/xstate-v5/transitions#using-transitions-and-events-in-stately-studio). And most items on the canvas can then be edited directly.
 
 - [ ]  gif adding a tag from quick actions and editing the name
 
@@ -54,7 +54,7 @@ For example, we enhanced the Edit Menu to support adding actions, tags, and othe
 
 Statecharts are great for modeling how a process goes from state to state when an event occurs. Especially since you can also make things happen by having effects run at specific times. 
 
-The most important addition we’ve made with this release is that effects (invoked actors, entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside of states and transitions. 
+The most important addition we’ve made with this release is that effects ([invoked actors](/docs/xstate-v5/invoke#using-invoked-actors-in-stately-studio), entry actions, and exit actions) are now interactive. They are represented as blocks on the canvas that can be placed inside of states and transitions. 
 
 This will make it easy to define, understand, and modify your app’s behavior as users step through your flow. 
 
@@ -62,7 +62,7 @@ This will make it easy to define, understand, and modify your app’s behavior a
 
 Effect blocks are editable, can be copied, and handle standard keyboard interactions, just as you’d expect. And rumor is, soon you’ll be able to drag them around, enhancing your codebase with a new spatial dimension. Imagine changing when a javascript function is called simply by dragging it to a new place in the flow. 🤫
 
-Speaking of upcoming features, if you follow [our live streams](https://youtube.com/statelyai/?source=blog), you’ve already seen a preview of writing code inside the Studio using the new effect blocks. But we decided to take this functionality even further before releasing, so stay tuned!
+Speaking of upcoming features, if you follow [our live streams](https://youtube.com/statelyai/?source=blog), you’ve already seen [a preview of writing code inside the Studio using the new effect blocks](https://www.youtube.com/live/FY030no59Y4?feature=share&t=1876). But we decided to take this functionality even further before releasing, so stay tuned!
 
 ## Streamlined visualization makes complex flows easier to understand
 
@@ -70,7 +70,7 @@ One bit of feedback we consistently get is that statecharts are helpful, but tha
 
 So we’ve turned over every aspect of how statecharts are represented on the canvas, trying to figure out how to balance the need to show a dense variety of information in a way that is not overwhelming. 
 
-One change is that the name of the state is now a header and most of the other data on it (tags, description, effects, and so on) are grouped together as part of a new detail section.
+One change is that the name of the state is now a header and most of the other data on it (tags, [description](/docs/xstate-v5/descriptions), effects, and so on) are grouped together as part of a new detail section.
 
 - [ ]  image
 
@@ -114,7 +114,7 @@ Tags are now supported in the Studio to help you categorize different state node
 
 - [ ]  tag image
 
-And the Studio now supports several categories of actions which are built into XState:
+And the Studio now supports several categories of [actions which are built into XState](/docs/xstate/actions/built-in-actions):
 
 - assign
 - raise
