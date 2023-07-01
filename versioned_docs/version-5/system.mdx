@@ -26,7 +26,11 @@ The root of a system can also be explicitly assigned a `systemId` in the `interp
 ```ts
 import { interpret } from 'xstate';
 
-const actor = interpret(machine, { systemId: 'root-id' }).start();
+const actor = interpret(machine, {
+  systemId: 'root-id'
+});
+
+actor.start();
 ```
 
 This is useful for actors in the system to be able send events to the root actor.
