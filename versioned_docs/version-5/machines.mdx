@@ -152,6 +152,7 @@ const feedbackActor = interpret(customFeedbackMachine).start();
 Modifying the previous example, if we were to imperatively call `.provide()` on an existing machine, that would not change the machine’s behavior with our implementations.
 
 ```ts
+// Do NOT do this!
 const feedbackMachine = createMachine({...});
 
 feedbackMachine.provide({
