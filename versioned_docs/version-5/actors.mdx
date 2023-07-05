@@ -208,7 +208,9 @@ const toggleMachine = createMachine({
 
 const toggleActor = interpret(toggleMachine);
 toggleActor.subscribe((snapshot) => {
-  console.log(snapshot.value);
+  // snapshot is the machine's state
+  console.log('state', snapshot.value);
+  console.log('context', snapshot.context);
 });
 toggleActor.start();
 // Logs 'inactive'
