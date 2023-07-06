@@ -145,6 +145,15 @@ const sidebars = {
               className: 'pro-feature',
             },
             'machine-restore',
+            'autolayout',
+            'annotations',
+            'descriptions',
+            {
+              "type": "doc",
+              "label": "Colors",
+              "id": "colors",
+              "className": "pro-feature"
+            },
           ],
         },
         {
@@ -167,8 +176,9 @@ const sidebars = {
             },
           ],
         },
-        'annotations',
-        'descriptions',
+        "keyboard-shortcuts",
+        'canvas-view-controls',
+        'user-preferences'
       ],
     },
     'projects',

@@ -27,21 +27,28 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 
 In a video player, we might want the video to be *Closed* out of fullscreen mode a few seconds after the video has *Stopped*, instead of closing the fullscreen mode suddenly as soon as the video is stopped. The eventless transition above transitions from the *Stopped* state to the *Closed* state after 5 seconds.
 
-## Make an event into a delayed transition
+### Make an event into a delayed transition
 
-First, select the event you want to replace with a delayed transition. Then…
+Delayed transitions have a default time interval of 500ms (0.5 seconds).
 
-### Using the **quick actions** menu
+#### On the canvas
 
-1. Right-click the event to open the **quick actions** menu.
-2. Choose **After** from the **Event type** options.
-3. Use the **Transition details** panel to change the delay time.
+1. Select the event you want to replace with a delayed transition.
+1. Right-click the event to open the edit menu.
+2. From the **Event type** options, choose **After** to turn the event into a delayed transition.
 
-### Using the **Transition details** panel
+#### Using the transition Details panel
 
-1. Open the **Transition details** panel from the right tool menu.
-2. Choose **After** from the **Event type** dropdown menu.
-3. Specify the delay time in milliseconds using the **Delay** text input.
+1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
+2. From the **Event type** dropdown menu, choose **After** to turn the event into a delayed transition.
+
+#### Specify delay time 
+
+Your delay time interval will be displayed in a human-readable format on hover. For example, 15000ms will be displayed as 15 seconds.
+
+1. Select the delayed transition.
+2. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
+3. Use the **Delay** text input to specify the interval in milliseconds.
 
 :::xstate
 
