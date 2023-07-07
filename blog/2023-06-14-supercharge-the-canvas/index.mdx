@@ -38,7 +38,7 @@ One of our goals at Stately is to make this inherent complexity you face more ma
 
 Today we are launching an updated design for Stately Studio’s visual canvas that lays a foundation we will build on over the next wave of releases.
 
-![Example of a flow](making-complexity-manageable.png)
+![A flow in Stately Studio for a video player which can be toggled between Mini and Full states. The states and transitions are colored.](making-complexity-manageable.png)
 
 ## Create from the canvas to stay in the flow
 
@@ -58,7 +58,7 @@ The most important addition we’ve made with this release is that effects ([inv
 
 This will make it easy to define, understand, and modify your app’s behavior as users step through your flow. 
 
-![Running effects from locations in the flow](effect-blocks-make-it.png)
+![An OnboardPatient state machine with XState assign actions on multiple transitions, and actors being invoked from multiple states.](effect-blocks-make-it.png)
 
 Effect blocks are editable, can be copied, and handle standard keyboard interactions, just as you’d expect. And rumor is, soon you’ll be able to drag them around, enhancing your codebase with a new spatial dimension. Imagine changing when a JavaScript function is called simply by dragging it to a new place in the flow. 🤫
 
@@ -72,19 +72,19 @@ So we’ve turned over every aspect of how statecharts are represented on the ca
 
 One change is that the name of the state is now a header, and most of the other data on it (tags, [description](/docs/xstate-v5/descriptions), effects, and so on) are grouped together as part of a new detail section.
 
-![State name as header](streamlined-viz-1.png)
+![A MissingItem state with a bold yellow background. The state also has an exception tag, a description, entry action, and invoked actors. These are all displayed under the MissingItem state heading on a lighter background.](streamlined-viz-1.png)
 
 This means that when you first open the flow, it’s easy to focus on the state names for a quick overview of how they are connected. Then when you want more detail, you can narrow your attention to what interests you.
 
 We’ve also heard feedback that sometimes it can be hard to tell a state from a transition. One reason is that with Stately, unlike other diagramming tools, transitions can have many of the same properties as states (such as actions and descriptions). This gives a powerful option for modeling but can introduce challenges with ambiguity. We mitigated this, however, by adopting a style where states “pop out” while transitions “blend in”.
 
-![Comparing states to transitions](streamlined-viz-2.png)
+![States have stronger colored more opaque backgrounds and less rounded corners. Events and transitions have more of a rounded pill shape with translucent backgrounds.](streamlined-viz-2.png)
 
 Effect blocks, on the other hand, have the same style no matter where they are placed since their location simply says when they are executed. This consistency makes it easy for contributors with various backgrounds to intuitively understand “what happens”.
 
 And you may notice many other small and not-so-small details. For example, a chunky border around each level in the hierarchy gives a new sectioned-off look. This will be useful in the future as we add support for more dynamic views. 
 
-![Section borders around levels](streamlined-viz-3.png)
+![The root state and parent state in this flow both have chunky borders that are colored purple to match their state. The child states are a solid color without a border.](streamlined-viz-3.png)
 
 And one principle we used to guide us was that, because statecharts already involve so many boxes and arrows, any sharply defined line should be significant for the flow. That means we generally looked for other solutions for separating sections.
 
@@ -96,7 +96,7 @@ Another part of the improved design is translucency. Because Stately handles the
 
 That’s why we made some canvas elements translucent by default, including state details and transition labels. It's usually better to avoid overlapping content, but now flows should be easier to follow when it happens.
 
-![Translucency example](translucency.png)
+![A translucent onDone transition means the transition lines running underneath it are still visible.](translucency.png)
 
 ## Hide the UI to work without distraction
 
@@ -135,7 +135,7 @@ And it doesn’t just look pretty. There are so many ways that color can help yo
 - Use different colors for different user personas or stories
 - Mark popular paths with colors based on usage data
 
-![Color examples](colors.png)
+![Swatches of red, orange, yellow, green, blues, purple, and pink.](colors.png)
 
 We think you’ll find that color is especially useful when building with others, such as collaborating with team members or presenting to clients. It provides a nice way to convey new layers of meaning. And a colorful image makes the modeling that Stately supports more appealing for non-developers, getting everyone on board and building an attractive bridge between different audiences.
 
