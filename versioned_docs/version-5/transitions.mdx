@@ -2,9 +2,6 @@
 title: Events and transitions
 ---
 
-import EmbedMachine from '@site/src/components/EmbedMachine';
-import SkipDownLink from '@site/src/components/SkipDownLink';
-
 A **transition** is a change from one finite state to another, triggered by an event.
 
 An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
@@ -39,39 +36,30 @@ const feedbackMachine = createMachine({
 
 The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
-:::tip
-
-Watch our [“Transitions and events” video on YouTube](https://www.youtube.com/watch?v=0qgP4RZyq58&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=4) (1m50s).
-
-:::
-
 ### Add a transition and event
 
 1. Select an existing state.
-2. Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+2. Press or drag from one of the <Plus size={18} /> handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
 
 ### Change the source and target states for a transition or event
 
 First select the transition or event you want to change. Then…
 
-#### Using the **Transition details** panel
+#### On the canvas
 
-1. Select the transition or event you wish to change.
-2. Open the **Transition details** panel from the right tool menu.
-3. Choose a new source state from the **Source** dropdown options.
-4. Choose a new target state from the **Target** dropdown options.
+1. Right-click the transition or event, or use the <MoreHorizontal size={18} /> triple dot icon button, to open the Edit menu.
+2. Choose **Switch source and target**.
 
 #### Dragging the transition handles
 
-1. Select the transition or event you want to change.
-2. Drag the transition’s handle connected to the source state to connect it to a new source state.
-3. Drag the transition’s handle connected to the target state to connect it to a new target state.
+1. Drag the transition’s handle connected to the source state to connect it to a new source state.
+2. Drag the transition’s handle connected to the target state to connect it to a new target state.
 
-### Switch the source and target states for a transition or event
+#### Using the transition details panel
 
-1. Select the transition or event.
-2. Right-click the state to bring up the **quick actions** menu.
-3. Choose **Switch source and target** from the **quick actions** menu.
+1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
+2. Choose a new source state from the **Source** dropdown options.
+3. Choose a new target state from the **Target** dropdown options.
 
 ## Event objects
 
@@ -107,10 +95,10 @@ A state can transition to itself. This is known as a **self-transition**, and is
 
 #### Make an event into a self-transition
 
-##### Using the **quick actions** menu
+##### On the canvas
 
-1. Right-click the event to bring up the **quick actions** menu.
-2. Choose **Make self transition** from the **quick actions** menu.
+1. Right-click the event to open the edit menu.
+2. Choose **Make self transition** from the edit menu.
 
 ##### Dragging the transition arrow
 
