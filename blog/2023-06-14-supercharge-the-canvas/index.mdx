@@ -21,7 +21,8 @@ Today we are excited to release an update to Stately that takes a huge step towa
 - Interact with effects like entry actions and invoked actors as visual blocks 🧩
 - Understand complex flows with a refined design for statecharts 🔥
 - Hide the UI to help focus on your content 🎧
-- Use tags and many XState actions in the Studio 💪<!--truncate-->
+- Improved transition routing ↵
+- Use tags, action parameters, and many XState actions in the Studio 💪<!--truncate-->
 
 ## Making complexity manageable
 
@@ -94,7 +95,11 @@ We think we’ve built something that will increasingly be able to support howev
 
 Another part of the improved design is translucency. Because Stately handles the complex, nonlinear flows often required when building apps, it is not always possible to lay out your logic in a nice straight line. This means that arrows can go underneath other items, making the content difficult to read. Also, when working on a canvas, sometimes it’s nice to casually toss items into overlapping piles as your work comes together. But statecharts can get pretty detailed! And this means sometimes states can cover each other up, and it’s hard to even tell anything is underneath.
 
-That’s why we made some canvas elements translucent by default, including state details and transition labels. It's usually better to avoid overlapping content, but now flows should be easier to follow when it happens.
+That’s why we made some canvas elements translucent by default, including state details and transition labels. 
+
+It's still usually better to avoid overlapping content. And to help content not overlap in the first place, we've also enhanced transition routing. 
+
+But with translucency flows should be easier to follow when it happens.
 
 ![A translucent onDone transition means the transition lines running underneath it are still visible.](translucency.png)
 
