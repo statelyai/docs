@@ -30,24 +30,116 @@ You can fire multiple entry and exit actions on a state. Top-level final states 
 
 In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
 
-## Add an entry action to a state
+### Add a transition action
 
-1. Select the state you want to have an entry action.
-2. Open the **State details** panel from the right tool menu.
-3. Use the **+** plus icon alongside the **Entry actions** to add a new action.
-4. Use the **Custom** tab under **Entry actions** to input the **type** for the entry action.
-5. Use the **Assign** tab under **Entry actions** to assign **key** and **assignment** pairs to the entry action.
-6. Save the entry action using the **Save** button.
+First, select the event where you want an action to be fired.
 
-## Add an exit action to a state
+### On the canvas
 
-1. Select the state you want to have an exit action.
-2. Open the **State details** panel from the right tool menu.
-3. Use the **+** plus icon alongside the **Exit actions** to add a new action.
-4. Use the **Custom** tab under **Exit actions** to input the **type** for the exit action.
-5. Use the **Assign** tab under **Exit actions** to assign **key** and **assignment** pairs to the exit action.
-6. Save the entry action using the **Save** button.
+1. Use the <Plus size={18} /> plus icon button to open the edit menu.
+2. Choose <Zap size={18} /> **Action** from the menu to add an action block.
+3. Write your action’s name in the action’s text input.
 
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **+ Transition action** button to add an action block.
+3. Write your action’s name in the action’s text input.
+
+## Delete a transition action
+
+First, select the transition action block you want to delete.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the transition action.
+
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Hover, focus, or select the transition action block to reveal the <Trash size={18} /> trash icon button.
+3. Use the <Trash size={18} /> trash icon button to delete the action.
+
+## Add an entry action or exit action to a state
+
+First, select the state you want to have an entry or exit action.
+
+### On the canvas
+
+1. Select the state where you want to add an action.
+2. Use the <Plus size={18} /> plus icon button to open the edit menu.
+3. Choose <Zap size={18} /> **Entry action** or <Zap size={18} /> **Exit action** from the menu to add an action block to the event.
+4. Write your action’s name in the action’s text input.
+
+### Using the event details panel
+
+1. Open the state <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **+ Effect** button to open the effects menu, and choose **Add entry action** or **Add exit action**.
+3. Write your action’s name in the action’s text input.
+
+## Delete an entry action or exit action from a state
+
+First, select the action block you want to delete.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the action.
+
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Hover, focus, or select the action block to reveal the <Trash size={18} /> trash icon button.
+3. Use the <Trash size={18} /> trash icon button to delete the action.
+
+## Add a built-in action
+
+You can add built-in XState actions which will be formatted in your [exported code](export-as-code.mdx). The options are:
+
+- [assign](#assign-action): assigns data to the state context.
+- [raise](#raise-action): _raises_ an event that is received by the same machine.
+- [log](#log-action): an easy way to log messages to the console.
+- [sendTo](#send-to-action): sends an event to a specific actor.
+- [stop](#stop-action): stops a child actor.
+
+To add a built-in action, first add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-to-a-state), or [exit action](#add-an-exit-action-to-a-state).
+
+### On the canvas
+
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+4. Fill out the required corresponding action input fields.
+
+### Using the details panel
+
+1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+4. Fill out the required corresponding action input fields.
+
+## Add a custom action
+
+You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](#action-objects) in your [exported code](export-as-code.mdx).
+
+First, add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-to-a-state), or [exit action](#add-an-exit-action-to-a-state).
+
+### On the canvas
+
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+
+[Read about action objects below for more on action types and and parameters](#action-objects).
+
+### Using the details panel
+
+1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
 :::xstate
 
 ## Looking for how to use entry and exit actions in XState?

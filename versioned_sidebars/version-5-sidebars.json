@@ -96,7 +96,6 @@
             "keywords": ["guides"]
           },
           "items": [
-            "descriptions",
             "import-from-code",
             "export-as-code",
             {
@@ -105,9 +104,16 @@
               "id": "versions",
               "className": "pro-feature"
             },
+            {
+              "type": "doc",
+              "label": "Colors",
+              "id": "colors",
+              "className": "pro-feature"
+            },
             "annotations",
             "descriptions",
-            "machine-restore"
+            "machine-restore",
+            "autolayout"
           ]
         },
         {
@@ -204,7 +210,10 @@
               "id": "upgrade"
             }
           ]
-        }
+        },
+        "keyboard-shortcuts",
+        "canvas-view-controls",
+        "user-preferences"
       ]
     },
     {

@@ -25,12 +25,37 @@ These states are “finite”; the machine can only move through the states you�
 
 ## Create a state
 
-1. Select your machine or an existing state.
-2. Create a new state inside your machine or existing state:
-   - Use the **+ State** button that appears above the selected state, or:
-   - Drag from the handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-   - Double-click inside your machine or an existing state.
+:::tip
 
+The fastest way to create a new state is by double-clicking in any empty space on the canvas.
+
+:::
+
+### Create a new target state
+
+Each transition has a source state and a target state. To create a new target state from a source state:
+
+1. Select the source state.
+2. Press or drag from one of the <Plus size={18} /> handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+
+[Read more about transitioning between source and target states](/transitions-and-events/intro.mdx#using-transitions-and-events-in-stately-studio).
+
+### Create a new child state
+
+[How to create child and parent states](parent-states.mdx).
+
+## Delete a state
+
+First, select the state you want to delete.
+
+### Using the context menu
+
+1. Use the <MoreHorizontal size={18} /> triple dot icon button to open the Edit menu.
+2. Choose **Delete** to delete the selected state.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the selected state.
 :::xstate
 
 ## Looking for how to use states in XState?

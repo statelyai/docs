@@ -300,7 +300,8 @@ body {
 
   /* tables */
   --ifm-table-border-color: var(--st-layout-border);
-  --ifm-table-stripe-background: var(--st-background-secondary);
+  --ifm-table-background: transparent;
+  --ifm-table-stripe-background: rgba(255,255,255,0.6);
   --ifm-footer-link-color: var(--st-footer-link);
 
   /* admonitions */
@@ -401,13 +402,13 @@ html[data-theme='light'] body {
   --docsearch-hit-shadow: none;
   --docsearch-hit-mark: var(--st-gray-900);
   --docsearch-hit-mark-active: var(--st-gray-800);
-  --docsearch-key-border: solid var(--st-gray-500);
+  --docsearch-key-border: solid var(--st-gray-300);
   --docsearch-key-gradient: linear-gradient(
     -225deg,
     var(--st-gray-50),
     var(--st-gray-100)
   );
-  --docsearch-key-shadow: inset 0 -3px 0 0 var(--st-gray-500);
+  --docsearch-key-shadow: inset 0 -3px 0 0 var(--st-gray-300);
   --docsearch-footer-background: var(--st-gray-50);
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-100);
 
@@ -716,6 +717,17 @@ ul ol,
 ol ol,
 ol ul {
   margin-top: var(--ifm-list-item-margin);
+}
+
+/* Keyboard shortcuts */
+/* Match docsearch keys */
+
+kbd {
+  border: var(--docsearch-key-border);
+  background: var(--docsearch-key-gradient);
+  box-shadow: var(--docsearch-key-shadow);
+  color: var(--docsearch-muted-color);
+  padding: 0.1rem 0.3rem 0.3rem 0.3rem;
 }
 
 /* Make secondary (not content) text a consistent size */
