@@ -147,7 +147,7 @@ const feedbackActor = interpret(customFeedbackMachine).start();
 
 `machine.provide()` is not imperative but rather returns a new machine that includes the implementation overrides.
 
-Modifying the previous example, if we were to imperatively call `.provide()` on an existing machine, that would not change the machine’s behavior with our implementations.
+Modifying the previous example, if we were to imperatively call `.provide()` on an existing machine, that would **not** change the machine’s behavior with our implementations.
 
 ```ts
 // Do NOT do this!
