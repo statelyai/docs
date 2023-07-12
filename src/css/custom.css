@@ -1649,6 +1649,13 @@ html[data-theme='dark'] [role='tabpanel'] .theme-code-block pre {
   border-top-left-radius: 0;
 }
 
+/* Videos */
+
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Blog */
 
 ul.blog-list {
