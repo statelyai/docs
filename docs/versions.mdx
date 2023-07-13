@@ -39,15 +39,6 @@ Versions are named with their creation time by default and have the version crea
   />
 </p>
 
-### Initial versions
-
-An initial version is automatically made for new machines created when:
-
-- you fork a machine from an existing machine or project
-- you duplicate an existing machine in its project
-
-These machines are labeled “Initial version” and use the Stately bot icon.
-
 ### Rename a version
 
 You can rename any version to something other than the version’s timestamp.
@@ -67,6 +58,25 @@ You can rename any version to something other than the version’s timestamp.
 </p>
 
 The version’s timestamp will still be shown under the version name.
+
+## Auto-saved versions
+
+There are some cases where Stately versions will automatically be created for a machine. These are indicated in the list of versions with the Stately bot icon.
+
+### Initial versions
+
+An initial version is automatically saved for new machines when:
+
+- you fork a machine from an existing machine or project
+- you duplicate an existing machine in its project
+
+These versions are labeled “Initial version”.
+
+### Periodic snapshot versions
+
+To reduce the likelihood of data loss, versions are automatically saved hourly as long as edits have been made to the project machine. These versions are labeled with a timestamp that can be edited by you. They work just like other versions that you can view, restore, or delete.
+
+In the version list, these auto-saved versions are hidden by default but you can toggle their visibility to show them along with versions you explicitly save.
 
 ## View a version
 
