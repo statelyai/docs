@@ -39,15 +39,6 @@ Versions are named with their creation time by default and have the version crea
   />
 </p>
 
-### Initial versions
-
-An initial version is automatically made for new machines created when:
-
-- you fork a machine from an existing machine or project
-- you duplicate an existing machine in its project
-
-These machines are labeled “Initial version” and use the Stately bot icon.
-
 ### Rename a version
 
 You can rename any version to something other than the version’s timestamp.
@@ -68,6 +59,25 @@ You can rename any version to something other than the version’s timestamp.
 
 The version’s timestamp will still be shown under the version name.
 
+## Auto-saved versions
+
+There are some cases where versions will automatically be created for a machine Auto-saved versions are indicated in the list of versions with the Stately bot icon.
+
+### Initial versions
+
+An initial version is automatically saved for new machines when:
+
+- you fork a machine from an existing machine or project
+- you duplicate an existing machine in its project
+
+These versions are labeled “Initial version”.
+
+### Periodic snapshot versions
+
+To reduce the likelihood of data loss, versions are automatically saved hourly as long as edits have been made to the project machine. These versions are labeled with a timestamp that can be edited by you. They work just like other versions that you can view, restore, or delete.
+
+In the version list, these auto-saved versions are hidden by default but you can toggle their visibility to show them along with versions you explicitly save.
+
 ## View a version
 
 You can view any version by selecting that version in the **Version history**. The version will be shown in the Editor and read-only unless you restore that version using the **Restore** button.
@@ -87,22 +97,6 @@ You can return to viewing the current version of your machine from **Return to c
 ## Restore a version
 
 You can restore your current machine to any version from the version history.
-
-:::tip
-
-If you restore a version without creating a new version for your current machine, your current machine will be autosaved in your version history. These autosaved machine names start with “Pre-restore” and have a Stately Bot icon instead of your avatar.
-
-<p>
-  <ThemedImage
-    alt="Autosave machine in the Version history panel named starting with Pre-restore version."
-    sources={{
-      light: '/assets/versions/version-auto.png',
-      dark: '/assets/versions/version-auto-dm.png',
-    }}
-  />
-</p>
-
-:::
 
 ### Restore a version from the **Version history** panel
 
