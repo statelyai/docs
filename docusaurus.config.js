@@ -149,7 +149,7 @@ const config = {
         links: [
           {
             label: 'Roadmap',
-            href: 'https://statelyai.canny.io',
+            href: 'https://feedback.stately.ai',
             target: '_self',
           },
           {
