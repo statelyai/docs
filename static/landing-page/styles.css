@@ -2113,7 +2113,7 @@ path.edge {
 -------------------------------------------------------------------- */
 .pricing-grid {
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 0;
   grid-template-columns: repeat(3, minmax(0px, 1fr));
   margin-top: 3rem;
 }
@@ -2153,6 +2153,7 @@ path.edge {
 .tier-wrapper {
   display: flex;
   position: relative;
+  margin-bottom: 1rem;
 }
 
 .tier {
@@ -2160,8 +2161,8 @@ path.edge {
   border-radius: 0.75rem;
   width: 100%;
   background: var(--chakra-colors-gray-850);
-  padding-inline-start: 2rem;
-  padding-inline-end: 2rem;
+  padding-inline-start: 1.5rem;
+  padding-inline-end: 1.5rem;
   padding-bottom: 2rem;
 }
 
@@ -2257,7 +2258,7 @@ h2.pricing-heading {
 .pricing-arrow {
   margin-top: 2rem;
   color: var(--chakra-colors-gray-600);
-  width: 58px;
+  width: 38px;
 }
 
 .pricing-section {
