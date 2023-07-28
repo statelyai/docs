@@ -769,7 +769,7 @@ import { fromCallback, createMachine } from 'xstate';
 
 const machine = createMachine({
   invoke: {
-    src: fromCallback((sendBack, receive, { input }) => {
+    src: fromCallback(({ sendBack, receive, input }) => {
       // ...
     }),
     input: ({ context, event }) => ({
