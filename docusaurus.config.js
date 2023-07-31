@@ -88,7 +88,7 @@ const config = {
           blogTitle: 'Stately Blog',
           blogDescription: 'Stately’s engineering blog',
           blogSidebarCount: 0,
-          postsPerPage: 'ALL',
+          postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
             `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
         },
