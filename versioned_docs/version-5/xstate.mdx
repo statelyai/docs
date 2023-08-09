@@ -6,7 +6,7 @@ slug: '/xstate'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-XState is a state management and orchestration solution for JavaScript and TypeScript apps.
+XState is a state management and orchestration solution for JavaScript and TypeScript applications.
 
 It uses [event-driven](transitions.mdx) programming, [state machines, statecharts](state-machines-and-statecharts.mdx), and the [actor model](actor-model.mdx) to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks and can be used in the frontend, backend, or wherever JavaScript runs.
 
@@ -42,7 +42,7 @@ npm install xstate
 ## Create a simple machine
 
 ```js
-import { createMachine, interpret } from 'xstate';
+import { createMachine, interpret, assign } from 'xstate';
 
 const countMachine = createMachine({
   context: {
@@ -84,7 +84,7 @@ countActor.send({ type: 'SET', value: 10 });
 ## Create a more complex machine
 
 ```js
-import { createMachine, interpret } from 'xstate';
+import { createMachine, interpret, assign } from 'xstate';
 
 const textMachine = createMachine({
   context: {
