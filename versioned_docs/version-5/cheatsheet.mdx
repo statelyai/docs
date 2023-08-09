@@ -1,0 +1,476 @@
+---
+title: 'Cheatsheet'
+---
+
+This is a cheatsheet that you can use to quickly look up the syntax for XState v5 beta.
+
+## Installing XState
+
+```bash title="using yarn"
+yarn add xstate
+```
+
+```bash title="using npm"
+npm install xstate
+```
+
+## Creating a state machine
+
+```ts
+import { createMachine, createActor, assign } from 'xstate';
+
+const machine = createMachine({
+  id: 'toggle',
+  initial: 'active',
+  context: { count: 0 },
+  states: {
+    active: {
+      entry: assign({
+        count: ({ context }) => context.count + 1,
+      }),
+      on: {
+        toggle: 'active',
+      },
+    },
+    inactive: {
+      on: {
+        toggle: 'inactive',
+      },
+    },
+  },
+});
+
+const actor = createActor(machine);
+actor.subscribe((snapshot) => {
+  console.log(snapshot.value);
+});
+
+actor.start();
+// logs 'active' with context { count: 1 }
+
+actor.send({ type: 'toggle' });
+// logs 'inactive' with context { count: 1 }
+actor.send({ type: 'toggle' });
+// logs 'active' with context { count: 2 }
+actor.send({ type: 'toggle' });
+// logs 'inactive' with context { count: 2 }
+```
+
+## Creating promise logic
+
+```ts
+import { fromPromise, createActor } from 'xstate';
+
+const promiseLogic = fromPromise(async () => {
+  const response = await fetch('https://dog.ceo/api/breeds/image/random');
+  const dog = await response.json();
+  return dog;
+});
+
+const actor = createActor(promiseLogic);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+
+actor.start();
+// logs something like: {
+//   message: 'https://images.dog.ceo/breeds/terrier-norwich/n02094258_1003.jpg',
+//   status: 'success'
+// }
+```
+
+## Creating transition logic
+
+A transition function is just like a reducer.
+
+```ts
+import { fromTransition, createActor } from 'xstate';
+
+const transitionLogic = fromTransition((state, event) => {
+  switch (event.type) {
+    case 'inc':
+      return {
+        ...state,
+        count: state.count + 1,
+      };
+    default:
+      return state;
+  }
+}, 0); // <- initial state
+
+const actor = createActor(transitionLogic);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+
+actor.start();
+// logs { count: 0 }
+
+actor.send({ type: 'inc' });
+// logs { count: 1 }
+actor.send({ type: 'inc' });
+// logs { count: 2 }
+```
+
+## Creating observable logic
+
+```ts
+import { fromObservable, createActor } from 'xstate';
+import { interval } from 'rxjs';
+
+const observableLogic = fromObservable(() => interval(1000));
+
+const actor = createActor(observableLogic);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+
+actor.start();
+// logs 0, 1, 2, 3, 4, 5, ...
+// every second
+```
+
+## Creating callback logic
+
+```ts
+import { fromCallback, createActor } from 'xstate';
+
+const callbackLogic = fromCallback(({ sendBack, receive }) => {
+  const i = setTimeout(() => {
+    sendBack({ type: 'timeout' });
+  }, 1000);
+
+  receive((event) => {
+    if (event.type === 'cancel') {
+      console.log('canceled');
+      clearTimeout(i);
+    }
+  });
+
+  return () => {
+    clearTimeout(i);
+  };
+});
+
+const actor = createActor(callbackLogic);
+
+actor.start();
+
+actor.send({ type: 'cancel' });
+// logs 'canceled'
+```
+
+## Parent states
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const machine = createMachine({
+  id: 'parent',
+  initial: 'active',
+  states: {
+    active: {
+      initial: 'one',
+      states: {
+        one: {},
+        two: {},
+      },
+    },
+    inactive: {},
+  },
+});
+
+const actor = createActor(machine);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot.value);
+});
+
+actor.start();
+// logs { active: 'one' }
+```
+
+## Actions
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const machine = createMachine({
+  id: 'toggle',
+  initial: 'active',
+  states: {
+    active: {
+      // highlight-next-line
+      entry: 'activate',
+      // highlight-next-line
+      exit: 'deactivate',
+      on: {
+        toggle: {
+          target: 'inactive',
+          // highlight-next-line
+          actions: ['notify'],
+        },
+      },
+    },
+    inactive: {
+      on: {
+        toggle: {
+          type: 'active',
+          // highlight-start
+          actions: [
+            {
+              type: 'notify',
+              params: {
+                message: 'Some notification',
+              },
+            },
+          ],
+          // highlight-end
+        },
+      },
+    },
+  },
+});
+
+const actor = createActor(
+  machine.provide({
+    actions: {
+      notify: ({ action }) => {
+        console.log(action.params.message ?? 'Default message');
+      },
+      activate: () => {
+        console.log('Activating');
+      },
+      deactivate: () => {
+        console.log('Deactivating');
+      },
+    },
+  }),
+);
+
+actor.start();
+// logs 'Activating'
+
+actor.send({ type: 'toggle' });
+// logs 'Deactivating'
+// logs 'Default message'
+
+actor.send({ type: 'toggle' });
+// logs 'Some notification'
+// logs 'Activating'
+```
+
+## Guards
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const machine = createMachine({
+  id: 'toggle',
+  initial: 'active',
+  context: {
+    canActivate: false,
+  },
+  states: {
+    inactive: {
+      on: {
+        toggle: [
+          {
+            target: 'active',
+            // highlight-next-line
+            guard: 'canBeToggled',
+          },
+          {
+            actions: 'notifyNotAllowed',
+          },
+        ],
+      },
+    },
+    active: {
+      // ...
+    },
+  },
+});
+
+const actor = createActor(
+  machine.provide({
+    // highlight-start
+    guards: {
+      canBeToggled: ({ context }) => context.canActivate,
+    },
+    // highlight-end
+    actions: {
+      notifyNotAllowed: () => {
+        console.log('Cannot be toggled');
+      },
+    },
+  }),
+);
+
+actor.start();
+// logs 'Cannot be toggled'
+```
+
+## Invoking actors
+
+```ts
+import { createMachine, fromPromise, createActor, assign } from 'xstate';
+
+const loadUserLogic = fromPromise(async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+  const user = await response.json();
+  return user;
+});
+
+const machine = createMachine({
+  id: 'toggle',
+  initial: 'loading',
+  context: {
+    user: undefined,
+  },
+  states: {
+    loading: {
+      // highlight-start
+      invoke: {
+        id: 'loadUser',
+        src: loadUserLogic,
+        onDone: {
+          target: 'doSomethingWithUser',
+          actions: assign({
+            user: ({ event }) => event.output,
+          }),
+        },
+        onError: 'failure',
+      },
+      // highlight-end
+    },
+    doSomethingWithUser: {
+      // ...
+    },
+    failure: {
+      // ...
+    },
+  },
+});
+
+const actor = createActor(machine);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot.context.user);
+});
+
+actor.start();
+// eventually logs:
+// { id: 1, name: 'Leanne Graham', ... }
+```
+
+## Spawning actors
+
+```ts
+import { createMachine, fromPromise, createActor, assign } from 'xstate';
+
+const loadUserLogic = fromPromise(async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+  const user = await response.json();
+  return user;
+});
+
+const machine = createMachine({
+  context: {
+    userRef: undefined,
+  },
+  on: {
+    loadUser: {
+      actions: assign({
+        // highlight-start
+        userRef: ({ spawn }) => spawn(loadUserLogic),
+        // highlight-end
+      }),
+    },
+  },
+});
+
+const actor = createActor(machine);
+actor.subscribe((snapshot) => {
+  const { userRef } = snapshot.context;
+  console.log(userRef?.getSnapshot());
+});
+actor.start();
+
+actor.send({ type: 'loadUser' });
+// eventually logs:
+// { id: 1, name: 'Leanne Graham', ... }
+```
+
+## Input and output
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const greetMachine = createMachine({
+  // highlight-start
+  context: ({ input }) => ({
+    message: `Hello, ${input.name}`,
+  }),
+  // highlight-end
+  entry: ({ context }) => {
+    console.log(context.message);
+  },
+});
+
+const actor = createActor(greetMachine, {
+  // highlight-start
+  input: {
+    name: 'David',
+  },
+  // highlight-end
+});
+
+actor.start();
+// logs 'Hello, David'
+```
+
+## Invoking actors with input
+
+```ts
+import { createMachine, createActor, fromPromise } from 'xstate';
+
+const loadUserLogic = fromPromise(async ({ input }) => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${input.id}`,
+  );
+  const user = await response.json();
+  return user;
+});
+
+const machine = createMachine({
+  initial: 'loading user',
+  states: {
+    'loading user': {
+      invoke: {
+        id: 'loadUser',
+        src: loadUserLogic,
+        // highlight-start
+        input: {
+          id: 3,
+        },
+        // highlight-end
+        onDone: {
+          actions: ({ event }) => {
+            console.log(event.output);
+          },
+        },
+      },
+    },
+  },
+});
+
+const actor = createActor(machine);
+
+actor.start();
+// eventually logs:
+// { id: 3, name: 'Clementine Bauch', ... }
+```
