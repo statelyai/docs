@@ -2,3 +2,19 @@
 title: 'Simulate mode'
 description: 'Tour the features in Stately editor’s Simulate mode, including a guide to all the panels and how to simulate your machines.'
 ---
+
+You can simulate your machine as if it were live in Simulate Mode. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue. Press any available event to walkthrough your machine.
+
+Eventless (always) events will be triggered instantly upon entering their source state, unless they’re guarded with a condition. Delayed (after) events will be taken automatically after the timer has completed.
+
+<EmbedMachine name="Simulate mode" embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?machineId=e5fbd908-42af-440f-8d11-91ca16a4fbda&mode=Simulate"/>
+
+## Log
+
+All triggered events are recorded in order in the [Log icon] Log panel, along with their target state. Press any event in the log panel list to return to that event. Press any state in the log panel list to return to that state.
+
+:::studio
+
+[Live simulation mode](live-simulation.mdx) ([pro feature](studio-pro-plan.mdx)) helps you share your simulated machine with your team without screen sharing or screenshots.
+
+:::
