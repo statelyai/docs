@@ -242,12 +242,12 @@ import { SomeMachineContext } from '../path/to/SomeMachineContext';
 
 function SomeComponent() {
   const count = SomeMachineContext.useSelector((state) => state.context.count);
-  const someactorRef = SomeMachineContext.useActor();
+  const someActorRef = SomeMachineContext.useActorRef();
 
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => someactorRef.send({ type: 'inc' })}>
+      <button onClick={() => someActorRef.send({ type: 'inc' })}>
         Increment
       </button>
     </div>
