@@ -93,7 +93,7 @@ import { createMachine, createActor } from 'xstate';
 const machine = createMachine(/* ... */);
 
 // ❌ DEPRECATED
-const actor = createActor(machine);
+const actor = interpret(machine);
 ```
 
 </TabItem>
