@@ -20,7 +20,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine);
+const feedbackActor = createActor(feedbackMachine);
 
 feedbackActor.subscribe((state) => {
   console.log(state.context.feedback);
@@ -79,7 +79,7 @@ const feedbackMachine = createMachine({
   }),
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 console.log(feedbackActor.getSnapshot().context.createdAt);
 // logs the current timestamp
@@ -89,7 +89,7 @@ Lazy initial context is evaluated per actor, so each actor will have its own `co
 
 ### Input
 
-You can provide input data to a machine’s initial `context` by passing an `input` property to the `interpret(machine, { input })` function and using the `input` property from the first argument in the `context` function:
+You can provide input data to a machine’s initial `context` by passing an `input` property to the `createActor(machine, { input })` function and using the `input` property from the first argument in the `context` function:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -99,7 +99,7 @@ const feedbackMachine = createMachine({
   }),
 });
 
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   input: {
     defaultRating: 5,
   },
@@ -131,7 +131,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine);
+const feedbackActor = createActor(feedbackMachine);
 
 feedbackActor.subscribe((state) => {
   console.log(state.context.feedback);
@@ -218,7 +218,7 @@ const machine = createMachine({
   }),
 });
 
-const feedbackActor = interpret(machine, {
+const feedbackActor = createActor(machine, {
   input: {
     defaultRating: 5,
   },

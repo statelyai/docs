@@ -9,7 +9,10 @@ A state describes the machine’s status or mode, which could be as simple as *
 
 These states are “finite”; the machine can only move through the states you’ve pre-defined.
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d"/>
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d"
+/>
 
 :::tip
 
@@ -17,7 +20,10 @@ Watch our [“What are states?” video on YouTube](https://www.youtube.com/watc
 
 :::
 
-<SkipDownLink text="Jump to learning more about the state object in XState" link="#state-object"/>
+<SkipDownLink
+  text="Jump to learning more about the state object in XState"
+  link="#state-object"
+/>
 
 ## Using states in Stately Studio
 
@@ -61,7 +67,7 @@ Use the <kbd>Backspace</kbd> key to delete the selected state.
 
 The state object represents the current state of a running machine ([actor](actor-model.mdx)) and contains the following properties:
 
-- **`value`**: the current state value, which is either: 
+- **`value`**: the current state value, which is either:
   - a string representing a simple state like `'playing'`, or:
   - an object representing nested states like `{ paused: 'buffering' }`.
 - **`context`**: the current [context](context.mdx) (extended state.)
@@ -83,7 +89,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const actor = interpret(feedbackMachine);
+const actor = createActor(feedbackMachine);
 actor.start();
 
 console.log(actor.getSnapshot());
@@ -103,10 +109,10 @@ console.log(actor.getSnapshot());
 
 ## Accessing state snapshots
 
-You can access an actor’s the emitted state (or *snapshot*) by subscribing to or reading from the actor’s `.getSnapshot()` method.
+You can access an actor’s the emitted state (or _snapshot_) by subscribing to or reading from the actor’s `.getSnapshot()` method.
 
 ```ts
-const actor = interpret(feedbackMachine);
+const actor = createActor(feedbackMachine);
 
 actor.subscribe((snapshot) => {
   console.log(snapshot);
@@ -123,7 +129,7 @@ console.log(actor.getSnapshot());
 
 ## State value
 
-A state machine with nested states (or *[statechart](state-machines-and-statecharts.mdx#what-is-a-statechart)*) is a tree-like structure where each node is a *state node*. The root state node is the top-level state node that represents the entire machine. The root node may have child state nodes, which may have child state nodes, and so on.
+A state machine with nested states (or _[statechart](state-machines-and-statecharts.mdx#what-is-a-statechart)_) is a tree-like structure where each node is a _state node_. The root state node is the top-level state node that represents the entire machine. The root node may have child state nodes, which may have child state nodes, and so on.
 
 The **state value** is an object that represents all the active state nodes in a machine. For state machines that have state nodes without child state nodes, the state value is a string:
 
@@ -175,7 +181,7 @@ The `state.children` property represents all currently spawned/invoked actors in
 
 ## `state.can(eventType)`
 
-The `state.can(event)` method determines whether an `event` object will cause a state change if sent to the interpreted machine. The method will return `true` if the state will change due to the `event` being sent; otherwise the method will return `false`:
+The `state.can(event)` method determines whether an `event` object will cause a state change if sent to the machine actor. The method will return `true` if the state will change due to the `event` being sent; otherwise the method will return `false`:
 
 ```js
 const feedbackMachine = createMachine({
@@ -193,7 +199,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // ...
 
@@ -226,7 +232,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 const currentState = feedbackActor.getSnapshot();
 

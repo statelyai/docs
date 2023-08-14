@@ -42,7 +42,7 @@ npm install xstate
 ## Create a simple machine
 
 ```js
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const countMachine = createMachine({
   context: {
@@ -67,7 +67,7 @@ const countMachine = createMachine({
   },
 });
 
-const countActor = interpret(countMachine).start();
+const countActor = createActor(countMachine).start();
 
 countActor.subscribe((state) => {
   console.log(state.context.count);
@@ -84,7 +84,7 @@ countActor.send({ type: 'SET', value: 10 });
 ## Create a more complex machine
 
 ```js
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const textMachine = createMachine({
   context: {
@@ -122,7 +122,7 @@ const textMachine = createMachine({
   },
 });
 
-const textActor = interpret(textMachine).start();
+const textActor = createActor(textMachine).start();
 
 textActor.subscribe((state) => {
   console.log(state.context.value);
@@ -151,7 +151,7 @@ textActor.send({ type: 'text.cancel' });
 
 ## Packages
 
-- 🤖 [xstate](https://github.com/statelyai/xstate/): Core finite state machine and statecharts library + interpreter
+- 🤖 [xstate](https://github.com/statelyai/xstate/): Core finite state machine and statecharts library + actors
 - 🔬 [@xstate/fsm](https://github.com/statelyai/xstate/tree/main/packages/xstate-fsm): Minimal finite state machine library
 - 📉 [@xstate/graph](https://github.com/statelyai/xstate/tree/main/packages/xstate-graph): Graph traversal utilities for XState
 - ⚛️ [@xstate/react](https://github.com/statelyai/xstate/tree/main/packages/xstate-react): React hooks and utilities for using XState in React applications

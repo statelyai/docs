@@ -69,12 +69,12 @@ export const Toggler = () => {
 
 ### `useMachine(machine, options?)`
 
-A [React hook](https://reactjs.org/hooks) that interprets the given `machine` and starts an actor that runs for the lifetime of the component.
+A [React hook](https://reactjs.org/hooks) that creates an actor from the given `machine` and starts an actor that runs for the lifetime of the component.
 
 #### Arguments
 
 - `machine` - An [XState machine](machines.mdx)
-- `options?` - [Interpreter options](machines.mdx#interpreting-machines).
+- `options?` - [Actor options](machines.mdx#creating-actors-from-machines).
 
 **Returns** a tuple of `[state, send, actor]`:
 
@@ -101,12 +101,12 @@ const [state, send] = useMachine(
 
 ### `useActor(actorLogic)`
 
-A [React hook](https://reactjs.org/hooks) that interprets the given `actorLogic` and starts an actor that runs for the lifetime of the component.
+A [React hook](https://reactjs.org/hooks) that creates an actor from the the given `actorLogic` and starts an actor that runs for the lifetime of the component.
 
 #### Arguments
 
-- `actorLogic` - The actor logic to interpret; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
-- `options?` (optional) - Interpreter options
+- `actorLogic` - The actor logic to create an actor from; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
+- `options?` (optional) - Actor options
 
 ```js
 const promiseLogic = fromPromise(async () => {
@@ -122,14 +122,14 @@ const [state, send] = useActor(promiseLogic);
 
 A React hook that returns the `actorRef` created from the `machine` with the `options`, if specified. It starts the actor ref and runs it for the lifetime of the component. This is similar to `useActor`; however, `useActorRef` allows for a custom `observer` to subscribe to the `actorRef`.
 
-The `useActorRef` is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor` that would flush each update from the machine to the React component, `useActorRef` instead returns a static reference (to just the interpreted machine) which will not rerender when its state changes.
+The `useActorRef` is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor` that would flush each update from the machine to the React component, `useActorRef` instead returns a static reference (to just the machine actor) which will not rerender when its state changes.
 
 To use a piece of state from the actorRef inside a render, use the `useSelector(...)` hook to subscribe to it.
 
 #### Arguments
 
 - `actorLogic`
-- `options?` (optional) - Interpreter options
+- `options?` (optional) - Actor options
 - `observer?` (optional) - an observer or listener that listens to state updates:
   - an observer (e.g., `{ next: (snapshot) => {/* ... */} }`)
   - or a listener (e.g., `(snapshot) => {/* ... */}`)
@@ -205,7 +205,7 @@ const App = ({ actorRef }) => {
 
 ### `createActorContext(machine)`
 
-Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that interprets the `machine` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
+Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that creates an actor from the `machine` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
 
 #### Arguments
 
@@ -216,7 +216,7 @@ Returns a React Context object that contains the following properties:
 - `Provider` - a React Context Provider component with the following props:
   - `machine` - An [XState machine](machines.mdx) that must be of the same type as the machine passed to `createActorContext(...)`
 - `useSelector(selector, compare?)` - a React hook that takes in a `selector` function and optional `compare` function and returns the selected value from the actor snapshot
-- `useActorRef()` - a React hook that returns the actor ref of the interpreted `machine`
+- `useActorRef()` - a React hook that returns the actor ref of the `machine` actor
 
 Creating a React Context for the actor and providing it in app scope:
 

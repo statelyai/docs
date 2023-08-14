@@ -53,7 +53,7 @@ Examples of actions:
 
 In our video player machine, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
 
-<EmbedMachine 
+<EmbedMachine
   name="video player machine"
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000"
 />
@@ -142,9 +142,9 @@ To add a built-in action, first add a [transition action](#add-a-transition-acti
 
 1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
 1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
-2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
-3. Choose your desired action from the dropdown menu at the top of the **Action** panel.
-4. Fill out the required corresponding action input fields.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+1. Fill out the required corresponding action input fields.
 
 ## Add a custom action
 
@@ -165,9 +165,9 @@ First, add a [transition action](#add-a-transition-action), [entry action](#add-
 
 1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
 1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
-2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
-3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
-4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+1. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
 
 ## Entry and exit actions
 
@@ -182,7 +182,6 @@ Coming soon… illustration
 Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
 Coming soon… example
-
 
 ## Inline actions
 
@@ -263,7 +262,7 @@ const feedbackMachine = createMachine(
 These implementations can later be overridden by providing implementations in the `machine.provide(implementations)` method, which creates a new machine with the same config but with the provided implementations:
 
 ```ts
-const feedbackActor = interpret(
+const feedbackActor = createActor(
   // highlight-start
   feedbackMachine.provide({
     actions: {
@@ -297,7 +296,7 @@ const countMachine = createMachine({
   },
 });
 
-const countActor = interpret(countMachine);
+const countActor = createActor(countMachine);
 countActor.subscribe((state) => {
   console.log(state.context.count);
 });
@@ -340,7 +339,7 @@ The raise action is a special action that _raises_ an event that is received by 
 actions: raise({ type: 'someEvent', data: 'someData' });
 ```
 
-Internally, when an event is raised, it is placed into an “internal event queue”. After the current transition is finished, these events are processed in insertion order ([first-in first-out, or FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))). External events are only processed once all events in the internal event queue are processed.
+Internally, when an event is raised, it is placed into an “internal event queue”. After the current transition is finished, these events are processed in insertion order ([first-in first-out, or FIFO](<https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)>)). External events are only processed once all events in the internal event queue are processed.
 
 Raised events can be dynamic:
 

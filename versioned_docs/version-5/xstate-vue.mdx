@@ -81,12 +81,12 @@ export default {
 
 ### `useMachine(machine, options?)`
 
-A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that interprets the given `machine` and starts a service that runs for the lifetime of the component.
+A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that creates an actor from the given the given `machine` and starts a service that runs for the lifetime of the component.
 
 #### Arguments
 
 - `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html).
-- `options` (optional) - [Interpreter options](https://xstate.js.org/docs/guides/interpretation.html#options) OR one of the following Machine Config options: `guards`, `actions`, `activities`, `services`, `delays`, `immediate`, `context`, or `state`.
+- `options` (optional) - [Actor options](https://xstate.js.org/docs/guides/interpretation.html#options) OR one of the following Machine Config options: `guards`, `actions`, `activities`, `services`, `delays`, `immediate`, `context`, or `state`.
 
 **Returns** `{ state, send, service}`:
 
@@ -131,7 +131,7 @@ A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduc
 #### Arguments (_Since 0.5.0_)
 
 - `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html) or a function that lazily returns a machine.
-- `options` (optional) - [Interpreter options](https://xstate.js.org/docs/guides/interpretation.html#options) and/or any of the following machine config options: `guards`, `actions`, `services`, `delays`, `immediate`, `context`, `state`.
+- `options` (optional) - [Actor options](https://xstate.js.org/docs/guides/interpretation.html#options) and/or any of the following machine config options: `guards`, `actions`, `services`, `delays`, `immediate`, `context`, `state`.
 - `observer` (optional) - an observer or listener that listens to state updates:
   - an observer (e.g., `{ next: (state) => {/* ... */} }`)
   - or a listener (e.g., `(state) => {/* ... */}`)
@@ -164,7 +164,7 @@ export default {
       (state) => {
         // subscribes to state changes
         console.log(state.value);
-      }
+      },
     );
     // ...
   },
@@ -236,7 +236,7 @@ export default {
 
 ### `useMachine(machine)` with `@xstate/fsm`
 
-A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that interprets the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
+A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that creates an actor from the given the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
 
 This special `useMachine` hook is imported from `@xstate/vue/lib/fsm`
 
@@ -370,7 +370,7 @@ You can persist and rehydrate state with `useMachine(...)` via `options.state`:
 <script>
 // Get the persisted state config object from somewhere, e.g. localStorage
 const persistedState = JSON.parse(
-  localStorage.getItem('some-persisted-state-key')
+  localStorage.getItem('some-persisted-state-key'),
 );
 
 export default {

@@ -62,12 +62,12 @@ By using the global variable `XStateSvelteFSM`
 
 ### `useMachine(machine, options?)`
 
-A function that interprets the given `machine` and starts a service that runs for the lifetime of the component.
+A function that creates an actor from the given `machine` and starts a service that runs for the lifetime of the component.
 
 **Arguments**
 
 - `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html).
-- `options` (optional) - [Interpreter options](https://xstate.js.org/docs/guides/interpretation.html#options) OR one of the following Machine Config options: `guards`, `actions`, `activities`, `services`, `delays`, `immediate`, `context`, or `state`.
+- `options` (optional) - [Actor options](https://xstate.js.org/docs/guides/interpretation.html#options) OR one of the following Machine Config options: `guards`, `actions`, `activities`, `services`, `delays`, `immediate`, `context`, or `state`.
 
 **Returns** `{ state, send, service}`:
 
@@ -77,7 +77,7 @@ A function that interprets the given `machine` and starts a service that runs fo
 
 ### `useMachine(machine)` with `@xstate/fsm`
 
-A function that interprets the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
+A function that creates an actor from the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
 
 This special `useMachine` hook is imported from `@xstate/svelte/lib/fsm`
 
@@ -161,7 +161,7 @@ A function that returns [Svelte store](https://svelte.dev/docs#svelte_store) rep
 
 ```svelte
 <script lang="ts">
-  import { interpret } from 'xstate';
+  import { createActor } from 'xstate';
   import { createModel } from 'xstate/lib/model';
   import { useSelector } from '../src';
 
@@ -197,7 +197,7 @@ A function that returns [Svelte store](https://svelte.dev/docs#svelte_store) rep
     }
   });
 
-  const service = interpret(machine).start();
+  const service = createActor(machine).start();
 
   const count = useSelector(service, (state) => state.context.count);
 
@@ -320,11 +320,11 @@ You can persist and rehydrate state with `useMachine(...)` via `options.state`:
 // Get the persisted state config object from somewhere, e.g. localStorage
 
 const persistedState = JSON.parse(
-  localStorage.getItem('some-persisted-state-key')
+  localStorage.getItem('some-persisted-state-key'),
 );
 
 const { state, send } = useMachine(someMachine, {
-  state: persistedState
+  state: persistedState,
 });
 
 // state will initially be that persisted state, not the machine’s initialState
@@ -339,22 +339,22 @@ Example:
 ```js
 // service.js
 
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const toggleMachine = createMachine({
   id: 'toggle',
   initial: 'inactive',
   states: {
     inactive: {
-      on: { TOGGLE: 'active' }
+      on: { TOGGLE: 'active' },
     },
     active: {
-      on: { TOGGLE: 'inactive' }
-    }
-  }
+      on: { TOGGLE: 'inactive' },
+    },
+  },
 });
 
-export const toggleService = interpret(toggleMachine).start();
+export const toggleService = createActor(toggleMachine).start();
 ```
 
 ```svelte

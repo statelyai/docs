@@ -43,7 +43,7 @@ const feedbackMachine = createMachine({
 In this example, the machine has two states: `question` and `thanks`. The `question` state has a transition to the `thanks` state when the `feedback.good` event is sent to the machine:
 
 ```ts
-const feedbackActor = interpret(feedbackMachine);
+const feedbackActor = createActor(feedbackMachine);
 
 feedbackActor.subscribe((state) => {
   console.log(state.value);
@@ -56,16 +56,16 @@ feedbackActor.send({ type: 'feedback.good' });
 // logs 'thanks'
 ```
 
-## Interpreting machines
+## Creating actors from machines
 
 A machine can be considered a "blueprint" for an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
 
-To create an actor, interpret the machine using the `interpret(machine)` function:
+To create an actor, use the `createActor(machine)` function:
 
 ```ts
-import { interpret } from 'xstate';
+import { createActor } from 'xstate';
 
-const feedbackActor = interpret(feedbackMachine);
+const feedbackActor = createActor(feedbackMachine);
 
 feedbackActor.subscribe((state) => {
   console.log(state.value);
@@ -110,7 +110,7 @@ const feedbackMachine = createMachine(
     delays: {
       /* ... */
     },
-  }
+  },
 );
 ```
 
@@ -122,7 +122,7 @@ const feedbackMachine = createMachine({
   // ...
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // logs 'Doing something!'
 ```
@@ -138,7 +138,7 @@ const customFeedbackMachine = feedbackMachine.provide({
   },
 });
 
-const feedbackActor = interpret(customFeedbackMachine).start();
+const feedbackActor = createActor(customFeedbackMachine).start();
 
 // logs 'Doing something custom!'
 ```
@@ -192,10 +192,10 @@ const nextState = feedbackMachine.transition(initialState, {
 });
 ```
 
-The `machine.transition(...)` method is useful for testing or building a custom interpreter.
+The `machine.transition(...)` method is useful for testing or building a custom actor.
 
 - [Testing](testing.mdx)
-- Coming soon… Custom interpreters
+- Coming soon… Custom actors
 
 ## API
 
