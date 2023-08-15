@@ -52,7 +52,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // Finite state
 console.log(feedbackActor.getSnapshot().value);
@@ -161,7 +161,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 console.log(feedbackActor..getSnapshot().hasTag('visible'));
 // logs true
@@ -220,7 +220,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 console.log(feedbackActor.getSnapshot().meta);
 // logs the object:
@@ -239,7 +239,7 @@ console.log(feedbackActor.getSnapshot().meta);
 Transitions are how you move from one finite state to another. They are defined by the `on` property on a state node:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   initial: 'prompt',
@@ -258,7 +258,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 console.log(feedbackActor.getSnapshot().value);
 // logs 'prompt'
@@ -276,7 +276,7 @@ Read more about [events and transitions](transitions.mdx).
 A transition's `target` property defines where the machine should go when the transition is taken. Normally, it targets a sibling state node:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   initial: 'prompt',
@@ -302,7 +302,7 @@ const feedbackMachine = createMachine({
 The `target` can also target a descendant of a sibling state node:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   initial: 'prompt',
@@ -333,7 +333,7 @@ const feedbackMachine = createMachine({
 When the target state node is a descendant of the source state node, the source state node key can be omitted:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   // ...
@@ -366,7 +366,7 @@ const feedbackMachine = createMachine({
 When the state node doesn't change; i.e., the source and target state nodes are the same, the `target` property can be omitted:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   // ...
@@ -389,7 +389,7 @@ const feedbackMachine = createMachine({
 State nodes can also be targeted by their `id` by prefixing the `target` with a `#` followed by the state node's `id`:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   initial: 'prompt',
@@ -415,7 +415,7 @@ const feedbackMachine = createMachine({
 States can be identified with a unique ID: `id: 'myState'`. This is useful for targeting a state from any other state, even if they have different parent states:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const feedbackMachine = createMachine({
   initial: 'prompt',

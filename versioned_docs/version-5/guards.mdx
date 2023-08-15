@@ -41,7 +41,10 @@ const feedbackMachine = createMachine(
 
 ## Using guards in Stately Studio
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=96f3bfce-147a-4aa0-ae2d-674cdfcb14ec"/>
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=96f3bfce-147a-4aa0-ae2d-674cdfcb14ec"
+/>
 
 :::studio
 
@@ -155,7 +158,7 @@ const feedbackMachine = createMachine(
 Guards can later be provided or overridden by providing custom guard implementations in the `.provide()` method:
 
 ```ts
-const feedbackActor = interpret(
+const feedbackActor = createActor(
   // highlight-start
   feedbackMachine.provide({
     guards: {
