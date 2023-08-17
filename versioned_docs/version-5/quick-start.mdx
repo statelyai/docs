@@ -59,19 +59,19 @@ const toggleMachine = createMachine({
 });
 ```
 
-## Interpret your machine and send it events
+## Create a machine actor and send it events
 
 When you run a state machine, it becomes an [actor](actors.mdx): a running process that can receive messages (events), send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
 
 ```js
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const toggleMachine = createMachine({
   // Machine code from above
 });
 
 // Creates an actor that you can send events to; not started yet!
-const actor = interpret(machine);
+const actor = createActor(machine);
 
 // Subscribe to updated snapshots (emitted state changes) from the actor
 actor.subscribe((snapshot) => {

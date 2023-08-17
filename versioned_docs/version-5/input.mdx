@@ -2,10 +2,10 @@
 title: 'Input'
 ---
 
-Input refers to the data provided to a state machine that influences its behavior. In [XState](xstate.mdx), you provide input when creating an [actor](actors.mdx) using the second argument of the `interpret(machine, { input })` function:
+Input refers to the data provided to a state machine that influences its behavior. In [XState](xstate.mdx), you provide input when creating an [actor](actors.mdx) using the second argument of the `createActor(machine, { input })` function:
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
   context: ({ input }) => ({
@@ -16,7 +16,7 @@ const feedbackMachine = createMachine({
   // ...
 });
 
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   // highlight-start
   input: {
     userId: '123',
@@ -32,18 +32,18 @@ Input is coming to Stately Studio’s editor soon…
 
 :::
 
-## Interpreting actors with input
+## Creating actors with input
 
 You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, etc.:
 
 ```ts
-import { interpret, fromPromise } from 'xstate';
+import { createActor, fromPromise } from 'xstate';
 
 const userFetcher = fromPromise(({ input }) => {
   return fetch(`/users/${input.userId}`).then((res) => res.json());
 });
 
-const userFetcherActor = interpret(userFetcher, {
+const userFetcherActor = createActor(userFetcher, {
   // highlight-start
   input: {
     userId: '123',
@@ -61,10 +61,10 @@ Coming soon… show examples for `fromTransition`, `fromObservable`, etc.
 
 ## Initial event input
 
-When an actor is started, it will automatically send a special event named `xstate.init` to itself. If `input` is provided to the `interpret` function, it will be included in the `xstate.init` event:
+When an actor is started, it will automatically send a special event named `xstate.init` to itself. If `input` is provided to the `createActor(logic, { input })` function, it will be included in the `xstate.init` event:
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
   // highlight-start
@@ -76,7 +76,7 @@ const feedbackMachine = createMachine({
   // ...
 });
 
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   input: {
     userId: '123',
     defaultRating: 5,
@@ -89,7 +89,7 @@ const feedbackActor = interpret(feedbackMachine, {
 You can provide input to invoked actors via the `input` property of the `invoke` configuration:
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
   invoke: {
@@ -104,7 +104,7 @@ const feedbackMachine = createMachine({
   actors: {
     liveFeedback: fromPromise(({ input }) => {
       return fetch(`https://${input.domain}/feedback`).then((res) =>
-        res.json()
+        res.json(),
       );
     }),
   },
@@ -114,7 +114,7 @@ const feedbackMachine = createMachine({
 The `invoke.input` property can be a static input value or a function that returns the input value. The function will be called with an object that contains the current `context` and `event`:
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
   context: {
@@ -144,7 +144,7 @@ const feedbackMachine = createMachine({
 You can provide input to spawned actors via the `input` property of the `spawn` configuration:
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
   context: {
@@ -202,7 +202,7 @@ const createFeedbackMachine = (userId, defaultRating) => {
 
 const feedbackMachine1 = createFeedbackMachine('123', 5);
 
-const feedbackActor1 = interpret(feedbackMachine1).start();
+const feedbackActor1 = createActor(feedbackMachine1).start();
 
 // New way: using input
 const feedbackMachine = createMachine({
@@ -214,7 +214,7 @@ const feedbackMachine = createMachine({
   // ...
 });
 
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   input: {
     userId: '123',
     defaultRating: 5,
@@ -254,7 +254,7 @@ const Component = (props) => {
 ## TypeScript
 
 ```ts
-import { interpret, createMachine } from 'xstate';
+import { createActor, createMachine } from 'xstate';
 
 const machine = createMachine({
   types: {} as {
@@ -274,7 +274,7 @@ Use our XState input cheatsheet below to get started quickly.
 ### Providing input
 
 ```ts
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   input: {
     userId: '123',
     defaultRating: 5,

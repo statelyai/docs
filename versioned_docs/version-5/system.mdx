@@ -4,10 +4,10 @@ title: 'Systems'
 
 An actor system is a collection of actors that can communicate with each other. Actors can invoke/spawn other actors, which forms a natural hierarchy of actors that belong to the same system.
 
-In XState, a system is implicitly created from the root actor, which is the actor that is returned from `interpret(machine).start()`. The system can be accessed from the `actor.system` property of actors, and from the destructured `{ system }` property from state machine actions:
+In XState, a system is implicitly created from the root actor, which is the actor that is returned from `createActor(machine).start()`. The system can be accessed from the `actor.system` property of actors, and from the destructured `{ system }` property from state machine actions:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
   // highlight-next-line
@@ -16,18 +16,18 @@ const machine = createMachine({
   },
 });
 
-const actor = interpret(machine).start();
+const actor = createActor(machine).start();
 // highlight-next-line
 actor.system;
 ```
 
-The root of a system can also be explicitly assigned a `systemId` in the `interpret(...)` function:
+The root of a system can also be explicitly assigned a `systemId` in the `createActor(...)` function:
 
 ```ts
-import { interpret } from 'xstate';
+import { createActor } from 'xstate';
 
-const actor = interpret(machine, {
-  systemId: 'root-id'
+const actor = createActor(machine, {
+  systemId: 'root-id',
 });
 
 actor.start();
@@ -44,7 +44,7 @@ Actors can be registered with the system so that any other actor in the system c
 Invoked actors are registered with a system-wide `systemId` in the `invoke` object:
 
 ```ts
-import { createMachine, interpret } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const formMachine = createMachine({
   // ...
@@ -74,13 +74,13 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 ```
 
 Spawned actors are registered with a system-wide `systemId` in the 2nd argument of the `spawn` function:
 
 ```ts
-import { createMachine, interpret, assign } from 'xstate';
+import { createMachine, createActor, assign } from 'xstate';
 
 const todoMachine = createMachine({
   // ...
