@@ -14,6 +14,8 @@ yarn add xstate
 npm install xstate
 ```
 
+[Read more on installing XState](installation.mdx).
+
 ## Creating a state machine
 
 ```ts
@@ -56,6 +58,8 @@ actor.send({ type: 'toggle' });
 // logs 'inactive' with context { count: 2 }
 ```
 
+[Read more about the actor model](actor-model.mdx).
+
 ## Creating promise logic
 
 ```ts
@@ -74,11 +78,13 @@ actor.subscribe((snapshot) => {
 });
 
 actor.start();
-// logs something like: {
-//   message: 'https://images.dog.ceo/breeds/terrier-norwich/n02094258_1003.jpg',
-//   status: 'success'
+// logs: {
+//   message: "https://images.dog.ceo/breeds/kuvasz/n02104029_110.jpg", 
+//   status: "success"
 // }
 ```
+
+[Read more about promise actor logic](actors.mdx#promise-actor-logic).
 
 ## Creating transition logic
 
@@ -114,6 +120,8 @@ actor.send({ type: 'inc' });
 // logs { count: 2 }
 ```
 
+[Read more about transition actors](actors.mdx#transition-actors).
+
 ## Creating observable logic
 
 ```ts
@@ -132,6 +140,8 @@ actor.start();
 // logs 0, 1, 2, 3, 4, 5, ...
 // every second
 ```
+
+[Read more about observable actors](actors.mdx#observable-actors).
 
 ## Creating callback logic
 
@@ -163,6 +173,8 @@ actor.send({ type: 'cancel' });
 // logs 'canceled'
 ```
 
+[Read more about callback actors](actors.mdx#callback-actors).
+
 ## Parent states
 
 ```ts
@@ -192,6 +204,8 @@ actor.subscribe((snapshot) => {
 actor.start();
 // logs { active: 'one' }
 ```
+
+[Read more about parent states](parent-states.mdx).
 
 ## Actions
 
@@ -263,6 +277,8 @@ actor.send({ type: 'toggle' });
 // logs 'Activating'
 ```
 
+[Read more about actions](actions.mdx).
+
 ## Guards
 
 ```ts
@@ -313,6 +329,8 @@ const actor = createActor(
 actor.start();
 // logs 'Cannot be toggled'
 ```
+
+[Read more about guards](guards.mdx).
 
 ## Invoking actors
 
@@ -367,6 +385,8 @@ actor.start();
 // { id: 1, name: 'Leanne Graham', ... }
 ```
 
+[Read more about invoking actors](invoke.mdx).
+
 ## Spawning actors
 
 ```ts
@@ -405,6 +425,8 @@ actor.send({ type: 'loadUser' });
 // { id: 1, name: 'Leanne Graham', ... }
 ```
 
+[Read more about spawning actors](spawn.mdx).
+
 ## Input and output
 
 ```ts
@@ -432,6 +454,8 @@ const actor = createActor(greetMachine, {
 actor.start();
 // logs 'Hello, David'
 ```
+
+[Read more about input](input.mdx).
 
 ## Invoking actors with input
 
@@ -474,3 +498,5 @@ actor.start();
 // eventually logs:
 // { id: 3, name: 'Clementine Bauch', ... }
 ```
+
+[Read more about invoking actors with input](input.mdx#invoking-actors-with-input).
