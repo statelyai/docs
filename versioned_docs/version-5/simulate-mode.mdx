@@ -3,15 +3,33 @@ title: 'Simulate mode'
 description: 'Tour the features in Stately editor’s Simulate mode, including a guide to all the panels and how to simulate your machines.'
 ---
 
-You can simulate your machine as if it were live in Simulate Mode. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue. Press any available event to walkthrough your machine.
-
-Eventless (always) events will be triggered instantly upon entering their source state, unless they’re guarded with a condition. Delayed (after) events will be taken automatically after the timer has completed.
+You can simulate your machine as if it were live in Simulate Mode. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue.
 
 <EmbedMachine name="Simulate mode" embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?machineId=e5fbd908-42af-440f-8d11-91ca16a4fbda&mode=Simulate"/>
 
+## Simulate events
+
+Press any available event to walk through your machine. Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the <ListOrderedIcon size={12} /> [Log](#log).
+
+:::caution
+
+Simulate mode is disabled if your machine contains errors. States and events with errors are marked with an <AlertCircle size={12} /> error icon in **Design** mode. Hover over any error icon to find out more about the error. Fix all the errors to enable Simulate mode.
+
+:::
+
+### Eventless (always) events
+
+Eventless (always) events will be triggered instantly upon entering their source state unless they’re guarded with a condition. 
+
+### Delayed (after) events
+
+Delayed (after) events will be taken automatically after completing the timer.
+
 ## Log
 
-All triggered events are recorded in order in the [Log icon] Log panel, along with their target state. Press any event in the log panel list to return to that event. Press any state in the log panel list to return to that state.
+All triggered events are recorded, in order, in the <ListOrderedIcon size={12} /> Log panel, along with their target state. Press any event in the log panel list to return to that event. Press any state in the log panel list to return to that state.
+
+Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the <ListOrderedIcon size={12} /> [Log](#log).
 
 :::studio
 
