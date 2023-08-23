@@ -176,6 +176,12 @@ const sidebars = {
             },
           ],
         },
+        {
+          "type": "doc",
+          "label": "Lock machines",
+          "id": "lock-machines",
+          "className": "pro-feature"
+        },
         "keyboard-shortcuts",
         'canvas-view-controls',
         'user-preferences'
