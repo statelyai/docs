@@ -1,10 +1,7 @@
 ---
 title: Parent to child communication
+description: 'Invoked actors can send events to their parent using the sendParent and sendBack methods. Child actors can also receive events from the parent.'
 ---
-
-<!-- Needs technical review -->
-
-<!-- deps: ["callback-actors", "machine-actors", "send-parent"] -->
 
 We’ve learned that invoked actors can send events to their parent via the invoked machine’s `sendParent` action and the invoked callback’s `sendBack` method. Child actors can also _receive_ events from the parent, allowing for bidirectional communication.
 
