@@ -138,12 +138,6 @@ const sidebars = {
           items: [
             'import-from-code',
             'export-as-code',
-            {
-              type: 'doc',
-              label: 'Version history',
-              id: 'versions',
-              className: 'pro-feature',
-            },
             'machine-restore',
             'autolayout',
             'annotations',
@@ -175,6 +169,12 @@ const sidebars = {
               className: 'pro-feature',
             },
           ],
+        },
+        {
+          type: 'doc',
+          label: 'Version history',
+          id: 'versions',
+          className: 'pro-feature',
         },
         "keyboard-shortcuts",
         'canvas-view-controls',

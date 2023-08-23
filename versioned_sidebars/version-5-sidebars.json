@@ -100,12 +100,6 @@
             "export-as-code",
             {
               "type": "doc",
-              "label": "Version history",
-              "id": "versions",
-              "className": "pro-feature"
-            },
-            {
-              "type": "doc",
               "label": "Colors",
               "id": "colors",
               "className": "pro-feature"
@@ -210,6 +204,12 @@
               "id": "upgrade"
             }
           ]
+        },
+        {
+          "type": "doc",
+          "label": "Version history",
+          "id": "versions",
+          "className": "pro-feature"
         },
         "keyboard-shortcuts",
         "canvas-view-controls",
