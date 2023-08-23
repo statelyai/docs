@@ -7,7 +7,7 @@ const a11yEmoji = require('@fec/remark-a11y-emoji');
 const config = {
   title: 'Stately',
   tagline:
-    'Documentation for Stately: state machines and statecharts for the modern web',
+    'Stately’s documentation and blog: state machines and statecharts for the modern web',
   url: 'https://stately.ai',
   baseUrl: '/',
   baseUrlIssueBanner: false,
@@ -88,7 +88,7 @@ const config = {
           blogTitle: 'Stately Blog',
           blogDescription: 'Stately’s engineering blog',
           blogSidebarCount: 0,
-          postsPerPage: 'ALL',
+          postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
             `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
         },
