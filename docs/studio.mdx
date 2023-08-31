@@ -34,7 +34,7 @@ Here you can find all the documentation for the Stately Studio and [XState](/xst
   </li>
 </ul>
 
-The Stately Studio is a suite of tools for building app logic, including the Studio Editor, [developer tools for XState](/tools/developer-tools.mdx), and much more coming soon.
+Stately Studio is a suite of tools for building app logic, including the Editor, [developer tools for XState](/tools/developer-tools.mdx), and much more coming soon.
 
 <p>
   <ThemedImage
@@ -46,51 +46,33 @@ The Stately Studio is a suite of tools for building app logic, including the Stu
   />
 </p>
 
-You can use the [Studio Editor](#studio-editor) to model your logic using state machines and statecharts visually; no code required! Collaborate on your machines with coworkers and friends with [shared projects in teams](#projects-and-teams). Use the [XState VS Code extension](/tools/xstate-vscode-extension.mdx) to use the Editor with your codebase inside your code editor, or [export](#export) your code from the Studio into your codebase.
+You can use [Stately Studio’s editor](#studio-editor) to model your logic using state machines and statecharts visually; no code required! Collaborate on your machines with coworkers and friends with [shared projects in teams](/#projects-and-teams). Use the [XState VS Code extension](/tools/xstate-vscode-extension.mdx) to use the editor with your codebase inside your code editor, or [export](/#export) your code from Stately Studio into your codebase.
 
 :::tip
 
-What are state machines and statecharts? We’re glad you asked! [Check out our no-code introduction to state machines and statecharts](/state-machines-and-statecharts.mdx).
+What are state machines and statecharts? We’re glad you asked! [Check out our no-code introduction to state machines and statecharts](state-machines-and-statecharts.mdx).
 
 :::
 
-## Stately Studio editor
+## Stately Studio’s editor
 
-Stately Studio’s editor supports everything you need to visually build state machines and statecharts. The editor currently has two modes; **Design** mode for creating your machines and **Simulation** mode for simulating how your machine works.
+Stately Studio’s editor supports everything you need to visually build state machines and statecharts. The editor currently has two modes; [**Design** mode](design-mode.mdx) for creating your machines and [**Simulate** mode](simulate-mode.mdx) for simulating how your machine works.
 
-### Design mode
+:::video
 
-<p>
-  <ThemedImage
-    alt="A dog walk machine open in Stately Studio’s editor in Design mode. The running state is selected, with the right panel showing options for a state."
-    sources={{
-      light: '/editor.png',
-      dark: '/editor-dm.png',
-    }}
-  />
-</p>
+[Learn how to use Stately in our quick introduction video (7m36s)](https://www.youtube.com/watch?v=EzYIerEutgk).
 
-Visually add, modify, and delete states, events, and transitions, as well as data, including actions, descriptions, and invoked actors.
+:::
 
-### Simulation mode
+### Quick start tutorials
 
-<p>
-  <ThemedImage
-    alt="A dog walk machine open in Stately Studio’s editor in Simulate mode. The walking state is active, with the speed up and arrive home events both highlighted showing which events could be triggered next. The right panel shows an event log of the states and events taken."
-    sources={{
-      light: '/simulate.png',
-      dark: '/simulate-dm.png',
-    }}
-  />
-</p>
+You can access quick start tutorials from the blue <HelpCircle size={12} /> Help button in the editor.
 
-Run the statechart, trigger events, and see the active state nodes.
+When you first visit the Editor, you’ll be shown two short videos (7m36s) as a quick start guide. You can access these videos again anytime from:
+- Editor menu > Help > <GraduationCap size={12} /> **Learn Stately**.
+- The <HelpCircle size={12} /> Help button > <GraduationCap size={12} /> **Learn Stately**.
 
-### Export
-
-You can also export machines to JSON, JavaScript and TypeScript, ready to be used in your codebase with [XState](/xstate/intro.mdx).
-
-## Projects and teams
+### Projects and teams
 
 <p>
   <ThemedImage
@@ -102,7 +84,7 @@ You can also export machines to JSON, JavaScript and TypeScript, ready to be use
   />
 </p>
 
-As a [Pro user](https://stately.ai/pricing), you can create and join teams in the Stately Studio to share your machines and collaborate on private team projects. [Read more about Projects](projects.mdx) and [Teams](teams.mdx).
+As a [Pro user](https://stately.ai/pricing), you can create and join teams in Stately Studio to share your machines and collaborate on private team projects. [Read more about Projects](projects.mdx) and [Teams](teams.mdx).
 
 <p>
   <ThemedImage
@@ -114,9 +96,9 @@ As a [Pro user](https://stately.ai/pricing), you can create and join teams in th
   />
 </p>
 
-## Discover machines
+### Discover machines
 
-Are you seeking inspiration for your machine? Or do you want to learn from how somebody else models their machines? The [Discover page](https://stately.ai/registry/discover) lists all the public machines created with the Stately Studio. [Read more about the Discover page](/discover.mdx).
+Are you seeking inspiration for your machine? Or do you want to learn from how somebody else models their machines? The [Discover page](https://stately.ai/registry/discover) lists all the public machines created with Stately Studio. [Read more about the Discover page](discover.mdx).
 
 <p>
   <ThemedImage
@@ -130,14 +112,6 @@ Are you seeking inspiration for your machine? Or do you want to learn from how s
 
 ## Our roadmap
 
-Do you want to request a feature in the Stately Studio? [Check out our Canny roadmap](https://feedback.stately.ai) to post your feature idea and upvote other features. Our roadmap also shows you the features we have planned and those already in progress.
+Do you want to request a feature in Stately Studio? [Check out our roadmap](https://feedback.stately.ai) to post your feature ideas and upvote other features. Our roadmap also shows you the features we have planned and those already in progress.
 
 You can also keep up with the Stately team’s work in progress at our regular [office hour live streams](https://youtube.com/statelyai).
-
-:::xstate
-
-## Powered by XState
-
-The Stately Studio is powered by [XState](/xstate/installation.mdx), a best-in-class open source library for handling complexity at scale.
-
-:::
