@@ -125,15 +125,11 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          type: 'category',
-          label: 'Design mode',
-          link: {
-            type: 'generated-index',
-            title: 'Design mode',
-            description:
-              'Learn how to use Design mode in Stately Studio’s editor.',
-            slug: '/category/design-mode',
-            keywords: ['guides'],
+          "type": "category",
+          "label": "Design mode",
+          "link": {
+            "type": "doc",
+            "id": "design-mode"
           },
           items: [
             'import-from-code',
@@ -151,15 +147,11 @@ const sidebars = {
           ],
         },
         {
-          type: 'category',
-          label: 'Simulate mode',
-          link: {
-            type: 'generated-index',
-            title: 'Simulate mode',
-            description:
-              'Learn how to use Simulate mode in Stately Studio’s editor.',
-            slug: '/category/simulate-mode',
-            keywords: ['guides'],
+          "type": "category",
+          "label": "Simulate mode",
+          "link": {
+            "type": "doc",
+            "id": "simulate-mode"
           },
           items: [
             {
@@ -175,6 +167,12 @@ const sidebars = {
           label: 'Version history',
           id: 'versions',
           className: 'pro-feature',
+        },
+        {
+          "type": "doc",
+          "label": "Lock machines",
+          "id": "lock-machines",
+          "className": "pro-feature"
         },
         "keyboard-shortcuts",
         'canvas-view-controls',
