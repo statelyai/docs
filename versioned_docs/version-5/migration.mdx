@@ -649,6 +649,131 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### Transitions are internal by default, not external
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+All transitions are implicitly internal. This change is relevant for transitions defined on compound state nodes with `entry` or `exit` actions, invoked actors or delayed transitions (`after`). If you relied on implicit re-entering of a compound state node, use `reenter: true`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine(
+  {
+    // ...
+    states: {
+      compoundState: {
+        entry: 'someAction',
+        on: {
+          someEvent: {
+            target: 'compoundState.childState',
+            reenter: true, // make it external explicitly!
+          },
+        },
+        initial: 'childState',
+        states: {
+          childState: {},
+        },
+      },
+    },
+  },
+)
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine(
+  {
+    // ...
+    states: {
+      compoundState: {
+        entry: 'someAction',
+        on: {
+          someEvent: {
+            // implicitly external
+            target: 'compoundState.childState', // non-relative target
+          },
+        },
+        initial: 'childState',
+        states: {
+          childState: {},
+        },
+      },
+    },
+  },
+)
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine(
+  {
+    // ...
+    states: {
+      compoundState: {
+        after: {
+          1000: {
+            target: 'compoundState.childState',
+            reenter: true, // make it external explicitly!
+          }
+        },
+        initial: 'childState',
+        states: {
+          childState: {},
+        },
+      },
+    },
+  },
+)
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine(
+  {
+    // ...
+    states: {
+      compoundState: {
+        after: {
+          1000: {
+            // implicitly external
+            target: 'compoundState.childState', // non-relative target
+          }
+        },
+        initial: 'childState',
+        states: {
+          childState: {},
+        },
+      },
+    },
+  },
+)
+```
+
+</TabItem>
+</Tabs>
+
+
 ### Use `stateIn()` to validate state transitions, not `in`
 
 :::breakingchange
