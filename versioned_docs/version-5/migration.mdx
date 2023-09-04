@@ -787,7 +787,7 @@ const machine = createMachine({
     compoundState: {
       on: {
         someEvent: {
-          guard: not(stateIn('compoundState.childState')),
+          guard: not(stateIn({ compoundState: 'childState' }),
           target: '.childState',
         },
       },
