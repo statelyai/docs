@@ -8,11 +8,9 @@ slug: 2023-08-31-generating-flows
 image: /blog/2023-08-31-generating-flows.png
 ---
 
-**New Experimental Feature: Generating Flows**
+As software architecture grows increasingly complex, developers and project managers often grapple with the challenge of visualizing and organizing application logic. This is where state machines and flows come into play. State machines are a powerful tool for modeling application logic, and flows are a great way to visualize and organize state machines. At Stately, we’re committed to making state machines and flows more accessible and easier to use.
 
-As software architecture grows increasingly complex, developers and project managers often grapple with the challenge of visualizing and organizing application logic. This is where state machines and flows come into play. State machines are a powerful tool for modeling application logic, and flows are a great way to visualize and organize state machines. At Stately, we're committed to making state machines and flows more accessible and easier to use.
-
-But state machines, though powerful, have a learning curve that can be a bit intimidating. And then there's the blank slate problem: where do you even start when modeling a flow? Furthermore, when flows get large, how can you apply broad changes in a more natural way while keeping the flow intact and logically correct? These are some of the challenges we set out to solve with our new experimental generative features.
+But state machines, though powerful, have a learning curve that can be a bit intimidating. And then there’s the blank slate problem: where do you even start when modeling a flow? Furthermore, when flows get large, how can you apply broad changes in a more natural way while keeping the flow intact and logically correct? These are some of the challenges we set out to solve with our new experimental generative features.
 
 ## New generative features
 
@@ -21,12 +19,14 @@ In response to these challenges, we are thrilled to introduce two experimental b
 - The ability to **generate a flow** from plain text
 - The ability to **modify an existing flow** from plain text
 
+<!--truncate-->
+
 ### Generating a flow
 
 To utilize this feature:
 
 1. Click on the **Generate flow** button located in the top bar.
-2. Write a prompt for a flow you would like to generate; for instance, "A simple checkout process."
+2. Write a prompt for a flow you would like to generate; for instance, “A simple checkout process.”
 3. Be descriptive; the more information you provide, the more detailed the resulting state machine flow will be.
 4. Click the **Generate flow** button, wait a few seconds, and voilà!
 
@@ -37,7 +37,7 @@ Stately leverages LLMs to craft a flow that matches your prompt. The result is a
 The process to modify an existing flow is similar:
 
 1. Click on the **Generate flow** button located in the top bar.
-2. Write instructions for the modifications you would like to make to the flow; for instance, "Add a new state to the flow that handles a user cancelling their order."
+2. Write instructions for the modifications you would like to make to the flow; for instance, “Add a new state to the flow that handles a user cancelling their order.”
 3. As before, the more information you provide, the more detailed the resulting state machine flow will be.
 4. Toggle the **Modify current flow** switch.
 5. Click the **Modify current flow** button, wait a few seconds, and voilà!
@@ -48,7 +48,7 @@ Stately will use the existing flow as context to generate a new flow that incorp
 
 The potential is vast. Think about generating flows for domains like customer support, inventory management, or online voting systems. Imagine refining a flow to incorporate customer feedback, include multilingual support, or even a state to address system downtimes. The horizon is truly limitless.
 
-All applications have state machine flows in them, whether they're implicitly or explicitly defined, in the frontend or backend. There's many possibilities for flows to generate and modify. Here's some examples:
+All applications have state machine flows in them, whether they’re implicitly or explicitly defined, in the frontend or backend. There’s many possibilities for flows to generate and modify. Here’s some examples:
 
 - A flow for a simple checkout process
 - A newsletter signup flow
@@ -78,4 +78,4 @@ And much, much more. We want Stately to be the source of truth for your applicat
 
 ---
 
-Stately's experimental generative features are available exclusively to our [Pro users](/docs/studio-pro-plan) in beta. We're offering a [one-month free trial](/pricing), so you can try it out and see for yourself. We'd love to hear your feedback and ideas, so please try out the new features and let us know what you think!
+Stately’s experimental generative features are available exclusively to our [Pro users](/docs/studio-pro-plan) in beta. We’re offering a [one-month free trial](/pricing), so you can try it out and see for yourself. We’d love to hear your feedback and ideas, so please try out the new features and let us know what you think!
