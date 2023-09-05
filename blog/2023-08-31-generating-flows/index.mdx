@@ -30,7 +30,24 @@ To utilize this feature:
 3. Be descriptive; the more information you provide, the more detailed the resulting state machine flow will be.
 4. Click the **Generate flow** button, wait a few seconds, and voilà!
 
+<p>
+  <ThemedImage
+    alt="Generate flow dialog: Experimental feature. With the flow description of “A simple checkout process”, with the submit button “Generating flow” in progress."
+    sources={{
+      light: '/blog/2023-08-31-generating-flows/generate-flow.png',
+      dark: '/blog/2023-08-31-generating-flows/generate-flow-dm.png',
+    }}
+  />
+</p>
+
 Stately leverages LLMs to craft a flow that matches your prompt. The result is a flow that is both understandable and consistent with your specifications, and can be further refined to suit your needs.
+
+_The following machine is the result of generating the flow described by “A simple checkout process.”_
+
+<EmbedMachine
+  name="checkout"
+  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
+/>
 
 ### Modifying a flow
 
@@ -43,6 +60,13 @@ The process to modify an existing flow is similar:
 5. Click the **Modify current flow** button, wait a few seconds, and voilà!
 
 Stately will use the existing flow as context to generate a new flow that incorporates your modifications. Keep in mind that this will send your flow to OpenAI, so only use this feature if you are comfortable with that.
+
+_The following machine is the result of modifying the previous flow with the description “Add a new state to the flow that handles a user cancelling their order.”_
+
+<EmbedMachine
+  name="checkout, modified"
+  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d3b4da3d-f9ee-46ef-b85e-736af1dac843"
+/>
 
 ## Be creative
 
@@ -75,7 +99,5 @@ Our vision goes beyond mere generation. Upcoming features include:
 - Narratives and summaries of flows in natural language.
 
 And much, much more. We want Stately to be the source of truth for your application logic, not just as a collection of flows, but as an intelligent tool for helping you and your team build better software.
-
----
 
 Stately’s experimental generative features are available exclusively to our [Pro users](/docs/studio-pro-plan) in beta. We’re offering a [one-month free trial](/pricing), so you can try it out and see for yourself. We’d love to hear your feedback and ideas, so please try out the new features and let us know what you think!
