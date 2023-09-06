@@ -42,10 +42,10 @@ To utilize this feature:
 
 Stately leverages LLMs to craft a flow that matches your prompt. The result is a flow that is both understandable and consistent with your specifications, and can be further refined to suit your needs.
 
-_The following machine is the result of generating the flow described by “A simple checkout process.”_
+_The following machine is the result of generating the flow described by “A checkout flow where you can edit basket, update basket, add shipping details, add billing details, calculate shipping costs, and take payment. Payment can succeed or fail. Succeed is the final state. On fail, payment can be tried again after update billing details.”_
 
 <EmbedMachine
-  name="checkout"
+  name="checkoutFlow"
   embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
 />
 
@@ -61,11 +61,11 @@ The process to modify an existing flow is similar:
 
 Stately will use the existing flow as context to generate a new flow that incorporates your modifications. Keep in mind that this will send your flow to OpenAI, so only use this feature if you are comfortable with that.
 
-_The following machine is the result of modifying the previous flow with the description “Add a new state to the flow that handles a user cancelling their order.”_
+_The following machine is the result of modifying the previous flow with the description “Viewing basket is the initial state.”_
 
 <EmbedMachine
-  name="checkout, modified"
-  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d3b4da3d-f9ee-46ef-b85e-736af1dac843"
+  name="checkoutFlow, modified"
+  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
 />
 
 ## Be creative
