@@ -48,18 +48,18 @@ In XState, actor logic is defined by an object containing methods like `.transit
 
 ## Creating actors
 
-You can create an actor, which is a “live” instance of some actor logic, via `interpret(actorLogic, options?)`. The `interpret(...)` function takes the following arguments:
+You can create an actor, which is a “live” instance of some actor logic, via `createActor(actorLogic, options?)`. The `createActor(...)` function takes the following arguments:
 
-- `actorLogic`: the [actor logic](actors.mdx#creating-actor-logic) to interpret
-- `options` (optional): interpreter options
+- `actorLogic`: the [actor logic](actors.mdx#creating-actor-logic) to create an actor from
+- `options` (optional): actor options
 
-When you `interpret(...)` actor logic, you implicitly create an [actor system](system.mdx) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
+When you create an actor from actor logic via `createActor(actorLogic)`, you implicitly create an [actor system](system.mdx) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
 
 ```ts
-import { interpret } from 'xstate';
+import { createActor } from 'xstate';
 import { someActorLogic } from './someActorLogic.ts';
 
-const actor = interpret(someActorLogic);
+const actor = createActor(someActorLogic);
 actor.start();
 
 // Now the actor can receive events
@@ -91,7 +91,7 @@ When an actor receives an event, its internal state may change. An actor may emi
 An actor’s snapshot is not necessarily the same as its internal state; instead, it is a value the actor wants to _share_ with subscribers. For example, a promise actor has an internal state consisting of `data`, `status`, and other internal properties, but only the `data` is emitted as its snapshot.
 
 ```ts
-import { fromPromise, interpret } from 'xstate';
+import { fromPromise, createActor } from 'xstate';
 
 const countLogic = fromPromise(async () => {
   const count = await fetchCount();
@@ -99,7 +99,7 @@ const countLogic = fromPromise(async () => {
   return count;
 });
 
-const countActor = interpret(countLogic);
+const countActor = createActor(countLogic);
 countActor.start();
 
 countActor.getSnapshot(); // logs undefined
@@ -148,14 +148,14 @@ subscription.unsubscribe();
 
 When the actor is stopped, all observers will automatically be unsubscribed.
 
-You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `interpret(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
+You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
-You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `interpret(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
+You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
 ```ts
 const persistedState = JSON.parse(localStorage.get('some-persisted-state'));
 
-const actor = interpret(someLogic, {
+const actor = createActor(someLogic, {
   // highlight-start
   state: persistedState,
   // highlight-end
@@ -206,7 +206,7 @@ const toggleMachine = createMachine({
   },
 });
 
-const toggleActor = interpret(toggleMachine);
+const toggleActor = createActor(toggleMachine);
 toggleActor.subscribe((snapshot) => {
   // snapshot is the machine's state
   console.log('state', snapshot.value);
@@ -232,7 +232,7 @@ const promiseLogic = fromPromise(() => {
   return fetch('...').then((data) => data.json());
 });
 
-const promiseActor = interpret(promiseLogic);
+const promiseActor = createActor(promiseLogic);
 promiseActor.subscribe((snapshot) => {
   console.log(snapshot);
 });
@@ -264,7 +264,7 @@ const transitionLogic = fromTransition(
   { count: 0 },
 );
 
-const transitionActor = interpret(transitionLogic);
+const transitionActor = createActor(transitionLogic);
 transitionActor.subscribe((snapshot) => {
   console.log(snapshot);
 });
@@ -286,7 +286,7 @@ Sending events to observable actors will have no effect.
 ```ts
 const secondLogic = fromObservable(() => interval(1000));
 
-const secondActor = interpret(secondLogic);
+const secondActor = createActor(secondLogic);
 secondActor.start();
 // At every second:
 // Logs 0
@@ -316,7 +316,7 @@ const canvasMachine = createMachine({
   },
 });
 
-const canvasActor = interpret(canvasMachine);
+const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
 

@@ -6,10 +6,10 @@ Actors can persist their internal state and restore it later. **Persistence** re
 
 In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable & traceable.
 
-In XState, you can obtain the state to be persisted via `actor.getPersistedState()` and restore state via `interpret(behavior, { state: restoredState }).start()`:
+In XState, you can obtain the state to be persisted via `actor.getPersistedState()` and restore state via `createActor(behavior, { state: restoredState }).start()`:
 
 ```ts
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // Get state to be persisted
 const persistedState = feedbackActor.getPersistedState();
@@ -20,7 +20,7 @@ localStorage.setItem('feedback', JSON.stringify(persistedState));
 // Restore state
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
-const restoredFeedbackActor = interpret(feedbackMachine, {
+const restoredFeedbackActor = createActor(feedbackMachine, {
   state: restoredState,
 }).start();
 ```
@@ -30,7 +30,7 @@ const restoredFeedbackActor = interpret(feedbackMachine, {
 You can obtain the state to be persisted via `actor.getPersistedState()`:
 
 ```ts
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // Get state to be persisted
 const persistedState = feedbackActor.getPersistedState();
@@ -54,14 +54,14 @@ console.log(persistedState);
 
 ## Restoring state
 
-You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `interpret(logic, { state: restoredState })`:
+You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `createActor(logic, { state: restoredState })`:
 
 ```ts
 // Get persisted state
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
 // Restore state
-const feedbackActor = interpret(feedbackMachine, {
+const feedbackActor = createActor(feedbackMachine, {
   state: restoredState,
 });
 
@@ -87,7 +87,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const feedbackActor = interpret(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine).start();
 
 // Persist state
 const persistedState = feedbackActor.getPersistedState();
@@ -98,7 +98,7 @@ localStorage.setItem('feedback', JSON.stringify(persistedState));
 // Restore state
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
-const restoredFeedbackActor = interpret(feedbackMachine, {
+const restoredFeedbackActor = createActor(feedbackMachine, {
   state: restoredState,
 }).start();
 // Will restore both the feedbackActor and the invoked form actor at
@@ -149,7 +149,7 @@ const persistedState = actor.getPersistedState();
 ```ts
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
-const restoredActor = interpret(actorMachine, {
+const restoredActor = createActor(actorMachine, {
   state: restoredState,
 }).start();
 ```

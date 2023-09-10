@@ -48,7 +48,10 @@ const playerMachine = createMachine({
 });
 ```
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3" />
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3"
+/>
 
 ## Using states in Stately Studio
 
@@ -91,7 +94,7 @@ To set the state back as a normal state, follow the same steps and select the **
 The [state value](states.mdx#state-value) of a parallel state is an object with the state values of each of its regions.
 
 ```ts
-const playerActor = interpret(playerMachine);
+const playerActor = createActor(playerMachine);
 playerActor.start();
 
 console.log(playerActor.getSnapshot().value);
