@@ -592,7 +592,7 @@ html[data-theme='dark'] body {
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-700);
 
   /* navbar */
-  --ifm-navbar-background-color: var(--st-navbar-background);
+  --ifm-navbar-background-color: var(--ifm-background-color);
   --ifm-navbar-shadow: none;
 
   /* contents list */
@@ -603,6 +603,10 @@ html[data-theme='dark'] body {
   --st-tag-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
   --st-tag-text: var(--st-gray-50);
   --st-tag-background: var(--st-gray-850);
+
+  /* background */
+  --ifm-background-color: #15151d;
+  --ifm-footer-background-color: var(--ifm-background-color);
 }
 
 /* Code examples */
@@ -1699,7 +1703,6 @@ ul.blog-list {
 /* Footer */
 
 .footer {
-  background: var(--st-background);
   border-top: 1px solid var(--st-header-border);
   padding: 0.5rem;
 }
