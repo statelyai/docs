@@ -6,13 +6,23 @@ Use this cheatsheet to quickly look up the syntax for XState v5 beta.
 
 ## Installing XState
 
-```bash title="using yarn"
+<Tabs>
+<TabItem value="yarn" label="yarn">
+
+```bash
 yarn add xstate
 ```
 
-```bash title="using npm"
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
 npm install xstate
 ```
+
+</TabItem>
+</Tabs>
 
 [Read more on installing XState](installation.mdx).
 
@@ -31,12 +41,12 @@ const machine = createMachine({
         count: ({ context }) => context.count + 1,
       }),
       on: {
-        toggle: 'active',
+        toggle: { target: 'active' },
       },
     },
     inactive: {
       on: {
-        toggle: 'inactive',
+        toggle: { target: 'inactive' },
       },
     },
   },
@@ -79,7 +89,7 @@ actor.subscribe((snapshot) => {
 
 actor.start();
 // logs: {
-//   message: "https://images.dog.ceo/breeds/kuvasz/n02104029_110.jpg", 
+//   message: "https://images.dog.ceo/breeds/kuvasz/n02104029_110.jpg",
 //   status: "success"
 // }
 ```
@@ -93,17 +103,20 @@ A transition function is just like a reducer.
 ```ts
 import { fromTransition, createActor } from 'xstate';
 
-const transitionLogic = fromTransition((state, event) => {
-  switch (event.type) {
-    case 'inc':
-      return {
-        ...state,
-        count: state.count + 1,
-      };
-    default:
-      return state;
-  }
-}, 0); // <- initial state
+const transitionLogic = fromTransition(
+  (state, event) => {
+    switch (event.type) {
+      case 'inc':
+        return {
+          ...state,
+          count: state.count + 1,
+        };
+      default:
+        return state;
+    }
+  },
+  { count: 0 }, // initial state
+);
 
 const actor = createActor(transitionLogic);
 
@@ -218,23 +231,24 @@ const machine = createMachine({
   states: {
     active: {
       // highlight-next-line
-      entry: 'activate',
+      entry: { type: 'activate' },
       // highlight-next-line
-      exit: 'deactivate',
+      exit: { type: 'deactivate' },
       on: {
         toggle: {
           target: 'inactive',
           // highlight-next-line
-          actions: ['notify'],
+          actions: [{ type: 'notify' }],
         },
       },
     },
     inactive: {
       on: {
         toggle: {
-          type: 'active',
+          target: 'active',
           // highlight-start
           actions: [
+            // action with params
             {
               type: 'notify',
               params: {
@@ -306,6 +320,13 @@ const machine = createMachine({
       },
     },
     active: {
+      on: {
+        toggle: {
+          // Guard with params
+          guard: { type: 'isAfterTime', params: { time: '16:00' } },
+          target: 'inactive',
+        },
+      },
       // ...
     },
   },
@@ -316,6 +337,12 @@ const actor = createActor(
     // highlight-start
     guards: {
       canBeToggled: ({ context }) => context.canActivate,
+      isAfterTime: ({ guard }) => {
+        const { time } = guard.params;
+        const [hour, minute] = time.split(':');
+        const now = new Date();
+        return now.getHours() > hour && now.getMinutes() > minute;
+      },
     },
     // highlight-end
     actions: {
@@ -500,3 +527,38 @@ actor.start();
 ```
 
 [Read more about invoking actors with input](input.mdx#invoking-actors-with-input).
+
+## Types
+
+```ts
+const promiseLogic = fromPromise(async () => {
+  /* ... */
+});
+
+const machine = createMachine({
+  types: {} as {
+    context: {
+      count: number;
+    };
+    events:
+      | {
+          type: 'inc';
+        }
+      | { type: 'dec' }
+      | { type: 'incBy'; amount: number };
+    actions:
+      | { type: 'notify'; params: { message: string } }
+      | { type: 'handleChange' };
+    guards:
+      | { type: 'canBeToggled' }
+      | { type: 'isAfterTime'; params: { time: string } };
+    actors: {
+      logic: typeof promiseLogic;
+      src: 'someSrc';
+      id: 'promise1' | 'promise2';
+    };
+    delays: 'shortTimeout' | 'longTimeout';
+    tags: 'tag1' | 'tag2';
+  },
+});
+```
