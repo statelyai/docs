@@ -660,7 +660,7 @@ h1 {
 }
 
 .markdown h1, .markdown h1:first-child, .index-page h1 {
-  --ifm-h1-font-size: 2.5rem;
+  --ifm-h1-font-size: 1.875rem;
 }
 
 h2 {
@@ -781,7 +781,7 @@ a:hover {
 article,
 .index-page {
   margin: 0 auto;
-  max-width: 66ch;
+  max-width: 50rem;
 }
 
 /* back to top button */
@@ -1077,7 +1077,7 @@ html [class*='toggleButton'] {
 
 .theme-doc-sidebar-item-category-level-1 a,
 .theme-doc-sidebar-item-link-level-1 a {
-  color: var(--st-text);
+  color: var(--ifm-color-emphasis-0);
 }
 
 .theme-doc-sidebar-item-category-level-1 ul li,

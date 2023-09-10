@@ -235,7 +235,31 @@ on: {
 
 ## TypeScript
 
-_Coming soon_.
+You can strongly type the `guards` of your machine in the `types.guards` property of the machine config.
+
+```ts
+const machine = createMachine({
+  types: {} as {
+    // highlight-start
+    guards:
+      | {
+          type: 'isGreaterThan';
+          params: {
+            count: number;
+          };
+        }
+      | { type: 'isAllowed' };
+    // highlight-end
+  },
+  // ...
+  on: {
+    event: {
+      guard: { type: 'isGreaterThan', params: { count: 5 } },
+      // ...
+    },
+  },
+});
+```
 
 ## Cheatsheet
 

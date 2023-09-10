@@ -151,13 +151,22 @@ feedbackActor.send({
 
 ## TypeScript
 
+You can strongly type the `context` of your machine in the `types.context` property of the machine config.
+
 ```ts
 const machine = createMachine({
-  schema: {} as {
+  types: {} as {
+    // highlight-start
     context: {
       feedback: string;
       rating: number;
     };
+    // highlight-end
+  },
+  // Initial context
+  context: {
+    feedback: '',
+    rating: 5,
   },
   entry: ({ context }) => {
     context.feedback; // string

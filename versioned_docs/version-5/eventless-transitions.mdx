@@ -26,7 +26,10 @@ Eventless transitions are labeled “always” and often referred to as “alway
 }
 ```
 
-<SkipDownLink text="Jump to learning more about eventless transitions in XState" link="#eventless-transitions-and-guards"/>
+<SkipDownLink
+  text="Jump to learning more about eventless transitions in XState"
+  link="#eventless-transitions-and-guards"
+/>
 
 ## Using eventless transitions in Stately Studio
 
@@ -77,7 +80,24 @@ Coming soon… examples
 
 ## TypeScript
 
-_Coming soon_
+Eventless transitions can potentially be enabled by any event, so the `event` type is the union of all possible events.
+
+```ts
+const machine = createMachine({
+  types: {} as {
+    events: { type: 'greet'; message: string } | { type: 'submit' };
+  },
+  // ...
+  always: {
+    actions: ({ event }) => {
+      event.type; // 'greet' | 'submit'
+    },
+    guard: ({ event }) => {
+      event.type; // 'greet' | 'submit'
+    },
+  },
+});
+```
 
 ## Cheatsheet
 

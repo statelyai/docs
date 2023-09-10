@@ -524,7 +524,29 @@ const countMachine = createMachine({
 
 ## TypeScript
 
-_Coming soon_
+You can strongly type the `actions` of your machine in the `types.actions` property of the machine config.
+
+```ts
+const machine = createMachine({
+  types: {} as {
+    // highlight-start
+    actions:
+      | {
+          type: 'track';
+          params: {
+            response: string;
+          };
+        }
+      | { type: 'increment'; params: { value: number } };
+    // highlight-end
+  },
+  // ...
+  entry: [
+    { type: 'track', params: { response: 'good' } },
+    { type: 'increment', params: { value: 1 } },
+  ],
+});
+```
 
 ## Cheatsheet
 

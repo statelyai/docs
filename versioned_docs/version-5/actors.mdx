@@ -413,7 +413,39 @@ function Component(props: { actor?: AnyActorRef }) {
 
 ## TypeScript
 
-_Coming soon_
+You can strongly type the `actors` of your machine in the `types.actors` property of the machine config.
+
+```ts
+const fetcher = fromPromise(
+  async ({ input }: { input: { userId: string } }) => {
+    const user = await fetchUser(input.userId);
+
+    return user;
+  },
+);
+
+const machine = createMachine({
+  types: {} as {
+    // highlight-start
+    actors: {
+      src: 'fetchData'; // src name (inline behaviors ideally inferred)
+      id: 'fetch1' | 'fetch2'; // possible ids (optional)
+      logic: typeof fetcher;
+    };
+    // highlight-end
+  },
+  invoke: {
+    src: 'fetchData', // strongly typed
+    id: 'fetch2', // strongly typed
+    onDone: {
+      actions: ({ event }) => {
+        event.output; // strongly typed as { result: string }
+      },
+    },
+    input: { userId: '42' }, // strongly typed
+  },
+});
+```
 
 ## Cheatsheet
 
