@@ -339,7 +339,7 @@ h2 {
   font-family: 'TTCommons', Arial, sans-serif;
   font-weight: 750;
   margin: 0.83em 0;
-} 
+}
 
 p {
   margin: 1em 0;
@@ -2226,9 +2226,10 @@ h2.pricing-heading {
 
 .pricing-text.details-bold {
   font-size: var(--font-xxsmall);
-  color: var(--chakra-colors-gray-50);
+  color: var(--chakra-colors-gray-200) !important;
   margin-top: 0.5rem;
-  font-variation-settings: 'wght' 600;
+  font-variation-settings: 'wght' 200;
+  max-width: 8em;
 }
 
 .pricing-text.description {
