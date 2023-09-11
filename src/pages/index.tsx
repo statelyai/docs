@@ -1,7 +1,6 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import React, { useEffect } from 'react';
 import { drawArrows } from '../components/landing-page-arrows';
-import '/landing-page/styles.css'; // import the CSS file before the HTML file to avoid layout shifts
 
 // https://github.com/facebook/docusaurus/discussions/8387#discussioncomment-6067944
 // Loading a static HTML only works during SSR, so we use this hack to make it work during CSR
