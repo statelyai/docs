@@ -24,7 +24,7 @@ html,
 body {
   font-weight: var(--ifm-font-weight-normal);
   letter-spacing: -0.011rem;
-  line-height: 1.45;
+  line-height: 1.625;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -331,7 +331,7 @@ html[data-theme='light'] body {
   --st-text: var(--st-gray-800);
   --st-text-highlight: var(--st-gray-900);
   --st-heading: var(--st-text-highlight);
-  --st-text-secondary: var(--st-gray-700);
+  --st-text-secondary: var(--st-gray-600);
   --st-text-link: var(--st-blue-700);
   --st-text-link-hover: var(--st-blue-600);
   --st-text-link-active: var(--st-blue-500);
@@ -481,9 +481,9 @@ html[data-theme='dark'] body {
   --st-background: var(--st-gray-900);
   --st-background-secondary: var(--st-gray-800);
   --st-text: var(--st-gray-200);
-  --st-text-highlight: var(--st-gray-100);
+  --st-text-highlight: var(--st-gray-50);
   --st-heading: var(--st-text-highlight);
-  --st-text-secondary: var(--st-gray-200);
+  --st-text-secondary: var(--st-gray-400);
   --st-text-link: var(--st-blue-300);
   --st-text-link-hover: var(--st-blue-400);
   --st-text-link-active: var(--st-blue-400);
@@ -664,7 +664,7 @@ h1 {
 }
 
 .markdown h1, .markdown h1:first-child, .index-page h1 {
-  --ifm-h1-font-size: 1.875rem;
+  --ifm-h1-font-size: 2rem;
 }
 
 h2 {
@@ -672,31 +672,33 @@ h2 {
 }
 
 .markdown h2 {
-  --ifm-h2-font-size: 2rem;
+  margin-top: 4.5rem;
+  --ifm-h2-font-size: 1.5rem;
 }
 
 h3 {
   letter-spacing: -0.019rem;
+  color: var(--st-heading);
 }
 
 .markdown h3 {
-  --ifm-h3-font-size: 1.5rem;
+  --ifm-h3-font-size: 1.25rem;
 }
 
 .markdown > h3 {
-    margin-top: calc(var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading));
+  margin-top: 3rem;
 }
 
 .markdown h4 {
-  --ifm-h4-font-size: 1.2rem;
+  --ifm-h4-font-size: 1.15rem;
 }
 
 .markdown h5 {
-  --ifm-h5-font-size: 1.1rem;
+  --ifm-h5-font-size: 1.05rem;
 }
 
 .markdown h6 {
-  --ifm-h6-font-size: 1.05rem;
+  --ifm-h6-font-size: 1rem;
 }
 
 .text--bold,
@@ -786,6 +788,9 @@ article,
 .index-page {
   margin: 0 auto;
   max-width: 50rem;
+  /* adds more side padding when in column mode */
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /* back to top button */
@@ -850,6 +855,11 @@ code {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
   }
+  article, .index-page {
+  /* Let content breath some on a not-huge screen */
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 }
 
 .navbar__logo {
@@ -1113,6 +1123,7 @@ html [class*='toggleButton'] {
 }
 .menu__list-item:last-of-type {
   padding-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
 }
 .menu__list-item:not(:first-child) {
   margin-top: 0;
@@ -1164,6 +1175,7 @@ html [class*='toggleButton'] {
 .menu__list-item .menu__list-item .menu__link--active {
   border-left: 3px solid var(--st-menu-link-border-active);
   margin-left: -4px;
+  color: var(--ifm-color-emphasis-0);
 }
 
 .menu__list-item .menu__list-item .menu__list-item .menu__link--active {
