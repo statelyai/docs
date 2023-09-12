@@ -22,6 +22,7 @@
 
 html,
 body {
+  background-color: var(--st-background);
   font-weight: var(--ifm-font-weight-normal);
   letter-spacing: -0.011rem;
   line-height: 1.625;
@@ -1091,7 +1092,7 @@ html [class*='toggleButton'] {
 
 .theme-doc-sidebar-item-category-level-1 a,
 .theme-doc-sidebar-item-link-level-1 a {
-  color: var(--ifm-color-emphasis-0);
+  color: var(--st-text-highlight);
 }
 
 .theme-doc-sidebar-item-category-level-1 ul li,
@@ -1175,7 +1176,7 @@ html [class*='toggleButton'] {
 .menu__list-item .menu__list-item .menu__link--active {
   border-left: 3px solid var(--st-menu-link-border-active);
   margin-left: -4px;
-  color: var(--ifm-color-emphasis-0);
+  color: var(--st-text-highlight);
 }
 
 .menu__list-item .menu__list-item .menu__list-item .menu__link--active {
@@ -1717,6 +1718,7 @@ ul.blog-list {
 /* Footer */
 
 .footer {
+  background: var(--st-background);
   border-top: 1px solid var(--st-header-border);
   padding: 0.5rem;
 }
