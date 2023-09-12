@@ -244,7 +244,8 @@
         "initial-states",
         "final-states",
         "history-states",
-        "persistence"
+        "persistence",
+        "tags"
       ]
     },
     {

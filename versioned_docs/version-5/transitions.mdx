@@ -6,7 +6,10 @@ A **transition** is a change from one finite state to another, triggered by an e
 
 An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7"/>
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7"
+/>
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
 
@@ -30,7 +33,10 @@ const feedbackMachine = createMachine({
 });
 ```
 
-<SkipDownLink text="Jump to learning more about event objects in XState" link="#event-objects"/>
+<SkipDownLink
+  text="Jump to learning more about event objects in XState"
+  link="#event-objects"
+/>
 
 ## Using transitions and events in Stately Studio
 
@@ -155,7 +161,7 @@ In XState v4, re-entering transitions were known as **external transitions**, an
 
 Coming soon… illustration showing no re-enter vs. re-enter
 
-Coming soon…  example with `{ target: '.child', reenter: true }`
+Coming soon… example with `{ target: '.child', reenter: true }`
 
 ## Transitions to any state
 
@@ -247,7 +253,7 @@ Since parallel states have multiple regions that can be active at the same time,
 
 Multiple targets are specified as an array of strings:
 
-Coming soon…  example.
+Coming soon… example.
 
 ## Other transitions
 
@@ -302,7 +308,24 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 ## TypeScript
 
-_Coming soon_
+Transitions mainly use the event type that they are enabled by.
+
+```ts
+const machine = createMachine({
+  types: {} as {
+    events: { type: 'greet'; message: string } | { type: 'submit' };
+  },
+  // ...
+  on: {
+    greet: {
+      actions: ({ event }) => {
+        event.type; // 'greet'
+        event.message; // string
+      },
+    },
+  },
+});
+```
 
 ## Cheatsheet
 

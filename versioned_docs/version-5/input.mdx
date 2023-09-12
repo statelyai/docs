@@ -253,16 +253,36 @@ const Component = (props) => {
 
 ## TypeScript
 
+You can strongly type the `input` of your machine in the `types.input` property of the machine config.
+
 ```ts
 import { createActor, createMachine } from 'xstate';
 
 const machine = createMachine({
   types: {} as {
+    // highlight-start
     input: {
       userId: string;
       defaultRating: number;
     };
-    // ...
+    // highlight-end
+    context: {
+      userId: string;
+      feedback: string;
+      rating: number;
+    };
+  },
+  context: ({ input }) => ({
+    userId: input.userId,
+    feedback: '',
+    rating: input.defaultRating,
+  }),
+});
+
+const actor = createActor(machine, {
+  input: {
+    userId: '123',
+    defaultRating: 5,
   },
 });
 ```
