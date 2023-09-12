@@ -116,7 +116,7 @@ body {
   --st-violet-50: #fcecff;
 
   /* Gray */
-  --st-gray-900: #151618;
+  --st-gray-900: #15151d;
   --st-gray-850: #212226;
   --st-gray-825: #27282a;
   --st-gray-800: #2d2e34;
@@ -159,6 +159,7 @@ body {
   --ifm-link-decoration: underline;
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
   --ifm-heading-vertical-rhythm-bottom: 0.75;
+  --ifm-footer-background-color: var(--st-background);
   --ifm-code-background: var(--st-code-highlight-background);
   --ifm-code-border-radius: 0.25em;
   --ifm-code-font-size: 95%;
@@ -301,7 +302,7 @@ body {
   /* tables */
   --ifm-table-border-color: var(--st-layout-border);
   --ifm-table-background: transparent;
-  --ifm-table-stripe-background: rgba(255,255,255,0.6);
+  --ifm-table-stripe-background: rgba(255, 255, 255, 0.6);
   --ifm-footer-link-color: var(--st-footer-link);
 
   /* admonitions */
@@ -349,7 +350,7 @@ html[data-theme='light'] body {
   --st-layout-border-secondary: var(--st-gray-100);
   --st-code-border: var(--st-gray-100);
   --st-codeblock-background: white;
-  --st-code-inline-border: 1px solid rgba(191, 227, 248, .5);/* var(--st-blue-100) in rgba */
+  --st-code-inline-border: 1px solid rgba(191, 227, 248, 0.5); /* var(--st-blue-100) in rgba */
   --st-code-inline-text: var(--st-blue-900);
   --st-code-highlight-background: var(--st-blue-50);
   --st-copy-button-background: var(--st-blue-100);
@@ -413,7 +414,7 @@ html[data-theme='light'] body {
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-100);
 
   /* tags */
-  --st-tag-border: 1px solid rgba(191, 227, 248, .5);/* var(--st-blue-100) in rgba */
+  --st-tag-border: 1px solid rgba(191, 227, 248, 0.5); /* var(--st-blue-100) in rgba */
   --st-tag-text: var(--st-blue-900);
   --st-tag-background: var(--st-blue-50);
 
@@ -502,7 +503,7 @@ html[data-theme='dark'] body {
   --st-layout-border: var(--st-gray-700);
   --st-layout-border-secondary: var(--st-gray-700);
   --st-code-border: transparent;
-  --st-code-inline-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
+  --st-code-inline-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
   --st-code-inline-text: var(--st-gray-50);
   --st-codeblock-background: var(--st-gray-850);
   --st-code-highlight-background: var(--st-gray-800);
@@ -592,7 +593,7 @@ html[data-theme='dark'] body {
   --docsearch-footer-shadow: inset 0 1px 0 0 var(--st-gray-700);
 
   /* navbar */
-  --ifm-navbar-background-color: var(--ifm-background-color);
+  --ifm-navbar-background-color: var(--st-navbar-background);
   --ifm-navbar-shadow: none;
 
   /* contents list */
@@ -600,13 +601,9 @@ html[data-theme='dark'] body {
   --ifm-toc-link-color: var(--st-text);
 
   /* tags */
-  --st-tag-border: 1px solid rgba(69, 71, 79, .5);/* var(--st-gray-700) in rgba */
+  --st-tag-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
   --st-tag-text: var(--st-gray-50);
   --st-tag-background: var(--st-gray-850);
-
-  /* background */
-  --ifm-background-color: #15151d;
-  --ifm-footer-background-color: var(--ifm-background-color);
 }
 
 /* Code examples */
@@ -663,7 +660,9 @@ h1 {
   letter-spacing: -0.022rem;
 }
 
-.markdown h1, .markdown h1:first-child, .index-page h1 {
+.markdown h1,
+.markdown h1:first-child,
+.index-page h1 {
   --ifm-h1-font-size: 2rem;
 }
 
@@ -855,11 +854,12 @@ code {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
   }
-  article, .index-page {
-  /* Let content breath some on a not-huge screen */
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
+  article,
+  .index-page {
+    /* Let content breath some on a not-huge screen */
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .navbar__logo {
@@ -1380,7 +1380,8 @@ details summary::before {
   --ifm-alert-border-color: var(--st-tip-accent);
 }
 
-.alert--danger, .alert--breakingchange {
+.alert--danger,
+.alert--breakingchange {
   --ifm-alert-background-color: var(--st-danger-background);
   --ifm-alert-background-color-highlight: var(--st-danger-accent);
   --ifm-alert-foreground-color: var(--st-danger-text);
@@ -1395,7 +1396,8 @@ details summary::before {
   --ifm-alert-border-color: var(--st-warning-accent);
 }
 
-.alert--v4compatible, .alert--breakingchange {
+.alert--v4compatible,
+.alert--breakingchange {
   width: fit-content;
   padding: 4px 10px;
 }
@@ -1586,8 +1588,8 @@ a.link-box strong {
   text-align: center;
 }
 
-.docs-intro h2:hover a.hash-link  {
- opacity: 0;
+.docs-intro h2:hover a.hash-link {
+  opacity: 0;
 }
 
 .docs-intro-studio,
