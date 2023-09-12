@@ -53,12 +53,12 @@ const config = {
           includeCurrentVersion: true,
           versions: {
             current: {
-              label: 'XState v4',
-            },
-            5: {
               label: 'XState v5',
-              path: 'xstate-v5',
-              banner: 'unreleased',
+            },
+            4: {
+              label: 'XState v4',
+              path: 'xstate-v4',
+              banner: 'none',
             },
           },
 
@@ -90,7 +90,7 @@ const config = {
           blogSidebarCount: 0,
           postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
-            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
+            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
