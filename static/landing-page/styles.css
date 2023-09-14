@@ -4,6 +4,7 @@
   font-family: 'TTCommons';
   src: url('assets/ttcommons.woff2') format('woff2');
   font-display: swap;
+  font-weight: '100 1000',
 }
 
 /* -- Variables
@@ -312,13 +313,14 @@ h6 {
 
 h1 {
   font-size: var(--font-xxl);
-  font-variation-settings: 'wght' 450;
+  font-variation-settings: 'wght' 700;
   margin-bottom: 0.25em;
   text-align: center;
 }
 
 h2 {
   font-size: var(--font-large);
+  font-variation-settings: 'wght' 500;
 }
 
 body.privacy main h2,
@@ -532,6 +534,14 @@ input[type='submit'],
   color: var(--button-orange-txt);
 }
 
+.button-link.ghost {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.24)
+}
+.button-link.ghost:hover, .button-link-cta-ghost:active {
+  background: rgba(255,255,255,0.11);
+}
+
 .duo-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -708,7 +718,7 @@ body {
   margin: 0.3em auto 4.6em;
   max-width: var(--max-header-width);
   padding: 0 1.35em;
-}
+  }
 
 .navigation-list a {
   color: var(--white);
@@ -828,6 +838,7 @@ body {
 
 .intro-title {
   font-size: var(--font-xxxl);
+  font-variation-settings: "wght" 700;
 }
 
 [data-edge-source='first-heading'] {
@@ -2264,4 +2275,9 @@ h2.pricing-heading {
 
 .pricing-section {
   margin-bottom: 8rem;
+}
+
+
+.pink {
+  color: #cf249b
 }
