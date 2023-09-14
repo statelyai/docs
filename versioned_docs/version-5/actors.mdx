@@ -77,7 +77,7 @@ actor.stop();
 
 An invoked actor represents a state-based actor, so it is stopped when the invoking state is exited. Invoked actors are used for a finite/known number of actors.
 
-A spawned actor represents multiple entities that can be started at any time and stopped at any time. Spawed actors are action-based and used for a dynamic or unknown number of actors.
+A spawned actor represents multiple entities that can be started at any time and stopped at any time. Spawned actors are action-based and used for a dynamic or unknown number of actors.
 
 An example of the difference between invoking and spawning actors could occur in a todo app. When loading todos, a `loadTodos` actor would be an invoked actor; it represents a single state-based task. In comparison, each of the todos can themselves be spawned actors, and there can be a dynamic number of these actors.
 
