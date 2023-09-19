@@ -19,7 +19,7 @@ Enter [Stately teams](https://stately.ai/docs/teams), our way to provide privacy
 
 ## Why would I need this?
 Great question, and we're glad you asked! 
-While we have the [Discover](https://stately.ai/registry/discover) page, which showcases over 20 thousand(!) community-created machines, we know that statcharts can contain critical details about core algorithms or can have processes that give businesses a competitive edge. 
+While we have the [Discover](https://stately.ai/registry/discover) page, which showcases over 20 thousand(!) community-created machines, we know that statecharts can contain critical details about core algorithms or can have processes that give businesses a competitive edge. 
 Many users expressed interest in keeping these types of machines private, and we listened. 
 
 
@@ -31,10 +31,10 @@ Teams is an exclusive feature for [**Pro** and Enterprise users](https://stately
 
 ### Access control
 There are many times when a dev team needs to share their work context with others without granting them full rights to the projects. 
-For example, Lenny in accounting probably shouldn't have access to the company repo, but he could benefit from visually understanding the steps involved in processes and workfows.
+For example, Lenny in accounting probably shouldn't have access to the company repo, but he could benefit from visually understanding the steps involved in processes and workflows.
 Having different teams with different roles allows us to keep parties informed without added risk. 
 Don't trust your PM's trigger finger? Make them a [viewer](https://stately.ai/docs/teams#viewer-role); we promise not to tell. 
-Taking a vacation before new members can be onboared? 
+Taking a vacation before new members can be onboarded? 
 Make another teammate an [admin](https://stately.ai/docs/teams#admin-role). 
 Checkout all our roles and permissions in our [docs](https://stately.ai/docs/teams#team-roles). 
 
@@ -43,6 +43,22 @@ There are ways to share machine visualizations in the Studio without teams, but 
 Users can make their projects and machines public, but that is a no-go for most businesses.
 Alternatively, Pro users could keep their projects private and only share with people they trust by exporting and re-importing. However, that invites potentially different sources of truth, adds potential confusion, and lacks a truly shared context.
 Inviting users to collaborate on the same private team grants them the ability to share without the exporting and copy/paste gymnastics. 
+
+### A source of what, now?
+Simply put, a "source of truth" is a single place where all the information about a project is stored. 
+In our case, we wanted to make sure that teams have a single place to view and collaborate on machine visualizations, and that place is a team-based project in the Studio.
+This prevents confusion and allows for a shared context between all members of the team. With a proper source of truth configured, we can avoid situations like this: 
+
+![true misery](/blog/2023-09-15-file-confusion.png)
+
+
+
+### But what about source control? Shouldn't that be the source of truth?
+Ideally, yes, the team's repository is the single source of truth for all application logic, but not every member of the team is a developer, nor should they all have access to source code.
+That said, we know teams need to ensure their machines in the Studio are always in lockstep with the rest of their source, so we added the ability to [import machines directly from GitHub](https://stately.ai/docs/import-from-github).
+We're also working on a full-fledged GitHub Sync feature, allowing users to save machines as commits back to their source repos, so stay tuned for that announcement!
+
+
 
 ### Superpower Pro features
 Having teams allows other features to shine. For example, we all know the value of collaboration, but more users naturally add more potential for mistakes to happen, even with proper roles assigned. To protect against mistakes, we've added the ability to [lock machines](https://stately.ai/docs/lock-machines), preventing teammates from accidentally overwriting or deleting machines.
