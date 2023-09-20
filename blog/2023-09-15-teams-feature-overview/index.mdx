@@ -8,7 +8,7 @@ image: /blog/2023-09-15-stately-teams-overview.png
 date: 2023-09-19
 ---
 
-Our team knew early on that users needed the ability to share machines in the Studio and build on each others' work. 
+Our team knew early on that users needed the ability to share machines in the Studio and build on each other's work. 
 We also needed the Studio to be an effective tool for teams to work together and share context. 
 But how do we do that safely, making sure the right eyes were on the right machines? 
 And how do we protect against accidental mishaps that have plagued devs since the dawn of the computer? 
@@ -33,30 +33,29 @@ Every teammate may not be a dev, but we're confident that every teammate can ben
 ## Teams 101
 Teams is an exclusive feature for [**Pro** and **Enterprise** users](https://stately.ai/pricing) that allows them to collaborate on different projects without needing to make them publicly visible. Team owners have the ability to assign roles that map closely with their team members' intended set of responsibilities.
 
-![team screenshot](./teamVNext.png)
+![The Stately Studio Next team members tab. Under Owners/Admin, Kevin is labeled as Owner. David is an admin. Laura, Farzad and Gavin are listed under Editors. Anders, cirephe, and Mateusz are listed under Viewers.](./teamVNext.png)
 
 ### Access control
 There are many times when a dev team needs to share their work context with others without granting them full rights to the projects. 
 For example, Lenny in accounting probably shouldn't have access to the company repo, but he could benefit from visually understanding the steps involved in processes and workflows.
-Having different teams with different roles allows us to keep parties informed without added risk. 
+Having different teams with different roles lets us to keep parties informed without added risk. 
 Don't trust your PM's trigger finger? Make them a [viewer](https://stately.ai/docs/teams#viewer-role); we promise not to tell. 
 Taking a vacation before new members can be onboarded? 
 Make another teammate an [admin](https://stately.ai/docs/teams#admin-role). 
-Checkout all our roles and permissions in our [docs](https://stately.ai/docs/teams#team-roles). 
+[Checkout all our roles and permissions in our docs](https://stately.ai/docs/teams#team-roles). 
 
 ### Sharing conveniently and safely
 There are ways to share machine visualizations in the Studio without teams, but they're not ideal for many users.
 Users can make their projects and machines public, but that is a no-go for most businesses.
 Alternatively, Pro users could keep their projects private and only share with people they trust by exporting and re-importing. However, that invites potentially different sources of truth, adds potential confusion, and lacks a truly shared context.
-Inviting users to collaborate on the same private team grants them the ability to share without the exporting and copy/paste gymnastics. 
+Inviting users to collaborate on the same private team allows them to share without the exporting and copy/paste gymnastics. 
 
 ### A source of what, now?
 Simply put, a "source of truth" is a single place where all the information about a project is stored. 
 In our case, we wanted to make sure that teams have a single place to view and collaborate on machine visualizations, and that place is a team-based project in the Studio.
 This prevents confusion and allows for a shared context between all members of the team. With a proper source of truth configured, we can avoid situations like this: 
 
-![true misery](/blog/2023-09-15-file-confusion.png)
-
+![Four files with the filenames: onboardMachine.json, onboardMachine-final.json, onboardMachine-final-final.json, onboardMachine-actual-final-for-real-this-time.json.](/blog/2023-09-15-file-confusion.png)
 
 
 ### But what about source control? Shouldn't that be the source of truth?
@@ -92,7 +91,7 @@ The seat is only taken once a user accepts the invite and claims the seat.
 If the invite was not accepted, the seat remains free. 
 
 
-### Can I swap member's roles and reclaim seats?
+### Can I swap member roles and reclaim seats?
 Yes, but only owners and admins have the ability to reassign roles. 
 Any role except the owner may choose to leave the team, however. 
 The owner can instead delete the team. 
