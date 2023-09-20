@@ -97,6 +97,9 @@ localStorage.setItem('some-state-key', JSON.stringify(persistedState));
 Retrieve the persisted state from storage and restore it as an object when creating the actor:
 
 ```ts
+// Read the persisted state from localStorage
+const restoredState = localStorage.getItem('some-state-key');
+
 const actor = createActor(machine, {
   // Restore the state (if it exists)
   state: restoredState,
