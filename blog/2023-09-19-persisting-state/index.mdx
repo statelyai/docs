@@ -84,7 +84,7 @@ You may want to persist the state of this machine so that when the user comes ba
 
 First, you should determine your [persistence strategy](#persistence-strategies). For this example, we'll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Actors created with `createActor` have a `.getPersistedState()` method that returns the state that should be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Note that this "persisted state" may be slightly different from the `snapshot` state returned from `actor.getSnapshot()`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
+Actors created with `createActor` have a `.getPersistedState()` method that returns the state that should be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
 
 ```ts
 // Read the state to persist from the actor (sync)
