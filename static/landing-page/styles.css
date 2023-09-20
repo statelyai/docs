@@ -393,7 +393,6 @@ a:active {
 
 video {
   border-radius: 0.4em;
-  background: var(--grey06);
   height: auto;
   width: 100%;
   z-index: var(--text-layer);
