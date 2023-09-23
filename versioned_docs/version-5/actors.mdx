@@ -60,6 +60,11 @@ import { createActor } from 'xstate';
 import { someActorLogic } from './someActorLogic.ts';
 
 const actor = createActor(someActorLogic);
+
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+
 actor.start();
 
 // Now the actor can receive events
@@ -88,10 +93,12 @@ An example of the difference between invoking and spawning actors could occur in
 
 When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor’s snapshot synchronously via `actor.getSnapshot()`.
 
-An actor’s snapshot is not necessarily the same as its internal state; instead, it is a value the actor wants to _share_ with subscribers. For example, a promise actor has an internal state consisting of `data`, `status`, and other internal properties, but only the `data` is emitted as its snapshot.
-
 ```ts
 import { fromPromise, createActor } from 'xstate';
+
+async function fetchCount() {
+  return Promise.resolve(42);
+}
 
 const countLogic = fromPromise(async () => {
   const count = await fetchCount();
@@ -100,12 +107,18 @@ const countLogic = fromPromise(async () => {
 });
 
 const countActor = createActor(countLogic);
+
 countActor.start();
 
 countActor.getSnapshot(); // logs undefined
 
 // After the promise resolves...
-countActor.getSnapshot(); // logs 42
+countActor.getSnapshot();
+// => {
+//   output: 42,
+//   status: 'done',
+//   ...
+// }
 ```
 
 You can subscribe to an actor’s snapshot values via `actor.subscribe(observer)`. The observer will receive the actor’s snapshot value when it is emitted. The observer can be:
@@ -126,7 +139,7 @@ const subscription = actor.subscribe({
   next(snapshot) {
     console.log(snapshot);
   },
-  error(data) {
+  error(err) {
     // ...
   },
   complete() {
@@ -146,19 +159,24 @@ const subscription = actor.subscribe((snapshot) => {
 subscription.unsubscribe();
 ```
 
-When the actor is stopped, all observers will automatically be unsubscribed.
-
-You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
+When the actor is stopped, all of its observers will automatically be unsubscribed.
 
 You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
 ```ts
-const persistedState = JSON.parse(localStorage.get('some-persisted-state'));
+const persistedState = JSON.parse(localStorage.getItem('some-persisted-state'));
 
 const actor = createActor(someLogic, {
   // highlight-start
   state: persistedState,
   // highlight-end
+});
+
+actor.subscribe(() => {
+  localStorage.setItem(
+    'some-persisted-state',
+    JSON.stringify(actor.getPersistedState()),
+  );
 });
 
 // Actor will start at persisted state
@@ -176,15 +194,21 @@ You can wait for an actor’s snapshot to satisfy a predicate using the `waitFor
 - Rejected if an error is thrown or the `options.timeout` value is elapsed.
 
 ```ts
-await waitFor(
+import { waitFor } from 'xstate';
+import { countActor } from './countActor.ts';
+
+const snapshot = await waitFor(
   countActor,
   (snapshot) => {
-    return snapshot.count >= 100;
+    return snapshot.context.count >= 100;
   },
   {
     timeout: 10_000, // 10 seconds (10,000 milliseconds)
   },
 );
+
+console.log(snapshot.output);
+// => 100
 ```
 
 ## State machine actor logic
@@ -199,6 +223,7 @@ You can describe actor logic as a [state machine](machines.mdx). Actors created 
 
 ```ts
 const toggleMachine = createMachine({
+  id: 'toggle',
   initial: 'inactive',
   states: {
     inactive: {},
@@ -207,6 +232,7 @@ const toggleMachine = createMachine({
 });
 
 const toggleActor = createActor(toggleMachine);
+
 toggleActor.subscribe((snapshot) => {
   // snapshot is the machine's state
   console.log('state', snapshot.value);
@@ -229,7 +255,7 @@ Sending events to promise actors will have no effect.
 
 ```ts
 const promiseLogic = fromPromise(() => {
-  return fetch('...').then((data) => data.json());
+  return fetch('https://example.com/...').then((data) => data.json());
 });
 
 const promiseActor = createActor(promiseLogic);
@@ -237,15 +263,23 @@ promiseActor.subscribe((snapshot) => {
   console.log(snapshot);
 });
 promiseActor.start();
-// Logs undefined
+// => {
+//   output: undefined,
+//   status: 'active'
+//   ...
+// }
 
 // After promise resolves
-// Logs user: { name: ... }
+// => {
+//   output: { ... },
+//   status: 'done',
+//   ...
+// }
 ```
 
-## Transition actors
+## Transition function actors
 
-Transition actor logic is described by a [transition function](#TODO), similar to a [reducer](#TODO). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
+Transition function actor logic is described by a [transition function](#TODO), similar to a [reducer](#TODO). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
 
 - Receive events
 - Emit snapshots of its state
@@ -269,10 +303,18 @@ transitionActor.subscribe((snapshot) => {
   console.log(snapshot);
 });
 transitionActor.start();
-// Logs { count: 0 }
+// => {
+//   status: 'active',
+//   context: { count: 0 },
+//   ...
+// }
 
 transitionActor.send({ type: 'increment' });
-// Logs { count: 1 }
+// => {
+//   status: 'active',
+//   context: { count: 1 },
+//   ...
+// }
 ```
 
 ## Observable actors
@@ -287,6 +329,11 @@ Sending events to observable actors will have no effect.
 const secondLogic = fromObservable(() => interval(1000));
 
 const secondActor = createActor(secondLogic);
+
+secondActor.subscribe((snapshot) => {
+  console.log(snapshot.context);
+});
+
 secondActor.start();
 // At every second:
 // Logs 0
