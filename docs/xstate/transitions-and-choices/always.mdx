@@ -107,16 +107,16 @@ const gameMachine = createMachine(
           MAKE_MOVE: [
             {
               cond: 'didPlayerWin',
-              actions: 'doMove',
+              actions: 'makeMove',
               target: 'win',
             },
             {
               cond: 'didPlayerLose',
-              actions: 'doMove'
+              actions: 'makeMove'
               target: 'lose',
             },
             {
-              actions: 'doMove'
+              actions: 'makeMove'
             },
           ],
         },
