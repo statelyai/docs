@@ -4,8 +4,8 @@
   "repository": "https://github.com/statelyai/docs",
   "scripts": {
     "docusaurus": "docusaurus",
-    "remark:once": "yarn remark --quiet --frail --use remark-validate-links docs/**/* versioned_docs/**/*",
-    "remark:watch": "yarn remark --quiet --frail --use remark-validate-links --watch docs/**/* versioned_docs/**/*",
+    "remark:once": "yarn remark --quiet --frail docs/**/* versioned_docs/**/*",
+    "remark:watch": "yarn remark --quiet --frail --watch docs/**/* versioned_docs/**/*",
     "start": "concurrently \"yarn remark:watch\" \"yarn typecheck:watch\" \"docusaurus start\"",
     "build": "yarn remark:once && yarn typecheck && docusaurus build",
     "swizzle": "docusaurus swizzle",
@@ -15,6 +15,14 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-validate-links",
+      {
+        "repository": false
+      }
+    ]
   },
   "dependencies": {
     "@docusaurus/core": "^2.4.3",
