@@ -20,7 +20,10 @@
     "plugins": [
       "remark-validate-links",
       {
-        "repository": false
+        "urlConfig": {
+          "hostname": "github.com",
+          "prefix": "/statelyai/docs/"
+        }
       }
     ]
   },
