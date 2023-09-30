@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "docusaurus build",
+    "remark": "remark",
+    "remark:once": "yarn run remark --quiet --frail --use remark-validate-links docs/**/* versioned_docs/**/*",
+    "remark:watch": "yarn run remark --quiet --frail --use remark-validate-links --watch docs/**/* versioned_docs/**/*",
+    "start": "concurrently \"yarn run remark:watch\" \"yarn run typecheck:watch\" \"docusaurus start\"",
+    "build": "yarn run remark:once && yarn run typecheck && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -15,8 +18,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.4.1",
-    "@docusaurus/preset-classic": "^2.4.1",
+    "@docusaurus/core": "^2.4.3",
+    "@docusaurus/preset-classic": "^2.4.3",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-extractor": "^7.35.1",
     "@xstate/inspect": "^0.8.0",
@@ -32,10 +35,13 @@
     "xstate": "^4.37.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.4.1",
+    "@docusaurus/module-type-aliases": "^2.4.3",
     "@fec/remark-a11y-emoji": "^3.1.0",
     "@tsconfig/docusaurus": "^1.0.7",
+    "concurrently": "^8.2.1",
     "dotenv": "^16.0.3",
+    "remark-cli": "^12.0.0",
+    "remark-validate-links": "^13.0.0",
     "typescript": "^5.0.4"
   },
   "browserslist": {
