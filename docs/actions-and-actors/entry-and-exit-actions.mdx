@@ -93,15 +93,15 @@ Use the <kbd>Backspace</kbd> key to delete the action.
 
 ## Add a built-in action
 
-You can add built-in XState actions which will be formatted in your [exported code](export-as-code.mdx). The options are:
+You can add built-in XState actions which will be formatted in your [exported code](/docs/export-as-code.mdx). The options are:
 
-- [assign](#assign-action): assigns data to the state context.
-- [raise](#raise-action): _raises_ an event that is received by the same machine.
-- [log](#log-action): an easy way to log messages to the console.
-- [sendTo](#send-to-action): sends an event to a specific actor.
-- [stop](#stop-action): stops a child actor.
+- [assign](/docs/xstate/actions/context#assign-action): assigns data to the state context.
+- [raise](/docs/xstate/actions/built-in-actions#raise-action): _raises_ an event that is received by the same machine.
+- [log](/docs/xstate/actions/built-in-actions#log-action): an easy way to log messages to the console.
+- [sendTo](/docs/xstate/actions/built-in-actions#sending-events-to-actors): sends an event to a specific actor.
+- [stop](/docs/xstate/actors/spawn#stopping-spawned-actors): stops a child actor.
 
-To add a built-in action, first add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-to-a-state), or [exit action](#add-an-exit-action-to-a-state).
+To add a built-in action, first add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
 
 ### On the canvas
 
@@ -114,15 +114,15 @@ To add a built-in action, first add a [transition action](#add-a-transition-acti
 
 1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
 1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
-2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
-3. Choose your desired action from the dropdown menu at the top of the **Action** panel.
-4. Fill out the required corresponding action input fields.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+1. Fill out the required corresponding action input fields.
 
 ## Add a custom action
 
-You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](#action-objects) in your [exported code](export-as-code.mdx).
+You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](/docs/xstate/actions) in your [exported code](/docs/export-as-code).
 
-First, add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-to-a-state), or [exit action](#add-an-exit-action-to-a-state).
+First, add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
 
 ### On the canvas
 
@@ -131,16 +131,16 @@ First, add a [transition action](#add-a-transition-action), [entry action](#add-
 3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
 4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
 
-[Read about action objects below for more on action types and and parameters](#action-objects).
+[Read about action objects below for more on action types and and parameters](/docs/xstate/actions).
 
 ### Using the details panel
 
 1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
 1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
-2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
-3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
-4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
-:::xstate
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+1. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+   :::xstate
 
 ## Looking for how to use entry and exit actions in XState?
 
