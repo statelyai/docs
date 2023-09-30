@@ -18,13 +18,12 @@
   },
   "remarkConfig": {
     "plugins": [
-      "remark-validate-links",
-      {
-        "urlConfig": {
-          "hostname": "github.com",
-          "prefix": "/statelyai/docs/"
+      [
+        "remark-validate-links",
+        {
+          "repository": false
         }
-      }
+      ]
     ]
   },
   "dependencies": {
