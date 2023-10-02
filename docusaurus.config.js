@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'icon.svg',
   staticDirectories: ['static'],
 
@@ -90,7 +90,7 @@ const config = {
           blogSidebarCount: 0,
           postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
-            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
+            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
