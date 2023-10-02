@@ -122,7 +122,7 @@ const actor = createActor(machine, {
 actor.start();
 ```
 
-The actor will start at the `restoredState`, if it exists. If it is `undefined`, the actor will start at the initial state of the actor logic provided to `createActor(logic)`.
+The actor will start at the `restoredState`, if it exists. If `restoredState` is `undefined`, the actor will start at the initial state of the actor logic provided to `createActor(logic)`.
 
 ## Persistence strategies
 
@@ -132,7 +132,7 @@ For the browser, you can:
 - Use a client-side database like [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
 - Use [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
 - Use [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-- Store it in runtime memory (e.g., a global variable or some other persistent store)
+- Store the state in runtime memory (e.g., a global variable or some other persistent store)
 
 For the server, you can:
 
