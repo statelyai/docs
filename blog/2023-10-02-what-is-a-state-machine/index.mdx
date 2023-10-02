@@ -8,7 +8,7 @@ slug: what-is-a-state-machine
 date: 2023-10-02
 ---
 
-A state machine is a visual way of modeling how things work.
+A state machine is a way of modeling how things work, using states and transitions to show how something changes over time in response to events.
 
 You’ve might have heard the term “state machine” or “finite-state machine” before. If you look it up [on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation”, followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply your team’s work.
 
@@ -99,11 +99,11 @@ There are many key advantages of using state machines:
 
 ### Clear visualization
 
-With state machine diagrams, you can visually represent the progression of a process, making it easier to grasp and communicate complex logic. This aids in bridging gaps between technical and non-technical stakeholders.
+With state machine diagrams, you can visually represent the states of a process, making it easier to grasp and communicate complex logic. These diagrams bridge the communication gap between technical and non-technical team members. They also provide a clear way to document and share app logic, which can be used for onboarding new team members. After all, following boxes and arrows (just like a flowchart) is much easier than parsing code, especially for someone unfamiliar with the codebase (or coding in general).
 
 ### Consistent, robust application logic
 
-By mapping out all states and transitions, state machines ensure every possible scenario is accounted for. This minimizes unexpected behaviors and system inconsistencies, because it is **mathematically impossible** for a state machine to take a transition that does not exist.
+By mapping out all states and transitions, state machines ensure every possible scenario is accounted for. This minimizes unexpected behaviors (such as undesired ../../states/initial transitions) and system inconsistencies, because it is **mathematically impossible** for a state machine to take a transition that does not exist. You can quickly identify a transition to a state that should not go to that state
 
 ### Modularity and scalability
 
