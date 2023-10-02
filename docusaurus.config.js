@@ -53,12 +53,12 @@ const config = {
           includeCurrentVersion: true,
           versions: {
             current: {
-              label: 'XState v4',
-            },
-            5: {
               label: 'XState v5',
-              path: 'xstate-v5',
               banner: 'unreleased',
+            },
+            4: {
+              label: 'XState v4',
+              path: 'xstate-v4',
             },
           },
 
