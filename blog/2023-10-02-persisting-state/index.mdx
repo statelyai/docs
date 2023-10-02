@@ -3,14 +3,16 @@ title: 'Persisting and restoring state in XState'
 description: Learn how to persist and restore your state machine state in XState
 tags: []
 authors: [david]
-date: 2023-09-19
-slug: 2023-09-19-persisting-state
-image: /blog/2023-09-19-persisting-state.png
+date: 2023-10-02
+slug: 2023-10-02-persisting-state
+image: /blog/2023-10-02-persisting-state.png
 ---
 
-State machines have a useful feature: modeling state. But what happens when your user closes the browser and comes back later? Or when your server restarts? Or when your user logs out and logs back in? In this article, we'll learn how to persist and restore state in XState.
+State machines are great for modeling state in applications. However, we often need to persist and restore state across sessions - for example, when a user closes and reopens their browser. In this article, we'll explore how to persist and restore state in XState so your frontend applications or backend workflows can pick up where they left off.
 
-Note: this article applies to XState v5 beta.
+:::info
+The code in this article applies to XState v5 beta.
+:::
 
 ## Quick reference
 
@@ -84,7 +86,7 @@ You may want to persist the state of this machine so that when the user comes ba
 
 First, you should determine your [persistence strategy](#persistence-strategies). For this example, we'll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Actors created with `createActor` have a `.getPersistedState()` method that returns the state that should be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
+Actors created with `createActor` have a `.getPersistedState()` method that returns the state that can be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
 
 ```ts
 // Read the state to persist from the actor (sync)
@@ -126,14 +128,11 @@ For the server, you can:
 - Use a cache (e.g., [Redis](https://redis.io/))
 - Use cookies or session storage
 
-## Persisting other kinds of actor logic
-
-TODO: all kinds of actor logic can be persisted, not just machines
-
-## Recursive persistence
-
-TODO: all invoked and spawned actors can be persisted, as long as they're named
-
 ## Examples
 
-TODO: list example(s) here
+There are examples of persisting state that can be found in the [XState git repository](https://github.com/statelyai/xstate/tree/next/examples):
+
+- [Persisting state to a writable `.json` file](https://github.com/statelyai/xstate/blob/next/examples/persisted-donut-maker)
+- [Persisting state to MongoDB](https://github.com/statelyai/xstate/tree/next/examples/mongodb-persisted-state)
+
+Feel free to suggest other examples at [feedback.stately.ai](https://feedback.stately.ai/examples), or [contribute your own](https://github.com/statelyai/xstate/tree/next/examples)!
