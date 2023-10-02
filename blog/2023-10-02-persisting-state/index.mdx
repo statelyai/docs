@@ -18,7 +18,7 @@ slug: 2023-10-02-persisting-state
 image: /blog/2023-10-02-persisting-state.png
 ---
 
-State machines are great for modeling state in applications. However, we often need to persist and restore state across sessions - for example, when a user closes and reopens their browser. In this article, we'll explore how to persist and restore state in XState so your frontend applications or backend workflows can pick up where it left off.
+State machines are great for modeling state in applications. However, we often need to persist and restore state across sessions - for example, when a user closes and reopens their browser. In this article, we’ll explore how to persist and restore state in XState so your frontend applications or backend workflows can pick up where it left off.
 
 <!--truncate-->
 
@@ -28,7 +28,7 @@ The code in this article applies to [XState v5 beta](/docs/xstate-v5/migration).
 
 ## Quick reference
 
-If you're already familiar with XState, here's a quick reference for persisting and restoring state:
+If you’re already familiar with XState, here’s a quick reference for persisting and restoring state:
 
 ```ts
 import { createActor } from 'xstate';
@@ -56,7 +56,7 @@ actor.start();
 
 ## Persisting and restoring state
 
-Let's say we have a state machine that represents a user's shopping cart:
+Let’s say we have a state machine that represents a user’s shopping cart:
 
 ```ts
 import { createMachine, createActor, assign } from 'xstate';
@@ -96,7 +96,7 @@ You may want to persist the state of this machine so that when the user comes ba
 - **Persist the state** to some storage (e.g., localStorage, a database, etc.)
 - **Restore the state** from the storage when creating the actor
 
-First, you should determine your [persistence strategy](#persistence-strategies). For this example, we'll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+First, you should determine your [persistence strategy](#persistence-strategies). For this example, we’ll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
 Actors created with `createActor` have a `.getPersistedState()` method that returns the state that can be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
 
