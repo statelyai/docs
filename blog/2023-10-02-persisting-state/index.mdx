@@ -91,6 +91,11 @@ const checkoutActor = createActor(machine, {
 });
 ```
 
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/092bf401-2d65-48ae-969c-99b4a7eeb87f?machineId=6777d80d-82d8-41dc-9cd3-c6951495ff0f"
+  name="checkout"
+/>
+
 You may want to persist the state of this machine so that when the user comes back to the site, the items in their cart are still there, and the step in the checkout process is still the same. To do this, we need to remember to do two things:
 
 - **Persist the state** to some storage (e.g., localStorage, a database, etc.)
@@ -147,4 +152,4 @@ There are [examples of persisting state that can be found in the XState git repo
 - [Persisting state to a writable `.json` file](https://github.com/statelyai/xstate/blob/next/examples/persisted-donut-maker)
 - [Persisting state to MongoDB](https://github.com/statelyai/xstate/tree/next/examples/mongodb-persisted-state)
 
-Feel free to [suggest other examples at on our examples request board](https://feedback.stately.ai/examples), or [contribute your own](https://github.com/statelyai/xstate/tree/next/examples)!
+Feel free to [suggest other examples at on our examples request board](https://feedback.stately.ai/examples), or [contribute your own examples](https://github.com/statelyai/xstate/tree/next/examples)!
