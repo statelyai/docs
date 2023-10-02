@@ -37,12 +37,12 @@ In the actor model, actors are objects that can communicate with each other. The
 
 Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **actor logic creators**. The types of actor logic you can create from XState are:
 
-- [State machine logic (`createMachine(...)`)](#TODO)
-- [Promise logic (`fromPromise(...)`)](#TODO)
-- [Transition logic (`fromTransition(...)`)](#TODO)
-- [Observable logic (`fromObservable(...)`)](#TODO)
-- [Event observable logic (`fromEventObservable(...)`)](#TODO)
-- [Callback logic (`fromCallback(...)`)](#TODO)
+- [State machine logic (`createMachine(...)`)](cheatsheet.mdx#creating-a-state-machine)
+- [Promise logic (`fromPromise(...)`)](cheatsheet.mdx#creating-promise-logic)
+- [Transition logic (`fromTransition(...)`)](cheatsheet.mdx#creating-promise-logic)
+- [Observable logic (`fromObservable(...)`)](cheatsheet.mdx#creating-observable-logic)
+- [Event observable logic (`fromEventObservable(...)`)](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions)
+- [Callback logic (`fromCallback(...)`)](cheatsheet.mdx#creating-callback-logic)
 
 In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
@@ -245,7 +245,7 @@ promiseActor.start();
 
 ## Transition actors
 
-Transition actor logic is described by a [transition function](#TODO), similar to a [reducer](#TODO). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
+Transition actor logic is described by a [transition function](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions), similar to a [reducer](cheatsheet.mdx#creating-transition-logic). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
 
 - Receive events
 - Emit snapshots of its state
@@ -277,7 +277,7 @@ transitionActor.send({ type: 'increment' });
 
 ## Observable actors
 
-Observable actor logic is described by an [observable stream of values](#TODO). Actors created from observable logic (“observable actors”) can:
+Observable actor logic is described by an [observable stream of values](cheatsheet.mdx#creating-observable-logic). Actors created from observable logic (“observable actors”) can:
 
 - Emit snapshots of its emitted value
 

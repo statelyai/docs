@@ -4,7 +4,7 @@
   font-family: 'TTCommons';
   src: url('assets/ttcommons.woff2') format('woff2');
   font-display: swap;
-  font-weight: '100 1000',
+  font-weight: '100 1000';
 }
 
 /* -- Variables
@@ -393,7 +393,6 @@ a:active {
 
 video {
   border-radius: 0.4em;
-  background: var(--grey06);
   height: auto;
   width: 100%;
   z-index: var(--text-layer);
@@ -536,10 +535,11 @@ input[type='submit'],
 
 .button-link.ghost {
   background: none;
-  border: 1px solid rgba(255,255,255,0.24)
+  border: 1px solid rgba(255, 255, 255, 0.24);
 }
-.button-link.ghost:hover, .button-link-cta-ghost:active {
-  background: rgba(255,255,255,0.11);
+.button-link.ghost:hover,
+.button-link-cta-ghost:active {
+  background: rgba(255, 255, 255, 0.11);
 }
 
 .duo-buttons {
@@ -718,7 +718,7 @@ body {
   margin: 0.3em auto 4.6em;
   max-width: var(--max-header-width);
   padding: 0 1.35em;
-  }
+}
 
 .navigation-list a {
   color: var(--white);
@@ -838,7 +838,7 @@ body {
 
 .intro-title {
   font-size: var(--font-xxxl);
-  font-variation-settings: "wght" 700;
+  font-variation-settings: 'wght' 700;
 }
 
 [data-edge-source='first-heading'] {
@@ -2122,21 +2122,37 @@ path.edge {
 
 /* -- Pricing page (copied from the React code Billing page)
 -------------------------------------------------------------------- */
-.pricing-grid {
-  display: grid;
-  grid-gap: 0;
-  grid-template-columns: repeat(3, minmax(0px, 1fr));
-  margin-top: 3rem;
+
+.pricing-arrow {
+  display: none;
 }
 
-@media (max-width: 1280px) {
+@media (min-width: 1280px) {
   .pricing-grid {
-    max-width: 600px;
-    margin: 0 auto;
-    grid-template-columns: repeat(1, minmax(0px, 1fr));
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 3rem;
+    grid-template-areas:
+      'community professional enterprise'
+      'services services services';
   }
+
   .pricing-arrow {
-    display: none;
+    display: block;
+  }
+
+  .tier-wrapper.community {
+    grid-area: community;
+  }
+  .tier-wrapper.professional {
+    grid-area: professional;
+  }
+  .tier-wrapper.enterprise {
+    grid-area: enterprise;
+  }
+  .tier-wrapper.services {
+    grid-area: services;
   }
 }
 
@@ -2185,7 +2201,7 @@ path.edge {
   color: white;
 }
 
-.enterprise {
+.tier.enterprise {
   /* padding copied from H2 */
   padding-top: 0.83em;
   padding-bottom: 0.83em;
@@ -2201,9 +2217,15 @@ path.edge {
   margin-top: 0;
 }
 
+.tier.services {
+  margin-top: 1rem;
+}
+
 .sign-up-button {
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 25rem;
 }
 
 .pricing-heading {
@@ -2277,7 +2299,6 @@ h2.pricing-heading {
   margin-bottom: 8rem;
 }
 
-
 .pink {
-  color: #cf249b
+  color: #cf249b;
 }
