@@ -93,13 +93,13 @@ Use the <kbd>Backspace</kbd> key to delete the action.
 
 ## Add a built-in action
 
-You can add built-in XState actions which will be formatted in your [exported code](/docs/export-as-code.mdx). The options are:
+You can add built-in XState actions which will be formatted in your [exported code](/export-as-code.mdx). The options are:
 
-- [assign](/docs/xstate/actions/context#assign-action): assigns data to the state context.
-- [raise](/docs/xstate/actions/built-in-actions#raise-action): _raises_ an event that is received by the same machine.
-- [log](/docs/xstate/actions/built-in-actions#log-action): an easy way to log messages to the console.
-- [sendTo](/docs/xstate/actions/built-in-actions#sending-events-to-actors): sends an event to a specific actor.
-- [stop](/docs/xstate/actors/spawn#stopping-spawned-actors): stops a child actor.
+- [assign](../xstate/actions/context.mdx#assign-action): assigns data to the state context.
+- [raise](../xstate/actions/built-in-actions.mdx#raise-action): _raises_ an event that is received by the same machine.
+- [log](../xstate/actions/built-in-actions.mdx#log-action): an easy way to log messages to the console.
+- [sendTo](../xstate/actions/built-in-actions.mdx#sending-events-to-actors): sends an event to a specific actor.
+- [stop](/xstate/actors/spawn.mdx#stopping-spawned-actors): stops a child actor.
 
 To add a built-in action, first add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
 
@@ -120,7 +120,7 @@ To add a built-in action, first add a [transition action](#add-a-transition-acti
 
 ## Add a custom action
 
-You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](/docs/xstate/actions) in your [exported code](/docs/export-as-code).
+You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](../xstate/actions/actions.mdx) in your [exported code](/export-as-code.mdx).
 
 First, add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
 
@@ -131,7 +131,7 @@ First, add a [transition action](#add-a-transition-action), [entry action](#add-
 3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
 4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
 
-[Read about action objects below for more on action types and and parameters](/docs/xstate/actions).
+[Read about action objects below for more on action types and and parameters](../xstate/actions).
 
 ### Using the details panel
 
@@ -144,6 +144,6 @@ First, add a [transition action](#add-a-transition-action), [entry action](#add-
 
 ## Looking for how to use entry and exit actions in XState?
 
-Find out [more about actions in XState](/xstate/actions/actions.mdx) in the XState section of the docs.
+Find out [more about actions in XState](../xstate/actions/actions.mdx) in the XState section of the docs.
 
 :::

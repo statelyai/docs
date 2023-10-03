@@ -26,8 +26,8 @@ Over the past few years, we have collected a wealth of valuable feedback from th
 
 One of the biggest items of feedback we’ve received about XState is that although it is powerful, there is a substantial learning curve. There are some ~~new~~ old concepts to learn with XState, such as the actor model, state machines, and statecharts. With these concepts comes new terminology. In XState v5 beta and [the documentation](https://stately.ai/docs/xstate-v5), we have made a concerted effort to make XState as approachable as possible, and to reduce the learning curve as much as possible. Here are some of the changes we’ve made:
 
-- **Simplified terminology**. Concepts shouldn’t have multiple names, so we have simplified terms wherever possible. The basic unit of abstraction in XState v5 beta is the **actor**, and we’ve removed some of the more confusing terms, such as “service” and “interpreter,” “transient transitions” to “eventless transitions,” “cond” to “guard", “internal: false” to “reenter: true,” and [more](https://stately.ai/docs/xstate-v5/migration).
-- **Reduced API surface area**. Some of the new features, such as [input](#actor-input) made existing features redundant, such as `machine.withContext(...)`. We’ve also removed redundant functionality, such as `actor.onTransition(...)`, in favor of `actor.subscribe(...)`. [Read about all the breaking changes](https://stately.ai/docs/xstate-v5/migration).
+- **Simplified terminology**. Concepts shouldn’t have multiple names, so we have simplified terms wherever possible. The basic unit of abstraction in XState v5 beta is the **actor**, and we’ve removed some of the more confusing terms, such as “service” and “interpreter,” “transient transitions” to “eventless transitions,” “cond” to “guard", “internal: false” to “reenter: true,” and [more](https://stately.ai/docs/migration).
+- **Reduced API surface area**. Some of the new features, such as [input](#actor-input) made existing features redundant, such as `machine.withContext(...)`. We’ve also removed redundant functionality, such as `actor.onTransition(...)`, in favor of `actor.subscribe(...)`. [Read about all the breaking changes](https://stately.ai/docs/migration).
 - **Examples, examples, examples**. We’re adding many [XState v5 beta examples in the XState repository’s examples folder](https://github.com/statelyai/xstate/tree/next/examples) to help you quickly understand how XState can help with your use cases.
 - **Interactive documentation**. We’re working on adding interactive examples to the documentation, so you can visualize the concepts as you learn them.
 - **From zero to “hello world” as quickly as possible**. Our goal with XState v5 and the [updated documentation (work in progress)](https://stately.ai/docs/xstate-v5) is to make developers productive with XState quickly. A simple, complete counter example in XState looks like this:
@@ -388,7 +388,7 @@ For more examples, [visit the `/examples` directory in the XState repository](ht
 
 ## Migration and breaking changes
 
-As with any major version, there are some breaking changes. We’ve tried to keep these to a minimum, but some are necessary to make XState v5 beta as powerful and flexible as possible. [Read our current guide for migrating from XState v4 to v5 and the list of breaking changes](https://stately.ai/docs/xstate-v5/migration).
+As with any major version, there are some breaking changes. We’ve tried to keep these to a minimum, but some are necessary to make XState v5 beta as powerful and flexible as possible. [Read our current guide for migrating from XState v4 to v5 and the list of breaking changes](https://stately.ai/docs/migration).
 
 ## In progress
 
