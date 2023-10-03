@@ -125,13 +125,19 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          "type": "category",
-          "label": "Design mode",
-          "link": {
-            "type": "doc",
-            "id": "design-mode"
+          type: 'category',
+          label: 'Design mode',
+          link: {
+            type: 'doc',
+            id: 'design-mode',
           },
           items: [
+            {
+              type: 'doc',
+              label: 'Generate flow',
+              id: 'generate-flow',
+              className: 'pro-feature',
+            },
             'import-from-code',
             'export-as-code',
             'machine-restore',
@@ -139,19 +145,19 @@ const sidebars = {
             'annotations',
             'descriptions',
             {
-              "type": "doc",
-              "label": "Colors",
-              "id": "colors",
-              "className": "pro-feature"
+              type: 'doc',
+              label: 'Colors',
+              id: 'colors',
+              className: 'pro-feature',
             },
           ],
         },
         {
-          "type": "category",
-          "label": "Simulate mode",
-          "link": {
-            "type": "doc",
-            "id": "simulate-mode"
+          type: 'category',
+          label: 'Simulate mode',
+          link: {
+            type: 'doc',
+            id: 'simulate-mode',
           },
           items: [
             {
@@ -169,14 +175,14 @@ const sidebars = {
           className: 'pro-feature',
         },
         {
-          "type": "doc",
-          "label": "Lock machines",
-          "id": "lock-machines",
-          "className": "pro-feature"
+          type: 'doc',
+          label: 'Lock machines',
+          id: 'lock-machines',
+          className: 'pro-feature',
         },
-        "keyboard-shortcuts",
+        'keyboard-shortcuts',
         'canvas-view-controls',
-        'user-preferences'
+        'user-preferences',
       ],
     },
     'projects',
