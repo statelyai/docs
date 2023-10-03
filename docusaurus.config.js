@@ -54,11 +54,12 @@ const config = {
           versions: {
             current: {
               label: 'XState v5',
-              banner: 'unreleased',
+              banner: 'none',
             },
             4: {
               label: 'XState v4',
               path: 'xstate-v4',
+              banner: 'unmaintained',
             },
           },
 
