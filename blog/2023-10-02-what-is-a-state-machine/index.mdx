@@ -107,10 +107,6 @@ By mapping out all states and transitions, state machines ensure every possible 
 
 State machines allow for isolating logic. This means that one can make changes or additions to a specific segment without overhauling the entire system. Regardless of framework, programming language, or implementation, the core abstractions remain the same: states, events, and transitions. If you need to add, change, or remove a feature, the process is to add, change, or remove states and transitions.
 
-### Error handling
-
-State machines make it easier to identify and manage exceptions. By understanding all possible states and transitions, systems can be designed to manage or prevent errors efficiently. It’s also easy to spot incorrect logic by visually identifying transitions that go to the wrong state, or even transitions that may be missing.
-
 ### Test path generation
 
 State machines clearly define all possible states, events, and transitions. This allows testers to simulate specific events and verify if transitions to specific states occur as expected. Since state machines are directed graphs, they act like a “map” for your app logic. This enables the automatic generation of many different “paths” through the state machine. Each of these paths represents a potential use-case, even those that may initially go unnoticed, such as edge-cases. Exhaustive test path generation is also possible, which means that every possible path through the state machine can be tested.
