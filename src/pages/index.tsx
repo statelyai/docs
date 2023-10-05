@@ -1,24 +1,27 @@
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import React, { useEffect } from 'react';
-import { drawArrows } from '../components/landing-page-arrows';
+import Link from '@docusaurus/Link';
+import React from 'react';
+import '../css/landing-page.css';
 
 // https://github.com/facebook/docusaurus/discussions/8387#discussioncomment-6067944
 // Loading a static HTML only works during SSR, so we use this hack to make it work during CSR
 export default function Index() {
-  const landingPage = useBaseUrl('/landing-page/index.html');
-  const [html, setHtml] = React.useState('');
+  return (
+    <header className="bg-orange-300 h-screen">
+      <div className="container mx-auto text-center py-24">
+        <h1 className="text-6xl font-bold text-green-200">Stately</h1>
+        <p className="text-4xl bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient">
+          Get yourself production-ready code in nanoseconds! 🚀
+        </p>
 
-  useEffect(() => {
-    // Fetch the HTML file from the static folder
-    fetch(landingPage)
-      // Convert the response to text
-      .then((response) => response.text())
-      // Set the HTML
-      .then((html) => setHtml(html));
-  }, []);
-
-  // Draw the arrows after any changes to the HTML
-  useEffect(() => drawArrows(), [html]);
-
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+        <div className="py-10">
+          <Link
+            className="bg-white rounded-md text-gray-500 px-4 py-2"
+            to="/docs"
+          >
+            Read our docs
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
 }
