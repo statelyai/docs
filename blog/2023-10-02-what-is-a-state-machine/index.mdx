@@ -1,28 +1,41 @@
 ---
 title: What is a state machine?
 description: Learn what a state machine is, and how it can help you model and understand complex systems visually.
-tags: []
+tags: [state machine, statechart]
 authors: [david]
-slug: what-is-a-state-machine
-# image:
-date: 2023-10-02
+slug: 2023-10-05-what-is-a-state-machine
+image: /blog/2023-10-05-what-is-a-state-machine.png
+date: 2023-10-05
 ---
 
-You might have heard of the term “state machine” or “finite-state machine” before. If you look it up [on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation”, followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply your team’s work.
+You might have heard of the term “state machine” or “finite-state machine” before. If you [look state machine up on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation”, followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply your team’s work.
 
-However, state machines are _really useful_ for describing almost any kind of logic, feature, user story, sequence, process, workflow, specification, and more. They can greatly improve the way that your team collaborates on processes, flows, features, and any other kinds of application logic, and they’re much simpler to understand than you may think. If you’ve worked with flowcharts before, or have ever diagrammed a process on a whiteboard with boxes and arrows, you may already know how state machines work!
+However, state machines are _really useful_ for describing almost any kind of logic, feature, user story, sequence, process, workflow, specification, and more. <!--truncate-->They can greatly improve the way that your team collaborates on processes, flows, features, and any other kinds of application logic, and they’re much simpler to understand than you may think.
+
+If you’ve worked with flowcharts before, or have ever diagrammed a process on a whiteboard with boxes and arrows, you may already know how state machines work!
 
 # What is a state machine?
 
 A state machine is a way of modeling how something works, using states and transitions to show how something changes over time in response to events.
 
+![Two states of locked and unlocked. On the unlocked state you can transition to un-locked on a coin event or transition to locked on a push event. On the locked state you can transition to un-locked with a coin event or transition to locked with a push event.](turnstile-state-machine.svg)
+
 Specifically, it formally models how a system transitions from one state to another, based on certain events (e.g., triggers, signals, changes, etc.). Think of it as a useful tool for visualizing and designing the flow of user experiences, product features, or any process you’re working on.
 
 Visually, state machine diagrams are similar to flowcharts. Both use shapes to represent states (e.g. steps in a flow), and arrows to indicate transitions between those states. The main difference is that state machines are more precise, formal, and powerful than flowcharts. They’re also more flexible, since they can be used to model any kind of logic, not just processes.
 
-(illustration of state machine)
+<p>
+  <ThemedImage
+    alt="A flightBooking state machine with an initial idle state. From idle you can transition to car booking, flight booking, and hotel booking states."
+    sources={{
+      light:
+        'https://prodstack-ogimagebuckete7b3c4ce-fcz4tpdpagli.s3.amazonaws.com/studio-ec345257-35c4-4fcc-bfbc-9a9255bc8d13-light.png',
+      dark: 'https://prodstack-ogimagebuckete7b3c4ce-fcz4tpdpagli.s3.amazonaws.com/studio-ec345257-35c4-4fcc-bfbc-9a9255bc8d13-dark.png',
+    }}
+  />
+</p>
 
-State machines are a concept deeply rooted in computer science; however, they have broad applications that extend to various business domains and design disciplines. From developing intuitive software interfaces to designing effective business processes, state machines provide a structured way to model and understand complex systems. Whether you're a product owner, project manager, designer, developer, QA tester, business analyst, or any other role, understanding state machines can significantly improve your ability to design, manage, and refine features, processes, and products.
+State machines are a concept deeply rooted in computer science; however, they have broad applications that extend to various business domains and design disciplines. From developing intuitive software interfaces to designing effective business processes, state machines provide a structured way to model and understand complex systems. Whether you’re a product owner, project manager, designer, developer, QA tester, business analyst, or any other role, understanding state machines can significantly improve your ability to design, manage, and refine features, processes, and products.
 
 In short, a state machine lets us clearly understand how something reacts when an event occurs.
 
@@ -30,21 +43,32 @@ In short, a state machine lets us clearly understand how something reacts when a
 
 Visually, state machines are just boxes and arrows. The building blocks of a state machine – **states, events,** and **transitions,** are quite straightforward (no pun intended), but together they form a powerful tool for modeling and understanding systems.
 
-**States**
-A state represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site's order can be in the 'Pending', 'Shipped', 'Delivered', or 'Returned' states. Each of these is a finite state, contributing to the entire lifecycle of an order.
+### States
 
-(illustration of a finite state state)
+A state represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site’s order can be in the _Pending_, _Shipped_, _Delivered_, or _Returned_ states. Each of these is a finite state, contributing to the entire lifecycle of an order.
 
-Finite states are **deterministic**, meaning that something can only be in exactly one finite state at a time. An order cannot be in both the ‘Pending’ and ‘Delivered’ states at the same time, just like you can’t be in both the ‘Asleep’ and ‘Awake’ states simultaneously.
+<p>
+  <ThemedImage
+    alt="States for an order machine: pending, shipped, delivered, and returned."
+    sources={{
+      light: '/blog/2023-10-02-what-is-a-state-machine/order-states-light.png',
+      dark: '/blog/2023-10-02-what-is-a-state-machine/order-states-dark.png',
+    }}
+  />
+</p>
+
+Finite states are **deterministic**, meaning that something can only be in exactly one finite state at a time. An order cannot be in both the _Pending_ and _Delivered_ states at the same time, just like you can’t be in both the _Asleep_ and _Awake_ states simultaneously.
 
 State machines always start at an **initial state**, and may end up in a **final state**, which denotes that the state machine is “done” and can no longer transition to any other state.
 
-**Events**
+### Events
+
 Events are occurrences; they’re a record that something happened. Using the previous example, an event like "item shipped" might transition an order’s state from 'Pending' to 'Shipped'.
 
 (illustration of an event)
 
-**Transitions**
+### Transitions
+
 A state transition describes how a system “moves” from one state to another. These are the arrows between the states, labeled by the event that causes the transition to occur.
 
 In state machines, transitions always happen immediately. For example, an order can be ‘Pending’ for some time (almost frustratingly so), but when the “item shipped” event occurs, it immediately transitions to the ‘Shipped’ state.
