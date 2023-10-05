@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'icon.svg',
   staticDirectories: ['static'],
 
@@ -53,12 +53,13 @@ const config = {
           includeCurrentVersion: true,
           versions: {
             current: {
-              label: 'XState v4',
-            },
-            5: {
               label: 'XState v5',
-              path: 'xstate-v5',
-              banner: 'unreleased',
+              banner: 'none',
+            },
+            4: {
+              label: 'XState v4',
+              path: 'xstate-v4',
+              banner: 'unmaintained',
             },
           },
 
@@ -90,7 +91,7 @@ const config = {
           blogSidebarCount: 0,
           postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
-            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`
+            `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
