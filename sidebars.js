@@ -117,6 +117,12 @@ const sidebars = {
             'export-as-code',
             {
               type: 'doc',
+              label: 'Generate flow',
+              id: 'generate-flow',
+              className: 'pro-feature',
+            },
+            {
+              type: 'doc',
               label: 'Colors',
               id: 'colors',
               className: 'pro-feature',

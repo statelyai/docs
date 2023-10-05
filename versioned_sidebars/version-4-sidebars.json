@@ -109,6 +109,12 @@
             "id": "design-mode"
           },
           "items": [
+            {
+              "type": "doc",
+              "label": "Generate flow",
+              "id": "generate-flow",
+              "className": "pro-feature"
+            },
             "import-from-code",
             "export-as-code",
             "machine-restore",
