@@ -1059,6 +1059,187 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### Use `invoke.input` instead of `invoke.data`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `invoke.data` property is removed. If you want to provide context to invoked actors, use `invoke.input`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someActor',
+    input: {
+      value: 42,
+    },
+  },
+});
+
+// The input must be consumed by the invoked actor:
+const someActor = createMachine({
+  // ...
+  context: ({ input }) => input,
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someActor',
+    data: {
+      value: 42,
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+### Use `output` in final states instead of `data`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+To produce output data from a machine which reached its final state, use the `output` property instead of `data`:
+
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      output: {
+        answer: 42,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      data: {
+        answer: 42,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+### Don't use property mappers in `input` or `output`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+If you want to provide dynamic context to invoked actors, or produce dynamic output from final states, use a function instead of an object with property mappers.
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someActor',
+    input: ({ context, event }) => ({
+      value: event.value,
+    }),
+  },
+});
+
+// The input must be consumed by the invoked actor:
+const someActor = createMachine({
+  // ...
+  context: ({ input }) => input,
+});
+
+// Producing machine output
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      output: ({ context, event }) => ({
+        answer: context.value,
+      }),
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someActor',
+    data: {
+      value: (context, event) => event.value, // a property mapper
+    },
+  },
+});
+
+// Producing machine output
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      data: {
+        answer: (context, event) => context.value, // a property mapper
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 ### Use `actors` property on `options` object instead of `services`
 
 :::breakingchange
