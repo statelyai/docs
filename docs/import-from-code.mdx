@@ -2,17 +2,11 @@
 title: Import from code
 ---
 
-Importing from code is helpful if you’ve already built machines while working with [XState](/xstate/intro.mdx), or have created a machine using our older [Stately Viz](https://stately.ai/viz) but haven’t yet tried the Stately Studio Editor.
-
-:::video
-
-Watch our [“Import from code” video on YouTube](https://www.youtube.com/watch?v=DAoIFaugDLo) (2m24s).
-
-:::
+Importing from code is helpful if you’ve already built machines while working with [XState](xstate.mdx), or have created a machine using our older [Stately Viz](https://stately.ai/viz) but haven’t yet tried Stately Studio’s editor.
 
 :::tip
 
-Want to import machines from GitHub? Try our [import from GitHub](/import-from-github.mdx) options.
+Watch our [“Import from code” video on YouTube](https://www.youtube.com/watch?v=DAoIFaugDLo) (2m24s).
 
 :::
 
@@ -28,24 +22,16 @@ Your code should be formatted as a [`createMachine()` factory function](https://
 
 :::
 
-## Import multiple machines
+You may have multiple `createMachine`s included in the code you insert in the text area, but Stately Studio will only import the first machine found in the code. We plan to support importing multiple machines in the future.
 
-:::new
-
-You can now import multiple machines when importing code.
-
-:::
-
-If you have multiple `createMachine`s included in the code you insert in the text area, the Studio will import each machine as a new machine inside your project.
-
-## Import code to overwrite your machine from the code panel
+### Import code to overwrite your machine from the code panel
 
 1. Open the **Code** panel from the right tool menu.
 2. Use the **Import** button to open the importer.
 3. Paste or type your machine code into the text area.
 4. Use the **Import** button to import your machine, overwriting your current machine.
 
-## Import code to overwrite a machine from the machines list
+### Import code to overwrite a machine from the machines list
 
 1. Open the **Machines** list from the left drawer menu.
 2. Use the <MoreHorizontal size={18} /> triple dot icon alongside a machine to open the machine options menu.
@@ -53,7 +39,7 @@ If you have multiple `createMachine`s included in the code you insert in the tex
 5. Paste or type your machine code into the text area.
 6. Use the **Import** button to import your machine, overwriting the selected machine.
 
-## Create a new machine inside a project using import code
+### Create a new machine inside a project using import code
 
 1. Open the **Machines** list from the left drawer menu.
 2. Use the **+** plus icon alongside the **Machines** heading to open the new machine options.

@@ -1,0 +1,149 @@
+---
+title: Entry & exit actions
+description: 'While the statechart is running, it can execute other effects called actions. Actions are “fire-and-forget effects.”'
+---
+
+While the statechart is running, it can execute other effects called actions.
+
+An action can be fired upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+
+:::video
+
+Watch our [“Entry actions and exit actions” video on YouTube](https://www.youtube.com/watch?v=GYoYZ1Dt1sA&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=8) (1m32s).
+
+:::
+
+You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+
+<p>
+  <ThemedImage
+    alt="Video player state machine containing closed and opened states. On the Play event, the Closed state transitions to the Opened state. The Playing state has an entry action for starting a video playing indicated by the ‘Entry’ label and the text playVideo, and an exit action for pausing a video indicated by the ‘Exit’ lable and the text pauseVideo. The Opened state contains Playing and Paused states, which are transitioned between using the Pause and Play events. There’s a Stop event from the Opened state that transitions to the final state of Stopped. There’s an onDone event from the parent Opened state back to the Closed state."
+    sources={{
+      light:
+        'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.light.png',
+      dark: 'https://stately.ai/registry/machines/222e2d7a-0ed6-4f2c-843a-e6646d717000.dark.png',
+    }}
+  />
+</p>
+
+[View this machine in the Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=222e2d7a-0ed6-4f2c-843a-e6646d717000).
+
+In our video player, we have entry and exit actions on the Playing state. We use the entry action of playVideo to fire an effect playing the video on entry to the Playing state. We use the exit action of pauseVideo to fire an effect pausing the video when the Playing state is exited.
+
+### Add a transition action
+
+First, select the event where you want an action to be fired.
+
+### On the canvas
+
+1. Use the <Plus size={18} /> plus icon button to open the edit menu.
+2. Choose <Zap size={18} /> **Action** from the menu to add an action block.
+3. Write your action’s name in the action’s text input.
+
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **+ Transition action** button to add an action block.
+3. Write your action’s name in the action’s text input.
+
+## Delete a transition action
+
+First, select the transition action block you want to delete.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the transition action.
+
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Hover, focus, or select the transition action block to reveal the <Trash size={18} /> trash icon button.
+3. Use the <Trash size={18} /> trash icon button to delete the action.
+
+## Add an entry action or exit action to a state
+
+First, select the state you want to have an entry or exit action.
+
+### On the canvas
+
+1. Select the state where you want to add an action.
+2. Use the <Plus size={18} /> plus icon button to open the edit menu.
+3. Choose <Zap size={18} /> **Entry action** or <Zap size={18} /> **Exit action** from the menu to add an action block to the event.
+4. Write your action’s name in the action’s text input.
+
+### Using the event details panel
+
+1. Open the state <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **+ Effect** button to open the effects menu, and choose **Add entry action** or **Add exit action**.
+3. Write your action’s name in the action’s text input.
+
+## Delete an entry action or exit action from a state
+
+First, select the action block you want to delete.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the action.
+
+### Using the event details panel
+
+1. Open the event <Info size={18} /> **Details** panel from the right tool menu.
+2. Hover, focus, or select the action block to reveal the <Trash size={18} /> trash icon button.
+3. Use the <Trash size={18} /> trash icon button to delete the action.
+
+## Add a built-in action
+
+You can add built-in XState actions which will be formatted in your [exported code](/export-as-code.mdx). The options are:
+
+- [assign](../xstate/actions/context.mdx#assign-action): assigns data to the state context.
+- [raise](../xstate/actions/built-in-actions.mdx#raise-action): _raises_ an event that is received by the same machine.
+- [log](../xstate/actions/built-in-actions.mdx#log-action): an easy way to log messages to the console.
+- [sendTo](../xstate/actions/built-in-actions.mdx#sending-events-to-actors): sends an event to a specific actor.
+- [stop](/xstate/actors/spawn.mdx#stopping-spawned-actors): stops a child actor.
+
+To add a built-in action, first add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
+
+### On the canvas
+
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+4. Fill out the required corresponding action input fields.
+
+### Using the details panel
+
+1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Choose your desired action from the dropdown menu at the top of the **Action** panel.
+1. Fill out the required corresponding action input fields.
+
+## Add a custom action
+
+You can also add custom actions with a custom action type and parameters which will be formatted as [XState action objects](../xstate/actions/actions.mdx) in your [exported code](/export-as-code.mdx).
+
+First, add a [transition action](#add-a-transition-action), [entry action](#add-an-entry-action-or-exit-action-to-a-state), or [exit action](#add-an-entry-action-or-exit-action-to-a-state).
+
+### On the canvas
+
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+2. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+3. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+4. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+
+[Read about action objects below for more on action types and and parameters](../xstate/actions).
+
+### Using the details panel
+
+1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Custom action is selected by default. Add your custom action type in the **Action type** text input.
+1. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+   :::xstate
+
+## Looking for how to use entry and exit actions in XState?
+
+Find out [more about actions in XState](../xstate/actions/actions.mdx) in the XState section of the docs.
+
+:::
