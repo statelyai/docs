@@ -140,18 +140,18 @@
     "description": "The title of the page for a docs tag"
   },
   "theme.blog.tagListPageDescription": {
-      "message": "From A-Z, browse all the tags used in the blog posts on the Stately Blog.",
-      "description": "The description of the page for the blog tags list"
+    "message": "From A-Z, browse all the tags used in the blog posts on the Stately Blog.",
+    "description": "The description of the page for the blog tags list"
   },
   "theme.docs.versionBadge.label": {
     "message": "Version: {versionLabel}"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "{siteTitle} for {versionLabel} are in progress",
+    "message": "Docs for {versionLabel} are in progress",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "These {siteTitle} for {versionLabel}, are no longer actively maintained",
+    "message": "Docs for {versionLabel} are no longer actively maintained",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
