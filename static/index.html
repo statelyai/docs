@@ -44,7 +44,7 @@
     <script
       defer
       data-domain="stately.ai"
-      src="https://plausible.io/js/plausible.js"
+      src="https://plausible.io/js/script.tagged-events.js"
     ></script>
     <script defer src="./landing-page/bundle.js"></script>
   </head>
@@ -62,10 +62,14 @@
         </a>
       </h2>
       <nav class="navigation">
-        <a href="/editor?source=landing-page" class="button-link orange"
+        <a
+          href="/editor?source=landing-page plausible-event-name=landing+try+editor"
+          class="button-link orange"
           >Try the editor</a
         >
-        <a href="/registry/login?source=landing-page" class="button-link blue"
+        <a
+          href="/registry/login?source=landing-page"
+          class="button-link blue plausible-event-name=landing-editor+signin"
           >Sign in</a
         >
         <ul class="navigation-list">
@@ -100,13 +104,13 @@
         data-edge-target-position="0.7"
       >
         <a
-          class="button-link button-link-cta-primary"
+          class="button-link button-link-cta-primary plausible-event-name=landing+try+editor"
           href="/editor?source=landing-page"
         >
           Try the editor
         </a>
         <a
-          class="button-link button-link-cta-secondary ghost"
+          class="button-link button-link-cta-secondary ghost plausible-event-name=landing+demo"
           href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
         >
           Book a demo
@@ -702,13 +706,13 @@
         </h2>
         <p class="duo-buttons" data-edge-source="final-cta">
           <a
-            class="button-link button-link-cta-primary"
+            class="button-link button-link-cta-primary plausible-event-name=landing+try+editor"
             href="/editor?source=landing-page"
           >
             Try the editor
           </a>
           <a
-            class="button-link button-link-cta-secondary"
+            class="button-link button-link-cta-secondary plausible-event-name=landing+demo"
             href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
           >
             Book a demo
@@ -722,7 +726,7 @@
         action="registry/api/newsletter/signup"
         method="post"
         target="popupwindow"
-        class="embeddable-buttondown-form state"
+        class="embeddable-buttondown-form state plausible-event-name=landing+newsletter+signup"
         data-active
       >
         <h2>Get updates by email</h2>
@@ -750,7 +754,13 @@
           </li>
           <li><a href="https://twitter.com/statelyai">Twitter</a></li>
           <li><a href="https://youtube.com/c/statelyai">YouTube</a></li>
-          <li><a href="https://discord.gg/xstate">Discord community</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xstate"
+              class="plausible-event-name=landing+discord"
+              >Discord community</a
+            >
+          </li>
         </ul>
       </nav>
       <p class="copyright"><small>Copyright &copy; Stately, 2023</small></p>
