@@ -1431,6 +1431,14 @@ details summary::before {
   margin-bottom: calc(var(--ifm-alert-padding-vertical) * 0.5);
 }
 
+.alert:not(details) * + h2,
+.alert:not(details) * + h3,
+.alert:not(details) * + h4,
+.alert:not(details) * + h5,
+.alert:not(details) * + h6 {
+  margin-top: calc(var(--ifm-alert-padding-vertical) * 1.5);
+}
+
 .alert:not(details) a {
   color: inherit;
 }
