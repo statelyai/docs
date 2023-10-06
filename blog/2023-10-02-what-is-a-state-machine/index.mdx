@@ -163,17 +163,18 @@ State machines allow for isolating logic, meaning you can make changes or additi
 
 State machines clearly define all possible states, events, and transitions, allowing testers to simulate specific events and verify if transitions to specific states occur as expected. Since state machines are directed graphs, they act like a “map” for your app logic. This map enables the automatic generation of many different “paths” through the state machine. Each path represents a potential use case, even those that may initially go unnoticed, such as edge cases. Exhaustive test path generation is also possible so that you can test every possible path through the state machine.
 
-_Our [export to Stories feature](/docs/export-as-code#export-formats) enables you to generate the happy paths (stories) for your app._
+:::info
 
-```md
-# Stories for `orderMachine`
+_Our [export to Stories feature](/docs/export-as-code#export-formats) enables you to generate the happy paths (stories) for your app:_
 
-## orderMachine.Pending
+### Stories for `orderMachine`
+
+#### orderMachine.Pending
 
 1. _Start_
    → **State** `orderMachine.Pending`
 
-## orderMachine.Shipped
+#### orderMachine.Shipped
 
 1. _Start_
    → **State** `orderMachine.Pending`
@@ -181,7 +182,7 @@ _Our [export to Stories feature](/docs/export-as-code#export-formats) enables yo
 2. **Event** `item shipped`
    → **State** `orderMachine.Shipped`
 
-## orderMachine.Delivered
+#### orderMachine.Delivered
 
 1. _Start_
    → **State** `orderMachine.Pending`
@@ -192,7 +193,7 @@ _Our [export to Stories feature](/docs/export-as-code#export-formats) enables yo
 3. **Event** `item delivered`
    → **State** `orderMachine.Delivered`
 
-## orderMachine.Returned
+#### orderMachine.Returned
 
 1. _Start_
    → **State** `orderMachine.Pending`
@@ -205,7 +206,8 @@ _Our [export to Stories feature](/docs/export-as-code#export-formats) enables yo
 
 4. **Event** `item returned`
    → **State** `orderMachine.Returned`
-```
+
+:::
 
 ## Transition to state machines
 
