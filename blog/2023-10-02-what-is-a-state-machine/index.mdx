@@ -45,7 +45,7 @@ Visually, state machines are just boxes and arrows. The building blocks of a sta
 
 ### States
 
-A [state](/docs/states/intro) represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site’s order can be in the _Pending_, _Shipped_, _Delivered_, or _Returned_ states. Each of these is a finite state, contributing to the entire lifecycle of an order.
+A [state](/docs/state-machines-and-statecharts#states) represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site’s order can be in the _Pending_, _Shipped_, _Delivered_, or _Returned_ states. Each of these is a finite state, contributing to the entire lifecycle of an order.
 
 <p>
   <ThemedImage
@@ -59,7 +59,7 @@ A [state](/docs/states/intro) represents a particular situation, mode, or status
 
 Finite states are **deterministic**, meaning that something can only be in exactly one finite state at a time. An order cannot be in both the _Pending_ and _Delivered_ states at the same time, just like you can’t be in both the _Asleep_ and _Awake_ states simultaneously.
 
-State machines always start at an **[initial state](/docs/states/initial-states)** and may end up in a **[final state](/docs/states/final-states)**, indicating that the state machine is “done” and can no longer transition to any other state.
+State machines always start at an **[initial state](/docs/state-machines-and-statecharts#initial-state)** and may end up in a **[final state](/docs/state-machines-and-statecharts#final-state)**, indicating that the state machine is “done” and can no longer transition to any other state.
 
 ### Events
 
@@ -77,7 +77,7 @@ Events are occurrences; they’re a record that something happened. Using the pr
 
 ### Transitions
 
-A state [transition](/docs/transitions-and-events/intro) describes how a system “moves” from one state to another. These are the arrows between the states, labeled by the event that causes the transition to occur.
+A state [transition](/docs/transitions) describes how a system “moves” from one state to another. These are the arrows between the states, labeled by the event that causes the transition to occur.
 
 In state machines, transitions always happen immediately. For example, an order can be _Pending_ for some time (almost frustratingly so), but when the _item shipped_ event occurs, it immediately transitions to the _Shipped_ state.
 
