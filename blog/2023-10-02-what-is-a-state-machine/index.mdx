@@ -1,59 +1,102 @@
 ---
 title: What is a state machine?
 description: Learn what a state machine is, and how it can help you model and understand complex systems visually.
-tags: []
+tags: [state machine, statechart]
 authors: [david]
-slug: what-is-a-state-machine
-# image:
-date: 2023-10-02
+slug: 2023-10-05-what-is-a-state-machine
+image: /blog/2023-10-05-what-is-a-state-machine.png
+date: 2023-10-05
 ---
 
-You might have heard of the term “state machine” or “finite-state machine” before. If you look it up [on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation”, followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply your team’s work.
+You might have heard of “state machine” or “finite-state machine” before. [If you look up _state machine_ on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation,” followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply to your team’s work.
 
-However, state machines are _really useful_ for describing almost any kind of logic, feature, user story, sequence, process, workflow, specification, and more. They can greatly improve the way that your team collaborates on processes, flows, features, and any other kinds of application logic, and they’re much simpler to understand than you may think. If you’ve worked with flowcharts before, or have ever diagrammed a process on a whiteboard with boxes and arrows, you may already know how state machines work!
+However, state machines are _really useful_ for describing almost any kind of logic, feature, user story, sequence, process, workflow, specification, and more. <!--truncate-->They can greatly improve how your team collaborates on processes, flows, features, and any other kinds of application logic, and they’re much simpler to understand than you may think.
+
+If you’ve worked with flowcharts or diagrammed a process on a whiteboard with boxes and arrows, you may already know how state machines work!
 
 # What is a state machine?
 
 A state machine is a way of modeling how something works, using states and transitions to show how something changes over time in response to events.
 
-Specifically, it formally models how a system transitions from one state to another, based on certain events (e.g., triggers, signals, changes, etc.). Think of it as a useful tool for visualizing and designing the flow of user experiences, product features, or any process you’re working on.
+![Two states of locked and unlocked. On the unlocked state you can transition to un-locked on a coin event or transition to locked on a push event. On the locked state you can transition to un-locked with a coin event or transition to locked with a push event.](turnstile-state-machine.svg)
 
-Visually, state machine diagrams are similar to flowcharts. Both use shapes to represent states (e.g. steps in a flow), and arrows to indicate transitions between those states. The main difference is that state machines are more precise, formal, and powerful than flowcharts. They’re also more flexible, since they can be used to model any kind of logic, not just processes.
+Specifically, it formally models how a system transitions from one state to another based on specific events (e.g., triggers, signals, changes, etc.). Think of it as a useful tool for visualizing and designing the flow of user experiences, product features, or any process you’re working on.
 
-(illustration of state machine)
+Visually, state machine diagrams are similar to flowcharts. Both use shapes to represent states (e.g., steps in a flow) and arrows to indicate transitions between those states. The main difference is that state machines are more precise, formal, and powerful than flowcharts. They’re also more flexible since you can use them to model any kind of logic, not just processes.
 
-State machines are a concept deeply rooted in computer science; however, they have broad applications that extend to various business domains and design disciplines. From developing intuitive software interfaces to designing effective business processes, state machines provide a structured way to model and understand complex systems. Whether you're a product owner, project manager, designer, developer, QA tester, business analyst, or any other role, understanding state machines can significantly improve your ability to design, manage, and refine features, processes, and products.
+<p>
+  <ThemedImage
+    alt="A booking state machine with an initial idle state. From idle you can transition to car booking, flight booking, and hotel booking states."
+    sources={{
+      light:
+        'https://prodstack-ogimagebuckete7b3c4ce-fcz4tpdpagli.s3.amazonaws.com/studio-ec345257-35c4-4fcc-bfbc-9a9255bc8d13-light.png',
+      dark: 'https://prodstack-ogimagebuckete7b3c4ce-fcz4tpdpagli.s3.amazonaws.com/studio-ec345257-35c4-4fcc-bfbc-9a9255bc8d13-dark.png',
+    }}
+  />
+</p>
+
+State machines are a concept deeply rooted in computer science; however, they have broad applications that extend to various business domains and design disciplines. From developing intuitive software interfaces to designing effective business processes, state machines provide a structured way to model and understand complex systems. Whether you’re a product owner, project manager, designer, developer, QA tester, business analyst, or any other role, understanding state machines can significantly improve your ability to design, manage, and refine features, processes, and products.
 
 In short, a state machine lets us clearly understand how something reacts when an event occurs.
 
 ## The parts of a state machine
 
-Visually, state machines are just boxes and arrows. The building blocks of a state machine – **states, events,** and **transitions,** are quite straightforward (no pun intended), but together they form a powerful tool for modeling and understanding systems.
+Visually, state machines are just boxes and arrows. The building blocks of a state machine – **states, events,** and **transitions,** are quite straightforward (no pun intended), but together, they form a powerful tool for modeling and understanding systems.
 
-**States**
-A state represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site's order can be in the 'Pending', 'Shipped', 'Delivered', or 'Returned' states. Each of these is a finite state, contributing to the entire lifecycle of an order.
+### States
 
-(illustration of a finite state state)
+A [state](/docs/states/intro) represents a particular situation, mode, or status that something can be in. For instance, an e-commerce site’s order can be in the _Pending_, _Shipped_, _Delivered_, or _Returned_ states. Each of these is a finite state, contributing to the entire lifecycle of an order.
 
-Finite states are **deterministic**, meaning that something can only be in exactly one finite state at a time. An order cannot be in both the ‘Pending’ and ‘Delivered’ states at the same time, just like you can’t be in both the ‘Asleep’ and ‘Awake’ states simultaneously.
+<p>
+  <ThemedImage
+    alt="Pending and shipped states."
+    sources={{
+      light: '/blog/2023-10-02-what-is-a-state-machine/order-states-light.png',
+      dark: '/blog/2023-10-02-what-is-a-state-machine/order-states-dark.png',
+    }}
+  />
+</p>
 
-State machines always start at an **initial state**, and may end up in a **final state**, which denotes that the state machine is “done” and can no longer transition to any other state.
+Finite states are **deterministic**, meaning that something can only be in exactly one finite state at a time. An order cannot be in both the _Pending_ and _Delivered_ states at the same time, just like you can’t be in both the _Asleep_ and _Awake_ states simultaneously.
 
-**Events**
-Events are occurrences; they’re a record that something happened. Using the previous example, an event like "item shipped" might transition an order’s state from 'Pending' to 'Shipped'.
+State machines always start at an **[initial state](/docs/states/initial-states)** and may end up in a **[final state](/docs/states/final-states)**, indicating that the state machine is “done” and can no longer transition to any other state.
 
-(illustration of an event)
+### Events
 
-**Transitions**
-A state transition describes how a system “moves” from one state to another. These are the arrows between the states, labeled by the event that causes the transition to occur.
+Events are occurrences; they’re a record that something happened. Using the previous example, an event like _item shipped_ might transition an order’s state from _Pending_ to _Shipped_.
 
-In state machines, transitions always happen immediately. For example, an order can be ‘Pending’ for some time (almost frustratingly so), but when the “item shipped” event occurs, it immediately transitions to the ‘Shipped’ state.
+<p>
+  <ThemedImage
+    alt="There is an initial Pending state. The machine transitions from Pending to the Shipped state with the item shipped event."
+    sources={{
+      light: '/blog/2023-10-02-what-is-a-state-machine/order-event-light.png',
+      dark: '/blog/2023-10-02-what-is-a-state-machine/order-event-dark.png',
+    }}
+  />
+</p>
 
-(illustration of a transition)
+### Transitions
+
+A state [transition](/docs/transitions-and-events/intro) describes how a system “moves” from one state to another. These are the arrows between the states, labeled by the event that causes the transition to occur.
+
+In state machines, transitions always happen immediately. For example, an order can be _Pending_ for some time (almost frustratingly so), but when the _item shipped_ event occurs, it immediately transitions to the _Shipped_ state.
+
+<p>
+  <ThemedImage
+    alt="State machine for an order: the states are pending, shipped, delivered, and returned."
+    sources={{
+      light:
+        '/blog/2023-10-02-what-is-a-state-machine/order-transitions-light.png',
+      dark: '/blog/2023-10-02-what-is-a-state-machine/order-transitions-dark.png',
+    }}
+  />
+</p>
+
+[View this state machine in Stately](https://stately.ai/registry/editor/092bf401-2d65-48ae-969c-99b4a7eeb87f?machineId=942c00ac-7922-4a5a-bf92-d2438847c62f&mode=design).
 
 ## A state machine example
 
-Let’s say you wanted to create a flow for a travel booking app. This flow represents the logic of a user booking a flight, hotel, and rental car, and this logic can be applied to the frontend code (as a multi-step flow), as well as backend code (as a workflow that communicates with APIs to book everything). Let’s model this travel booking flow as a state machine.
+Let’s say you wanted to create a flow for a travel booking app. This flow represents the logic of a user booking a flight, hotel, and rental car, and you can apply this logic to the frontend code (as a multi-step flow) and backend code (as a workflow that communicates with APIs to book everything). Let’s model this travel booking flow as a state machine.
 
 First, think of all of the **states** of this flow. Each state represents something that is happening, such as the flight or hotel being booked:
 
@@ -71,7 +114,7 @@ Then, think of all the **events** that can happen in the flow. There are the “
 - Hotel booked
 - Car booked
 
-But there are also other events that can happen:
+But other events can happen:
 
 - Flight booking failed
 - Hotel booking failed
@@ -80,41 +123,99 @@ But there are also other events that can happen:
 
 You can then combine these states and events to create a complete **state machine diagram** that represents all the possible user flows through the app:
 
-(state machine embed)
+<EmbedMachine
+  name="booking machine"
+  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=5e614700-7fc3-4d22-adce-4dd6cf4f6de0&mode=Design"
+/>
 
-These state machines serve as a **source of truth** for your app logic, since they can be used for:
+The state machine above uses parent and child states, a feature of [statecharts](/docs/state-machines-and-statecharts#what-is-a-statechart), to reduce complexity.
 
-- **Documentation** that outlines the features and use-cases represented in the flow
-- **Code** that can be generated from the state machine
+These state machines serve as a **source of truth** for your app logic since you can use them for:
+
+- **Documentation** that outlines the features and use cases represented in the flow
+- **Code** you can generate from the state machine
 - **Diagrams** as visual documentation
-- **Tests** that can also be generated for various flows
+- **Tests** you can also generate for various flows
 
-## Benefits of Using State Machines
+## Benefits of using state machines
 
-Understanding and managing anything that can happen in your applications is crucial for efficient collaboration and innovation – you want to ensure that your team can understand and iterate on app logic and features quickly, no matter how complex they get. State machines are a powerful, visual approach for accomplishing that, and they’re much more than just a diagramming tool.
+Understanding and managing anything that can happen in your applications is crucial for [efficient collaboration and innovation](/blog/using-teams-in-stately-studio) – you want to ensure that your team can understand and iterate on app logic and features quickly, no matter how complex they get. State machines are a powerful visual approach for accomplishing that, and they’re much more than just a diagramming tool.
 
 There are many key advantages of using state machines:
 
 ### Visualized documentation
 
-With state machine diagrams, you can visually represent the states of a process, making it easier to grasp and communicate complex logic. These diagrams bridge the communication gap between technical and non-technical team members. They also provide a clear way to document and share app logic, which can be used for onboarding new team members. After all, following boxes and arrows (just like a flowchart) is much easier than parsing code, especially for someone unfamiliar with the codebase.
+With state machine diagrams, you can visually represent the states of a process, making it easier to grasp and communicate complex logic. These diagrams bridge the communication gap between technical and non-technical team members. They also provide a clear way to document and share app logic, which you could use for onboarding new team members. After all, following boxes and arrows (just like a flowchart) is much easier than parsing code, especially for someone unfamiliar with the codebase.
+
+![A mermaid diagram of our order state machine.](mermaid-diagram.svg)
+
+_Our [export to Mermaid feature](/docs/export-as-code#export-formats) enables you to embed your state machines in GitHub and GitLab pull requests and comments._
 
 ### Consistent, robust application logic
 
-By mapping out all states and transitions, state machines ensure every possible scenario is accounted for. This minimizes unexpected behaviors (such as undesired states/transitions) and system inconsistencies, because it is **mathematically impossible** for a state machine to take a transition that does not exist. You can quickly identify a transition to a state that should not go to that state. This is especially useful for complex apps, where it’s easy to miss edge-cases or unexpected scenarios.
+By mapping out all states and transitions, state machines ensure you account for every possible scenario. This minimizes unexpected behaviors (such as undesired states/transitions) and system inconsistencies because it is **mathematically impossible** for a state machine to take a transition that does not exist. You can quickly identify a transition to a state that should not go to that state. This is especially useful for complex apps, where it’s easy to miss edge cases or unexpected scenarios.
 
 ### Modularity and scalability
 
-State machines allow for isolating logic. This means that one can make changes or additions to a specific segment without overhauling the entire system. Regardless of framework, programming language, or implementation, the core abstractions remain the same: states, events, and transitions. If you need to add, change, or remove a feature, the process is to add, change, or remove states and transitions.
+State machines allow for isolating logic, meaning you can make changes or additions to a specific segment without overhauling the entire system. Regardless of framework, programming language, or implementation, the core abstractions remain the same: states, events, and transitions. If you need to add, change, or remove a feature, the process is to add, change, or remove states and transitions.
 
 ### Test path generation
 
-State machines clearly define all possible states, events, and transitions. This allows testers to simulate specific events and verify if transitions to specific states occur as expected. Since state machines are directed graphs, they act like a “map” for your app logic. This enables the automatic generation of many different “paths” through the state machine. Each of these paths represents a potential use-case, even those that may initially go unnoticed, such as edge-cases. Exhaustive test path generation is also possible, which means that every possible path through the state machine can be tested.
+State machines clearly define all possible states, events, and transitions, allowing testers to simulate specific events and verify if transitions to specific states occur as expected. Since state machines are directed graphs, they act like a “map” for your app logic. This map enables the automatic generation of many different “paths” through the state machine. Each path represents a potential use case, even those that may initially go unnoticed, such as edge cases. Exhaustive test path generation is also possible so that you can test every possible path through the state machine.
+
+:::info
+
+_Our [export to Stories feature](/docs/export-as-code#export-formats) enables you to generate the happy paths (stories) for your app:_
+
+### Stories for `orderMachine`
+
+#### orderMachine.Pending
+
+1. _Start_
+   → **State** `orderMachine.Pending`
+
+#### orderMachine.Shipped
+
+1. _Start_
+   → **State** `orderMachine.Pending`
+
+2. **Event** `item shipped`
+   → **State** `orderMachine.Shipped`
+
+#### orderMachine.Delivered
+
+1. _Start_
+   → **State** `orderMachine.Pending`
+
+2. **Event** `item shipped`
+   → **State** `orderMachine.Shipped`
+
+3. **Event** `item delivered`
+   → **State** `orderMachine.Delivered`
+
+#### orderMachine.Returned
+
+1. _Start_
+   → **State** `orderMachine.Pending`
+
+2. **Event** `item shipped`
+   → **State** `orderMachine.Shipped`
+
+3. **Event** `item delivered`
+   → **State** `orderMachine.Delivered`
+
+4. **Event** `item returned`
+   → **State** `orderMachine.Returned`
+
+:::
 
 ## Transition to state machines
 
-At Stately, we love state machines, and it’s because we know how valuable they can be to development teams. State machines provide a visually clear way to understand, design, and manage flows and logic at any level of complexity. Integrating the principles of state machines can lead to more predictable outcomes, clearer communication, and enhanced efficiency for the entire team, from project managers to designers and developers. You can use them as a precise way of diagramming and documenting app logic, and you can even use them in your codebase to power that same logic.
+We love state machines at [Stately](/) because we know how valuable they can be to development teams. State machines provide a visually clear way to understand, design, and manage flows and logic at any level of complexity. Integrating the principles of state machines can lead to more predictable outcomes, clearer communication, and enhanced efficiency for the entire team, from project managers to designers and developers. You can use them as a precise way of diagramming and documenting app logic and even use them in your codebase to power that same logic.
 
 There are many ways to get started with state machines:
 
-(TODO: add links here to state.new, intro to Stately Studio, generating flows, XState documentation)
+- [Watch our video intro to Stately](https://www.youtube.com/watch?v=EzYIerEutgk).
+- [Learn about generating state machines from text descriptions](https://www.youtube.com/watch?v=wjZE39wCZXo) with our AI feature.
+- [Read more about using XState](/docs/xstate), our open-source library for state machines anywhere JavaScript is supported.
+- Jump into creating your own machine in [our drag-and-drop editor at state.new](https://state.new).
