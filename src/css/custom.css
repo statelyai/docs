@@ -1428,6 +1428,7 @@ details summary::before {
 .alert:not(details) h6 {
   color: inherit;
   font-size: 1.1rem;
+  margin-top: 0;
   margin-bottom: calc(var(--ifm-alert-padding-vertical) * 0.5);
 }
 

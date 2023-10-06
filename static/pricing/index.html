@@ -33,7 +33,7 @@
     <script
       defer
       data-domain="stately.ai"
-      src="https://plausible.io/js/plausible.js"
+      src="https://plausible.io/js/script.tagged-events.js"
     ></script>
     <script defer src="/landing-page/bundle.js"></script>
   </head>
@@ -46,10 +46,14 @@
         /></a>
       </h2>
       <nav class="navigation">
-        <a href="/editor?source=landing-page" class="button-link orange"
+        <a
+          href="/editor?source=landing-page plausible-event-name=pricing+try+editor"
+          class="button-link orange"
           >Try the editor</a
         >
-        <a href="/registry/login?source=landing-page" class="button-link blue"
+        <a
+          href="/registry/login?source=landing-page"
+          class="button-link blue plausible-event-name=pricing-editor+signin"
           >Sign in</a
         >
         <ul class="navigation-list">
@@ -74,7 +78,7 @@
                 <p class="pricing-text price-number">$0</p>
                 <a
                   href="/editor?source=landing-page"
-                  class="button-link sign-up-button"
+                  class="button-link sign-up-button plausible-event-name=community+signup"
                 >
                   Get started
                 </a>
@@ -115,7 +119,9 @@
                     </p>
                   </div>
                 </div>
-                <a href="/registry/billing" class="button-link sign-up-button"
+                <a
+                  href="/registry/billing"
+                  class="button-link sign-up-button plausible-event-name=pro+signup"
                   >Sign up</a
                 >
               </div>
@@ -176,7 +182,7 @@
                 </p>
                 <a
                   href="mailto:support@stately.ai?subject=I'm interested in the Stately Studio Enterprise plan"
-                  class="button-link sign-up-button"
+                  class="button-link sign-up-button plausible-event-name=enterprise+contact"
                   >Contact us</a
                 >
               </div>
@@ -222,7 +228,7 @@
                 <p>
                   <a
                     href="mailto:support@stately.ai?subject=I'm interested in the Stately Studio services"
-                    class="button-link sign-up-button"
+                    class="button-link sign-up-button plausible-event-name=services+contact"
                     >Contact us</a
                   >
                 </p>
@@ -253,7 +259,7 @@
         method="post"
         target="popupwindow"
         onsubmit="window.open('https://buttondown.email/stately', 'popupwindow')"
-        class="embeddable-buttondown-form state"
+        class="embeddable-buttondown-form state plausible-event-name=pricing+newsletter+signup"
         data-active
       >
         <h2>Get updates by email</h2>
@@ -281,7 +287,13 @@
           </li>
           <li><a href="https://twitter.com/statelyai">Twitter</a></li>
           <li><a href="https://youtube.com/c/statelyai">YouTube</a></li>
-          <li><a href="https://discord.gg/xstate">Discord community</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xstate"
+              class="plausible-event-name=pricing+discord"
+              >Discord community</a
+            >
+          </li>
         </ul>
       </nav>
       <p class="copyright"><small>Copyright &copy; Stately, 2023</small></p>

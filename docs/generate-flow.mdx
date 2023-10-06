@@ -1,0 +1,50 @@
+---
+title: Generate flow
+---
+
+**Generate flow** is an experimental feature that helps you auto-create machines from text descriptions. You can generate a flow for a new machine or use the flow description to describe how you want to modify your current flow.
+
+:::studio
+
+**Generate flow** is a Pro feature of the Studio. [Check out the features on our Pro plan](/studio-pro-plan.mdx) or [upgrade to try the Pro plan with a 30-day free trial](https://stately.ai/registry/billing).
+
+:::
+
+You have 1000 generations available to use each month. The number of available generations is reset at the beginning of each calendar month.
+
+There are many reasons you might want to generate your flows, including:
+
+- You have a complex machine in mind and want to get started quickly
+- You want an example of a state machine for a particular flow
+- You’re new and want to get an idea of how you can model state machines
+
+<YouTube id="wjZE39wCZXo" />
+
+## Generate a new flow
+
+Generating a new flow will overwrite your current machine with an all-new flow created from your text description.
+
+1. Use the **Generate flow** button to open the generate flow dialog.
+2. Deselect **Generate from current flow** to create an all-new flow. [Read more about generate from current flow below](#generate-from-current-flow).
+3. Enter a text description of the flow you want to generate in as much detail as possible.
+4. Use the **Generate** button to generate your flow.
+
+When you generate an all-new flow, only your prompt text is sent to OpenAI.
+
+## Generate from current flow
+
+1. Use the **Generate flow** button to open the generate flow dialog.
+2. Ensure **Generate from current flow** is selected to modify your current machine.
+3. Enter a text description of the changes you want to make to your machine in as much detail as possible.
+4. Use the **Generate** button to generate your flow.
+
+When you use **Generate from current flow**, we share your machine definition with OpenAI to help build the response.
+
+## View history
+
+You can view a history of text descriptions used to generate flows for the current machine. Use the **View history** button inside the **Generate flow** dialog to find your **Prompt history**.
+
+- Use **Open flow** to preview the [version](versions.mdx) of the machine generated from the selected prompt.
+- Use **Copy to prompt** to copy the selected prompt into the text description area of the **Generate flow** dialog.
+
+A new [version](versions.mdx) is auto-saved every time you generate a flow. Use the <History size={18} /> **Versions** panel and switch the **Show auto-saved versions** toggle on to browse auto-saved versions of your current machine.

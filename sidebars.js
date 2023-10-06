@@ -20,27 +20,41 @@ const sidebars = {
 
   tutorialSidebar: [
     {
+      type: 'doc',
+      label: 'About Stately and XState',
+      id: 'about',
+    },
+    {
       type: 'category',
       label: 'Get started',
       link: {
         type: 'generated-index',
-        title: 'Get started with Stately',
-        description:
-          'Learn about state machines, statecharts, and Stately Studio’s editor',
+        title: 'Get started',
+        description: 'Get started quickly with XState and Stately Studio.',
         slug: '/category/get-started',
         keywords: ['guides'],
       },
+      collapsed: false,
+      collapsible: true,
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
-          id: 'studio',
+          label: 'Install XState',
+          id: 'installation',
+        },
+        'quick-start',
+        {
+          type: 'doc',
+          label: 'Migrate to XState v5',
+          id: 'migration',
         },
         {
           type: 'doc',
-          label: 'State machines and statecharts',
-          id: 'state-machines-and-statecharts',
+          label: 'Examples',
+          id: 'examples',
         },
+        'templates',
+        'cheatsheet',
       ],
     },
     {
@@ -48,9 +62,8 @@ const sidebars = {
       label: 'Core concepts',
       link: {
         type: 'generated-index',
-        title: 'Stately core concepts',
-        description:
-          'Learn about states, transitions, events, actions, and actors in the Stately Studio.',
+        title: 'Core concepts',
+        description: 'Learn the core concepts for XState and Stately Studio.',
         slug: '/category/core-concepts',
         keywords: ['guides'],
       },
@@ -59,55 +72,18 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introducing states',
-          id: 'states/intro',
-        },
-        'states/initial-states',
-        'states/final-states',
-        'states/parent-states',
-        'states/parallel-states',
-        'states/history-states',
-        {
-          type: 'category',
-          label: 'Transitions and events',
-          link: {
-            type: 'generated-index',
-            title: 'Transitions and events',
-            description:
-              'Learn about all the possible transitions and events in Stately Studio’s editor.',
-            slug: '/category/transitions-and-events',
-            keywords: ['guides'],
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'Transitions and events',
-              id: 'transitions-and-events/intro',
-            },
-            'transitions-and-events/guards',
-            'transitions-and-events/eventless-transitions',
-            'transitions-and-events/delayed-transitions',
-            'transitions-and-events/self-transitions',
-            'transitions-and-events/state-done-events',
-            'transitions-and-events/invoke-done-events',
-            'transitions-and-events/invoke-error-events',
-          ],
+          label: 'State machines',
+          id: 'state-machines-and-statecharts',
         },
         {
-          type: 'category',
-          label: 'Actions and actors',
-          link: {
-            type: 'generated-index',
-            title: 'Actions and actors',
-            description:
-              'Learn about actions and actors in Stately Studio’s editor.',
-            slug: '/category/actions-and-actors',
-            keywords: ['guides'],
-          },
-          items: [
-            'actions-and-actors/entry-and-exit-actions',
-            'actions-and-actors/actors',
-          ],
+          type: 'doc',
+          label: 'Actor model',
+          id: 'actor-model',
+        },
+        {
+          type: 'doc',
+          label: 'What is XState?',
+          id: 'xstate',
         },
       ],
     },
@@ -125,33 +101,44 @@ const sidebars = {
       collapsible: true,
       items: [
         {
-          "type": "category",
-          "label": "Design mode",
-          "link": {
-            "type": "doc",
-            "id": "design-mode"
+          type: 'doc',
+          label: 'Introducing Stately Studio',
+          id: 'studio',
+        },
+        {
+          type: 'category',
+          label: 'Design mode',
+          link: {
+            type: 'doc',
+            id: 'design-mode',
           },
           items: [
             'import-from-code',
             'export-as-code',
-            'machine-restore',
-            'autolayout',
+            {
+              type: 'doc',
+              label: 'Generate flow',
+              id: 'generate-flow',
+              className: 'pro-feature',
+            },
+            {
+              type: 'doc',
+              label: 'Colors',
+              id: 'colors',
+              className: 'pro-feature',
+            },
             'annotations',
             'descriptions',
-            {
-              "type": "doc",
-              "label": "Colors",
-              "id": "colors",
-              "className": "pro-feature"
-            },
+            'machine-restore',
+            'autolayout',
           ],
         },
         {
-          "type": "category",
-          "label": "Simulate mode",
-          "link": {
-            "type": "doc",
-            "id": "simulate-mode"
+          type: 'category',
+          label: 'Simulate mode',
+          link: {
+            type: 'doc',
+            id: 'simulate-mode',
           },
           items: [
             {
@@ -162,6 +149,84 @@ const sidebars = {
             },
           ],
         },
+        'projects',
+        {
+          type: 'doc',
+          label: 'Teams',
+          className: 'pro-feature',
+          id: 'teams',
+        },
+        'discover',
+        {
+          type: 'category',
+          label: 'Share',
+          link: {
+            type: 'generated-index',
+            title: 'Share',
+            description:
+              'Learn how to share machines created in Stately Studio.',
+            slug: '/category/share',
+            keywords: ['guides'],
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'Embed URL',
+              id: 'embed',
+            },
+            {
+              type: 'doc',
+              label: 'Image URL',
+              id: 'image',
+            },
+            {
+              type: 'doc',
+              label: 'Share URL',
+              id: 'url',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Accounts',
+          link: {
+            type: 'generated-index',
+            title: 'Stately Studio accounts',
+            description:
+              'Learn about Stately Studio plans and how to manage your account.',
+            slug: '/category/accounts',
+            keywords: ['guides'],
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'Community plan',
+              id: 'studio-community-plan',
+              className: 'community-feature',
+            },
+            {
+              type: 'doc',
+              label: 'Pro plan',
+              id: 'studio-pro-plan',
+              className: 'pro-feature',
+            },
+            {
+              type: 'doc',
+              label: 'Enterprise plan',
+              id: 'studio-enterprise-plan',
+            },
+            {
+              type: 'doc',
+              label: 'Sign up',
+              id: 'sign-up',
+            },
+            {
+              type: 'doc',
+              label: 'Upgrade',
+              id: 'upgrade',
+            },
+          ],
+        },
         {
           type: 'doc',
           label: 'Version history',
@@ -169,320 +234,89 @@ const sidebars = {
           className: 'pro-feature',
         },
         {
-          "type": "doc",
-          "label": "Lock machines",
-          "id": "lock-machines",
-          "className": "pro-feature"
-        },
-        "keyboard-shortcuts",
-        'canvas-view-controls',
-        'user-preferences'
-      ],
-    },
-    'projects',
-    {
-      type: 'doc',
-      label: 'Teams',
-      className: 'pro-feature',
-      id: 'teams',
-    },
-    'discover',
-    {
-      type: 'category',
-      label: 'Share',
-      link: {
-        type: 'generated-index',
-        title: 'Share',
-        description: 'Learn how to share machines created in Stately Studio.',
-        slug: '/category/share',
-        keywords: ['guides'],
-      },
-      items: [
-        {
           type: 'doc',
-          label: 'Embed URL',
-          id: 'embed',
-        },
-        {
-          type: 'doc',
-          label: 'Image URL',
-          id: 'image',
-        },
-        {
-          type: 'doc',
-          label: 'Share URL',
-          id: 'url',
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Accounts',
-      link: {
-        type: 'generated-index',
-        title: 'Stately Studio accounts',
-        description:
-          'Learn about Stately Studio plans and how to manage your account.',
-        slug: '/category/accounts',
-        keywords: ['guides'],
-      },
-      items: [
-        {
-          type: 'doc',
-          label: 'Community plan',
-          id: 'studio-community-plan',
-          className: 'community-feature',
-        },
-        {
-          type: 'doc',
-          label: 'Pro plan',
-          id: 'studio-pro-plan',
+          label: 'Lock machines',
+          id: 'lock-machines',
           className: 'pro-feature',
         },
-        {
-          type: 'doc',
-          label: 'Enterprise plan',
-          id: 'studio-enterprise-plan',
-        },
-        {
-          type: 'doc',
-          label: 'Sign up',
-          id: 'sign-up',
-        },
-        {
-          type: 'doc',
-          label: 'Upgrade',
-          id: 'upgrade',
-        },
+        'keyboard-shortcuts',
+        'canvas-view-controls',
+        'user-preferences',
       ],
     },
     {
       type: 'category',
-      label: 'XState library',
+      label: 'State machines',
       link: {
         type: 'generated-index',
-        title: 'XState library',
-        description: 'Learn about XState.',
-        slug: '/category/xstate',
+        title: 'State machines',
+        description:
+          'Learn how to use state machines in XState and Stately Studio.',
+        slug: '/category/state-machines',
         keywords: ['guides'],
       },
       collapsed: false,
       collapsible: true,
       items: [
-        {
-          type: 'doc',
-          label: 'Introducing XState',
-          id: 'xstate/intro',
-        },
-        {
-          type: 'link',
-          label: 'Migrate to XState v5 beta',
-          href: '/docs/xstate-v5/migration',
-        },
-        'xstate/installation',
-        'xstate/templates',
-        {
-          type: 'category',
-          label: 'Basics',
-          link: {
-            type: 'generated-index',
-            title: 'XState basics',
-            description: 'Learn the basics of XState.',
-            slug: '/category/xstate-basics',
-            keywords: ['guides'],
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'What is a statechart?',
-              id: 'xstate/basics/what-is-a-statechart',
-            },
-            'xstate/basics/options',
-            'xstate/basics/inline-vs-named-options',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Actions',
-          link: {
-            type: 'generated-index',
-            title: 'Actions in XState',
-            description: 'Learn how to use actions in XState.',
-            slug: '/category/xstate-actions',
-            keywords: ['guides'],
-          },
-          items: ['xstate/actions/actions', 'xstate/actions/built-in-actions'],
-        },
-        {
-          type: 'doc',
-          label: 'Context',
-          id: 'xstate/actions/context',
-        },
-        {
-          type: 'category',
-          label: 'Transitions and choices',
-          link: {
-            type: 'generated-index',
-            title: 'Transitions and choices in XState',
-            description: 'Learn how to use transitions and guards in XState.',
-            slug: '/category/xstate-transitions-and-choices',
-            keywords: ['guides'],
-          },
-          items: [
-            'xstate/transitions-and-choices/guards',
-            'xstate/transitions-and-choices/guarded-actions',
-            'xstate/transitions-and-choices/always',
-            'xstate/transitions-and-choices/after',
-            'xstate/transitions-and-choices/internal-external',
-            'xstate/transitions-and-choices/transition-descriptions',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Running machines',
-          link: {
-            type: 'generated-index',
-            title: 'Running machines in XState',
-            description: 'Learn how to run machines in XState.',
-            slug: '/category/xstate-running-machines',
-            keywords: ['guides'],
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'Running machines',
-              id: 'xstate/running-machines/intro',
-            },
-            'xstate/running-machines/react',
-            'xstate/running-machines/node',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Deep dive: states',
-          link: {
-            type: 'generated-index',
-            title: 'Deep dive into states in XState',
-            description: 'Learn all about states in XState.',
-            slug: '/category/xstate-states',
-            keywords: ['guides'],
-          },
-          items: [
-            'xstate/states/parent-and-child-states',
-            'xstate/states/other-state-attributes',
-            'xstate/states/advanced-transitions',
-            'xstate/states/final-states',
-            'xstate/states/parallel-states',
-            'xstate/states/history-states',
-            'xstate/states/in-state-guards',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Model-based testing',
-          link: {
-            type: 'generated-index',
-            title: 'Model-based testing in XState',
-            description:
-              'Learn all about when and how to use model-based testing with XState.',
-            slug: '/category/xstate-model-based-testing',
-            keywords: ['guides'],
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'Model-based testing',
-              id: 'xstate/model-based-testing/intro',
-            },
-            'xstate/model-based-testing/when-to-use',
-            'xstate/model-based-testing/quickstart',
-            'xstate/model-based-testing/test-paths',
-            'xstate/model-based-testing/assertions',
-            'xstate/model-based-testing/event-cases',
-            'xstate/model-based-testing/jest',
-            'xstate/model-based-testing/vitest',
-            'xstate/model-based-testing/cypress',
-            'xstate/model-based-testing/playwright',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Actors',
-          link: {
-            type: 'generated-index',
-            title: 'Actors in XState',
-            description: 'Learn all about using actors in XState.',
-            slug: '/category/xstate-actors',
-            keywords: ['guides'],
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'Introducing actors',
-              id: 'xstate/actors/intro',
-            },
-            'xstate/actors/promises',
-            'xstate/actors/actions-vs-actors',
-            'xstate/actors/callbacks',
-            'xstate/actors/machines',
-            'xstate/actors/observables',
-            'xstate/actors/parent-child-communication',
-            'xstate/actors/spawn',
-            {
-              type: 'doc',
-              label: 'Actor cheatsheet',
-              id: 'xstate/actors/cheatsheet',
-            },
-          ],
-        },
-        {
-          type: 'category',
-          label: 'TypeScript',
-          link: {
-            type: 'generated-index',
-            title: 'TypeScript in XState',
-            description: 'Learn about TypeScript in XState.',
-            slug: '/category/xstate-typescript',
-            keywords: ['guides'],
-          },
-          items: [
-            'xstate/typescript/typegen',
-            'xstate/typescript/type-helpers',
-            'xstate/typescript/troubleshooting',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Packages',
-          link: {
-            type: 'generated-index',
-            title: 'XState packages',
-            description: 'Find all the packages in XState.',
-            slug: '/category/xstate-packages',
-            keywords: ['guides'],
-          },
-          items: [
-            'xstate/packages/xstate-fsm',
-            'xstate/packages/xstate-graph',
-            'xstate/packages/xstate-test',
-            'xstate/packages/xstate-immer',
-            'xstate/packages/xstate-react',
-            'xstate/packages/xstate-svelte',
-            'xstate/packages/xstate-vue',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Advanced Topics',
-          link: {
-            type: 'generated-index',
-            title: 'Advanced topics in XState',
-            description: 'Learn even more about XState.',
-            slug: '/category/xstate-advanced-topics',
-            keywords: ['guides'],
-          },
-          items: ['xstate/advanced/react-patterns', 'xstate/advanced/scxml'],
-        },
+        'machines',
+        'states',
+        'context',
+        'input',
+        'transitions',
+        'eventless-transitions',
+        'delayed-transitions',
+        'actions',
+        'guards',
+        'finite-states',
+        'parent-states',
+        'parallel-states',
+        'initial-states',
+        'final-states',
+        'history-states',
+        'persistence',
+        'tags',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Actors ',
+      link: {
+        type: 'generated-index',
+        title: 'Actors',
+        description:
+          'Learn how to use actors and the actor model in XState and Stately Studio.',
+        slug: '/category/actors',
+        keywords: ['guides'],
+      },
+      collapsed: false,
+      collapsible: true,
+      items: ['actors', 'invoke', 'spawn', 'system'],
+    },
+    {
+      type: 'doc',
+      label: 'Testing',
+      id: 'testing',
+    },
+    {
+      type: 'category',
+      label: 'Packages',
+      link: {
+        type: 'generated-index',
+        title: 'Packages',
+        description: 'Find all the packages in XState.',
+        slug: '/category/xstate-packages',
+        keywords: ['guides'],
+      },
+      collapsed: true,
+      collapsible: true,
+      items: [
+        'xstate-react',
+        'xstate-vue',
+        'xstate-svelte',
+        'xstate-fsm',
+        'xstate-graph',
+        'xstate-test',
+        'xstate-immer',
       ],
     },
     {
@@ -492,27 +326,22 @@ const sidebars = {
       collapsible: true,
       link: {
         type: 'generated-index',
-        title: 'Stately Developer tools',
+        title: 'Stately developer tools',
         description:
           'Find all the developer tools you can use with XState and Stately Studio’s editor.',
         slug: '/category/developer-tools',
         keywords: ['guides'],
       },
       items: [
-        'tools/xstate-vscode-extension',
-        'tools/visualizer',
-        'tools/inspector',
+        'xstate-vscode-extension',
+        'visualizer',
+        'inspector',
         {
           type: 'doc',
           label: 'Other tools',
-          id: 'tools/developer-tools',
+          id: 'developer-tools',
         },
       ],
-    },
-    {
-      type: 'doc',
-      label: 'Examples',
-      id: 'examples/intro',
     },
     {
       type: 'doc',

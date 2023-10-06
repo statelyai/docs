@@ -44,9 +44,20 @@
     <script
       defer
       data-domain="stately.ai"
-      src="https://plausible.io/js/plausible.js"
+      src="https://plausible.io/js/script.tagged-events.js"
     ></script>
     <script defer src="./landing-page/bundle.js"></script>
+    <script type="text/javascript">
+      window.$crisp = [];
+      window.CRISP_WEBSITE_ID = 'dff22f8a-0d73-4a83-91be-1f448410c464';
+      (function () {
+        d = document;
+        s = d.createElement('script');
+        s.src = 'https://client.crisp.chat/l.js';
+        s.async = 1;
+        d.getElementsByTagName('head')[0].appendChild(s);
+      })();
+    </script>
   </head>
 
   <body>
@@ -62,10 +73,14 @@
         </a>
       </h2>
       <nav class="navigation">
-        <a href="/editor?source=landing-page" class="button-link orange"
+        <a
+          href="/editor?source=landing-page"
+          class="button-link orange plausible-event-name=landing+try+editor"
           >Try the editor</a
         >
-        <a href="/registry/login?source=landing-page" class="button-link blue"
+        <a
+          href="/registry/login?source=landing-page"
+          class="button-link blue plausible-event-name=landing-editor+signin"
           >Sign in</a
         >
         <ul class="navigation-list">
@@ -100,13 +115,13 @@
         data-edge-target-position="0.7"
       >
         <a
-          class="button-link button-link-cta-primary"
+          class="button-link button-link-cta-primary plausible-event-name=landing+try+editor"
           href="/editor?source=landing-page"
         >
           Try the editor
         </a>
         <a
-          class="button-link button-link-cta-secondary ghost"
+          class="button-link button-link-cta-secondary ghost plausible-event-name=landing+demo"
           href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
         >
           Book a demo
@@ -380,7 +395,7 @@
           </p>
 
           <p>
-            <a class="arrow-link" href="/docs/xstate/installation"
+            <a class="arrow-link" href="/docs/installation"
               >Get started with our quickstart guide</a
             >
           </p>
@@ -445,7 +460,7 @@
             <h3 class="fadeout-box">No framework required</h3>
             <p class="fadeout-box">
               Only JavaScript is required. Get started quickly with our
-              <a href="/docs/xstate/templates">JavaScript-only template</a>.
+              <a href="/docs/templates">JavaScript-only template</a>.
             </p>
           </li>
 
@@ -457,7 +472,7 @@
               Speedy integration with React, Vue, Svelte and more, with our
               dedicated
               <a href="/docs/category/xstate-packages">packages</a> and
-              <a href="/docs/xstate/templates">templates</a>.
+              <a href="/docs/templates">templates</a>.
             </p>
           </li>
 
@@ -702,13 +717,13 @@
         </h2>
         <p class="duo-buttons" data-edge-source="final-cta">
           <a
-            class="button-link button-link-cta-primary"
+            class="button-link button-link-cta-primary plausible-event-name=landing+try+editor"
             href="/editor?source=landing-page"
           >
             Try the editor
           </a>
           <a
-            class="button-link button-link-cta-secondary"
+            class="button-link button-link-cta-secondary plausible-event-name=landing+demo"
             href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
           >
             Book a demo
@@ -722,7 +737,7 @@
         action="registry/api/newsletter/signup"
         method="post"
         target="popupwindow"
-        class="embeddable-buttondown-form state"
+        class="embeddable-buttondown-form state plausible-event-name=landing+newsletter+signup"
         data-active
       >
         <h2>Get updates by email</h2>
@@ -750,7 +765,13 @@
           </li>
           <li><a href="https://twitter.com/statelyai">Twitter</a></li>
           <li><a href="https://youtube.com/c/statelyai">YouTube</a></li>
-          <li><a href="https://discord.gg/xstate">Discord community</a></li>
+          <li>
+            <a
+              href="https://discord.gg/xstate"
+              class="plausible-event-name=landing+discord"
+              >Discord community</a
+            >
+          </li>
         </ul>
       </nav>
       <p class="copyright"><small>Copyright &copy; Stately, 2023</small></p>
