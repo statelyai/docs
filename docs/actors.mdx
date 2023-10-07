@@ -187,8 +187,6 @@ See [persistence](persistence.mdx) for more details.
 
 You can wait for an actor’s snapshot to satisfy a predicate using the `waitFor(actor, predicate, options?)` helper function. The `waitFor(...)` function returns a promise that is:
 
-You can wait for an actor’s snapshot to satisfy a predicate using the `waitFor(actor, predicate, options?)` helper function. The `waitFor(...)` function returns a promise that is:
-
 - Resolved when the emitted snapshot satisfies the `predicate` function
 - Resolved immediately if the current snapshot already satisfies the `predicate` function
 - Rejected if an error is thrown or the `options.timeout` value is elapsed.
