@@ -18,13 +18,27 @@ If you’ve worked with flowcharts or diagrammed a process on a whiteboard with 
 
 A state machine is a way of modeling how something works, using states and transitions to show how something changes over time in response to events.
 
-![A state machine for a music player. The state machine starts in the Paused state, and on play, goes to the Playing state. On pause, it goes back to the Paused state. In any state, you can skip to the next track.](music-player-state-machine-dark.png)
+<ThemedImage
+  alt="A state machine for a music player. The state machine starts in the Paused state, and on play, goes to the Playing state. On pause, it goes back to the Paused state. In any state, you can skip to the next track."
+  sources={{
+    light:
+      '/blog/2023-10-02-what-is-a-state-machine/music-player-state-machine-light.png',
+    dark: '/blog/2023-10-02-what-is-a-state-machine/music-player-state-machine-dark.png',
+  }}
+/>
 
 Specifically, it formally models how a system transitions from one state to another based on specific events (e.g., triggers, signals, changes, etc.). Think of it as a useful tool for visualizing and designing the flow of user experiences, product features, or any process you’re working on.
 
 Visually, state machine diagrams are similar to flowcharts. Both use shapes to represent states (e.g., steps in a flow) and arrows to indicate transitions between those states. The main difference is that state machines are more precise, formal, and powerful than flowcharts. They’re also more flexible since you can use them to model any kind of logic, not just processes.
 
-![A booking state machine with an initial idle state. From idle you can transition to car booking, flight booking, and hotel booking states.](flight-booking-state-machine.png)
+<ThemedImage
+  alt="A booking state machine with an initial idle state. From idle you can transition to car booking, flight booking, and hotel booking states."
+  sources={{
+    light:
+      '/blog/2023-10-02-what-is-a-state-machine/flight-booking-state-machine.png',
+    dark: '/blog/2023-10-02-what-is-a-state-machine/flight-booking-state-machine.png',
+  }}
+/>
 
 State machines are a concept deeply rooted in computer science; however, they have broad applications that extend to various business domains and design disciplines. From developing intuitive software interfaces to designing effective business processes, state machines provide a structured way to model and understand complex systems. Whether you’re a product owner, project manager, designer, developer, QA tester, business analyst, or any other role, understanding state machines can significantly improve your ability to design, manage, and refine features, processes, and products.
 
@@ -138,7 +152,14 @@ There are many key advantages of using state machines:
 
 With state machine diagrams, you can visually represent the states of a process, making it easier to grasp and communicate complex logic. These diagrams bridge the communication gap between technical and non-technical team members. They also provide a clear way to document and share app logic, which you could use for onboarding new team members. After all, following boxes and arrows (just like a flowchart) is much easier than parsing code, especially for someone unfamiliar with the codebase.
 
-![A mermaid diagram of our order state machine.](mermaid-order-machine-dark.png)
+<ThemedImage
+  alt="A mermaid diagram of our order state machine."
+  sources={{
+    light:
+      '/blog/2023-10-02-what-is-a-state-machine/mermaid-order-machine-light.png',
+    dark: '/blog/2023-10-02-what-is-a-state-machine/mermaid-order-machine-dark.png',
+  }}
+/>
 
 _Our [export to Mermaid feature](/docs/export-as-code#export-formats) enables you to embed your state machines in GitHub and GitLab pull requests and comments._
 
