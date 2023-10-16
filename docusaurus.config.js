@@ -83,7 +83,10 @@ const config = {
           },
 
           // Add accessible emoji remark plugin
-          remarkPlugins: [a11yEmoji],
+          remarkPlugins: [
+            a11yEmoji,
+            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+          ],
         },
         blog: {
           blogTitle: 'Stately Blog',
@@ -92,6 +95,9 @@ const config = {
           postsPerPage: 10,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
             `https://github.com/statelyai/docs/edit/main/${blogDirPath}/${blogPath}`,
+          remarkPlugins: [
+            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+          ],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
