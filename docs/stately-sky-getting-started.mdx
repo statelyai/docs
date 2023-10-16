@@ -53,6 +53,8 @@ For code that Vite doesn't touch, however, we rely on the `SKY_API_KEY` variable
 After adding the API key, you'll need to initialize the actor. Create a new file in the `src` directory of the starter project. We named ours `trafficLightActor.ts`. In that file, import the `actorFromStately` function and initialize the actor with the provided URL and your own session ID. The session ID can be any string you want. We recommend using a UUID: 
 
 ```typescript
+import { actorFromStately } from '@statelyai/sky';
+
 const actor = actorFromStately({
      url: "paste your actor url here",
      sessionId: "your session id here",
