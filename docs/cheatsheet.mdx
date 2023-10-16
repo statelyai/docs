@@ -41,12 +41,12 @@ const machine = createMachine({
         count: ({ context }) => context.count + 1,
       }),
       on: {
-        toggle: { target: 'active' },
+        toggle: { target: 'inactive' },
       },
     },
     inactive: {
       on: {
-        toggle: { target: 'inactive' },
+        toggle: { target: 'active' },
       },
     },
   },
