@@ -1,0 +1,40 @@
+---
+title: State Machines Aren’t Enough: A Quick Primer on Statecharts! 
+description: What's the difference between statecharts and state machines?
+tags: [stately studio, xstate, statecharts, state machines]
+authors: [gavin]
+slug: statechars-vs-state-machines
+image: 
+date: 2023-09-30
+---
+
+You might have heard us use the terms “state machine” and “statechart” interchangeably and wondered “what’s the difference”?
+If that’s you, then please read on! 
+<!--truncate-->
+
+
+A little while ago, David wrote a [lovely post](TODO- add link to post here) explaining what exactly a state machine is, its components, and how they can be used to model logic in a testable and predictable way. 
+It’s really easy to forget about covering the basics when we're immersed in the world of boxes and arrows all day!
+So, this post aims to build on that last one and cover a step up in logic modeling complexity: statecharts.
+You may have also heard us use the term “statechart” almost interchangeably with state machine, but they're not quite the same thing.
+While state machines are an excellent way to describe application logic, processes, workflows, etc... they can only go so far. 
+Statecharts were designed to address some of the limitations of state machines by adding a few key concepts: hierarchy, and concurrency.
+
+
+## Going back in time
+I'd be remiss if I didn't cover the fact that statecharts are not a new concept.
+As a matter of fact, they're quite old. Statecharts are the brainchild of [David Harel back in 1984](https://www.sciencedirect.com/science/article/pii/0167642387900359?via%3Dihub).
+State machines excel at defining logic for a single entity or process, but they aren't ideal when one needs to represent the the communication or interoperability between one process and another.
+For example, we can model a person using a washing machine as a state machine from a high level. The person loads clothes, shuts the door, selects a cycle, and then the starts the machine. 
+After some time, the machine finishes and the person unloads the clothes.
+At a high level, this works, but it doesn't really capture all the details of the washing machine process! 
+What if we needed to model both the person interacting with the washer and the washer itself? That's where statecharts add value. 
+With a proper hierarchy, we can show the sub-states and transitions happening in the washing process, like filling the tub, agitating, draining, rinsing, etc... all while maintaining the higher order steps with the person interacting with the washer!
+Where state machines are great at defining the logic of a single entity, statecharts are great at defining the logic of a system of entities.
+
+## Hierarchy, explained
+
+
+## Concurrency, explained 
+
+## 
