@@ -10,9 +10,8 @@ This guide will walk you through the process of creating a simple traffic light 
 ## Prerequisites
 
 1. A Stately account with a [Pro or Enterprise subscription](https://stately.ai/pricing)
-2. The starter project. [Clone the repo on your local machine](https://github.com/statelyai/sky-starter-app/tree/main)
+2. Our Stately Sky starter project. [Clone the repo to your local machine](https://github.com/statelyai/sky-starter-app)
 3. A machine to deploy as an actor. To test, feel free to fork our [stop light example](https://stately.ai/registry/editor/eb3e89f5-5936-439f-8254-2f6ea4303659?machineId=15fd8071-b80c-4a6f-b9f5-60b6cf578ee5)
-4. A package manager, like [NPM](https://www.npmjs.com/package/npm) or [Yarn](https://yarnpkg.com/)
 
 ## Step 1: Create a machine in the Studio
 
@@ -42,15 +41,19 @@ Now that the API key is generated, you can deploy your machine to Sky as a runni
 
 ## Step 4: Add your API key to the starter project
 
-Open the starter project in your code editor. At the root of the project, create a `.env` file to hold your API key.
-There are 2 variables that need to be set in the `.env` file: `SKY_API_KEY` and `VITE_SKY_API_KEY`. Paste your API key as the value for both these keys.
+Start by opening [the starter project](https://github.com/statelyai/sky-starter-app) in your code editor. Next install the packages using your package manager of choice:
+
+```bash npm2yarn
+npm install
+```
+
+At the root of the project, create a `.env` file to hold your API key.
+There are 2 variables that need to be set in the `.env` file, paste your API key as the value for both these keys:
+
+1. `SKY_API_KEY` (used by the `@xstate/cli` to fetch the machine config).
+2. `VITE_SKY_API_KEY` (used by the Vite React app to connect to Sky).
 
 ![.env file](../static/assets/sky-getting-started/code-env-file.png)
-
-:::tip
-The starter project relies on Vite to run the app. Vite uses the `VITE_` prefix for environment variables, so any code processed by Vite will not have access to any environment variables without that prefix.
-For code that Vite doesn't touch, however, we rely on the `SKY_API_KEY` variable. This is why we set both variables to the same value.
-:::
 
 ## Step 5: Initialize the actor in the starter project
 
