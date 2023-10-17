@@ -105,6 +105,36 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Unbreak specific pages we know are broken where the structure changed between XState v4 and v5
+        redirects: [
+          {
+            to: '/docs/xstate-v4/xstate/model-based-testing/intro',
+            from: '/docs/category/xstate-model-based-testing',
+          },
+          {
+            to: '/docs/xstate-v4/xstate/actors/parent-child-communication',
+            from: '/docs/xstate/actors/parent-child-communication',
+          },
+          {
+            to: '/docs/xstate-v4/xstate/typescript/type-helpers',
+            from: '/docs/xstate/typescript/type-helpers',
+          },
+        ],
+        createRedirects(existingPath) {
+          if (existingPath.includes('/docs')) {
+            // Redirect everything from /docs/xstate-v5 to /docs (to unbreak Google search results)
+            return [existingPath.replace('/docs', '/docs/xstate-v5')];
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
