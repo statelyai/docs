@@ -1,5 +1,5 @@
 ---
-title: @xstate/react API
+title: "@xstate/react API"
 ---
 
 # @xstate/react API
