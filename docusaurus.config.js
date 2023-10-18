@@ -133,6 +133,25 @@ const config = {
         },
       },
     ],
+
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'xstate-api',
+        path: 'api/xstate',
+        routeBasePath: 'api/xstate',
+        // sidebarPath: require.resolve('./sidebars.js')
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'xstate-react-api',
+        path: 'api/@xstate/react',
+        routeBasePath: 'api/@xstate/react',
+        // sidebarPath: require.resolve('./sidebars.js')
+      }
+    ]
   ],
 
   themeConfig:
