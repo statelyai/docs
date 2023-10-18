@@ -171,6 +171,7 @@ const config = {
             position: 'right',
           },
           { to: '/docs', label: 'Docs', position: 'right' },
+          { to: '/api/xstate', label: 'API', position: 'right' },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
