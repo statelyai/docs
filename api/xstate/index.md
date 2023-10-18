@@ -1,5 +1,5 @@
 ---
-title: XState API
+title: XState API (next)
 ---
 
-# XState API
+# XState API (next)

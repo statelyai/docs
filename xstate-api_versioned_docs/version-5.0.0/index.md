@@ -1,5 +1,5 @@
 ---
-title: XState API
+title: XState API v5.0.0
 ---
 
-# XState API
+# XState API v5.0.0
