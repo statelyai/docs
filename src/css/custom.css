@@ -1937,3 +1937,11 @@ span.footer__link-item a:active {
   width: 1px;
   white-space: nowrap;
 }
+
+/* via https://github.com/facebook/docusaurus/issues/3930#issuecomment-1396833897  */
+html:not(.plugin-id-xstate-api) .docsVersionDropdown--xstate-api {
+  display: none;
+}
+html:not(.plugin-id-xstate-react-api) .docsVersionDropdown--xstate-react-api {
+  display: none;
+}

@@ -192,6 +192,14 @@ const config = {
           { to: 'blog', label: 'Blog', position: 'right' },
           {
             type: 'docsVersionDropdown',
+            docsPluginId: 'xstate-api',
+            className: 'docsVersionDropdown--xstate-api',
+            position: 'right',
+          },
+          {
+            type: 'docsVersionDropdown',
+            docsPluginId: 'xstate-react-api',
+            className: 'docsVersionDropdown--xstate-react-api',
             position: 'right',
           },
           {
