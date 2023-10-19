@@ -1,27 +1,25 @@
-import Link from '@docusaurus/Link';
 import React from 'react';
 import '../css/landing-page.css';
+import { Navbar } from './Navbar';
+import { Intro } from './Intro';
+import { Testimonials } from './Testimonials';
+import { Footer } from './Footer';
+import { Benefits } from './Benefits';
+import { FinalCallToAction } from './FinalCallToAction';
 
-// https://github.com/facebook/docusaurus/discussions/8387#discussioncomment-6067944
-// Loading a static HTML only works during SSR, so we use this hack to make it work during CSR
 export default function Index() {
   return (
-    <header className="bg-orange-300 h-screen">
-      <div className="container mx-auto text-center py-24">
-        <h1 className="text-6xl font-bold text-green-200">Stately</h1>
-        <p className="text-4xl bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient">
-          Get yourself production-ready code in nanoseconds! 🚀
-        </p>
-
-        <div className="py-10">
-          <Link
-            className="bg-white rounded-md text-gray-500 px-4 py-2"
-            to="/docs"
-          >
-            Read our docs
-          </Link>
-        </div>
-      </div>
-    </header>
+    <>
+      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md">
+        <Navbar />
+      </header>
+      <main className="bg-blue-950">
+        <Intro />
+        <Benefits />
+        <Testimonials />
+        <FinalCallToAction />
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -1,0 +1,167 @@
+@property --x {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
+@property --opacityBlue {
+  syntax: '<percentage>';
+  initial-value: 25%;
+  inherits: false;
+}
+
+@property --opacityOther {
+  syntax: '<percentage>';
+  initial-value: 30%;
+  inherits: false;
+}
+
+.bgimage-gradient-blue {
+  background-image: radial-gradient(
+    /* 90% 45% at 30% -15%, */ 90% 45% at var(--x) -15%,
+    rgba(15, 110, 229, var(--opacityBlue)),
+    rgba(255, 255, 255, 0)
+  );
+  animation: moveGradient 6s ease-in-out 0s infinite alternate,
+    opacityBlue 6s ease-in-out 0s infinite alternate;
+}
+
+.bgimage-gradient-pink {
+  background-image: radial-gradient(
+    90% 45% at var(--x) -15%,
+    rgba(207, 36, 155, var(--opacityOther)),
+    rgba(255, 255, 255, 0)
+  );
+  animation: moveGradient 6s ease-in-out 0s forwards,
+    opacityOther 6s ease-in-out 0s forwards;
+}
+
+.bgimage-gradient-orange {
+  background-image: radial-gradient(
+    90% 45% at var(--x) -15%,
+    rgba(193, 79, 15, var(--opacityOther)),
+    rgba(255, 255, 255, 0)
+  );
+  animation: moveGradient 6s ease-in-out 0s forwards,
+    opacityOther 6s ease-in-out 0s forwards;
+}
+
+.bgimage-gradient-green {
+  background-image: radial-gradient(
+    90% 45% at var(--x) -15%,
+    rgba(41, 131, 59, var(--opacityOther)),
+    rgba(255, 255, 255, 0)
+  );
+  animation: moveGradient 6s ease-in-out 0s forwards,
+    opacityOther 6s ease-in-out 0s forwards;
+}
+
+.bgimage-gradient-purple {
+  background-image: radial-gradient(
+    90% 45% at var(--x) -15%,
+    rgba(131, 85, 229, var(--opacityOther)),
+    rgba(255, 255, 255, 0)
+  );
+  animation: moveGradient 6s ease-in-out 0s forwards,
+    opacityOther 6s ease-in-out 0s forwards;
+}
+
+@keyframes moveGradient {
+  0% {
+    --x: 0%;
+  }
+  100% {
+    --x: 30%;
+  }
+}
+
+@keyframes opacityBlue {
+  0% {
+    --opacityBlue: 30%;
+  }
+  100% {
+    --opacityBlue: 45%;
+  }
+}
+
+@keyframes opacityOther {
+  0% {
+    --opacityOther: 45%;
+  }
+  100% {
+    --opacityOther: 15%;
+  }
+}
+
+/* 
+ * Dot animation 
+ */
+
+.dot1 {
+  animation: dot1Animation 5s ease-out infinite;
+}
+
+@keyframes dot1Animation {
+  0% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot2 {
+  animation: dot2Animation 5s ease-out infinite;
+}
+
+@keyframes dot2Animation {
+  0% {
+    opacity: 0;
+  }
+  21% {
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot3 {
+  animation: dot3Animation 5s ease-out infinite;
+}
+
+@keyframes dot3Animation {
+  0% {
+    opacity: 0;
+  }
+  43% {
+    opacity: 0;
+  }
+  44% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
