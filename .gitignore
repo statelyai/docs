@@ -30,3 +30,7 @@ yarn-error.log*
 # JetBrains IDE's
 .idea
 .fleet
+
+# API Extractor temporary files
+temp/
+
