@@ -12,7 +12,7 @@ yarn build
 # enter the core package
 cd packages/core
 # run API Extractor to generate temp/xstate.api.json
-../../../node_modules/@microsoft/api-extractor/bin/api-extractor run --local --diagnostics
+../../../node_modules/@microsoft/api-extractor/bin/api-extractor run --config ../../../config/xstate.api-extractor.json --local --diagnostics
 # go back to the docs git root
 cd ../../..
 # run API Documenter to generate API Docs Markdown
