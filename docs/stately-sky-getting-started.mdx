@@ -97,4 +97,5 @@ And that's it! You're now able to interact with your running actor in much the s
 - Only XState V5 machines are supported.
 - Delayed transitions are not yet supported, but will be soon.
 - The generated `sky.ts` files are meant to be added to source control.
+- You'll notice a warning in the `sky.ts` file that the file is generated. You should not manually edit these files. Any local changes will not reflect what's running in Sky.
 - Running `xstate sky` will only affect a file if it hasn't already been fetched. If you make changes to the machine in the Studio, you'll need to delete the generated file `yourFile.sky.ts` and run the command again. Alternatively, you can force the refetch by running `xstate sky --refetch`.
