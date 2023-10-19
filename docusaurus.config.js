@@ -149,22 +149,6 @@ const config = {
           }
         }
       },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'xstate-react-api',
-        path: 'api/@xstate/react',
-        routeBasePath: 'api/@xstate/react',
-        // sidebarPath: require.resolve('./sidebars.js'),
-        breadcrumbs: false,
-        versions: {
-          current: {
-            label: '@xstate/react@3.2.2',
-            badge: true
-          }
-        }
-      }
     ]
   ],
 
