@@ -141,6 +141,7 @@ const config = {
         path: 'api/xstate',
         routeBasePath: 'api/xstate',
         // sidebarPath: require.resolve('./sidebars.js'),
+        breadcrumbs: false,
         versions: {
           current: {
             label: 'xstate@5.0.0',
@@ -156,6 +157,7 @@ const config = {
         path: 'api/@xstate/react',
         routeBasePath: 'api/@xstate/react',
         // sidebarPath: require.resolve('./sidebars.js'),
+        breadcrumbs: false,
         versions: {
           current: {
             label: '@xstate/react@3.2.2',
