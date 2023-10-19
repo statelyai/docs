@@ -143,7 +143,8 @@ const config = {
         // sidebarPath: require.resolve('./sidebars.js'),
         versions: {
           current: {
-            label: 'xstate@5.0.0'
+            label: 'xstate@5.0.0',
+            badge: true
           }
         }
       },
@@ -157,7 +158,8 @@ const config = {
         // sidebarPath: require.resolve('./sidebars.js'),
         versions: {
           current: {
-            label: '@xstate/react@3.2.2'
+            label: '@xstate/react@3.2.2',
+            badge: true
           }
         }
       }
