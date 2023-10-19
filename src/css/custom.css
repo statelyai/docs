@@ -1943,7 +1943,10 @@ html:not(.plugin-id-xstate-api) .dropdown:has(.docsVersionDropdown--xstate-api),
 html:not(.plugin-id-xstate-api) .docsVersionDropdown--xstate-api {
   display: none;
 }
+/* TODO per-package overrides can go here */
+/*
 html:not(.plugin-id-xstate-react-api) .dropdown:has(.docsVersionDropdown--xstate-react-api),
 html:not(.plugin-id-xstate-react-api) .docsVersionDropdown--xstate-react-api {
   display: none;
 }
+*/
