@@ -1119,7 +1119,7 @@ Breaking change
 
 :::
 
-To produce output data from a machine which reached its final state, use the `output` property instead of `data`:
+To produce output data from a machine which reached its final state, use the top-level `output` property instead of `data`:
 
 
 <Tabs>
@@ -1132,10 +1132,10 @@ const machine = createMachine({
   states: {
     finished: {
       type: 'final',
-      output: {
-        answer: 42,
-      },
     },
+  },
+  output: {
+    answer: 42,
   },
 });
 ```
@@ -1153,6 +1153,50 @@ const machine = createMachine({
       type: 'final',
       data: {
         answer: 42,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+
+To provide a dynamically generated output, replace `invoke.data` with `invoke.output` and add a top-level `output` property:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      output: ({ event }) => ({
+        answer: event.someValue,
+      }),
+    },
+  },
+  output: ({ event }) => event.output,
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const machine = createMachine({
+  // ...
+  states: {
+    finished: {
+      type: 'final',
+      data: (context, event) => {
+        answer: event.someValue,
       },
     },
   },
