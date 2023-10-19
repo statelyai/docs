@@ -31,6 +31,16 @@ Currently we serve the root landing page from a static file.
 - During server side rendering (SSR) we use [`/static/index.html`](./static/index.html)
 - During client side rendering (CSR) we use [`/static/landing-page/index.html`](./static/landing-page/index.html)
 
+## Updating API Documentation
+
+```
+$ scripts/update-api-docs.sh
+```
+
+This command generates API Documentation as Markdown files to the `api` directory.
+
+It uses [API Extractor](https://api-extractor.com) to analyze code and inline TSDoc comments from xstate packages, creating `*.api.json` doc model files, which are then used by [API Documenter](https://api-extractor.com/pages/setup/generating_docs) to generate Markdown files in the appropriate `api` directory for each package. We use the  [Docusaurus Multi-Instance](https://docusaurus.io/docs/docs-multi-instance) feature to configure each `api/*` directory as its own set of versionable docs.
+
 ## Build
 
 ```
