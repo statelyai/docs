@@ -1939,9 +1939,11 @@ span.footer__link-item a:active {
 }
 
 /* via https://github.com/facebook/docusaurus/issues/3930#issuecomment-1396833897  */
-html:not(.plugin-id-xstate-api) .dropdown:has(.docsVersionDropdown--xstate-api) {
+html:not(.plugin-id-xstate-api) .dropdown:has(.docsVersionDropdown--xstate-api),
+html:not(.plugin-id-xstate-api) .docsVersionDropdown--xstate-api {
   display: none;
 }
-html:not(.plugin-id-xstate-react-api) .dropdown:has(.docsVersionDropdown--xstate-react-api) {
+html:not(.plugin-id-xstate-react-api) .dropdown:has(.docsVersionDropdown--xstate-react-api),
+html:not(.plugin-id-xstate-react-api) .docsVersionDropdown--xstate-react-api {
   display: none;
 }

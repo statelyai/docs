@@ -140,7 +140,12 @@ const config = {
         id: 'xstate-api',
         path: 'api/xstate',
         routeBasePath: 'api/xstate',
-        // sidebarPath: require.resolve('./sidebars.js')
+        // sidebarPath: require.resolve('./sidebars.js'),
+        versions: {
+          current: {
+            label: 'xstate@5.0.0'
+          }
+        }
       },
     ],
     [
@@ -149,7 +154,12 @@ const config = {
         id: 'xstate-react-api',
         path: 'api/@xstate/react',
         routeBasePath: 'api/@xstate/react',
-        // sidebarPath: require.resolve('./sidebars.js')
+        // sidebarPath: require.resolve('./sidebars.js'),
+        versions: {
+          current: {
+            label: '@xstate/react@3.2.2'
+          }
+        }
       }
     ]
   ],
