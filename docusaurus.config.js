@@ -196,12 +196,6 @@ const config = {
             position: 'right',
           },
           {
-            type: 'docsVersionDropdown',
-            docsPluginId: 'xstate-react-api',
-            className: 'docsVersionDropdown--xstate-react-api',
-            position: 'right',
-          },
-          {
             type: 'html',
             position: 'right',
             value:
