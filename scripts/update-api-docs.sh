@@ -16,7 +16,7 @@ cd packages/core
 # go back to the docs git root
 cd ../../..
 # run API Documenter to generate API Docs Markdown
-./node_modules/@microsoft/api-documenter/bin/api-documenter markdown --input-folder ./temp/xstate --output-folder ./api/xstate
+./node_modules/@microsoft/api-documenter/bin/api-documenter generate --input-folder ./temp/xstate --output-folder ./api/xstate
 # remove temporary API Extractor doc model file
 rm temp/xstate/xstate.api.json
 rmdir temp/xstate

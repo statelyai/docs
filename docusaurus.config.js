@@ -140,8 +140,8 @@ const config = {
         id: 'xstate-api',
         path: 'api/xstate',
         routeBasePath: 'api/xstate',
-        // sidebarPath: require.resolve('./sidebars.js'),
-        breadcrumbs: false,
+        sidebarPath: require.resolve('./sidebar-xstate-api.js'),
+        breadcrumbs: true,
         versions: {
           current: {
             label: 'xstate@5.0.0',
