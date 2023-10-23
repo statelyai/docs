@@ -1,10 +1,11 @@
+// Based on https://github.com/microsoft/rushstack-websites/tree/5335470/tools/api-documenter-docusaurus-plugin
+
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { IApiDocumenterPluginManifest } from '@microsoft/api-documenter';
-import { DocusaurusMarkdownFeature } from './DocusaurusMarkdownFeature';
+const { DocusaurusMarkdownFeature } = require('./DocusaurusMarkdownFeature.js');
 
-export const apiDocumenterPluginManifest: IApiDocumenterPluginManifest = {
+const apiDocumenterPluginManifest = {
   manifestVersion: 1000,
   features: [
     {
@@ -14,3 +15,5 @@ export const apiDocumenterPluginManifest: IApiDocumenterPluginManifest = {
     }
   ]
 };
+
+module.exports = { apiDocumenterPluginManifest }

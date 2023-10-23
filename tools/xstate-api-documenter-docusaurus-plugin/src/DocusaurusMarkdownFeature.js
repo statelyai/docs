@@ -1,35 +1,44 @@
+// See: https://api.rushstack.io/pages/api-documenter
+
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as fs from 'node:fs'
-import * as path from 'node:path';
-import { ApiItem } from '@microsoft/api-extractor-model';
-import {
-  MarkdownDocumenterFeature,
-  IMarkdownDocumenterFeatureOnBeforeWritePageArgs,
-  IMarkdownDocumenterFeatureOnFinishedArgs
-} from '@microsoft/api-documenter';
+const fs = require('node:fs');
+const path = require('node:path');
+const { MarkdownDocumenterFeature } = require('@microsoft/api-documenter');
 
-interface INavigationNode {
-  type: string;
-  label: string;
-  id?: string;
-  items?: INavigationNode[];
-  link?: object
-}
+/**
+ * @typedef {Object} INavigationNode
+ * @property {string} type
+ * @property {string} label
+ * @property {string} [id]
+ * @property {INavigationNode[]} [items]
+ * @property {object} [link]
+ */
 
-interface INavigationFile extends INavigationNode {}
+/** @typedef {Object} INavigationFile */
 
-export class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
-  private _apiItemsWithPages: Set<ApiItem> = new Set<ApiItem>();
+class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
+  /**
+   * @private
+   * @default new Set<ApiItem>()
+   */
+  _apiItemsWithPages = new Set();
 
-  public onInitialized(): void {
-    console.log('RushStackFeature: onInitialized()');
-  }
+  /**
+   * @public
+   * @returns {void}
+   */
+  onInitialized() {}
 
-  public onBeforeWritePage(eventArgs: IMarkdownDocumenterFeatureOnBeforeWritePageArgs): void {
+  /**
+   * @public
+   * @param {IMarkdownDocumenterFeatureOnBeforeWritePageArgs} eventArgs
+   * @returns {void}
+   */
+  onBeforeWritePage(eventArgs) {
     // Add the Docusaurus frontmatter
-    const header: string = [
+    const header = [
       `---`,
       // Generated API docs have a built-in title header below the breadcrumbs
       // `title: ${JSON.stringify(eventArgs.apiItem.displayName)}`,
@@ -56,13 +65,17 @@ export class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
 
     // try to remove breadcrumbs
     // by removing any lines that start with [Home]
-    eventArgs.pageContent = eventArgs.pageContent.replace(/\[Home\]\(.\/index.md\) &gt;.+/, '')
+    eventArgs.pageContent = eventArgs.pageContent.replace(/\[Home\]\(.\/index.md\) &gt;.+/, '');
 
     this._apiItemsWithPages.add(eventArgs.apiItem);
   }
 
-  public onFinished(eventArgs: IMarkdownDocumenterFeatureOnFinishedArgs): void {
-    console.log('finished!!!!')
+  /**
+   * @public
+   * @param {IMarkdownDocumenterFeatureOnFinishedArgs} eventArgs
+   * @returns {void}
+   */
+  onFinished(eventArgs) {
     // const navigationFile: INavigationFile = {
     //   type: 'category',
     //   label: 'API Reference',
@@ -76,30 +89,36 @@ export class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     // };
     // this._buildNavigation(navigationFile.items!, this.context.apiModel);
 
-    let navigationFile:[] = []
+    let navigationFile = []
     this._buildNavigation(navigationFile, this.context.apiModel);
 
-    const navFilePath: string = path.join(this.context.outputFolder, '..', '..', 'sidebar-xstate-api.json');
-    const navFileContent: string = JSON.stringify(navigationFile, undefined, 2);
+    const navFilePath = path.join(this.context.outputFolder, '..', '..', 'sidebar-xstate-api.json');
+    const navFileContent = JSON.stringify(navigationFile, undefined, 2);
 
-    console.log('writing:', navFilePath)
+    console.log('writing:', navFilePath);
     fs.writeFileSync(navFilePath, navFileContent);
   }
 
-  private _buildNavigation(parentNodes: INavigationNode[], parentApiItem: ApiItem): void {
+  /**
+   * @private
+   * @param {INavigationNode[]} parentNodes
+   * @param {ApiItem} parentApiItem
+   * @returns {void}
+   */
+  _buildNavigation(parentNodes, parentApiItem) {
     for (const apiItem of parentApiItem.members) {
       if (this._apiItemsWithPages.has(apiItem)) {
         const label = apiItem.displayName;
 
         const id = path.posix
-          .join(this.context.documenter.getLinkForApiItem(apiItem)!)
+          .join(this.context.documenter.getLinkForApiItem(apiItem))
           .replace(/\.md$/, '')
           .replace(/\/$/, '/index');
-        const children: INavigationNode[] = [];
+        const children = [];
         this._buildNavigation(children, apiItem);
 
         if (children.length > 0) {
-          const newNode: INavigationNode = {
+          const newNode = {
             type: 'category',
             label,
             link: { type: 'doc', id },
@@ -114,7 +133,7 @@ export class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
           };
           parentNodes.push(newNode);
         } else {
-          const newNode: INavigationNode = {
+          const newNode = {
             type: 'doc',
             label,
             id
@@ -127,3 +146,5 @@ export class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     }
   }
 }
+
+module.exports = { DocusaurusMarkdownFeature }

@@ -1,13 +1,10 @@
 {
   "name": "xstate-api-documenter-docusaurus-plugin",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "private": true,
   "dependencies": {
     "@microsoft/api-extractor-model": "7.28.2"
-  },
-  "devDependencies": {
-    "typescript": "5.2.2"
   },
   "engines": {
     "node": ">=16.14"
