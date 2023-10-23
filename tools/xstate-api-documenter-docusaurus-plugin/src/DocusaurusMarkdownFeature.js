@@ -81,19 +81,6 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
    */
   onFinished(eventArgs) {
     // generate a categorized sidebar.json which can be loaded by Docusaurus
-    // const navigationFile = {
-    //   type: 'category',
-    //   label: 'API',
-    //   items: [
-    //     {
-    //       type: 'doc',
-    //       label: '(members)',
-    //       id: 'index'
-    //     }
-    //   ]
-    // };
-    // this._buildNavigation(navigationFile.items, this.context.apiModel);
-
     let navigationFile = []
     this._buildNavigation(navigationFile, this.context.apiModel);
 
@@ -141,14 +128,7 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
             type: 'category',
             label,
             link: { type: 'doc', id },
-            items: [
-                  // {
-                  //   type: 'doc',
-                  //   label: '(members)',
-                  //   id
-                  // },
-              ...children
-            ]
+            items: children
           };
           parentNodes.push(newNode);
         } else {
