@@ -79,10 +79,10 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
    * @returns {void}
    */
   onFinished(eventArgs) {
-    // const navigationFile: INavigationFile = {
     // generate a categorized sidebar.json which can be loaded by Docusaurus
+    // const navigationFile = {
     //   type: 'category',
-    //   label: 'API Reference',
+    //   label: 'API',
     //   items: [
     //     {
     //       type: 'doc',
@@ -91,7 +91,7 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     //     }
     //   ]
     // };
-    // this._buildNavigation(navigationFile.items!, this.context.apiModel);
+    // this._buildNavigation(navigationFile.items, this.context.apiModel);
 
     let navigationFile = []
     this._buildNavigation(navigationFile, this.context.apiModel);
