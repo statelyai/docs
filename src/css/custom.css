@@ -1950,3 +1950,10 @@ html:not(.plugin-id-xstate-react-api) .docsVersionDropdown--xstate-react-api {
   display: none;
 }
 */
+
+/* slightly less top margin for API Doc title */
+.plugin-id-xstate-api .theme-doc-markdown.markdown > h2 {
+  /* margin-top: 4.5rem; */
+  /* --ifm-h2-font-size: 1.5rem; */
+  margin-top: 1.5rem;
+}
