@@ -99,7 +99,7 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     const navFilePath = path.join(this.context.outputFolder, '..', '..', 'sidebar-xstate-api.json');
     const navFileContent = JSON.stringify(navigationFile, undefined, 2);
 
-    console.log('writing:', navFilePath);
+    console.log('Writing', navFilePath);
     fs.writeFileSync(navFilePath, navFileContent);
   }
 
