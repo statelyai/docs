@@ -101,6 +101,14 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
 
     console.log('Writing', navFilePath);
     fs.writeFileSync(navFilePath, navFileContent);
+
+    fs.copyFileSync(
+      path.join(this.context.outputFolder, 'xstate.md'),
+      path.join(this.context.outputFolder, 'index.md')
+    )
+    fs.rmSync(
+      path.join(this.context.outputFolder, 'xstate.md')
+    )
   }
 
   /**
@@ -112,9 +120,9 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
   _buildNavigation(parentNodes, parentApiItem) {
     for (const apiItem of parentApiItem.members) {
       if (this._apiItemsWithPages.has(apiItem)) {
-        const label = apiItem.displayName;
+        let label = apiItem.displayName;
 
-        const id = path.posix
+        let id = path.posix
           .join(this.context.documenter.getLinkForApiItem(apiItem))
           .replace(/\.md$/, '')
           .replace(/\/$/, '/index');
@@ -122,6 +130,12 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
         this._buildNavigation(children, apiItem);
 
         if (children.length > 0) {
+          // special case to rename top-level
+          if (id == 'xstate') {
+            label = 'XState API'
+            id = 'index'
+          }
+
           const newNode = {
             type: 'category',
             label,

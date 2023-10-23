@@ -1,10 +1,10 @@
 [
   {
     "type": "category",
-    "label": "xstate",
+    "label": "XState API",
     "link": {
       "type": "doc",
-      "id": "xstate"
+      "id": "index"
     },
     "items": [
       {
