@@ -41,7 +41,8 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     const header = [
       `---`,
       // Generated API docs have a built-in title header below the Markdown breadcrumbs
-      // `title: ${JSON.stringify(eventArgs.apiItem.displayName)}`,
+      // Also used as HTML title
+      `title: ${JSON.stringify(eventArgs.apiItem.displayName)}`,
       `hide_title: true`,
 
       // Suppress the default Edit button
