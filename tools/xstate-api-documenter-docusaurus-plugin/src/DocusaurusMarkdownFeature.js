@@ -46,6 +46,7 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
 
       // Suppress the default Edit button
       `custom_edit_url: null`,
+
       // suppress the Next/Prev links for API docs
       // because the link text is just the filename
       `pagination_prev: null`,
