@@ -1,4 +1,4 @@
-// See: https://api.rushstack.io/pages/api-documenter
+// Adapted from https://github.com/microsoft/rushstack-websites/tree/5335470/tools/api-documenter-docusaurus-plugin
 
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
@@ -40,11 +40,14 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     // Add the Docusaurus frontmatter
     const header = [
       `---`,
-      // Generated API docs have a built-in title header below the breadcrumbs
+      // Generated API docs have a built-in title header below the Markdown breadcrumbs
       // `title: ${JSON.stringify(eventArgs.apiItem.displayName)}`,
       `hide_title: true`,
-      // Suppress the default Edit button and Next/Prev links for API docs
+
+      // Suppress the default Edit button
       `custom_edit_url: null`,
+      // suppress the Next/Prev links for API docs
+      // because the link text is just the filename
       `pagination_prev: null`,
       `pagination_next: null`,
       `---`,
@@ -63,8 +66,8 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
     // However empty React fragments have an equivalent effect:
     eventArgs.pageContent = eventArgs.pageContent.replace(/<!-- -->/g, '<></>');
 
-    // try to remove breadcrumbs
-    // by removing any lines that start with [Home]
+    // try to remove API Documenter breadcrumbs to prefer Docusaurus breadcrumbs instead
+    // removes any lines in the Markdown ouput that start with [Home]
     eventArgs.pageContent = eventArgs.pageContent.replace(/\[Home\]\(.\/index.md\) &gt;.+/, '');
 
     this._apiItemsWithPages.add(eventArgs.apiItem);
@@ -77,6 +80,7 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
    */
   onFinished(eventArgs) {
     // const navigationFile: INavigationFile = {
+    // generate a categorized sidebar.json which can be loaded by Docusaurus
     //   type: 'category',
     //   label: 'API Reference',
     //   items: [
