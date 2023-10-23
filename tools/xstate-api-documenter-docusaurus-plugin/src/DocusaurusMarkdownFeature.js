@@ -81,8 +81,15 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
    */
   onFinished(eventArgs) {
     // generate a categorized sidebar.json which can be loaded by Docusaurus
-    let navigationFile = []
-    this._buildNavigation(navigationFile, this.context.apiModel);
+    const navigationFile = [
+      // special case to for top-level index
+      {
+        type: 'doc',
+        label: '(index)',
+        id: 'index'
+      }
+    ];
+    this._buildNavigation(navigationFile, this.context.apiModel.members[0]);
 
     const navFilePath = path.join(this.context.outputFolder, '..', '..', 'sidebar-xstate-api.json');
     const navFileContent = JSON.stringify(navigationFile, undefined, 2);
@@ -118,12 +125,6 @@ class DocusaurusMarkdownFeature extends MarkdownDocumenterFeature {
         this._buildNavigation(children, apiItem);
 
         if (children.length > 0) {
-          // special case to rename top-level
-          if (id == 'xstate') {
-            label = 'XState API'
-            id = 'index'
-          }
-
           const newNode = {
             type: 'category',
             label,
