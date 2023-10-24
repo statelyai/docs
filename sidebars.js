@@ -274,11 +274,53 @@ const sidebars = {
             },
           ],
         },
-        'context',
+        {
+          type: 'category',
+          label: 'Context',
+          link: {
+            type: 'doc',
+            id: 'context',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-context',
+            },
+          ],
+        },
         'input',
         'transitions',
-        'eventless-transitions',
-        'delayed-transitions',
+        {
+          type: 'category',
+          label: 'Eventless transitions',
+          link: {
+            type: 'doc',
+            id: 'eventless-transitions',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-eventless-transitions',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Delayed transitions',
+          link: {
+            type: 'doc',
+            id: 'delayed-transitions',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-delayed-transitions',
+            },
+          ],
+        },
         {
           type: 'category',
           label: 'Actions',
