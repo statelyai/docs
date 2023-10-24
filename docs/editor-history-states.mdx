@@ -1,0 +1,22 @@
+---
+title: History states in Stately’s editor
+---
+
+A [history state](history-state.mdx) is a special type of state (a _pseudostate_) that remembers the last [child state](parent-states.mdx) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
+
+## Make a state a history state
+
+First, select the state you want to set as a history state for the parent state. Then…
+
+### On the canvas
+
+1. Right-click the state to open the edit menu.
+2. From the **Type** options, choose **History**.
+
+### Using the state Details panel
+
+1. Select the state you want to make a history state.
+2. Open the state <Info size={18} /> **Details** panel from the right tool menu.
+3. From the type option, choose **History**.
+
+To set the state back as a normal state, follow the same steps and select the **Normal** type option.

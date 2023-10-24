@@ -342,7 +342,21 @@ const sidebars = {
         'parallel-states',
         'initial-states',
         'final-states',
-        'history-states',
+        {
+          type: 'category',
+          label: 'History states',
+          link: {
+            type: 'doc',
+            id: 'history-states',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-history-states',
+            },
+          ],
+        },
         'persistence',
         'tags',
       ],
