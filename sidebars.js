@@ -374,7 +374,26 @@ const sidebars = {
       },
       collapsed: false,
       collapsible: true,
-      items: ['actors', 'invoke', 'spawn', 'system'],
+      items: [
+        'actors',
+        {
+          type: 'category',
+          label: 'Invoke',
+          link: {
+            type: 'doc',
+            id: 'invoke',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-invoke',
+            },
+          ],
+        },
+        'spawn',
+        'system',
+      ],
     },
     {
       type: 'doc',
