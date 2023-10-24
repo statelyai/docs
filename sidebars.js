@@ -269,7 +269,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately editor',
+              label: 'In Stately’s editor',
               id: 'editor-states',
             },
           ],
@@ -279,7 +279,21 @@ const sidebars = {
         'transitions',
         'eventless-transitions',
         'delayed-transitions',
-        'actions',
+        {
+          type: 'category',
+          label: 'Actions',
+          link: {
+            type: 'doc',
+            id: 'actions',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-actions',
+            },
+          ],
+        },
         'guards',
         'finite-states',
         'parent-states',

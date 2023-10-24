@@ -1,0 +1,70 @@
+---
+title: Actions in Stately’s editor
+---
+
+Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. [Learn more about actions](actions.mdx).
+
+## Add an action
+
+First, select the state or event where you want an action to be fired.
+
+### On the canvas
+
+1. Use the <Plus size={18} /> plus icon button to open the edit menu.
+2. Choose <Zap size={18} /> **Action**, <Zap size={18} /> **Entry action**, or <Zap size={18} /> **Exit action** from the menu to add an action block.
+3. Write your action’s name in the action’s text input.
+
+### Using the state or event details panel
+
+1. Open the state or event <Info size={18} /> **Details** panel from the right tool menu.
+2. Use the **+ Effect** button to open the effects menu, and choose **Add entry action** or **Add exit action** to add an entry or exit action. Or use the **+ Transition action** button to add a transition action block.
+3. Write your action’s name in the action’s text input.
+
+## Delete an action
+
+First, select the transition action block you want to delete.
+
+### Using backspace
+
+Use the <kbd>Backspace</kbd> key to delete the transition action.
+
+### Using the state or event details panel
+
+1. Open the state or event <Info size={18} /> **Details** panel from the right tool menu.
+2. Hover, focus, or select the transition action block to reveal the <Trash size={18} /> trash icon button.
+3. Use the <Trash size={18} /> trash icon button to delete the action.
+
+## Add custom or built-in actions
+
+:::studio
+
+When you create an action in the Stately editor, it is a custom action by default. You can edit your actions to use XState’s built-in actions.
+
+:::
+
+Custom actions with a custom action type and parameters which will be formatted as [XState action objects](actions.mdx#action-objects) in your [exported code](export-as-code.mdx).
+
+Built-in XState actions will be formatted in your [exported code](export-as-code.mdx). The options are:
+
+- [assign](actions.mdx#assign-action): assigns data to the state context.
+- [raise](actions.mdx#raise-action): _raises_ an event that is received by the same machine.
+- [log](actions.mdx#log-action): an easy way to log messages to the console.
+- [sendTo](actions.mdx#send-to-action): sends an event to a specific actor.
+- [stop](actions.mdx#stop-action): stops a child actor.
+
+### On the canvas
+
+1. [Add an action](#add-an-action).
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Choose your desired action from the dropdown menu at the top of the **Action** panel. Custom action is selected by default.
+1. Fill out the required corresponding action input fields. Add your custom action type in the **Action type** text input. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
+
+### Using the details panel
+
+1. [Add an action](#add-an-action).
+1. Open the state, or event <Info size={18} /> **Details** panel from the right tool menu.
+1. Hover, focus, or select the action block to reveal the <Edit size={18} /> edit icon button.
+1. Use the <Edit size={18} /> edit icon button to open the **Action** panel.
+1. Choose your desired action from the dropdown menu at the top of the **Action** panel. Custom action is selected by default.
+1. Fill out the required corresponding action input fields. Add your custom action type in the **Action type** text input. Add your custom **Action parameters** using the **Parameter key** and **Parameter value** text input pairs.
