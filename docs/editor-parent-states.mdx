@@ -1,0 +1,39 @@
+---
+title: Parent states in Stately’s editor
+---
+
+States can contain more states, also known as **child states**. These child states are only active when the parent state is active.
+
+Child states are nested inside their parent states. Parent states are also known as **compound states**.
+
+[Read more about parent and child states](parent-states.mdx).
+
+## Add a child state
+
+1. Select the state that will become the parent state.
+2. Use the <Plus size={18} /> plus icon button to open the edit menu.
+3. Choose **Child state** from the menu to add a child state to your state.
+
+If a state already contains child states, you can double-click inside the parent state to create another child state.
+
+## Change the parent state of a child state
+
+Using the state <Info size={18} /> **Details** panel:
+
+1. Select the child state you want to reparent.
+2. Open the state <Info size={18} /> **Details** panel from the right tool menu.
+3. Choose your desired new parent from the **Parent** dropdown menu.
+
+### Using copy and paste from the edit menu
+
+1. Right-click the child state you want to reparent to open the edit menu.
+2. Select **Copy** to copy the state.
+3. Right-click the desired new parent to open the edit menu.
+4. Select **Paste** to paste the child state into the parent state.
+
+### Using copy and paste keyboard shortcuts
+
+1. Select the child state you want to reparent.
+2. Use **Command**/**Ctrl** + **C** to copy the state.
+3. Select the desired new parent state.
+4. Use **Command**/**Ctrl** + **V** to paste the child state into the parent state.

@@ -12,45 +12,18 @@ Watch our [“Parent and child states” video on YouTube](https://www.youtube.c
 
 :::
 
-<EmbedMachine name="Video player" embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9ba5377c-aab3-4465-8909-4eea499622fa" />
+<EmbedMachine
+  name="Video player"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9ba5377c-aab3-4465-8909-4eea499622fa"
+/>
 
 In the video player above, the *Opened* state is a parent state to the *Playing*, *Paused*, and *Stopped* states. These states, their transitions, and their events are nested inside the *Opened* state.
 
-<SkipDownLink
-  text="Jump to learning more about parent and child states in XState"
-  link="#root-state"
-/>
+:::studio
 
-## Add a child state
+[Learn how to create parent and child states in Stately’s editor](TODO).
 
-1. Select the state that will become the parent state.
-2. Use the <Plus size={18} /> plus icon button to open the edit menu.
-3. Choose **Child state** from the menu to add a child state to your state.
-
-If a state already contains child states, you can double-click inside the parent state to create another child state.
-
-## Change the parent state of a child state
-
-Using the state <Info size={18} /> **Details** panel:
-
-1. Select the child state you want to reparent.
-2. Open the state <Info size={18} /> **Details** panel from the right tool menu.
-3. Choose your desired new parent from the **Parent** dropdown menu.
-
-### Using copy and paste from the edit menu
-
-1. Right-click the child state you want to reparent to open the edit menu.
-2. Select **Copy** to copy the state.
-3. Right-click the desired new parent to open the edit menu.
-4. Select **Paste** to paste the child state into the parent state.
-
-### Using copy and paste keyboard shortcuts
-
-1. Select the child state you want to reparent.
-2. Use **Command**/**Ctrl** + **C** to copy the state.
-3. Select the desired new parent state.
-4. Use **Command**/**Ctrl** + **V** to paste the child state into the parent state.
-
+:::
 
 ## Root state
 

@@ -33,39 +33,11 @@ const feedbackMachine = createMachine({
 });
 ```
 
-<SkipDownLink
-  text="Jump to learning more about event objects in XState"
-  link="#event-objects"
-/>
+:::studio
 
-## Using transitions and events in Stately Studio
+[Learn how to use transitions and events in Stately’s editor](TODO).
 
-The arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
-
-### Add a transition and event
-
-1. Select an existing state.
-2. Press or drag from one of the <Plus size={18} /> handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-
-### Change the source and target states for a transition or event
-
-First select the transition or event you want to change. Then…
-
-#### On the canvas
-
-1. Right-click the transition or event, or use the <MoreHorizontal size={18} /> triple dot icon button, to open the Edit menu.
-2. Choose **Switch source and target**.
-
-#### Dragging the transition handles
-
-1. Drag the transition’s handle connected to the source state to connect it to a new source state.
-2. Drag the transition’s handle connected to the target state to connect it to a new target state.
-
-#### Using the transition details panel
-
-1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
-2. Choose a new source state from the **Source** dropdown options.
-3. Choose a new target state from the **Target** dropdown options.
+:::
 
 ## Event objects
 

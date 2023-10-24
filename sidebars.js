@@ -290,7 +290,21 @@ const sidebars = {
           ],
         },
         'input',
-        'transitions',
+        {
+          type: 'category',
+          label: 'Transitions',
+          link: {
+            type: 'doc',
+            id: 'transitions',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-transitions',
+            },
+          ],
+        },
         {
           type: 'category',
           label: 'Eventless transitions',
@@ -338,7 +352,21 @@ const sidebars = {
         },
         'guards',
         'finite-states',
-        'parent-states',
+        {
+          type: 'category',
+          label: 'Parent states',
+          link: {
+            type: 'doc',
+            id: 'parent-states',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately’s editor',
+              id: 'editor-parent-states',
+            },
+          ],
+        },
         'parallel-states',
         'initial-states',
         'final-states',
