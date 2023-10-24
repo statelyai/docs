@@ -1,0 +1,33 @@
+---
+title: States in Stately’s editor
+---
+
+In Stately, the rounded rectangle boxes are states. The **!** warning icon in the machine above indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](initial-states.mdx) by a [transition](transitions.mdx).
+
+## Create a state
+
+:::tip
+
+The fastest way to create a new state is by double-clicking in any empty space on the canvas.
+
+:::
+
+### Create a new target state
+
+Each transition has a source state and a target state. To create a new target state from a source state:
+
+1. Select the source state.
+2. Press or drag from one of the <Plus size={18} /> handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
+
+[Read more about transitioning between source and target states](transitions.mdx#using-transitions-and-events-in-stately-studio).
+
+### Create a new child state
+
+[How to create child and parent states](parent-states.mdx).
+
+## Delete a state
+
+First, select the state you want to delete.
+
+- Use the <MoreHorizontal size={18} /> triple dot icon button to open the Edit menu and choose **Delete** to delete the selected state.
+- Use the <kbd>Backspace</kbd> key to delete the selected state.

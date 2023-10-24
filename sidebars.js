@@ -259,7 +259,21 @@ const sidebars = {
       collapsible: true,
       items: [
         'machines',
-        'states',
+        {
+          type: 'category',
+          label: 'States',
+          link: {
+            type: 'doc',
+            id: 'states',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'In Stately editor',
+              id: 'editor-states',
+            },
+          ],
+        },
         'context',
         'input',
         'transitions',
