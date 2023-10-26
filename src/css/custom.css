@@ -850,7 +850,7 @@ code {
   margin-right: 0;
 }
 
-@media (min-width: 997px) {
+@media (min-width: 1049px) {
   .navbar__brand {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
@@ -1009,7 +1009,7 @@ html .DocSearch-Button-Key:nth-of-type(2) {
   }
 }
 
-@media (min-width: 997px) {
+@media (min-width: 1049px) {
   html [class*='searchBox'] {
     width: 100%;
   }
