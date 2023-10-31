@@ -300,7 +300,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Transitions in Stately',
               id: 'editor-transitions',
             },
           ],
@@ -315,7 +315,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Eventless transitions in Stately',
               id: 'editor-eventless-transitions',
             },
           ],
@@ -330,7 +330,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Delayed transitions in Stately',
               id: 'editor-delayed-transitions',
             },
           ],
@@ -345,7 +345,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Actions in Stately',
               id: 'editor-actions',
             },
           ],
@@ -362,7 +362,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Parent states in Stately',
               id: 'editor-parent-states',
             },
           ],
@@ -380,7 +380,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'History states in Stately',
               id: 'editor-history-states',
             },
           ],
@@ -414,7 +414,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'In Stately’s editor',
+              label: 'Actors in Stately',
               id: 'editor-invoke',
             },
           ],
