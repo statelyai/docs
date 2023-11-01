@@ -42,10 +42,8 @@ function AllLinks() {
         </LinkItem>
       </LinkList>
       <LinkList title="Company">
+        <LinkItem href="/blog/tags/changelog">Changelog</LinkItem>
         <LinkItem href="/blog/">Blog</LinkItem>
-        <LinkItem href="https://feedback.stately.ai/changelog">
-          Changelog
-        </LinkItem>
         <LinkItem href="mailto:support@stately.ai">Contact</LinkItem>
       </LinkList>
       <LinkList title="Resources">

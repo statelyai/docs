@@ -7,7 +7,7 @@ export function Intro() {
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-white/90 drop-shadow-sm tracking-tighter leading-tight">
-          Build robust app logic and workflows.
+          Your assistant for building and deploying robust app logic
         </h1>
         <ExampleRow />
         <CallToActionButtons />
@@ -32,6 +32,8 @@ const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
 function ExampleRow() {
   return (
     <ul className="flex max-w-full flex-wrap gap-2 mt-12">
+      <li className={exampleBox}>Workflows</li>
+      <hr className={line} />
       <li className={exampleBox}>Chatbots</li>
       <hr className={line} />
 
@@ -41,10 +43,10 @@ function ExampleRow() {
       <li className={exampleBox}>Onboarding</li>
       <hr className={line} />
 
-      <li className={exampleBox}>Complex logic</li>
+      <li className={exampleBox}>Games</li>
       <hr className={line} />
 
-      <li className={exampleBox}>Prototypes</li>
+      <li className={exampleBox}>Complex logic</li>
       <hr className={line} />
 
       <li className={exampleBox}>

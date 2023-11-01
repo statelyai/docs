@@ -97,6 +97,7 @@ export function Navbar() {
                         className="w-[18px] h-[18px]"
                       />
                     </a>
+                    Github
                   </div>
                 </div>
               </div>

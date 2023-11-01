@@ -6,6 +6,7 @@ import { Testimonials } from './Testimonials';
 import { Footer } from './Footer';
 import { Benefits } from './Benefits';
 import { FinalCallToAction } from './FinalCallToAction';
+import { AIAssistance } from './AIAssistance';
 
 export default function Index() {
   return (
@@ -15,6 +16,7 @@ export default function Index() {
       </header>
       <main className="bg-blue-950">
         <Intro />
+        <AIAssistance />
         <Benefits />
         <Testimonials />
         <FinalCallToAction />
