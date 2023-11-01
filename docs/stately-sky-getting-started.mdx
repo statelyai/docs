@@ -4,64 +4,88 @@ title: 'Stately Sky getting started'
 
 # Getting started with Stately Sky
 
-This guide will walk you through the process of creating a simple traffic light actor using Stately Sky.
-**Please note that Sky is currently in alpha and will be changing rapidly**.
+This guide will walk you through deploying a simple traffic light state machine actor with Stately Sky using [XState](/docs/xstate.mdx), [Vite](https://vitejs.dev/) and [React](https://reactjs.org/).
 
-## Prerequisites
+:::caution
 
-1. A Stately account with a [Pro or Enterprise subscription](https://stately.ai/pricing)
-2. Our Stately Sky starter project. [Clone the repo to your local machine](https://github.com/statelyai/sky-starter-app)
-3. A machine to deploy as an actor. To test, feel free to fork our [stop light example](https://stately.ai/registry/editor/eb3e89f5-5936-439f-8254-2f6ea4303659?machineId=15fd8071-b80c-4a6f-b9f5-60b6cf578ee5)
+Please note that Sky is currently in alpha and will be changing rapidly.
+
+:::
+
+## What you’ll need
+
+- A [Stately](https://stately.ai) account with a [Pro or Enterprise subscription](https://stately.ai/pricing).
+- Our [Stately Sky starter project](https://github.com/statelyai/sky-starter-app). Clone the repo to your local machine.
 
 ## Getting started video
 
 <YouTube id="A_J1jbz1oWw" />
 
-## Step 1: Create a machine in the Studio
+## Step 1: Create a machine with Stately
 
-Create a project and compose your machine in the Studio with the transitions and states you want. For this example, we'll create a simple traffic light machine with three states: `green`, `yellow`, and `red`.
+Create a project and compose your machine in the [Stately editor](https://stately.ai/editor) with the transitions and states you want.
 
-![Traffic light machine in the Studio](../static/assets/sky-getting-started/editor-traffic-light.png)
+For this example, we’ll create a simple traffic light machine with three states: `green`, `yellow`, and `red`. Feel free to fork [our traffic light example](https://stately.ai/registry/editor/eb3e89f5-5936-439f-8254-2f6ea4303659?machineId=15fd8071-b80c-4a6f-b9f5-60b6cf578ee5) to test.
+
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/eb3e89f5-5936-439f-8254-2f6ea4303659?machineId=15fd8071-b80c-4a6f-b9f5-60b6cf578ee5"
+  name="Traffic light"
+/>
 
 :::xstate
-Sky only supports XState V5 machines. The changes in V5 provide both a better developer experience and adhere to the Actor Model more closely, allowing for Sky to capably deploy machines that reliably communicate their state.
+Sky only supports [XState](https://github.com/statelyai/xstate) V5 machines. The [changes in XState V5](/docs/migration.mdx) provide both a better developer experience and adhere to the [Actor Model](/docs/actor-model.mdx) more closely, allowing Sky to capably deploy machines that reliably communicate their state.
 :::
 
 ## Step 2: Create an API key
 
-When you've finished creating your machine, you'll need to create an API key to deploy it to Sky. You can do this by clicking the "Run" button in the top right corner of the Studio. A screen will appear, prompting you to create an API key. Select that button.
+After creating your machine, you’ll need to create an API key to deploy it to Sky.
+
+1. Use the **Run** button in the top right corner of the editor to open the Stately Sky options.
+2. Use the **Create API Key** button to generate an API key.
 
 ![No API key created yet](..//static/assets/sky-getting-started/editor-no-api-key.png)
 
-Be sure to copy that API key and save it somewhere safe. You'll need it later. The page should look like this:
+3. Be sure to copy that API key and save it somewhere safe. You’ll need it later.
+
+The page should look like this:
 
 ![API key created](..//static/assets/sky-getting-started/editor-api-key.png)
 
 ## Step 3: Deploy your machine to Sky
 
-Now that the API key is generated, you can deploy your machine to Sky as a running actor. Select the "Deploy new actor" button to start the process. Once the actor is deployed, the page will display the name of the running actor and the URL you can use to interact with it. You'll need to use that URL to communicate with the actor from the starter project.
+Once you have generated the API key, you can deploy your machine to Sky as a running actor.
+
+1. Use the **Deploy new actor** button to start the deployment process.
+2. When the actor is deployed, it will be listed under **Existing deploys**.
+3. Use **Copy URL** to copy to the URL to your clipboard.
+
+You’ll need the running actor’s URL to communicate with that actor from the starter project.
 
 ![Actor deployed](../static/assets/sky-getting-started/editor-deployed-actor.png)
 
 ## Step 4: Add your API key to the starter project
 
-Start by opening [the starter project](https://github.com/statelyai/sky-starter-app) in your code editor. Next install the packages using your package manager of choice:
+1. Open [the starter project](https://github.com/statelyai/sky-starter-app) in your code editor.
+2. Install the packages using your package manager of choice:
 
 ```bash npm2yarn
 npm install
 ```
 
-At the root of the project, create a `.env` file to hold your API key.
-There are 2 variables that need to be set in the `.env` file, paste your API key as the value for both these keys:
+3. At the project’s root, create a `.env` file to hold your API key.
+4. Set the following two variables in the `.env` file; paste your API key as the value for both these keys:
 
-1. `SKY_API_KEY` (used by the `@xstate/cli` to fetch the machine config).
-2. `VITE_SKY_API_KEY` (used by the Vite React app to connect to Sky).
+- `SKY_API_KEY`: used by the `@xstate/cli` to fetch the machine config.
+- `VITE_SKY_API_KEY`: used by the Vite React app to connect to Sky.
 
 ![.env file](../static/assets/sky-getting-started/code-env-file.png)
 
 ## Step 5: Initialize the actor in the starter project
 
-After adding the API key, you'll need to initialize the actor. Create a new file in the `src` directory of the starter project. We named ours `trafficLightActor.ts`. In that file, import the `actorFromStately` function and initialize the actor with the provided URL and your own session ID. The session ID can be any string you want. We recommend using a UUID:
+After adding the API key, you’ll need to initialize the actor.
+
+1. Create a new file in the `src` directory of the starter project. We named ours `trafficLightActor.ts`.
+2. In your new file, import the `actorFromStately` function and initialize the actor with the provided URL and your own session ID:
 
 ```typescript
 import { actorFromStately } from '@statelyai/sky';
@@ -72,34 +96,46 @@ const actor = actorFromStately({
 });
 ```
 
+The session ID can be any string you want. We recommend using a UUID.
+
 :::tip
-By default Sky is multiplayer. We make use of the session ID to allow multiple tenants to reference the same running actor instance.
+By default Sky is multiplayer. We use the session ID to allow multiple tenants to reference the same running actor instance.
 :::
 
 ## Step 6: Fetching the actor config from Sky
 
-Now that we've initialized the actor, we need to fetch the config from Sky. Doing so will download and generate the machine configuration file in our repo, giving us typesafety when interacting with the running actor!
+Now that we’ve initialized the actor, we need to fetch the config from Sky. Doing so will download and generate the machine configuration file in our repo, giving us type safety when interacting with the running actor!
 
-To fetch the config, we'll use the XState CLI tool. In our `package.json`, we already have a reference to the script we need to run, named `sky`. This runs the command over all the files in the `src` repo to find configs associated with any initialized actors.
+To fetch the config, we’ll use the [XState CLI tool](/docs/developer-tools.mdx#xstate-cli-command-line-interface) and the `sky` script already in our `package.json`. This script runs the command over all the files in the `src` repo to find configs associated with any initialized actors.
 
 ![package.json](../static/assets/sky-getting-started/code-sky-cmd.png)
 
-Using your package manager of choice, run the `sky` command. For convenience, feel free to use one of the npm or yarn commands below:
+1. Using your package manager of choice, run the `sky` command:
 
 ```bash npm2yarn
 npm run sky
 ```
 
-Once completed, you should see a second argument passed to the `actorFromStately` function, with the name `skyConfig` and updated imports. You should also see a new TypeScript file in your `src` directory, named after the actor in the Studio. In our case, it's `trafficLightActor.sky.ts`.
+2. Once the `sky` command has completed, you should see:
+
+- a second `skyConfig` argument with updated imports passed to the `actorFromStately` function.
+- a new TypeScript file in your `src` directory, named after the actor in the Studio. In our case, it’s `trafficLightActor.sky.ts`.
+
+You’ll notice a warning in the `sky.ts` file that the file is generated. You should not manually edit these files as any local changes will not reflect what’s running in Sky.
+
+Running `xstate sky` will only affect a file if it hasn’t already been fetched. If you make changes to the machine in the Studio, you’ll need to delete the generated file `yourFile.sky.ts` and run the command again. Alternatively, you can force the refetch by running `xstate sky --refetch`.
+
+:::tip
+
+Add your generated `sky.ts` files to source control.
+
+:::
 
 ![traffic light actor](../static/assets/sky-getting-started/code-traffic-light-with-config.png)
 
 ## Finishing up
 
-And that's it! You're now able to interact with your running actor in much the same way you would with local ones, like sending events with the `send()` function. This is still in early days, so there are some limitations and things to remember. Specifically:
+And that’s it! You can now interact with your running actor in much the same way you would with local actors, like sending events with the `send()` function. Sky is still in its early days, so there are some limitations and things to remember. Specifically:
 
 - Only XState V5 machines are supported.
 - Delayed transitions are not yet supported, but will be soon.
-- The generated `sky.ts` files are meant to be added to source control.
-- You'll notice a warning in the `sky.ts` file that the file is generated. You should not manually edit these files. Any local changes will not reflect what's running in Sky.
-- Running `xstate sky` will only affect a file if it hasn't already been fetched. If you make changes to the machine in the Studio, you'll need to delete the generated file `yourFile.sky.ts` and run the command again. Alternatively, you can force the refetch by running `xstate sky --refetch`.
