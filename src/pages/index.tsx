@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/landing-page.css';
-import { Navbar } from './Navbar';
-import { Intro } from './Intro';
-import { Testimonials } from './Testimonials';
-import { Footer } from './Footer';
-import { Benefits } from './Benefits';
-import { FinalCallToAction } from './FinalCallToAction';
-import { AIAssistance } from './AIAssistance';
+import { Navbar } from '../components/landing/Navbar';
+import { Intro } from '../components/landing/Intro';
+import { Testimonials } from '../components/landing/Testimonials';
+import { Footer } from '../components/landing/Footer';
+import { Benefits } from '../components/landing/Benefits';
+import { FinalCallToAction } from '../components/landing/FinalCallToAction';
+import { AIAssistance } from '../components/landing/AIAssistance';
+import '../css/landing-styles.css';
 
 export default function Index() {
   return (

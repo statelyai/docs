@@ -1,6 +1,5 @@
 import React from 'react';
 import { ButtonLink } from './SharedComponents';
-import './styles.css';
 
 export function Intro() {
   return (
