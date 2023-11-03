@@ -31,7 +31,7 @@ const config = {
 
   scripts: [
     {
-      src: 'https://plausible.io/js/script.js',
+      src: 'https://plausible.io/js/script.tagged-events.js',
       defer: true,
       'data-domain': 'stately.ai',
     },
