@@ -408,6 +408,75 @@ Callback actors are a bit different from other actors in that they do not do the
 - Do not emit values when used with `.subscribe()`
 - Can not be stopped with `.stop()`
 
+Callback functions cannot be `async` functions. But it is possible to execute a Promise within a callback function. Promise rejections will not be caught by `onError`, so you may choose to use `sendBack` to report errors caught from the Promise to the parent actor.
+
+```ts
+const machine = createMachine({
+  initial: 'running',
+  states: {
+    running: {
+      invoke: {
+        src: fromCallback(({ sendBack }) => {
+          // highlight-start
+          somePromise()
+            .then((data) => sendBack({ type: 'done', data }))
+            .catch((error) => sendBack({ type: 'error', data: error }));
+          // highlight-end
+
+          return () => {
+            /* cleanup function */
+          };
+        })
+      },
+      // highlight-start
+      on: {
+        error: {
+          actions: ({ event }) => console.error(event.data)
+        }
+      }
+      // highlight-end
+    }
+  }
+});
+```
+
+To use `async`/`await`, you may find it more expressive to wrap your code in an [asynchronous immediately invoked function expression (IIFE)](https://developer.mozilla.org/en-US/docs/Glossary/IIFE#execute_an_async_function).
+
+```ts
+const machine = createMachine({
+  initial: 'running',
+  states: {
+    running: {
+      invoke: {
+        src: fromCallback(({ sendBack }) => {
+          // highlight-start
+          (async () => {
+            try {
+              const data = await somePromise();
+              sendBack({ type: 'done', data });
+            } catch (error) {
+              sendBack({ type: 'error', data: error });
+            }
+          })();
+          // highlight-end
+
+          return () => {
+            /* cleanup function */
+          };
+        })
+      },
+      // highlight-start
+      on: {
+        error: {
+          actions: ({ event }) => console.error(event.data)
+        }
+      }
+      // highlight-end
+    }
+  }
+});
+```
+
 ## Higher-level actor logic
 
 Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
