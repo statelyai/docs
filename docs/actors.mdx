@@ -33,16 +33,16 @@ In the actor model, actors are objects that can communicate with each other. The
   - Or emitting snapshots, which can be considered implicit events sent to subscribers.
 - Actors can create (spawn/invoke) new actors.
 
-## Creating actor logic
+## Actor logic
 
-Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **actor logic creators**. The types of actor logic you can create from XState are:
+Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **[actor logic creators](#actor-logic-creators)**. The types of actor logic you can create from XState are:
 
-- [State machine logic (`createMachine(...)`)](cheatsheet.mdx#creating-a-state-machine)
-- [Promise logic (`fromPromise(...)`)](cheatsheet.mdx#creating-promise-logic)
-- [Transition logic (`fromTransition(...)`)](cheatsheet.mdx#creating-promise-logic)
-- [Observable logic (`fromObservable(...)`)](cheatsheet.mdx#creating-observable-logic)
-- [Event observable logic (`fromEventObservable(...)`)](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions)
-- [Callback logic (`fromCallback(...)`)](cheatsheet.mdx#creating-callback-logic)
+- [State machine logic (`createMachine(...)`)](#createMachine)
+- [Promise logic (`fromPromise(...)`)](#fromPromise)
+- [Transition function logic (`fromTransition(...)`)](#fromTransition)
+- [Observable logic (`fromObservable(...)`)](#fromObservable)
+- [Event observable logic (`fromEventObservable(...)`)](#fromEventObservable)
+- [Callback logic (`fromCallback(...)`)](#fromCallback)
 
 In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
@@ -50,7 +50,7 @@ In XState, actor logic is defined by an object containing methods like `.transit
 
 You can create an actor, which is a “live” instance of some actor logic, via `createActor(actorLogic, options?)`. The `createActor(...)` function takes the following arguments:
 
-- `actorLogic`: the [actor logic](actors.mdx#creating-actor-logic) to create an actor from
+- `actorLogic`: the [actor logic](actors.mdx#actor-logic) to create an actor from
 - `options` (optional): actor options
 
 When you create an actor from actor logic via `createActor(actorLogic)`, you implicitly create an [actor system](system.mdx) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
@@ -211,7 +211,9 @@ console.log(snapshot.output);
 // => 100
 ```
 
-## State machine actor logic
+## Actor Logic Creators
+
+### State Machine Logic with `createMachine` {#createMachine}
 
 You can describe actor logic as a [state machine](machines.mdx). Actors created from state machine actor logic can:
 
@@ -244,7 +246,7 @@ toggleActor.send({ type: 'toggle' });
 // Logs 'active'
 ```
 
-## Promise actor logic
+### Promise Logic with `fromPromise` {#fromPromise}
 
 Promise actor logic is described by an async process that resolves or rejects after some time. Actors created from promise logic (“promise actors”) can:
 
@@ -277,9 +279,9 @@ promiseActor.start();
 // }
 ```
 
-## Transition function actors
+### Transition Function Logic with `fromTransition` {#fromTransition}
 
-Transition actor logic is described by a [transition function](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions), similar to a [reducer](cheatsheet.mdx#creating-transition-logic). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
+Transition actor logic is described by a [transition function](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions), similar to a [reducer](fromTransition). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
 
 - Receive events
 - Emit snapshots of its state
@@ -317,9 +319,9 @@ transitionActor.send({ type: 'increment' });
 // }
 ```
 
-## Observable actors
+### Observable Logic with `fromObservable` {#fromObservable}
 
-Observable actor logic is described by an [observable stream of values](cheatsheet.mdx#creating-observable-logic). Actors created from observable logic (“observable actors”) can:
+Observable actor logic is described by an [observable stream of values](#fromObservable). Actors created from observable logic (“observable actors”) can:
 
 - Emit snapshots of its emitted value
 
@@ -342,7 +344,7 @@ secondActor.start();
 // ...
 ```
 
-## Event observable actors
+### Event Observable Logic with `fromEventObservable` {#fromEventObservable}
 
 Event observable actor logic is described by an observable stream of [event objects](transitions.mdx#event-objects). Actors created from event observable logic (“event observable actors”) can:
 
@@ -367,7 +369,7 @@ const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
 
-## Callback actors
+### Callback Logic with `fromCallback` {#fromCallback}
 
 Callback actor logic is described by a callback function that receives a single object argument that includes a `sendBack(event)` function and a `receive(event => ...)` function. Actors created from callback logic (“callback actors”) can:
 
@@ -408,7 +410,7 @@ Callback actors are a bit different from other actors in that they do not do the
 - Do not emit values when used with `.subscribe()`
 - Can not be stopped with `.stop()`
 
-## Higher-level actor logic
+## Higher-Level Logic
 
 Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
 
