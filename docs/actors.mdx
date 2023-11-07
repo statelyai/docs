@@ -408,7 +408,9 @@ Callback actors are a bit different from other actors in that they do not do the
 - Do not emit values when used with `.subscribe()`
 - Can not be stopped with `.stop()`
 
-Callback functions cannot be `async` functions. But it is possible to execute a Promise within a callback function. Promise rejections will not be caught by `onError`, so you may choose to use `sendBack` to report errors caught from the Promise to the parent actor.
+You may choose to use `sendBack` to report caught errors to the parent actor. This is especially helpful for handling promise rejections within a callback function, which will not be caught by [`onError`](invoke.mdx#onerror).
+
+Callback functions cannot be `async` functions. But it is possible to execute a Promise within a callback function.
 
 ```ts
 const machine = createMachine({
