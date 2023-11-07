@@ -213,7 +213,7 @@ console.log(snapshot.output);
 
 ## Actor Logic Creators
 
-### `createMachine` for State Machine Logic {#createMachine}
+### `createMachine` for State Machine Logic {#createmachine}
 
 You can describe actor logic as a [state machine](machines.mdx). Actors created from state machine actor logic can:
 
@@ -246,7 +246,7 @@ toggleActor.send({ type: 'toggle' });
 // Logs 'active'
 ```
 
-### `fromPromise` for Promise Logic {#fromPromise}
+### `fromPromise` for Promise Logic {#frompromise}
 
 Promise actor logic is described by an async process that resolves or rejects after some time. Actors created from promise logic (“promise actors”) can:
 
@@ -279,7 +279,7 @@ promiseActor.start();
 // }
 ```
 
-### `fromTransition` for Transition Function Logic {#fromTransition}
+### `fromTransition` for Transition Function Logic {#fromtransition}
 
 Transition actor logic is described by a [transition function](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions), similar to a [reducer](fromTransition). Transition functions take the current `state` and received `event` object as arguments, and return the next state. Actors created from transition logic (“transition actors”) can:
 
@@ -319,7 +319,7 @@ transitionActor.send({ type: 'increment' });
 // }
 ```
 
-### `fromObservable` for Observable Logic {#fromObservable}
+### `fromObservable` for Observable Logic {#fromobservable}
 
 Observable actor logic is described by an [observable stream of values](#fromObservable). Actors created from observable logic (“observable actors”) can:
 
@@ -344,7 +344,7 @@ secondActor.start();
 // ...
 ```
 
-### `fromEventObservable` for Event Observable Logic {#fromEventObservable}
+### `fromEventObservable` for Event Observable Logic {#fromeventobservable}
 
 Event observable actor logic is described by an observable stream of [event objects](transitions.mdx#event-objects). Actors created from event observable logic (“event observable actors”) can:
 
@@ -369,7 +369,7 @@ const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
 
-### `fromCallback` for Callback Logic {#fromCallback}
+### `fromCallback` for Callback Logic {#fromcallback}
 
 Callback actor logic is described by a callback function that receives a single object argument that includes a `sendBack(event)` function and a `receive(event => ...)` function. Actors created from callback logic (“callback actors”) can:
 
