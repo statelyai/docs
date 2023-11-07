@@ -37,12 +37,12 @@ In the actor model, actors are objects that can communicate with each other. The
 
 Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **[actor logic creators](#actor-logic-creators)**. The types of actor logic you can create from XState are:
 
-- [State machine logic (`createMachine(...)`)](#createMachine)
-- [Promise logic (`fromPromise(...)`)](#fromPromise)
-- [Transition function logic (`fromTransition(...)`)](#fromTransition)
-- [Observable logic (`fromObservable(...)`)](#fromObservable)
-- [Event observable logic (`fromEventObservable(...)`)](#fromEventObservable)
-- [Callback logic (`fromCallback(...)`)](#fromCallback)
+- [State machine logic (`createMachine(...)`)](#createmachine)
+- [Promise logic (`fromPromise(...)`)](#frompromise)
+- [Transition function logic (`fromTransition(...)`)](#fromtransition)
+- [Observable logic (`fromObservable(...)`)](#fromobservable)
+- [Event observable logic (`fromEventObservable(...)`)](#fromeventobservable)
+- [Callback logic (`fromCallback(...)`)](#fromcallback)
 
 In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
