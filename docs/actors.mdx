@@ -464,7 +464,50 @@ const loggingToggleLogic = withLogging(toggleLogic);
 
 ## Custom actor logic
 
-Custom actor logic can be defined with an object that implements the interface `ActorLogic`. See the source code of `fromTransition` for an example.
+Custom actor logic can be defined with an object that implements the `ActorLogic` interface.
+
+For example, here’s a custom actor logic object with a `transition` function that operates as a simple reducer:
+
+```ts
+import { createActor, EventObject, ActorLogic, Snapshot } from "xstate";
+
+const countLogic: ActorLogic<
+  Snapshot<undefined> & { context: number },
+  EventObject
+> = {
+  transition: (state, event) => {
+    if (event.type === 'INC') {
+      return {
+        ...state,
+        context: state.context + 1
+      };
+    } else if (event.type === 'DEC') {
+      return {
+        ...state,
+        context: state.context - 1
+      };
+    }
+    return state;
+  },
+  getInitialState: () => ({
+    status: 'active',
+    output: undefined,
+    error: undefined,
+    context: 0
+  }),
+  getPersistedState: (s) => s
+};
+
+const actor = createActor(countLogic)
+actor.subscribe(state => {
+  console.log(state.context)
+})
+actor.start() // => 0
+actor.send({ type: 'INC' }) // => 1
+actor.send({ type: 'INC' }) // => 2
+```
+
+For further examples, see implementations of `ActorLogic` in the source code, like the `fromTransition` actor logic creator, or the examples in the tests.
 
 ## Empty actors
 
