@@ -44,7 +44,7 @@ Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) I
 - [Event observable logic (`fromEventObservable(...)`)](migration.mdx#use-actor-logic-creators-for-invokesrc-instead-of-functions)
 - [Callback logic (`fromCallback(...)`)](cheatsheet.mdx#creating-callback-logic)
 
-In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
+In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialState()`, `.getPersistedState()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
 ## Creating actors
 
