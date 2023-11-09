@@ -683,7 +683,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -709,7 +709,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -728,7 +728,7 @@ const machine = createMachine({
         1000: {
           target: 'compoundState.childState',
           reenter: true, // make it external explicitly!
-        }
+        },
       },
       initial: 'childState',
       states: {
@@ -736,7 +736,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -753,7 +753,7 @@ const machine = createMachine({
         1000: {
           // implicitly external
           target: 'compoundState.childState', // non-relative target
-        }
+        },
       },
       initial: 'childState',
       states: {
@@ -761,7 +761,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -828,7 +828,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -1120,7 +1120,6 @@ Breaking change
 :::
 
 To produce output data from a machine which reached its final state, use the `output` property instead of `data`:
-
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
@@ -1438,6 +1437,51 @@ actor.batch(events);
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to loop over events to send them as a batch.
+
+### Use `snapshot.status === 'done'` instead of `snapshot.done`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `snapshot.done` property, which was previously in the snapshot object of state machine actors, is removed. Use `snapshot.status === 'done'` instead, which is available to all actors:
+
+<Tabs>
+
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const actor = createActor(machine);
+actor.start();
+
+actor.subscribe((snapshot) => {
+  if (snapshot.status === 'done') {
+    // ...
+  }
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const actor = interpret(machine);
+actor.start();
+
+actor.subscribe((state) => {
+  if (state.done) {
+    // ...
+  }
+});
+```
+
+</TabItem>
+</Tabs>
 
 ## TypeScript
 
