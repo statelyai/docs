@@ -1230,7 +1230,8 @@ html [class*='toggleButton'] {
 
 /* Add a pro badge to menu items with the pro-feature classname */
 
-.menu__list-item.pro-feature a:after {
+.menu__list-item.pro-feature > a:after,
+.menu__list-item.pro-feature > div > a:after {
   background-color: var(--st-orange-500);
   border-radius: 0.3rem;
   content: 'Pro';
@@ -1241,11 +1242,12 @@ html [class*='toggleButton'] {
   margin-left: 0.45rem;
   padding: 0 0.3rem;
   text-transform: uppercase;
+  transform: rotateZ(0deg);
 }
 
 /* Add a free badge to menu items with the pro-feature classname */
-
-.menu__list-item.community-feature a:after {
+.menu__list-item.community-feature > a:after,
+.menu__list-item.community-feature > div > a:after {
   background-color: var(--st-blue-500);
   border-radius: 0.3rem;
   content: 'Free';
@@ -1255,6 +1257,7 @@ html [class*='toggleButton'] {
   margin-top: 0.1rem;
   margin-left: 0.45rem;
   padding: 0 0.3rem;
+  transform: rotateZ(0deg);
   text-transform: uppercase;
 }
 
