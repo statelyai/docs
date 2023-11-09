@@ -151,6 +151,22 @@ const sidebars = {
         },
         'projects',
         {
+          type: 'category',
+          label: 'Stately Sky',
+          link: {
+            type: 'doc',
+            id: 'stately-sky-getting-started',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'Getting started',
+              id: 'stately-sky-getting-started',
+              className: 'pro-feature',
+            },
+          ],
+        },
+        {
           type: 'doc',
           label: 'Teams',
           className: 'pro-feature',
