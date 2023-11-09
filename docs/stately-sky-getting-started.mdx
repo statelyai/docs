@@ -2,9 +2,9 @@
 title: 'Stately Sky getting started'
 ---
 
-# Getting started with Stately Sky
+# Getting started with Stately Sky 🌤️
 
-This guide will walk you through deploying a simple traffic light state machine actor with Stately Sky using [XState](/docs/xstate.mdx), [Vite](https://vitejs.dev/) and [React](https://reactjs.org/).
+This guide will walk you through deploying a simple traffic light state machine workflow with Stately Sky using [XState](/docs/xstate.mdx), [Vite](https://vitejs.dev/) and [React](https://reactjs.org/).
 
 :::caution
 
@@ -40,7 +40,7 @@ Sky only supports [XState](https://github.com/statelyai/xstate) V5 machines. The
 
 After creating your machine, you’ll need to create an API key to deploy it to Sky.
 
-1. Use the **Run** button in the top right corner of the editor to open the Stately Sky options.
+1. Use the **Deploy** button in the top right corner of the editor to open the Stately Sky options.
 2. Use the **Create API Key** button to generate an API key.
 
 ![No API key created yet](..//static/assets/sky-getting-started/editor-no-api-key.png)
@@ -53,13 +53,13 @@ The page should look like this:
 
 ## Step 3: Deploy your machine to Sky
 
-Once you have generated the API key, you can deploy your machine to Sky as a running actor.
+Once you have generated the API key, you can deploy your machine to Sky as a running workflow.
 
-1. Use the **Deploy new actor** button to start the deployment process.
-2. When the actor is deployed, it will be listed under **Existing deploys**.
+1. Use the **Deploy to Sky 🌤️** button to start the deployment process.
+2. When the workflow is deployed, it will be listed under **Existing deploys**.
 3. Use **Copy URL** to copy to the URL to your clipboard.
 
-You’ll need the running actor’s URL to communicate with that actor from the starter project.
+You’ll need the running workflow’s URL to communicate with it from the starter project.
 
 ![Actor deployed](../static/assets/sky-getting-started/editor-deployed-actor.png)
 
@@ -80,9 +80,9 @@ npm install
 
 ![.env file](../static/assets/sky-getting-started/code-env-file.png)
 
-## Step 5: Initialize the actor in the starter project
+## Step 5: Add the actor in the starter project
 
-After adding the API key, you’ll need to initialize the actor.
+After adding the API key, you’ll need to add the actor.
 
 1. Create a new file in the `src` directory of the starter project. We named ours `trafficLightActor.ts`.
 2. In your new file, import the `actorFromStately` function and initialize the actor with the provided URL and your own session ID:
@@ -91,20 +91,23 @@ After adding the API key, you’ll need to initialize the actor.
 import { actorFromStately } from '@statelyai/sky';
 
 const actor = actorFromStately({
-  url: 'paste your actor url here',
+  url: 'paste your Sky url here',
   sessionId: 'your session id here',
 });
 ```
 
-The session ID can be any string you want. We recommend using a UUID.
-
 :::tip
-By default Sky is multiplayer. We use the session ID to allow multiple tenants to reference the same running actor instance.
+By default, Sky is multiplayer.
+The session ID is used to shard the multiplayer session.
+
+- Use a shared session ID to allow multiple users to reference the same state.
+- If you want users isolated, use a unique session ID for each user.
+
 :::
 
-## Step 6: Fetching the actor config from Sky
+## Step 6: Fetching the config from Sky
 
-Now that we’ve initialized the actor, we need to fetch the config from Sky. Doing so will download and generate the machine configuration file in our repo, giving us type safety when interacting with the running actor!
+Now that we’ve added the actor, we need to fetch the config from Sky. Doing so will download and generate the machine configuration file in our repo, giving us type safety when interacting with the running actor!
 
 To fetch the config, we’ll use the [XState CLI tool](/docs/developer-tools.mdx#xstate-cli-command-line-interface) and the `sky` script already in our `package.json`. This script runs the command over all the files in the `src` repo to find configs associated with any initialized actors.
 
