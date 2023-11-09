@@ -153,6 +153,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Stately Sky',
+          className: 'pro-feature',
           link: {
             type: 'doc',
             id: 'stately-sky-getting-started',
@@ -162,7 +163,6 @@ const sidebars = {
               type: 'doc',
               label: 'Getting started',
               id: 'stately-sky-getting-started',
-              className: 'pro-feature',
             },
           ],
         },
