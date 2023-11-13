@@ -27,8 +27,8 @@ const feedbackMachine = createMachine({
   }
 }, {
   actions: {
-    track: ({ action }) => {
-      track(action.params);
+    track: (_, params) => {
+      track(params);
       // tracks { response: 'good' }
     },
     showConfetti: () => {
@@ -249,7 +249,7 @@ const feedbackMachine = createMachine(
   {
     // highlight-start
     actions: {
-      track: ({ context, event }) => {
+      track: ({ context, event }, params) => {
         // Action implementation
         // ...
       },
@@ -266,7 +266,7 @@ const feedbackActor = createActor(
   // highlight-start
   feedbackMachine.provide({
     actions: {
-      track: ({ context, event }) => {
+      track: ({ context, event }, params) => {
         // Overridden action implementation
         // ...
       },

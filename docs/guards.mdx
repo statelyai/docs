@@ -143,10 +143,10 @@ const feedbackMachine = createMachine(
   {
     // highlight-start
     guards: {
-      isValid: ({ context, guard }) => {
+      isValid: ({ context }, params) => {
         return (
           context.feedback.length > 0 &&
-          context.feedback.length <= guard.maxLength
+          context.feedback.length <= params.maxLength
         );
       },
     },
@@ -162,10 +162,10 @@ const feedbackActor = createActor(
   // highlight-start
   feedbackMachine.provide({
     guards: {
-      isValid: ({ context, guard }) => {
+      isValid: ({ context }, params) => {
         return (
           context.feedback.length > 0 &&
-          context.feedback.length <= guard.maxLength &&
+          context.feedback.length <= params.maxLength &&
           isNotSpam(context.feedback)
         );
       },

@@ -456,7 +456,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### Use `params` to pass custom event data
+### Use `params` to pass params to actions & guards
 
 :::breakingchange
 
@@ -464,7 +464,7 @@ Breaking change
 
 :::
 
-Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`:
+Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`. These `params` are then passed to the 2nd argument of the action or guard implementation:
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
@@ -478,6 +478,22 @@ const machine = createMachine({
       message: 'Hello world',
     },
   },
+  on: {
+    someEvent: {
+      guard: { type: 'isGreaterThan', params: { value: 42 } },
+    },
+  },
+}).provide({
+  actions: {
+    greet: ({ context, event }, params) => {
+      console.log(params.message); // 'Hello world'
+    },
+  },
+  guards: {
+    isGreaterThan: ({ context, event }, params) => {
+      return event.value > params.value;
+    },
+  },
 });
 ```
 
@@ -487,12 +503,31 @@ const machine = createMachine({
 
 ```ts
 // ❌ DEPRECATED
-const machine = createMachine({
-  entry: {
-    type: 'greet',
-    message: 'Hello world',
+const machine = createMachine(
+  {
+    entry: {
+      type: 'greet',
+      message: 'Hello world',
+    },
+    on: {
+      someEvent: {
+        cond: { type: 'isGreaterThan', value: 42 },
+      },
+    },
   },
-});
+  {
+    actions: {
+      greet: (context, event, { action }) => {
+        console.log(action.message); // 'Hello world'
+      },
+    },
+    guards: {
+      isGreaterThan: (context, event, { guard }) => {
+        return event.value > guard.value;
+      },
+    },
+  },
+);
 ```
 
 </TabItem>
