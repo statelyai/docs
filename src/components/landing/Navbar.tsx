@@ -1,13 +1,13 @@
-import React, { Fragment, ReactNode } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { MenuIcon, XIcon } from 'lucide-react';
 import Link from '@docusaurus/Link';
+import { MenuIcon, XIcon } from 'lucide-react';
+import React, { Fragment, ReactNode } from 'react';
 import { ButtonLink } from './SharedComponents';
+const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
 const navigation = [
-  { name: 'Docs', href: 'https://wwww.stately.ai/docs', current: false },
-  { name: 'Blog', href: 'https://wwww.stately.ai/blog', current: false },
-  { name: 'Pricing', href: 'https://wwww.stately.ai/pricing', current: false },
+  { name: 'Docs', href: '/docs', current: false },
+  { name: 'Blog', href: '/blog', current: false },
+  { name: 'Pricing', href: '/pricing', current: false },
 ];
 
 function classNames(...classes) {
@@ -156,7 +156,7 @@ export function Navbar() {
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
                   )}
-                  aria-current="Log in"
+                  aria-label="Log in"
                 >
                   Log in
                 </Disclosure.Button>
@@ -168,7 +168,7 @@ export function Navbar() {
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
                   )}
-                  aria-current="Sign up"
+                  aria-label="Sign up"
                 >
                   Sign up
                 </Disclosure.Button>

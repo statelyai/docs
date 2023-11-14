@@ -4,18 +4,18 @@ export function ButtonLink({
   children,
   background,
   href,
-  target,
+  target = '_blank',
   rel,
-  size,
+  size = 'small',
 }: {
   children: ReactNode;
-  background: 'blue' | 'pink' | 'darkBlue' | 'orange';
+  background?: 'blue' | 'pink' | 'darkBlue' | 'orange';
   href: string;
-  target: string;
-  rel: string;
+  target?: '_blank' | '_self';
+  rel?: string;
   size?: 'small' | 'large';
 }) {
-  // Tailwind does not suppot string interpolation
+  // Tailwind does not support string interpolation
   const bg =
     background === 'blue'
       ? 'bg-blue-600'

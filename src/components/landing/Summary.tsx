@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ButtonLink, classNames, ComingSoon } from './SharedComponents';
 
 export function Summary() {
@@ -114,6 +114,10 @@ function SummaryListItem({
   imgSrc,
   boxBg,
 }: {
+  children: ReactNode;
+  full?: boolean;
+  imgSrc?: string;
+  boxBg?: boolean;
   title: string;
   href?: string;
   linkText?: string;

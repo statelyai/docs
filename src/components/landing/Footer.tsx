@@ -28,18 +28,10 @@ function AllLinks() {
         <p className="text-white/60 mt-5 text-base">&copy; 2023 Stately</p>
       </div>
       <LinkList title="Product">
-        <LinkItem>
-          <a href="#design">Features</a>
-        </LinkItem>
-        <LinkItem>
-          <a href="/docs/">Documentation</a>
-        </LinkItem>
-        <LinkItem>
-          <a href="https://github.com/statelyai/xstate">XState</a>
-        </LinkItem>
-        <LinkItem>
-          <a href="/pricing/">Pricing</a>
-        </LinkItem>
+        <LinkItem href="#design">Features</LinkItem>
+        <LinkItem href="/docs/">Documentation</LinkItem>
+        <LinkItem href="https://github.com/statelyai/xstate">XState</LinkItem>
+        <LinkItem href="/pricing/">Pricing</LinkItem>
       </LinkList>
       <LinkList title="Company">
         <LinkItem href="/blog/tags/changelog">Changelog</LinkItem>
@@ -47,9 +39,7 @@ function AllLinks() {
         <LinkItem href="mailto:support@stately.ai">Contact</LinkItem>
       </LinkList>
       <LinkList title="Resources">
-        <LinkItem>
-          <a href="/privacy/">Privacy policy</a>
-        </LinkItem>
+        <LinkItem href="/privacy/">Privacy policy</LinkItem>
         <LinkItem href="/code-of-conduct/">Code of Conduct</LinkItem>
       </LinkList>
 
@@ -95,7 +85,10 @@ function Newsletter() {
         className="embeddable-buttondown-form state"
         data-active
       >
-        <label for="bd-email" className="text-base text-white/60 font-semibold">
+        <label
+          htmlFor="bd-email"
+          className="text-base text-white/60 font-semibold"
+        >
           Subscribe to our newsletter
         </label>
         <div className="fields pt-2">
