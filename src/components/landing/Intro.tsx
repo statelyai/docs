@@ -11,10 +11,10 @@ export function Intro() {
         <ExampleRow />
 
         <div className="flex flex-col w-full items-center">
-          <h2 className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
             Build and deploy workflows and app logic with AI enhanced,
             collaborative tools
-          </h2>
+          </p>
           <CallToActionButtons />
         </div>
 

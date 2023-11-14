@@ -63,7 +63,7 @@ function DesignSection() {
 
           <div className="grid md:grid-cols-2 w-full gap-12 pt-24">
             <div className="md:col-span-2">
-              <Feature box imgSrc="/landing/DELETE-1.png">
+              <Feature box imgSrc="/landing/DELETE-1.png" imgAlt="TODO">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <FeatureText>
                     <Strong>Create flows with no code required</Strong>. Rapidly
@@ -619,8 +619,8 @@ function AnimateAwayGradient({ animationClass, children }) {
 
 function FeatureTitle({ children }) {
   return (
-    <div className="font-extrabold text-xl md:text-2xl lg:text-3xl drop-shadow-sm text-white/90 leading-tight md:leading-tight lg:leading-tight">
+    <h3 className="font-extrabold text-xl md:text-2xl lg:text-3xl drop-shadow-sm text-white/90 leading-tight md:leading-tight lg:leading-tight">
       {children}
-    </div>
+    </h3>
   );
 }

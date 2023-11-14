@@ -73,8 +73,8 @@ export function ComingSoon() {
 
 export function SectionTitle({ children }) {
   return (
-    <h1 className="font-extrabold text-3xl md:text-4xl lg:text-5xl drop-shadow-sm text-white/90 leading-tight md:leading-tight lg:leading-tight">
+    <h2 className="font-extrabold text-3xl md:text-4xl lg:text-5xl drop-shadow-sm text-white/90 leading-tight md:leading-tight lg:leading-tight">
       {children}
-    </h1>
+    </h2>
   );
 }

@@ -4,9 +4,9 @@ import { classNames, ButtonLink, ComingSoon } from './SharedComponents';
 export function Lifecycle() {
   return (
     <div className="pt-72 pb-48">
-      <h1 className="text-7xl font-semibold text-white/90 tracking-tighter leading-tight text-center max-w-6xl m-auto">
+      <h2 className="text-7xl font-semibold text-white/90 tracking-tighter leading-tight text-center max-w-6xl m-auto">
         Stately transitions your team through the product lifecycle.
-      </h1>
+      </h2>
       <div className="flex gap-12 flex-col">
         <LifecycleStep num="1" title="Design" color="pink">
           <DesignSection />
