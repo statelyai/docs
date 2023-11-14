@@ -102,7 +102,7 @@ function DesignSection() {
                       write code.
                     </FeatureText>
                   </div>
-                  <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
+                  <img alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in." src="/landing/generate-flow-dialog.png" className="h-96 w-full" />
                 </div>
               </Feature>
             </div>
