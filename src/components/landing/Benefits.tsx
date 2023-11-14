@@ -62,7 +62,7 @@ function DesignSection() {
 
           <div className="grid md:grid-cols-2 w-full gap-12 pt-24">
             <div className="md:col-span-2">
-              <Feature box imgSrc="/landing/DELETE-1.png" imgAlt="TODO">
+              <Feature box imgSrc="/landing/design-and-simulate.png" imgAlt="Split view of the same credit check workflow in design and simulate modes in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted.">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <FeatureText>
                     <Strong>Create flows with no code required</Strong>. Rapidly
@@ -553,7 +553,7 @@ function Feature({
         <img
           alt={imgAlt}
           src={imgSrc}
-          className="rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-56 w-full mt-8"
+          className="rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full mt-8"
         />
       )}
     </div>
