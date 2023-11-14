@@ -8,7 +8,8 @@ export function Testimonials() {
         <SectionTitle>Loved by teams</SectionTitle>
       </div>
       <ul className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-6 items-start">
-        <div className="grid gap-6 w-full">
+        <li>
+        <ul className="grid gap-6 w-full">
           <Testimonial
             imgSrc="./landing-page/assets/amy.png"
             name="Amy Pellegrini"
@@ -35,8 +36,10 @@ export function Testimonials() {
             debug while also making the code more straightforward and
             approachable.
           </Testimonial>
-        </div>
-        <div className="grid gap-6">
+        </ul>
+        </li>
+        <li>
+        <ul className="grid gap-6">
           <Testimonial
             imgSrc="./landing-page/assets/presley.png"
             name="Presley Pizzo"
@@ -58,8 +61,10 @@ export function Testimonials() {
             generation makes it easier than ever to move forward with
             confidence. XState makes it all possible!
           </Testimonial>
-        </div>
-        <div className="grid gap-6">
+        </ul>
+        </li>
+        <li>
+        <ul className="grid gap-6">
           <Testimonial
             imgSrc="./landing-page/assets/maya.png"
             name="Maya Shavin"
@@ -79,7 +84,8 @@ export function Testimonials() {
             real time, has been a game changer in how I model and communicate
             any logic!
           </Testimonial>
-        </div>
+        </ul>
+        </li>
       </ul>
     </section>
   );
