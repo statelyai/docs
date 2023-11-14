@@ -185,7 +185,7 @@ function XStateSection() {
             </ButtonLink>
           </Feature>
         </div>
-        <img alt="TODO" src="/landing/DELETE-2.png" className="w-full h-96 mt-12" />
+        <img alt="TODO" src="/landing/DELETE-2.png" className="w-full h-auto mt-12" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full pt-36 justify-center">
           <Feature box>
             <div className="flex">
@@ -233,7 +233,7 @@ function XStateSection() {
                     extend the scaffolding with your vision.
                   </FeatureText>
                 </div>
-                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="TODO" src="/landing/DELETE-1.png" className="h-auto w-full" />
               </div>
             </Feature>
           </div>
@@ -241,7 +241,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box>
               <div className="grid grid-cols-2 gap-12">
-                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="TODO" src="/landing/DELETE-1.png" className="h-auto w-full" />
                 <div className="pt-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
@@ -383,7 +383,7 @@ function SkySection() {
           </div>
         </div>
 
-        <img alt="TODO" src="/landing/DELETE-2.png" className="h-120 w-full mt-32" />
+        <img alt="TODO" src="/landing/DELETE-2.png" className="h-auto w-full mt-32" />
 
         <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
