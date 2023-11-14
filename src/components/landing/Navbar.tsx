@@ -1,8 +1,8 @@
 import Link from '@docusaurus/Link';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from 'lucide-react';
 import React, { Fragment, ReactNode } from 'react';
 import { ButtonLink } from './SharedComponents';
+const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
 const navigation = [
   { name: 'Docs', href: 'https://wwww.stately.ai/docs', current: false },
