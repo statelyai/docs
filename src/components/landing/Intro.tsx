@@ -39,23 +39,12 @@ const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
 function ExampleRow() {
   return (
     <ul className="flex max-w-full flex-wrap gap-2 mt-20 m-auto justify-center select-none">
-      <li className={exampleBox}>Workflows</li>
-      <li className={line} role="none"></li>
-      <li className={exampleBox}>Chatbots</li>
-      <li className={line} role="none"></li>
-
-      <li className={exampleBox}>Multistep forms</li>
-      <li className={line} role="none"></li>
-
-      <li className={exampleBox}>Onboarding</li>
-      <li className={line} role="none"></li>
-
-      <li className={exampleBox}>Games</li>
-      <li className={line} role="none"></li>
-
-      <li className={exampleBox}>Complex logic</li>
-      <li className={line} role="none"></li>
-
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Workflows</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Chatbots</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Multistep forms</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Onboarding</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Games</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Complex logic</div> <span className={line}></span></li>
       <li className={exampleBox}>
         <span className="dot1">.</span>
         <span className="dot2">.</span>
