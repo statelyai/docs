@@ -336,7 +336,7 @@ function SourceOfTruthSection() {
                     further information.
                   </FeatureText>
                 </div>
-                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="The event schema modal in the Stately editor open to add properties to an orderCreatedEvent event. The properties are orderNumber and orderDate, and they are both strings." src="/landing/event-schema.png" className="h-96 w-full" />
               </div>
             </Feature>
           </div>
