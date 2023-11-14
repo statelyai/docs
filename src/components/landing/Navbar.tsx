@@ -5,9 +5,9 @@ import { ButtonLink } from './SharedComponents';
 const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
 const navigation = [
-  { name: 'Docs', href: 'https://wwww.stately.ai/docs', current: false },
-  { name: 'Blog', href: 'https://wwww.stately.ai/blog', current: false },
-  { name: 'Pricing', href: 'https://wwww.stately.ai/pricing', current: false },
+  { name: 'Docs', href: '/docs', current: false },
+  { name: 'Blog', href: '/blog', current: false },
+  { name: 'Pricing', href: '/pricing', current: false },
 ];
 
 function classNames(...classes) {

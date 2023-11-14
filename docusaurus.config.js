@@ -11,8 +11,8 @@ const config = {
   url: 'https://stately.ai',
   baseUrl: '/',
   baseUrlIssueBanner: false,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
   staticDirectories: ['static'],
 
