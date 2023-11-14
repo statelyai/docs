@@ -8,7 +8,7 @@
     "remark:watch": "yarn remark --quiet --frail --watch docs/**/* versioned_docs/**/*",
     "dev": "docusaurus start",
     "start": "concurrently \"yarn remark:watch\" \"yarn typecheck:watch\" \"docusaurus start\"",
-    "build": "yarn remark:once && yarn typecheck && docusaurus build",
+    "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
