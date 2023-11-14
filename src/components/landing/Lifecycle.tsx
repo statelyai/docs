@@ -1,5 +1,5 @@
 import React from 'react';
-import { classNames, ButtonLink, ComingSoon } from './SharedComponents';
+import { ButtonLink, ComingSoon, classNames } from './SharedComponents';
 
 export function Lifecycle() {
   return (
@@ -95,7 +95,9 @@ function BuildSection() {
             <StrongLink>An IDE extension</StrongLink> brings the power of
             Stately into VS Code.
           </p>
-          <ButtonLink size="small">Download the VS Code extension</ButtonLink>
+          <ButtonLink href="https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode">
+            Download the VS Code extension
+          </ButtonLink>
         </FeatureText>
         <FeatureText>
           <Strong>Save versions</Strong> as backup and to see the history of
@@ -145,7 +147,9 @@ function BuildSection() {
               issues caused by boolean-based state management.
             </p>
             <div className="pt-4 ">
-              <ButtonLink size="small">Learn more about statecharts</ButtonLink>
+              <ButtonLink href="/docs/state-machines-and-statecharts">
+                Learn more about statecharts
+              </ButtonLink>
             </div>
           </FeatureBox>
         </div>

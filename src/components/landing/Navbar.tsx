@@ -1,7 +1,7 @@
-import React, { Fragment, ReactNode } from 'react';
+import Link from '@docusaurus/Link';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from 'lucide-react';
-import Link from '@docusaurus/Link';
+import React, { Fragment, ReactNode } from 'react';
 import { ButtonLink } from './SharedComponents';
 
 const navigation = [
@@ -152,7 +152,7 @@ export function Navbar() {
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
                   )}
-                  aria-current="Log in"
+                  aria-label="Log in"
                 >
                   Log in
                 </Disclosure.Button>
@@ -164,7 +164,7 @@ export function Navbar() {
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
                   )}
-                  aria-current="Sign up"
+                  aria-label="Sign up"
                 >
                   Sign up
                 </Disclosure.Button>

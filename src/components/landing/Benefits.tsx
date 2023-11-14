@@ -1,22 +1,21 @@
-import React, { useEffect, useState, ReactNode, useRef } from 'react';
 import {
-  classNames,
-  SectionTitle,
+  ArrowLeftRightIcon,
+  BookOpenIcon,
+  CalendarIcon,
+  FileDownIcon,
+  MergeIcon,
+  PartyPopperIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  Wand2Icon,
+} from 'lucide-react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import {
   ButtonLink,
   ComingSoon,
+  SectionTitle,
+  classNames,
 } from './SharedComponents';
-import {
-  ShieldCheckIcon,
-  BookOpenIcon,
-  SparklesIcon,
-  ArrowLeftRightIcon,
-  Wand2Icon,
-  FileDownIcon,
-  PartyPopperIcon,
-  MergeIcon,
-  CalendarIcon,
-} from 'lucide-react';
-import { AIAssistance } from './AIAssistance';
 
 export function Benefits() {
   return (
@@ -136,18 +135,10 @@ function XStateSection() {
             </FeatureText>
 
             <div className="flex gap-2">
-              <ButtonLink
-                href="https://stately.ai/docs/xstate"
-                target="_blank"
-                size="small"
-              >
+              <ButtonLink href="/docs/xstate" target="_self">
                 Read XState docs
               </ButtonLink>
-              <ButtonLink
-                href="https://stately.ai/docs/xstate"
-                target="_blank"
-                size="small"
-              >
+              <ButtonLink href="https://github.com/statelyai/xstate">
                 View on Github
               </ButtonLink>
             </div>
@@ -183,7 +174,12 @@ function XStateSection() {
               </Strong>
               .
             </FeatureText>
-            <ButtonLink size="small">Learn more about statecharts</ButtonLink>
+            <ButtonLink
+              href="/docs/state-machines-and-statecharts"
+              target="_self"
+            >
+              Learn more about statecharts
+            </ButtonLink>
           </Feature>
         </div>
         <img src="/landing/DELETE-2.png" className="w-full h-96 mt-12" />
@@ -218,7 +214,9 @@ function XStateSection() {
               <Strong>An IDE extension</Strong> brings the power of Stately into
               VS Code.
             </FeatureText>
-            <ButtonLink size="small">Download the VS Code extension</ButtonLink>
+            <ButtonLink href="https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode">
+              Download the VS Code extension
+            </ButtonLink>
           </Feature>
 
           <div className="md:col-span-2 lg:col-span-3">
@@ -441,52 +439,16 @@ function SkySection() {
             </Feature>
           </div>
         </div>
-        <div className="max-w-5xl m-auto">
-          <FeatureTitle></FeatureTitle>
-        </div>
       </BenefitSection>
     </AnimateAwayGradient>
   );
 }
 
-function BenefitSection({ anchorLink, title, color, children }) {
-  const numberBgColor =
-    color === 'pink'
-      ? 'bg-pink-600'
-      : color === 'green'
-      ? 'bg-green-600'
-      : color === 'purple'
-      ? 'bg-purple-600'
-      : color === 'orange'
-      ? 'bg-orange-600'
-      : color === 'teal'
-      ? 'bg-teal-600'
-      : 'text-gray-600';
-  const otherNumberStyles = `flex justify-center items-center rounded-full w-16 h-16 select-none shadow-lg`;
-  const numberStyles = classNames(numberBgColor, otherNumberStyles);
-
-  const otherTextStyles =
-    'font-extrabold text-6xl drop-shadow-sm border-t-[0.5px]';
-  const textStyles = classNames('text-white/90', otherTextStyles);
-
-  // const headerColor =
-  //   color === 'pink'
-  //     ? 'bg-gradient-to-b from-pink-900 to-blue-950 border-t border-t-pink-600/40'
-  //     : color === 'green'
-  //     ? 'bg-gradient-to-b from-green-900 to-blue-950 border-t border-t-green-600/40 '
-  //     : color === 'purple'
-  //     ? 'bg-gradient-to-b from-purple-800 to-blue-950 border-t border-t-purple-600/40'
-  //     : color === 'orange'
-  //     ? 'bg-gradient-to-b from-orange-800 to-blue-950 border-t border-t-orange-600/40'
-  //     : color === 'teal'
-  //     ? 'bg-gradient-to-b from-teal-800 to-blue-950 border-t border-t-teal-600/40'
-  //     : '';
-
+function BenefitSection({ anchorLink, children }) {
   return (
     <section
       id={anchorLink}
       className={classNames(
-        // 'bg-gradient-to-b from-blue-600/10 to-blue-950 border-t border-t-blue-600/30',
         'py-36',
         'container border-t-[0.5px] border-t-blue-900',
       )}
