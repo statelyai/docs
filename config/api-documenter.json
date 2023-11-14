@@ -1,0 +1,10 @@
+{
+  "outputTarget": "markdown",
+
+  "plugins": [
+    {
+      "packageName": "../tools/xstate-api-documenter-docusaurus-plugin",
+      "enabledFeatureNames": ["docusaurus-markdown-documenter"]
+    }
+  ]
+}

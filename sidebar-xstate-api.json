@@ -1,0 +1,2957 @@
+[
+  {
+    "type": "doc",
+    "label": "(index)",
+    "id": "index"
+  },
+  {
+    "type": "doc",
+    "label": "__ResolvedTypesMetaFrom",
+    "id": "xstate.__resolvedtypesmetafrom"
+  },
+  {
+    "type": "doc",
+    "label": "Action",
+    "id": "xstate.action"
+  },
+  {
+    "type": "category",
+    "label": "ActionArgs",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actionargs"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "action",
+        "id": "xstate.actionargs.action"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "ActionFunction",
+    "id": "xstate.actionfunction"
+  },
+  {
+    "type": "doc",
+    "label": "ActionFunctionMap",
+    "id": "xstate.actionfunctionmap"
+  },
+  {
+    "type": "doc",
+    "label": "Actions",
+    "id": "xstate.actions"
+  },
+  {
+    "type": "category",
+    "label": "Actor",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actor"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_parent",
+        "id": "xstate.actor._parent"
+      },
+      {
+        "type": "doc",
+        "label": "[symbolObservable]",
+        "id": "xstate.actor._symbolobservable_"
+      },
+      {
+        "type": "doc",
+        "label": "(constructor)",
+        "id": "xstate.actor._constructor_"
+      },
+      {
+        "type": "doc",
+        "label": "cancel",
+        "id": "xstate.actor.cancel"
+      },
+      {
+        "type": "doc",
+        "label": "clock",
+        "id": "xstate.actor.clock"
+      },
+      {
+        "type": "doc",
+        "label": "delaySend",
+        "id": "xstate.actor.delaysend"
+      },
+      {
+        "type": "doc",
+        "label": "getPersistedState",
+        "id": "xstate.actor.getpersistedstate"
+      },
+      {
+        "type": "doc",
+        "label": "getSnapshot",
+        "id": "xstate.actor.getsnapshot"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.actor.id"
+      },
+      {
+        "type": "doc",
+        "label": "logic",
+        "id": "xstate.actor.logic"
+      },
+      {
+        "type": "doc",
+        "label": "options",
+        "id": "xstate.actor.options"
+      },
+      {
+        "type": "doc",
+        "label": "ref",
+        "id": "xstate.actor.ref"
+      },
+      {
+        "type": "doc",
+        "label": "send",
+        "id": "xstate.actor.send"
+      },
+      {
+        "type": "doc",
+        "label": "sessionId",
+        "id": "xstate.actor.sessionid"
+      },
+      {
+        "type": "doc",
+        "label": "src",
+        "id": "xstate.actor.src"
+      },
+      {
+        "type": "doc",
+        "label": "start",
+        "id": "xstate.actor.start"
+      },
+      {
+        "type": "doc",
+        "label": "status",
+        "id": "xstate.actor.status"
+      },
+      {
+        "type": "doc",
+        "label": "stop",
+        "id": "xstate.actor.stop"
+      },
+      {
+        "type": "doc",
+        "label": "subscribe",
+        "id": "xstate.actor.subscribe"
+      },
+      {
+        "type": "doc",
+        "label": "subscribe",
+        "id": "xstate.actor.subscribe_1"
+      },
+      {
+        "type": "doc",
+        "label": "system",
+        "id": "xstate.actor.system"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.actor.tojson"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ActorContext",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorcontext"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "defer",
+        "id": "xstate.actorcontext.defer"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.actorcontext.id"
+      },
+      {
+        "type": "doc",
+        "label": "logger",
+        "id": "xstate.actorcontext.logger"
+      },
+      {
+        "type": "doc",
+        "label": "self",
+        "id": "xstate.actorcontext.self"
+      },
+      {
+        "type": "doc",
+        "label": "sessionId",
+        "id": "xstate.actorcontext.sessionid"
+      },
+      {
+        "type": "doc",
+        "label": "stopChild",
+        "id": "xstate.actorcontext.stopchild"
+      },
+      {
+        "type": "doc",
+        "label": "system",
+        "id": "xstate.actorcontext.system"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ActorLike",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorlike"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "send",
+        "id": "xstate.actorlike.send"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ActorLogic",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorlogic"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "config",
+        "id": "xstate.actorlogic.config"
+      },
+      {
+        "type": "doc",
+        "label": "getInitialState",
+        "id": "xstate.actorlogic.getinitialstate"
+      },
+      {
+        "type": "doc",
+        "label": "getPersistedState",
+        "id": "xstate.actorlogic.getpersistedstate"
+      },
+      {
+        "type": "doc",
+        "label": "restoreState",
+        "id": "xstate.actorlogic.restorestate"
+      },
+      {
+        "type": "doc",
+        "label": "start",
+        "id": "xstate.actorlogic.start"
+      },
+      {
+        "type": "doc",
+        "label": "transition",
+        "id": "xstate.actorlogic.transition"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "ActorLogicFrom",
+    "id": "xstate.actorlogicfrom"
+  },
+  {
+    "type": "category",
+    "label": "ActorOptions",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actoroptions"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "clock",
+        "id": "xstate.actoroptions.clock"
+      },
+      {
+        "type": "doc",
+        "label": "devTools",
+        "id": "xstate.actoroptions.devtools"
+      },
+      {
+        "type": "doc",
+        "label": "execute",
+        "id": "xstate.actoroptions.execute"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.actoroptions.id"
+      },
+      {
+        "type": "doc",
+        "label": "input",
+        "id": "xstate.actoroptions.input"
+      },
+      {
+        "type": "doc",
+        "label": "inspect",
+        "id": "xstate.actoroptions.inspect"
+      },
+      {
+        "type": "doc",
+        "label": "logger",
+        "id": "xstate.actoroptions.logger"
+      },
+      {
+        "type": "doc",
+        "label": "parent",
+        "id": "xstate.actoroptions.parent"
+      },
+      {
+        "type": "doc",
+        "label": "src",
+        "id": "xstate.actoroptions.src"
+      },
+      {
+        "type": "doc",
+        "label": "state",
+        "id": "xstate.actoroptions.state"
+      },
+      {
+        "type": "doc",
+        "label": "sync",
+        "id": "xstate.actoroptions.sync"
+      },
+      {
+        "type": "doc",
+        "label": "systemId",
+        "id": "xstate.actoroptions.systemid"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ActorRef",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorref"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_parent",
+        "id": "xstate.actorref._parent"
+      },
+      {
+        "type": "doc",
+        "label": "getPersistedState",
+        "id": "xstate.actorref.getpersistedstate"
+      },
+      {
+        "type": "doc",
+        "label": "getSnapshot",
+        "id": "xstate.actorref.getsnapshot"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.actorref.id"
+      },
+      {
+        "type": "doc",
+        "label": "send",
+        "id": "xstate.actorref.send"
+      },
+      {
+        "type": "doc",
+        "label": "sessionId",
+        "id": "xstate.actorref.sessionid"
+      },
+      {
+        "type": "doc",
+        "label": "src",
+        "id": "xstate.actorref.src"
+      },
+      {
+        "type": "doc",
+        "label": "start",
+        "id": "xstate.actorref.start"
+      },
+      {
+        "type": "doc",
+        "label": "status",
+        "id": "xstate.actorref.status"
+      },
+      {
+        "type": "doc",
+        "label": "stop",
+        "id": "xstate.actorref.stop"
+      },
+      {
+        "type": "doc",
+        "label": "system",
+        "id": "xstate.actorref.system"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.actorref.tojson"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "ActorRefFrom",
+    "id": "xstate.actorreffrom"
+  },
+  {
+    "type": "doc",
+    "label": "ActorStatus",
+    "id": "xstate.actorstatus"
+  },
+  {
+    "type": "category",
+    "label": "ActorSystem",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorsystem"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "get",
+        "id": "xstate.actorsystem.get"
+      },
+      {
+        "type": "doc",
+        "label": "inspect",
+        "id": "xstate.actorsystem.inspect"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ActorSystemInfo",
+    "link": {
+      "type": "doc",
+      "id": "xstate.actorsysteminfo"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actors",
+        "id": "xstate.actorsysteminfo.actors"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "and",
+    "id": "xstate.and"
+  },
+  {
+    "type": "doc",
+    "label": "AnyActor",
+    "id": "xstate.anyactor"
+  },
+  {
+    "type": "doc",
+    "label": "AnyActorContext",
+    "id": "xstate.anyactorcontext"
+  },
+  {
+    "type": "doc",
+    "label": "AnyActorLogic",
+    "id": "xstate.anyactorlogic"
+  },
+  {
+    "type": "doc",
+    "label": "AnyActorRef",
+    "id": "xstate.anyactorref"
+  },
+  {
+    "type": "doc",
+    "label": "AnyActorSystem",
+    "id": "xstate.anyactorsystem"
+  },
+  {
+    "type": "doc",
+    "label": "AnyEventObject",
+    "id": "xstate.anyeventobject"
+  },
+  {
+    "type": "doc",
+    "label": "AnyFunction",
+    "id": "xstate.anyfunction"
+  },
+  {
+    "type": "doc",
+    "label": "AnyHistoryValue",
+    "id": "xstate.anyhistoryvalue"
+  },
+  {
+    "type": "doc",
+    "label": "AnyInterpreter",
+    "id": "xstate.anyinterpreter"
+  },
+  {
+    "type": "doc",
+    "label": "AnyInvokeConfig",
+    "id": "xstate.anyinvokeconfig"
+  },
+  {
+    "type": "doc",
+    "label": "AnyState",
+    "id": "xstate.anystate"
+  },
+  {
+    "type": "doc",
+    "label": "AnyStateConfig",
+    "id": "xstate.anystateconfig"
+  },
+  {
+    "type": "doc",
+    "label": "AnyStateMachine",
+    "id": "xstate.anystatemachine"
+  },
+  {
+    "type": "doc",
+    "label": "AnyStateNode",
+    "id": "xstate.anystatenode"
+  },
+  {
+    "type": "doc",
+    "label": "AnyStateNodeConfig",
+    "id": "xstate.anystatenodeconfig"
+  },
+  {
+    "type": "doc",
+    "label": "AnyStateNodeDefinition",
+    "id": "xstate.anystatenodedefinition"
+  },
+  {
+    "type": "doc",
+    "label": "AnyTransitionConfig",
+    "id": "xstate.anytransitionconfig"
+  },
+  {
+    "type": "doc",
+    "label": "AnyTransitionDefinition",
+    "id": "xstate.anytransitiondefinition"
+  },
+  {
+    "type": "doc",
+    "label": "AreAllImplementationsAssumedToBeProvided",
+    "id": "xstate.areallimplementationsassumedtobeprovided"
+  },
+  {
+    "type": "doc",
+    "label": "assign",
+    "id": "xstate.assign"
+  },
+  {
+    "type": "category",
+    "label": "AssignAction",
+    "link": {
+      "type": "doc",
+      "id": "xstate.assignaction"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_out_TActor",
+        "id": "xstate.assignaction._out_tactor"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "AssignArgs",
+    "link": {
+      "type": "doc",
+      "id": "xstate.assignargs"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "spawn",
+        "id": "xstate.assignargs.spawn"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "Assigner",
+    "id": "xstate.assigner"
+  },
+  {
+    "type": "category",
+    "label": "AtomicStateNodeConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.atomicstatenodeconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "initial",
+        "id": "xstate.atomicstatenodeconfig.initial"
+      },
+      {
+        "type": "doc",
+        "label": "onDone",
+        "id": "xstate.atomicstatenodeconfig.ondone"
+      },
+      {
+        "type": "doc",
+        "label": "parallel",
+        "id": "xstate.atomicstatenodeconfig.parallel"
+      },
+      {
+        "type": "doc",
+        "label": "states",
+        "id": "xstate.atomicstatenodeconfig.states"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "BaseActorRef",
+    "link": {
+      "type": "doc",
+      "id": "xstate.baseactorref"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "send",
+        "id": "xstate.baseactorref.send"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "CallbackActorLogic",
+    "id": "xstate.callbackactorlogic"
+  },
+  {
+    "type": "doc",
+    "label": "cancel",
+    "id": "xstate.cancel"
+  },
+  {
+    "type": "doc",
+    "label": "CancelAction",
+    "id": "xstate.cancelaction"
+  },
+  {
+    "type": "doc",
+    "label": "Cast",
+    "id": "xstate.cast"
+  },
+  {
+    "type": "doc",
+    "label": "choose",
+    "id": "xstate.choose"
+  },
+  {
+    "type": "category",
+    "label": "ChooseAction",
+    "link": {
+      "type": "doc",
+      "id": "xstate.chooseaction"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_out_TAction",
+        "id": "xstate.chooseaction._out_taction"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TActor",
+        "id": "xstate.chooseaction._out_tactor"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TDelay",
+        "id": "xstate.chooseaction._out_tdelay"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TGuard",
+        "id": "xstate.chooseaction._out_tguard"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ChooseBranch",
+    "link": {
+      "type": "doc",
+      "id": "xstate.choosebranch"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actions",
+        "id": "xstate.choosebranch.actions"
+      },
+      {
+        "type": "doc",
+        "label": "guard",
+        "id": "xstate.choosebranch.guard"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "Compute",
+    "id": "xstate.compute"
+  },
+  {
+    "type": "doc",
+    "label": "ContextFactory",
+    "id": "xstate.contextfactory"
+  },
+  {
+    "type": "doc",
+    "label": "ContextFrom",
+    "id": "xstate.contextfrom"
+  },
+  {
+    "type": "doc",
+    "label": "createActor",
+    "id": "xstate.createactor"
+  },
+  {
+    "type": "doc",
+    "label": "createActor",
+    "id": "xstate.createactor_1"
+  },
+  {
+    "type": "doc",
+    "label": "createEmptyActor",
+    "id": "xstate.createemptyactor"
+  },
+  {
+    "type": "doc",
+    "label": "createMachine",
+    "id": "xstate.createmachine"
+  },
+  {
+    "type": "doc",
+    "label": "DelayConfig",
+    "id": "xstate.delayconfig"
+  },
+  {
+    "type": "category",
+    "label": "DelayedTransitionDefinition",
+    "link": {
+      "type": "doc",
+      "id": "xstate.delayedtransitiondefinition"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "delay",
+        "id": "xstate.delayedtransitiondefinition.delay"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "DelayedTransitions",
+    "id": "xstate.delayedtransitions"
+  },
+  {
+    "type": "doc",
+    "label": "DelayExpr",
+    "id": "xstate.delayexpr"
+  },
+  {
+    "type": "doc",
+    "label": "DelayFunctionMap",
+    "id": "xstate.delayfunctionmap"
+  },
+  {
+    "type": "doc",
+    "label": "DevToolsAdapter",
+    "id": "xstate.devtoolsadapter"
+  },
+  {
+    "type": "category",
+    "label": "DoneActorEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.doneactorevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.doneactorevent.output"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.doneactorevent.type"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "DoneStateEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.donestateevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.donestateevent.output"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.donestateevent.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "Equals",
+    "id": "xstate.equals"
+  },
+  {
+    "type": "category",
+    "label": "ErrorActorEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.erroractorevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "data",
+        "id": "xstate.erroractorevent.data"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.erroractorevent.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "escalate",
+    "id": "xstate.escalate"
+  },
+  {
+    "type": "doc",
+    "label": "EventDescriptor",
+    "id": "xstate.eventdescriptor"
+  },
+  {
+    "type": "doc",
+    "label": "EventFrom",
+    "id": "xstate.eventfrom"
+  },
+  {
+    "type": "doc",
+    "label": "EventFromLogic",
+    "id": "xstate.eventfromlogic"
+  },
+  {
+    "type": "category",
+    "label": "EventObject",
+    "link": {
+      "type": "doc",
+      "id": "xstate.eventobject"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.eventobject.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "ExtractEvent",
+    "id": "xstate.extractevent"
+  },
+  {
+    "type": "doc",
+    "label": "forwardTo",
+    "id": "xstate.forwardto"
+  },
+  {
+    "type": "doc",
+    "label": "fromCallback",
+    "id": "xstate.fromcallback"
+  },
+  {
+    "type": "doc",
+    "label": "fromEventObservable",
+    "id": "xstate.fromeventobservable"
+  },
+  {
+    "type": "doc",
+    "label": "fromObservable",
+    "id": "xstate.fromobservable"
+  },
+  {
+    "type": "doc",
+    "label": "fromPromise",
+    "id": "xstate.frompromise"
+  },
+  {
+    "type": "doc",
+    "label": "fromTransition",
+    "id": "xstate.fromtransition"
+  },
+  {
+    "type": "doc",
+    "label": "getStateNodes",
+    "id": "xstate.getstatenodes"
+  },
+  {
+    "type": "category",
+    "label": "HistoryStateNode",
+    "link": {
+      "type": "doc",
+      "id": "xstate.historystatenode"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "history",
+        "id": "xstate.historystatenode.history"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.historystatenode.target"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "HistoryStateNodeConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.historystatenodeconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "history",
+        "id": "xstate.historystatenodeconfig.history"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.historystatenodeconfig.target"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "HistoryValue",
+    "id": "xstate.historyvalue"
+  },
+  {
+    "type": "doc",
+    "label": "HomomorphicOmit",
+    "id": "xstate.homomorphicomit"
+  },
+  {
+    "type": "doc",
+    "label": "HomomorphicPick",
+    "id": "xstate.homomorphicpick"
+  },
+  {
+    "type": "doc",
+    "label": "IndexByProp",
+    "id": "xstate.indexbyprop"
+  },
+  {
+    "type": "doc",
+    "label": "IndexByType",
+    "id": "xstate.indexbytype"
+  },
+  {
+    "type": "doc",
+    "label": "InferEvent",
+    "id": "xstate.inferevent"
+  },
+  {
+    "type": "category",
+    "label": "InitialTransitionConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.initialtransitionconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.initialtransitionconfig.target"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "InitialTransitionDefinition",
+    "link": {
+      "type": "doc",
+      "id": "xstate.initialtransitiondefinition"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "guard",
+        "id": "xstate.initialtransitiondefinition.guard"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.initialtransitiondefinition.target"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "InputFrom",
+    "id": "xstate.inputfrom"
+  },
+  {
+    "type": "category",
+    "label": "InspectedActorEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.inspectedactorevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actorRef",
+        "id": "xstate.inspectedactorevent.actorref"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.inspectedactorevent.type"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "InspectedEventEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.inspectedeventevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.inspectedeventevent.event"
+      },
+      {
+        "type": "doc",
+        "label": "sourceRef",
+        "id": "xstate.inspectedeventevent.sourceref"
+      },
+      {
+        "type": "doc",
+        "label": "targetRef",
+        "id": "xstate.inspectedeventevent.targetref"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.inspectedeventevent.type"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "InspectedSnapshotEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.inspectedsnapshotevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actorRef",
+        "id": "xstate.inspectedsnapshotevent.actorref"
+      },
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.inspectedsnapshotevent.event"
+      },
+      {
+        "type": "doc",
+        "label": "snapshot",
+        "id": "xstate.inspectedsnapshotevent.snapshot"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.inspectedsnapshotevent.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "InspectionEvent",
+    "id": "xstate.inspectionevent"
+  },
+  {
+    "type": "doc",
+    "label": "InternalMachineImplementations",
+    "id": "xstate.internalmachineimplementations"
+  },
+  {
+    "type": "category",
+    "label": "InteropObservable",
+    "link": {
+      "type": "doc",
+      "id": "xstate.interopobservable"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "[Symbol.observable]",
+        "id": "xstate.interopobservable._symbol.observable_"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "InteropSubscribable",
+    "link": {
+      "type": "doc",
+      "id": "xstate.interopsubscribable"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "subscribe",
+        "id": "xstate.interopsubscribable.subscribe"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "interpret",
+    "id": "xstate.interpret"
+  },
+  {
+    "type": "doc",
+    "label": "Interpreter",
+    "id": "xstate.interpreter"
+  },
+  {
+    "type": "doc",
+    "label": "InterpreterFrom",
+    "id": "xstate.interpreterfrom"
+  },
+  {
+    "type": "doc",
+    "label": "InterpreterStatus",
+    "id": "xstate.interpreterstatus"
+  },
+  {
+    "type": "doc",
+    "label": "InvokeConfig",
+    "id": "xstate.invokeconfig"
+  },
+  {
+    "type": "category",
+    "label": "InvokeDefinition",
+    "link": {
+      "type": "doc",
+      "id": "xstate.invokedefinition"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.invokedefinition.id"
+      },
+      {
+        "type": "doc",
+        "label": "input",
+        "id": "xstate.invokedefinition.input"
+      },
+      {
+        "type": "doc",
+        "label": "onDone",
+        "id": "xstate.invokedefinition.ondone"
+      },
+      {
+        "type": "doc",
+        "label": "onError",
+        "id": "xstate.invokedefinition.onerror"
+      },
+      {
+        "type": "doc",
+        "label": "onSnapshot",
+        "id": "xstate.invokedefinition.onsnapshot"
+      },
+      {
+        "type": "doc",
+        "label": "src",
+        "id": "xstate.invokedefinition.src"
+      },
+      {
+        "type": "doc",
+        "label": "systemId",
+        "id": "xstate.invokedefinition.systemid"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.invokedefinition.tojson"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "IsAny",
+    "id": "xstate.isany"
+  },
+  {
+    "type": "doc",
+    "label": "IsLiteralString",
+    "id": "xstate.isliteralstring"
+  },
+  {
+    "type": "doc",
+    "label": "IsNever",
+    "id": "xstate.isnever"
+  },
+  {
+    "type": "doc",
+    "label": "Lazy",
+    "id": "xstate.lazy"
+  },
+  {
+    "type": "doc",
+    "label": "log",
+    "id": "xstate.log"
+  },
+  {
+    "type": "doc",
+    "label": "LogAction",
+    "id": "xstate.logaction"
+  },
+  {
+    "type": "doc",
+    "label": "LogExpr",
+    "id": "xstate.logexpr"
+  },
+  {
+    "type": "doc",
+    "label": "LowInfer",
+    "id": "xstate.lowinfer"
+  },
+  {
+    "type": "doc",
+    "label": "MachineConfig",
+    "id": "xstate.machineconfig"
+  },
+  {
+    "type": "doc",
+    "label": "MachineContext",
+    "id": "xstate.machinecontext"
+  },
+  {
+    "type": "doc",
+    "label": "MachineImplementations",
+    "id": "xstate.machineimplementations"
+  },
+  {
+    "type": "doc",
+    "label": "MachineImplementationsFrom",
+    "id": "xstate.machineimplementationsfrom"
+  },
+  {
+    "type": "category",
+    "label": "MachineImplementationsSimplified",
+    "link": {
+      "type": "doc",
+      "id": "xstate.machineimplementationssimplified"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actions",
+        "id": "xstate.machineimplementationssimplified.actions"
+      },
+      {
+        "type": "doc",
+        "label": "actors",
+        "id": "xstate.machineimplementationssimplified.actors"
+      },
+      {
+        "type": "doc",
+        "label": "delays",
+        "id": "xstate.machineimplementationssimplified.delays"
+      },
+      {
+        "type": "doc",
+        "label": "guards",
+        "id": "xstate.machineimplementationssimplified.guards"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "MachineSnapshot",
+    "id": "xstate.machinesnapshot"
+  },
+  {
+    "type": "category",
+    "label": "MachineTypes",
+    "link": {
+      "type": "doc",
+      "id": "xstate.machinetypes"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actions",
+        "id": "xstate.machinetypes.actions"
+      },
+      {
+        "type": "doc",
+        "label": "actors",
+        "id": "xstate.machinetypes.actors"
+      },
+      {
+        "type": "doc",
+        "label": "context",
+        "id": "xstate.machinetypes.context"
+      },
+      {
+        "type": "doc",
+        "label": "delays",
+        "id": "xstate.machinetypes.delays"
+      },
+      {
+        "type": "doc",
+        "label": "events",
+        "id": "xstate.machinetypes.events"
+      },
+      {
+        "type": "doc",
+        "label": "guards",
+        "id": "xstate.machinetypes.guards"
+      },
+      {
+        "type": "doc",
+        "label": "input",
+        "id": "xstate.machinetypes.input"
+      },
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.machinetypes.output"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.machinetypes.tags"
+      },
+      {
+        "type": "doc",
+        "label": "typegen",
+        "id": "xstate.machinetypes.typegen"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "Mapper",
+    "id": "xstate.mapper"
+  },
+  {
+    "type": "doc",
+    "label": "mapState",
+    "id": "xstate.mapstate"
+  },
+  {
+    "type": "category",
+    "label": "MarkAllImplementationsAsProvided",
+    "link": {
+      "type": "doc",
+      "id": "xstate.markallimplementationsasprovided"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "\"@@xstate/typegen\"",
+        "id": "xstate.markallimplementationsasprovided.___xstate_typegen_"
+      },
+      {
+        "type": "doc",
+        "label": "resolved",
+        "id": "xstate.markallimplementationsasprovided.resolved"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "matchesState",
+    "id": "xstate.matchesstate"
+  },
+  {
+    "type": "doc",
+    "label": "MaybeLazy",
+    "id": "xstate.maybelazy"
+  },
+  {
+    "type": "doc",
+    "label": "Merge",
+    "id": "xstate.merge"
+  },
+  {
+    "type": "doc",
+    "label": "MetaObject",
+    "id": "xstate.metaobject"
+  },
+  {
+    "type": "doc",
+    "label": "MissingImplementationsError",
+    "id": "xstate.missingimplementationserror"
+  },
+  {
+    "type": "doc",
+    "label": "NoInfer",
+    "id": "xstate.noinfer"
+  },
+  {
+    "type": "doc",
+    "label": "NonReducibleUnknown",
+    "id": "xstate.nonreducibleunknown"
+  },
+  {
+    "type": "doc",
+    "label": "NoRequiredParams",
+    "id": "xstate.norequiredparams"
+  },
+  {
+    "type": "doc",
+    "label": "not",
+    "id": "xstate.not"
+  },
+  {
+    "type": "doc",
+    "label": "ObservableActorLogic",
+    "id": "xstate.observableactorlogic"
+  },
+  {
+    "type": "doc",
+    "label": "Observer",
+    "id": "xstate.observer"
+  },
+  {
+    "type": "doc",
+    "label": "or",
+    "id": "xstate.or"
+  },
+  {
+    "type": "doc",
+    "label": "OutputFrom",
+    "id": "xstate.outputfrom"
+  },
+  {
+    "type": "category",
+    "label": "ParameterizedObject",
+    "link": {
+      "type": "doc",
+      "id": "xstate.parameterizedobject"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "params",
+        "id": "xstate.parameterizedobject.params"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.parameterizedobject.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "PartialAssigner",
+    "id": "xstate.partialassigner"
+  },
+  {
+    "type": "doc",
+    "label": "pathToStateValue",
+    "id": "xstate.pathtostatevalue"
+  },
+  {
+    "type": "doc",
+    "label": "PersistedMachineState",
+    "id": "xstate.persistedmachinestate"
+  },
+  {
+    "type": "doc",
+    "label": "PersistedStateFrom",
+    "id": "xstate.persistedstatefrom"
+  },
+  {
+    "type": "doc",
+    "label": "PromiseActorLogic",
+    "id": "xstate.promiseactorlogic"
+  },
+  {
+    "type": "doc",
+    "label": "Prop",
+    "id": "xstate.prop"
+  },
+  {
+    "type": "doc",
+    "label": "PropertyAssigner",
+    "id": "xstate.propertyassigner"
+  },
+  {
+    "type": "category",
+    "label": "ProvidedActor",
+    "link": {
+      "type": "doc",
+      "id": "xstate.providedactor"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.providedactor.id"
+      },
+      {
+        "type": "doc",
+        "label": "logic",
+        "id": "xstate.providedactor.logic"
+      },
+      {
+        "type": "doc",
+        "label": "src",
+        "id": "xstate.providedactor.src"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "pure",
+    "id": "xstate.pure"
+  },
+  {
+    "type": "category",
+    "label": "PureAction",
+    "link": {
+      "type": "doc",
+      "id": "xstate.pureaction"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_out_TAction",
+        "id": "xstate.pureaction._out_taction"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TActor",
+        "id": "xstate.pureaction._out_tactor"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TDelay",
+        "id": "xstate.pureaction._out_tdelay"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TEvent",
+        "id": "xstate.pureaction._out_tevent"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TGuard",
+        "id": "xstate.pureaction._out_tguard"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "raise",
+    "id": "xstate.raise"
+  },
+  {
+    "type": "category",
+    "label": "RaiseAction",
+    "link": {
+      "type": "doc",
+      "id": "xstate.raiseaction"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_out_TDelay",
+        "id": "xstate.raiseaction._out_tdelay"
+      },
+      {
+        "type": "doc",
+        "label": "_out_TEvent",
+        "id": "xstate.raiseaction._out_tevent"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "RaiseActionOptions",
+    "link": {
+      "type": "doc",
+      "id": "xstate.raiseactionoptions"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "delay",
+        "id": "xstate.raiseactionoptions.delay"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.raiseactionoptions.id"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "RaiseActionParams",
+    "link": {
+      "type": "doc",
+      "id": "xstate.raiseactionparams"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.raiseactionparams.event"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ResolvedTypegenMeta",
+    "link": {
+      "type": "doc",
+      "id": "xstate.resolvedtypegenmeta"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "resolved",
+        "id": "xstate.resolvedtypegenmeta.resolved"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "ResolveTypegenMeta",
+    "link": {
+      "type": "doc",
+      "id": "xstate.resolvetypegenmeta"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "\"@@xstate/typegen\"",
+        "id": "xstate.resolvetypegenmeta.___xstate_typegen_"
+      },
+      {
+        "type": "doc",
+        "label": "resolved",
+        "id": "xstate.resolvetypegenmeta.resolved"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "SendExpr",
+    "id": "xstate.sendexpr"
+  },
+  {
+    "type": "doc",
+    "label": "sendParent",
+    "id": "xstate.sendparent"
+  },
+  {
+    "type": "doc",
+    "label": "sendTo",
+    "id": "xstate.sendto"
+  },
+  {
+    "type": "category",
+    "label": "SendToAction",
+    "link": {
+      "type": "doc",
+      "id": "xstate.sendtoaction"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_out_TDelay",
+        "id": "xstate.sendtoaction._out_tdelay"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "SendToActionOptions",
+    "id": "xstate.sendtoactionoptions"
+  },
+  {
+    "type": "category",
+    "label": "SendToActionParams",
+    "link": {
+      "type": "doc",
+      "id": "xstate.sendtoactionparams"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.sendtoactionparams.event"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "SimpleOrStateNodeConfig",
+    "id": "xstate.simpleorstatenodeconfig"
+  },
+  {
+    "type": "category",
+    "label": "SimulatedClock",
+    "link": {
+      "type": "doc",
+      "id": "xstate.simulatedclock"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "clearTimeout",
+        "id": "xstate.simulatedclock.cleartimeout"
+      },
+      {
+        "type": "doc",
+        "label": "now",
+        "id": "xstate.simulatedclock.now"
+      },
+      {
+        "type": "doc",
+        "label": "setTimeout",
+        "id": "xstate.simulatedclock.settimeout"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "SimulatedClock",
+    "link": {
+      "type": "doc",
+      "id": "xstate.simulatedclock"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "increment",
+        "id": "xstate.simulatedclock.increment"
+      },
+      {
+        "type": "doc",
+        "label": "set",
+        "id": "xstate.simulatedclock.set"
+      },
+      {
+        "type": "doc",
+        "label": "start",
+        "id": "xstate.simulatedclock.start"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "SingleOrArray",
+    "id": "xstate.singleorarray"
+  },
+  {
+    "type": "doc",
+    "label": "Snapshot",
+    "id": "xstate.snapshot"
+  },
+  {
+    "type": "category",
+    "label": "SnapshotEvent",
+    "link": {
+      "type": "doc",
+      "id": "xstate.snapshotevent"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "snapshot",
+        "id": "xstate.snapshotevent.snapshot"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.snapshotevent.type"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "SnapshotFrom",
+    "id": "xstate.snapshotfrom"
+  },
+  {
+    "type": "doc",
+    "label": "Spawner",
+    "id": "xstate.spawner"
+  },
+  {
+    "type": "doc",
+    "label": "SpecialTargets",
+    "id": "xstate.specialtargets"
+  },
+  {
+    "type": "category",
+    "label": "State",
+    "link": {
+      "type": "doc",
+      "id": "xstate.state"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "(constructor)",
+        "id": "xstate.state._constructor_"
+      },
+      {
+        "type": "doc",
+        "label": "can",
+        "id": "xstate.state.can"
+      },
+      {
+        "type": "doc",
+        "label": "children",
+        "id": "xstate.state.children"
+      },
+      {
+        "type": "doc",
+        "label": "configuration",
+        "id": "xstate.state.configuration"
+      },
+      {
+        "type": "doc",
+        "label": "context",
+        "id": "xstate.state.context"
+      },
+      {
+        "type": "doc",
+        "label": "error",
+        "id": "xstate.state.error"
+      },
+      {
+        "type": "doc",
+        "label": "from",
+        "id": "xstate.state.from"
+      },
+      {
+        "type": "doc",
+        "label": "hasTag",
+        "id": "xstate.state.hastag"
+      },
+      {
+        "type": "doc",
+        "label": "historyValue",
+        "id": "xstate.state.historyvalue"
+      },
+      {
+        "type": "doc",
+        "label": "machine",
+        "id": "xstate.state.machine"
+      },
+      {
+        "type": "doc",
+        "label": "matches",
+        "id": "xstate.state.matches"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.state.meta"
+      },
+      {
+        "type": "doc",
+        "label": "nextEvents",
+        "id": "xstate.state.nextevents"
+      },
+      {
+        "type": "doc",
+        "label": "status",
+        "id": "xstate.state.status"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.state.tags"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.state.tojson"
+      },
+      {
+        "type": "doc",
+        "label": "toStrings",
+        "id": "xstate.state.tostrings"
+      },
+      {
+        "type": "doc",
+        "label": "value",
+        "id": "xstate.state.value"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "StateConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.stateconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "children",
+        "id": "xstate.stateconfig.children"
+      },
+      {
+        "type": "doc",
+        "label": "configuration",
+        "id": "xstate.stateconfig.configuration"
+      },
+      {
+        "type": "doc",
+        "label": "context",
+        "id": "xstate.stateconfig.context"
+      },
+      {
+        "type": "doc",
+        "label": "error",
+        "id": "xstate.stateconfig.error"
+      },
+      {
+        "type": "doc",
+        "label": "historyValue",
+        "id": "xstate.stateconfig.historyvalue"
+      },
+      {
+        "type": "doc",
+        "label": "machine",
+        "id": "xstate.stateconfig.machine"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.stateconfig.meta"
+      },
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.stateconfig.output"
+      },
+      {
+        "type": "doc",
+        "label": "status",
+        "id": "xstate.stateconfig.status"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.stateconfig.tags"
+      },
+      {
+        "type": "doc",
+        "label": "value",
+        "id": "xstate.stateconfig.value"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "StateFrom",
+    "id": "xstate.statefrom"
+  },
+  {
+    "type": "doc",
+    "label": "stateIn",
+    "id": "xstate.statein"
+  },
+  {
+    "type": "doc",
+    "label": "StateKey",
+    "id": "xstate.statekey"
+  },
+  {
+    "type": "category",
+    "label": "StateLike",
+    "link": {
+      "type": "doc",
+      "id": "xstate.statelike"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "context",
+        "id": "xstate.statelike.context"
+      },
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.statelike.event"
+      },
+      {
+        "type": "doc",
+        "label": "value",
+        "id": "xstate.statelike.value"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "StateMachine",
+    "link": {
+      "type": "doc",
+      "id": "xstate.statemachine"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "__TAction",
+        "id": "xstate.statemachine.__taction"
+      },
+      {
+        "type": "doc",
+        "label": "__TActor",
+        "id": "xstate.statemachine.__tactor"
+      },
+      {
+        "type": "doc",
+        "label": "__TContext",
+        "id": "xstate.statemachine.__tcontext"
+      },
+      {
+        "type": "doc",
+        "label": "__TDelay",
+        "id": "xstate.statemachine.__tdelay"
+      },
+      {
+        "type": "doc",
+        "label": "__TEvent",
+        "id": "xstate.statemachine.__tevent"
+      },
+      {
+        "type": "doc",
+        "label": "__TGuard",
+        "id": "xstate.statemachine.__tguard"
+      },
+      {
+        "type": "doc",
+        "label": "__TInput",
+        "id": "xstate.statemachine.__tinput"
+      },
+      {
+        "type": "doc",
+        "label": "__TOutput",
+        "id": "xstate.statemachine.__toutput"
+      },
+      {
+        "type": "doc",
+        "label": "__TResolvedTypesMeta",
+        "id": "xstate.statemachine.__tresolvedtypesmeta"
+      },
+      {
+        "type": "doc",
+        "label": "__TTag",
+        "id": "xstate.statemachine.__ttag"
+      },
+      {
+        "type": "doc",
+        "label": "__xstatenode",
+        "id": "xstate.statemachine.__xstatenode"
+      },
+      {
+        "type": "doc",
+        "label": "(constructor)",
+        "id": "xstate.statemachine._constructor_"
+      },
+      {
+        "type": "doc",
+        "label": "config",
+        "id": "xstate.statemachine.config"
+      },
+      {
+        "type": "doc",
+        "label": "createState",
+        "id": "xstate.statemachine.createstate"
+      },
+      {
+        "type": "doc",
+        "label": "definition",
+        "id": "xstate.statemachine.definition"
+      },
+      {
+        "type": "doc",
+        "label": "events",
+        "id": "xstate.statemachine.events"
+      },
+      {
+        "type": "doc",
+        "label": "getInitialState",
+        "id": "xstate.statemachine.getinitialstate"
+      },
+      {
+        "type": "doc",
+        "label": "getPersistedState",
+        "id": "xstate.statemachine.getpersistedstate"
+      },
+      {
+        "type": "doc",
+        "label": "getStateNodeById",
+        "id": "xstate.statemachine.getstatenodebyid"
+      },
+      {
+        "type": "doc",
+        "label": "getTransitionData",
+        "id": "xstate.statemachine.gettransitiondata"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.statemachine.id"
+      },
+      {
+        "type": "doc",
+        "label": "idMap",
+        "id": "xstate.statemachine.idmap"
+      },
+      {
+        "type": "doc",
+        "label": "implementations",
+        "id": "xstate.statemachine.implementations"
+      },
+      {
+        "type": "doc",
+        "label": "microstep",
+        "id": "xstate.statemachine.microstep"
+      },
+      {
+        "type": "doc",
+        "label": "provide",
+        "id": "xstate.statemachine.provide"
+      },
+      {
+        "type": "doc",
+        "label": "resolveState",
+        "id": "xstate.statemachine.resolvestate"
+      },
+      {
+        "type": "doc",
+        "label": "resolveStateValue",
+        "id": "xstate.statemachine.resolvestatevalue"
+      },
+      {
+        "type": "doc",
+        "label": "restoreState",
+        "id": "xstate.statemachine.restorestate"
+      },
+      {
+        "type": "doc",
+        "label": "root",
+        "id": "xstate.statemachine.root"
+      },
+      {
+        "type": "doc",
+        "label": "start",
+        "id": "xstate.statemachine.start"
+      },
+      {
+        "type": "doc",
+        "label": "states",
+        "id": "xstate.statemachine.states"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.statemachine.tojson"
+      },
+      {
+        "type": "doc",
+        "label": "transition",
+        "id": "xstate.statemachine.transition"
+      },
+      {
+        "type": "doc",
+        "label": "types",
+        "id": "xstate.statemachine.types"
+      },
+      {
+        "type": "doc",
+        "label": "version",
+        "id": "xstate.statemachine.version"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "StateMachineDefinition",
+    "id": "xstate.statemachinedefinition"
+  },
+  {
+    "type": "category",
+    "label": "StateNode",
+    "link": {
+      "type": "doc",
+      "id": "xstate.statenode"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "_initialize",
+        "id": "xstate.statenode._initialize"
+      },
+      {
+        "type": "doc",
+        "label": "(constructor)",
+        "id": "xstate.statenode._constructor_"
+      },
+      {
+        "type": "doc",
+        "label": "after",
+        "id": "xstate.statenode.after"
+      },
+      {
+        "type": "doc",
+        "label": "always",
+        "id": "xstate.statenode.always"
+      },
+      {
+        "type": "doc",
+        "label": "config",
+        "id": "xstate.statenode.config"
+      },
+      {
+        "type": "doc",
+        "label": "definition",
+        "id": "xstate.statenode.definition"
+      },
+      {
+        "type": "doc",
+        "label": "description",
+        "id": "xstate.statenode.description"
+      },
+      {
+        "type": "doc",
+        "label": "entry",
+        "id": "xstate.statenode.entry"
+      },
+      {
+        "type": "doc",
+        "label": "events",
+        "id": "xstate.statenode.events"
+      },
+      {
+        "type": "doc",
+        "label": "exit",
+        "id": "xstate.statenode.exit"
+      },
+      {
+        "type": "doc",
+        "label": "history",
+        "id": "xstate.statenode.history"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.statenode.id"
+      },
+      {
+        "type": "doc",
+        "label": "initial",
+        "id": "xstate.statenode.initial"
+      },
+      {
+        "type": "doc",
+        "label": "invoke",
+        "id": "xstate.statenode.invoke"
+      },
+      {
+        "type": "doc",
+        "label": "key",
+        "id": "xstate.statenode.key"
+      },
+      {
+        "type": "doc",
+        "label": "machine",
+        "id": "xstate.statenode.machine"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.statenode.meta"
+      },
+      {
+        "type": "doc",
+        "label": "next",
+        "id": "xstate.statenode.next"
+      },
+      {
+        "type": "doc",
+        "label": "on",
+        "id": "xstate.statenode.on"
+      },
+      {
+        "type": "doc",
+        "label": "order",
+        "id": "xstate.statenode.order"
+      },
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.statenode.output"
+      },
+      {
+        "type": "doc",
+        "label": "ownEvents",
+        "id": "xstate.statenode.ownevents"
+      },
+      {
+        "type": "doc",
+        "label": "parent",
+        "id": "xstate.statenode.parent"
+      },
+      {
+        "type": "doc",
+        "label": "path",
+        "id": "xstate.statenode.path"
+      },
+      {
+        "type": "doc",
+        "label": "states",
+        "id": "xstate.statenode.states"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.statenode.tags"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.statenode.tojson"
+      },
+      {
+        "type": "doc",
+        "label": "transitions",
+        "id": "xstate.statenode.transitions"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.statenode.type"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "StateNodeConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.statenodeconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "after",
+        "id": "xstate.statenodeconfig.after"
+      },
+      {
+        "type": "doc",
+        "label": "always",
+        "id": "xstate.statenodeconfig.always"
+      },
+      {
+        "type": "doc",
+        "label": "description",
+        "id": "xstate.statenodeconfig.description"
+      },
+      {
+        "type": "doc",
+        "label": "entry",
+        "id": "xstate.statenodeconfig.entry"
+      },
+      {
+        "type": "doc",
+        "label": "exit",
+        "id": "xstate.statenodeconfig.exit"
+      },
+      {
+        "type": "doc",
+        "label": "history",
+        "id": "xstate.statenodeconfig.history"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.statenodeconfig.id"
+      },
+      {
+        "type": "doc",
+        "label": "initial",
+        "id": "xstate.statenodeconfig.initial"
+      },
+      {
+        "type": "doc",
+        "label": "invoke",
+        "id": "xstate.statenodeconfig.invoke"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.statenodeconfig.meta"
+      },
+      {
+        "type": "doc",
+        "label": "on",
+        "id": "xstate.statenodeconfig.on"
+      },
+      {
+        "type": "doc",
+        "label": "onDone",
+        "id": "xstate.statenodeconfig.ondone"
+      },
+      {
+        "type": "doc",
+        "label": "order",
+        "id": "xstate.statenodeconfig.order"
+      },
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.statenodeconfig.output"
+      },
+      {
+        "type": "doc",
+        "label": "states",
+        "id": "xstate.statenodeconfig.states"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.statenodeconfig.tags"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.statenodeconfig.target"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.statenodeconfig.type"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "StateNodeDefinition",
+    "link": {
+      "type": "doc",
+      "id": "xstate.statenodedefinition"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "description",
+        "id": "xstate.statenodedefinition.description"
+      },
+      {
+        "type": "doc",
+        "label": "entry",
+        "id": "xstate.statenodedefinition.entry"
+      },
+      {
+        "type": "doc",
+        "label": "exit",
+        "id": "xstate.statenodedefinition.exit"
+      },
+      {
+        "type": "doc",
+        "label": "history",
+        "id": "xstate.statenodedefinition.history"
+      },
+      {
+        "type": "doc",
+        "label": "id",
+        "id": "xstate.statenodedefinition.id"
+      },
+      {
+        "type": "doc",
+        "label": "initial",
+        "id": "xstate.statenodedefinition.initial"
+      },
+      {
+        "type": "doc",
+        "label": "invoke",
+        "id": "xstate.statenodedefinition.invoke"
+      },
+      {
+        "type": "doc",
+        "label": "key",
+        "id": "xstate.statenodedefinition.key"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.statenodedefinition.meta"
+      },
+      {
+        "type": "doc",
+        "label": "on",
+        "id": "xstate.statenodedefinition.on"
+      },
+      {
+        "type": "doc",
+        "label": "order",
+        "id": "xstate.statenodedefinition.order"
+      },
+      {
+        "type": "doc",
+        "label": "output",
+        "id": "xstate.statenodedefinition.output"
+      },
+      {
+        "type": "doc",
+        "label": "states",
+        "id": "xstate.statenodedefinition.states"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.statenodedefinition.tags"
+      },
+      {
+        "type": "doc",
+        "label": "transitions",
+        "id": "xstate.statenodedefinition.transitions"
+      },
+      {
+        "type": "doc",
+        "label": "type",
+        "id": "xstate.statenodedefinition.type"
+      },
+      {
+        "type": "doc",
+        "label": "version",
+        "id": "xstate.statenodedefinition.version"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "StateNodesConfig",
+    "id": "xstate.statenodesconfig"
+  },
+  {
+    "type": "doc",
+    "label": "StatesConfig",
+    "id": "xstate.statesconfig"
+  },
+  {
+    "type": "doc",
+    "label": "StatesDefinition",
+    "id": "xstate.statesdefinition"
+  },
+  {
+    "type": "doc",
+    "label": "StateTypes",
+    "id": "xstate.statetypes"
+  },
+  {
+    "type": "doc",
+    "label": "StateValue",
+    "id": "xstate.statevalue"
+  },
+  {
+    "type": "doc",
+    "label": "StateValueFrom",
+    "id": "xstate.statevaluefrom"
+  },
+  {
+    "type": "doc",
+    "label": "StateValueMap",
+    "id": "xstate.statevaluemap"
+  },
+  {
+    "type": "doc",
+    "label": "stop_2",
+    "id": "xstate.stop_2"
+  },
+  {
+    "type": "doc",
+    "label": "StopAction",
+    "id": "xstate.stopaction"
+  },
+  {
+    "type": "category",
+    "label": "Subscribable",
+    "link": {
+      "type": "doc",
+      "id": "xstate.subscribable"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "subscribe",
+        "id": "xstate.subscribable.subscribe"
+      },
+      {
+        "type": "doc",
+        "label": "subscribe",
+        "id": "xstate.subscribable.subscribe_1"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Subscription",
+    "link": {
+      "type": "doc",
+      "id": "xstate.subscription"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "unsubscribe",
+        "id": "xstate.subscription.unsubscribe"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "TagsFrom",
+    "id": "xstate.tagsfrom"
+  },
+  {
+    "type": "doc",
+    "label": "TODO",
+    "id": "xstate.todo"
+  },
+  {
+    "type": "doc",
+    "label": "toObserver",
+    "id": "xstate.toobserver"
+  },
+  {
+    "type": "doc",
+    "label": "TransitionActorLogic",
+    "id": "xstate.transitionactorlogic"
+  },
+  {
+    "type": "category",
+    "label": "TransitionConfig",
+    "link": {
+      "type": "doc",
+      "id": "xstate.transitionconfig"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actions",
+        "id": "xstate.transitionconfig.actions"
+      },
+      {
+        "type": "doc",
+        "label": "description",
+        "id": "xstate.transitionconfig.description"
+      },
+      {
+        "type": "doc",
+        "label": "guard",
+        "id": "xstate.transitionconfig.guard"
+      },
+      {
+        "type": "doc",
+        "label": "meta",
+        "id": "xstate.transitionconfig.meta"
+      },
+      {
+        "type": "doc",
+        "label": "reenter",
+        "id": "xstate.transitionconfig.reenter"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.transitionconfig.target"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "TransitionConfigOrTarget",
+    "id": "xstate.transitionconfigortarget"
+  },
+  {
+    "type": "doc",
+    "label": "TransitionConfigTarget",
+    "id": "xstate.transitionconfigtarget"
+  },
+  {
+    "type": "category",
+    "label": "TransitionDefinition",
+    "link": {
+      "type": "doc",
+      "id": "xstate.transitiondefinition"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "actions",
+        "id": "xstate.transitiondefinition.actions"
+      },
+      {
+        "type": "doc",
+        "label": "eventType",
+        "id": "xstate.transitiondefinition.eventtype"
+      },
+      {
+        "type": "doc",
+        "label": "guard",
+        "id": "xstate.transitiondefinition.guard"
+      },
+      {
+        "type": "doc",
+        "label": "reenter",
+        "id": "xstate.transitiondefinition.reenter"
+      },
+      {
+        "type": "doc",
+        "label": "source",
+        "id": "xstate.transitiondefinition.source"
+      },
+      {
+        "type": "doc",
+        "label": "target",
+        "id": "xstate.transitiondefinition.target"
+      },
+      {
+        "type": "doc",
+        "label": "toJSON",
+        "id": "xstate.transitiondefinition.tojson"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "TransitionDefinitionMap",
+    "id": "xstate.transitiondefinitionmap"
+  },
+  {
+    "type": "doc",
+    "label": "Transitions",
+    "id": "xstate.transitions"
+  },
+  {
+    "type": "doc",
+    "label": "TransitionsConfig",
+    "id": "xstate.transitionsconfig"
+  },
+  {
+    "type": "doc",
+    "label": "TransitionSnapshot",
+    "id": "xstate.transitionsnapshot"
+  },
+  {
+    "type": "doc",
+    "label": "TransitionTarget",
+    "id": "xstate.transitiontarget"
+  },
+  {
+    "type": "doc",
+    "label": "TypegenConstraint",
+    "id": "xstate.typegenconstraint"
+  },
+  {
+    "type": "category",
+    "label": "TypegenDisabled",
+    "link": {
+      "type": "doc",
+      "id": "xstate.typegendisabled"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "\"@@xstate/typegen\"",
+        "id": "xstate.typegendisabled.___xstate_typegen_"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "TypegenEnabled",
+    "link": {
+      "type": "doc",
+      "id": "xstate.typegenenabled"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "\"@@xstate/typegen\"",
+        "id": "xstate.typegenenabled.___xstate_typegen_"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "TypegenMeta",
+    "link": {
+      "type": "doc",
+      "id": "xstate.typegenmeta"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "eventsCausingActions",
+        "id": "xstate.typegenmeta.eventscausingactions"
+      },
+      {
+        "type": "doc",
+        "label": "eventsCausingActors",
+        "id": "xstate.typegenmeta.eventscausingactors"
+      },
+      {
+        "type": "doc",
+        "label": "eventsCausingDelays",
+        "id": "xstate.typegenmeta.eventscausingdelays"
+      },
+      {
+        "type": "doc",
+        "label": "eventsCausingGuards",
+        "id": "xstate.typegenmeta.eventscausingguards"
+      },
+      {
+        "type": "doc",
+        "label": "internalEvents",
+        "id": "xstate.typegenmeta.internalevents"
+      },
+      {
+        "type": "doc",
+        "label": "invokeSrcNameMap",
+        "id": "xstate.typegenmeta.invokesrcnamemap"
+      },
+      {
+        "type": "doc",
+        "label": "matchesStates",
+        "id": "xstate.typegenmeta.matchesstates"
+      },
+      {
+        "type": "doc",
+        "label": "missingImplementations",
+        "id": "xstate.typegenmeta.missingimplementations"
+      },
+      {
+        "type": "doc",
+        "label": "tags",
+        "id": "xstate.typegenmeta.tags"
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "UnifiedArg",
+    "link": {
+      "type": "doc",
+      "id": "xstate.unifiedarg"
+    },
+    "items": [
+      {
+        "type": "doc",
+        "label": "context",
+        "id": "xstate.unifiedarg.context"
+      },
+      {
+        "type": "doc",
+        "label": "event",
+        "id": "xstate.unifiedarg.event"
+      },
+      {
+        "type": "doc",
+        "label": "self",
+        "id": "xstate.unifiedarg.self"
+      },
+      {
+        "type": "doc",
+        "label": "system",
+        "id": "xstate.unifiedarg.system"
+      }
+    ]
+  },
+  {
+    "type": "doc",
+    "label": "UnknownAction",
+    "id": "xstate.unknownaction"
+  },
+  {
+    "type": "doc",
+    "label": "Values",
+    "id": "xstate.values"
+  },
+  {
+    "type": "doc",
+    "label": "waitFor",
+    "id": "xstate.waitfor"
+  },
+  {
+    "type": "doc",
+    "label": "WithDynamicParams",
+    "id": "xstate.withdynamicparams"
+  }
+]

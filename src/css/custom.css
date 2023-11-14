@@ -1940,3 +1940,23 @@ span.footer__link-item a:active {
   width: 1px;
   white-space: nowrap;
 }
+
+/* via https://github.com/facebook/docusaurus/issues/3930#issuecomment-1396833897  */
+html:not(.plugin-id-xstate-api) .dropdown:has(.docsVersionDropdown--xstate-api),
+html:not(.plugin-id-xstate-api) .docsVersionDropdown--xstate-api {
+  display: none;
+}
+/* TODO per-package overrides can go here */
+/*
+html:not(.plugin-id-xstate-react-api) .dropdown:has(.docsVersionDropdown--xstate-react-api),
+html:not(.plugin-id-xstate-react-api) .docsVersionDropdown--xstate-react-api {
+  display: none;
+}
+*/
+
+/* slightly less top margin for API Doc title */
+.plugin-id-xstate-api .theme-doc-markdown.markdown > h2 {
+  /* margin-top: 4.5rem; */
+  /* --ifm-h2-font-size: 1.5rem; */
+  margin-top: 1.5rem;
+}

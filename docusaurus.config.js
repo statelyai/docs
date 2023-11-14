@@ -138,6 +138,23 @@ const config = {
         },
       },
     ],
+
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'xstate-api',
+        path: 'api/xstate',
+        routeBasePath: 'api/xstate',
+        sidebarPath: require.resolve('./sidebar-xstate-api.js'),
+        breadcrumbs: true,
+        versions: {
+          current: {
+            label: 'xstate@5.0.0',
+            badge: true
+          }
+        }
+      },
+    ]
   ],
 
   themeConfig:
@@ -157,6 +174,7 @@ const config = {
             position: 'right',
           },
           { to: '/docs', label: 'Docs', position: 'right' },
+          { to: '/api/xstate', label: 'API', position: 'right' },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
@@ -178,6 +196,8 @@ const config = {
           { to: 'blog', label: 'Blog', position: 'right' },
           {
             type: 'docsVersionDropdown',
+            docsPluginId: 'xstate-api',
+            className: 'docsVersionDropdown--xstate-api',
             position: 'right',
           },
           {

@@ -18,7 +18,7 @@ const sidebars = {
 
   // But you can create a sidebar manually
 
-  tutorialSidebar: [
+  docs: [
     {
       type: 'doc',
       label: 'About Stately and XState',
@@ -364,7 +364,7 @@ const sidebars = {
       label: 'Glossary',
       id: 'glossary',
     },
-  ],
+  ]
 };
 
 module.exports = sidebars;
