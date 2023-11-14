@@ -1,5 +1,5 @@
 ---
-title: 'Introducking Stately Sky'
+title: 'Introducing Stately Sky'
 description: Announcing Stately Sky, the new way to run your state machines in the cloud.
 authors: [gavin]
 tags: [new, sky, serverless, cloud, run, machines, state, stately]
@@ -12,24 +12,22 @@ The Stately team is very excited to announce a new feature we’ve been working 
 
 <!--truncate-->
 
-
 ## Why Sky: a seamless developer experience without the lock-in(Working title)
 
 ### Developer Experience
 
-We know that state machines are extremely powerful for defining app logic, and Sky supercharges the Studio by allowing developers to ***build and deploy*** workflows to the edge, all defined as state machines! Typically, when we think of building workflows or long running processes, we typically think of 2 possible paths: 
+We know that state machines are extremely powerful for defining app logic, and Sky supercharges the Studio by allowing developers to **_build and deploy_** workflows to the edge, all defined as state machines! Typically, when we think of building workflows or long running processes, we typically think of 2 possible paths:
 
 - coding against large cloud services with cumbersome development environments, tons of boilerplate, and painful deployment processes.
 - relying on low-code or no-code platforms that tend to be inflexible and require vendor lock-in
 
-Sky aims to remove the barriers on both ends of the spectrum. We’ve always allowed developers to export their diagrams in the Studio as code, as JSON, and [more recently, as stories](https://stately.ai/docs/export-as-code#export-formats). There is no vendor lock-in from the Studio. Additionally, deploying workflows couldn’t be easier. Once the user has built and tested their machines in the Studio, they need only to generate an API key and click deploy. 
+Sky aims to remove the barriers on both ends of the spectrum. We’ve always allowed developers to export their diagrams in the Studio as code, as JSON, and [more recently, as stories](https://stately.ai/docs/export-as-code#export-formats). There is no vendor lock-in from the Studio. Additionally, deploying workflows couldn’t be easier. Once the user has built and tested their machines in the Studio, they need only to generate an API key and click deploy.
 
 ![GIF demonstrating flow generation process](./generateFlow.gif)
 
 After that, developers can interact with their “live actor” in the same way they’ve been able to work with other XState machines. There is an SDK for Sky-based actors, but the syntax is virtually the same, save for the initial connection and configuration:
 
 ```tsx
-
 const actor = actorFromStately(
   {
     url: 'url of the running actor',
@@ -37,14 +35,13 @@ const actor = actorFromStately(
   },
   skyConfig, //provided after initializing sky in your local dev environment
 );
-
 ```
 
 The snippet above is all that’s needed in code to connect an application to the live running actor in Stately Sky. For details on all the configuration steps, check out the “[Getting Started](https://stately.ai/docs/stately-sky-getting-started)” guide that walks through the full setup.
 
 ### Multiplayer: batteries included
 
-Sky removes the complexity of spinning up a running web server in a cloud platform or hosting it on premise. Thanks to [PartyKit](https://docs.partykit.io/), real-time communication and multiplayer come built-in for the developer. Users don’t have to concern themselves with wrangling and scaling concurrent live connections in Sky. If a client needs to interact with a live actor, they need only the `sessionId` and the rest is handled for them. Both Sky and PartyKit are built using CloudFlare, allowing us to scale with the needs of the user. 
+Sky removes the complexity of spinning up a running web server in a cloud platform or hosting it on premise. Thanks to [PartyKit](https://docs.partykit.io/), real-time communication and multiplayer come built-in for the developer. Users don’t have to concern themselves with wrangling and scaling concurrent live connections in Sky. If a client needs to interact with a live actor, they need only the `sessionId` and the rest is handled for them. Both Sky and PartyKit are built using CloudFlare, allowing us to scale with the needs of the user.
 
 ## What can you do with Sky?
 
@@ -52,7 +49,7 @@ Since Sky actors are built using the same tools, the good news is that everythin
 
 ### Use Cases
 
-There are several instances where users would benefit from a live actor, particularly one that can accept requests from multiple sources. Running state machines as actors in Sky gives developers the readability of statecharts with the durability and fault tolerance of cloud compute. For example, long-running workflows where time is a serious constraint can be easily implemented and maintained within Sky. Workflows like: 
+There are several instances where users would benefit from a live actor, particularly one that can accept requests from multiple sources. Running state machines as actors in Sky gives developers the readability of statecharts with the durability and fault tolerance of cloud compute. For example, long-running workflows where time is a serious constraint can be easily implemented and maintained within Sky. Workflows like:
 
 - Multiplayer-collaboration sessions, like whiteboarding, document editing, and gaming.
 - Asynchronous workflows, like fetching large amounts of data in the background
@@ -62,11 +59,11 @@ There are several instances where users would benefit from a live actor, particu
 
 ![Component diagram image](./componentDiagram.png)
 
-Sky makes use of Cloudflare and PartyKit to handle the webserver lifecycle, orchestration, and compute. All those details are abstracted away from the user. Sky’s role is to consume user-defined statecharts and publish them as live actors. So, whenever it is time to interact with that live actor, the user would do so with the Sky SDK. That component is the “tie-in” between the live actor and the rest of the user application. The Sky SDK exposes the live actor to receive events no different from a standard XState actor. 
+Sky makes use of Cloudflare and PartyKit to handle the webserver lifecycle, orchestration, and compute. All those details are abstracted away from the user. Sky’s role is to consume user-defined statecharts and publish them as live actors. So, whenever it is time to interact with that live actor, the user would do so with the Sky SDK. That component is the “tie-in” between the live actor and the rest of the user application. The Sky SDK exposes the live actor to receive events no different from a standard XState actor.
 
 ### See it in action
 
-Our very own Laura Kalbag whipped up an interactive collaborative sleep demo built with Sky.[ Check it out here](https://laurakalbag.github.io/collaborative-sleep-sky/), and be sure to open multiple tabs to simulate different users! 
+Our very own Laura Kalbag built an interactive collaborative sleep demo built with Sky.[ Check it out here](https://laurakalbag.github.io/collaborative-sleep-sky/), and be sure to open multiple tabs to simulate different users!
 
 ### Resources
 
