@@ -6,7 +6,6 @@ import { Testimonials } from '../components/landing/Testimonials';
 import { Footer } from '../components/landing/Footer';
 import { Benefits } from '../components/landing/Benefits';
 import { FinalCallToAction } from '../components/landing/FinalCallToAction';
-import { AIAssistance } from '../components/landing/AIAssistance';
 import '../css/landing-styles.css';
 
 export default function Index() {
@@ -17,7 +16,6 @@ export default function Index() {
       </header>
       <main className="bg-blue-950">
         <Intro />
-        <AIAssistance />
         <Benefits />
         <Testimonials />
         <FinalCallToAction />

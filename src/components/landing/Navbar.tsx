@@ -97,7 +97,19 @@ export function Navbar() {
                         className="w-[18px] h-[18px]"
                       />
                     </a>
-                    Github
+                    <a
+                      href="https://github.com/statelyai/xstate"
+                      className={classNames(
+                        linkStyles,
+                        'self-center opacity-60 hover:opacity-100 cursor-pointer',
+                      )}
+                      target="_blank"
+                    >
+                      <img
+                        src="/landing/github-white.svg"
+                        className="w-[18px] h-[18px]"
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
