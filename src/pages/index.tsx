@@ -48,12 +48,23 @@ export default function Index() {
           content="Stately helps your whole team understand and collaborate on your logic through our visualizer, visual editor and XState."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/assets/stately-landing-page.png" />
-        <link rel="icon" href="/landing-page/favicon.ico" sizes="any" />
-        <link rel="icon" href="/landing-page/icon.svg" type="image/svg+xml" />
+        <meta
+          property="og:image"
+          content="https://stately.ai/assets/stately-landing-page.png"
+        />
+        <link
+          rel="icon"
+          href="https://stately.ai/landing-page/favicon.ico"
+          sizes="any"
+        />
+        <link
+          rel="icon"
+          href="https://stately.ai/landing-page/icon.svg"
+          type="image/svg+xml"
+        />
         <link
           rel="apple-touch-icon"
-          href="/landing-page/apple-touch-icon.png"
+          href="https://stately.ai/landing-page/apple-touch-icon.png"
         />
         <link rel="manifest" href="./landing-page/manifest.webmanifest" />
         <script
