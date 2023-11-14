@@ -185,7 +185,7 @@ function XStateSection() {
             </ButtonLink>
           </Feature>
         </div>
-        <img alt="TODO" src="/landing/DELETE-2.png" className="w-full h-auto mt-12" />
+        <img alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension." src="/landing/vscode-split.png" className="w-full h-auto mt-12" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full pt-36 justify-center">
           <Feature box>
             <div className="flex">
