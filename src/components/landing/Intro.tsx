@@ -40,21 +40,21 @@ function ExampleRow() {
   return (
     <ul className="flex max-w-full flex-wrap gap-2 mt-20 m-auto justify-center select-none">
       <li className={exampleBox}>Workflows</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
       <li className={exampleBox}>Chatbots</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
 
       <li className={exampleBox}>Multistep forms</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
 
       <li className={exampleBox}>Onboarding</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
 
       <li className={exampleBox}>Games</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
 
       <li className={exampleBox}>Complex logic</li>
-      <hr className={line} />
+      <li className={line} role="none"></li>
 
       <li className={exampleBox}>
         <span className="dot1">.</span>
