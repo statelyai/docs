@@ -55,7 +55,7 @@ There are several instances where users would benefit from a live actor, particu
 
 ### How does it work?
 
-![Component diagram image](./componentDiagram.png)
+![Diagram showing Stately Sky at the top, which communicates with the Sky SDK inside the user app. Stately Sky also communicates with PartyKit’s state orchestator which in turn talks to the PartyKit Scheduler for delayed transitions and to “machineHub”, which is built on Cloudflare Workers for platforms for stateless compute.](./componentDiagram.png)
 
 Sky makes use of Cloudflare and PartyKit to handle the webserver lifecycle, orchestration, and compute. All those details are abstracted away from the user. Sky’s role is to consume user-defined statecharts and publish them as live actors. So, whenever it is time to interact with that live actor, the user would do so with the Sky SDK. That component is the “tie-in” between the live actor and the rest of the user application. The Sky SDK exposes the live actor to receive events no different from a standard XState actor.
 
