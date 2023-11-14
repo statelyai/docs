@@ -489,7 +489,7 @@ function FeatureLeftImage({ children, imgSrc = '/landing/DELETE-1.png', imgAlt =
       <img
         alt={imgAlt}
         src={imgSrc}
-        className="max-w-2xl rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
+        className="max-w-2xl rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
       />
       <p className="text-white/60 text-xl leading-normal pt-12 flex-1">
         {children}
@@ -507,7 +507,7 @@ function FeatureRightImage({ children, imgSrc = '/landing/DELETE-1.png', imgAlt 
       <img
         alt={imgAlt}
         src={imgSrc}
-        className="max-w-2xl rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
+        className="max-w-2xl rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
       />
     </div>
   );
@@ -553,7 +553,7 @@ function Feature({
         <img
           alt={imgAlt}
           src={imgSrc}
-          className="rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full mt-8"
+          className="rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full mt-8"
         />
       )}
     </div>
