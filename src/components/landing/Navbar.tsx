@@ -35,7 +35,7 @@ export function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <a href="https://wwww.stately.ai">
+                  <a href="/">
                     <img
                       className="h-8 w-auto"
                       src="/landing/stately-logo.svg"
