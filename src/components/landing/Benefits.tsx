@@ -102,7 +102,7 @@ function DesignSection() {
                       write code.
                     </FeatureText>
                   </div>
-                  <img src="/landing/DELETE-1.png" className="h-96 w-full" />
+                  <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
                 </div>
               </Feature>
             </div>
@@ -126,6 +126,7 @@ function XStateSection() {
         <div className="grid lg:grid-cols-3 mt-24">
           <Feature>
             <img
+              alt="XState"
               src="/landing/xstate-white.svg"
               className="h-8 self-start mb-4 opacity-60"
             />
@@ -156,6 +157,7 @@ function XStateSection() {
           <Feature>
             <div className="flex gap-4">
               <img
+              alt="TypeScript, React, Vue"
                 src="/landing/platform-logos.svg"
                 className="h-[30px] self-start mb-4 opacity-60"
               />
@@ -170,6 +172,7 @@ function XStateSection() {
           </Feature>
           <Feature>
             <img
+              alt=""
               src="/landing/network-white.svg"
               className="h-[38px] self-start mb-2 opacity-60"
             />
@@ -186,7 +189,7 @@ function XStateSection() {
             <ButtonLink size="small">Learn more about statecharts</ButtonLink>
           </Feature>
         </div>
-        <img src="/landing/DELETE-2.png" className="w-full h-96 mt-12" />
+        <img alt="TODO" src="/landing/DELETE-2.png" className="w-full h-96 mt-12" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full pt-36 justify-center">
           <Feature box>
             <div className="flex">
@@ -232,7 +235,7 @@ function XStateSection() {
                     extend the scaffolding with your vision.
                   </FeatureText>
                 </div>
-                <img src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
               </div>
             </Feature>
           </div>
@@ -240,7 +243,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box>
               <div className="grid grid-cols-2 gap-12">
-                <img src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
                 <div className="pt-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
@@ -262,6 +265,7 @@ function XStateSection() {
             </FeatureText>
 
             <img
+              alt="GitHub"
               src="/landing/github-white.svg"
               className="h-[24px] self-start"
             />
@@ -332,7 +336,7 @@ function SourceOfTruthSection() {
                     further information.
                   </FeatureText>
                 </div>
-                <img src="/landing/DELETE-1.png" className="h-96 w-full" />
+                <img alt="TODO" src="/landing/DELETE-1.png" className="h-96 w-full" />
               </div>
             </Feature>
           </div>
@@ -381,7 +385,7 @@ function SkySection() {
           </div>
         </div>
 
-        <img src="/landing/DELETE-2.png" className="h-120 w-full mt-32" />
+        <img alt="TODO" src="/landing/DELETE-2.png" className="h-120 w-full mt-32" />
 
         <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
@@ -517,10 +521,11 @@ function StrongLink({ children, href = 'https://www.stately.ai/docs' }) {
   );
 }
 
-function FeatureLeftImage({ children, imgSrc = '/landing/DELETE-1.png' }) {
+function FeatureLeftImage({ children, imgSrc = '/landing/DELETE-1.png', imgAlt = 'TODO' }) {
   return (
     <div className="grid grid-col-2-leftfr rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
       <img
+        alt={imgAlt}
         src={imgSrc}
         className="max-w-2xl rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
       />
@@ -531,13 +536,14 @@ function FeatureLeftImage({ children, imgSrc = '/landing/DELETE-1.png' }) {
   );
 }
 
-function FeatureRightImage({ children, imgSrc = '/landing/DELETE-1.png' }) {
+function FeatureRightImage({ children, imgSrc = '/landing/DELETE-1.png', imgAlt = 'TODO' }) {
   return (
     <div className="flex h-fit w-fit max-w-6xl rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
       <p className="text-white/60 text-xl leading-normal pt-12 flex-1">
         {children}
       </p>
       <img
+        alt={imgAlt}
         src={imgSrc}
         className="max-w-2xl rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full"
       />
@@ -552,7 +558,7 @@ function FeatureBox({ children }) {
     </div>
   );
 }
-function FeatureText({ children, imgSrc = '/landing/DELETE-1.png' }) {
+function FeatureText({ children, imgSrc = '/landing/DELETE-1.png', imgAlt = 'TODO' }) {
   return <p className="text-white/60 text-xl leading-normal">{children}</p>;
 }
 
@@ -561,11 +567,13 @@ function Feature({
   comingSoon,
   box,
   imgSrc,
+  imgAlt,
 }: {
   children: ReactNode;
   comingSoon?: boolean;
   box?: boolean;
   imgSrc?: string;
+  imgAlt?: string;
 }) {
   const boxStyles = box
     ? 'bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl'
@@ -581,6 +589,7 @@ function Feature({
       {comingSoon && <ComingSoon />}
       {imgSrc && (
         <img
+          alt={imgAlt}
           src={imgSrc}
           className="rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-56 w-full mt-8"
         />

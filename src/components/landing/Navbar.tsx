@@ -67,6 +67,7 @@ export function Navbar() {
                       target="_blank"
                     >
                       <img
+                        alt="Discord"
                         src="/landing/discord-mark-white.svg"
                         className="w-[18px] h-[18px]"
                       />
@@ -80,6 +81,7 @@ export function Navbar() {
                       target="_blank"
                     >
                       <img
+                        alt="Twitter"
                         src="/landing/twitter-white.svg"
                         className="w-[18px] h-[18px]"
                       />
@@ -93,6 +95,7 @@ export function Navbar() {
                       target="_blank"
                     >
                       <img
+                        alt="YouTube"
                         src="/landing/youtube-white.svg"
                         className="w-[18px] h-[18px]"
                       />
@@ -106,6 +109,7 @@ export function Navbar() {
                       target="_blank"
                     >
                       <img
+                        alt="GitHub"
                         src="/landing/github-white.svg"
                         className="w-[18px] h-[18px]"
                       />

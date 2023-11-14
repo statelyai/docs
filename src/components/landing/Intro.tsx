@@ -20,6 +20,7 @@ export function Intro() {
 
         <div className="shadow-md rounded-md w-full">
           <img
+            alt="TODO"
             src="/landing/example-default.png"
             className="w-full my-24 rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850"
           />
@@ -86,19 +87,19 @@ function CallToActionButtons() {
 function Companies() {
   return (
     <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16">
-      <Company src="/landing-page/assets/aws.svg" />
-      <Company src="/landing-page/assets/ted.svg" />
-      <Company src="/landing-page/assets/netflix.svg" />
-      <Company src="/landing-page/assets/lyft.svg" />
-      <Company src="/landing-page/assets/microsoft.svg" />
-      <Company src="/landing-page/assets/epic-games.svg" />
-      <Company src="/landing-page/assets/cisco.svg" />
+      <Company src="/landing-page/assets/aws.svg" alt="AWS" />
+      <Company src="/landing-page/assets/ted.svg" alt="TED" />
+      <Company src="/landing-page/assets/netflix.svg" alt="Netflix" />
+      <Company src="/landing-page/assets/lyft.svg" alt="Lyft" />
+      <Company src="/landing-page/assets/microsoft.svg" alt="Microsoft" />
+      <Company src="/landing-page/assets/epic-games.svg" alt="Epic Games" />
+      <Company src="/landing-page/assets/cisco.svg" alt="Cisco" />
     </div>
   );
 }
 
-function Company({ src }) {
-  return <img src={src} className="h-16 opacity-50" />;
+function Company({ src, alt }) {
+  return <img src={src} alt={alt} className="h-16 opacity-50" />;
 }
 
 // function PromoVideo() {
