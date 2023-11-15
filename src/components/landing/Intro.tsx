@@ -20,8 +20,10 @@ export function Intro() {
 
         <div className="shadow-md rounded-md w-full">
           <img
-            alt="TODO"
-            src="/landing/example-default.png"
+            alt="This state machine is called Accumulate room readings. Its purpose is to get temperature and humidity readings from IoT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. When a temperature event is logged, the state machine updates the temperature value. Similarly, when a humidity event is logged, it updates the humidity value. After one hour, the state machine transitions to the GenerateReport state. In this state, it invokes a service called produceReport to generate the report. Once the report is generated, the state machine transitions back to the ConsumeReadings state to continue accumulating readings."
+            src="/landing/room-readings.png"
+            height="706"
+            width="1248"
             className="w-full my-24 rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850"
           />
         </div>
@@ -76,19 +78,19 @@ function CallToActionButtons() {
 function Companies() {
   return (
     <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16">
-      <Company src="/landing-page/assets/aws.svg" alt="AWS" />
-      <Company src="/landing-page/assets/ted.svg" alt="TED" />
-      <Company src="/landing-page/assets/netflix.svg" alt="Netflix" />
-      <Company src="/landing-page/assets/lyft.svg" alt="Lyft" />
-      <Company src="/landing-page/assets/microsoft.svg" alt="Microsoft" />
-      <Company src="/landing-page/assets/epic-games.svg" alt="Epic Games" />
-      <Company src="/landing-page/assets/cisco.svg" alt="Cisco" />
+      <Company src="/landing-page/assets/aws.svg" alt="AWS" height="64" width="65" />
+      <Company src="/landing-page/assets/ted.svg" alt="TED" height="64" width="80" />
+      <Company src="/landing-page/assets/netflix.svg" alt="Netflix" height="64" width="122" />
+      <Company src="/landing-page/assets/lyft.svg" alt="Lyft" height="64" width="58" />
+      <Company src="/landing-page/assets/microsoft.svg" alt="Microsoft" height="64" width="154" />
+      <Company src="/landing-page/assets/epic-games.svg" alt="Epic Games" height="64" width="45" />
+      <Company src="/landing-page/assets/cisco.svg" alt="Cisco" height="64" width="74" />
     </div>
   );
 }
 
-function Company({ src, alt }) {
-  return <img src={src} alt={alt} className="h-16 opacity-50" />;
+function Company({ src, alt, height, width }) {
+  return <img src={src} alt={alt} height={height} width={width} className="h-16 opacity-50" />;
 }
 
 // function PromoVideo() {
