@@ -6,13 +6,13 @@ export function Intro() {
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
         <h1 className="text-5xl md:text-6xl lg:text-6xl font-semibold text-white/90 drop-shadow-sm tracking-tighter leading-tight text-center">
-          Your intelligent assistant for robust logic
+          Your intelligent assistant for robust logic.
         </h1>
         <ExampleRow />
 
         <div className="flex flex-col w-full items-center">
           <h2 className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
-            Build and deploy workflows and app logic with AI enhanced,
+            Build and deploy workflows and app logic with AI-enhanced,
             collaborative tools
           </h2>
           <CallToActionButtons />

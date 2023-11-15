@@ -35,7 +35,7 @@ function DesignSection() {
         <>
           <SectionTitle>
             <span className="text-pink-500">Design how it works</span> with a
-            visual language for everyone on the team (even AI 🤖)
+            visual language for everyone on the team (even AI 🤖).
           </SectionTitle>
           <div className="grid grid-cols-1 lg:grid-cols-2  pt-16 gap-12">
             <div className="max-w-lg flex">
@@ -53,7 +53,7 @@ function DesignSection() {
                 <SparklesIcon size="32" />
               </div>
               <FeatureText>
-                AIs love helping at each phase with state machines to guide
+                AI’s love helping at each phase with state machines to guide
                 them, while humans use the visual editor to audit and enhance
                 their work.
               </FeatureText>
@@ -79,8 +79,8 @@ function DesignSection() {
             </div>
             <Feature box>
               <FeatureText>
-                <Strong>Get feedback</Strong> from your team and your clients on
-                how everything is supposed to work.
+                <Strong>Get feedback</Strong> from your team and clients on how
+                everything is supposed to work.
               </FeatureText>
             </Feature>
 
@@ -401,9 +401,9 @@ function SkySection() {
             <Feature box>
               <div className="max-w-3xl m-auto pt-4">
                 <FeatureText>
-                  Combine the expressivity and readability of statecharts with
-                  the durability and fault tolerance of cloud compute by running
-                  state machines as actors in Sky.
+                  Combine the expressiveness and readability of statecharts with
+                  the durability and fault tolerance of cloud computing by
+                  running state machines as actors in Sky.
                 </FeatureText>
               </div>
 
@@ -412,8 +412,9 @@ function SkySection() {
                   <PartyPopperIcon className="text-purple-300 mb-4 mt-1" />
                   <div className="flex-1">
                     <FeatureText>
-                      <Strong>Multiplayer collaboration</Strong> like
-                      whiteboarding, document editing, and gaming.
+                      <Strong>Multiplayer collaboration</Strong> which can be
+                      useful for whiteboarding, document editing, gaming or many
+                      other types of apps.
                     </FeatureText>
                   </div>
                 </div>
@@ -422,7 +423,7 @@ function SkySection() {
                   <div className="flex-1">
                     <FeatureText>
                       <Strong>Asynchronous workflows</Strong> like fetching
-                      large amounts of data in the background
+                      large amounts of data in the background.
                     </FeatureText>
                   </div>
                 </div>
@@ -431,7 +432,7 @@ function SkySection() {
                   <div className="flex-1">
                     <FeatureText>
                       <Strong>Long-running backend processes</Strong> like
-                      medical patient onboarding flows or inventory management
+                      medical patient onboarding flows or inventory management.
                     </FeatureText>
                   </div>
                 </div>
