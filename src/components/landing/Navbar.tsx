@@ -39,6 +39,8 @@ export function Navbar() {
                     <img
                       className="h-8 w-auto"
                       src="/landing/stately-logo.svg"
+                      height="32"
+                      width="115"
                       alt="Stately"
                     />
                   </a>

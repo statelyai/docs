@@ -62,7 +62,7 @@ function DesignSection() {
 
           <div className="grid md:grid-cols-2 w-full gap-12 pt-24">
             <div className="md:col-span-2">
-              <Feature box imgSrc="/landing/design-and-simulate.png" imgAlt="Split view of the same credit check workflow in design and simulate modes in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted.">
+              <Feature box imgSrc="/landing/design-and-simulate.png" imgHeight="707" imgWidth="1250" imgAlt="Split view of the same credit check workflow in design and simulate modes in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted.">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <FeatureText>
                     <Strong>Create flows with no code required</Strong>. Rapidly
@@ -127,6 +127,8 @@ function XStateSection() {
             <img
               alt="XState"
               src="/landing/xstate-white.svg"
+              height="32"
+              width="118"
               className="h-8 self-start mb-4 opacity-60"
             />
             <FeatureText>
@@ -150,6 +152,8 @@ function XStateSection() {
               <img
               alt="TypeScript, React, Vue"
                 src="/landing/platform-logos.svg"
+                height="30"
+                width="126"
                 className="h-[30px] self-start mb-4 opacity-60"
               />
             </div>
@@ -164,6 +168,8 @@ function XStateSection() {
           <Feature>
             <img
               alt=""
+              height="32"
+              width="102"
               src="/landing/network-white.svg"
               className="h-[38px] self-start mb-2 opacity-60"
             />
@@ -185,7 +191,7 @@ function XStateSection() {
             </ButtonLink>
           </Feature>
         </div>
-        <img alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension." src="/landing/vscode-split.png" className="w-full h-auto mt-12" />
+        <img height="709" width="1250" alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension." src="/landing/vscode-split.png" className="w-full h-auto mt-12" />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full pt-36 justify-center">
           <Feature box>
             <div className="flex">
@@ -233,7 +239,7 @@ function XStateSection() {
                     extend the scaffolding with your vision.
                   </FeatureText>
                 </div>
-                <img alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button." src="/landing/generate-react-app.png" className="h-auto w-full" />
+                <img height="806" width="1250" alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button." src="/landing/generate-react-app.png" className="h-auto w-full" />
               </div>
             </Feature>
           </div>
@@ -241,7 +247,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box>
               <div className="grid grid-cols-2 gap-12">
-                <img alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas." src="/landing/test-paths.png" className="h-auto w-full" />
+                <img width="625" height="403" alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas." src="/landing/test-paths.png" className="h-auto w-full" />
                 <div className="pt-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
@@ -265,6 +271,8 @@ function XStateSection() {
             <img
               alt="GitHub"
               src="/landing/github-white.svg"
+              width="24"
+              height="24"
               className="h-[24px] self-start"
             />
           </Feature>
@@ -383,7 +391,7 @@ function SkySection() {
           </div>
         </div>
 
-        <img alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button." src="/landing/deploy-to-sky-button.png" className="h-auto w-full mt-32" />
+        <img alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button." src="/landing/deploy-to-sky-button.png" className="h-auto w-full mt-32" width="1250" height="806" />
 
         <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
@@ -530,12 +538,16 @@ function Feature({
   box,
   imgSrc,
   imgAlt,
+  imgHeight,
+  imgWidth,
 }: {
   children: ReactNode;
   comingSoon?: boolean;
   box?: boolean;
   imgSrc?: string;
   imgAlt?: string;
+  imgHeight?: string;
+  imgWidth?: string;
 }) {
   const boxStyles = box
     ? 'bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl'
@@ -553,6 +565,8 @@ function Feature({
         <img
           alt={imgAlt}
           src={imgSrc}
+          height={imgHeight}
+          width={imgWidth}
           className="rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full mt-8"
         />
       )}
