@@ -29,7 +29,6 @@ export default function Index() {
     <>
       <Head>
         <title>Stately | Your intelligent assistant for robust logic</title>
-        <link rel="stylesheet" href="./landing-page/styles.css" />
         <meta
           content="width=device-width, initial-scale=1, viewport-fit=cover"
           name="viewport"
