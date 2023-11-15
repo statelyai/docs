@@ -11,16 +11,19 @@ export function Intro() {
         <ExampleRow />
 
         <div className="flex flex-col w-full items-center">
-          <h2 className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
-            Build and deploy workflows and app logic with AI-enhanced,
+          <p className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
+            Build and deploy workflows and app logic with AI enhanced,
             collaborative tools
-          </h2>
+          </p>
           <CallToActionButtons />
         </div>
 
         <div className="shadow-md rounded-md w-full">
           <img
-            src="/landing/example-default.png"
+            alt="This state machine is called Accumulate room readings. Its purpose is to get temperature and humidity readings from IoT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. When a temperature event is logged, the state machine updates the temperature value. Similarly, when a humidity event is logged, it updates the humidity value. After one hour, the state machine transitions to the GenerateReport state. In this state, it invokes a service called produceReport to generate the report. Once the report is generated, the state machine transitions back to the ConsumeReadings state to continue accumulating readings."
+            src="/landing/room-readings.png"
+            height="706"
+            width="1248"
             className="w-full my-24 rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850"
           />
         </div>
@@ -38,23 +41,12 @@ const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
 function ExampleRow() {
   return (
     <ul className="flex max-w-full flex-wrap gap-2 mt-20 m-auto justify-center select-none">
-      <li className={exampleBox}>Workflows</li>
-      <hr className={line} />
-      <li className={exampleBox}>Chatbots</li>
-      <hr className={line} />
-
-      <li className={exampleBox}>Multistep forms</li>
-      <hr className={line} />
-
-      <li className={exampleBox}>Onboarding</li>
-      <hr className={line} />
-
-      <li className={exampleBox}>Games</li>
-      <hr className={line} />
-
-      <li className={exampleBox}>Complex logic</li>
-      <hr className={line} />
-
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Workflows</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Chatbots</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Multistep forms</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Onboarding</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Games</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Complex logic</div> <span className={line}></span></li>
       <li className={exampleBox}>
         <span className="dot1">.</span>
         <span className="dot2">.</span>
@@ -86,19 +78,19 @@ function CallToActionButtons() {
 function Companies() {
   return (
     <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16">
-      <Company src="/landing-page/assets/aws.svg" />
-      <Company src="/landing-page/assets/ted.svg" />
-      <Company src="/landing-page/assets/netflix.svg" />
-      <Company src="/landing-page/assets/lyft.svg" />
-      <Company src="/landing-page/assets/microsoft.svg" />
-      <Company src="/landing-page/assets/epic-games.svg" />
-      <Company src="/landing-page/assets/cisco.svg" />
+      <Company src="/landing-page/assets/aws.svg" alt="AWS" height="64" width="65" />
+      <Company src="/landing-page/assets/ted.svg" alt="TED" height="64" width="80" />
+      <Company src="/landing-page/assets/netflix.svg" alt="Netflix" height="64" width="122" />
+      <Company src="/landing-page/assets/lyft.svg" alt="Lyft" height="64" width="58" />
+      <Company src="/landing-page/assets/microsoft.svg" alt="Microsoft" height="64" width="154" />
+      <Company src="/landing-page/assets/epic-games.svg" alt="Epic Games" height="64" width="45" />
+      <Company src="/landing-page/assets/cisco.svg" alt="Cisco" height="64" width="74" />
     </div>
   );
 }
 
-function Company({ src }) {
-  return <img src={src} className="h-16 opacity-50" />;
+function Company({ src, alt, height, width }) {
+  return <img src={src} alt={alt} height={height} width={width} className="h-16 opacity-50" />;
 }
 
 // function PromoVideo() {

@@ -23,6 +23,8 @@ function AllLinks() {
             className="h-6 w-auto"
             src="/landing/stately-logo.svg"
             alt="Stately"
+            height="24"
+            width="86"
           />
         </a>
         <p className="text-white/60 mt-5 text-base">&copy; 2023 Stately</p>
