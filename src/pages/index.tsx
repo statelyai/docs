@@ -49,7 +49,7 @@ export default function Index() {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="https://stately.ai/assets/stately-landing-page.png"
+          content="https://stately.ai/landing-page/stately-landing-page.png"
         />
         <link
           rel="icon"
