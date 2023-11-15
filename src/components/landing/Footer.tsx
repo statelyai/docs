@@ -132,7 +132,7 @@ function DiscordCommunity() {
           href="https://www.youtube.com/@Statelyai/streams"
           className="text-blue-300 hover:text-white font-bold hover:no-underline"
         >
-          office hours
+          Office Hours
         </a>{' '}
         for previews and announcements with the Stately team.
       </p>

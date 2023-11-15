@@ -35,7 +35,8 @@ export function ButtonLink({
       : 'h-12 text-md px-4';
 
   const text = `text-md font-semibold text-gray-50`;
-  const layout = 'inline-flex items-center justify-center rounded-full';
+  const layout =
+    'inline-flex items-center justify-center rounded-full whitespace-nowrap';
   const various =
     'w-fit shadow-md cursor-pointer touch-none select-none transform-gpu transition';
   const disabled = 'disabled:opacity-50 disabled:cursor-not-allowed';
