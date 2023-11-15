@@ -35,7 +35,7 @@ export default function Index() {
         />
         <meta
           name="description"
-          content="Stately helps your whole team understand and collaborate on your logic through our visualizer, visual editor and XState."
+          content="Build and deploy workflows and app logic with Stately’s AI enhanced, collaborative tools."
         />
         <meta
           property="og:title"
@@ -44,12 +44,12 @@ export default function Index() {
         <meta property="og:url" content="https://stately.ai" />
         <meta
           property="og:description"
-          content="Stately helps your whole team understand and collaborate on your logic through our visualizer, visual editor and XState."
+          content="Build and deploy workflows and app logic with Stately’s AI enhanced, collaborative tools."
         />
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="https://stately.ai/assets/stately-landing-page.png"
+          content="https://stately.ai/landing-page/stately-landing-page.png"
         />
         <link
           rel="icon"
