@@ -233,7 +233,7 @@ function XStateSection() {
                     extend the scaffolding with your vision.
                   </FeatureText>
                 </div>
-                <img alt="TODO" src="/landing/DELETE-1.png" className="h-auto w-full" />
+                <img alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button." src="/landing/generate-react-app.png" className="h-auto w-full" />
               </div>
             </Feature>
           </div>
@@ -241,7 +241,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box>
               <div className="grid grid-cols-2 gap-12">
-                <img alt="TODO" src="/landing/DELETE-1.png" className="h-auto w-full" />
+                <img alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas." src="/landing/test-paths.png" className="h-auto w-full" />
                 <div className="pt-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
@@ -383,7 +383,7 @@ function SkySection() {
           </div>
         </div>
 
-        <img alt="TODO" src="/landing/DELETE-2.png" className="h-auto w-full mt-32" />
+        <img alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button." src="/landing/deploy-to-sky-button.png" className="h-auto w-full mt-32" />
 
         <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
