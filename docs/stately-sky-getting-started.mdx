@@ -63,24 +63,7 @@ You’ll need the workflow’s URL to reference it from the starter project.
 
 ![Stately Sky modal shows the Traffic light workflow listed under Existing deploys. The workflow has its own URL with the options to Copy URL or delete alongside.](../static/assets/sky-getting-started/editor-deployed-workflow.png)
 
-## Step 4: Add your API key to the starter project
-
-1. Open [the starter project](https://github.com/statelyai/sky-starter-app) in your code editor.
-2. Install the packages using your package manager of choice:
-
-```bash npm2yarn
-npm install
-```
-
-3. At the project’s root, create a `.env` file to hold your API key.
-4. Set the following two variables in the `.env` file; paste your API key as the value for both these keys:
-
-- `SKY_API_KEY`: used by the `@xstate/cli` to fetch the machine config.
-- `VITE_SKY_API_KEY`: used by the Vite React app to connect to Sky.
-
-![.env file](../static/assets/sky-getting-started/code-env-file.png)
-
-## Step 5: Add the actor in the starter project
+## Step 4: Add the actor in the starter project
 
 After adding the API key, you’ll need to create an actor.
 
@@ -91,6 +74,7 @@ After adding the API key, you’ll need to create an actor.
 import { actorFromStately } from '@statelyai/sky';
 
 const actor = actorFromStately({
+  apiKey: 'paste your API key here',
   url: 'paste your Sky url here',
   sessionId: 'your session id here',
 });
@@ -105,7 +89,7 @@ The session ID is used to shard the multiplayer session. Each actor has a unique
 
 :::
 
-## Step 6: Fetching the config from Sky
+## Step 5: Fetching the config from Sky
 
 Now that we’ve created the actor, we need to fetch the config from Sky. Doing so will download and generate the machine configuration file in our repo, giving us type safety when interacting with the running actor!
 
@@ -133,8 +117,6 @@ Running `xstate sky` will only affect a file if it hasn’t already been fetched
 Add your generated `sky.ts` files to source control.
 
 :::
-
-![traffic light actor](../static/assets/sky-getting-started/code-traffic-light-with-config.png)
 
 ## Finishing up
 
