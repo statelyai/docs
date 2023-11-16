@@ -41,12 +41,29 @@ const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
 function ExampleRow() {
   return (
     <ul className="flex max-w-full flex-wrap gap-2 mt-20 m-auto justify-center select-none">
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Workflows</div> <span className={line}></span></li>
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Chatbots</div> <span className={line}></span></li>
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Multistep forms</div> <span className={line}></span></li>
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Onboarding</div> <span className={line}></span></li>
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Games</div> <span className={line}></span></li>
-      <li className="flex flex-wrap gap-2"><div className={exampleBox}>Complex logic</div> <span className={line}></span></li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Workflows</div>{' '}
+        <span className={line}></span>
+      </li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Chatbots</div>{' '}
+        <span className={line}></span>
+      </li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Multistep forms</div>{' '}
+        <span className={line}></span>
+      </li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Onboarding</div>{' '}
+        <span className={line}></span>
+      </li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Games</div> <span className={line}></span>
+      </li>
+      <li className="flex flex-wrap gap-2">
+        <div className={exampleBox}>Complex logic</div>{' '}
+        <span className={line}></span>
+      </li>
       <li className={exampleBox}>
         <span className="dot1">.</span>
         <span className="dot2">.</span>
@@ -60,12 +77,14 @@ function CallToActionButtons() {
   return (
     <div className="flex gap-4 justify-center md:justify-start">
       <ButtonLink
+        size="large"
         background="pink"
         href="https://stately.ai/editor?source=landing-page"
       >
         Try the visual editor
       </ButtonLink>
       <ButtonLink
+        size="large"
         background="darkBlue"
         href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
       >
@@ -78,19 +97,62 @@ function CallToActionButtons() {
 function Companies() {
   return (
     <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16">
-      <Company src="/landing-page/assets/aws.svg" alt="AWS" height="64" width="65" />
-      <Company src="/landing-page/assets/ted.svg" alt="TED" height="64" width="80" />
-      <Company src="/landing-page/assets/netflix.svg" alt="Netflix" height="64" width="122" />
-      <Company src="/landing-page/assets/lyft.svg" alt="Lyft" height="64" width="58" />
-      <Company src="/landing-page/assets/microsoft.svg" alt="Microsoft" height="64" width="154" />
-      <Company src="/landing-page/assets/epic-games.svg" alt="Epic Games" height="64" width="45" />
-      <Company src="/landing-page/assets/cisco.svg" alt="Cisco" height="64" width="74" />
+      <Company
+        src="/landing-page/assets/aws.svg"
+        alt="AWS"
+        height="64"
+        width="65"
+      />
+      <Company
+        src="/landing-page/assets/ted.svg"
+        alt="TED"
+        height="64"
+        width="80"
+      />
+      <Company
+        src="/landing-page/assets/netflix.svg"
+        alt="Netflix"
+        height="64"
+        width="122"
+      />
+      <Company
+        src="/landing-page/assets/lyft.svg"
+        alt="Lyft"
+        height="64"
+        width="58"
+      />
+      <Company
+        src="/landing-page/assets/microsoft.svg"
+        alt="Microsoft"
+        height="64"
+        width="154"
+      />
+      <Company
+        src="/landing-page/assets/epic-games.svg"
+        alt="Epic Games"
+        height="64"
+        width="45"
+      />
+      <Company
+        src="/landing-page/assets/cisco.svg"
+        alt="Cisco"
+        height="64"
+        width="74"
+      />
     </div>
   );
 }
 
 function Company({ src, alt, height, width }) {
-  return <img src={src} alt={alt} height={height} width={width} className="h-16 opacity-50" />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      height={height}
+      width={width}
+      className="h-16 opacity-50"
+    />
+  );
 }
 
 // function PromoVideo() {

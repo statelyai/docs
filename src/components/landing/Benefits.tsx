@@ -247,9 +247,9 @@ function XStateSection() {
           </Feature>
 
           <div className="md:col-span-2 lg:col-span-3">
-            <Feature box>
+            <Feature box noPadding>
               <div className="grid grid-cols-2 gap-12">
-                <div className="pt-12">
+                <div className="pt-12 pl-12">
                   <FeatureText>
                     <Strong>Generate React apps from diagrams</Strong> to
                     jumpstart product development. Keep iterating visually with
@@ -261,29 +261,27 @@ function XStateSection() {
                   height="806"
                   width="1250"
                   alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button."
-                  src="/landing/generate-react-app.png"
-                  className="h-auto w-full"
+                  src="/landing/generate-react.png"
+                  className="h-auto w-full rounded-r-2xl"
                 />
               </div>
             </Feature>
           </div>
 
           <div className="md:col-span-2 lg:col-span-3">
-            <Feature box>
-              <div className="grid grid-cols-2 gap-12">
-                <img
-                  width="625"
-                  height="403"
-                  alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
-                  src="/landing/test-paths.png"
-                  className="h-auto w-full"
-                />
-                <div className="pt-12">
+            <Feature box noPadding>
+              <div>
+                <div className="py-12 pl-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
                     coverage robust and up-to-date.
                   </FeatureText>
                 </div>
+                <img
+                  alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
+                  src="/landing/test-generation.png"
+                  className="h-auto w-full"
+                />
               </div>
             </Feature>
           </div>
@@ -363,9 +361,9 @@ function SourceOfTruthSection() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full mt-12">
           <div className="md:col-span-2 lg:col-span-3">
-            <Feature box>
+            <Feature box noPadding>
               <div className="grid grid-cols-2 gap-12">
-                <div className="pt-12">
+                <div className="pt-12 pl-12">
                   <FeatureText>
                     <Strong>Reference an event catalog</Strong> which is
                     automatically generated and can be annotated to provide
@@ -375,9 +373,8 @@ function SourceOfTruthSection() {
                 <img
                   alt="The event schema modal in the Stately editor open to add properties to an orderCreatedEvent event. The properties are orderNumber and orderDate, and they are both strings."
                   src="/landing/event-schema.png"
-                  width="625"
-                  height="403"
-                  className="h-auto w-full rounded-md"
+                  height="100px"
+                  className="rounded-md"
                 />
               </div>
             </Feature>
@@ -429,10 +426,8 @@ function SkySection() {
 
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
-          src="/landing/deploy-to-sky-button.png"
-          className="h-auto w-full mt-32"
-          width="1250"
-          height="806"
+          src="/landing/deploy-to-sky.png"
+          className="h-auto w-full mt-32 max-w-5xl mx-auto"
         />
 
         <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
@@ -595,6 +590,7 @@ function Feature({
   imgAlt,
   imgHeight,
   imgWidth,
+  noPadding,
 }: {
   children: ReactNode;
   comingSoon?: boolean;
@@ -603,15 +599,19 @@ function Feature({
   imgAlt?: string;
   imgHeight?: string;
   imgWidth?: string;
+  noPadding?: boolean;
 }) {
   const boxStyles = box
     ? 'bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl'
     : '';
+
+  const paddingStyles = noPadding ? 0 : 'py-6 px-8';
   return (
     <div
       className={classNames(
         boxStyles,
-        'flex flex-col py-6 px-8 gap-6 text-white/60 text-lg leading-normal',
+        paddingStyles,
+        'flex flex-col gap-6 text-white/60 text-lg leading-normal',
       )}
     >
       {children}
