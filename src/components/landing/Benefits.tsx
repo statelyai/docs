@@ -37,9 +37,9 @@ function DesignSection() {
             <span className="text-pink-500">Design how it works</span> with a
             visual language for everyone on the team (even AI 🤖).
           </SectionTitle>
-          <div className="grid grid-cols-1 lg:grid-cols-2  pt-16 gap-12">
-            <div className="max-w-lg flex">
-              <div className="pr-12 pt-2 text-pink-300">
+          <div className="grid grid-cols-1 gap-12 pt-16 lg:grid-cols-2">
+            <div className="flex max-w-lg">
+              <div className="pt-2 pr-12 text-pink-300">
                 <Wand2Icon size="32" />
               </div>
               <FeatureText>
@@ -48,8 +48,8 @@ function DesignSection() {
                 more in one place. No more silos. Always up to date.
               </FeatureText>
             </div>
-            <div className="max-w-lg flex">
-              <div className="pr-12 pt-2 text-pink-300">
+            <div className="flex max-w-lg">
+              <div className="pt-2 pr-12 text-pink-300">
                 <SparklesIcon size="32" />
               </div>
               <FeatureText>
@@ -60,7 +60,7 @@ function DesignSection() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 w-full gap-12 pt-24">
+          <div className="grid w-full gap-12 pt-24 md:grid-cols-2">
             <div className="md:col-span-2">
               <Feature
                 box
@@ -69,7 +69,7 @@ function DesignSection() {
                 imgWidth="1250"
                 imgAlt="Split view of the same credit check workflow in design and simulate modes in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
                   <FeatureText>
                     <Strong>Create flows with no code required</Strong>. Rapidly
                     prototype or gather requirements without worrying about
@@ -112,7 +112,7 @@ function DesignSection() {
                     src="/landing/generate-flow-dialog.png"
                     width="625"
                     height="450"
-                    className="h-auto w-full rounded-md"
+                    className="w-full h-auto rounded-md"
                   />
                 </div>
               </Feature>
@@ -134,14 +134,14 @@ function XStateSection() {
           </span>{' '}
           and get the best of both text-based and visual tools.
         </SectionTitle>
-        <div className="grid lg:grid-cols-3 mt-24">
+        <div className="grid mt-24 lg:grid-cols-3">
           <Feature>
             <img
               alt="XState"
               src="/landing/xstate-white.svg"
               height="32"
               width="118"
-              className="h-8 self-start mb-4 opacity-60"
+              className="self-start h-8 mb-4 opacity-60"
             />
             <FeatureText>
               <Strong>Run diagrams using XState</Strong>, a best-in-class open
@@ -210,7 +210,7 @@ function XStateSection() {
           src="/landing/vscode-split.png"
           className="w-full h-auto mt-12"
         />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full pt-36 justify-center">
+        <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-36">
           <Feature box>
             <div className="flex">
               <ArrowLeftRightIcon className="h-[24px] self-start mt-1 text-orange-300" />
@@ -262,7 +262,7 @@ function XStateSection() {
                   width="1250"
                   alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button."
                   src="/landing/generate-react.png"
-                  className="h-auto w-full rounded-r-2xl"
+                  className="w-full h-auto rounded-r-2xl"
                 />
               </div>
             </Feature>
@@ -280,7 +280,7 @@ function XStateSection() {
                 <img
                   alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
                   src="/landing/test-generation.png"
-                  className="h-auto w-full"
+                  className="w-full h-auto"
                 />
               </div>
             </Feature>
@@ -327,17 +327,17 @@ function SourceOfTruthSection() {
   return (
     <AnimateAwayGradient animationClass="bgimage-gradient-green">
       <BenefitSection anchorLink="understand">
-        <p className="font-extrabold text-3xl drop-shadow-sm text-white/60 leading-tight pb-8">
+        <p className="pb-8 text-3xl font-extrabold leading-tight drop-shadow-sm text-white/60">
           Products evolve. <span className="pl-4">People are busy.</span>
         </p>
         <SectionTitle>
           <span className="text-green-500">Understand and stay aligned</span>{' '}
           with Stately as the source of truth.
         </SectionTitle>
-        <div className="grid lg:grid-cols-2 mt-24">
+        <div className="grid mt-24 lg:grid-cols-2">
           <Feature>
-            <div className="max-w-lg flex">
-              <div className="pr-6 pt-2 text-green-300">
+            <div className="flex max-w-lg">
+              <div className="pt-2 pr-6 text-green-300">
                 <ShieldCheckIcon size="48" />
               </div>
               <FeatureText>
@@ -348,8 +348,8 @@ function SourceOfTruthSection() {
             </div>
           </Feature>
           <Feature>
-            <div className="max-w-lg flex">
-              <div className="pr-6 pt-2 text-green-300">
+            <div className="flex max-w-lg">
+              <div className="pt-2 pr-6 text-green-300">
                 <BookOpenIcon size="48" />
               </div>
               <FeatureText>
@@ -359,7 +359,7 @@ function SourceOfTruthSection() {
             </div>
           </Feature>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 w-full mt-12">
+        <div className="grid w-full gap-12 mt-12 md:grid-cols-2 lg:grid-cols-3">
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box noPadding>
               <div className="grid grid-cols-2 gap-12">
@@ -408,7 +408,7 @@ function SkySection() {
           <span className="text-purple-500">Deploy to Stately Sky</span> for an
           instant realtime backend.
         </SectionTitle>
-        <div className="grid grid-cols-1 lg:grid-cols-2  pt-16 gap-12">
+        <div className="grid grid-cols-1 gap-12 pt-16 lg:grid-cols-2">
           <div className="max-w-xl">
             <FeatureText>
               <Strong>Want to keep it simple?</Strong> Design in our visual
@@ -418,7 +418,7 @@ function SkySection() {
           </div>
           <div className="max-w-xl">
             <FeatureText>
-              Send your events using our SDK and{' '}
+              Send events using our SDK, and{' '}
               <Strong>we'll update all clients automatically</Strong>.
             </FeatureText>
           </div>
@@ -427,10 +427,10 @@ function SkySection() {
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
           src="/landing/deploy-to-sky.png"
-          className="h-auto w-full mt-32 max-w-5xl mx-auto"
+          className="w-full h-auto max-w-5xl mx-auto mt-32"
         />
 
-        <div className="max-w-5xl mt-24 flex flex-col gap-4 m-auto">
+        <div className="flex flex-col max-w-5xl gap-4 m-auto mt-24">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
           <FeatureText>
             Coding against large cloud services is cumbersome, boilerplate
@@ -439,16 +439,17 @@ function SkySection() {
           </FeatureText>
           <FeatureText>
             <Strong>
-              With Stately Sky, just draw a diagram, generate an API key, and
-              press "Deploy". <br />
-              And it has robust export options with no lock-in.
+              With Stately Sky, simply draw a diagram, generate an API key, and
+              click "Deploy".
+              <br />
+              It also offers reliable export options without any lock-in.
             </Strong>
           </FeatureText>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-36">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-36">
           <div className="grid col-span-3">
             <Feature box>
-              <div className="max-w-3xl m-auto pt-4">
+              <div className="max-w-3xl pt-4 m-auto">
                 <FeatureText>
                   Combine the expressiveness and readability of statecharts with
                   the durability and fault tolerance of cloud computing by
@@ -456,9 +457,9 @@ function SkySection() {
                 </FeatureText>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-auto pt-8 pb-8">
+              <div className="grid grid-cols-1 gap-8 pt-8 pb-8 m-auto md:grid-cols-2 lg:grid-cols-3">
                 <div className="flex gap-4">
-                  <PartyPopperIcon className="text-purple-300 mb-4 mt-1" />
+                  <PartyPopperIcon className="mt-1 mb-4 text-purple-300" />
                   <div className="flex-1">
                     <FeatureText>
                       <Strong>Multiplayer collaboration</Strong> which can be
@@ -468,16 +469,17 @@ function SkySection() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <MergeIcon className="text-purple-300 mb-4 mt-1" />
+                  <MergeIcon className="mt-1 mb-4 text-purple-300" />
                   <div className="flex-1">
                     <FeatureText>
-                      <Strong>Asynchronous workflows</Strong> like fetching
-                      large amounts of data in the background.
+                      <Strong>Asynchronous workflows</Strong> enhance efficiency
+                      in operations without immediate results, such as data
+                      processing, email delivery, or API calls.
                     </FeatureText>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <CalendarIcon className="text-purple-300 mb-4 mt-1" />
+                  <CalendarIcon className="mt-1 mb-4 text-purple-300" />
                   <div className="flex-1">
                     <FeatureText>
                       <Strong>Long-running backend processes</Strong> like
@@ -541,7 +543,7 @@ function FeatureLeftImage({
         src={imgSrc}
         className="max-w-2xl rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full"
       />
-      <p className="text-white/60 text-xl leading-normal pt-12 flex-1">
+      <p className="flex-1 pt-12 text-xl leading-normal text-white/60">
         {children}
       </p>
     </div>
@@ -555,7 +557,7 @@ function FeatureRightImage({
 }) {
   return (
     <div className="flex h-fit w-fit max-w-6xl rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
-      <p className="text-white/60 text-xl leading-normal pt-12 flex-1">
+      <p className="flex-1 pt-12 text-xl leading-normal text-white/60">
         {children}
       </p>
       <img
@@ -569,7 +571,7 @@ function FeatureRightImage({
 
 function FeatureBox({ children }) {
   return (
-    <div className="flex flex-col h-fit w-full max-w-lg py-6 px-8">
+    <div className="flex flex-col w-full max-w-lg px-8 py-6 h-fit">
       {children}
     </div>
   );
@@ -579,7 +581,7 @@ function FeatureText({
   imgSrc = '/landing/DELETE-1.png',
   imgAlt = 'TODO',
 }) {
-  return <p className="text-white/60 text-xl leading-normal">{children}</p>;
+  return <p className="text-xl leading-normal text-white/60">{children}</p>;
 }
 
 function Feature({
@@ -650,7 +652,7 @@ function AnimateAwayGradient({ animationClass, children }) {
 
 function FeatureTitle({ children }) {
   return (
-    <h3 className="font-extrabold text-xl md:text-2xl lg:text-3xl drop-shadow-sm text-white/90 leading-tight md:leading-tight lg:leading-tight">
+    <h3 className="text-xl font-extrabold leading-tight md:text-2xl lg:text-3xl drop-shadow-sm text-white/90 md:leading-tight lg:leading-tight">
       {children}
     </h3>
   );
