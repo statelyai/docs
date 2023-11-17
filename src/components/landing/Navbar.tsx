@@ -120,17 +120,13 @@ export function Navbar() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  {/* Important to open this in a new window to escape the SPA router, otherwise the link won't take us to the right page */}
-                  <NavLink href="/registry/login" target="_blank">
-                    Log in
-                  </NavLink>
+                  <NavLink href="/registry/login">Log in</NavLink>
 
-                  {/* Important to open this in a new window to escape the SPA router, otherwise the link won't take us to the right page */}
                   <ButtonLink
                     size="small"
                     background="blue"
                     href="/registry/signup"
-                    target="_blank"
+                    target="_self"
                   >
                     Sign up
                   </ButtonLink>
