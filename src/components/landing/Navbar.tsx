@@ -121,7 +121,9 @@ export function Navbar() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <NavLink href="/registry/login">Log in</NavLink>
+                  <NavLink href="/registry/login" target="_blank">
+                    Log in
+                  </NavLink>
 
                   <ButtonLink
                     size="small"
@@ -223,10 +225,12 @@ function NavLink({
   children,
   isCurrent,
   href,
+  target = '_self',
 }: {
   children: ReactNode;
   isCurrent?: boolean;
   href: string;
+  target?: '_blank' | '_self';
 }) {
   return (
     <Link
@@ -238,6 +242,7 @@ function NavLink({
         linkStyles,
       )}
       aria-current={isCurrent ? 'page' : undefined}
+      target={target}
     >
       {children}
     </Link>
