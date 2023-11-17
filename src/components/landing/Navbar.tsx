@@ -38,7 +38,7 @@ export function Navbar() {
                   <a href="/">
                     <img
                       className="h-8 w-auto"
-                      src="/landing/stately-logo.svg"
+                      src="/assets/landing/stately-logo.svg"
                       height="32"
                       width="115"
                       alt="Stately"
@@ -70,7 +70,7 @@ export function Navbar() {
                     >
                       <img
                         alt="Discord"
-                        src="/landing/discord-mark-white.svg"
+                        src="/assets/landing/discord-mark-white.svg"
                         className="w-[18px] h-[18px]"
                       />
                     </a>
@@ -84,7 +84,7 @@ export function Navbar() {
                     >
                       <img
                         alt="Twitter"
-                        src="/landing/twitter-white.svg"
+                        src="/assets/landing/twitter-white.svg"
                         className="w-[18px] h-[18px]"
                       />
                     </a>
@@ -98,7 +98,7 @@ export function Navbar() {
                     >
                       <img
                         alt="YouTube"
-                        src="/landing/youtube-white.svg"
+                        src="/assets/landing/youtube-white.svg"
                         className="w-[18px] h-[18px]"
                       />
                     </a>
@@ -112,7 +112,7 @@ export function Navbar() {
                     >
                       <img
                         alt="GitHub"
-                        src="/landing/github-white.svg"
+                        src="/assets/landing/github-white.svg"
                         className="w-[18px] h-[18px]"
                       />
                     </a>

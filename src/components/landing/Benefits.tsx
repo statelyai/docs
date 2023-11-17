@@ -78,7 +78,7 @@ function DesignSection() {
                 </div>
                 <img
                   alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
-                  src="/landing/design-and-simulate.png"
+                  src="/assets/landing/design-and-simulate.png"
                   className="w-full h-auto rounded-b-2xl"
                 />
               </Feature>
@@ -140,7 +140,7 @@ function DesignSection() {
                   </div>
                   <img
                     alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
-                    src="/landing/assets-colorpicker.png"
+                    src="/assets/landing/assets-colorpicker.png"
                     className="w-full h-auto rounded-r-2xl"
                   />
                 </div>
@@ -158,7 +158,7 @@ function DesignSection() {
                 </div>
                 <img
                   alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
-                  src="/landing/ai-generation.png"
+                  src="/assets/landing/ai-generation.png"
                   className="w-full h-auto rounded-br-2xl"
                 />
               </Feature>
@@ -184,7 +184,7 @@ function XStateSection() {
           <Feature>
             <img
               alt="XState"
-              src="/landing/xstate-white.svg"
+              src="/assets/landing/xstate-white.svg"
               height="32"
               width="118"
               className="self-start h-8 mb-4 opacity-60"
@@ -209,7 +209,7 @@ function XStateSection() {
             <div className="flex gap-4">
               <img
                 alt="TypeScript, React, Vue"
-                src="/landing/platform-logos.svg"
+                src="/assets/landing/platform-logos.svg"
                 height="30"
                 width="126"
                 className="h-[30px] self-start mb-4 opacity-60"
@@ -228,7 +228,7 @@ function XStateSection() {
               alt=""
               height="32"
               width="102"
-              src="/landing/network-white.svg"
+              src="/assets/landing/network-white.svg"
               className="h-[38px] self-start mb-2 opacity-60"
             />
 
@@ -251,7 +251,7 @@ function XStateSection() {
         </div>
         <img
           alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension."
-          src="/landing/vscode-split.png"
+          src="/assets/landing/vscode-split.png"
           className="w-full h-auto mt-12"
         />
         <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-48">
@@ -303,7 +303,7 @@ function XStateSection() {
                 </div>
                 <img
                   alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button."
-                  src="/landing/generate-react.png"
+                  src="/assets/landing/generate-react.png"
                   className="w-full h-auto rounded-b-2xl md:rounded-bl-[0] md:rounded-tr-2xl"
                 />
               </div>
@@ -321,7 +321,7 @@ function XStateSection() {
                 </div>
                 <img
                   alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
-                  src="/landing/test-generation.png"
+                  src="/assets/landing/test-generation.png"
                   className="w-full h-auto rounded-br-2xl"
                 />
               </div>
@@ -340,7 +340,7 @@ function XStateSection() {
 
             <img
               alt="GitHub"
-              src="/landing/github-white.svg"
+              src="/assets/landing/github-white.svg"
               width="24"
               height="24"
               className="h-[24px] self-start"
@@ -414,7 +414,7 @@ function SourceOfTruthSection() {
                 </div>
                 <img
                   alt="The event schema modal in the Stately editor open to add properties to an orderCreatedEvent event. The properties are orderNumber and orderDate, and they are both strings."
-                  src="/landing/event-schema.png"
+                  src="/assets/landing/event-schema.png"
                   height="100px"
                   className="rounded-md"
                 />
@@ -475,7 +475,7 @@ function SkySection() {
 
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
-          src="/landing/deploy-to-sky.png"
+          src="/assets/landing/deploy-to-sky.png"
           className="w-full h-auto max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
         />
 
@@ -498,7 +498,7 @@ function SkySection() {
 
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
-          src="/landing/sky-diagram.svg"
+          src="/assets/landing/sky-diagram.svg"
           className="w-full max-w-5xl mx-auto mt-24"
         />
 

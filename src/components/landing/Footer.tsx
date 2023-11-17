@@ -21,7 +21,7 @@ function AllLinks() {
         <a href="/">
           <img
             className="h-6 w-auto"
-            src="/landing/stately-logo.svg"
+            src="/assets/landing/stately-logo.svg"
             alt="Stately"
             height="24"
             width="86"

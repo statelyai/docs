@@ -73,7 +73,7 @@ function BuildSection() {
         <StrongLink>Give your coding superpowers</StrongLink> by getting the
         best of both text and visual tools.
       </p>
-      <img src="/landing/DELETE-2.png" className="w-full h-96 ml-4" />
+      <img src="/assets/landing/DELETE-2.png" className="w-full h-96 ml-4" />
       <div className="flex flex-wrap gap-x-12 gap-y-8 w-full pt-12 justify-center">
         <FeatureText>
           <p>
@@ -180,7 +180,7 @@ function ShipSection() {
       <div className="pt-12">
         <ComingSoon />
       </div>
-      <img src="/landing/DELETE-2.png" className="h-96 w-full mt-12" />
+      <img src="/assets/landing/DELETE-2.png" className="h-96 w-full mt-12" />
     </div>
   );
 }
