@@ -6,6 +6,7 @@ import {
   MergeIcon,
   PartyPopperIcon,
   ShieldCheckIcon,
+  CheckCircleIcon,
   SparklesIcon,
   Wand2Icon,
 } from 'lucide-react';
@@ -62,14 +63,8 @@ function DesignSection() {
 
           <div className="grid w-full gap-12 pt-24 md:grid-cols-2">
             <div className="md:col-span-2">
-              <Feature
-                box
-                imgSrc="/landing/design-and-simulate.png"
-                imgHeight="707"
-                imgWidth="1250"
-                imgAlt="Split view of the same credit check workflow in design and simulate modes in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
-              >
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+              <Feature noPadding box>
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 p-12">
                   <FeatureText>
                     <Strong>Create flows with no code required</Strong>. Rapidly
                     prototype or gather requirements without worrying about
@@ -81,6 +76,13 @@ function DesignSection() {
                     auto-generated React app.
                   </FeatureText>
                 </div>
+                <img
+                  alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
+                  src="/landing/design-and-simulate.png"
+                  width="625"
+                  height="450"
+                  className="w-full h-auto rounded-b-xl"
+                />
               </Feature>
             </div>
             <Feature box>
@@ -93,28 +95,62 @@ function DesignSection() {
             <Feature box>
               <FeatureText>
                 <Strong>Explore community diagrams</Strong> to inspire your own
-                solutions. Then share your work with the community to get
-                feedback and kudos.
+                solutions. Share your work with the community to get feedback
+                and kudos.
               </FeatureText>
             </Feature>
             <div className="md:col-span-2">
-              <Feature box>
-                <div className="grid grid-cols-2 gap-12">
-                  <div className="pt-12">
+              <Feature box noPadding>
+                <div className="grid md:grid-cols-2">
+                  <div className="p-12">
                     <FeatureText>
-                      <Strong>Generate flows with AI</Strong> to scaffold
-                      behavior, suggest variants, turn up edge cases, and even
-                      write code.
+                      <Strong>Attach images and other assets to states</Strong>{' '}
+                      to view mockups, requirements documents, and more
+                      alongside the code.
                     </FeatureText>
+                    <div className="grid pt-12 gap-8">
+                      <FeatureText>
+                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
+                        Designers and product managers can fill in how each
+                        state is supposed to look.
+                      </FeatureText>
+                      <FeatureText>
+                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
+                        Intuitively understand what a state machine does with
+                        images at each step.
+                      </FeatureText>
+                      <FeatureText>
+                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
+                        Quickly prototype new ideas by experiencing mockups
+                        using the same logic as your code.
+                      </FeatureText>
+                    </div>
                   </div>
                   <img
-                    alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
-                    src="/landing/generate-flow-dialog.png"
-                    width="625"
-                    height="450"
-                    className="w-full h-auto rounded-md"
+                    alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
+                    src="/landing/assets-colorpicker.png"
+                    className="w-full h-auto rounded-r-xl"
                   />
                 </div>
+              </Feature>
+            </div>
+
+            <div className="md:col-span-2">
+              <Feature box noPadding>
+                <div className="pt-24 pl-12 max-w-xl pb-24 m-auto">
+                  <FeatureText>
+                    <Strong>Generate flows with AI</Strong> to scaffold
+                    behavior, suggest variants, turn up edge cases, and even
+                    write code.
+                  </FeatureText>
+                </div>
+                <img
+                  alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
+                  src="/landing/ai-generation.png"
+                  width="625"
+                  height="450"
+                  className="w-full h-auto rounded-br-xl"
+                />
               </Feature>
             </div>
           </div>
