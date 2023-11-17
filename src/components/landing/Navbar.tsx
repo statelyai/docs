@@ -1,4 +1,3 @@
-import Link from '@docusaurus/Link';
 import { MenuIcon, XIcon } from 'lucide-react';
 import React, { Fragment, ReactNode } from 'react';
 import { ButtonLink } from './SharedComponents';
@@ -236,7 +235,7 @@ function NavLink({
   target?: '_blank' | '_self';
 }) {
   return (
-    <Link
+    <a
       href={href}
       className={classNames(
         isCurrent
@@ -248,7 +247,7 @@ function NavLink({
       target={target}
     >
       {children}
-    </Link>
+    </a>
   );
 }
 
