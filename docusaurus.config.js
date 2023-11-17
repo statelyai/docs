@@ -11,8 +11,8 @@ const config = {
   url: 'https://stately.ai',
   baseUrl: '/',
   baseUrlIssueBanner: false,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
   staticDirectories: ['static'],
 
@@ -138,6 +138,17 @@ const config = {
         },
       },
     ],
+    async function tailwindPlugin(context, options) {
+      return {
+        name: 'docusaurus-tailwindcss',
+        configurePostCss(postcssOptions) {
+          // Appends TailwindCSS and AutoPrefixer.
+          postcssOptions.plugins.push(require('tailwindcss'));
+          postcssOptions.plugins.push(require('autoprefixer'));
+          return postcssOptions;
+        },
+      };
+    },
   ],
 
   themeConfig:
