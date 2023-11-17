@@ -79,7 +79,7 @@ function DesignSection() {
                 <img
                   alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
                   src="/assets/landing/design-and-simulate.png"
-                  className="w-full h-auto rounded-b-2xl"
+                  className="w-full h-auto rounded-b-2xl" height="385" width="1207"
                 />
               </Feature>
             </div>
@@ -139,9 +139,9 @@ function DesignSection() {
                     </div>
                   </div>
                   <img
-                    alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
+                    alt="A state machine in the Stately editor for a color picker with a screenshot of the color value input in the idle state and a screenshot of the full spectrum color picker in the open state."
                     src="/assets/landing/assets-colorpicker.png"
-                    className="w-full h-auto rounded-r-2xl"
+                    className="w-full h-auto rounded-r-2xl" width="603" height="903"
                   />
                 </div>
               </Feature>
@@ -159,7 +159,7 @@ function DesignSection() {
                 <img
                   alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
                   src="/assets/landing/ai-generation.png"
-                  className="w-full h-auto rounded-br-2xl"
+                  className="w-full h-auto rounded-br-2xl" height="363" width="1207"
                 />
               </Feature>
             </div>
@@ -250,9 +250,10 @@ function XStateSection() {
           </Feature>
         </div>
         <img
-          alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension."
+          alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the same state machine visualized using the XState VSCode extension."
           src="/assets/landing/vscode-split.png"
           className="w-full h-auto mt-12"
+          height="637" width="1208"
         />
         <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-48">
           <Feature box>
@@ -302,9 +303,11 @@ function XStateSection() {
                   </FeatureText>
                 </div>
                 <img
-                  alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button."
+                  alt="The room reading state machine visualized in the Stately editor alongside the React app code generated for that app logic. Over the top is a button that says Generate React app."
                   src="/assets/landing/generate-react.png"
                   className="w-full h-auto rounded-b-2xl md:rounded-bl-[0] md:rounded-tr-2xl"
+                  height="331"
+                  width="580"
                 />
               </div>
             </Feature>
@@ -320,8 +323,10 @@ function XStateSection() {
                   </FeatureText>
                 </div>
                 <img
-                  alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
+                  alt="A test path list of states and events in the Stately editor alongside that path being highlighted on the canvas, and the code generated to implement the tests."
                   src="/assets/landing/test-generation.png"
+                  height="287"
+                  width="1207"
                   className="w-full h-auto rounded-br-2xl"
                 />
               </div>
@@ -413,9 +418,10 @@ function SourceOfTruthSection() {
                   </FeatureText>
                 </div>
                 <img
-                  alt="The event schema modal in the Stately editor open to add properties to an orderCreatedEvent event. The properties are orderNumber and orderDate, and they are both strings."
+                  alt="An order flow in the Stately editor alongside the event schema which shows events for OrderCreatedEvent, ShipmentSentEvent and OrderConfirmedEvent. Each event has properties of various types including string, array, object, and boolean."
                   src="/assets/landing/event-schema.png"
-                  height="100px"
+                  height="580"
+                  width="470"
                   className="rounded-md"
                 />
               </div>
@@ -474,8 +480,9 @@ function SkySection() {
         </div>
 
         <img
-          alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
+          alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light."
           src="/assets/landing/deploy-to-sky.png"
+          height="598" width="1024"
           className="w-full h-auto max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
         />
 
@@ -497,8 +504,10 @@ function SkySection() {
         </div>
 
         <img
-          alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
+          alt="A diagram showing how Stately Studio deploys an actor to Stately Sky, how the config is sent from Stately Sky to Stately Sky SDK, which in turn sents state and events back to Stately Sky."
           src="/assets/landing/sky-diagram.svg"
+          height="139"
+          width="1024"
           className="w-full max-w-5xl mx-auto mt-24"
         />
 
