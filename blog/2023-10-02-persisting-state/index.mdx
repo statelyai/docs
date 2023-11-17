@@ -40,7 +40,7 @@ const stateString = localStorage.getItem('some-state');
 // Create the state from the string (if it exists)
 const restoredState = stateString ? JSON.parse(stateString) : undefined;
 
-const actor = createActor(machine, {
+const actor = createActor(someMachine, {
   // Restore the state (if it exists)
   state: restoredState,
 });

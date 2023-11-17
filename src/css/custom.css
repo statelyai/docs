@@ -850,7 +850,7 @@ code {
   margin-right: 0;
 }
 
-@media (min-width: 997px) {
+@media (min-width: 1049px) {
   .navbar__brand {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
@@ -1009,7 +1009,7 @@ html .DocSearch-Button-Key:nth-of-type(2) {
   }
 }
 
-@media (min-width: 997px) {
+@media (min-width: 1049px) {
   html [class*='searchBox'] {
     width: 100%;
   }
@@ -1230,7 +1230,8 @@ html [class*='toggleButton'] {
 
 /* Add a pro badge to menu items with the pro-feature classname */
 
-.menu__list-item.pro-feature a:after {
+.menu__list-item.pro-feature > a:after,
+.menu__list-item.pro-feature > div > a:after {
   background-color: var(--st-orange-500);
   border-radius: 0.3rem;
   content: 'Pro';
@@ -1241,11 +1242,12 @@ html [class*='toggleButton'] {
   margin-left: 0.45rem;
   padding: 0 0.3rem;
   text-transform: uppercase;
+  transform: rotateZ(0deg);
 }
 
 /* Add a free badge to menu items with the pro-feature classname */
-
-.menu__list-item.community-feature a:after {
+.menu__list-item.community-feature > a:after,
+.menu__list-item.community-feature > div > a:after {
   background-color: var(--st-blue-500);
   border-radius: 0.3rem;
   content: 'Free';
@@ -1255,6 +1257,7 @@ html [class*='toggleButton'] {
   margin-top: 0.1rem;
   margin-left: 0.45rem;
   padding: 0 0.3rem;
+  transform: rotateZ(0deg);
   text-transform: uppercase;
 }
 
@@ -1428,7 +1431,16 @@ details summary::before {
 .alert:not(details) h6 {
   color: inherit;
   font-size: 1.1rem;
+  margin-top: 0;
   margin-bottom: calc(var(--ifm-alert-padding-vertical) * 0.5);
+}
+
+.alert:not(details) * + h2,
+.alert:not(details) * + h3,
+.alert:not(details) * + h4,
+.alert:not(details) * + h5,
+.alert:not(details) * + h6 {
+  margin-top: calc(var(--ifm-alert-padding-vertical) * 1.5);
 }
 
 .alert:not(details) a {

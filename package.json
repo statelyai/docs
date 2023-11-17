@@ -8,6 +8,7 @@
     "remark:watch": "yarn remark --quiet --frail --watch docs/**/* versioned_docs/**/*",
     "dev": "docusaurus start",
     "start": "concurrently \"yarn remark:watch\" \"yarn typecheck:watch\" \"docusaurus start\"",
+    "check-links": "yarn remark:once && yarn typecheck",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -29,7 +30,9 @@
   },
   "dependencies": {
     "@docusaurus/core": "^2.4.3",
+    "@docusaurus/plugin-client-redirects": "^2.4.3",
     "@docusaurus/preset-classic": "^2.4.3",
+    "@docusaurus/remark-plugin-npm2yarn": "^2.4.3",
     "@headlessui/react": "^1.7.17",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-extractor": "^7.35.1",
@@ -47,6 +50,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.3",
+    "typecheck": "^0.1.2",
     "xstate": "^4.37.2"
   },
   "devDependencies": {

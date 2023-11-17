@@ -41,12 +41,12 @@ const machine = createMachine({
         count: ({ context }) => context.count + 1,
       }),
       on: {
-        toggle: { target: 'active' },
+        toggle: { target: 'inactive' },
       },
     },
     inactive: {
       on: {
-        toggle: { target: 'inactive' },
+        toggle: { target: 'active' },
       },
     },
   },
@@ -133,7 +133,7 @@ actor.send({ type: 'inc' });
 // logs { count: 2 }
 ```
 
-[Read more about transition actors](actors.mdx#transition-actors).
+[Read more about transition actors](actors.mdx#transition-function-actors).
 
 ## Creating observable logic
 
@@ -266,8 +266,8 @@ const machine = createMachine({
 const actor = createActor(
   machine.provide({
     actions: {
-      notify: ({ action }) => {
-        console.log(action.params.message ?? 'Default message');
+      notify: (_, params) => {
+        console.log(params.message ?? 'Default message');
       },
       activate: () => {
         console.log('Activating');
@@ -337,8 +337,8 @@ const actor = createActor(
     // highlight-start
     guards: {
       canBeToggled: ({ context }) => context.canActivate,
-      isAfterTime: ({ guard }) => {
-        const { time } = guard.params;
+      isAfterTime: (_, params) => {
+        const { time } = params;
         const [hour, minute] = time.split(':');
         const now = new Date();
         return now.getHours() > hour && now.getMinutes() > minute;
