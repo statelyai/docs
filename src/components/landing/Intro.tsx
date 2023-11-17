@@ -5,20 +5,20 @@ export function Intro() {
   return (
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
-        <h1 className="text-5xl md:text-6xl lg:text-6xl font-semibold text-white/90 drop-shadow-sm tracking-tighter leading-tight text-center">
+        <h1 className="text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
           Your intelligent assistant for robust logic
         </h1>
         <ExampleRow />
 
-        <div className="flex flex-col w-full items-center">
-          <p className="text-lg md:text-xl lg:text-2xl text-white/60 drop-shadow-sm tracking-tight leading-normal mt-24 mb-12 max-w-lg text-center">
+        <div className="flex flex-col items-center w-full">
+          <p className="max-w-lg mt-24 mb-12 text-lg leading-normal tracking-tight text-center md:text-xl lg:text-2xl text-white/60 drop-shadow-sm">
             Build and deploy workflows and app logic with AI enhanced,
             collaborative tools
           </p>
           <CallToActionButtons />
         </div>
 
-        <div className="shadow-md rounded-md w-full">
+        <div className="w-full rounded-md shadow-md">
           <img
             alt="This state machine is called Accumulate room readings. Its purpose is to get temperature and humidity readings from IoT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. When a temperature event is logged, the state machine updates the temperature value. Similarly, when a humidity event is logged, it updates the humidity value. After one hour, the state machine transitions to the GenerateReport state. In this state, it invokes a service called produceReport to generate the report. Once the report is generated, the state machine transitions back to the ConsumeReadings state to continue accumulating readings."
             src="/assets/landing/room-readings.png"
@@ -40,7 +40,7 @@ const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
 
 function ExampleRow() {
   return (
-    <ul className="flex max-w-full flex-wrap gap-2 mt-20 m-auto justify-center select-none">
+    <ul className="flex flex-wrap justify-center max-w-full gap-2 m-auto mt-20 select-none">
       <li className="flex flex-wrap gap-2">
         <div className={exampleBox}>Workflows</div>{' '}
         <span className={line}></span>
@@ -75,11 +75,11 @@ function ExampleRow() {
 
 function CallToActionButtons() {
   return (
-    <div className="flex gap-4 justify-center md:justify-start">
+    <div className="flex justify-center gap-4 md:justify-start">
       <ButtonLink
         size="large"
         background="pink"
-        href="https://stately.ai/editor?source=landing-page"
+        href="/editor?source=landing-page"
       >
         Try the visual editor
       </ButtonLink>
@@ -96,7 +96,7 @@ function CallToActionButtons() {
 
 function Companies() {
   return (
-    <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16 max-w-3xl lg:max-w-5xl">
+    <div className="container flex flex-wrap justify-center max-w-3xl gap-12 pb-16 md:gap-16 lg:max-w-5xl">
       <Company
         src="/landing-page/assets/aws.svg"
         alt="AWS"
