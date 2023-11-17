@@ -54,7 +54,7 @@ function DesignSection() {
                 <SparklesIcon size="32" />
               </div>
               <FeatureText>
-                AI’s love helping at each phase with state machines to guide
+                AI's love helping at each phase with state machines to guide
                 them, while humans use the visual editor to audit and enhance
                 their work.
               </FeatureText>
@@ -178,7 +178,7 @@ function XStateSection() {
           <span className="text-orange-500">
             Build with executable diagrams
           </span>{' '}
-          and get the best of both text-based and visual tools.
+          and get the best of text-based and visual tools.
         </SectionTitle>
         <div className="grid mt-24 lg:grid-cols-3">
           <Feature>
@@ -297,7 +297,7 @@ function XStateSection() {
                   <FeatureText>
                     <Strong>Generate React apps from diagrams</Strong> to
                     jumpstart product development. Keep iterating visually with
-                    the help of AI or dive straight into the code to rapidly
+                    the help of AI, or dive straight into the code to rapidly
                     extend the scaffolding with your vision.
                   </FeatureText>
                 </div>
@@ -439,8 +439,8 @@ function SourceOfTruthSection() {
 
           <Feature box>
             <FeatureText>
-              <Strong>Generate diagram summaries</Strong> to quickly get
-              oriented.
+              <Strong>Generate diagram summaries</Strong> to get oriented
+              quickly.
             </FeatureText>
           </Feature>
         </div>
@@ -461,7 +461,7 @@ function SkySection() {
           <div className="max-w-xl">
             <FeatureText>
               <Strong>Want to keep it simple?</Strong> Design in our visual
-              editor then one-click deploy to our multiplayer ready
+              editor, then one-click deploy to our multiplayer ready
               logic-as-a-service Stately Sky.
             </FeatureText>
           </div>

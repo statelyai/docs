@@ -67,9 +67,9 @@ function SummaryList() {
           boxBg
         >
           <p>
-            Want to keep it simple? Design in our visual editor then send events
-            to Stately using our SDK and let us handle your backend with support
-            for realtime multiplayer.
+            Want to keep it simple? Design in our visual editor, then send
+            events to Stately using our SDK and let us handle your backend with
+            support for realtime multiplayer.
           </p>
           <div className="pt-6">
             <ComingSoon />

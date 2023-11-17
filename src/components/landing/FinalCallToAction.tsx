@@ -11,7 +11,7 @@ export function FinalCallToAction() {
         </SectionTitle>
       </div>
       <div className="flex justify-center pt-24 gap-4">
-        <ButtonLink href="/pricing" background="blue" size="large">
+        <ButtonLink href="/registry/signup" background="blue" size="large">
           Sign up for free
         </ButtonLink>
         <ButtonLink

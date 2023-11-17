@@ -18,7 +18,7 @@ function AllLinks() {
   return (
     <nav className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 justify-center pt-8 pb-16 max-w-5xl m-auto">
       <div className="mt-8">
-        <a href="https://wwww.stately.ai">
+        <a href="/">
           <img
             className="h-6 w-auto"
             src="/landing/stately-logo.svg"
