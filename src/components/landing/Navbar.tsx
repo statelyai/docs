@@ -19,25 +19,25 @@ export function Navbar() {
     <Disclosure as="nav">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
+          <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-full p-2 text-white/60 hover:text-white focus:outline-none focus:ring-1 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="relative inline-flex items-center justify-center p-2 rounded-full text-white/60 hover:text-white focus:outline-none focus:ring-1 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XIcon className="block w-6 h-6" aria-hidden="true" />
                   ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    <MenuIcon className="block w-6 h-6" aria-hidden="true" />
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
+              <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+                <div className="flex items-center flex-shrink-0">
                   <a href="/">
                     <img
-                      className="h-8 w-auto"
+                      className="w-auto h-8"
                       src="/assets/landing/stately-logo.svg"
                       height="32"
                       width="115"
@@ -59,7 +59,7 @@ export function Navbar() {
                       </NavLink>
                     ))}
                   </div>
-                  <div className="hidden lg:flex ml-8">
+                  <div className="hidden ml-8 lg:flex">
                     <a
                       href="https://discord.gg/xstate"
                       className={classNames(
@@ -139,8 +139,8 @@ export function Navbar() {
               </div>
             </div>
 
-            <Disclosure.Panel className="sm:hidden bg-blue-850 rounded-md shadow-lg">
-              <div className="space-y-1 px-2 py-3">
+            <Disclosure.Panel className="rounded-md shadow-lg sm:hidden bg-blue-850">
+              <div className="px-2 py-3 space-y-1">
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
@@ -228,7 +228,7 @@ function NavLink({
   children,
   isCurrent,
   href,
-  target = '_self',
+  target,
 }: {
   children: ReactNode;
   isCurrent?: boolean;
@@ -273,7 +273,7 @@ function NavMenuItem({ children, href }) {
 // TODO: use Docusaurus links
 {
   /* <Link
-className="bg-white rounded-full text-gray-500 px-4 py-2"
+className="px-4 py-2 text-gray-500 bg-white rounded-full"
 to="/docs"
 > */
 }
