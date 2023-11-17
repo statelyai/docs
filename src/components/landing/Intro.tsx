@@ -6,7 +6,7 @@ export function Intro() {
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
         <h1 className="text-5xl md:text-6xl lg:text-6xl font-semibold text-white/90 drop-shadow-sm tracking-tighter leading-tight text-center">
-          Your intelligent assistant for robust logic.
+          Your intelligent assistant for robust logic
         </h1>
         <ExampleRow />
 
@@ -96,7 +96,7 @@ function CallToActionButtons() {
 
 function Companies() {
   return (
-    <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16">
+    <div className="container flex flex-wrap gap-12 md:gap-16 justify-center pb-16 max-w-3xl lg:max-w-5xl">
       <Company
         src="/landing-page/assets/aws.svg"
         alt="AWS"

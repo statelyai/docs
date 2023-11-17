@@ -31,10 +31,10 @@ export function ButtonLink({
     size === 'small'
       ? 'h-8 text-sm px-3'
       : size === 'large'
-      ? ' h-16 text-lg px-6'
-      : 'h-12 text-md px-4';
+      ? ' h-16 text-base md:text-lg px-6'
+      : 'h-12 text-base px-4';
 
-  const text = `text-md font-semibold text-gray-50`;
+  const text = `text-base font-semibold text-gray-50`;
   const layout =
     'inline-flex items-center justify-center rounded-full whitespace-nowrap';
   const various =

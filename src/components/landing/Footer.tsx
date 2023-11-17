@@ -2,8 +2,8 @@ import React from 'react';
 
 export function Footer() {
   return (
-    <div className=" bg-blue-950 pb-24 pt-72">
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl pb-16 mx-auto">
+    <div className="bg-blue-950 pb-24 pt-72">
+      <section className="container grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl pb-16 mx-auto">
         <Newsletter />
         <DiscordCommunity />
       </section>
@@ -16,8 +16,8 @@ export function Footer() {
 
 function AllLinks() {
   return (
-    <nav className="grid grid-cols-5 justify-center pt-16 pb-16 max-w-5xl m-auto">
-      <div>
+    <nav className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 justify-center pt-8 pb-16 max-w-5xl m-auto">
+      <div className="mt-8">
         <a href="https://wwww.stately.ai">
           <img
             className="h-6 w-auto"
@@ -59,7 +59,7 @@ function AllLinks() {
 
 function LinkList({ children, title }) {
   return (
-    <div>
+    <div className="mt-8">
       <h4 className="text-base font-bold text-white/60 mb-4 mt-0">{title}</h4>
       <ul className="text-white/90 font-medium text-base">{children}</ul>
     </div>

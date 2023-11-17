@@ -79,9 +79,7 @@ function DesignSection() {
                 <img
                   alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
                   src="/landing/design-and-simulate.png"
-                  width="625"
-                  height="450"
-                  className="w-full h-auto rounded-b-xl"
+                  className="w-full h-auto rounded-b-2xl"
                 />
               </Feature>
             </div>
@@ -109,27 +107,41 @@ function DesignSection() {
                       alongside the code.
                     </FeatureText>
                     <div className="grid pt-12 gap-8">
-                      <FeatureText>
-                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
-                        Designers and product managers can fill in how each
-                        state is supposed to look.
-                      </FeatureText>
-                      <FeatureText>
-                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
-                        Intuitively understand what a state machine does with
-                        images at each step.
-                      </FeatureText>
-                      <FeatureText>
-                        <CheckCircleIcon className="inline mr-4 text-pink-300" />{' '}
-                        Quickly prototype new ideas by experiencing mockups
-                        using the same logic as your code.
-                      </FeatureText>
+                      <div className="flex gap-4">
+                        <CheckCircleIcon className="text-pink-300 mt-1" />
+                        <div className="flex-1">
+                          <FeatureText>
+                            Designers and product managers can fill in how each
+                            state is supposed to look.
+                          </FeatureText>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4">
+                        <CheckCircleIcon className="text-pink-300 mt-1" />
+                        <div className="flex-1">
+                          <FeatureText>
+                            Intuitively understand what a state machine does
+                            with images at each step.
+                          </FeatureText>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4">
+                        <CheckCircleIcon className="text-pink-300 mt-1" />
+                        <div className="flex-1">
+                          <FeatureText>
+                            Quickly prototype new ideas by experiencing mockups
+                            using the same logic as your code.
+                          </FeatureText>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <img
                     alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
                     src="/landing/assets-colorpicker.png"
-                    className="w-full h-auto rounded-r-xl"
+                    className="w-full h-auto rounded-r-2xl"
                   />
                 </div>
               </Feature>
@@ -147,9 +159,7 @@ function DesignSection() {
                 <img
                   alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
                   src="/landing/ai-generation.png"
-                  width="625"
-                  height="450"
-                  className="w-full h-auto rounded-br-xl"
+                  className="w-full h-auto rounded-br-2xl"
                 />
               </Feature>
             </div>
@@ -240,13 +250,11 @@ function XStateSection() {
           </Feature>
         </div>
         <img
-          height="709"
-          width="1250"
           alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the state machine visualized using the XState VSCode extension."
           src="/landing/vscode-split.png"
           className="w-full h-auto mt-12"
         />
-        <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-36">
+        <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-48">
           <Feature box>
             <div className="flex">
               <ArrowLeftRightIcon className="h-[24px] self-start mt-1 text-orange-300" />
@@ -284,7 +292,7 @@ function XStateSection() {
 
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box noPadding>
-              <div className="grid grid-cols-2 gap-12">
+              <div className="grid md:grid-cols-2 gap-12">
                 <div className="pt-12 pl-12">
                   <FeatureText>
                     <Strong>Generate React apps from diagrams</Strong> to
@@ -294,11 +302,9 @@ function XStateSection() {
                   </FeatureText>
                 </div>
                 <img
-                  height="806"
-                  width="1250"
                   alt="A book lending machine in the Stately editor alongside the React app view showing the React code and the machine represented in TypeScript. In between them is the Stately editor’s Generate React app button."
                   src="/landing/generate-react.png"
-                  className="w-full h-auto rounded-r-2xl"
+                  className="w-full h-auto rounded-b-2xl md:rounded-bl-[0] md:rounded-tr-2xl"
                 />
               </div>
             </Feature>
@@ -307,7 +313,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box noPadding>
               <div>
-                <div className="py-12 pl-12">
+                <div className="pb-24 pt-12 pl-12">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
                     coverage robust and up-to-date.
@@ -316,7 +322,7 @@ function XStateSection() {
                 <img
                   alt="A list of test paths in the Stately editor, The reaches state “Book lennding.End” via declineBookHold is hovered over, and the corresponding path through the state machine is highlighted on the canvas."
                   src="/landing/test-generation.png"
-                  className="w-full h-auto"
+                  className="w-full h-auto rounded-br-2xl"
                 />
               </div>
             </Feature>
@@ -398,7 +404,7 @@ function SourceOfTruthSection() {
         <div className="grid w-full gap-12 mt-12 md:grid-cols-2 lg:grid-cols-3">
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box noPadding>
-              <div className="grid grid-cols-2 gap-12">
+              <div className="grid md:grid-cols-2 gap-12">
                 <div className="pt-12 pl-12">
                   <FeatureText>
                     <Strong>Reference an event catalog</Strong> which is
@@ -428,6 +434,13 @@ function SourceOfTruthSection() {
                 Export as markdown stories, Mermaid drawings, or JSON documents
               </Strong>{' '}
               that can be copied into issues and project documents.
+            </FeatureText>
+          </Feature>
+
+          <Feature box>
+            <FeatureText>
+              <Strong>Generate diagram summaries</Strong> to quickly get
+              oriented.
             </FeatureText>
           </Feature>
         </div>
@@ -463,10 +476,10 @@ function SkySection() {
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
           src="/landing/deploy-to-sky.png"
-          className="w-full h-auto max-w-5xl mx-auto mt-32"
+          className="w-full h-auto max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
         />
 
-        <div className="flex flex-col max-w-5xl gap-4 m-auto mt-24">
+        <div className="flex flex-col max-w-5xl gap-4 m-auto mt-48">
           <FeatureTitle>A seamless developer experience</FeatureTitle>
           <FeatureText>
             Coding against large cloud services is cumbersome, boilerplate
@@ -482,10 +495,17 @@ function SkySection() {
             </Strong>
           </FeatureText>
         </div>
+
+        <img
+          alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light. In between them is the Stately editor’s Deploy button."
+          src="/landing/sky-diagram.svg"
+          className="w-full max-w-5xl mx-auto mt-24"
+        />
+
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-36">
           <div className="grid col-span-3">
             <Feature box>
-              <div className="max-w-3xl pt-4 m-auto">
+              <div className="max-w-3xl py-12 m-auto">
                 <FeatureText>
                   Combine the expressiveness and readability of statecharts with
                   the durability and fault tolerance of cloud computing by
@@ -555,63 +575,18 @@ function Strong({ children }) {
 }
 
 // Eventually maybe make all bolded text links to doc pages
-function StrongLink({ children, href = 'https://www.stately.ai/docs' }) {
-  return (
-    <a
-      href={href}
-      className="font-extrabold text-white/90 hover:text-white"
-      target="_blank"
-    >
-      {children}
-    </a>
-  );
-}
+// function StrongLink({ children, href = 'https://www.stately.ai/docs' }) {
+//   return (
+//     <a
+//       href={href}
+//       className="font-extrabold text-white/90 hover:text-white"
+//       target="_blank"
+//     >
+//       {children}
+//     </a>
+//   );
+// }
 
-function FeatureLeftImage({
-  children,
-  imgSrc = '/landing/DELETE-1.png',
-  imgAlt = 'TODO',
-}) {
-  return (
-    <div className="grid grid-col-2-leftfr rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
-      <img
-        alt={imgAlt}
-        src={imgSrc}
-        className="max-w-2xl rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full"
-      />
-      <p className="flex-1 pt-12 text-xl leading-normal text-white/60">
-        {children}
-      </p>
-    </div>
-  );
-}
-
-function FeatureRightImage({
-  children,
-  imgSrc = '/landing/DELETE-1.png',
-  imgAlt = 'TODO',
-}) {
-  return (
-    <div className="flex h-fit w-fit max-w-6xl rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
-      <p className="flex-1 pt-12 text-xl leading-normal text-white/60">
-        {children}
-      </p>
-      <img
-        alt={imgAlt}
-        src={imgSrc}
-        className="max-w-2xl rounded-xl border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-auto w-full"
-      />
-    </div>
-  );
-}
-
-function FeatureBox({ children }) {
-  return (
-    <div className="flex flex-col w-full max-w-lg px-8 py-6 h-fit">
-      {children}
-    </div>
-  );
-}
 function FeatureText({
   children,
   imgSrc = '/landing/DELETE-1.png',
