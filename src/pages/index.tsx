@@ -8,6 +8,7 @@ import { Navbar } from '../components/landing/Navbar';
 import { Testimonials } from '../components/landing/Testimonials';
 import '../css/landing-page.css';
 import '../css/landing-styles.css';
+// import '../css/preflight.css';
 
 export default function Index() {
   useEffect(() => {
@@ -72,10 +73,10 @@ export default function Index() {
           src="https://plausible.io/js/script.tagged-events.js"
         ></script>
       </Head>
-      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md">
+      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md twp">
         <Navbar />
       </header>
-      <main className="bg-blue-950">
+      <main className="bg-blue-950 twp">
         <Intro />
         <Benefits />
         <Testimonials />

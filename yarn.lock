@@ -8560,6 +8560,11 @@ svgo@^2.7.0, svgo@^2.8.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
+tailwindcss-scoped-preflight@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/tailwindcss-scoped-preflight/-/tailwindcss-scoped-preflight-2.0.2.tgz#aeca934fb0981040f81cddabbb2405e20dc8423a"
+  integrity sha512-R306riOQ9lzP0uRfthR8v7Fv0GH4guqZmA8l4Y5Iyt/Bhbmyk2Ze4c27LyNljkaItFXAs+/rDAAULa/aZnqcqw==
+
 tailwindcss@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.3.3.tgz#90da807393a2859189e48e9e7000e6880a736daf"
