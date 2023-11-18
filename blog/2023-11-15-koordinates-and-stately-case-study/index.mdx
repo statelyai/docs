@@ -1,0 +1,67 @@
+---
+title: 'Koordinates x Stately: geospatial data management case study'
+description: Making geographic information systems accessible and collaborative. A Stately and Koordinates case study.
+authors: [gavin]
+tags: [case study, study, koordinates, stately, state machines, machines, gis, geospatial]
+date: 2023-11-15
+slug: 2023-11-15-koordinates-and-stately-case-study
+image: /blog/koordinates_logo_rev.png
+---
+
+For more than 15 years, the team at [Koordinates](https://koordinates.com/) has been hard at work reimagining and building streamlined and equitable ways for customers to manage geospatial data. Koordinates have built a massively scaled GIS platform for users to upload their own data, query over 18,000 open datasets, and securely merge openly available data with proprietary information.
+<!--truncate-->
+Unlike competing products that require vendor lock-in and lack compatibility across the entire GIS stack, Koordinates’ offerings are modular: users may use as much or as little of the tooling as they like, and the tooling is interoperable with existing GIS environments.
+
+![Koordinates Logo](./koordinates_logo_rev.png)
+
+## UI state management
+
+Koordinates provide their users with both a web app, named Koordinates Cloud, as well as an Electron-based desktop app. In order to filter through and query such large datasets, the team naturally needed to expose a lot of controls for end-user functionality. The frontends for the apps allow end users to accomplish complex tasks, like:
+
+- **searching** for the **right data via the Browser
+- **visualizing** relevant geospatial information in the Map Viewer
+- **automating** data management with workflows in the Data Manager
+
+Managing context and application state was a core concern for the team, and for determining the best framework to manage complex state, they turned to XState.
+
+## Repository State Management
+
+The desktop app Koordinates provides also ships with **[Kart](https://github.com/koordinates/kart),** an open source version control platform built specifically for large geospatial datasets. Being built on top of Git, Kart provides a familiar user experience for developers used to the version control system. Specifically, Kart allows users to:
+
+- **clone** geospatial data to users’ local machines
+- **manage** branches for their datasets - creating, merging, and deleting them
+- **roll back** branches to previous commits, preserving changes made over time
+
+In the case of Kart, many of these operations can be long-running and have **several** edge cases, making Stately’s tooling to visualize, understand, and execute logic from stateful diagrams a massive benefit.
+
+## Breaking complex UI’s into manageable components **
+
+In the case of both their products, Koordinates was able to use Stately’s tooling to break their “big” problems down into several, distinct smaller ones. Taylor Lodge, an engineer on the core team, explained that with Stately’s visual editor and simulation tooling, they were able to break their application logic into several small, testable state machines. For example, the UI for Koordinates Cloud has several components, but the logic for loading elements in their list view is represented rather succinctly in this state machine: 
+
+
+<EmbedMachine
+  name="Koordinates List View Machine"
+  embedURL="https://stately.ai/registry/editor/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?mode=design&machineId=68b835cc-49fc-4b9c-972e-a63c01465c1f"/>
+
+There are several potential events that _can_ happen, but the core states are relatively few to model this behavior. Instead of representing their entire app state in a monolith, the team decided to go with a more modular approach, making use of the [actor model](https://en.wikipedia.org/wiki/Actor_model). This makes maintaining and testing individual components much easier, and it allows for extensibility down the line as project complexity grows.
+
+Handling several logical components does come with some considerations, however. Taylor noted that now that the team had several small components, they needed a way to orchestrate and communicate between them in a cohesive manner. Thankfully, the [XState](https://github.com/statelyai/xstate) framework for composing machines is open source, and the team used it as their base for [`xstate-tree`, an open source framework](https://github.com/koordinates/xstate-tree) for modeling complex UI’s as a tree of XState machines. `xstate-tree` couples React views with state machines and composes them as actors in “slots”, allowing them to be exposed to their respective React views. Learn more about all the features `xstate-tree` provides in their [well-documented GitHub repo](https://github.com/koordinates/xstate-tree).
+
+While there are other state management platforms for developers, the team at Koordinates also wanted the ability to co-locate their implementation logic alongside their machines’ definitions, or “blueprints”. This reduces the surface area developers when revisions need to made to their machines. From Taylor: “I love the first class support in XState for side effects. That the side effects can be co-located with my code that triggers it and uses it, instead of having to put them _somewhere else_ like with Redux”.
+
+
+## Handling complex, long-running tasks and edge cases
+
+Being a source control solution for complex datasets, Kart has a naturally complex set of problems to solve as well. Merging, cloning, and loading data all have plenty of considerations, edge cases, and possible failure scenarios, so the team had to take care to address all of them. The ability to map this logic using the Stately Editor proved to be extremely useful.
+
+<EmbedMachine
+  name="Koordinates List View Machine"
+  embedURL="https://stately.ai/registry/editor/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?mode=design&machineId=afa23e5f-11c7-460d-bd98-ff7de694a41d"/>
+
+Stately tooling isn’t just for managing UI state. In fact, the logic representing Kart repos is all managed using an XState actor. That actor then watches the filesystem to execute Kart-specific commands and update its own in-memory state. 
+
+Taylor and the team love Stately’s visual editor. Even without domain knowledge of their core product, the logic is still human readable and understandable. Questions like “what happens when a user cancels a clone operation?” and “when is the data model for branches updated?” are easily answered by reading the diagram. Diagramming logic in this way ensured the team was able to build Kart’s functionality in a way that is inherently less prone to bugs and plan for potential errors where possible without wasting time over-engineering for cases that could never occur.
+
+## Moving forward with Stately
+
+By building with Stately’s tooling, the Koordinates team not only simplified their UI and repository state management, but they in turn gave back to the technical community with `xstate-tree`, allowing React developers to better wrangle hosts of machines. Koordinates and Stately are aligned on many core goals: enhancing productivity for their users, strongly committing to open source, and facilitating team collaboration. So, the Stately team was eager for feedback and have committed to the development of features that enhance collaboration without compromise, like GitHub synchronization to respect the repo as the single source of truth as well as system-wide statechart visualization to facilitate deeper interdisciplinary communication and understanding. 
