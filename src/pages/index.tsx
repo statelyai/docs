@@ -73,9 +73,13 @@ export default function Index() {
           src="https://plausible.io/js/script.tagged-events.js"
         ></script>
       </Head>
+
+      {/* We need the class name `twp` here to ensure the Tailwind reset gets applied to all children. */}
       <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md twp">
         <Navbar />
       </header>
+
+      {/* We need the class name `twp` here to ensure the Tailwind reset gets applied to all children. */}
       <main className="bg-blue-950 twp">
         <Intro />
         <Benefits />
