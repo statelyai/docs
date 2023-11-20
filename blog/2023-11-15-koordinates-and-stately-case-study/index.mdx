@@ -49,7 +49,7 @@ In the case of both their products, Koordinates was able to use Stately’s tool
 
 <EmbedMachine
   name="Koordinates List View Machine"
-  embedURL="https://stately.ai/registry/editor/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?mode=design&machineId=68b835cc-49fc-4b9c-972e-a63c01465c1f"/>
+  embedURL="https://stately.ai/registry/editor/embed/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?machineId=68b835cc-49fc-4b9c-972e-a63c01465c1f"/>
 
 There are several potential events that _can_ happen, but the core states are relatively few to model this behavior. Instead of representing their entire app state in a monolith, the team decided to go with a more modular approach, making use of the [actor model](https://en.wikipedia.org/wiki/Actor_model). This makes maintaining and testing individual components much easier, and it allows for extensibility down the line as project complexity grows.
 
@@ -64,7 +64,7 @@ Being a source control solution for complex datasets, Kart has a naturally compl
 
 <EmbedMachine
   name="Koordinates List View Machine"
-  embedURL="https://stately.ai/registry/editor/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?mode=design&machineId=afa23e5f-11c7-460d-bd98-ff7de694a41d"/>
+  embedURL="https://stately.ai/registry/editor/embed/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?machineId=afa23e5f-11c7-460d-bd98-ff7de694a41d"/>
 
 Stately tooling isn’t just for managing UI state. In fact, the logic representing Kart repos is all managed using an XState actor. That actor then watches the filesystem to execute Kart-specific commands and update its own in-memory state. 
 
