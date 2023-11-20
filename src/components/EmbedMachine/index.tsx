@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 import { useColorMode } from '@docusaurus/theme-common';
 
@@ -7,23 +7,9 @@ type Embed = {
   embedURL: string;
 };
 
-
 export default function EmbedMachine({ name, embedURL }: Embed) {
   const { colorMode } = useColorMode();
-
-  // keeps the whole page from scrolling when 
-  const handleMouseEnter = () => {
-    document.body.style.overflow = 'hidden';
-    }
-  const handleMouseLeave = () => { 
-    document.body.style.overflow = 'auto';
-  }
-
   return (
-    <div
-    onMouseEnter={handleMouseEnter}
-    onMouseLeave={handleMouseLeave}
-  >
     <iframe
       loading="lazy"
       src={manageURL(embedURL, {
@@ -36,7 +22,6 @@ export default function EmbedMachine({ name, embedURL }: Embed) {
       </a>
       .
     </iframe>
-    </div>
   );
 }
 
