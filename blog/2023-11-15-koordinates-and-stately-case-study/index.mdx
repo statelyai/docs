@@ -8,7 +8,7 @@ slug: 2023-11-17-koordinates-and-stately-case-study
 image: /blog/koordinates_logo_white.png
 ---
 
-For more than 15 years, the team at [Koordinates](https://koordinates.com/) has been hard at work reimagining and building streamlined and equitable ways for customers to manage geospatial data. Koordinates have built a massively scaled GIS platform for users to upload their own data, query over 18,000 open datasets, and securely merge openly available data with proprietary information.
+For more than 15 years, the team at [Koordinates](https://koordinates.com/) has been hard at work reimagining and building streamlined and equitable ways for customers to manage geospatial data. Koordinates have built a massively scaled GIS (Geographic Information Systems) platform for users to upload their own data, query over 18,000 open datasets, and securely merge openly available data with proprietary information.
 <!--truncate-->
 Unlike competing products that require vendor lock-in and lack compatibility across the entire GIS stack, Koordinates’ offerings are modular: users may use as much or as little of the tooling as they like, and the tooling is interoperable with existing GIS environments.
 
@@ -26,13 +26,13 @@ Unlike competing products that require vendor lock-in and lack compatibility acr
 
 Koordinates provide their users with both a web app, named Koordinates Cloud, as well as an Electron-based desktop app. In order to filter through and query such large datasets, the team naturally needed to expose a lot of controls for end-user functionality. The frontends for the apps allow end users to accomplish complex tasks, like:
 
-- **searching** for the **right data via the Browser
+- **searching** for the right data via the Browser
 - **visualizing** relevant geospatial information in the Map Viewer
 - **automating** data management with workflows in the Data Manager
 
 Managing context and application state was a core concern for the team, and for determining the best framework to manage complex state, they turned to XState.
 
-## Repository State Management
+## Repository state management
 
 The desktop app Koordinates provides also ships with **[Kart](https://github.com/koordinates/kart),** an open source version control platform built specifically for large geospatial datasets. Being built on top of Git, Kart provides a familiar user experience for developers used to the version control system. Specifically, Kart allows users to:
 
@@ -42,7 +42,7 @@ The desktop app Koordinates provides also ships with **[Kart](https://github.com
 
 In the case of Kart, many of these operations can be long-running and have several edge cases, making Stately’s tooling to visualize, understand, and execute logic from stateful diagrams a massive benefit.
 
-## Breaking complex UI’s into manageable components **
+## Breaking complex UI’s into manageable components
 
 In the case of both their products, Koordinates was able to use Stately’s tooling to break their “big” problems down into several, distinct smaller ones. Taylor Lodge, an engineer on the core team, explained that with Sta tely’s visual editor and simulation tooling, they were able to break their application logic into several small, testable state machines. For example, the UI for Koordinates Cloud has several components, but the logic for loading elements in their list view is represented rather succinctly in this state machine: 
 
@@ -53,9 +53,11 @@ In the case of both their products, Koordinates was able to use Stately’s tool
 
 There are several potential events that _can_ happen, but the core states are relatively few to model this behavior. Instead of representing their entire app state in a monolith, the team decided to go with a more modular approach, making use of the [actor model](https://en.wikipedia.org/wiki/Actor_model). This makes maintaining and testing individual components much easier, and it allows for extensibility down the line as project complexity grows.
 
-Handling several logical components does come with some considerations, however. Taylor noted that now that the team had several small components, they needed a way to orchestrate and communicate between them in a cohesive manner. Thankfully, the [XState](https://github.com/statelyai/xstate) framework for composing machines is open source, and the team used it as their base for [`xstate-tree`, an open source framework](https://github.com/koordinates/xstate-tree) for modeling complex UI’s as a tree of XState machines. `xstate-tree` couples React views with state machines and composes them as actors in “slots”, allowing them to be exposed to their respective React views. Learn more about all the features `xstate-tree` provides in their [well-documented GitHub repo](https://github.com/koordinates/xstate-tree).
+Handling several logical components does come with some considerations, however. Taylor noted that now that the team had several small components, they needed a way to orchestrate and communicate between them in a cohesive manner. Thankfully, the [XState](https://github.com/statelyai/xstate) framework for composing machines is open source, and the team used it as their base for [`xstate-tree`, an open source framework](https://github.com/koordinates/xstate-tree) for modeling complex UIs as a tree of XState machines. `xstate-tree` couples React views with state machines and composes them as actors in “slots”, allowing them to be exposed to their respective React views. Learn more about all the features `xstate-tree` provides in their [well-documented GitHub repo](https://github.com/koordinates/xstate-tree).
 
-While there are other state management platforms for developers, the team at Koordinates also wanted the ability to co-locate their implementation logic alongside their machines’ definitions, or “blueprints”. This reduces the surface area developers when revisions need to made to their machines. From Taylor: “I love the first class support in XState for side effects. That the side effects can be co-located with my code that triggers it and uses it, instead of having to put them _somewhere else_ like with Redux”.
+While there are other state management platforms for developers, the team at Koordinates also wanted the ability to co-locate their implementation logic alongside their machines’ definitions, or “blueprints”. This reduces the surface area developers when revisions need to made to their machines. From Taylor: 
+
+> “I love the first class support in XState for side effects. That the side effects can be co-located with my code that triggers it and uses it, instead of having to put them _somewhere else_ like with Redux”
 
 
 ## Handling complex, long-running tasks and edge cases
