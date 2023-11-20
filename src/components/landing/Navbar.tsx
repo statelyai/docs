@@ -153,7 +153,7 @@ export function Navbar() {
                 <Disclosure.Button
                   key="log-in"
                   as="a"
-                  href="/"
+                  href="/registry/login"
                   className={classNames(
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
@@ -165,7 +165,7 @@ export function Navbar() {
                 <Disclosure.Button
                   key="sign-up"
                   as="a"
-                  href="/"
+                  href="/registry/signup"
                   className={classNames(
                     linkStyles,
                     'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
