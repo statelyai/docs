@@ -704,9 +704,10 @@ h3 {
 .text--bold,
 strong,
 b {
+  color: var(--st-text-highlight);
   font-synthesis: none;
   font-weight: bold;
-  font-weight: var(--ifm-font-weight-bold);
+  font-weight: 750;
 }
 
 .text--italic,
