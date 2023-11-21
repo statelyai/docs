@@ -16,7 +16,16 @@ That’s why we’re so excited to release Stately Studio 2.0, which aims to **m
 
 <!--truncate-->
 
-[image]
+<p>
+  <ThemedImage
+    alt="A state machine, called 'Source of truth', helps manage the different stages of a project. It starts in the 'Create' state, where you can import existing code, generate new code using AI, design with a drag-and-drop interface, or convert from other state management libraries. Once you're done creating, you transition to the 'Use' state. Here, you can export your code and documentation, deploy live workflows, generate tests, React apps, and schemas, and simulate your project to preview and share."
+    sources={{
+      light:
+        '/blog/2023-11-20-stately-studio-2-0/source.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/source-dm.png',
+    }}
+  />
+</p>
 
 Stately Studio 2.0 is an intelligent software modeling platform for working with app logic at all stages of the software development lifecycle. With its many specialized graph algorithms for analyzing state machines deterministically, paired with AI (large language models (LLMs) and more) for the not-so-deterministic tasks, such as generation & modification from natural language, [Stately Studio](https://stately.ai) is an essential tool for any development team working on complex app logic.
 
@@ -63,7 +72,16 @@ Here’s how it works:
 2. Hit **Generate React app**.
 3. Stately will near-instantly generate a React app from your state machine (there’s zero AI used here!)
 
-[image]
+<p>
+  <ThemedImage
+    alt="Split view with state machine for a sensor reading app on the left, and a generated UI for the sensor readings on the right. The generated UI has a title, the current sensor readings, and buttons to log new readings. On top of the split view is a Generate React app button."
+    sources={{
+      light:
+        '/blog/2023-11-20-stately-studio-2-0/generate.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/generate-dm.png',
+    }}
+  />
+</p>
 
 You can open the React app in CodeSandbox to view the working React app built on top of your state machine. Whether you’re making a working prototype or creating a baseline for a functioning app, we want to make it easy to generate UI code from your state machines. We’ll also support StackBlitz in the future.
 
@@ -94,7 +112,16 @@ Are you an enterprise team looking to store your assets on your own cloud or ser
 
 At [Stately.ai](http://stately.ai/), we want to help you and your team use state machines to improve every aspect of your software development process, from design to development to testing to deployment to monitoring. Last week, we launched **Stately Sky** for our Pro users; if you use state machines for workflows, you can now use Stately Sky to deploy your state machines to the cloud and get all the benefits of serverless computing.
 
-[image]
+<p>
+  <ThemedImage
+    alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
+    sources={{
+      light:
+        '/blog/2023-11-20-stately-studio-2-0/sky.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/sky-dm.png',
+    }}
+  />
+</p>
 
 With Stately AI and Stately Sky together, you can go from an idea to a deployed workflow in minutes. The Stately editor helps you create much more flexible workflows than other workflow tools—you can use these workflows on the front end, back end, or both. Perfect for onboarding flows, collaborative apps, games, AI agents, and more. Stately Sky is also backed by Cloudflare Workers so that you can run your state machines in 200+ locations worldwide, with low latency and high availability. 
 
@@ -118,7 +145,16 @@ You can now **zoom to selected** to re-center the canvas from the zoom menu or t
 
 As part of our Stately AI toolset for our Pro users, we now have an experimental **Get summary** option in the machine details panel. You can use this to create a summary of your state machine to make it even more understandable to non-technical stakeholders. We’ve also found it helpful in generating alternative text for images of our state machines. This feature could explain and summarize specific paths throughout the machine in the future, representing different use cases or edge cases.
 
-[image]
+<p>
+  <ThemedImage
+    alt="Our room readings state machine with the machine details panel open. Below a Get Summary button is the summary text for this machine that reads 'This state machine is called Accumulate room readings. Its purpose is to collect temperature and humidity readings from loT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. Whenever a temperature or humidity event is received, the state machine updates the respective value. After one hour (3600000 milliseconds), the state machine transitions to the GenerateReport state. In this state, it invokes a separate machine called produceReport to generate the report/ Once the report is generated, it…'"
+    sources={{
+      light:
+        '/blog/2023-11-20-stately-studio-2-0/summary.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/summary-dm.png',
+    }}
+  />
+</p>
 
 ## What’s coming next
 
