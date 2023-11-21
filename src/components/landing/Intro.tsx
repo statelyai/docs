@@ -80,6 +80,7 @@ function CallToActionButtons() {
         size="large"
         background="pink"
         href="/editor?source=landing-page"
+        target="_self"
       >
         Try the visual editor
       </ButtonLink>
