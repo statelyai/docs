@@ -328,6 +328,8 @@ Observable actor logic is described by an [observable stream of values](#fromObs
 Sending events to observable actors will have no effect.
 
 ```ts
+import { interval } from 'rxjs';
+
 const secondLogic = fromObservable(() => interval(1000));
 
 const secondActor = createActor(secondLogic);
@@ -354,6 +356,8 @@ Event observable actor logic is described by an observable stream of [event obje
 Sending events to event observable actors will have no effect.
 
 ```ts
+import { fromEvent } from 'rxjs';
+
 const mouseClickLogic = fromEventObservable(() =>
   fromEventPattern(document.body, 'click'),
 );
