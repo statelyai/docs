@@ -359,7 +359,7 @@ Sending events to event observable actors will have no effect.
 import { fromEvent } from 'rxjs';
 
 const mouseClickLogic = fromEventObservable(() =>
-  fromEventPattern(document.body, 'click'),
+  fromEvent(document.body, 'click') as Subscribable<EventObject>
 );
 
 const canvasMachine = createMachine({
