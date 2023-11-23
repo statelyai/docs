@@ -2162,6 +2162,18 @@ path.edge {
   margin-bottom: 1.5rem;
 }
 
+.badge {
+  background-color: #DB4206;
+  border-radius: 0.3rem;
+  color: white;
+  font-size: 0.6em;
+  font-weight: 400;
+  margin-top: 0.1rem;
+  margin-left: 0.5rem;
+  padding: 0.35rem 0.4rem;
+  text-transform: uppercase;
+}
+
 .feature-list .pricing-text {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -2289,33 +2301,46 @@ h2.pricing-heading {
 }
 
 @media (min-width: 1280px) {
-  .tier.services, .tier.community {
+  .tier.services {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 0;
   }
 
-  .tier.services .tier-header, .tier.community .tier-header {
+  .tier.community {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 0;
+  }
+
+  .tier.services .tier-header {
     border-bottom: none;
     flex-basis: 33%;
     padding-right: 1.5rem;
   }
 
   .tier.community .tier-header {
+    display: flex;
+    align-items: center;
+    border-bottom: none;
     margin-bottom: 0;
+    padding-right: 1.5rem;
   }
   
   .tier.community .pricing-heading {
-    margin-bottom: 0.5rem;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
   }
 
   .tier.services .feature-list, .tier.community .feature-list {
     border-left: 1px solid rgba(255, 255, 255, 0.11);
-    flex-basis: 66%;
     padding: 1rem 1.5rem;
   }
 
   .tier.community .feature-list {
+    align-items: center;
     display: flex;
     padding: 0.5rem 0 0.5rem 1.5rem;
     justify-content: space-between;
@@ -2324,11 +2349,13 @@ h2.pricing-heading {
   .tier.community .community-text  {
     color: white;
     font-size: calc(var(--font-small) * 1.05);
-    flex-basis: 70%;
+    flex-basis: auto;
+    margin: 0;
   }
 
   .tier.community .get-started {
-    flex-basis: 30%;
+    flex-basis: 24ch;
+    margin: 0;
   }
 
   .tier.community .get-started a {
