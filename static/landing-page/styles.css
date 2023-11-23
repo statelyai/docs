@@ -2134,7 +2134,8 @@ path.edge {
     grid-template-columns: repeat(3, 1fr);
     margin-top: 3rem;
     grid-template-areas:
-      'community professional enterprise'
+      'community community community'
+      'professional team enterprise'
       'services services services';
   }
 
@@ -2217,6 +2218,10 @@ path.edge {
   margin-top: 0;
 }
 
+.tier.community {
+  margin-bottom: 1rem;
+}
+
 .tier.services {
   margin-top: 1rem;
 }
@@ -2281,6 +2286,25 @@ h2.pricing-heading {
   since they are just slightly off otherwise?
   */
   min-height: 71px;
+}
+
+@media (min-width: 1280px) {
+  .tier.services, .tier.community {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+  }
+
+  .tier.services .tier-header, .tier.community .tier-header {
+    border-bottom: none;
+    flex-basis: 33%;
+    padding-right: 1.5rem;
+  }
+
+  .tier.services .feature-list, .tier.community .feature-list {
+    border-left: 1px solid rgba(255, 255, 255, 0.11);
+    padding: 1rem 1.5rem;
+  }
 }
 
 .details-wrapper {
