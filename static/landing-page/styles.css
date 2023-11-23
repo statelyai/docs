@@ -2279,7 +2279,7 @@ h2.pricing-heading {
   color: var(--chakra-colors-gray-200) !important;
   margin-top: 0.5rem;
   font-variation-settings: 'wght' 200;
-  max-width: 8em;
+  max-width: 19ch;
 }
 
 .pricing-text.description {
