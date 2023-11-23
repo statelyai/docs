@@ -2165,7 +2165,7 @@ path.edge {
 .feature-list .pricing-text {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   font-variation-settings: 'wght' 500;
   font-size: var(--font-small);
 }
@@ -2301,9 +2301,38 @@ h2.pricing-heading {
     padding-right: 1.5rem;
   }
 
+  .tier.community .tier-header {
+    margin-bottom: 0;
+  }
+  
+  .tier.community .pricing-heading {
+    margin-bottom: 0.5rem;
+  }
+
   .tier.services .feature-list, .tier.community .feature-list {
     border-left: 1px solid rgba(255, 255, 255, 0.11);
+    flex-basis: 66%;
     padding: 1rem 1.5rem;
+  }
+
+  .tier.community .feature-list {
+    display: flex;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    justify-content: space-between;
+  }
+
+  .tier.community .community-text  {
+    color: white;
+    font-size: calc(var(--font-small) * 1.05);
+    flex-basis: 70%;
+  }
+
+  .tier.community .get-started {
+    flex-basis: 30%;
+  }
+
+  .tier.community .get-started a {
+    margin-left: 1.5rem;
   }
 }
 
