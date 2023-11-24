@@ -62,8 +62,8 @@ So even for simple web apps, with small app-specific state and a few known app-s
 ## XState
 
 Actors in XState can:
-- **Create more actors** using the `spawn` action in a machine.
 - **Accept messages** as [events](transitions.mdx) sent by [action creators](actions.mdx) like [`raise`](actions#raise-action) or [`sendTo`](actions#send-to-action) in a machine, or from outside via `actor.send`.
+- **Create more actors** within a machine using `spawn` in an [`assign`](actions.mdx#assign-action), or using the `spawnChild` action creator, (see [Spawn](spawn.mdx) for details).
 - **Send more messages** as events using the [`sendTo`](actions.mdx#send-to-action) action creator in a machine, or `self.send` in their own logic.
 
 Actors in XState have their own [actor logic](actors.mdx#actor-logic) which they use to:
