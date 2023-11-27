@@ -1,11 +1,11 @@
 ---
-title: "Should this be a state, or in context?"
+title: 'Should this be a state, or in context?'
 description: How to decide when to use state or context.
 tags: [context, state machine, xstate, state]
 authors: [matt]
 image: /blog/2021-04-29-should-this-be-a-state-or-in-context.png
 slug: 2021-04-29-should-this-be-a-state-or-in-context
-date:  2021-04-29
+date: 2021-04-29
 ---
 
 State machines offer several API’s for expressing state. Like other tools, you can keep arbitrary values in a store (usually expressed as an object) called `context`.
@@ -15,11 +15,11 @@ State machines offer several API’s for expressing state. Like other tools, you
 This is handy for values which change over time and you need to keep updated, like the value of a form input:
 
 ```ts
-import { createMachine, assign } from "xstate";
+import { createMachine, assign } from 'xstate';
 
 const machine = createMachine({
   context: {
-    name: "",
+    name: '',
   },
   on: {
     CHANGE_NAME: {
@@ -39,16 +39,16 @@ XState also gives you another way of expressing state - through finite states. L
 
 ```ts
 const machine = createMachine({
-  initial: "closed",
+  initial: 'closed',
   states: {
     closed: {
       on: {
-        OPEN: "open",
+        OPEN: 'open',
       },
     },
     open: {
       on: {
-        CLOSE: "close",
+        CLOSE: 'close',
       },
     },
   },
@@ -85,19 +85,19 @@ To show you what I mean, let’s imagine a form input inside a modal. We only wa
 
 ```ts
 const machine = createMachine({
-  initial: "closed",
+  initial: 'closed',
   context: {
-    name: "",
+    name: '',
   },
   states: {
     closed: {
       on: {
-        OPEN: "open",
+        OPEN: 'open',
       },
     },
     open: {
       on: {
-        CLOSE: "close",
+        CLOSE: 'close',
         CHANGE_NAME: {
           actions: assign((context, event) => {
             return {
@@ -123,7 +123,7 @@ You might be wondering - but, I _can_ express the above in `context`!
 ```ts
 const machine = createMachine({
   context: {
-    name: "",
+    name: '',
     isOpen: false,
   },
   on: {

@@ -108,15 +108,13 @@ const parentMachine = createMachine(
         console.log('Child machine complete!');
       },
     },
-  }
+  },
 );
 ```
 
 You can also send data along with this `onDone` event. This “done data” is specified on the final state’s `data` property:
 
-
 ```ts
-
 const secretMachine = createMachine({
   initial: 'wait',
   context: {

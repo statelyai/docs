@@ -112,8 +112,7 @@
             {
               "type": "doc",
               "label": "Generate flow",
-              "id": "generate-flow",
-              "className": "pro-feature"
+              "id": "generate-flow"
             },
             "import-from-code",
             "export-as-code",
@@ -124,8 +123,7 @@
             {
               "type": "doc",
               "label": "Colors",
-              "id": "colors",
-              "className": "pro-feature"
+              "id": "colors"
             }
           ]
         },
@@ -140,22 +138,19 @@
             {
               "type": "doc",
               "label": "Live simulation",
-              "id": "live-simulation",
-              "className": "pro-feature"
+              "id": "live-simulation"
             }
           ]
         },
         {
           "type": "doc",
           "label": "Version history",
-          "id": "versions",
-          "className": "pro-feature"
+          "id": "versions"
         },
         {
           "type": "doc",
           "label": "Lock machines",
-          "id": "lock-machines",
-          "className": "pro-feature"
+          "id": "lock-machines"
         },
         "keyboard-shortcuts",
         "canvas-view-controls",
@@ -211,14 +206,12 @@
         {
           "type": "doc",
           "label": "Community plan",
-          "id": "studio-community-plan",
-          "className": "community-feature"
+          "id": "studio-community-plan"
         },
         {
           "type": "doc",
           "label": "Pro plan",
-          "id": "studio-pro-plan",
-          "className": "pro-feature"
+          "id": "studio-pro-plan"
         },
         {
           "type": "doc",

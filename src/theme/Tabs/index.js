@@ -1,4 +1,4 @@
-import React, {cloneElement} from 'react';
+import React, { cloneElement } from 'react';
 import clsx from 'clsx';
 import {
   useScrollPositionBlocker,
@@ -6,9 +6,9 @@ import {
 } from '@docusaurus/theme-common/internal';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import styles from './styles.module.css';
-function TabList({className, block, selectedValue, selectValue, tabValues}) {
+function TabList({ className, block, selectedValue, selectValue, tabValues }) {
   const tabRefs = [];
-  const {blockElementScrollPositionUntilNextRender} =
+  const { blockElementScrollPositionUntilNextRender } =
     useScrollPositionBlocker();
   const handleTabChange = (event) => {
     const newTab = event.currentTarget;
@@ -51,8 +51,9 @@ function TabList({className, block, selectedValue, selectValue, tabValues}) {
           'tabs--block': block,
         },
         className,
-      )}>
-      {tabValues.map(({value, label, attributes}) => (
+      )}
+    >
+      {tabValues.map(({ value, label, attributes }) => (
         <li
           // TODO extract TabListItem
           role="tab"
@@ -65,14 +66,15 @@ function TabList({className, block, selectedValue, selectValue, tabValues}) {
           {...attributes}
           className={clsx('tabs__item', styles.tabItem, attributes?.className, {
             'tabs__item--active': selectedValue === value,
-          })}>
+          })}
+        >
           {label ?? value}
         </li>
       ))}
     </ul>
   );
 }
-function TabContent({lazy, children, selectedValue}) {
+function TabContent({ lazy, children, selectedValue }) {
   const childTabs = (Array.isArray(children) ? children : [children]).filter(
     Boolean,
   );
@@ -84,7 +86,7 @@ function TabContent({lazy, children, selectedValue}) {
       // fail-safe or fail-fast? not sure what's best here
       return null;
     }
-    return cloneElement(selectedTabItem, {className: 'padding-top--s'});
+    return cloneElement(selectedTabItem, { className: 'padding-top--s' });
   }
   return (
     <div className="padding-top--s">

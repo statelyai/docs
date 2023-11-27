@@ -1,5 +1,4 @@
 import { YouTube as MDXYouTube } from 'mdx-embed';
-import React from 'react';
 
 export default function YouTube({ id }: { id: string }) {
   return (

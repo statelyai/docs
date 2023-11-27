@@ -2,15 +2,15 @@ import {
   ArrowLeftRightIcon,
   BookOpenIcon,
   CalendarIcon,
+  CheckCircleIcon,
   FileDownIcon,
   MergeIcon,
   PartyPopperIcon,
   ShieldCheckIcon,
-  CheckCircleIcon,
   SparklesIcon,
   Wand2Icon,
 } from 'lucide-react';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   ButtonLink,
   ComingSoon,
@@ -79,7 +79,9 @@ function DesignSection() {
                 <img
                   alt="View of the same credit check workflow in simulate mode in the Stately editor. In Design mode, states can be added. In Simulate mode, the machine can be walked through where the current state and available events are highlighted."
                   src="/assets/landing/design-and-simulate.png"
-                  className="w-full h-auto rounded-b-2xl" height="385" width="1207"
+                  className="w-full h-auto rounded-b-2xl"
+                  height="385"
+                  width="1207"
                 />
               </Feature>
             </div>
@@ -141,7 +143,9 @@ function DesignSection() {
                   <img
                     alt="A state machine in the Stately editor for a color picker with a screenshot of the color value input in the idle state and a screenshot of the full spectrum color picker in the open state."
                     src="/assets/landing/assets-colorpicker.png"
-                    className="w-full h-auto rounded-r-2xl" width="603" height="903"
+                    className="w-full h-auto rounded-r-2xl"
+                    width="603"
+                    height="903"
                   />
                 </div>
               </Feature>
@@ -159,7 +163,9 @@ function DesignSection() {
                 <img
                   alt="A state machine being accurately generated in the Stately editor from the text description: An authentication flow for a web app. The first two sign in options are using GitHub or Apple where the user does not need to enter their email address or password. The third sign in option is using email where the user needs to enter their email address and password to sign up if they have not already signed up or to sign in if they have already signed up. The authentication flow is complete when a user has signed in."
                   src="/assets/landing/ai-generation.png"
-                  className="w-full h-auto rounded-br-2xl" height="363" width="1207"
+                  className="w-full h-auto rounded-br-2xl"
+                  height="363"
+                  width="1207"
                 />
               </Feature>
             </div>
@@ -253,7 +259,8 @@ function XStateSection() {
           alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the same state machine visualized using the XState VSCode extension."
           src="/assets/landing/vscode-split.png"
           className="w-full h-auto mt-12"
-          height="637" width="1208"
+          height="637"
+          width="1208"
         />
         <div className="grid justify-center w-full gap-12 md:grid-cols-2 lg:grid-cols-3 pt-48">
           <Feature box>
@@ -482,7 +489,8 @@ function SkySection() {
         <img
           alt="A traffic light machine in the Stately editor alongside a live web app with a rendering of a traffic light."
           src="/assets/landing/deploy-to-sky.png"
-          height="598" width="1024"
+          height="598"
+          width="1024"
           className="w-full h-auto max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
         />
 

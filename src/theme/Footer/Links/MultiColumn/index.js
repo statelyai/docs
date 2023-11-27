@@ -1,12 +1,12 @@
 import React from 'react';
 import LinkItem from '@theme/Footer/LinkItem';
-function ColumnLinkItem({item}) {
+function ColumnLinkItem({ item }) {
   return item.html ? (
     <li
       className="footer__item"
       // Developer provided the HTML, so assume it's safe.
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{__html: item.html}}
+      dangerouslySetInnerHTML={{ __html: item.html }}
     />
   ) : (
     <li key={item.href ?? item.to} className="footer__item">
@@ -14,7 +14,7 @@ function ColumnLinkItem({item}) {
     </li>
   );
 }
-function Column({column}) {
+function Column({ column }) {
   return (
     <div className="col footer__col">
       <h2 className="footer__title">{column.title}</h2>
@@ -26,7 +26,7 @@ function Column({column}) {
     </div>
   );
 }
-export default function FooterLinksMultiColumn({columns}) {
+export default function FooterLinksMultiColumn({ columns }) {
   return (
     <div className="row footer__links">
       {columns.map((column, i) => (

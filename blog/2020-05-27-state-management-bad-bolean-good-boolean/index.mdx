@@ -1,12 +1,12 @@
 ---
-title: "How to tell a bad boolean from a good boolean"
-description: "TL;DR: Bad booleans represent state. Good booleans are derived from state"
+title: 'How to tell a bad boolean from a good boolean'
+description: 'TL;DR: Bad booleans represent state. Good booleans are derived from state'
 tags: [tutorial]
 authors: [matt]
 category: entry
 image: /blog/2020-05-27-state-management-bad-bolean-good-boolean.png
 slug: 2020-05-27-state-management-bad-bolean-good-boolean
-date:  2020-05-27
+date: 2020-05-27
 ---
 
 **TL;DR**: Bad booleans represent state. Good booleans are derived from state.
@@ -29,7 +29,7 @@ In a fetch request, you might model the state like this:
 const makeFetch = async () => {
   isLoading = true;
   try {
-    await fetch("/users");
+    await fetch('/users');
 
     isComplete = true;
   } catch (e) {
@@ -68,22 +68,22 @@ This is what's known as boolean explosion - I learned about this from [Kyle Shev
 How do you get around this? Instead of a system with 8 possible values, we need a system with three possible values. We can do this in Typescript with an enum.
 
 ```ts
-type Status = "loading" | "complete" | "errored";
+type Status = 'loading' | 'complete' | 'errored';
 
-let status: Status = "loading";
+let status: Status = 'loading';
 ```
 
 We’d implement this in a fetch like this:
 
 ```ts
 const makeFetch = async () => {
-  status = "loading";
+  status = 'loading';
   try {
-    await fetch("/users");
+    await fetch('/users');
 
-    status = "complete";
+    status = 'complete';
   } catch (e) {
-    status = "errored";
+    status = 'errored';
   }
 };
 ```
@@ -105,10 +105,10 @@ if (result.isLoading) {
 The reason these are good booleans is that their underlying mechanism is based on an enum. Bad booleans represent state. Good booleans are derived from state:
 
 ```js
-let status: Status = "loading";
+let status: Status = 'loading';
 
 // Derived from the status above
-let isLoading = status === "loading";
+let isLoading = status === 'loading';
 ```
 
 You can safely use this `isLoading` to display your loading spinner, happy in the knowledge that you've removed all impossible states.
@@ -119,9 +119,9 @@ We can represent a state enum in Javascript as well. While the above code will w
 
 ```ts
 const statusEnum = {
-  loading: "loading",
-  complete: "complete",
-  errored: "errored",
+  loading: 'loading',
+  complete: 'complete',
+  errored: 'errored',
 };
 
 let status = statusEnum.loading;
@@ -129,7 +129,7 @@ let status = statusEnum.loading;
 const makeFetch = async () => {
   status = statusEnum.loading;
   try {
-    await fetch("/users");
+    await fetch('/users');
 
     status = statusEnum.complete;
   } catch (e) {

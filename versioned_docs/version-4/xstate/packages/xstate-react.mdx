@@ -83,7 +83,7 @@ A [React hook](https://reactjs.org/hooks) that interprets the given `machine` an
   const [state, send] = useMachine(() =>
     createMachine({
       /* ... */
-    })
+    }),
   );
   ```
 
@@ -160,7 +160,7 @@ const App = () => {
     (state) => {
       // subscribes to state changes
       console.log(state);
-    }
+    },
   );
 
   // ...

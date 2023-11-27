@@ -321,11 +321,11 @@ You can persist and rehydrate state with `useMachine(...)` via `options.state`:
 // Get the persisted state config object from somewhere, e.g. localStorage
 
 const persistedState = JSON.parse(
-  localStorage.getItem('some-persisted-state-key')
+  localStorage.getItem('some-persisted-state-key'),
 );
 
 const { state, send } = useMachine(someMachine, {
-  state: persistedState
+  state: persistedState,
 });
 
 // state will initially be that persisted state, not the machine’s initialState
@@ -347,12 +347,12 @@ const toggleMachine = createMachine({
   initial: 'inactive',
   states: {
     inactive: {
-      on: { TOGGLE: 'active' }
+      on: { TOGGLE: 'active' },
     },
     active: {
-      on: { TOGGLE: 'inactive' }
-    }
-  }
+      on: { TOGGLE: 'inactive' },
+    },
+  },
 });
 
 export const toggleService = interpret(toggleMachine).start();

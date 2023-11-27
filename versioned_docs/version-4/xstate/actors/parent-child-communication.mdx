@@ -43,7 +43,7 @@ const childMachine = createMachine(
         console.log('Event received!');
       },
     },
-  }
+  },
 );
 
 const parentMachine = createMachine({
@@ -60,7 +60,7 @@ const parentMachine = createMachine({
         // highlight-start
         {
           to: 'child',
-        }
+        },
         // highlight-end
       ),
     },
@@ -109,7 +109,7 @@ const pingPongMachine = createMachine(
         });
       },
     },
-  }
+  },
 );
 ```
 
@@ -142,7 +142,7 @@ const alertMachine = createMachine(
         alert('Oh no!');
       },
     },
-  }
+  },
 );
 
 const parentMachine = createMachine({
@@ -184,7 +184,7 @@ const machine = createMachine(
         });
       },
     },
-  }
+  },
 );
 ```
 

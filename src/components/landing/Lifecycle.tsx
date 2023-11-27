@@ -1,4 +1,3 @@
-import React from 'react';
 import { ButtonLink, ComingSoon, classNames } from './SharedComponents';
 
 export function Lifecycle() {

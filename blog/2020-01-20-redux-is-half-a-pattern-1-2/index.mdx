@@ -9,7 +9,10 @@ slug: 2020-01-20-redux-is-half-a-pattern-1-2
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7" />
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7"
+  />
 </head>
 
 Redux is fantastic.
@@ -94,7 +97,7 @@ There's many ways to represent the combination of finite and extended state in y
 
 ```js
 const waterState = {
-  value: "liquid", // finite state
+  value: 'liquid', // finite state
   context: {
     // extended state
     temperature: 90,
@@ -106,7 +109,7 @@ But you're free to represent it in other ways:
 
 ```js
 const waterState = {
-  phase: "liquid", // finite state
+  phase: 'liquid', // finite state
   data: {
     // extended state
     temperature: 90,
@@ -116,7 +119,7 @@ const waterState = {
 // or...
 
 const waterState = {
-  status: "liquid", // finite state
+  status: 'liquid', // finite state
   temperature: 90, // anything not 'status' is extended state
 };
 ```
@@ -146,7 +149,7 @@ To something like this:
 
 ```js
 const userState = {
-  status: "loading", // or 'idle' or 'error' or 'success'
+  status: 'loading', // or 'idle' or 'error' or 'success'
   user: null,
   error: null,
 };
@@ -196,7 +199,7 @@ Finite states can be introduced to a reducer by making an explicit property that
 
 ```js
 const initialUserState = {
-  status: "idle", // explicit finite state
+  status: 'idle', // explicit finite state
   user: null,
   error: null,
 };
@@ -211,10 +214,10 @@ interface User {
 }
 
 type UserState =
-  | { status: "idle", user: null, error: null }
-  | { status: "loading", user: null, error: null }
-  | { status: "success", user: User, error: null }
-  | { status: "failure", user: null, error: string };
+  | { status: 'idle', user: null, error: null }
+  | { status: 'loading', user: null, error: null }
+  | { status: 'success', user: User, error: null }
+  | { status: 'failure', user: null, error: string };
 ```
 
 ## Difference: events vs. actions
@@ -253,11 +256,11 @@ However, the way that developers tend to model reducers is by determining the ne
 ```js
 function userReducer(state, event) {
   switch (event.type) {
-    case "FETCH":
+    case 'FETCH':
     // go to some 'loading' state
-    case "RESOLVE":
+    case 'RESOLVE':
     // go to some 'success' state
-    case "REJECT":
+    case 'REJECT':
     // go to some 'error' state
     default:
       return state;
@@ -284,8 +287,8 @@ You might be looking through your existing Redux reducers and realize where this
 ```js
 function userReducer(state, event) {
   switch (event.type) {
-    case "FETCH":
-      if (state.status !== "loading") {
+    case 'FETCH':
+      if (state.status !== 'loading') {
         // go to some 'loading' state...
         // but ONLY if we're not already loading
       }
@@ -300,9 +303,9 @@ But that only makes your state logic harder to follow because the state transiti
 ```js
 function userReducer(state, event) {
   switch (state.status) {
-    case "idle":
+    case 'idle':
       switch (event.type) {
-        case "FETCH":
+        case 'FETCH':
         // go to some 'loading' state
 
         // ...
@@ -413,11 +416,11 @@ const { actions } = state;
 
 useEffect(() => {
   actions.forEach((action) => {
-    if (action.type === "fetchUser") {
+    if (action.type === 'fetchUser') {
       fetch(`/api/user/${action.id}`)
         .then((res) => res.json())
         .then((data) => {
-          dispatch({ type: "RESOLVE", user: data });
+          dispatch({ type: 'RESOLVE', user: data });
         });
     }
     // ... etc. for other action implementations

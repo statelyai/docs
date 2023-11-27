@@ -119,13 +119,11 @@ const sidebars = {
               type: 'doc',
               label: 'Generate flow',
               id: 'generate-flow',
-              className: 'pro-feature',
             },
             {
               type: 'doc',
               label: 'Colors',
               id: 'colors',
-              className: 'pro-feature',
             },
             'annotations',
             'descriptions',
@@ -145,7 +143,6 @@ const sidebars = {
               type: 'doc',
               label: 'Live simulation',
               id: 'live-simulation',
-              className: 'pro-feature',
             },
           ],
         },
@@ -153,7 +150,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Stately Sky',
-          className: 'pro-feature',
           link: {
             type: 'doc',
             id: 'stately-sky-getting-started',
@@ -217,13 +213,11 @@ const sidebars = {
               type: 'doc',
               label: 'Community plan',
               id: 'studio-community-plan',
-              className: 'community-feature',
             },
             {
               type: 'doc',
               label: 'Pro plan',
               id: 'studio-pro-plan',
-              className: 'pro-feature',
             },
             {
               type: 'doc',
@@ -251,13 +245,11 @@ const sidebars = {
           type: 'doc',
           label: 'Version history',
           id: 'versions',
-          className: 'pro-feature',
         },
         {
           type: 'doc',
           label: 'Lock machines',
           id: 'lock-machines',
-          className: 'pro-feature',
         },
         'keyboard-shortcuts',
         'canvas-view-controls',

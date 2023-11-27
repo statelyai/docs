@@ -1,6 +1,6 @@
 ---
 title: How to manage global state with XState and React
-description: "Everything you need to know to manage global state with XState and React."
+description: 'Everything you need to know to manage global state with XState and React.'
 authors: [matt]
 date: 2021-05-27
 tags: [xstate, react, redux, webdev]
@@ -28,10 +28,10 @@ To mimic Redux's globally-available store, we're going to use React context. Rea
 Luckily, XState gives us a first-class way to do that.
 
 ```ts
-import React, { createContext } from "react";
-import { useInterpret } from "@xstate/react";
-import { authMachine } from "./authMachine";
-import { ActorRefFrom } from "xstate";
+import React, { createContext } from 'react';
+import { useInterpret } from '@xstate/react';
+import { authMachine } from './authMachine';
+import { ActorRefFrom } from 'xstate';
 
 interface GlobalStateContextType {
   authService: ActorRefFrom<typeof authMachine>;
@@ -40,7 +40,7 @@ interface GlobalStateContextType {
 export const GlobalStateContext = createContext(
   // Typed this way to avoid TS errors,
   // looks odd I know
-  {} as GlobalStateContextType
+  {} as GlobalStateContextType,
 );
 
 export const GlobalStateProvider = (props) => {
@@ -61,15 +61,15 @@ Using `useInterpret` returns a `service`, which is a static reference to the run
 Further down the tree, you can subscribe to the service like this:
 
 ```ts
-import React, { useContext } from "react";
-import { GlobalStateContext } from "./globalState";
-import { useActor } from "@xstate/react";
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
+import { useActor } from '@xstate/react';
 
 export const SomeComponent = (props) => {
   const globalServices = useContext(GlobalStateContext);
   const [state] = useActor(globalServices.authService);
 
-  return state.matches("loggedIn") ? "Logged In" : "Logged Out";
+  return state.matches('loggedIn') ? 'Logged In' : 'Logged Out';
 };
 ```
 
@@ -82,19 +82,19 @@ There's an issue with the implementation above - this will update the component 
 Luckily, XState provides that too.
 
 ```ts
-import React, { useContext } from "react";
-import { GlobalStateContext } from "./globalState";
-import { useSelector } from "@xstate/react";
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
+import { useSelector } from '@xstate/react';
 
 const selector = (state) => {
-  return state.matches("loggedIn");
+  return state.matches('loggedIn');
 };
 
 export const SomeComponent = (props) => {
   const globalServices = useContext(GlobalStateContext);
   const isLoggedIn = useSelector(globalServices.authService, selector);
 
-  return isLoggedIn ? "Logged In" : "Logged Out";
+  return isLoggedIn ? 'Logged In' : 'Logged Out';
 };
 ```
 
@@ -104,14 +104,14 @@ Dispatching events
 For dispatching events to the global store, you can call a service's send function directly.
 
 ```ts
-import React, { useContext } from "react";
-import { GlobalStateContext } from "./globalState";
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
 
 export const SomeComponent = (props) => {
   const globalServices = useContext(GlobalStateContext);
 
   return (
-    <button onClick={() => globalServices.authService.send("LOG_OUT")}>
+    <button onClick={() => globalServices.authService.send('LOG_OUT')}>
       Log Out
     </button>
   );

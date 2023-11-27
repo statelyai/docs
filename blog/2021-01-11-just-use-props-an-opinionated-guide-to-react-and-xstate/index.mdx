@@ -1,5 +1,5 @@
 ---
-title: "“Just use props”: An opinionated guide to React and XState"
+title: '“Just use props”: An opinionated guide to React and XState'
 description: >-
   XState is the most powerful tool available for managing complex state. The
   challenge comes when integrating XState with React…
@@ -7,7 +7,7 @@ tags: [prop, xstate, state machine, react]
 authors: [matt]
 image: /blog/2021-01-11-just-use-props-an-opinionated-guide-to-react-and-xstate.png
 slug: 2021-01-11-just-use-props-an-opinionated-guide-to-react-and-xstate
-date:  2021-01-11
+date: 2021-01-11
 ---
 
 XState can feel overwhelming. Once you’ve gone through [Kyle](https://egghead.io/courses/introduction-to-state-machines-using-xstate) or [David’s](https://frontendmasters.com/courses/xstate/) courses and read through the [docs](https://xstate.js.org/docs), you’ll get a thorough understanding of the API. You’ll see that XState is the most powerful tool available for managing complex state.
@@ -33,11 +33,11 @@ It’s called **just use props**. It’s got a few simple rules:
 The simplest way to integrate a state machine in your app is with `useMachine`.
 
 ```ts
-import { createMachine, interpret } from "xstate";
-import { useMachine } from "@xstate/react";
+import { createMachine, interpret } from 'xstate';
+import { useMachine } from '@xstate/react';
 
 const machine = createMachine({
-  initial: "open",
+  initial: 'open',
   states: {
     open: {},
     closed: {},
@@ -47,7 +47,7 @@ const machine = createMachine({
 const Component = () => {
   const [state, send] = useMachine(machine);
 
-  return state.matches("open") ? "Open" : "Closed";
+  return state.matches('open') ? 'Open' : 'Closed';
 };
 ```
 
@@ -62,14 +62,14 @@ Let’s say you have a parent component and a child component. The parent has so
 The first is to pass a running service to the child which the child can subscribe to:
 
 ```ts
-import { useMachine, useService } from "@xstate/react";
-import { createMachine, Interpreter } from "xstate";
+import { useMachine, useService } from '@xstate/react';
+import { createMachine, Interpreter } from 'xstate';
 
 /**
  * Types for the machine declaration
  */
 type MachineContext = {};
-type MachineEvent = { type: "TOGGLE" };
+type MachineEvent = { type: 'TOGGLE' };
 
 const machine = createMachine<MachineContext, MachineEvent>({});
 
@@ -93,8 +93,8 @@ const ChildComponent = (props: ChildComponentProps) => {
   const [state, send] = useService(props.service);
 
   return (
-    <button onClick={() => send("TOGGLE")}>
-      {state.matches("open") ? "Open" : "Closed"}
+    <button onClick={() => send('TOGGLE')}>
+      {state.matches('open') ? 'Open' : 'Closed'}
     </button>
   );
 };
@@ -109,14 +109,14 @@ The machine appears to bleed across multiple components. Its service seems to ha
 This can be expressed much more cleanly using props:
 
 ```ts
-import { useMachine } from "@xstate/react";
-import { createMachine } from "xstate";
+import { useMachine } from '@xstate/react';
+import { createMachine } from 'xstate';
 
 /**
  * Types for the machine declaration
  */
 type MachineContext = {};
-type MachineEvent = { type: "TOGGLE" };
+type MachineEvent = { type: 'TOGGLE' };
 
 const machine = createMachine<MachineContext, MachineEvent>({});
 
@@ -125,8 +125,8 @@ const ParentComponent = () => {
 
   return (
     <ChildComponent
-      isOpen={state.matches("open")}
-      toggle={() => send("TOGGLE")}
+      isOpen={state.matches('open')}
+      toggle={() => send('TOGGLE')}
     />
   );
 };
@@ -143,7 +143,7 @@ interface ChildComponentProps {
 const ChildComponent = (props: ChildComponentProps) => {
   return (
     <button onClick={() => props.toggle()}>
-      {props.isOpen ? "Open" : "Closed"}
+      {props.isOpen ? 'Open' : 'Closed'}
     </button>
   );
 };
@@ -158,9 +158,9 @@ The best improvement, though, is in the `ParentComponent`. In the previous examp
 Unlike tools which require a global store, XState has no opinion on where you keep your state. If you have a piece of state which belongs near the root of your app, you can use React Context to make it globally available:
 
 ```ts
-import React, { createContext } from "react";
-import { useMachine } from "@xstate/react";
-import { createMachine } from "xstate";
+import React, { createContext } from 'react';
+import { useMachine } from '@xstate/react';
+import { createMachine } from 'xstate';
 
 const globalMachine = createMachine({});
 
@@ -176,7 +176,7 @@ const Provider: React.FC = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ isOpen: state.matches("open"), toggle: () => send("TOGGLE") }}
+      value={{ isOpen: state.matches('open'), toggle: () => send('TOGGLE') }}
     >
       {children}
     </GlobalContext.Provider>
@@ -198,7 +198,7 @@ Sometimes, you need to use a parent machine _and_ a child machine. Let’s say t
 
 ```ts
 const machine = createMachine({
-  initial: "open",
+  initial: 'open',
   context: {
     numberToStore: 0,
   },
@@ -228,7 +228,7 @@ const ChildComponent = (props: ChildComponentProps) => {
 
   useEffect(() => {
     send({
-      type: "REPORT_NEW_NUMBER",
+      type: 'REPORT_NEW_NUMBER',
       newNumber: props.someNumber,
     });
   }, [props.someNumber]);
@@ -245,7 +245,7 @@ const ChildComponent = () => {
 
   useEffect(() => {
     send({
-      type: "REPORT_NEW_NUMBER",
+      type: 'REPORT_NEW_NUMBER',
       newNumber: result.data.someNumber,
     });
   }, [result.data.someNumber]);
