@@ -68,7 +68,7 @@ const config = {
               'note',
               'tip',
               'info',
-              'caution',
+              'warning',
               'danger',
               'typescript',
               'xstate',

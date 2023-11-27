@@ -1394,6 +1394,7 @@ details summary::before {
 }
 
 .alert--warning,
+.theme-admonition-warning,
 .alert--warningxstate {
   --ifm-alert-background-color: var(--st-warning-background);
   --ifm-alert-background-color-highlight: var(--st-warning-accent);
