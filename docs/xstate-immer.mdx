@@ -39,7 +39,7 @@ const toggleMachine = createMachine({
   id: 'toggle',
   context: {
     count: 0,
-    level: 0
+    level: 0,
   },
   initial: 'inactive',
   states: {
@@ -49,22 +49,22 @@ const toggleMachine = createMachine({
           target: 'active',
           // Immutably update context the same "mutable"
           // way as you would do with Immer!
-          actions: assign((ctx) => ctx.count++)
-        }
-      }
+          actions: assign((ctx) => ctx.count++),
+        },
+      },
     },
     active: {
       on: {
         TOGGLE: {
-          target: 'inactive'
+          target: 'inactive',
         },
         // Use the updater for more convenience:
         [levelUpdater.type]: {
-          actions: levelUpdater.action
-        }
-      }
-    }
-  }
+          actions: levelUpdater.action,
+        },
+      },
+    },
+  },
 });
 
 const toggleService = interpret(toggleMachine)
@@ -120,8 +120,8 @@ const userMachine = createMachine({
     address: {
       city: null,
       state: null,
-      country: null
-    }
+      country: null,
+    },
   },
   initial: 'active',
   states: {
@@ -130,18 +130,18 @@ const userMachine = createMachine({
         CHANGE_COUNTRY: {
           actions: assign((context, event) => {
             context.address.country = event.value;
-          })
-        }
-      }
-    }
-  }
+          }),
+        },
+      },
+    },
+  },
 });
 
 const { initialState } = userMachine;
 
 const nextState = userMachine.transition(initialState, {
   type: 'UPDATE_COUNTRY',
-  country: 'USA'
+  country: 'USA',
 });
 
 nextState.context.address.country;
@@ -168,7 +168,7 @@ The object returned by `createUpdater(...)` is an updater object containing:
 - `action`: the assign action object that will update the `context`.
 - `update`: the event creator that takes in the `input` and returns an `event` object with the specified `eventType` and `input` that will be passed to `recipe(context, event)`.
 
-:::caution .update(...) event creator
+:::warning .update(...) event creator
 
 ### Caution
 
@@ -197,7 +197,7 @@ const formMachine = createMachine({
   initial: 'editing',
   context: {
     name: '',
-    age: null
+    age: null,
   },
   states: {
     editing: {
@@ -205,10 +205,10 @@ const formMachine = createMachine({
         // The updater.type can be used directly for transitions
         // where the updater.action function will be applied
         [nameUpdater.type]: { actions: nameUpdater.action },
-        [ageUpdater.type]: { actions: ageUpdater.action }
-      }
-    }
-  }
+        [ageUpdater.type]: { actions: ageUpdater.action },
+      },
+    },
+  },
 });
 
 const service = interpret(formMachine)
@@ -274,7 +274,7 @@ const nameUpdater = createUpdater<SomeContext, NameUpdateEvent>(
   'UPDATE_NAME',
   (ctx, { input }) => {
     ctx.name = input;
-  }
+  },
 );
 
 // You should use NameUpdateEvent directly as part of the event type
@@ -299,14 +299,14 @@ const nameUpdater = createUpdater<FormContext, NameUpdateEvent>(
   'UPDATE_NAME',
   (ctx, { input }) => {
     ctx.name = input;
-  }
+  },
 );
 
 const ageUpdater = createUpdater<FormContext, AgeUpdateEvent>(
   'UPDATE_AGE',
   (ctx, { input }) => {
     ctx.age = input;
-  }
+  },
 );
 
 type FormEvent =
@@ -319,24 +319,24 @@ type FormEvent =
 const formMachine = createMachine({
   schema: {
     context: {} as FormContext,
-    events: {} as FormEvent
+    events: {} as FormEvent,
   },
   initial: 'editing',
   context: {
     name: '',
-    age: undefined
+    age: undefined,
   },
   states: {
     editing: {
       on: {
         [nameUpdater.type]: { actions: nameUpdater.action },
         [ageUpdater.type]: { actions: ageUpdater.action },
-        SUBMIT: 'submitting'
-      }
+        SUBMIT: 'submitting',
+      },
     },
     submitting: {
       // ...
-    }
-  }
+    },
+  },
 });
 ```

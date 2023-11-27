@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function Footer() {
   return (
     <div className="bg-blue-950 pb-24 pt-72">

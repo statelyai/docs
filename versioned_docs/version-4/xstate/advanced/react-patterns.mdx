@@ -252,7 +252,7 @@ class Toggle extends React.Component {
   };
 
   actor = interpret(toggleMachine).onTransition((current) =>
-    this.setState({ current })
+    this.setState({ current }),
   );
 
   componentDidMount() {

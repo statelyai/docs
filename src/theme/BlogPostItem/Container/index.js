@@ -6,19 +6,19 @@ export default function BlogPostItemContainer({ children, className }) {
   const { withBaseUrl } = useBaseUrlUtils();
   const image = assets.image ?? frontMatter.image;
   return (
-      <article
-        className={className}
-        itemProp="blogPost"
-        itemScope
-        itemType="http://schema.org/BlogPosting"
-      >
-        {image && (
-          <meta
-            itemProp="image"
-            content={withBaseUrl(image, { absolute: true })}
-          />
-        )}
-        {children}
-      </article>
+    <article
+      className={className}
+      itemProp="blogPost"
+      itemScope
+      itemType="http://schema.org/BlogPosting"
+    >
+      {image && (
+        <meta
+          itemProp="image"
+          content={withBaseUrl(image, { absolute: true })}
+        />
+      )}
+      {children}
+    </article>
   );
 }

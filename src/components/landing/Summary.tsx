@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ButtonLink, classNames, ComingSoon } from './SharedComponents';
 
 export function Summary() {

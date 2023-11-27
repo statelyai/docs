@@ -1,5 +1,7 @@
 // Import the original mapper
 import MDXComponents from '@theme-original/MDXComponents';
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
 import ThemedImage from '@theme/ThemedImage';
 import * as LucideIcons from 'lucide-react';
 import { Announcement } from '../components/Announcement';
@@ -17,4 +19,6 @@ export default {
   YouTube,
   EmbedMachine,
   ThemedImage,
+  Tabs,
+  TabItem,
 };

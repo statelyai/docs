@@ -1,39 +1,39 @@
 /* Skip to link */
 
 a.skip {
-    display: block;
-    text-align: center;
-    padding-top: var(--ifm-leading);
-    padding-bottom: var(--ifm-leading);
-    text-decoration: none;
-  }
-  
-  a.skip span {
-    background: var(--ifm-background-color);
-  }
-  
-  a.skip span:first-of-type {
-    padding-left: 0.5em;
-  }
-  
-  a.skip span:last-of-type {
-    padding-right: 0.5em;
-  }
-  
-  a.skip span.text {
-    padding: 0 0.5em;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2rem;
-  }
-  
-  a.skip::before {
-    border-top: 1px solid var(--st-layout-border);
-    content: '';
-    display: block;
-    height: var(--ifm-leading);
-    top: calc(var(--ifm-leading)*1.5);
-    width: 100%;
-    position: relative;
-    z-index: -1;
-  }
+  display: block;
+  text-align: center;
+  padding-top: var(--ifm-leading);
+  padding-bottom: var(--ifm-leading);
+  text-decoration: none;
+}
+
+a.skip span {
+  background: var(--ifm-background-color);
+}
+
+a.skip span:first-of-type {
+  padding-left: 0.5em;
+}
+
+a.skip span:last-of-type {
+  padding-right: 0.5em;
+}
+
+a.skip span.text {
+  padding: 0 0.5em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2rem;
+}
+
+a.skip::before {
+  border-top: 1px solid var(--st-layout-border);
+  content: '';
+  display: block;
+  height: var(--ifm-leading);
+  top: calc(var(--ifm-leading) * 1.5);
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}

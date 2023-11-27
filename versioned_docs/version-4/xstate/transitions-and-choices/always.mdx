@@ -60,7 +60,7 @@ const machine = createMachine(
     guards: {
       shouldTransition: (ctx) => ctx.user.role === 'admin',
     },
-  }
+  },
 );
 ```
 
@@ -149,7 +149,6 @@ const gameMachine = createMachine(
 Example with `always`:
 
 ```ts
-
 import { createMachine, assign } from 'xstate';
 
 const gameMachine = createMachine(
@@ -165,7 +164,7 @@ const gameMachine = createMachine(
           { target: 'win', cond: 'didPlayerWin' },
           { target: 'lose', cond: 'didPlayerLose' },
         ],
-      // highlight-end
+        // highlight-end
         on: {
           AWARD_POINTS: {
             actions: 'awardPoints',
@@ -196,7 +195,7 @@ const gameMachine = createMachine(
         return context.points < 0;
       },
     },
-  }
+  },
 );
 ```
 

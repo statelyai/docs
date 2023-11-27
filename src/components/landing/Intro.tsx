@@ -1,4 +1,3 @@
-import React from 'react';
 import { ButtonLink } from './SharedComponents';
 
 export function Intro() {

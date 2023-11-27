@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {translate} from '@docusaurus/Translate';
+import { translate } from '@docusaurus/Translate';
 import {
   PageMetadata,
   HtmlClassNameProvider,
@@ -11,16 +11,14 @@ import BlogLayout from '@theme/BlogLayout';
 import TagsListByLetter from '@theme/TagsListByLetter';
 import SearchMetadata from '@theme/SearchMetadata';
 function useBlogTagsPostsPageDescription() {
-  return translate(
-    {
-      id: 'theme.blog.tagListPageDescription',
-      description: 'The description of the page for a blog tag',
-      message: 'Browse all the tags used in the posts.',
-    },
-  );
+  return translate({
+    id: 'theme.blog.tagListPageDescription',
+    description: 'The description of the page for a blog tag',
+    message: 'Browse all the tags used in the posts.',
+  });
 }
 
-export default function BlogTagsListPage({tags, sidebar}) {
+export default function BlogTagsListPage({ tags, sidebar }) {
   const title = translateTagsPageTitle();
   const description = useBlogTagsPostsPageDescription();
   return (
@@ -28,7 +26,8 @@ export default function BlogTagsListPage({tags, sidebar}) {
       className={clsx(
         ThemeClassNames.wrapper.blogPages,
         ThemeClassNames.page.blogTagsListPage,
-      )}>
+      )}
+    >
       <PageMetadata title={title} description={description} />
       <SearchMetadata tag="blog_tags_list" />
       <BlogLayout sidebar={sidebar}>

@@ -1,39 +1,30 @@
-import React from 'react';
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import {
-  findFirstCategoryLink,
-  useDocById,
-} from '@docusaurus/theme-common/internal';
-import isInternalUrl from '@docusaurus/isInternalUrl';
-import {translate} from '@docusaurus/Translate';
+import { translate } from '@docusaurus/Translate';
+import { useDocById } from '@docusaurus/theme-common/internal';
+import clsx from 'clsx';
 import styles from './styles.module.css';
-function CardContainer({href, children}) {
+
+function CardContainer({ href, children }) {
   return (
-    <Link
-      href={href}
-      className={clsx('card link-box', styles.cardContainer)}>
+    <Link href={href} className={clsx('card link-box', styles.cardContainer)}>
       {children}
     </Link>
   );
 }
-function CardLayout({href, title, description}) {
+function CardLayout({ href, title, description }) {
   return (
     <CardContainer href={href}>
-      <h2 className={clsx('card-heading', styles.cardTitle)}>
-        {title}
-      </h2>
+      <h2 className={clsx('card-heading', styles.cardTitle)}>{title}</h2>
       {description && (
-        <p
-          className={clsx('card-text', styles.cardDescription)}>
+        <p className={clsx('card-text', styles.cardDescription)}>
           {description}
         </p>
       )}
     </CardContainer>
   );
 }
-function CardCategory({item}) {
-  const href = findFirstCategoryLink(item);
+function CardCategory({ item }) {
+  const href = item.href;
   // Unexpected: categories that don't have a link have been filtered upfront
   if (!href) {
     return null;
@@ -51,15 +42,14 @@ function CardCategory({item}) {
             description:
               'The default description for a category card in the generated index about how many items this category includes',
           },
-          {count: item.items.length},
+          { count: item.items.length },
         )
       }
     />
   );
 }
-function CardLink({item}) {
-  const icon = isInternalUrl(item.href) ? '📄️' : '🔗';
-  const doc = useDocById(item.docId ?? undefined);
+function CardLink({ item }) {
+  const doc = useDocById(item.docId);
   return (
     <CardLayout
       href={item.href}
@@ -68,7 +58,7 @@ function CardLink({item}) {
     />
   );
 }
-export default function DocCard({item}) {
+export default function DocCard({ item }) {
   switch (item.type) {
     case 'link':
       return <CardLink item={item} />;

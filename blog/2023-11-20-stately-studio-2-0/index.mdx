@@ -2,7 +2,7 @@
 title: 'Stately Studio 2.0'
 description: We’re so excited to release Stately Studio 2.0, which aims to meet developers where they are, no matter which libraries, frameworks, or even languages they use.
 authors: [david]
-tags: [new, Stately, AI, Sky, XState, Redux, Zustand, generate, React ]
+tags: [new, Stately, AI, Sky, XState, Redux, Zustand, generate, React]
 date: 2023-11-20
 slug: 2023-11-20-stately-studio-2-0
 image: /blog/2023-11-20-stately-studio-2-0.png
@@ -20,8 +20,7 @@ That’s why we’re so excited to release Stately Studio 2.0, which aims to **m
   <ThemedImage
     alt="A state machine, called 'Source of truth', helps manage the different stages of a project. It starts in the 'Create' state, where you can import existing code, generate new code using AI, design with a drag-and-drop interface, or convert from other state management libraries. Once you're done creating, you transition to the 'Use' state. Here, you can export your code and documentation, deploy live workflows, generate tests, React apps, and schemas, and simulate your project to preview and share."
     sources={{
-      light:
-        '/blog/2023-11-20-stately-studio-2-0/source.png',
+      light: '/blog/2023-11-20-stately-studio-2-0/source.png',
       dark: '/blog/2023-11-20-stately-studio-2-0/source-dm.png',
     }}
   />
@@ -50,7 +49,7 @@ Our Import and convert feature brings the benefits of state machines to existing
 
 This feature is still experimental, but we’re excited for you to try it out. The conversion is made possible with a mixture of AST (Abstract syntax tree) analysis and complex, state-machine-powered LLM logic. And this is just the start; we have many plans for features coming soon:
 
-- **Import *and* export** to and from Redux, Zustand, and more libraries in the future. Of course, this has limitations; statecharts have many features beyond simple state management!
+- **Import _and_ export** to and from Redux, Zustand, and more libraries in the future. Of course, this has limitations; statecharts have many features beyond simple state management!
 - **Bidirectional** editing of your code: edit the diagram, see the code update; edit the code, see the diagram update.
 - Go further than libraries: import and **export custom workflow [DSL](https://en.wikipedia.org/wiki/Domain-specific_language)s** and even other languages.
 
@@ -76,8 +75,7 @@ Here’s how it works:
   <ThemedImage
     alt="Split view with state machine for a sensor reading app on the left, and a generated UI for the sensor readings on the right. The generated UI has a title, the current sensor readings, and buttons to log new readings. On top of the split view is a Generate React app button."
     sources={{
-      light:
-        '/blog/2023-11-20-stately-studio-2-0/generate.png',
+      light: '/blog/2023-11-20-stately-studio-2-0/generate.png',
       dark: '/blog/2023-11-20-stately-studio-2-0/generate-dm.png',
     }}
   />
@@ -95,8 +93,7 @@ A source of truth doesn’t really tell the whole truth if it’s just text, esp
   <ThemedImage
     alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
     sources={{
-      light:
-        '/blog/2023-11-20-stately-studio-2-0/drag-assets.png',
+      light: '/blog/2023-11-20-stately-studio-2-0/drag-assets.png',
       dark: '/blog/2023-11-20-stately-studio-2-0/drag-assets-dm.png',
     }}
   />
@@ -116,14 +113,13 @@ At [Stately.ai](http://stately.ai/), we want to help you and your team use state
   <ThemedImage
     alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
     sources={{
-      light:
-        '/blog/2023-11-20-stately-studio-2-0/sky.png',
+      light: '/blog/2023-11-20-stately-studio-2-0/sky.png',
       dark: '/blog/2023-11-20-stately-studio-2-0/sky-dm.png',
     }}
   />
 </p>
 
-With Stately AI and Stately Sky together, you can go from an idea to a deployed workflow in minutes. The Stately editor helps you create much more flexible workflows than other workflow tools—you can use these workflows on the front end, back end, or both. Perfect for onboarding flows, collaborative apps, games, AI agents, and more. Stately Sky is also backed by Cloudflare Workers so that you can run your state machines in 200+ locations worldwide, with low latency and high availability. 
+With Stately AI and Stately Sky together, you can go from an idea to a deployed workflow in minutes. The Stately editor helps you create much more flexible workflows than other workflow tools—you can use these workflows on the front end, back end, or both. Perfect for onboarding flows, collaborative apps, games, AI agents, and more. Stately Sky is also backed by Cloudflare Workers so that you can run your state machines in 200+ locations worldwide, with low latency and high availability.
 
 You can [read more about Stately Sky in Gavin’s blog post](https://stately.ai/blog/2023-11-13-introducing-stately-sky) and [how PartyKit orchestrates Stately’s machines in the Sky on the PartyKit blog](https://blog.partykit.io/posts/partykit-orchestrates-stately).
 
@@ -149,8 +145,7 @@ As part of our Stately AI toolset for our Pro users, we now have an experimental
   <ThemedImage
     alt="Our room readings state machine with the machine details panel open. Below a Get Summary button is the summary text for this machine that reads 'This state machine is called Accumulate room readings. Its purpose is to collect temperature and humidity readings from loT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. Whenever a temperature or humidity event is received, the state machine updates the respective value. After one hour (3600000 milliseconds), the state machine transitions to the GenerateReport state. In this state, it invokes a separate machine called produceReport to generate the report/ Once the report is generated, it…'"
     sources={{
-      light:
-        '/blog/2023-11-20-stately-studio-2-0/summary.png',
+      light: '/blog/2023-11-20-stately-studio-2-0/summary.png',
       dark: '/blog/2023-11-20-stately-studio-2-0/summary-dm.png',
     }}
   />
@@ -175,7 +170,7 @@ And soon, there will be even more! We have designed many updates to the Stately 
 
 ## Intelligent software modeling is the future
 
-Software modeling is an extremely important yet neglected part of the software development process. When going from ideas to code, having a visual model of how the software should work greatly reduces the cost of maintenance. 
+Software modeling is an extremely important yet neglected part of the software development process. When going from ideas to code, having a visual model of how the software should work greatly reduces the cost of maintenance.
 
 Right now, everyone is talking about how AI can help us work faster and smarter. LLMs can significantly accelerate state machine creation, modification, optimization, and explanation. Likewise, state machines can serve as essential guardrails for LLMs, helping them to avoid making mistakes by setting predetermined paths (state transitions) for them to follow. We even have open-source tooling that enables these guardrails for all developers, and we’ll release it soon.
 

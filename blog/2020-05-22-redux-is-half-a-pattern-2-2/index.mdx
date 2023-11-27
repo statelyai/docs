@@ -9,7 +9,10 @@ slug: 2020-05-22-redux-is-half-a-pattern-2-2
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/davidkpiano/redux-is-half-of-a-pattern-2-2-4jo3" />
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/redux-is-half-of-a-pattern-2-2-4jo3"
+  />
 </head>
 
 I wrote a form library once.
@@ -131,7 +134,7 @@ This isn't a cutting-edge, groundbreaking model; in fact, you've probably been u
 
 ```jsx
 const MyInput = ({ onChange, disabled }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   return (
     <input
@@ -160,19 +163,19 @@ const inputReducer = (state, event) => {
 
 const MyInput = ({ onChange, disabled }) => {
   const [state, dispatch] = useReducer(inputReducer, {
-    value: "",
+    value: '',
     effects: [],
   });
 
   // Transform prop changes into events
   useEffect(() => {
-    dispatch({ type: "DISABLED", value: disabled });
+    dispatch({ type: 'DISABLED', value: disabled });
   }, [disabled]);
 
   // Execute declarative effects
   useEffect(() => {
     state.effects.forEach((effect) => {
-      if (effect.type === "notifyChange") {
+      if (effect.type === 'notifyChange') {
         // "Send" a message back up to the parent "actor"
         onChange(state.value);
       }
@@ -185,11 +188,11 @@ const MyInput = ({ onChange, disabled }) => {
       value={state.value}
       onChange={(e) =>
         dispatch({
-          type: "CHANGE",
+          type: 'CHANGE',
           value: e.target.value,
         })
       }
-      onBlur={() => dispatch({ type: "BLUR" })}
+      onBlur={() => dispatch({ type: 'BLUR' })}
     />
   );
 };
@@ -275,9 +278,9 @@ The Actor Model is not a panacea, though. If you're not careful, you can end up 
 
 If you want to learn more about the Actor Model, check out [The Actor Model in 10 Minutes](https://www.brianstorti.com/the-actor-model/) by [Brian Storti](https://twitter.com/brianstorti), or any of these videos:
 
-<YouTube id="ELwEdb_pD0k?"/>
+<YouTube id="ELwEdb_pD0k?" />
 
-<YouTube id="Vg60lf92EkM?"/>
+<YouTube id="Vg60lf92EkM?" />
 
 Please keep in mind that this is post reflects my opinions based on what I've researched, and is in no way meant to be authoritative on the way you should do things. I want to make you _think_, and I hope that this post accomplished that goal. Thanks for reading!
 

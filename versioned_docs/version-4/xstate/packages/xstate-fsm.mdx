@@ -58,8 +58,8 @@ const toggleMachine = createMachine({
   initial: 'inactive',
   states: {
     inactive: { on: { TOGGLE: 'active' } },
-    active: { on: { TOGGLE: 'inactive' } }
-  }
+    active: { on: { TOGGLE: 'inactive' } },
+  },
 });
 
 const { initialState } = toggleMachine;
@@ -354,24 +354,24 @@ const lightMachine = createMachine({
   states: {
     green: {
       on: {
-        TIMER: 'yellow'
-      }
+        TIMER: 'yellow',
+      },
     },
     yellow: {
       on: {
         TIMER: {
           target: 'red',
-          actions: () => console.log('Going to red!')
-        }
-      }
+          actions: () => console.log('Going to red!'),
+        },
+      },
     },
     red: {
       entry: assign({ redLights: (ctx) => ctx.redLights + 1 }),
       on: {
-        TIMER: 'green'
-      }
-    }
-  }
+        TIMER: 'green',
+      },
+    },
+  },
 });
 
 const lightService = interpret(lightMachine);

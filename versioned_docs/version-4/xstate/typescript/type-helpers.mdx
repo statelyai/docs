@@ -182,9 +182,7 @@ const machine = createMachine({
 
 const options: MachineOptionsFrom<typeof machine> = {
   actions: {
-    sayHello: (context) => {
-  
-    },
+    sayHello: (context) => {},
   },
 };
 ```
@@ -228,7 +226,7 @@ const machine = createMachine(
         console.log('Hello');
       },
     },
-  }
+  },
 );
 
 const options: MachineOptionsFrom<typeof machine, true> = {

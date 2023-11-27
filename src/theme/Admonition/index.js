@@ -192,6 +192,18 @@ const AdmonitionConfigs = {
       </Translate>
     ),
   },
+  warning: {
+    infimaClassName: 'warning',
+    iconComponent: CautionIcon,
+    label: (
+      <Translate
+        id="theme.admonition.warning"
+        description="The default label used for the Warning admonition (:::warning)"
+      >
+        Warning
+      </Translate>
+    ),
+  },
   xstate: {
     infimaClassName: 'xstate',
     iconComponent: XStateIcon,

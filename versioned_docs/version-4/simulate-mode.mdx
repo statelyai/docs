@@ -5,13 +5,16 @@ description: 'Tour the features in Stately editor’s Simulate mode, including a
 
 You can simulate your machine as if it were live in Simulate Mode. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue.
 
-<EmbedMachine name="Simulate mode" embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?machineId=e5fbd908-42af-440f-8d11-91ca16a4fbda&mode=Simulate"/>
+<EmbedMachine
+  name="Simulate mode"
+  embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?machineId=e5fbd908-42af-440f-8d11-91ca16a4fbda&mode=Simulate"
+/>
 
 ## Simulate events
 
 Press any available event to walk through your machine. Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the <ListOrderedIcon size={12} /> [Log](#log).
 
-:::caution
+:::warning
 
 Simulate mode is disabled if your machine contains errors. States and events with errors are marked with an <AlertCircle size={12} /> error icon in **Design** mode. Hover over any error icon to find out more about the error. Fix all the errors to enable Simulate mode.
 
@@ -19,7 +22,7 @@ Simulate mode is disabled if your machine contains errors. States and events wit
 
 ### Eventless (always) events
 
-Eventless (always) events will be triggered instantly upon entering their source state unless they’re guarded with a condition. 
+Eventless (always) events will be triggered instantly upon entering their source state unless they’re guarded with a condition.
 
 ### Delayed (after) events
 

@@ -1,11 +1,11 @@
 ---
-title: "Should this be an action, or a service?"
+title: 'Should this be an action, or a service?'
 description: Whether to use an action or a service in XState.
 tags: [action, state machine, xstate, service]
 authors: [matt]
 image: /blog/2021-04-30-should-this-be-an-action-or-a-service.png
 slug: 2021-04-30-should-this-be-an-action-or-a-service
-date:  2021-04-30
+date: 2021-04-30
 ---
 
 XState offers several ways of orchestrating side effects. Since itâ€™s a statechart tool, [with significantly more power than a reducer](https://dev.to/mpocock1/usestate-vs-usereducer-vs-xstate-part-1-modals-569e), side effects are treated as a first-class concept.
@@ -29,17 +29,17 @@ Side effects can be expressed in two ways in XState. First, as a fire-and-forget
 ```ts
 const modalMachine = createMachine(
   {
-    initial: "closed",
+    initial: 'closed',
     states: {
       closed: {
         on: {
-          OPEN: "open",
+          OPEN: 'open',
         },
       },
       open: {
-        entry: ["reportThatUserOpenedTheModal"],
+        entry: ['reportThatUserOpenedTheModal'],
         on: {
-          CLOSE: "closed",
+          CLOSE: 'closed',
         },
       },
     },
@@ -50,10 +50,10 @@ const modalMachine = createMachine(
       // it here. This keeps the logic and implementation separate,
       // which I like
       reportThatUserOpenedTheModal: async () => {
-        await fetch("/external-service/user-opened-modal");
+        await fetch('/external-service/user-opened-modal');
       },
     },
-  }
+  },
 );
 ```
 
@@ -64,19 +64,19 @@ Actions represent a single point in time, like a dot on a graph. This means that
 ```ts
 const modalMachine = createMachine(
   {
-    initial: "closed",
+    initial: 'closed',
     states: {
       closed: {
         on: {
           OPEN: {
-            actions: "reportThatUserOpenedTheModal",
-            target: "open",
+            actions: 'reportThatUserOpenedTheModal',
+            target: 'open',
           },
         },
       },
       open: {
         on: {
-          CLOSE: "closed",
+          CLOSE: 'closed',
         },
       },
     },
@@ -87,7 +87,7 @@ const modalMachine = createMachine(
         // implementation
       },
     },
-  }
+  },
 );
 ```
 
@@ -96,17 +96,17 @@ This means that whenever `OPEN` is called from the `closed` state, that action w
 ```ts
 const modalMachine = createMachine(
   {
-    initial: "closed",
+    initial: 'closed',
     states: {
       closed: {
         on: {
-          OPEN: "open",
+          OPEN: 'open',
         },
-        exit: ["reportThatUserOpenedTheModal"],
+        exit: ['reportThatUserOpenedTheModal'],
       },
       open: {
         on: {
-          CLOSE: "closed",
+          CLOSE: 'closed',
         },
       },
     },
@@ -117,7 +117,7 @@ const modalMachine = createMachine(
         // implementation
       },
     },
-  }
+  },
 );
 ```
 
@@ -131,17 +131,17 @@ But actions have a specific limitation - they are designed to be forgotten. Letâ
 
 ```ts
 const modalMachine = createMachine({
-  initial: "closed",
+  initial: 'closed',
   states: {
     closed: {
       on: {
-        OPEN: "opening",
+        OPEN: 'opening',
       },
     },
     opening: {
       entry: [
         async () => {
-          await fetch("/external-service/user-opened-modal");
+          await fetch('/external-service/user-opened-modal');
 
           // OK, this was successful - how do I get to the open state?!
         },
@@ -149,7 +149,7 @@ const modalMachine = createMachine({
     },
     open: {
       on: {
-        CLOSE: "closed",
+        CLOSE: 'closed',
       },
     },
   },
@@ -162,11 +162,11 @@ When you care about the result of an action, put it in a service. This is how th
 
 ```ts
 const modalMachine = createMachine({
-  initial: "closed",
+  initial: 'closed',
   states: {
     closed: {
       on: {
-        OPEN: "opening",
+        OPEN: 'opening',
       },
     },
     opening: {
@@ -174,23 +174,23 @@ const modalMachine = createMachine({
         // This uses the invoked callback syntax - my favourite
         // syntax for expressing services
         src: () => async (send) => {
-          await fetch("/external-service/user-opened-modal");
+          await fetch('/external-service/user-opened-modal');
 
-          send("OPENED_SUCCESSFULLY");
+          send('OPENED_SUCCESSFULLY');
         },
         onError: {
-          target: "closed",
+          target: 'closed',
         },
       },
       on: {
         OPENED_SUCCESSFULLY: {
-          target: "open",
+          target: 'open',
         },
       },
     },
     open: {
       on: {
-        CLOSE: "closed",
+        CLOSE: 'closed',
       },
     },
   },
