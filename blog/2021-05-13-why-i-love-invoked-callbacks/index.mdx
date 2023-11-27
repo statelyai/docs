@@ -7,7 +7,7 @@ tags: [services, invoked callback, state machine, xstate]
 authors: [matt]
 image: /blog/2021-05-13-why-i-love-invoked-callbacks.png
 slug: 2021-05-13-why-i-love-invoked-callbacks
-date:  2021-05-13
+date: 2021-05-13
 ---
 
 XState offers several primitives for representing long-running application processes. These are usually expressed as [services](https://xstate.js.org/docs/guides/communication.html). I’ve written a bit about services [here](https://dev.to/mpocock1/xstate-should-this-be-an-action-or-a-service-2cp0) - but today I wanted to talk about my favourite way of expressing services: the Invoked Callback.
@@ -42,11 +42,11 @@ createMachine({
   context: {
     progress: 0,
   },
-  initial: "idle",
+  initial: 'idle',
   states: {
     idle: {
       on: {
-        START: "pending",
+        START: 'pending',
       },
     },
     pending: {
@@ -57,7 +57,7 @@ createMachine({
           }),
         },
         CANCEL: {
-          target: "idle",
+          target: 'idle',
         },
       },
       invoke: {
@@ -65,7 +65,7 @@ createMachine({
           const uploader = startUpload({
             onProgressUpdate: (progress) => {
               send({
-                type: "PROGRESS_UPDATED",
+                type: 'PROGRESS_UPDATED',
                 progress,
               });
             },
@@ -94,22 +94,22 @@ The invoked callback’s cleanup function makes it very useful for event listene
 ```ts
 createMachine(
   {
-    initial: "userIsOnTab",
+    initial: 'userIsOnTab',
     states: {
       userIsOnTab: {
         invoke: {
-          src: "checkForDocumentBlur",
+          src: 'checkForDocumentBlur',
         },
         on: {
-          REPORT_TAB_BLUR: "userIsNotOnTab",
+          REPORT_TAB_BLUR: 'userIsNotOnTab',
         },
       },
       userIsNotOnTab: {
         invoke: {
-          src: "checkForDocumentFocus",
+          src: 'checkForDocumentFocus',
         },
         on: {
-          REPORT_TAB_FOCUS: "userIsOnTab",
+          REPORT_TAB_FOCUS: 'userIsOnTab',
         },
       },
     },
@@ -118,28 +118,28 @@ createMachine(
     services: {
       checkForDocumentBlur: () => (send) => {
         const listener = () => {
-          send("REPORT_TAB_BLUR");
+          send('REPORT_TAB_BLUR');
         };
 
-        window.addEventListener("blur", listener);
+        window.addEventListener('blur', listener);
 
         return () => {
-          window.removeEventListener("blur", listener);
+          window.removeEventListener('blur', listener);
         };
       },
       checkForDocumentFocus: () => (send) => {
         const listener = () => {
-          send("REPORT_TAB_FOCUS");
+          send('REPORT_TAB_FOCUS');
         };
 
-        window.addEventListener("focus", listener);
+        window.addEventListener('focus', listener);
 
         return () => {
-          window.removeEventListener("focus", listener);
+          window.removeEventListener('focus', listener);
         };
       },
     },
-  }
+  },
 );
 ```
 
@@ -150,21 +150,21 @@ When in the `userIsOnTab` state, we listen for the window’s `blur` event. When
 Invoked callbacks can also receive events via the `onReceive` function. This is perfect when you need to communicate to your service, such as sending events to websockets.
 
 ```ts
-import { createMachine, forwardTo } from "xstate";
+import { createMachine, forwardTo } from 'xstate';
 
 createMachine({
   on: {
     SEND: {
-      actions: forwardTo("websocket"),
+      actions: forwardTo('websocket'),
     },
   },
   invoke: {
-    id: "websocket",
+    id: 'websocket',
     src: () => (send, onReceive) => {
       const websocket = connectWebsocket();
 
       onReceive((event) => {
-        if (event.type === "SEND") {
+        if (event.type === 'SEND') {
           websocket.send(event.message);
         }
       });

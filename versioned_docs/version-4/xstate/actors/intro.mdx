@@ -26,7 +26,7 @@ const machine = createMachine(
        */
       someActor: async () => {},
     },
-  }
+  },
 );
 ```
 
@@ -38,7 +38,7 @@ XState v5 is in beta. [Check out XState v5 Beta on NPM](https://www.npmjs.com/pa
 
 You can also run several invocations at the same time by specifying `invoke` as an array:
 
-```ts 
+```ts
 import { createMachine } from 'xstate';
 
 const machine = createMachine(
@@ -53,12 +53,12 @@ const machine = createMachine(
     ],
   },
   {
-    // `actors` in v5      
+    // `actors` in v5
     services: {
       someActor: async () => {},
       someOtherActor: async () => {},
     },
-  }
+  },
 );
 ```
 

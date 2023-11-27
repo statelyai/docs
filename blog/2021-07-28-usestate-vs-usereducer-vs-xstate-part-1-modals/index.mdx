@@ -1,5 +1,5 @@
 ---
-title: "useState vs useReducer vs XState - Part 1: Modals"
+title: 'useState vs useReducer vs XState - Part 1: Modals'
 description: >-
   Managing state at different levels of complexity is hard. This series of
   articles should help you make the right choices off the bat. Today we’re
@@ -8,7 +8,7 @@ tags: [modal, react, useState, useReducer, xstate]
 authors: [matt]
 image: /blog/2021-07-28-usestate-vs-usereducer-vs-xstate-part-1-modals.png
 slug: 2021-07-28-usestate-vs-usereducer-vs-xstate-part-1-modals
-date:  2021-07-28
+date: 2021-07-28
 ---
 
 Managing state at different levels of complexity is hard. Different tools make different trade-offs between readability, complexity and speed of development. The worst part is that as apps get more complex, it’s easy to regret choices that were made early on.
@@ -46,15 +46,15 @@ Highly readable, simple enough, fast to write, bug-proof. For a simple toggle li
 ```ts
 const reducer = (state = { isOpen: false }, action) => {
   switch (action.type) {
-    case "OPEN":
+    case 'OPEN':
       return {
         isOpen: true,
       };
-    case "CLOSE":
+    case 'CLOSE':
       return {
         isOpen: false,
       };
-    case "TOGGLE":
+    case 'TOGGLE':
       return {
         isOpen: !state.isOpen,
       };
@@ -66,15 +66,15 @@ const reducer = (state = { isOpen: false }, action) => {
 const [state, dispatch] = useReducer(reducer, { isOpen: false });
 
 const open = () => {
-  dispatch({ type: "OPEN" });
+  dispatch({ type: 'OPEN' });
 };
 
 const close = () => {
-  dispatch({ type: "CLOSE" });
+  dispatch({ type: 'CLOSE' });
 };
 
 const toggle = () => {
-  dispatch({ type: "TOGGLE" });
+  dispatch({ type: 'TOGGLE' });
 };
 ```
 
@@ -86,21 +86,21 @@ const toggle = () => {
 
 ```ts
 const machine = Machine({
-  id: "modalMachine",
-  initial: "closed",
+  id: 'modalMachine',
+  initial: 'closed',
   states: {
     closed: {
       on: {
         OPEN: {
-          target: "open",
+          target: 'open',
         },
-        TOGGLE: "open",
+        TOGGLE: 'open',
       },
     },
     open: {
       on: {
-        TOGGLE: "closed",
-        CLOSE: "closed",
+        TOGGLE: 'closed',
+        CLOSE: 'closed',
       },
     },
   },
@@ -109,15 +109,15 @@ const machine = Machine({
 const [state, send] = useMachine(machine);
 
 const open = () => {
-  send({ type: "OPEN" });
+  send({ type: 'OPEN' });
 };
 
 const close = () => {
-  send({ type: "CLOSE" });
+  send({ type: 'CLOSE' });
 };
 
 const toggle = () => {
-  send({ type: "TOGGLE" });
+  send({ type: 'TOGGLE' });
 };
 ```
 
@@ -143,13 +143,13 @@ Oh no. Requirements have changed. Now, instead of immediately closing, the modal
 
 ```ts
 // Refactor 1, 2
-const [modalState, setModalState] = useState("closed");
+const [modalState, setModalState] = useState('closed');
 
 // Refactor 3
 useEffect(() => {
-  if (modalState === "closing") {
+  if (modalState === 'closing') {
     const timeout = setTimeout(() => {
-      setModalState("closed");
+      setModalState('closed');
     }, 500);
     return () => {
       clearTimeout(timeout);
@@ -159,20 +159,20 @@ useEffect(() => {
 
 // Refactor 1, 2
 const open = () => {
-  setModalState("open");
+  setModalState('open');
 };
 
 // Refactor 1, 2
 const close = () => {
-  setModalState("closing");
+  setModalState('closing');
 };
 
 // Refactor 1, 2, 4
 const toggle = () => {
-  if (modalState === "closed") {
-    setModalState("open");
-  } else if (modalState === "open") {
-    setModalState("closing");
+  if (modalState === 'closed') {
+    setModalState('open');
+  } else if (modalState === 'open') {
+    setModalState('closing');
   }
 };
 ```
@@ -191,33 +191,33 @@ Yuck. That was an enormous amount of refactoring to do just to add a simple, sin
 
 ```ts
 // Refactor 1, 2
-const reducer = (state = { status: "closed" }, action) => {
+const reducer = (state = { status: 'closed' }, action) => {
   switch (action.type) {
     // Refactor 2
-    case "OPEN":
+    case 'OPEN':
       return {
-        status: "open",
+        status: 'open',
       };
     // Refactor 2
-    case "CLOSE":
+    case 'CLOSE':
       return {
-        status: "closing",
+        status: 'closing',
       };
     // Refactor 3
-    case "REPORT_ANIMATION_FINISHED":
+    case 'REPORT_ANIMATION_FINISHED':
       return {
-        status: "closed",
+        status: 'closed',
       };
     // Refactor 4
-    case "TOGGLE":
+    case 'TOGGLE':
       switch (state.status) {
-        case "closed":
+        case 'closed':
           return {
-            status: "open",
+            status: 'open',
           };
-        case "open":
+        case 'open':
           return {
-            status: "closing",
+            status: 'closing',
           };
       }
       break;
@@ -227,13 +227,13 @@ const reducer = (state = { status: "closed" }, action) => {
 };
 
 // Refactor 1
-const [state, dispatch] = useReducer(reducer, { status: "closed" });
+const [state, dispatch] = useReducer(reducer, { status: 'closed' });
 
 // Refactor 3
 useEffect(() => {
-  if (state.status === "closing") {
+  if (state.status === 'closing') {
     const timeout = setTimeout(() => {
-      dispatch({ type: "REPORT_ANIMATION_FINISHED" });
+      dispatch({ type: 'REPORT_ANIMATION_FINISHED' });
     }, 500);
     return () => {
       clearTimeout(timeout);
@@ -242,15 +242,15 @@ useEffect(() => {
 }, [state.status]);
 
 const open = () => {
-  dispatch({ type: "OPEN" });
+  dispatch({ type: 'OPEN' });
 };
 
 const close = () => {
-  dispatch({ type: "CLOSE" });
+  dispatch({ type: 'CLOSE' });
 };
 
 const toggle = () => {
-  dispatch({ type: "TOGGLE" });
+  dispatch({ type: 'TOGGLE' });
 };
 ```
 
@@ -264,28 +264,28 @@ This file required the same number of refactors as the `useState` implementation
 
 ```ts
 export const machine = Machine({
-  id: "modalMachine",
-  initial: "closed",
+  id: 'modalMachine',
+  initial: 'closed',
   states: {
     closed: {
       on: {
         OPEN: {
-          target: "open",
+          target: 'open',
         },
-        TOGGLE: "open",
+        TOGGLE: 'open',
       },
     },
     // Refactor 1
     closing: {
       after: {
-        500: "closed",
+        500: 'closed',
       },
     },
     open: {
       on: {
         // Refactor 2
-        TOGGLE: "closing",
-        CLOSE: "closing",
+        TOGGLE: 'closing',
+        CLOSE: 'closing',
       },
     },
   },
@@ -294,15 +294,15 @@ export const machine = Machine({
 const [state, send] = useMachine(machine);
 
 const open = () => {
-  send({ type: "OPEN" });
+  send({ type: 'OPEN' });
 };
 
 const close = () => {
-  send({ type: "CLOSE" });
+  send({ type: 'CLOSE' });
 };
 
 const toggle = () => {
-  send({ type: "TOGGLE" });
+  send({ type: 'TOGGLE' });
 };
 ```
 

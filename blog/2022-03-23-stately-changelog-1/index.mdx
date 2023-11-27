@@ -1,11 +1,11 @@
 ---
-title: "Stately Changelog #1 - Snap To Elements"
+title: 'Stately Changelog #1 - Snap To Elements'
 description: The Stately Editor changelog is where we discuss new features released to the Stately Editor beta.
 tags: [stately, announcement, editor, beta, changelog]
 authors: [matt]
 image: /blog/2022-03-23-stately-changelog-1.png
 slug: 2022-03-23-stately-changelog-1
-date:  2022-03-23
+date: 2022-03-23
 ---
 
 Happy Wednesday! Time for our first Editor Changelog blog, where we’ll talk about the new updates we’ve shipped in the editor.
@@ -43,13 +43,13 @@ We’ve massively improved the way we handle transition targets in VSCode. Inste
 
 ```ts
 const machine = createMachine({
-  initial: "a",
+  initial: 'a',
   states: {
     a: {
       on: {
         EVENT: {
           // Before
-          target: "#(machine).b",
+          target: '#(machine).b',
         },
       },
     },
@@ -58,13 +58,13 @@ const machine = createMachine({
 });
 
 const machine = createMachine({
-  initial: "a",
+  initial: 'a',
   states: {
     a: {
       on: {
         EVENT: {
           // After
-          target: "b",
+          target: 'b',
         },
       },
     },

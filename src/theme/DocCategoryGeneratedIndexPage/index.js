@@ -12,7 +12,7 @@ import DocVersionBadge from '@theme/DocVersionBadge';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
-function DocCategoryGeneratedIndexPageMetadata({categoryGeneratedIndex}) {
+function DocCategoryGeneratedIndexPageMetadata({ categoryGeneratedIndex }) {
   return (
     <PageMetadata
       title={categoryGeneratedIndex.title}
@@ -23,30 +23,30 @@ function DocCategoryGeneratedIndexPageMetadata({categoryGeneratedIndex}) {
     />
   );
 }
-function DocCategoryGeneratedIndexPageContent({categoryGeneratedIndex}) {
+function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
   const category = useCurrentSidebarCategory();
   return (
-    <div className='row'>
-    <div className={clsx('col', styles.generatedIndexPage)}>
-      <div className='index-page'>
-        <DocVersionBanner />
-        <DocBreadcrumbs />
-        <DocVersionBadge />
-        <Heading as="h1" className={styles.title}>
-          {categoryGeneratedIndex.title}
-        </Heading>
-        {categoryGeneratedIndex.description && (
-          <p>{categoryGeneratedIndex.description}</p>
-        )}
-        <DocCardList items={category.items} className={styles.list} />
+    <div className="row">
+      <div className={clsx('col', styles.generatedIndexPage)}>
+        <div className="index-page">
+          <DocVersionBanner />
+          <DocBreadcrumbs />
+          <DocVersionBadge />
+          <Heading as="h1" className={styles.title}>
+            {categoryGeneratedIndex.title}
+          </Heading>
+          {categoryGeneratedIndex.description && (
+            <p>{categoryGeneratedIndex.description}</p>
+          )}
+          <DocCardList items={category.items} className={styles.list} />
+        </div>
+        <footer className="margin-top--lg">
+          <DocPaginator
+            previous={categoryGeneratedIndex.navigation.previous}
+            next={categoryGeneratedIndex.navigation.next}
+          />
+        </footer>
       </div>
-      <footer className="margin-top--lg">
-        <DocPaginator
-          previous={categoryGeneratedIndex.navigation.previous}
-          next={categoryGeneratedIndex.navigation.next}
-        />
-      </footer>
-    </div>
     </div>
   );
 }

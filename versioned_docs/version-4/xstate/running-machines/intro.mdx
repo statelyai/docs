@@ -42,7 +42,7 @@ const machine = createMachine(
         console.log('Hello!');
       },
     },
-  }
+  },
 );
 
 const actor = interpret(machine).start();
@@ -73,7 +73,7 @@ const machine = createMachine(
         console.log('Hello!');
       },
     },
-  }
+  },
 );
 
 const actor = interpret(machine).start();
@@ -82,7 +82,7 @@ const actor = interpret(machine).start();
 const { unsubscribe } = actor.subscribe((state) => {
   console.log(
     // We’ll learn what goes inside here soon!
-    state
+    state,
   );
 });
 ```
@@ -106,7 +106,7 @@ const machine = createMachine(
         console.log('Hello!');
       },
     },
-  }
+  },
 );
 
 const actor = interpret(machine).start();
@@ -180,7 +180,7 @@ const machine = createMachine(
         };
       }),
     },
-  }
+  },
 );
 
 const actor = interpret(machine).start();

@@ -1,11 +1,11 @@
 ---
-title: "Modelling 101: How to build a statechart from scratch"
+title: 'Modelling 101: How to build a statechart from scratch'
 description: Stately dev Matt Pocock takes you through a step-by-step guide on modelling statecharts
 tags: [xstate, tutorial, statechart, modelling]
 authors: [matt]
 image: /blog/2022-02-15-modelling-101-how-to-build-a-statechart-from-scratch.png
 slug: 2022-02-15-modelling-101-how-to-build-a-statechart-from-scratch
-date:  2022-02-17
+date: 2022-02-17
 ---
 
 Modelling using statecharts changed my career as a dev. Of all the state management solutions I’ve tried, it feels the most complete, logical and robust. Even if you don’t use them in your app’s code, statecharts let you break down complex features into states, events, services, actions and guards.
@@ -83,14 +83,14 @@ Here, it’s a little different — when you subscribe to something, you need to
 
 ```ts
 const listener = () => {
-  console.log("Hello!");
+  console.log('Hello!');
 };
 
 // Subscribe
-window.addEventListener("focus", listener);
+window.addEventListener('focus', listener);
 
 // Unsubscribe
-window.removeEventListener("focus", listener);
+window.removeEventListener('focus', listener);
 ```
 
 Here, we care about the outcome because we need to _run something at the end of the process_ — i.e. unsubscribe from the listener.

@@ -1,5 +1,5 @@
 ---
-title: "State machines: How to stop making Horcruxes in your code"
+title: 'State machines: How to stop making Horcruxes in your code'
 description: >-
   There are several ways of mitigating horcruxes. But visualisations can prevent
   bugs, so why not go further?
@@ -7,11 +7,14 @@ tags: [business logic, xstate, statechart, useReducer]
 authors: [matt]
 image: /blog/2020-07-27-state-machines-how-to-stop-making-horcruxes-in-your-code.png
 slug: 2020-07-27-state-machines-how-to-stop-making-horcruxes-in-your-code
-date:  2020-07-27
+date: 2020-07-27
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/mpocock1/state-machines-how-to-stop-making-horcruxes-in-your-code-gl5" />
+  <link
+    rel="canonical"
+    href="https://dev.to/mpocock1/state-machines-how-to-stop-making-horcruxes-in-your-code-gl5"
+  />
 </head>
 
 My code contains [Horcruxes](https://harrypotter.fandom.com/wiki/Horcrux). I’m not proud to admit it, since to make a Horcrux you need to commit a murder. The murders seemed intuitive at the time, and were usually for expedience. But nonetheless, I am a murderer.
@@ -29,11 +32,11 @@ For instance, some logic for a modal might be expressed like this:
 ```ts
 const modalReducer = (state = { isOpen: false }, action) => {
   switch (action.type) {
-    case "CLOSE":
+    case 'CLOSE':
       return {
         isOpen: false,
       };
-    case "OPEN":
+    case 'OPEN':
       return {
         isOpen: true,
       };
@@ -48,7 +51,7 @@ This is the reducer pattern, popularised by libraries like [Redux](https://redux
 ```ts
 const [state, dispatch] = useReducer(modalReducer);
 
-<button onClick={() => dispatch({ type: "OPEN" })}>Open Modal</button>;
+<button onClick={() => dispatch({ type: 'OPEN' })}>Open Modal</button>;
 ```
 
 If you want to know what happens when you dispatch the `OPEN` action, you only need look in one place: the `modalReducer`. This part of your app is easy to keep bug-free, because all the logic for how it works is contained in one place.

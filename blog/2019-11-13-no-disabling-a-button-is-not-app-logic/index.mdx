@@ -1,5 +1,5 @@
 ---
-title: "No, disabling a button is not app logic."
+title: 'No, disabling a button is not app logic.'
 description: >-
   Disabling a button is not logic. Rather, it is a sign that logic is fragile
   and bug-prone. Let’s explore this with a simple example: fetching data in a
@@ -8,11 +8,14 @@ tags: [data fetching, state machine, statechart, state, business logic]
 authors: [david]
 image: /blog/2019-11-13-no-disabling-a-button-is-not-app-logic.png
 slug: 2019-11-13-no-disabling-a-button-is-not-app-logic
-date:  2019-11-13
+date: 2019-11-13
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i" />
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i"
+  />
 </head>
 
 I’m going to start this post with an excerpt from the book “Constructing the User Interface with Statecharts”, written by Ian Horrocks in 1999:
@@ -59,7 +62,7 @@ function DogFetcher() {
             });
         }}
       >
-        {isLoading ? "Fetching..." : "Fetch dog!"}
+        {isLoading ? 'Fetching...' : 'Fetch dog!'}
       </button>
     </div>
   );
@@ -80,7 +83,7 @@ function DogFetcher() {
     }}
     disabled={isLoading}
   >
-    {isLoading ? "Fetching..." : "Fetch dog!"}
+    {isLoading ? 'Fetching...' : 'Fetch dog!'}
   </button>;
 
   // ...
@@ -170,7 +173,7 @@ function DogFetcher() {
       </figure>
 
       <button onClick={fetchDog}>
-        {isLoading ? "Fetching..." : "Fetch dog!"}
+        {isLoading ? 'Fetching...' : 'Fetch dog!'}
       </button>
     </div>
   );
@@ -220,13 +223,13 @@ function DogFetcher() {
 
   return (
     <div>
-      {error && <span style={{ color: "red" }}>{error}</span>}
+      {error && <span style={{ color: 'red' }}>{error}</span>}
       <figure className="dog" onDoubleClick={fetchDog}>
         {dog && <img src={dog} alt="doggo" />}
       </figure>
 
       <button onClick={fetchDog}>
-        {isLoading ? "Fetching..." : "Fetch dog!"}
+        {isLoading ? 'Fetching...' : 'Fetch dog!'}
       </button>
       <button onClick={cancel}>Cancel</button>
     </div>
@@ -264,27 +267,27 @@ Great! Now let’s write our reducer:
 ```ts
 function dogReducer(state, event) {
   switch (event.type) {
-    case "FETCH":
+    case 'FETCH':
       return {
         ...state,
-        status: "loading",
+        status: 'loading',
       };
-    case "RESOLVE":
+    case 'RESOLVE':
       return {
         ...state,
-        status: "success",
+        status: 'success',
         dog: event.data,
       };
-    case "REJECT":
+    case 'REJECT':
       return {
         ...state,
-        status: "failure",
+        status: 'failure',
         error: event.error,
       };
-    case "CANCEL":
+    case 'CANCEL':
       return {
         ...state,
-        status: "idle",
+        status: 'idle',
       };
     default:
       return state;
@@ -292,7 +295,7 @@ function dogReducer(state, event) {
 }
 
 const initialState = {
-  status: "idle",
+  status: 'idle',
   dog: null,
   error: null,
 };
@@ -313,15 +316,15 @@ function DogFetcher() {
 
   return (
     <div>
-      {error && <span style={{ color: "red" }}>{error}</span>}
-      <figure className="dog" onDoubleClick={() => dispatch({ type: "FETCH" })}>
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+      <figure className="dog" onDoubleClick={() => dispatch({ type: 'FETCH' })}>
         {dog && <img src={dog} alt="doggo" />}
       </figure>
 
-      <button onClick={() => dispatch({ type: "FETCH" })}>
-        {status === "loading" ? "Fetching..." : "Fetch dog!"}
+      <button onClick={() => dispatch({ type: 'FETCH' })}>
+        {status === 'loading' ? 'Fetching...' : 'Fetch dog!'}
       </button>
-      <button onClick={() => dispatch({ type: "CANCEL" })}>Cancel</button>
+      <button onClick={() => dispatch({ type: 'CANCEL' })}>Cancel</button>
     </div>
   );
 }
@@ -332,17 +335,17 @@ However, the question remains: how do we execute the side-effect of actually fet
 ```ts
 // ...
 useEffect(() => {
-  if (state.status === "loading") {
+  if (state.status === 'loading') {
     let canceled = false;
 
     fetchRandomDog()
       .then((data) => {
         if (canceled) return;
-        dispatch({ type: "RESOLVE", data });
+        dispatch({ type: 'RESOLVE', data });
       })
       .catch((error) => {
         if (canceled) return;
-        dispatch({ type: "REJECT", error });
+        dispatch({ type: 'REJECT', error });
       });
 
     return () => {
@@ -415,41 +418,41 @@ In this case, we're going to use a state machine to manage and orchestrate state
 I'm going to use [XState](https://xstate.js.org/docs) and [`@xstate/react`](https://xstate.js.org/docs/packages/xstate-react/) to create the machine:
 
 ```ts
-import { Machine, assign } from "xstate";
-import { useMachine } from "@xstate/react";
+import { Machine, assign } from 'xstate';
+import { useMachine } from '@xstate/react';
 
 // ...
 
 const dogFetcherMachine = Machine({
-  id: "dog fetcher",
-  initial: "idle",
+  id: 'dog fetcher',
+  initial: 'idle',
   context: {
     dog: null,
     error: null,
   },
   states: {
     idle: {
-      on: { FETCH: "loading" },
+      on: { FETCH: 'loading' },
     },
     loading: {
       invoke: {
         src: () => fetchRandomDog(),
         onDone: {
-          target: "success",
+          target: 'success',
           actions: assign({ dog: (_, event) => event.data.message }),
         },
         onError: {
-          target: "failure",
+          target: 'failure',
           actions: assign({ error: (_, event) => event.data }),
         },
       },
-      on: { CANCEL: "idle" },
+      on: { CANCEL: 'idle' },
     },
     success: {
-      on: { FETCH: "loading" },
+      on: { FETCH: 'loading' },
     },
     failure: {
-      on: { FETCH: "loading" },
+      on: { FETCH: 'loading' },
     },
   },
 });
@@ -478,18 +481,18 @@ function DogFetcher() {
 
   return (
     <div>
-      {error && <span style={{ color: "red" }}>{error}</span>}
-      <figure className="dog" onDoubleClick={() => send("FETCH")}>
+      {error && <span style={{ color: 'red' }}>{error}</span>}
+      <figure className="dog" onDoubleClick={() => send('FETCH')}>
         {dog && <img src={dog} alt="doggo" />}
       </figure>
 
-      <button onClick={() => send("FETCH")}>
-        {current.matches("loading") && "Fetching..."}
-        {current.matches("success") && "Fetch another dog!"}
-        {current.matches("idle") && "Fetch dog"}
-        {current.matches("failure") && "Try again"}
+      <button onClick={() => send('FETCH')}>
+        {current.matches('loading') && 'Fetching...'}
+        {current.matches('success') && 'Fetch another dog!'}
+        {current.matches('idle') && 'Fetch dog'}
+        {current.matches('failure') && 'Try again'}
       </button>
-      <button onClick={() => send("CANCEL")}>Cancel</button>
+      <button onClick={() => send('CANCEL')}>Cancel</button>
     </div>
   );
 }
@@ -522,7 +525,7 @@ You do not need a state machine library (like XState) to do this. In fact, you m
 ```ts
 function DogFetcher() {
   // 'idle' or 'loading' or 'success' or 'error'
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState('idle');
 }
 ```
 
@@ -531,9 +534,9 @@ And just like that, you’ve eliminated `isLoading`, `isError`, `isSuccess`, `st
 ```ts
 function DogFetcher() {
   // 'idle' or 'loading' or 'success' or 'error'
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState('idle');
 
-  const isLoading = status === "loading";
+  const isLoading = status === 'loading';
 
   return (
     // ...

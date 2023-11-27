@@ -65,7 +65,7 @@ Events can be sent to spawned actors by passing a function to `send` or `forward
 ```ts
 send({ type: 'INC' }, { to: (context) => context.counterRef });
 
-forwardTo(context => context.counterRef);
+forwardTo((context) => context.counterRef);
 ```
 
 <!-- TODO - are there any other API's which need to be mentioned here?-->
@@ -132,7 +132,7 @@ const parentMachine = createMachine(
     actions: {
       stopMachine: stop((context) => context.childMachineRef),
     },
-  }
+  },
 );
 ```
 
@@ -150,7 +150,7 @@ const machine = createMachine({
     counterRef: (context, event) =>
       // highlight-start
       spawn((sendBack, receive) => {
-      // highlight-end
+        // highlight-end
         // Run any code you want inside here
 
         return () => {
@@ -196,6 +196,6 @@ const machine = createMachine(
         console.log(event.count);
       },
     },
-  }
+  },
 );
 ```

@@ -46,7 +46,7 @@ const baristaMachine = createMachine(
        */
       hasDecaf: (context, event) => false,
     },
-  }
+  },
 );
 ```
 
@@ -84,7 +84,7 @@ const baristaMachine = createMachine(
       hasDecaf: (context, event) => false,
       customerIsOkWithRegularCoffee: (context, event) => false,
     },
-  }
+  },
 );
 ```
 
@@ -95,7 +95,6 @@ const makeDecafCoffee = () => {};
 const makeRegularCoffee = () => {};
 const hasDecaf = false;
 const customerIsOKWithRegularCoffee = false;
-
 
 if (hasDecaf) {
   makeDecafCoffee();
@@ -140,7 +139,7 @@ const baristaMachine = createMachine(
       hasDecaf: (context, event) => false,
       customerIsOkWithRegularCoffee: (context, event) => false,
     },
-  }
+  },
 );
 ```
 
