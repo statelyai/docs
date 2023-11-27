@@ -1,13 +1,9 @@
-import React from 'react';
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import {
-  findFirstCategoryLink,
-  useDocById,
-} from '@docusaurus/theme-common/internal';
-import isInternalUrl from '@docusaurus/isInternalUrl';
 import { translate } from '@docusaurus/Translate';
+import { useDocById } from '@docusaurus/theme-common/internal';
+import clsx from 'clsx';
 import styles from './styles.module.css';
+
 function CardContainer({ href, children }) {
   return (
     <Link href={href} className={clsx('card link-box', styles.cardContainer)}>
@@ -28,7 +24,7 @@ function CardLayout({ href, title, description }) {
   );
 }
 function CardCategory({ item }) {
-  const href = findFirstCategoryLink(item);
+  const href = item.href;
   // Unexpected: categories that don't have a link have been filtered upfront
   if (!href) {
     return null;
@@ -53,8 +49,7 @@ function CardCategory({ item }) {
   );
 }
 function CardLink({ item }) {
-  const icon = isInternalUrl(item.href) ? '📄️' : '🔗';
-  const doc = useDocById(item.docId ?? undefined);
+  const doc = useDocById(item.docId);
   return (
     <CardLayout
       href={item.href}
