@@ -206,8 +206,7 @@
         {
           "type": "doc",
           "label": "Community plan",
-          "id": "studio-community-plan",
-          "className": "community-feature"
+          "id": "studio-community-plan"
         },
         {
           "type": "doc",

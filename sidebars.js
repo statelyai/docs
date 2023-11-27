@@ -213,7 +213,6 @@ const sidebars = {
               type: 'doc',
               label: 'Community plan',
               id: 'studio-community-plan',
-              className: 'community-feature',
             },
             {
               type: 'doc',
