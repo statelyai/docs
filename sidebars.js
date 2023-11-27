@@ -169,7 +169,7 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Teams',
-          className: 'pro-feature',
+          className: 'team-feature',
           id: 'teams',
         },
         'discover',
@@ -225,6 +225,12 @@ const sidebars = {
               label: 'Pro plan',
               id: 'studio-pro-plan',
               className: 'pro-feature',
+            },
+            {
+              type: 'doc',
+              label: 'Team plan',
+              id: 'studio-team-plan',
+              className: 'team-feature',
             },
             {
               type: 'doc',

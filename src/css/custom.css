@@ -1229,6 +1229,22 @@ html [class*='toggleButton'] {
   transform: rotateZ(90deg);
 }
 
+/* Add a team badge to menu items with the team-feature classname */
+
+.menu__list-item.team-feature > a:after,
+.menu__list-item.team-feature > div > a:after {
+  background-color: var(--st-green-500);
+  border-radius: 0.3rem;
+  content: 'Team';
+  color: white;
+  font-size: 0.85em;
+  font-weight: var(--ifm-font-weight-bold);
+  margin-top: 0.1rem;
+  margin-left: 0.45rem;
+  padding: 0 0.3rem;
+  text-transform: uppercase;
+  transform: rotateZ(0deg);
+}
 /* Add a pro badge to menu items with the pro-feature classname */
 
 .menu__list-item.pro-feature > a:after,
