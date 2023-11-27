@@ -142,6 +142,56 @@ const config = {
         },
       },
     ],
+
+    [
+      'docusaurus-plugin-typedoc-api',
+      {
+        projectRoot: `${__dirname}/xstate`,
+        packages: [
+          {
+            path: 'packages/core',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-analytics',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-graph',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-immer',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-inspect',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-react',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-solid',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-svelte',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-test',
+            entry: 'src/index.ts'
+          },
+          {
+            path: 'packages/xstate-vue',
+            entry: 'src/index.ts'
+          }
+        ]
+      }
+    ],
+
     async function tailwindPlugin(context, options) {
       return {
         name: 'docusaurus-tailwindcss',
@@ -177,6 +227,11 @@ const config = {
             position: 'right',
           },
           { to: '/docs', label: 'Docs', position: 'right' },
+          {
+            to: 'api',
+            label: 'API',
+            position: 'right',
+          },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
