@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './styles.module.css';
 
 type SkipDown = {
@@ -6,14 +5,14 @@ type SkipDown = {
   link: string;
 };
 
-export default function SkipDownLink({link, text}: SkipDown) {
+export default function SkipDownLink({ link, text }: SkipDown) {
   return (
     <p>
-        <a href={link} className={styles.skip}>
-            <span>↓</span>
-            <span className={styles.text}>{text}</span>
-            <span>↓</span>
-        </a>
+      <a href={link} className={styles.skip}>
+        <span>↓</span>
+        <span className={styles.text}>{text}</span>
+        <span>↓</span>
+      </a>
     </p>
   );
 }

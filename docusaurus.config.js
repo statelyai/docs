@@ -64,7 +64,6 @@ const config = {
 
           // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
-            tag: ':::',
             keywords: [
               'note',
               'tip',
@@ -257,8 +256,8 @@ const config = {
         respectPrefersColorScheme: true,
       },
       prism: {
-        theme: require('prism-react-renderer/themes/vsLight'),
-        darkTheme: require('prism-react-renderer/themes/vsDark'),
+        theme: require('prism-react-renderer/dist/index').themes.vsLight,
+        darkTheme: require('prism-react-renderer/dist/index').themes.vsDark,
       },
     }),
 };

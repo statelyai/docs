@@ -1,4 +1,3 @@
-import React from 'react';
 import { ButtonLink, SectionTitle } from './SharedComponents';
 
 export function FinalCallToAction() {

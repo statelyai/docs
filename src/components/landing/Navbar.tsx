@@ -1,5 +1,5 @@
 import { MenuIcon, XIcon } from 'lucide-react';
-import React, { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 import { ButtonLink } from './SharedComponents';
 const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
