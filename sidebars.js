@@ -106,6 +106,16 @@ const sidebars = {
           id: 'studio',
         },
         {
+          type: 'doc',
+          label: 'States and transitions',
+          id: 'editor-states-and-transitions',
+        },
+        {
+          type: 'doc',
+          label: 'Actions and actors',
+          id: 'editor-actions-and-actors',
+        },
+        {
           type: 'category',
           label: 'Design mode',
           link: {
@@ -127,6 +137,11 @@ const sidebars = {
             },
             'annotations',
             'descriptions',
+            {
+              type: 'doc',
+              label: 'Tags',
+              id: 'editor-tags',
+            },
             'machine-restore',
             'autolayout',
           ],
