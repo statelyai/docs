@@ -221,6 +221,11 @@ const sidebars = {
             },
             {
               type: 'doc',
+              label: 'Team plan',
+              id: 'studio-team-plan',
+            },
+            {
+              type: 'doc',
               label: 'Enterprise plan',
               id: 'studio-enterprise-plan',
             },
