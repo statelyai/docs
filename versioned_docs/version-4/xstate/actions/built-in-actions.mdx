@@ -47,6 +47,7 @@ send((context, event) => {
 ```
 
 ### Sending events to actors
+
 With the `sendTo` action, events can be sent to actors:
 
 ```ts
@@ -63,8 +64,7 @@ const machine = createMachine({
       on: {
         // highlight-start
         SOME_EVENT: {
-          actions: (context) =>
-            sendTo(context.someRef, { type: 'PING' }),
+          actions: (context) => sendTo(context.someRef, { type: 'PING' }),
         },
         // highlight-end
       },
@@ -74,11 +74,12 @@ const machine = createMachine({
 ```
 
 ## Raise action
+
 The `raise` action creator queues an event to the statechart, in the internal event queue.
 This means the event is sent immediately on the current “step” of the interpreter.
 
 ```ts
-import { createMachine, actions } from "xstate";
+import { createMachine, actions } from 'xstate';
 const { raise } = actions;
 
 // Demonstrate `raise` action
@@ -96,23 +97,23 @@ const raiseActionDemo = createMachine({
 
           // highlight-start
           // immediately invoke the NEXT event in 'middle'
-          actions: raise('NEXT')
+          actions: raise('NEXT'),
           // highlight-end
         },
       },
     },
     middle: {
       on: {
-        NEXT: 'last'
+        NEXT: 'last',
       },
     },
     last: {
       on: {
-        RESET: 'entry'
+        RESET: 'entry',
       },
     },
   },
-})
+});
 ```
 
 Click on both `STEP` and `RAISE` events in the [visualizer](https://stately.ai/viz?gist=04bff4f2e4c5b4fa7f346dcd7fc21627) to see the difference.
@@ -151,7 +152,7 @@ createMachine({
 
 ## Log action
 
-The `log` action creator is a declarative way of logging anything related to the current state `context` and/or `event`.                          |
+The `log` action creator is a declarative way of logging anything related to the current state `context` and/or `event`. |
 
 ```ts
 import { createMachine, actions } from 'xstate';
@@ -164,24 +165,23 @@ const loggingMachine = createMachine({
   states: {
     // highlight-start
     start: {
-    // highlight-end
+      // highlight-end
       entry: log('started!'),
       on: {
         FINISH: {
           target: 'end',
           // highlight-start
           actions: log(
-            (context, event) =>
-            `count: ${context.count}, event: ${event.type}`,
+            (context, event) => `count: ${context.count}, event: ${event.type}`,
 
-            'Finish label'
-          )
+            'Finish label',
+          ),
           // highlight-end
-        }
-      }
+        },
+      },
     },
-    end: {}
-  }
+    end: {},
+  },
 });
 
 const endState = loggingMachine.transition('start', 'FINISH');
@@ -204,6 +204,7 @@ endState.actions;
 Without any arguments, `log` is an action that logs an object with `context` and `event` properties, containing the current context and triggering event, respectively.
 
 ## Choose action
+
 The `choose` action creator creates an action that specifies which actions should be executed based on some conditions.
 
 :::danger
@@ -211,26 +212,26 @@ Do not use the `choose` action creator to execute actions that can otherwise be 
 :::
 
 ```ts
-import { actions } from "xstate";
+import { actions } from 'xstate';
 const { choose, log } = actions;
 
 const maybeDoThese = choose([
   {
-    cond: "cond1",
+    cond: 'cond1',
     actions: [
       // selected when "cond1" is true
-      log("cond1 chosen!")
-    ]
+      log('cond1 chosen!'),
+    ],
   },
   {
-    cond: "cond2",
+    cond: 'cond2',
     actions: [
       // selected when "cond1" is false and "cond2" is true
       log((context, event) => {
         /* ... */
       }),
-      log("another action")
-    ]
+      log('another action'),
+    ],
   },
   {
     cond: (context, event) => {
@@ -241,15 +242,15 @@ const maybeDoThese = choose([
       // selected when "cond1" and "cond2" are false and the inline `cond` is true
       (context, event) => {
         // some other action
-      }
-    ]
+      },
+    ],
   },
   {
     actions: [
-      log("fall-through action")
+      log('fall-through action'),
       // selected when "cond1", "cond2", and "cond3" are false
-    ]
-  }
+    ],
+  },
 ]);
 ```
 
@@ -292,11 +293,11 @@ const machine = createMachine(
         // into assignToContext
         assign({
           message: 'Hello!',
-      // highlight-end
+          // highlight-end
         });
       },
     },
-  }
+  },
 );
 ```
 
@@ -310,14 +311,14 @@ const machine = createMachine(
     // ...config
   },
   {
-  // highlight-start
+    // highlight-start
     actions: {
       assignToContext: assign((context) => ({
         message: 'Hello!',
-  // highlight-end
+        // highlight-end
       })),
     },
-  }
+  },
 );
 ```
 

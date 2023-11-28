@@ -1,5 +1,5 @@
 ---
-title: "XState: version 4.7 and the future"
+title: 'XState: version 4.7 and the future'
 description: >-
   XState version 4.7 has just been released. This is a minor version bump, but a
   major reworking of the internal algorithms, a lot of new capabilites, bug
@@ -8,11 +8,14 @@ tags: [update, state machine, statechart, xstate, state]
 authors: [david]
 image: /blog/2019-12-09-xstate-version-47-and-the-future.png
 slug: 2019-12-09-xstate-version-47-and-the-future
-date:  2019-12-09
+date: 2019-12-09
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/davidkpiano/xstate-version-4-7-and-the-future-2ehk" />
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/xstate-version-4-7-and-the-future-2ehk"
+  />
 </head>
 
 [XState](https://github.com/davidkpiano/xstate) version 4.7 [has just been released](https://github.com/davidkpiano/xstate/releases/tag/v4.7.0). This is a minor version bump, but a major reworking of the internal algorithms, a lot of new capabilities, bug fixes, and a better TypeScript experience. It also paves the road for even more utilities, like `@xstate/test` and `@xstate/react`, as well as compatibility with other 3rd-party tools across the ecosystem, and even across languages.
@@ -49,12 +52,12 @@ But let’s be honest, writing it like this is arguably a bit cleaner:
 
 ```ts
 const machine = Machine({
-  initial: "idle",
+  initial: 'idle',
   states: {
     idle: {
       on: {
         FETCH: {
-          target: "loading",
+          target: 'loading',
           actions: assign({ query: (_, event) => event.query }),
         },
       },
@@ -117,11 +120,11 @@ interface UserContext {
 This type-safe declaration allows you to defensively program effectively, but it can be a bit annoying when you are 100% sure that `user` is defined:
 
 ```ts
-if (state.matches("success")) {
+if (state.matches('success')) {
   if (!state.context.user) {
     // this should be impossible!
     // the user definitely exists!
-    throw new Error("Something weird happened");
+    throw new Error('Something weird happened');
   }
 
   return state.context.user.name;
@@ -144,7 +147,7 @@ XState makes invoking external ”services” a first-class citizen. If this is 
 ```ts
 on: {
   SOME_EVENT: {
-    actions: forwardTo("someService");
+    actions: forwardTo('someService');
   }
 }
 ```
@@ -154,12 +157,12 @@ on: {
 
 ```ts
 const authServerMachine = Machine({
-  initial: "waitingForCode",
+  initial: 'waitingForCode',
   states: {
     waitingForCode: {
       on: {
         CODE: {
-          actions: respond("TOKEN", { delay: 10 }),
+          actions: respond('TOKEN', { delay: 10 }),
         },
       },
     },
@@ -167,23 +170,23 @@ const authServerMachine = Machine({
 });
 
 const authClientMachine = Machine({
-  initial: "idle",
+  initial: 'idle',
   states: {
     idle: {
-      on: { AUTH: "authorizing" },
+      on: { AUTH: 'authorizing' },
     },
     authorizing: {
       invoke: {
-        id: "auth-server",
+        id: 'auth-server',
         src: authServerMachine,
       },
-      entry: send("CODE", { to: "auth-server" }),
+      entry: send('CODE', { to: 'auth-server' }),
       on: {
-        TOKEN: "authorized",
+        TOKEN: 'authorized',
       },
     },
     authorized: {
-      type: "final",
+      type: 'final',
     },
   },
 });
@@ -197,24 +200,24 @@ If you’ve ever wanted to transition from a state if _any_ (unspecified) event 
 
 ```ts
 const quietMachine = Machine({
-  id: "quiet",
-  initial: "idle",
+  id: 'quiet',
+  initial: 'idle',
   states: {
     idle: {
       on: {
         WHISPER: undefined,
         // On any event besides a WHISPER, transition to the 'disturbed' state
-        "*": "disturbed",
+        '*': 'disturbed',
       },
     },
     disturbed: {},
   },
 });
 
-quietMachine.transition(quietMachine.initialState, "WHISPER");
+quietMachine.transition(quietMachine.initialState, 'WHISPER');
 // => State { value: 'idle' }
 
-quietMachine.transition(quietMachine.initialState, "SOME_EVENT");
+quietMachine.transition(quietMachine.initialState, 'SOME_EVENT');
 // => State { value: 'disturbed' }
 ```
 

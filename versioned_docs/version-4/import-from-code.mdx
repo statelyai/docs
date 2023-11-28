@@ -18,11 +18,11 @@ Want to import machines from GitHub? Try our [import from GitHub](/import-from-g
 
 ## Import code
 
-Your code should be formatted as a [`createMachine()` factory function](https://xstate.js.org/docs/guides/machines.html) before import. The importer has basic validation in case your machine has basic errors, including reminding you if the `createMachine` definition is missing. 
+Your code should be formatted as a [`createMachine()` factory function](https://xstate.js.org/docs/guides/machines.html) before import. The importer has basic validation in case your machine has basic errors, including reminding you if the `createMachine` definition is missing.
 
 [Check out an importable machine code example at the end of this page](/#machine-code-example).
 
-:::caution
+:::warning
 
 **Caution**: importing code will overwrite your current or selected machine unless you create a new machine from the **Machines list** inside a project.
 
@@ -50,8 +50,8 @@ If you have multiple `createMachine`s included in the code you insert in the tex
 1. Open the **Machines** list from the left drawer menu.
 2. Use the <MoreHorizontal size={18} /> triple dot icon alongside a machine to open the machine options menu.
 3. Use the **Import Code** option to open the import text area.
-5. Paste or type your machine code into the text area.
-6. Use the **Import** button to import your machine, overwriting the selected machine.
+4. Paste or type your machine code into the text area.
+5. Use the **Import** button to import your machine, overwriting the selected machine.
 
 ## Create a new machine inside a project using import code
 
@@ -67,45 +67,44 @@ If you have multiple `createMachine`s included in the code you insert in the tex
 Below is an example of a `createMachine()` factory function which you can import as a machine without any errors:
 
 ```js
-
 createMachine({
-  id: "Video",
-  initial: "Closed",
-  description: "Video player",
+  id: 'Video',
+  initial: 'Closed',
+  description: 'Video player',
   states: {
     Closed: {
       on: {
         PLAY: {
-          target: "Opened",
+          target: 'Opened',
         },
       },
     },
     Opened: {
       invoke: {
-        src: "startVideo",
+        src: 'startVideo',
       },
-      initial: "Playing",
-      description: "Fullscreen mode",
+      initial: 'Playing',
+      description: 'Fullscreen mode',
       states: {
         Playing: {
           on: {
             PAUSE: {
-              target: "Paused",
+              target: 'Paused',
             },
           },
         },
         Paused: {
           on: {
             PLAY: {
-              target: "Playing",
+              target: 'Playing',
             },
           },
         },
         Stopped: {
-          type: "final",
+          type: 'final',
           after: {
-            "5000": {
-              target: "#Video.Closed",
+            5000: {
+              target: '#Video.Closed',
               actions: [],
               internal: false,
             },
@@ -114,7 +113,7 @@ createMachine({
       },
       on: {
         STOP: {
-          target: ".Stopped",
+          target: '.Stopped',
         },
       },
     },
@@ -123,5 +122,4 @@ createMachine({
   predictableActionArguments: true,
   preserveActionOrder: true,
 });
-
 ```

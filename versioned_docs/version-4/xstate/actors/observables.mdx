@@ -25,7 +25,7 @@ const intervalMachine = createMachine({
         src: (context, event) =>
           interval(context.myInterval).pipe(
             map((value) => ({ type: 'COUNT', value })),
-            take(5)
+            take(5),
           ),
         onDone: 'finished',
       },

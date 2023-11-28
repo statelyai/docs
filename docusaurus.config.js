@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
 const a11yEmoji = require('@fec/remark-a11y-emoji');
+const { themes } = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -64,12 +65,11 @@ const config = {
 
           // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
-            tag: ':::',
             keywords: [
               'note',
               'tip',
               'info',
-              'caution',
+              'warning',
               'danger',
               'typescript',
               'xstate',
@@ -257,8 +257,8 @@ const config = {
         respectPrefersColorScheme: true,
       },
       prism: {
-        theme: require('prism-react-renderer/themes/vsLight'),
-        darkTheme: require('prism-react-renderer/themes/vsDark'),
+        theme: themes.vsLight,
+        darkTheme: themes.vsDark,
       },
     }),
 };

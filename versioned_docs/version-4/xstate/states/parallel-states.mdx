@@ -26,7 +26,7 @@ const fileMachine = createMachine({
   states: {
     // highlight-start
     upload: {
-    // highlight-end
+      // highlight-end
       initial: 'idle',
       states: {
         idle: {
@@ -44,7 +44,7 @@ const fileMachine = createMachine({
     },
     // highlight-start
     download: {
-    // highlight-end
+      // highlight-end
       initial: 'idle',
       states: {
         idle: {
@@ -133,7 +133,7 @@ const machine = createMachine({});
 const state = machine.initialState;
 
 const isMatch = [{ customer: 'deposit' }, { customer: 'withdrawal' }].some(
-  state.matches
+  state.matches,
 );
 ```
 

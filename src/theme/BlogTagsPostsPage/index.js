@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import Translate, {translate} from '@docusaurus/Translate';
+import Translate, { translate } from '@docusaurus/Translate';
 import {
   PageMetadata,
   HtmlClassNameProvider,
@@ -14,7 +14,7 @@ import SearchMetadata from '@theme/SearchMetadata';
 import BlogPostItems from '@theme/BlogPostItems';
 // Very simple pluralization: probably good enough for now
 function useBlogPostsPlural() {
-  const {selectMessage} = usePluralForm();
+  const { selectMessage } = usePluralForm();
   return (count) =>
     selectMessage(
       count,
@@ -25,7 +25,7 @@ function useBlogPostsPlural() {
             'Pluralized label for "{count} posts". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
           message: 'One post|{count} posts',
         },
-        {count},
+        { count },
       ),
     );
 }
@@ -37,7 +37,7 @@ function useBlogTagsPostsPageTitle(tag) {
       description: 'The title of the page for a blog tag',
       message: '{nPosts} tagged with "{tagName}"',
     },
-    {nPosts: blogPostsPlural(tag.count), tagName: tag.label},
+    { nPosts: blogPostsPlural(tag.count), tagName: tag.label },
   );
 }
 function useBlogTagsPostsPageDescription(tag) {
@@ -48,10 +48,10 @@ function useBlogTagsPostsPageDescription(tag) {
       description: 'The description of the page for a blog tag',
       message: 'Browse all posts tagged with "{tagName}". {nPosts} found.',
     },
-    {nPosts: blogPostsPlural(tag.count), tagName: tag.label},
+    { nPosts: blogPostsPlural(tag.count), tagName: tag.label },
   );
 }
-function BlogTagsPostsPageMetadata({tag}) {
+function BlogTagsPostsPageMetadata({ tag }) {
   const title = useBlogTagsPostsPageTitle(tag);
   const description = useBlogTagsPostsPageDescription(tag);
   return (
@@ -61,7 +61,7 @@ function BlogTagsPostsPageMetadata({tag}) {
     </>
   );
 }
-function BlogTagsPostsPageContent({tag, items, sidebar, listMetadata}) {
+function BlogTagsPostsPageContent({ tag, items, sidebar, listMetadata }) {
   const title = useBlogTagsPostsPageTitle(tag);
   return (
     <BlogLayout sidebar={sidebar}>
@@ -71,7 +71,8 @@ function BlogTagsPostsPageContent({tag, items, sidebar, listMetadata}) {
         <Link href={tag.allTagsPath}>
           <Translate
             id="theme.tags.tagsPageLink"
-            description="The label of the link targeting the tag list page">
+            description="The label of the link targeting the tag list page"
+          >
             View All Tags
           </Translate>
         </Link>
@@ -87,7 +88,8 @@ export default function BlogTagsPostsPage(props) {
       className={clsx(
         ThemeClassNames.wrapper.blogPages,
         ThemeClassNames.page.blogTagPostListPage,
-      )}>
+      )}
+    >
       <BlogTagsPostsPageMetadata {...props} />
       <BlogTagsPostsPageContent {...props} />
     </HtmlClassNameProvider>

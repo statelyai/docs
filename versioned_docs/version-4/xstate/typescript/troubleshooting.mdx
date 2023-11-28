@@ -42,7 +42,7 @@ createMachine(
         console.log(event.flag);
       },
     },
-  }
+  },
 );
 ```
 
@@ -71,7 +71,6 @@ const config = {
   },
 };
 
-
 createMachine(config, {
   actions: {
     consoleLogData: (context, event) => {
@@ -96,7 +95,6 @@ type Event =
       type: 'EVENT_WITHOUT_FLAG';
     };
 
-
 createMachine({
   schema: {
     context: {} as Context,
@@ -106,7 +104,6 @@ createMachine({
     EVENT_WITH_FLAG: {
       actions: (context, event) => {
         console.log(event.flag);
-
       },
     },
   },
@@ -167,7 +164,6 @@ type Event =
   | {
       type: 'EVENT_WITHOUT_FLAG';
     };
-
 
 createMachine({
   schema: {
