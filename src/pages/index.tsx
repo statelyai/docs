@@ -1,5 +1,5 @@
 import Head from '@docusaurus/Head';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Benefits } from '../components/landing/Benefits';
 import { FinalCallToAction } from '../components/landing/FinalCallToAction';
 import { Footer } from '../components/landing/Footer';
@@ -8,7 +8,6 @@ import { Navbar } from '../components/landing/Navbar';
 import { Testimonials } from '../components/landing/Testimonials';
 import '../css/landing-page.css';
 import '../css/landing-styles.css';
-// import '../css/preflight.css';
 
 export default function Index() {
   useEffect(() => {
@@ -27,7 +26,8 @@ export default function Index() {
   }, []);
 
   return (
-    <>
+    // We need the class name `twp` here to ensure the Tailwind reset gets applied to all children.
+    <div className="twp">
       <Head>
         <title>Stately | Your intelligent assistant for robust logic</title>
         <meta
@@ -74,19 +74,17 @@ export default function Index() {
         ></script>
       </Head>
 
-      {/* We need the class name `twp` here to ensure the Tailwind reset gets applied to all children. */}
-      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md twp">
+      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md">
         <Navbar />
       </header>
 
-      {/* We need the class name `twp` here to ensure the Tailwind reset gets applied to all children. */}
-      <main className="bg-blue-950 twp">
+      <main className="bg-blue-950">
         <Intro />
         <Benefits />
         <Testimonials />
         <FinalCallToAction />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
