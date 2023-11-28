@@ -2,8 +2,6 @@
 title: Final states
 ---
 
-import EmbedMachine from '@site/src/components/EmbedMachine';
-
 A final state is a state that represents the completion or successful termination of a machine. It is defined by the `type: 'final'` property on a state node:
 
 ```ts
@@ -41,38 +39,6 @@ A machine can have multiple final states or no final states.
 - Final states can have `output` data, which is sent to the parent machine when the machine terminates.
 - When a machine reaches a top-level final state, it terminates.
 - Final states cannot have transitions
-
-<EmbedMachine
-  name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=c6f8ca35-25e3-4fc6-b4fe-c9994715852e"
-/>
-
-## Using final states in Stately Studio
-
-In the video player above, *Stopped* is the final child state in the *Opened* state. When the video player is *Stopped*, the video player moves to its *Closed* state.
-
-:::tip
-
-Watch our [“What are final states?” video on YouTube](https://www.youtube.com/watch?v=wqW8Gz4NYDc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=7) (55s).
-
-:::
-
-### Make a state a final state
-
-First, select the state you want to set as the final state.
-
-#### On the canvas
-
-1. Right-click the state to open the edit menu.
-2. From the **Type** options, choose **Final**.
-
-#### Using the state Details panel
-
-1. Select the state you want to set as the final state.
-2. Open the state <Info size={18} /> **Details** panel from the right tool menu.
-3. From the type option, choose **Final**.
-
-To set the state back as a normal state, follow the same steps and select the **Normal** type option.
 
 ## Top-level final states
 
