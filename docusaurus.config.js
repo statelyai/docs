@@ -32,6 +32,10 @@ const config = {
 
   scripts: [
     {
+      src: 'https://esm.run/xstate',
+      async: true,
+    },
+    {
       src: 'https://plausible.io/js/script.tagged-events.js',
       defer: true,
       'data-domain': 'stately.ai',

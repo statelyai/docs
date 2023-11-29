@@ -507,7 +507,7 @@ html[data-theme='dark'] body {
   --st-code-inline-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
   --st-code-inline-text: var(--st-gray-50);
   --st-codeblock-background: rgba(0, 0, 0, 0.1);
-  --st-code-highlight-background: var(--st-gray-800);
+  --st-code-highlight-background: var(--st-gray-850);
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
   --st-copy-button-background: var(--st-blue-700);
   --st-copy-button-text: var(--st-blue-100);
