@@ -228,7 +228,7 @@ const config = {
           },
           { to: '/docs', label: 'Docs', position: 'right' },
           {
-            to: 'api',
+            to: 'api/next',
             label: 'API',
             position: 'right',
           },
