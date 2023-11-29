@@ -97,7 +97,7 @@ const sidebars = {
         slug: '/category/studio',
         keywords: ['guides'],
       },
-      collapsed: false,
+      collapsed: true,
       collapsible: true,
       items: [
         {
