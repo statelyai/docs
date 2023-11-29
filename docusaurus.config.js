@@ -258,7 +258,7 @@ const config = {
       },
       prism: {
         theme: themes.vsLight,
-        darkTheme: themes.vsDark,
+        darkTheme: themes.oneDark,
       },
     }),
 };
