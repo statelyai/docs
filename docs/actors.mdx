@@ -37,7 +37,7 @@ In the actor model, actors are objects that can communicate with each other. The
 
 Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **[actor logic creators](#actor-logic-creators)**.
 
-In XState, actor logic is defined by an object containing methods like `.transition(...)`, `.getInitialState()`, `.getSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
+In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialState()`, `.getPersistedState()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
 ## Creating actors
 
@@ -464,9 +464,52 @@ function withLogging(actorLogic) {
 const loggingToggleLogic = withLogging(toggleLogic);
 ```
 
-## Custom actors
+## Custom actor logic
 
-_Coming soon_
+Custom actor logic can be defined with an object that implements the `ActorLogic` interface.
+
+For example, here’s a custom actor logic object with a `transition` function that operates as a simple reducer:
+
+```ts
+import { createActor, EventObject, ActorLogic, Snapshot } from "xstate";
+
+const countLogic: ActorLogic<
+  Snapshot<undefined> & { context: number },
+  EventObject
+> = {
+  transition: (state, event) => {
+    if (event.type === 'INC') {
+      return {
+        ...state,
+        context: state.context + 1
+      };
+    } else if (event.type === 'DEC') {
+      return {
+        ...state,
+        context: state.context - 1
+      };
+    }
+    return state;
+  },
+  getInitialState: () => ({
+    status: 'active',
+    output: undefined,
+    error: undefined,
+    context: 0
+  }),
+  getPersistedState: (s) => s
+};
+
+const actor = createActor(countLogic)
+actor.subscribe(state => {
+  console.log(state.context)
+})
+actor.start() // => 0
+actor.send({ type: 'INC' }) // => 1
+actor.send({ type: 'INC' }) // => 2
+```
+
+For further examples, see implementations of `ActorLogic` in the source code, like the `fromTransition` actor logic creator, or the examples in the tests.
 
 ## Empty actors
 
