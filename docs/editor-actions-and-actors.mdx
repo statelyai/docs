@@ -17,6 +17,8 @@ State machines can also be used to invoke actors as longer-running processes tha
 
 Use the <Edit size={18} /> edit icon button to open the **Action** panel and add custom action parameters. Actions are created as custom actions by default, but you can also use [XState built-in actions](#xstate-built-in-actions).
 
+To remove an action, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
+
 ### XState built-in actions
 
 You can choose from the following built-in XState actions which will be formatted in your [exported code](export-as-code.mdx). The options are:
@@ -46,6 +48,8 @@ In the video player above, the *startVideo* actor is invoked when the video pl
 - Select a state, open the state <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** button and choose **Add invoked actor**.
 
 Use the <Edit size={18} /> edit icon button to open the **Invoked actor** panel and enter the actor’s source logic and ID. The ID can be used with the [`sendTo` or `stop` actions](#xstate-built-in-actions) to stop and send events to the actor.
+
+To remove an actor, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
 
 #### Invoke done and invoke error events
 

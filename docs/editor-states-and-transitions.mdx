@@ -89,7 +89,7 @@ A history state remembers the last child state that was active before its parent
 
 ### Unreachable states
 
-A **!** warning icon indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](#initial-states) by a [transition](#transitions-and-events).
+A <AlertTriangle size={18}/> warning icon indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](#initial-states) by a [transition](#transitions-and-events).
 
 ## Transitions and events
 
@@ -107,6 +107,13 @@ There are a few different types of transitions:
 
 - Click a handle on any state to create a transition, event, and target state.
 - Drag from a source state’s handle to the target state’s handle to connect them with a transition and event.
+
+#### Delete a transition
+
+Deleting a state will also delete any transitions with that state as a source.
+
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* on a selected transition, and choose **Delete** to delete the selected transition.
+- Use the <kbd>Backspace</kbd> key to delete the selected transition.
 
 ### Changing transition source and target
 
@@ -132,6 +139,8 @@ To set the delay interval:
 - Use the text input on the delayed transition to specify the interval in milliseconds (ms).
 - Select the transition delayed transition, open the transition <Info size={18} /> **Details** panel from the right tool menu, and specify the interval in milliseconds (ms) in the **Delay** text input.
 
+To make a delayed transition into a regular transition, use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **Event**.
+
 ### Eventless (always) transitions
 
 **Eventless transitions** are transitions that are *always* taken when the transition is enabled. In Stately’s editor, delayed transitions are labeled “always.” [Read more about eventless transitions](eventless-transitions.mdx).
@@ -141,6 +150,8 @@ To make a transition into an eventless transition:
 - Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **Always**.
 - Select an event, open the transition <Info size={18} /> **Details** panel from the right tool menu, and choose **Always** from the **Trigger** dropdown menus.
 
+To make an eventless transition into a regular transition, use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **Event**.
+
 ### State done event
 
 Use a state done event to transition from a parent state when its final child state is reached. [Read more about state done events](state-done-events.mdx).
@@ -148,6 +159,8 @@ Use a state done event to transition from a parent state when its final child st
 To turn an event into a state done event:
 
 - Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* an event, and from **Event type**, choose **State Done event**.
+
+To make a state done event into a regular transition, use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **Event**.
 
 ### Self-transitions
 
@@ -173,3 +186,5 @@ To add a guard:
 To reorder guards:
 
 - Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the guarded transition and from the **Reorder guards** menu, choose **Move up** or **Move down**.
+
+To delete a guard, remove its condition from the text input.
