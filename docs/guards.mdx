@@ -6,6 +6,12 @@ A **guard** is a condition function that the machine checks when it goes throu
 
 A **guarded transition** is a transition that is enabled only if its `guard` evaluates to `true`. The guard determines whether or not the transition can be enabled. Any transition can be a guarded transition.
 
+:::studio
+
+You can easily visualize and simulate guarded transitions in Stately’s editor. [Read more about guards in Stately’s editor](/docs/editor-states-and-transitions/#add-guards).
+
+:::
+
 Guards should be pure, synchronous functions that return either `true` or `false`.
 
 ```ts

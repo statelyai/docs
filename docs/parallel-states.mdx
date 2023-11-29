@@ -10,6 +10,12 @@ Parallel states have the following characteristics:
 - Exiting a parallel state will also simultaneously exit all of its regions.
 - An event received in a parallel state is simultaneously received & handled by all of its regions.
 
+:::studio
+
+You can easily visualize and simulate parallel states in Stately’s editor. [Read more about parallel states in Stately’s editor](/docs/editor-states-and-transitions/#parallel-states).
+
+:::
+
 Here is a music player example with a parallel state consisting of two regions, one for handling playing the track and one for handling the volume:
 
 ```ts
