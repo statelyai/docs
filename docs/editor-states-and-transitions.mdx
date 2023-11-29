@@ -22,7 +22,7 @@ In Stately’s editor, the rounded rectangle boxes are states. There are a few d
 - [**Final states**](#final-states) are the last states the machine enters before it stops.
 - [**Parent states**](#parent-and-child-states) can contain more states, known as child states.
 - [**Parallel states**](#parallel-states) are parent states that have multiple child states that are all active at the same time.
-- [**History states**](#history-states) are parent states that remember which child state was active when the parent state was exited, and re-enter that child state when the parent state is re-entered.
+- [**History states**](#history-states) are parent states that remember which child state was active when the parent state was exited and re-enter that child state when the parent state is re-entered.
 
 You can invoke other state machines or actors on a state, or trigger an action when a state is entered or exited. [Read more about actions and actors in Stately’s editor](editor-actions-and-actors.mdx).
 
@@ -40,7 +40,7 @@ In Stately’s editor, you can also add [descriptions](descriptions.mdx), [color
 
 ### Parent and child states
 
-States can contain more states, also known as child states. These child states are only active when the parent state is active. [Read more about parent and child states](parent-states.mdx)
+States can contain more states, also known as child states. These child states are only active when the parent state is active. [Read more about parent and child states](parent-states.mdx).
 
 To add a child state:
 
@@ -77,14 +77,14 @@ In statecharts, a parallel state is a state that has multiple child states (also
 
 To turn a parent state into a parallel state:
 
-- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a parent state and from **State type**, choose **Parallel state**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a parent state, and from **State type**, choose **Parallel state**.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the **Parallel** state option.
 
 ### History states
 
-A history state remembers the last child state that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered. [Read more about history states](history-states.mdx).
+A history state remembers the last child state that was active before its parent state was exited. When a transition from outside the parent state targets a history state, the remembered child state is entered. [Read more about history states](history-states.mdx).
 
-- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a state and from **State type**, choose **History state**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a state, and from **State type**, choose **History state**.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the **History** state option.
 
 ### Unreachable states
@@ -95,7 +95,7 @@ A <AlertTriangle size={18}/> warning icon indicates an unreachable state. The st
 
 A machine moves from state to state through transitions. Transitions are caused by events; when an event happens, the machine transitions to the next state.
 
-In Stately’s editor, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a *source* state which comes before the transition, and a *target* state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
+In Stately’s editor, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a *source* state, which comes before the transition, and a *target* state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state.
 
 There are a few different types of transitions:
 - **Normal** transitions are triggered by an event.
@@ -173,7 +173,7 @@ To create a self-transition:
 
 ## Guards
 
-A **guarded transition** is a transition that is enabled only if its condition evaluates to `true`. [Read more about guarded transitions](guards.mdx).
+A **guarded transition** is a transition that is only enabled if its condition is evaluated to be `true`. [Read more about guarded transitions](guards.mdx).
 
 In Stately’s editor, guards are numbered in the order they are checked and labeled with “if” or “else if” along with their condition. Multiple guards on the same events are connected with a dotted line.
 
@@ -185,6 +185,6 @@ To add a guard:
 
 To reorder guards:
 
-- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the guarded transition and from the **Reorder guards** menu, choose **Move up** or **Move down**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the guarded transition, and from the **Reorder guards** menu, choose **Move up** or **Move down**.
 
 To delete a guard, remove its condition from the text input.
