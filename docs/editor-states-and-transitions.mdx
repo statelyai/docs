@@ -24,6 +24,8 @@ In Stately’s editor, the rounded rectangle boxes are states. There are a few d
 - [**Parallel states**](#parallel-states) are parent states that have multiple child states that are all active at the same time.
 - [**History states**](#history-states) are parent states that remember which child state was active when the parent state was exited and re-enter that child state when the parent state is re-entered.
 
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=61fa1504-a92c-4730-a87d-3ee9dd5d6e33&mode=design" title="Demoing states"/>
+
 You can invoke other state machines or actors on a state, or trigger an action when a state is entered or exited. [Read more about actions and actors in Stately’s editor](editor-actions-and-actors.mdx).
 
 In Stately’s editor, you can also add [descriptions](descriptions.mdx), [colors](colors.mdx), and [tags](tags.mdx) to states.
@@ -99,9 +101,11 @@ In Stately’s editor, the arrows are transitions, and the rounded rectangles on
 
 There are a few different types of transitions:
 - **Normal** transitions are triggered by an event.
-- [**Guarded transitions**](#guards) are triggered by an event, but only if a specified condition is met.
+- [**Guarded transitions**](#add-guards) are triggered by an event, but only if a specified condition is met.
 - [**Delayed transitions**](#delayed-after-transitions) (also known as *after* transitions) are triggered by an event, but only after a specified time interval.
 - [**Eventless transitions**](#eventless-always-transitions) (also known as *always* transitions) are triggered by a timer or other condition, and don’t have an event.
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?code=834448b4-3b8b-4de9-8b2e-353fd2b342de&mode=design&machineId=50c0ee06-8297-4b79-95d1-b1abf779d757" title="Demoing transitions"/>
 
 ### Create a transition and event
 
