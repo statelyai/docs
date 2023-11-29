@@ -1,13 +1,13 @@
 ---
 title: Quick start
-description: 'Want to jump straight into XState and Stately Studio? Start here!'
+description: 'Start here to jump straight into XState and Stately Studio.'
 ---
 
-Want to jump straight into XState version 5 and Stately Studio? Start here! Below you’ll find the quickest way to get started with XState using the example of a toggle feature and links to more detailed documentation.
+This quick start guide will help you get started with XState and Stately Studio. You will learn how to create a state machine, create an actor from that state machine, send events to that actor, and observe the state changes.
 
 :::studio
 
-The fastest way to start with Stately Studio is to go to [state.new](https://state.new). There you’ll find a starter machine with all the statechart basics ready for you to edit. [Read more about Stately Studio](studio.mdx).
+The fastest way to start with Stately Studio is to go to [state.new](https://state.new). There, you’ll find a starter machine with all the statechart basics ready for you to edit. [Read more about Stately Studio](studio.mdx).
 
 :::
 
@@ -17,15 +17,8 @@ The fastest way to start with Stately Studio is to go to [state.new](https://sta
 
 Install the XState V5 beta using your preferred package manager:
 
+
 <Tabs>
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn add xstate@beta
-```
-
-</TabItem>
-
 <TabItem value="npm" label="npm">
 
 ```bash
@@ -33,11 +26,27 @@ npm install xstate@beta
 ```
 
 </TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install xstate@beta
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add xstate@beta
+```
+
+</TabItem>
 </Tabs>
 
 ## Create a machine
 
-[Read our introduction to state machines and statecharts](state-machines-and-statecharts.mdx) to familiarize yourself with the concepts.
+In XState, a machine is an object that contains all the logic for an actor. In this example, we will create a simple toggle machine that can be in one of two states: `Active` or `Inactive`. The `toggle` event will toggle the state between `Active` and `Inactive`.
 
 ```js
 import { createMachine } from 'xstate';
@@ -56,9 +65,11 @@ const toggleMachine = createMachine({
 });
 ```
 
-## Create a machine actor and send it events
+[Read our introduction to state machines and statecharts](state-machines-and-statecharts.mdx) to familiarize yourself with the concepts.
 
-When you run a state machine, it becomes an [actor](actors.mdx): a running process that can receive messages (events), send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+## Create an actor and send events
+
+Machine logic can be used to create an actor. An [actor](actors.mdx) is a running process that can receive messages (events), send messages and change its behavior based on the messages it receives.
 
 ```js
 import { createMachine, createActor } from 'xstate';
@@ -67,15 +78,16 @@ const toggleMachine = createMachine({
   // Machine code from above
 });
 
-// Creates an actor that you can send events to; not started yet!
+// Create an actor that you can send events to.
+// Note: the actor is not started yet!
 const actor = createActor(machine);
 
-// Subscribe to updated snapshots (emitted state changes) from the actor
+// Subscribe to snapshots (emitted state changes) from the actor
 actor.subscribe((snapshot) => {
   console.log('Value:', snapshot.value);
 });
 
-// Start the actor!
+// Start the actor
 actor.start(); // logs 'Inactive'
 
 // Send events
@@ -85,7 +97,7 @@ actor.send({ type: 'toggle' }); // logs 'Inactive'
 
 ## Use delayed transitions
 
-[Delayed transitions](delayed-transitions.mdx) are transitions that only happen after a specified interval of time.
+[Delayed transitions](delayed-transitions.mdx) are transitions that automatically happen after a specified interval of time.
 
 ```js
 export const toggleMachine = createMachine({
@@ -119,7 +131,9 @@ export const toggleMachine = createMachine({
       on: { toggle: 'Active' },
     },
     Active: {
-      entry: assign({ count: ({ context }) => context.count + 1 }),
+      entry: assign({
+        count: ({ context }) => context.count + 1
+      }),
       on: { toggle: 'Inactive' },
       after: { 2000: 'Inactive' },
     },
@@ -142,7 +156,9 @@ const App = () => {
   return (
     <div>
       <div>Value: {state.value}</div>
-      <button onClick={() => send({ type: 'toggle' })}>Toggle</button>
+      <button onClick={() => send({ type: 'toggle' })}>
+        Toggle
+      </button>
     </div>
   );
 };

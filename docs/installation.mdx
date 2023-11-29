@@ -4,17 +4,9 @@ title: Installation
 
 # Installation
 
-You can install XState using your favorite package manager or embed the `<script>` directly from a CDN.
+XState has **zero dependencies** and runs anywhere that JavaScript runs. You can install XState using your favorite package manager, like [npm](https://www.npmjs.com/), [pnpm](https://pnpm.js.org/), or [yarn](https://yarnpkg.com/).
 
 <Tabs>
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn add xstate@beta
-```
-
-</TabItem>
-
 <TabItem value="npm" label="npm">
 
 ```bash
@@ -22,28 +14,42 @@ npm install xstate@beta
 ```
 
 </TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install xstate@beta
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add xstate@beta
+```
+
+</TabItem>
 </Tabs>
 
 ## CDN
 
-You can import XState from the [Skypack CDN](https://www.skypack.dev/xstate@beta):
+You can also import XState from various CDNs:
+
+- [esm.run](https://esm.run):
 
 ```ts
-import {
-  createMachine,
-  createActor,
-} from 'https://cdn.skypack.dev/xstate@beta';
+import { createMachine, createActor } from 'https://esm.run/xstate';
+```
 
-const machine = createMachine({
-  initial: 'a',
-  states: {
-    a: {},
-  },
-});
+- [esm.sh](https://esm.sh):
 
-const actor = createActor(machine);
-actor.subscribe((state) => {
-  console.log(state);
-});
-actor.start();
+```ts
+import { createMachine, createActor } from 'https://esm.sh/xstate';
+```
+
+- [Skypack](https://www.skypack.dev):
+
+```ts
+import { createMachine, createActor } from 'https://cdn.skypack.dev/xstate';
 ```

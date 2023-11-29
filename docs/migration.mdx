@@ -1,22 +1,14 @@
 ---
-title: 'Migrating XState v4 to v5'
+title: 'Migrating from XState v4 to v5'
 ---
 
-Following our guide below, migrating from XState version 4 to version 5 should be straightforward. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
+The guide below explains how to migrate from XState version 4 to version 5. Migrating from XState v4 to v5 should be a straightforward process. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
 
-This guide is for users who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
+This guide is for developers who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
 
 :::video
 
 Prefer video? [Watch our Migration to XState V5 beta webinar on YouTube](https://www.youtube.com/watch?v=s-nqoIbIZac).
-
-:::
-
-:::tip
-
-## I’m starting a new project. Should I use XState V5?
-
-XState version 5 is in beta, and compared to XState version 4, it is [feature complete](https://en.wikipedia.org/wiki/Software_release_life_cycle#Feature_complete) with all the features of V4 and more. But as V5 is still in beta, some slight breaking changes may occur with future beta versions. So go ahead, but proceed with caution!
 
 :::
 
@@ -78,7 +70,9 @@ import { createMachine, createActor } from 'xstate';
 const machine = createMachine(/* ... */);
 
 // ✅
-const actor = createActor(machine);
+const actor = createActor(machine, {
+  // actor options
+});
 ```
 
 </TabItem>
@@ -90,7 +84,9 @@ import { createMachine, interpret } from 'xstate';
 const machine = createMachine(/* ... */);
 
 // ❌ DEPRECATED
-const actor = interpret(machine);
+const actor = interpret(machine, {
+  // actor options
+});
 ```
 
 </TabItem>
@@ -156,7 +152,7 @@ Breaking change
 
 :::
 
-The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden in this manner. Use [input](input.mdx) instead:
+The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input.mdx) instead:
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
@@ -250,6 +246,76 @@ const machine = createMachine({
     },
   ],
 });
+```
+
+</TabItem>
+</Tabs>
+
+## States
+
+### Use `state.getMeta()` instead of `state.meta`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `state.meta` property has been renamed to `state.getMeta()`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+  
+```ts
+// ✅
+state.getMeta();
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+state.meta;
+```
+
+</TabItem>
+</Tabs>
+
+### The `state.getStrings()` method has been removed
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+### Use `state._nodes` instead of `state.configuration`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `state.configuration` property has been renamed to `state._nodes`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+  
+```ts
+// ✅
+state._nodes;
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+state.configuration;
 ```
 
 </TabItem>
@@ -423,6 +489,7 @@ The `cond` transition property for guarded transitions is now called `guard`:
 <TabItem value="v5" label="XState v5 beta">
 
 ```ts
+// ✅
 const machine = createMachine({
   on: {
     someEvent: {
@@ -807,7 +874,7 @@ Breaking change
 
 :::
 
-Child state nodes are always re-entered when they are targeted by transitions (both external and **internal**) defined on compound state nodes. This change is relevant only if a child state node has `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). Add a `stateIn` guard to prevent undesirable re-entry of the child state:
+Child state nodes are always re-entered when they are targeted by transitions (both external and internal) defined on compound state nodes. This change is relevant only if a child state node has `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). Add a `stateIn` guard to prevent undesirable re-entry of the child state:
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
@@ -849,7 +916,8 @@ const machine = createMachine({
     compoundState: {
       on: {
         someEvent: {
-          target: '.childState', // implicitly internal, childState not re-entered
+          // Implicitly internal; childState not re-entered
+          target: '.childState',
         },
       },
       initial: 'childState',
@@ -1106,6 +1174,12 @@ The `invoke.data` property is removed. If you want to provide context to invoked
 
 ```ts
 // ✅
+const someActor = createMachine({
+  // The input must be consumed by the invoked actor:
+  context: ({ input }) => input,
+  // ...
+});
+
 const machine = createMachine({
   // ...
   invoke: {
@@ -1115,12 +1189,6 @@ const machine = createMachine({
     },
   },
 });
-
-// The input must be consumed by the invoked actor:
-const someActor = createMachine({
-  // ...
-  context: ({ input }) => input,
-});
 ```
 
 </TabItem>
@@ -1129,6 +1197,10 @@ const someActor = createMachine({
 
 ```ts
 // ❌ DEPRECATED
+const someActor = createMachine({
+  // ...
+});
+
 const machine = createMachine({
   // ...
   invoke: {
@@ -1163,10 +1235,10 @@ const machine = createMachine({
   states: {
     finished: {
       type: 'final',
-      output: {
-        answer: 42,
-      },
     },
+  },
+  output: {
+    answer: 42,
   },
 });
 ```
@@ -1230,11 +1302,11 @@ const machine = createMachine({
   states: {
     finished: {
       type: 'final',
-      output: ({ context, event }) => ({
-        answer: context.value,
-      }),
     },
   },
+  output: ({ context, event }) => ({
+    answer: context.value,
+  }),
 });
 ```
 
@@ -1573,7 +1645,13 @@ Breaking change
 
 :::
 
-`machineConfig.tsTypes` has been renamed and is now nested as `machineConfig.types.typegen`:
+:::warningxstate
+
+XState Typegen does not fully support XState v5 yet. However, strongly-typed machines can still be achieved without Typegen.
+
+:::
+
+The `machineConfig.tsTypes` property has been renamed and is now at `machineConfig.types.typegen`.
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
