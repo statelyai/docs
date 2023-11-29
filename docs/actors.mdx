@@ -405,7 +405,7 @@ const callbackLogic = fromCallback(({ sendBack, receive }) => {
 
 Callback actors are a bit different from other actors in that they do not do the following:
 
-- Do not work with `onDone` or `onError`
+- Do not work with `onDone`
 - Do not produce a snapshot using `.getSnapshot()`
 - Do not emit values when used with `.subscribe()`
 - Can not be stopped with `.stop()`
