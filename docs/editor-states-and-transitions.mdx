@@ -35,7 +35,7 @@ In Stately’s editor, you can also add [descriptions](descriptions.mdx), [color
 
 #### Delete a state
 
-- Use the <MoreHorizontal size={18} /> triple dot icon button on a selected state to open the Edit menu, and choose **Delete** to delete the selected state.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* on a selected state, and choose **Delete** to delete the selected state.
 - Use the <kbd>Backspace</kbd> key to delete the selected state.
 
 ### Parent and child states
@@ -57,7 +57,7 @@ Machines can only have one top-level initial state. Each parent state has its ow
 
 To set a state as the initial state:
 
-- Right-click a state and choose Mark as initial state.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a state and choose Mark as initial state.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the desired initial state from the **Initial state** menu.
 
 ### Final states
@@ -66,7 +66,7 @@ When a machine reaches the final state, it can no longer receive any events, and
 
 To turn a state into a final state:
 
-- Right-click a state, and from **State type**, choose **Final state**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a state, and from **State type**, choose **Final state**.
 - Select the state, open the state <Info size={18} /> **Details** panel, and choose the **Final** state option.
 
 If you want your machine to transition from a parent state when its final child state is reached, use a [state done event](#state-done-event).
@@ -77,14 +77,14 @@ In statecharts, a parallel state is a state that has multiple child states (also
 
 To turn a parent state into a parallel state:
 
-- Right-click a parent state and from **State type**, choose **Parallel state**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a parent state and from **State type**, choose **Parallel state**.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the **Parallel** state option.
 
 ### History states
 
 A history state remembers the last child state that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered. [Read more about history states](history-states.mdx).
 
-- Right-click a state and from **State type**, choose **History state**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a state and from **State type**, choose **History state**.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the **History** state option.
 
 ### Unreachable states
@@ -110,7 +110,7 @@ There are a few different types of transitions:
 
 ### Changing transition source and target
 
-- Right-click the transition and choose **Switch source and target**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the transition and choose **Switch source and target**.
 - Drag the transition handle from one state to a different state.
 - Select a transition, open the transition <Info size={18} /> **Details** panel from the right tool menu, and choose a new source or target state from the dropdown menus.
 
@@ -122,7 +122,7 @@ In Stately’s editor, delayed transitions are labeled “after.” Delayed tran
 
 To make a transition into a delayed transition:
 
-- Right-click a transition, and from **Event type**, choose **After**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **After**.
 - Select an event, open the transition <Info size={18} /> **Details** panel from the right tool menu, and choose **After** from the **Trigger** dropdown menus.
 
 Your delay time interval will be displayed in a human-readable format on hover. For example, 15000ms will be displayed as 15 seconds.
@@ -138,7 +138,7 @@ To set the delay interval:
 
 To make a transition into an eventless transition:
 
-- Right-click a transition, and from **Event type**, choose **Always**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition, and from **Event type**, choose **Always**.
 - Select an event, open the transition <Info size={18} /> **Details** panel from the right tool menu, and choose **Always** from the **Trigger** dropdown menus.
 
 ### State done event
@@ -147,7 +147,7 @@ Use a state done event to transition from a parent state when its final child st
 
 To turn an event into a state done event:
 
-- Right-click an event, and from **Event type**, choose **State Done event**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* an event, and from **Event type**, choose **State Done event**.
 
 ### Self-transitions
 
@@ -155,7 +155,7 @@ A **self-transition** is when a state transitions back to itself, and is useful 
 
 To create a self-transition:
 
-- Right-click an existing event, and choose **Make self transition**. The transition will be connected back to the source state.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* an existing event, and choose **Make self transition**. The transition will be connected back to the source state.
 - Select an existing event, open the transition <Info size={18} /> **Details** panel from the right tool menu, and choose the same state from the source and target dropdown menus.
 
 ## Guards
@@ -167,9 +167,9 @@ In Stately’s editor, guards are numbered in the order they are checked and lab
 To add a guard:
 
 - Select a transition and use the <Plus size={18} /> **Add guard** to add a new guard to the transition. Use the text input to add the guard’s condition.
-- Right-click a transition and use **Add guard** to add a guard to the transition. Use the text input to add the guard’s condition.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* a transition and use **Add guard** to add a guard to the transition. Use the text input to add the guard’s condition.
 - Select an existing transition, open the transition <Info size={18} /> **Details** panel from the right tool menu, and enter the guard’s condition into the **Guard** text input.
 
 To reorder guards:
 
-- Right-click the guarded transition and from the **Reorder guards** menu, choose **Move up** or **Move down**.
+- Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the guarded transition and from the **Reorder guards** menu, choose **Move up** or **Move down**.
