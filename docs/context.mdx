@@ -2,8 +2,6 @@
 title: 'Context'
 ---
 
-import SkipDownLink from '@site/src/components/SkipDownLink';
-
 In XState, `context` is how you store data in a state machine [actor](actors.mdx).
 
 The `context` property is available in all states and used to store data relevant to an actor. The `context` object is immutable, so you cannot directly modify it. Instead, for state machine logic, you can use the `assign(...)` action to update `context`.
@@ -29,19 +27,6 @@ feedbackActor.subscribe((state) => {
 feedbackActor.start();
 // logs 'Some feedback'
 ```
-
-<SkipDownLink
-  text="Jump to learning more about context in XState"
-  link="#initial-context"
-/>
-
-## Using context in Stately Studio
-
-- Coming soon… setting initial values
-- Coming soon… updating context with assign
-- Coming soon… JS/TS export
-
----
 
 ## Initial context
 

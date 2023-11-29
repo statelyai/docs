@@ -2,11 +2,15 @@
 title: Eventless (always) transitions
 ---
 
-import SkipDownLink from '@site/src/components/SkipDownLink';
-
 **Eventless transitions** are transitions that happen without an explicit event. These transitions are *always* taken when the transition is enabled.
 
 Eventless transitions are labeled “always” and often referred to as “always” transitions.
+
+:::studio
+
+You can easily visualize and simulated eventless transitions in Stately’s editor. [Read more about eventless transitions in Stately’s editor](/docs/editor-states-and-transitions/#eventless-always-transitions).
+
+:::
 
 ```ts
 {
@@ -25,27 +29,6 @@ Eventless transitions are labeled “always” and often referred to as “alway
   }
 }
 ```
-
-<SkipDownLink
-  text="Jump to learning more about eventless transitions in XState"
-  link="#eventless-transitions-and-guards"
-/>
-
-## Using eventless transitions in Stately Studio
-
-### Make an event into an eventless transition
-
-First, select the event you want to replace with an eventless transition. Then…
-
-#### On the canvas
-
-1. Right-click the state to open the edit menu.
-2. From the **Event type** options, choose **Always** to turn the event into an eventless transition.
-
-#### Using the transition Details panel
-
-1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
-2. From the **Event type** dropdown menu, choose **Always** to turn the event into an eventless transition.
 
 ## Eventless transitions and guards
 
