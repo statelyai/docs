@@ -1,0 +1,14 @@
+diff --git a/node_modules/docusaurus-plugin-typedoc-api/lib/components/VersionBanner.js b/node_modules/docusaurus-plugin-typedoc-api/lib/components/VersionBanner.js
+index 7853ea1..3c0e481 100644
+--- a/node_modules/docusaurus-plugin-typedoc-api/lib/components/VersionBanner.js
++++ b/node_modules/docusaurus-plugin-typedoc-api/lib/components/VersionBanner.js
+@@ -27,6 +27,9 @@ function VersionBanner() {
+     return null;
+   }
+   const latestVersionInfo = docs[latestVersion.label];
++
++  return null;
++
+   return /*#__PURE__*/jsxRuntime.jsx("div", {
+     className: `${themeCommon.ThemeClassNames.docs.docVersionBanner} alert alert--warning margin-bottom--md`,
+     role: "alert",
