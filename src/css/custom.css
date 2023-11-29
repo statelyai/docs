@@ -506,8 +506,8 @@ html[data-theme='dark'] body {
   --st-code-border: transparent;
   --st-code-inline-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
   --st-code-inline-text: var(--st-gray-50);
-  --st-codeblock-background: var(--st-gray-850);
-  --st-code-highlight-background: var(--st-gray-800);
+  --st-codeblock-background: rgba(0, 0, 0, 0.1);
+  --st-code-highlight-background: var(--st-gray-850);
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
   --st-copy-button-background: var(--st-blue-700);
   --st-copy-button-text: var(--st-blue-100);
@@ -1612,7 +1612,7 @@ a.link-box strong {
   background: var(--ifm-tabs);
   border: 1px solid var(--ifm-tabs-color-active-border);
   border-bottom: none;
-  border-radius: var(--ifm-global-radius);
+  border-radius: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   cursor: pointer;
@@ -1620,6 +1620,15 @@ a.link-box strong {
   padding: var(--ifm-tabs-padding-vertical) var(--ifm-tabs-padding-horizontal);
   transition: background-color var(--ifm-transition-fast)
     var(--ifm-transition-timing-default);
+  font-size: small;
+}
+
+.tabs__item:first-child {
+  border-top-left-radius: var(--ifm-global-radius);
+}
+
+.tabs__item:last-child {
+  border-top-right-radius: var(--ifm-global-radius);
 }
 
 .tabs__item--active {

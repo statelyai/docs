@@ -18,22 +18,29 @@ Want to find out more about state machines? [Read our introduction](state-machin
 XState is available on [npm](https://www.npmjs.com/package/xstate):
 
 <Tabs>
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn add xstate
-```
-
-</TabItem>
-
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install xstate
+npm install xstate@beta
 ```
 
 </TabItem>
 
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install xstate@beta
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add xstate@beta
+```
+
+</TabItem>
 </Tabs>
 
 ## Create a simple machine
@@ -141,6 +148,12 @@ textActor.send({ type: 'text.cancel' });
 
 ## Download the XState VS Code extension
 
+:::warningxstate
+
+The XState VS Code extension does not fully support XState v5 yet.
+
+:::
+
 - [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode)
 - [Open VSX Registry](https://open-vsx.org/extension/statelyai/stately-vscode)
 
@@ -149,10 +162,8 @@ textActor.send({ type: 'text.cancel' });
 ## Packages
 
 - 🤖 [xstate](https://github.com/statelyai/xstate/): Core finite state machine and statecharts library + actors
-- 🔬 [@xstate/fsm](https://github.com/statelyai/xstate/tree/main/packages/xstate-fsm): Minimal finite state machine library
 - 📉 [@xstate/graph](https://github.com/statelyai/xstate/tree/main/packages/xstate-graph): Graph traversal utilities for XState
 - ⚛️ [@xstate/react](https://github.com/statelyai/xstate/tree/main/packages/xstate-react): React hooks and utilities for using XState in React applications
 - 💚 [@xstate/vue](https://github.com/statelyai/xstate/tree/main/packages/xstate-vue): Vue composition functions and utilities for using XState in Vue applications
 - 🎷 [@xstate/svelte](https://github.com/statelyai/xstate/tree/main/packages/xstate-svelte): Svelte utilities for using XState in Svelte applications
 - ✅ [@xstate/test](https://github.com/statelyai/xstate/tree/main/packages/xstate-test): Model-Based-Testing utilities (using XState) for testing any software
-- 🔍 [@xstate/inspect](https://github.com/statelyai/xstate/tree/main/packages/xstate-inspect): Inspection utilities for XState
