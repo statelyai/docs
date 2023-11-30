@@ -413,6 +413,80 @@ const machine = createMachine({
 
 **Pre-migration tip:** Update v4 projects to use `sendTo` or `raise` instead of `send`.
 
+### Use `enqueueActions()` instead of `pure()` and `choose()`
+
+The `pure()` and `choose()` methods have been removed. Use `enqueueActions()` instead.
+
+For `pure()` actions:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+entry: [
+  enqueueActions(({ context, event, enqueue }) => {
+    enqueue('action1');
+    enqueue('action2');
+  })
+];
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+entry: [
+  pure(() => {
+    return [
+      'action1',
+      'action2'
+    ]
+  })
+];
+```
+
+</TabItem>
+</Tabs>
+
+For `choose()` actions:
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+entry: [
+  enqueueActions(({ enqueue, check }) => {
+    if (check('someGuard')) {
+      enqueue('action1');
+      enqueue('action2');
+    }
+  })
+];
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+entry: [
+  choose([
+    {
+      guard: 'someGuard',
+      actions: ['action1', 'action2']
+    }
+  ]),
+];
+```
+
+</TabItem>
+</Tabs>
+
 ### `actor.send()` no longer accepts string types
 
 :::breakingchange
@@ -1483,16 +1557,16 @@ Breaking change
 
 :::
 
-`interpret(machine).start(state)` is now `createActor(machine, { state }).start()`
+`interpret(machine).start(state)` is now `createActor(machine, { snapshot }).start()`
 
-To restore an actor at a specific state, you should now pass the state as the `state` property of the `options` argument of `createActor(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
+To restore an actor at a specific state, you should now pass the state as the `snapshot` property of the `options` argument of `createActor(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
 
 <Tabs>
 <TabItem value="v5" label="XState v5 beta">
 
 ```ts
 // ✅
-const actor = createActor(machine, { state: someState });
+const actor = createActor(machine, { snapshot: someState });
 actor.start();
 ```
 

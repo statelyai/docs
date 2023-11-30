@@ -160,16 +160,16 @@ const machine = createMachine({
   // ...
 });
 
-const mainActor = interpret(machine);
+const mainActor = createActor(machine);
 mainActor.start();
 
 // Deeply persist state
 // Also persists the "someCounter" actor!
-const persistedState = mainActor.getPersistedState();
+const persistedState = mainActor.getPersistedSnapshot();
 
 // Restore state
-const restoredActor = interpret(machine, {
-  state: persistedState,
+const restoredActor = createActor(machine, {
+  snapshot: persistedState,
 });
 
 // Starts at recursively persisted state

@@ -42,12 +42,12 @@ const restoredState = stateString ? JSON.parse(stateString) : undefined;
 
 const actor = createActor(someMachine, {
   // Restore the state (if it exists)
-  state: restoredState,
+  snapshot: restoredState,
 });
 
 actor.subscribe(() => {
   // Persist the state to localStorage
-  const persistedState = actor.getPersistedState();
+  const persistedState = actor.getPersistedSnapshot();
   localStorage.setItem('some-state', JSON.stringify(persistedState));
 });
 
@@ -103,11 +103,11 @@ You may want to persist the state of this machine so that when the user comes ba
 
 First, you should determine your [persistence strategy](#persistence-strategies). For this example, we’ll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Actors created with `createActor` have a `.getPersistedState()` method that returns the state that can be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
+Actors created with `createActor` have a `.getPersistedSnapshot()` method that returns the state that can be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
 
 ```ts
 // Read the state to persist from the actor (sync)
-const persistedState = actor.getPersistedState();
+const persistedState = actor.getPersistedSnapshot();
 
 // Persist the state to localStorage
 localStorage.setItem('some-state-key', JSON.stringify(persistedState));
@@ -121,7 +121,7 @@ const restoredState = localStorage.getItem('some-state-key');
 
 const actor = createActor(machine, {
   // Restore the state (if it exists)
-  state: restoredState,
+  snapshot: restoredState,
 });
 
 actor.start();

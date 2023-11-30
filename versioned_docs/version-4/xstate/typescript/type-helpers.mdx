@@ -8,12 +8,12 @@ title: Type helpers
 
 XState makes several type helpers available to you for composing types in TypeScript. You can use these helpers for creating custom functions or typing various integrations.
 
-## `StateFrom`
+## `SnapshotFrom`
 
-`StateFrom` can be used to extract the `State` from a machine.
+`SnapshotFrom` can be used to extract the `State` from a machine.
 
 ```ts
-import { createMachine, StateFrom } from 'xstate';
+import { createMachine, SnapshotFrom } from 'xstate';
 
 const machine = createMachine({
   schema: {
@@ -23,7 +23,7 @@ const machine = createMachine({
   },
 });
 
-const myFunction = (state: StateFrom<typeof machine>) => {
+const myFunction = (snapshot: SnapshotFrom<typeof machine>) => {
   const context = state.context;
 };
 ```
