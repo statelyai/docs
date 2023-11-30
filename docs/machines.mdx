@@ -79,12 +79,12 @@ You can also create an actor [from other types of logic](actors.mdx#actor-logic)
 
 ## Providing implementations
 
-Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic. This includes:
+Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic (states & transitions). This includes:
 
-- [Actions](actions.mdx)
-- [Actors](actors.mdx)
-- [Guards](guards.mdx)
-- [Delays](delayed-transitions.mdx)
+- [Actions](actions.mdx), which are fire-and-forget side-effects
+- [Actors](actors.mdx), which are entities that can communicate with the machine actor
+- [Guards](guards.mdx), which are conditions that determine whether a transition should be taken
+- [Delays](delayed-transitions.mdx), which specify the time before a delayed transition is taken or a delayed event is sent
 
 The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`. 
 
@@ -93,21 +93,19 @@ import { setup } from 'xstate';
 
 const feedbackMachine = setup({
   // Default implementations
-  {
-    actions: {
-      doSomething: () => {
-        console.log('Doing something!');
-      },
+  actions: {
+    doSomething: () => {
+      console.log('Doing something!');
     },
-    actors: {
-      /* ... */
-    },
-    guards: {
-      /* ... */
-    },
-    delays: {
-      /* ... */
-    },
+  },
+  actors: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  delays: {
+    /* ... */
   },
 }).createMachine({
   entry: { type: 'doSomething' },

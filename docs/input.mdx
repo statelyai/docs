@@ -28,13 +28,15 @@ const feedbackActor = createActor(feedbackMachine, {
 
 :::studio
 
-Input is coming to Stately Studio’s editor soon…
+Input is coming to Stately Studio’s editor soon.
 
 :::
 
 ## Creating actors with input
 
-You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, etc.:
+You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, and other actor logic creators.
+
+**Input with `fromPromise()`:**
 
 ```ts
 import { createActor, fromPromise } from 'xstate';
@@ -57,7 +59,46 @@ userFetcherActor.onDone((data) => {
 });
 ```
 
-Coming soon… show examples for `fromTransition`, `fromObservable`, etc.
+**Input with `fromTransition()`:**
+
+```ts
+import { createActor, fromTransition } from 'xstate';
+
+const counter = fromTransition((state, event) => {
+  if (event.type === 'INCREMENT') {
+    return { count: state.count + 1 };
+  }
+  return state;
+}, ({ input }) => ({
+  count: input.startingCount ?? 0,
+});
+
+const counterActor = createActor(counter, {
+  // highlight-start
+  input: {
+    startingCount: 10,
+  }
+});
+```
+
+**Input with `fromObservable()`:**
+
+```ts
+import { createActor, fromObservable } from 'xstate';
+import { interval } from 'rxjs';
+
+const intervalLogic = fromObservable(({ input }) => interval(input.interval));
+
+const intervalActor = createActor(intervalLogic, {
+  // highlight-start
+  input: {
+    interval: 1000,
+  },
+  // highlight-end
+})
+
+intervalActor.start();
+```
 
 ## Initial event input
 
@@ -221,11 +262,6 @@ const feedbackActor = createActor(feedbackMachine, {
   },
 });
 ```
-
-- Coming soon… Usage with `@xstate/react`
-- Coming soon… Usage with `@xstate/vue`
-- Coming soon… Usage with `@xstate/svelte`
-- Coming soon… Usage with `@xstate/solid`
 
 ### Passing new data to an actor
 
