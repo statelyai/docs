@@ -243,12 +243,14 @@ Don't get the `onDone` property on a state confused with `invoke.onDone` - they 
 - The `onDone` property on a [state](states.mdx) node refers to the compound state node reaching a [final state](final-states.mdx).
 - The `invoke.onDone` property refers to the invocation (`invoke.src`) being done.
 
-```js {5,13}
+```js
 // ...
 loading: {
   invoke: {
     src: someSrc,
-    onDone: {/* ... */} // refers to `someSrc` being done
+    // refers to `someSrc` being done
+    // highlight-next-line
+    onDone: {/* ... */}
   },
   initial: 'loadFoo',
   states: {
@@ -256,7 +258,9 @@ loading: {
     loadBar: {/* ... */},
     loadingComplete: { type: 'final' }
   },
-  onDone: 'loaded' // refers to 'loading.loadingComplete' being reached
+  // refers to 'loading.loadingComplete' being reached
+  // highlight-next-line
+  onDone: { target: 'loaded' }
 }
 // ...
 ```
