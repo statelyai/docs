@@ -149,46 +149,16 @@ const config = {
         disableVersioning: true,
         projectRoot: `${__dirname}/xstate`,
         packages: [
-          {
-            path: 'packages/core',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-analytics',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-graph',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-immer',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-inspect',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-react',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-solid',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-svelte',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-test',
-            entry: 'src/index.ts'
-          },
-          {
-            path: 'packages/xstate-vue',
-            entry: 'src/index.ts'
-          }
+          { path: 'packages/core', slug: 'xstate' },
+          { path: 'packages/xstate-analytics', slug: '@xstate/analytics' },
+          { path: 'packages/xstate-graph', slug: '@xstate/graph' },
+          { path: 'packages/xstate-immer', slug: '@xstate/immer' },
+          { path: 'packages/xstate-inspect', slug: '@xstate/inspect' },
+          { path: 'packages/xstate-react', slug: '@xstate/react' },
+          { path: 'packages/xstate-solid', slug: '@xstate/solid' },
+          { path: 'packages/xstate-svelte', slug: '@xstate/svelte' },
+          { path: 'packages/xstate-test', slug: '@xstate/test' },
+          { path: 'packages/xstate-vue', slug: '@xstate/vue'  }
         ]
       }
     ],
