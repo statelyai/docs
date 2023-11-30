@@ -338,7 +338,6 @@ The `enqueueActions(...)` action creator is a higher-level action that enqueues 
   - `enqueue.assign(...)`: Enqueues an `assign(...)` action
   - `enqueue.sendTo(...)`: Enqueues a `sendTo(...)` action
   - `enqueue.raise(...)`: Enqueues a `raise(...)` action
-  - `enqueue.sendTo(...)`: Enqueues a `sendTo(...)` action
   - `enqueue.spawnChild(...)`: Enqueues a `spawnChild(...)` action
   - `enqueue.stopChild(...)`: Enqueues a `stopChild(...)` action
   - `enqueue.cancel(...)`: Enqueues a `cancel(...)` action
@@ -516,4 +515,193 @@ const machine = setup({
 
 ## Cheatsheet
 
-_Coming soon_
+### Entry and exit actions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // highlight-start
+  // Entry action on root
+  entry: [{ type: 'entryAction' }],
+  exit: [{ type: 'exitAction' }],
+  // highlight-end
+  initial: 'start',
+  states: {
+    start: {
+      // highlight-start
+      entry: [{ type:'startEntryAction' }],
+      exit: [{ type:'startExitAction' }],
+      // highlight-end
+    }
+  }
+});
+```
+
+### Transition actions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      actions: [
+        // highlight-start
+        { type: 'doSomething' },
+        { type: 'doSomethingElse' },
+        // highlight-end
+      ]
+    }
+  }
+});
+```
+
+### Inline action functions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      actions: [
+        // highlight-start
+        ({ context, event }) => {
+          console.log(context, event);
+        }
+        // highlight-end
+      ]
+    }
+  }
+});
+```
+
+### Setting up actions
+
+```ts
+import { setup } from 'xstate';
+
+const someAction = () => {
+  //...
+}
+
+const machine = setup({
+  actions: {
+    someAction
+  }
+}).createMachine({
+  entry: [
+    // highlight-start
+    { type: 'someAction' }
+    // highlight-end
+  ],
+  // ...
+})
+```
+
+### Providing actions
+
+```ts
+import { setup } from 'xstate';
+
+const someAction = () => {
+  //...
+}
+
+const machine = setup({
+  actions: {
+    someAction
+  }
+}).createMachine({
+  // ...
+});
+
+const modifiedMachine = machine.provide({
+  someAction: () => {
+    // Overridden action implementation
+  }
+});
+```
+
+### Assign action
+
+**With property assigners**
+
+```ts
+import { createMachine } from 'xstate';
+
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      // highlight-start
+      actions: assign({
+        count: ({ context, event }) => {
+          return context.count + event.value;
+        }
+      }),
+      // highlight-end
+    },
+  },
+});
+```
+
+**With function assigners**
+
+```ts
+import { createMachine } from 'xstate';
+
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      // highlight-start
+      actions: assign(({ context, event }) => {
+        return {
+          count: context.count + event.value
+        };
+      }),
+      // highlight-end
+    },
+  },
+});
+```
+
+### Raise action
+
+Coming soon...
+
+### Send-to action
+
+Coming soon...
+
+### Enqueue actions
+
+```ts
+import { createMachine, enqueueActions } from 'xstate';
+
+const machine = createMachine({
+  // highlight-start
+  entry: enqueueActions(({ enqueue, check }) => {
+    enqueue({ type: 'someAction' });
+
+    if (check({ type: 'someGuard' })) {
+      enqueue({ type: 'anotherAction' });
+    }
+
+    enqueue.assign({
+      count: 0
+    })
+
+    enqueue.sendTo('someActor', { type: 'someEvent' });
+
+    enqueue.raise({ type: 'anEvent' })
+  })
+  // highlight-end
+});
+```
