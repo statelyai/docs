@@ -224,7 +224,7 @@ const machine = createMachine({
 
 const actor = createActor(machine.provide({
   actors: {
-    workflow: fromPromise(…) // provided
+    workflow: fromPromise(/* ... */) // provided
   }
 }));
 ```
