@@ -1306,6 +1306,12 @@ details summary::before {
   --ifm-alert-border-color: var(--st-tip-accent);
 }
 
+.alert code {
+  background-color: var(--ifm-alert-background-color-highlight);
+  border-color: var(--ifm-alert-border-color);
+  color: var(--st-text-highlight);
+}
+
 .alert--secondary {
   --ifm-alert-background-color: var(--st-tip-background);
   --ifm-alert-background-color-highlight: var(--st-tip-accent);
