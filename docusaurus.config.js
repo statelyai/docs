@@ -159,6 +159,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: 'static/docs-default.png',
+      docs: {
+        sidebar: {
+          hideable: true,
+        }
+      },
       navbar: {
         title: '',
         logo: {
