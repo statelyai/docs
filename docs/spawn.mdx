@@ -1,14 +1,60 @@
 ---
-title: 'Spawn'
+title: 'Spawning Actors'
+description: 'You can use spawn to run actors. Actors created with spawn are spawning actors, and actors created with invoke are invoking actors.'
 ---
 
-XState is based on the [actor model](actors.mdx). Spawned actors are managed by the state machine.
+Sometimes invoking [actors](actors.mdx) may not be flexible enough for your needs. In such cases, you might want to:
 
-Coming soon… example.
+- Invoke child machines that last across several states (machines invoked with `invoke` are always tied to that state)
+- Invoke a dynamic number of actors
+
+You can use a powerful tool called `spawn` to run these actors in these cases. Actors created with spawn are **spawning actors**, and actors created with invoke are **invoking actors**.
 
 :::tip
 [Read about the difference between spawning and invoking actors](actors.mdx#invoking-and-spawning-actors).
 :::
+
+Spawning actors puts a reference to the machine in `context`, which means that you must always assign a spawned actor to context via `assign`:
+
+```ts
+import { createMachine, spawn, assign } from 'xstate';
+
+const childMachine = createMachine({
+  /* ... */
+});
+
+const parentMachine = createMachine({
+  entry: [
+    assign({
+      childMachineRef: () => spawn(childMachine),
+    }),
+  ],
+});
+```
+
+In the example above, the spawned actor can now be referenced on the `context` of the machine. You can spawn as many actors as you need:
+
+```ts
+import { createMachine, spawn, assign } from 'xstate';
+
+const childMachine = createMachine({
+  /* ... */
+});
+
+const parentMachine = createMachine({
+  entry: [
+    assign({
+      childMachineRefs: () => [
+        // highlight-start
+        spawn(childMachine),
+        spawn(childMachine),
+        spawn(childMachine),
+        // highlight-end
+      ],
+    }),
+  ],
+});
+```
 
 ## API
 
