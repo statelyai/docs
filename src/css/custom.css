@@ -349,8 +349,9 @@ html[data-theme='light'] body {
   --st-header-border: var(--st-gray-100);
   --st-layout-border: var(--st-gray-100);
   --st-layout-border-secondary: var(--st-gray-100);
-  --st-code-border: var(--st-gray-100);
-  --st-codeblock-background: white;
+  --st-code-border: transparent;
+  --st-codeblock-background: rgba(255, 255, 255, 0.2);
+  --st-admonition-codeblock-background: rgba(255, 255, 255, 0.2);
   --st-code-inline-border: 1px solid rgba(191, 227, 248, 0.5); /* var(--st-blue-100) in rgba */
   --st-code-inline-text: var(--st-blue-900);
   --st-code-highlight-background: var(--st-blue-50);
@@ -507,6 +508,7 @@ html[data-theme='dark'] body {
   --st-code-inline-border: 1px solid rgba(69, 71, 79, 0.5); /* var(--st-gray-700) in rgba */
   --st-code-inline-text: var(--st-gray-50);
   --st-codeblock-background: rgba(0, 0, 0, 0.1);
+  --st-admonition-codeblock-background: rgba(0, 0, 0, 0.7);
   --st-code-highlight-background: var(--st-gray-850);
   --docusaurus-highlighted-code-line-bg: var(--st-code-highlight-background);
   --st-copy-button-background: var(--st-blue-700);
@@ -616,7 +618,7 @@ html[data-theme='light'] .theme-code-block pre {
 }
 
 html[data-theme='light'] .theme-code-block {
-  border: 1px solid var(--st-code-border);
+  border: none;
 }
 
 html[data-theme='dark'] .theme-code-block,
@@ -626,7 +628,7 @@ html[data-theme='dark'] .theme-code-block pre {
 }
 
 html[data-theme='dark'] .theme-code-block {
-  border: 1px solid var(--st-code-border);
+  border: none;
 }
 
 /* Specific font-variation-settings for web font support */
@@ -1268,8 +1270,8 @@ footer [class*='iconExternalLink'] {
   box-shadow: none;
   color: var(--ifm-alert-foreground-color);
   display: grid;
-  grid-template-columns: 1.2em 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1.2em minmax(auto, calc(100% - 1.2em));
+  grid-template-rows: auto;
   grid-column-gap: 0.5em;
   grid-row-gap: 0;
   font-size: 0.95rem;
@@ -1304,6 +1306,17 @@ details summary::before {
   --ifm-alert-background-color-highlight: var(--st-tip-accent);
   --ifm-alert-foreground-color: var(--st-tip-text);
   --ifm-alert-border-color: var(--st-tip-accent);
+}
+
+.alert code {
+  background-color: var(--st-admonition-codeblock-background);
+  border-color: var(--st-admonition-codeblock-background);
+  color: var(--ifm-alert-foreground-color);
+}
+
+.alert pre code {
+  background-color: var(--st-admonition-codeblock-background);
+  border-color: inherit;
 }
 
 .alert--secondary {
