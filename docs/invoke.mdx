@@ -596,7 +596,89 @@ _Coming soon_
 
 ## Sending Responses
 
-_Coming soon_
+An invoked actor (or [spawned actor](./spawn.mdx)) can _respond_ to another actor; i.e., it can send an event _in response to_ an event sent by another actor. To do so, provide a reference to the sending actor as a custom property on the event object being sent. In the following example, we use `event.sender`, but any name works.
+
+```js
+// Parent
+actions: sendTo(
+  'childActor',
+  ({ self }) => ({
+    type: 'ping',
+    // highlight-next-line
+    sender: self
+  })
+);
+
+// Child
+actions: sendTo(
+    // highlight-next-line
+  ({ event }) => event.sender,
+  { type: 'pong' }
+)
+```
+
+In the following example, the `'client'` machine below sends the `'CODE'` event to the invoked `'auth-server'` service, which then responds with a `'TOKEN'` event after 1 second.
+
+```js
+import { createActor, createMachine, sendTo } from 'xstate';
+
+const authServerMachine = createMachine({
+  id: 'server',
+  initial: 'waitingForCode',
+  states: {
+    waitingForCode: {
+      on: {
+        CODE: {
+          // highlight-start
+          actions: sendTo(
+            ({ event }) => event.sender,
+            { type: 'TOKEN' },
+            { delay: 1000 }
+          )
+          // highlight-end
+        }
+      }
+    }
+  }
+});
+
+const authClientMachine = createMachine({
+  id: 'client',
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        AUTH: { target: 'authorizing' }
+      }
+    },
+    authorizing: {
+      invoke: {
+        id: 'auth-server',
+        src: authServerMachine
+      },
+      // highlight-start
+      entry: sendTo(
+        'auth-server',
+        ({ self }) => ({ type: 'CODE', sender: self })),
+      // highlight-end
+      on: {
+        TOKEN: { target: 'authorized' }
+      }
+    },
+    authorized: {
+      type: 'final'
+    }
+  }
+});
+```
+
+That specific example could be simplified by using the `sendParent(...)` action creator for the same effect. But by using `sendTo` the actors do not strictly need to be in a direct parent-child relationship to communicate.
+
+Note that by default `sendTo` will send events anonymously, in which case the reciever will not know the source of the event.
+
+:::note
+In XState v4, the `respond(...)` action creator was used for this purpose. In XState v5, use `sendTo(...)` instead.
+:::
 
 ## Multiple Actors
 
