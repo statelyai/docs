@@ -145,7 +145,9 @@ Whereas errors thrown by actions can only be handled globally by a subscriber of
 
 ```ts
 actor.subscribe({
-  error: (err) => { ... }
+  error: (err) => {
+    console.error(err);
+  }
 })
 ```
 
