@@ -108,14 +108,6 @@ const machine = createMachine(
 );
 ```
 
-### Delay expressions
-
-The delay option can be evaluated as a delay expression. The delay expression function takes in an object that contains `context` and `event` properties and returns the resolved `delay` (in milliseconds).
-
-```ts
-`after: [{ delay: () => 1000, target: ... }]`;
-```
-
 ## Lifecycle
 
 Delayed transition timers are canceled when the state is exited.
@@ -154,6 +146,26 @@ const machine = createMachine({
       ),
     },
   },
+});
+```
+
+You can also setup the delay using the `setup()` function:
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  // highlight-start
+  delays: {
+    shortTimeout: 1000,
+    longTimeout: 5000,
+    eventually: 10_000
+  }
+  // highlight-end
+}).createMachine({
+  after: {
+    shortTimeout: {/* ... */}
+  }
 });
 ```
 
