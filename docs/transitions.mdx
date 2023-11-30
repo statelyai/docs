@@ -113,9 +113,9 @@ Coming soon… example with `{ on: { target: '.child' } }`
 
 ## Re-entering
 
-By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not re-enter the parent state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state.
+By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not re-enter the parent state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state. It will not stop existing invoked actors or start new invoked actors.
 
-If you want the parent state to be re-entered, you can set the `reenter` property to `true`. This will cause the parent state to re-enter, executing the `exit` and `entry` actions of the parent state.
+If you want the parent state to be re-entered, you can set the `reenter` property to `true`. This will cause the parent state to re-enter, executing the `exit` and `entry` actions of the parent state. It will stop existing invoked actors, and start new invoked actors.
 
 :::tip
 
