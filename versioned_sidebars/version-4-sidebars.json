@@ -118,7 +118,11 @@
             "export-as-code",
             "machine-restore",
             "autolayout",
-            "annotations",
+            {
+              "type": "doc",
+              "label": "Notes",
+              "id": "annotations"
+            },
             "descriptions",
             {
               "type": "doc",
