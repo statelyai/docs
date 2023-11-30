@@ -672,8 +672,6 @@ const authClientMachine = createMachine({
 });
 ```
 
-That specific example could be simplified by using the `sendParent(...)` action creator for the same effect. But by using `sendTo` the actors do not strictly need to be in a direct parent-child relationship to communicate.
-
 Note that by default `sendTo` will send events anonymously, in which case the reciever will not know the source of the event.
 
 :::note
