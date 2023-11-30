@@ -135,7 +135,11 @@ const sidebars = {
               label: 'Colors',
               id: 'colors',
             },
-            'annotations',
+            {
+              type: 'doc',
+              label: 'Notes',
+              id: 'annotations',
+            },
             'descriptions',
             {
               type: 'doc',
