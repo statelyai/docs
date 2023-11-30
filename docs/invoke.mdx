@@ -74,7 +74,7 @@ const userMachine = createMachine({
 });
 ```
 
-Actors can also be invoked on the _root_ of the machine, where they will last the lifetime of the machine:
+Actors can also be invoked on the _root_ of the machine, and they will be active for the lifetime of its parent machine actor:
 
 ```ts
 import { fromEventObservable, fromEvent } from 'rxjs'
