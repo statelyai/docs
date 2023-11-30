@@ -67,7 +67,7 @@ You can pass several properties to the `options` object, all of which are option
 
 `iframe` (function or iframe `Element` or `false`) resolves to the `iframe` element to display the inspector. If set to `iframe: false`, a popup window is used instead.
 
-:::caution 
+:::warning
 
 You may need to “allow popups” in your browser to display the inspector in a popup window, as the browser might block them by default.
 
@@ -110,46 +110,46 @@ You can implement your own inspector by creating a **receiver**. A **receiver** 
 
 `"actor.register"`
 
-  ```ts
-  {
-    type: 'actor.register';
-    machine: AnyStateMachine;
-    state: AnyState;
-    id: string;
-    sessionId: string;
-    parent?: string;
-    source?: string;
-  }
-  ```
+```ts
+{
+  type: 'actor.register';
+  machine: AnyStateMachine;
+  state: AnyState;
+  id: string;
+  sessionId: string;
+  parent?: string;
+  source?: string;
+}
+```
 
 `"actor.stop"`
 
-  ```ts
-  {
-    type: 'actor.stop';
-    sessionId: string;
-  }
-  ```
+```ts
+{
+  type: 'actor.stop';
+  sessionId: string;
+}
+```
 
 `"actor.state"`
 
-  ```ts
-  {
-    type: 'actor.state';
-    state: AnyState;
-    sessionId: string;
-  }
-  ```
+```ts
+{
+  type: 'actor.state';
+  state: AnyState;
+  sessionId: string;
+}
+```
 
 `"actor.event"`
 
-  ```ts
-  {
-    type: 'actor.event';
-    event: SCXML.Event<any>;
-    sessionId: string;
-  }
-  ```
+```ts
+{
+  type: 'actor.event';
+  event: SCXML.Event<any>;
+  sessionId: string;
+}
+```
 
 To listen to events from an inspected source, create a receiver with the appropriate `create*Receiver(...)` function; for example:
 

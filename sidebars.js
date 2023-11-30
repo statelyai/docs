@@ -106,6 +106,16 @@ const sidebars = {
           id: 'studio',
         },
         {
+          type: 'doc',
+          label: 'States and transitions',
+          id: 'editor-states-and-transitions',
+        },
+        {
+          type: 'doc',
+          label: 'Actions and actors',
+          id: 'editor-actions-and-actors',
+        },
+        {
           type: 'category',
           label: 'Design mode',
           link: {
@@ -119,16 +129,19 @@ const sidebars = {
               type: 'doc',
               label: 'Generate flow',
               id: 'generate-flow',
-              className: 'pro-feature',
             },
             {
               type: 'doc',
               label: 'Colors',
               id: 'colors',
-              className: 'pro-feature',
             },
             'annotations',
             'descriptions',
+            {
+              type: 'doc',
+              label: 'Tags',
+              id: 'editor-tags',
+            },
             'machine-restore',
             'autolayout',
           ],
@@ -145,15 +158,28 @@ const sidebars = {
               type: 'doc',
               label: 'Live simulation',
               id: 'live-simulation',
-              className: 'pro-feature',
             },
           ],
         },
         'projects',
         {
+          type: 'category',
+          label: 'Stately Sky',
+          link: {
+            type: 'doc',
+            id: 'stately-sky-getting-started',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'Getting started',
+              id: 'stately-sky-getting-started',
+            },
+          ],
+        },
+        {
           type: 'doc',
           label: 'Teams',
-          className: 'pro-feature',
           id: 'teams',
         },
         'discover',
@@ -202,13 +228,16 @@ const sidebars = {
               type: 'doc',
               label: 'Community plan',
               id: 'studio-community-plan',
-              className: 'community-feature',
             },
             {
               type: 'doc',
               label: 'Pro plan',
               id: 'studio-pro-plan',
-              className: 'pro-feature',
+            },
+            {
+              type: 'doc',
+              label: 'Team plan',
+              id: 'studio-team-plan',
             },
             {
               type: 'doc',
@@ -231,13 +260,11 @@ const sidebars = {
           type: 'doc',
           label: 'Version history',
           id: 'versions',
-          className: 'pro-feature',
         },
         {
           type: 'doc',
           label: 'Lock machines',
           id: 'lock-machines',
-          className: 'pro-feature',
         },
         'keyboard-shortcuts',
         'canvas-view-controls',

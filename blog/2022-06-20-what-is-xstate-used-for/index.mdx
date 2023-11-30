@@ -21,19 +21,19 @@ XState can be used in any frontend application to manage state. It has first-cla
 You can try it in a Vanilla JS app by running this simple piece of code:
 
 ```ts
-import { createMachine, interpret } from "xstate";
+import { createMachine, interpret } from 'xstate';
 
 const machine = createMachine({
-  initial: "waiting",
+  initial: 'waiting',
   states: {
     waiting: {
       after: {
-        2000: "alerted",
+        2000: 'alerted',
       },
     },
     alerted: {
       entry: () => {
-        alert("Hello from the state machine!");
+        alert('Hello from the state machine!');
       },
     },
   },

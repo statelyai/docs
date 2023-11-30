@@ -6,6 +6,12 @@ title: Delayed (after) transitions
 
 Delayed transitions are defined on the `after` property in milliseconds. They are often referred to as “after” transitions.
 
+:::studio
+
+You can easily visualize and simulate delayed transitions in Stately’s editor. [Read more about delayed transitions in Stately’s editor](/docs/editor-states-and-transitions/#delayed-after-transitions).
+
+:::
+
 ```ts
 import { createMachine } from 'xstate';
 
@@ -40,11 +46,6 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 
 :::
 
-<SkipDownLink
-  text="Jump to learning more about delays in XState"
-  link="#delays"
-/>
-
 <EmbedMachine
   name="Delayed (after) transitions"
   embedURL="https://stately.ai/registry/editor/embed/1c962847-2829-45e2-b6fc-5f42fa3f8b6b?machineId=5671366b-05cf-43f5-a09a-b88373ea27c1"
@@ -53,35 +54,6 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 [View this machine in Stately Studio](https://stately.ai/registry/editor/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=5671366b-05cf-43f5-a09a-b88373ea27c1).
 
 In a video player, want the video to be *Closed* out of fullscreen mode a few seconds after the video has *Stopped*, instead of closing the fullscreen mode suddenly as soon as the video is stopped. The eventless transition above transitions from the *Stopped* state to the *Closed* state after 5 seconds.
-
-## Using delayed transitions in Stately Studio
-
-In Stately Studio, delayed transitions are labeled “after.”
-
-### Make an event into a delayed transition
-
-Delayed transitions have a default time interval of 500ms (0.5 seconds).
-
-#### On the canvas
-
-1. Select the event you want to replace with a delayed transition.
-1. Right-click the event to open the edit menu.
-1. From the **Event type** options, choose **After** to turn the event into a delayed transition.
-
-#### Using the transition Details panel
-
-1. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
-2. From the **Event type** dropdown menu, choose **After** to turn the event into a delayed transition.
-
-#### Specify delay time
-
-Your delay time interval will be displayed in a human-readable format on hover. For example, 15000ms will be displayed as 15 seconds.
-
-1. Select the delayed transition.
-2. Open the transition <Info size={18} /> **Details** panel from the right tool menu.
-3. Use the **Delay** text input to specify the interval in milliseconds.
-
----
 
 ## Delays
 

@@ -2134,7 +2134,8 @@ path.edge {
     grid-template-columns: repeat(3, 1fr);
     margin-top: 3rem;
     grid-template-areas:
-      'community professional enterprise'
+      'community community community'
+      'professional team enterprise'
       'services services services';
   }
 
@@ -2161,10 +2162,22 @@ path.edge {
   margin-bottom: 1.5rem;
 }
 
+.badge {
+  background-color: #DB4206;
+  border-radius: 0.3rem;
+  color: white;
+  font-size: 0.6em;
+  font-weight: 400;
+  margin-top: 0.1rem;
+  margin-left: 0.5rem;
+  padding: 0.35rem 0.4rem;
+  text-transform: uppercase;
+}
+
 .feature-list .pricing-text {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   font-variation-settings: 'wght' 500;
   font-size: var(--font-small);
 }
@@ -2217,6 +2230,10 @@ path.edge {
   margin-top: 0;
 }
 
+.tier.community {
+  margin-bottom: 1rem;
+}
+
 .tier.services {
   margin-top: 1rem;
 }
@@ -2262,7 +2279,7 @@ h2.pricing-heading {
   color: var(--chakra-colors-gray-200) !important;
   margin-top: 0.5rem;
   font-variation-settings: 'wght' 200;
-  max-width: 8em;
+  max-width: 19ch;
 }
 
 .pricing-text.description {
@@ -2281,6 +2298,69 @@ h2.pricing-heading {
   since they are just slightly off otherwise?
   */
   min-height: 71px;
+}
+
+@media (min-width: 1280px) {
+  .tier.services {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+  }
+
+  .tier.community {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 0;
+  }
+
+  .tier.services .tier-header {
+    border-bottom: none;
+    flex-basis: 33%;
+    padding-right: 1.5rem;
+  }
+
+  .tier.community .tier-header {
+    display: flex;
+    align-items: center;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-right: 1.5rem;
+  }
+  
+  .tier.community .pricing-heading {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+  }
+
+  .tier.services .feature-list, .tier.community .feature-list {
+    border-left: 1px solid rgba(255, 255, 255, 0.11);
+    padding: 1rem 1.5rem;
+  }
+
+  .tier.community .feature-list {
+    align-items: center;
+    display: flex;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    justify-content: space-between;
+  }
+
+  .tier.community .community-text  {
+    color: white;
+    font-size: calc(var(--font-small) * 1.05);
+    flex-basis: auto;
+    margin: 0;
+  }
+
+  .tier.community .get-started {
+    flex-basis: 26ch;
+    margin: 0;
+  }
+
+  .tier.community .get-started a {
+    margin-left: 1.5rem;
+  }
 }
 
 .details-wrapper {

@@ -7,11 +7,14 @@ tags: [finite state machine, statechart, xstate, state machine]
 authors: [david]
 image: /blog/2021-01-20-you-dont-need-a-library-for-state-machines.png
 slug: 2021-01-20-you-dont-need-a-library-for-state-machines
-date:  2021-01-20
+date: 2021-01-20
 ---
 
 <head>
-  <link rel="canonical" href="https://dev.to/davidkpiano/you-don-t-need-a-library-for-state-machines-k7h" />
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/you-don-t-need-a-library-for-state-machines-k7h"
+  />
 </head>
 
 The finite state machine is one of the oldest models of computation in computer science. It’s older than the web, older than any programming language you can think of, and probably older than you. Just ask [Mealy (1955)](https://en.wikipedia.org/wiki/Mealy_machine) or [Moore (1956)](https://en.wikipedia.org/wiki/Moore_machine). Finite state machines (FSMs) can be implemented in any modern language using control-flow statements, yet there’s most likely a state machine library (if not many) in all of those languages.
@@ -97,10 +100,10 @@ In contrast, state machines group behavior by **finite state** and narrow down w
 ```js
 // ✅ Finite-state-first approach
 switch (state.status) {
-  case "loading":
+  case 'loading':
     // narrow based on event
     switch (event.type) {
-      case "DATA_RECEIVED":
+      case 'DATA_RECEIVED':
       // do something, and possibly
       // change the finite state
       // ...
@@ -164,14 +167,14 @@ A simple, built-in way to represent such a configuration is an object. We can cr
 
 ```js
 const machine = {
-  initial: "loading",
+  initial: 'loading',
   states: {
     // A finite "state node"
     loading: {
       on: {
         // event types
         DATA_RECEIVED: {
-          target: "success",
+          target: 'success',
           // actions: [...]
         },
       },
@@ -197,7 +200,7 @@ function transition(state, event) {
   };
 }
 
-transition({ status: "loading" }, { type: "DATA_RECEIVED" });
+transition({ status: 'loading' }, { type: 'DATA_RECEIVED' });
 // => { status: 'success', ... }
 ```
 
@@ -206,7 +209,7 @@ You might be wondering why I didn’t use an even simpler object here, which you
 ```js
 const transitions = {
   loading: {
-    DATA_RECEIVED: "success",
+    DATA_RECEIVED: 'success',
   },
   success: {
     /* ... */
@@ -229,16 +232,16 @@ For instance, if our `DATA_RECEIVED` event returns data that we want to save in 
 
 ```js
 const machine = {
-  initial: "loading",
+  initial: 'loading',
   states: {
     loading: {
       on: {
         // event types
         DATA_RECEIVED: {
-          target: "success",
+          target: 'success',
           // represents what "effects" should happen
           // as a result of taking this transition
-          actions: [{ type: "saveData" }],
+          actions: [{ type: 'saveData' }],
         },
       },
     },
@@ -259,7 +262,7 @@ function transition(state, event) {
   // go through the actions to determine
   // what should be done
   nextStateNode.actions?.forEach((action) => {
-    if (action.type === "saveData") {
+    if (action.type === 'saveData') {
       nextState.data = event.data;
     }
   });

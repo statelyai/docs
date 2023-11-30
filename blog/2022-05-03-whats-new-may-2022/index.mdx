@@ -1,11 +1,11 @@
 ---
-title: "What’s new in May 2022?"
+title: 'What’s new in May 2022?'
 description: Updates to XState, @xstate/react and @xstate/fsm in the last month.
 tags: [stately, xstate, announcement, release]
 authors: [laura]
 image: /blog/2022-05-03-whats-new-may-2022.png
 slug: 2022-05-03-whats-new-may-2022
-date:  2022-05-03
+date: 2022-05-03
 ---
 
 What’s new to XState and Stately for May 2022?
@@ -30,8 +30,8 @@ import { waitFor } from 'xstate/lib/waitFor';
 // ...
 const loginService = interpret(loginMachine).start();
 
-const loggedInState = await waitFor(loginService, state =>
-  state.hasTag('loggedIn')
+const loggedInState = await waitFor(loginService, (state) =>
+  state.hasTag('loggedIn'),
 );
 
 loggedInState.hasTag('loggedIn'); // true
@@ -55,7 +55,7 @@ We have removed the `asEffect` and `asLayoutEffect` action creators. These actio
 
 If you want to execute actions at those exact times, you can either make a call directly from those effects or send events to the machine from those effects and execute explicit actions in response to said events.
 
-### `useMachine` and `useService` with @xstate/fsm 
+### `useMachine` and `useService` with @xstate/fsm
 
 We changed the signatures of `useMachine` and `useService` integrating with @xstate/fsm to match their signatures with their related hooks integrating with XState. Both now only accept a single generic. `useMachine` accepts `TMachine`, and `useService` accepts `TService`.
 

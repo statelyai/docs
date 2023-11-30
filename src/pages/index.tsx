@@ -1,39 +1,90 @@
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import React, { useEffect } from 'react';
-import { drawArrows } from '../components/landing-page-arrows';
+import Head from '@docusaurus/Head';
+import { useEffect } from 'react';
+import { Benefits } from '../components/landing/Benefits';
+import { FinalCallToAction } from '../components/landing/FinalCallToAction';
+import { Footer } from '../components/landing/Footer';
+import { Intro } from '../components/landing/Intro';
+import { Navbar } from '../components/landing/Navbar';
+import { Testimonials } from '../components/landing/Testimonials';
+import '../css/landing-page.css';
+import '../css/landing-styles.css';
 
-// https://github.com/facebook/docusaurus/discussions/8387#discussioncomment-6067944
-// Loading a static HTML only works during SSR, so we use this hack to make it work during CSR
 export default function Index() {
-  const landingPage = useBaseUrl('/landing-page/index.html');
-  const [html, setHtml] = React.useState('');
-
   useEffect(() => {
-    // Fetch the HTML file from the static folder
-    fetch(landingPage)
-      // Convert the response to text
-      .then((response) => response.text())
-      // Set the HTML
-      .then((html) => {
-        setHtml(html);
-
-        // Add the crisp chat script after the dynamic html has been loaded
-        // @ts-ignore
-        window.$crisp = [];
-        // @ts-ignore
-        window.CRISP_WEBSITE_ID = 'dff22f8a-0d73-4a83-91be-1f448410c464';
-        (function () {
-          let d = document;
-          let s = d.createElement('script');
-          s.src = 'https://client.crisp.chat/l.js';
-          s.async = true;
-          d.getElementsByTagName('head')[0].appendChild(s);
-        })();
-      });
+    // Add the crisp chat script after the dynamic html has been loaded
+    // @ts-ignore
+    window.$crisp = [];
+    // @ts-ignore
+    window.CRISP_WEBSITE_ID = 'dff22f8a-0d73-4a83-91be-1f448410c464';
+    (function () {
+      let d = document;
+      let s = d.createElement('script');
+      s.src = 'https://client.crisp.chat/l.js';
+      s.async = true;
+      d.getElementsByTagName('head')[0].appendChild(s);
+    })();
   }, []);
 
-  // Draw the arrows after any changes to the HTML
-  useEffect(() => drawArrows(), [html]);
+  return (
+    // We need the class name `twp` here to ensure the Tailwind reset gets applied to all children.
+    <div className="twp">
+      <Head>
+        <title>Stately | Your intelligent assistant for robust logic</title>
+        <meta
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+          name="viewport"
+        />
+        <meta
+          name="description"
+          content="Build and deploy workflows and app logic with Stately’s AI enhanced, collaborative tools."
+        />
+        <meta
+          property="og:title"
+          content="Stately - Your intelligent assistant for robust logic"
+        />
+        <meta property="og:url" content="https://stately.ai" />
+        <meta
+          property="og:description"
+          content="Build and deploy workflows and app logic with Stately’s AI enhanced, collaborative tools."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://stately.ai/landing-page/stately-landing-page.png"
+        />
+        <link
+          rel="icon"
+          href="https://stately.ai/landing-page/favicon.ico"
+          sizes="any"
+        />
+        <link
+          rel="icon"
+          href="https://stately.ai/landing-page/icon.svg"
+          type="image/svg+xml"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="https://stately.ai/landing-page/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="./landing-page/manifest.webmanifest" />
+        <script
+          defer
+          data-domain="stately.ai"
+          src="https://plausible.io/js/script.tagged-events.js"
+        ></script>
+      </Head>
 
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md">
+        <Navbar />
+      </header>
+
+      <main className="bg-blue-950">
+        <Intro />
+        <Benefits />
+        <Testimonials />
+        <FinalCallToAction />
+      </main>
+      <Footer />
+    </div>
+  );
 }

@@ -21,7 +21,7 @@ const machine = createMachine({
   // highlight-start
   context: {
     count: 0,
-  // highlight-end
+    // highlight-end
   },
 });
 ```
@@ -73,14 +73,14 @@ const machine = createMachine(
         /*
          * to keep TypeScript happy,
          * update using a function with the context parameter
-         * again we use the name `_` to indicate that the 
+         * again we use the name `_` to indicate that the
          * parameter is unused
          */
         message: (_) => 'Count changed',
       }),
       // highlight-end
     },
-  }
+  },
 );
 ```
 
@@ -102,7 +102,7 @@ const machine = createMachine(
     },
   },
   {
-  // highlight-start
+    // highlight-start
     actions: {
       assignToContext: assign((context) => {
         return {
@@ -113,8 +113,8 @@ const machine = createMachine(
         };
       }),
     },
-  // highlight-end
-  }
+    // highlight-end
+  },
 );
 ```
 
@@ -162,7 +162,7 @@ createMachine(
       },
     },
     // highlight-end
-  }
+  },
 );
 ```
 

@@ -1,6 +1,6 @@
 ---
-title: "Introducing: TypeScript typegen for XState"
-description: "XState’s TypeScript experience just got an enormous upgrade - Typescript typegen, integrated with VS Code."
+title: 'Introducing: TypeScript typegen for XState'
+description: 'XState’s TypeScript experience just got an enormous upgrade - Typescript typegen, integrated with VS Code.'
 tags: [announcement, xstate, community, typescript, tutorial, vscode]
 authors: [matt]
 image: /blog/2022-01-27-introducing-typegen.png
@@ -10,9 +10,9 @@ date: 2022-01-27
 
 <div
   style={{
-    position: "relative",
-    height: "0px",
-    paddingBottom: "56.25%",
+    position: 'relative',
+    height: '0px',
+    paddingBottom: '56.25%',
   }}
 >
   <iframe
@@ -20,11 +20,11 @@ date: 2022-01-27
     frameBorder="0"
     allowFullScreen
     style={{
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     }}
   ></iframe>
 </div>
@@ -50,25 +50,25 @@ You can visit the [official docs](https://xstate.js.org/docs/guides/typescript.h
 2. Open a new file and create a new machine, passing the schema attributes:
 
 ```ts
-import { createMachine } from "xstate";
+import { createMachine } from 'xstate';
 
 const machine = createMachine({
   schema: {
     context: {} as { value: string },
-    events: {} as { type: "FOO"; value: string } | { type: "BAR" },
+    events: {} as { type: 'FOO'; value: string } | { type: 'BAR' },
   },
-  initial: "a",
+  initial: 'a',
   states: {
     a: {
       on: {
         FOO: {
-          actions: "consoleLogValue",
-          target: "b",
+          actions: 'consoleLogValue',
+          target: 'b',
         },
       },
     },
     b: {
-      entry: "consoleLogValueAgain",
+      entry: 'consoleLogValueAgain',
     },
   },
 });
@@ -95,7 +95,7 @@ const machine = createMachine({
 ```ts
 const machine = createMachine({
   // This generic just got added!
-  tsTypes: {} as import("./filename.typegen").Typegen0,
+  tsTypes: {} as import('./filename.typegen').Typegen0,
   /* ... */
 });
 ```
@@ -118,7 +118,7 @@ const machine = createMachine(
         console.log(event.value);
       },
     },
-  }
+  },
 );
 ```
 
@@ -134,11 +134,11 @@ One of the most common pain points we heard from our community was using named a
 createMachine(
   {
     schema: {
-      events: {} as { type: "FOO"; value: string } | { type: "BAR" },
+      events: {} as { type: 'FOO'; value: string } | { type: 'BAR' },
     },
     on: {
       FOO: {
-        actions: "myAction",
+        actions: 'myAction',
       },
     },
   },
@@ -149,7 +149,7 @@ createMachine(
          * TS don't know if the event is FOO or BAR,
          * so we have to defensively check here
          */
-        if (event.type === "FOO") {
+        if (event.type === 'FOO') {
           /**
            * Now we know that event.value
            * is present on FOO, because
@@ -159,7 +159,7 @@ createMachine(
         }
       },
     },
-  }
+  },
 );
 ```
 
@@ -181,7 +181,7 @@ createMachine(
         console.log(event.value);
       },
     },
-  }
+  },
 );
 ```
 
@@ -198,7 +198,7 @@ Now, with typegen, you get **autocomplete on all machine options**. The followin
 ```ts
 createMachine(
   {
-    entry: ["sayHello"],
+    entry: ['sayHello'],
   },
   {
     actions: {
@@ -208,7 +208,7 @@ createMachine(
        */
       sayhello: () => {},
     },
-  }
+  },
 );
 ```
 
@@ -217,7 +217,7 @@ you implement them later. So, in a React component:
 
 ```tsx
 const machine = createMachine({
-  entry: ["sayHello"],
+  entry: ['sayHello'],
 });
 
 const App = () => {
@@ -254,9 +254,9 @@ createMachine(
       },
     },
     invoke: {
-      src: "myService",
+      src: 'myService',
       onDone: {
-        actions: "consoleLogId",
+        actions: 'consoleLogId',
       },
     },
   },
@@ -268,7 +268,7 @@ createMachine(
        */
       myService: async () => {
         return {
-          id: "1",
+          id: '1',
         };
       },
     },
@@ -281,7 +281,7 @@ createMachine(
         console.log(event.data.id);
       },
     },
-  }
+  },
 );
 ```
 

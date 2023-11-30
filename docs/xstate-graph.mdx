@@ -84,26 +84,26 @@ const feedbackMachine = createMachine({
         CLICK_GOOD: 'thanks',
         CLICK_BAD: 'form',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     form: {
       on: {
         SUBMIT: 'thanks',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     thanks: {
       on: {
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     closed: {
-      type: 'final'
-    }
-  }
+      type: 'final',
+    },
+  },
 });
 
 const shortestPaths = getShortestPaths(feedbackMachine);
@@ -209,26 +209,26 @@ const feedbackMachine = createMachine({
         CLICK_GOOD: 'thanks',
         CLICK_BAD: 'form',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     form: {
       on: {
         SUBMIT: 'thanks',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     thanks: {
       on: {
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     closed: {
-      type: 'final'
-    }
-  }
+      type: 'final',
+    },
+  },
 });
 
 const simplePaths = getSimplePaths(feedbackMachine);
@@ -317,32 +317,32 @@ const feedbackMachine = createMachine({
         CLICK_GOOD: 'thanks',
         CLICK_BAD: 'form',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     form: {
       on: {
         SUBMIT: 'thanks',
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     thanks: {
       on: {
         CLOSE: 'closed',
-        ESC: 'closed'
-      }
+        ESC: 'closed',
+      },
     },
     closed: {
-      type: 'final'
-    }
-  }
+      type: 'final',
+    },
+  },
 });
 
 const path = getPathFromEvents(feedbackMachine, [
   { type: 'CLICK_GOOD' },
   { type: 'SUBMIT' },
-  { type: 'CLOSE' }
+  { type: 'CLOSE' },
 ]);
 
 console.log(path);
@@ -418,21 +418,21 @@ const counterMachine = createMachine({
     active: {
       on: {
         INC: {
-          actions: assign({ count: (ctx, e) => ctx.count + e.value })
-        }
-      }
-    }
-  }
+          actions: assign({ count: (ctx, e) => ctx.count + e.value }),
+        },
+      },
+    },
+  },
 });
 
 const shortestPaths = getShortestPaths(counterMachine, {
   events: {
     INC: [
       { type: 'INC', value: 1 },
-      { type: 'INC', value: 2 }
-    ]
+      { type: 'INC', value: 2 },
+    ],
   },
-  filter: (state) => state.context.count <= 5
+  filter: (state) => state.context.count <= 5,
 });
 
 console.log(shortestPaths);

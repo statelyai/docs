@@ -58,7 +58,7 @@ feedbackActor.send({ type: 'feedback.good' });
 
 ## Creating actors from machines
 
-A machine can be considered a "blueprint" for an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine.
+A machine contains the logic of an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine. Multiple actors can be created from the same machine, and each of those actors will exhibit the same behavior (reaction to received events), but they will be independent of each other and have their own states.
 
 To create an actor, use the `createActor(machine)` function:
 
@@ -75,6 +75,8 @@ feedbackActor.start();
 // logs 'question'
 ```
 
+You can also create an actor [from other types of logic](actors.mdx#actor-logic), such as functions, promises, and observables.
+
 ## Providing implementations
 
 Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic. This includes:
@@ -84,16 +86,12 @@ Machine implementations are the language-specific code that is executed but is n
 - [Guards](guards.mdx)
 - [Delays](delayed-transitions.mdx)
 
-Typically, you will reference implementations using strings or objects, such as `{ type: 'doSomething' }`, and then create a new machine with default implementations in the second argument:
+The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`. 
 
 ```ts
-import { createMachine } from 'xstate';
+import { setup } from 'xstate';
 
-const feedbackMachine = createMachine(
-  // Machine config
-  {
-    // ...
-  },
+const feedbackMachine = setup({
   // Default implementations
   {
     actions: {
@@ -111,19 +109,14 @@ const feedbackMachine = createMachine(
       /* ... */
     },
   },
-);
-```
-
-Those references are then resolved to the actual provided implementation:
-
-```ts
-const feedbackMachine = createMachine({
+}).createMachine({
   entry: { type: 'doSomething' },
-  // ...
+  // ... rest of machine config
 });
 
-const feedbackActor = createActor(feedbackMachine).start();
+const feedbackActor = createActor(feedbackMachine)
 
+feedbackActor.start();
 // logs 'Doing something!'
 ```
 
@@ -133,14 +126,15 @@ You can override default implementations by _providing_ implementations via `mac
 const customFeedbackMachine = feedbackMachine.provide({
   actions: {
     doSomething: () => {
-      console.log('Doing something custom!');
+      console.log('Doing something else!');
     },
   },
 });
 
-const feedbackActor = createActor(customFeedbackMachine).start();
+const feedbackActor = createActor(customFeedbackMachine)
 
-// logs 'Doing something custom!'
+feedbackActor.start();
+// logs 'Doing something else!'
 ```
 
 ## Specifying types
@@ -148,6 +142,8 @@ const feedbackActor = createActor(customFeedbackMachine).start();
 You can specify TypeScript types inside the machine config using the `.types` property:
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   types: {} as {
     context: { feedback: string };
@@ -159,43 +155,29 @@ const feedbackMachine = createMachine({
 
 These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
-## Typegen
-
-_Coming soon_
-
-## Transition method
-
-A machine’s `machine.transition(state, event)` method is a pure method that returns the next state given the current state and an event:
+If you are using the `setup(...)` function, you should provide the types in the `.types` property inside the setup function:
 
 ```ts
-const feedbackMachine = createMachine({
-  initial: 'question',
-  states: {
-    question: {
-      on: {
-        'feedback.good': {
-          target: 'thanks',
-        },
-      },
-    },
-    thanks: {
-      // ...
-    },
-    // ...
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  types: {} as {
+    context: { feedback: string };
+    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
   },
-});
-
-const { initialState } = feedbackMachine;
-
-const nextState = feedbackMachine.transition(initialState, {
-  type: 'feedback.good',
+  actions: {
+    logTelemetry: () => {
+      // TODO: implement
+    }
+  }
+}).createMachine({
+  // ...
 });
 ```
 
-The `machine.transition(...)` method is useful for testing or building a custom actor.
+## Typegen
 
-- [Testing](testing.mdx)
-- Coming soon… Custom actors
+Typegen does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
 
 ## API
 
@@ -203,7 +185,59 @@ Coming soon… Link to API
 
 ## TypeScript
 
-_Coming soon_
+The best way to provide strong typing for your machine is to use the `setup(...)` function and/or the `.types` property.
+
+```ts
+import { setup, fromPromise } from 'xstate';
+
+const someAction = () => {/* ... */};
+
+const someGuard = ({ context }) => context.count <= 10;
+
+const someActor = fromPromise(async () => {
+  // ...
+  return 42;
+});
+
+const feedbackMachine = setup({
+  types: {
+    context: {} as { count: number };
+    events: {} as { type: 'increment' } | { type: 'decrement' };
+  },
+  actions: {
+    someAction
+  },
+  guards: {
+    someGuard
+  },
+  actors: {
+    someActor
+  }
+}).createMachine({
+  initial: 'counting',
+  states: {
+    counting: {
+      entry: { type: 'someAction' }, // strongly-typed
+      invoke: {
+        src: 'someActor', // strongly-typed
+        onDone: {
+          actions: ({ event }) => {
+            event.output; // strongly-typed as number
+          }
+        }
+      },
+      on: {
+        increment: {
+          guard: { type: 'someGuard' }, // strongly-typed
+          actions: assign({
+            count: ({ context }) => context.count + 1
+          })
+        }
+      },
+    }
+  }
+});
+```
 
 ## Machine cheatsheet
 
@@ -223,16 +257,36 @@ const machine = createMachine({
 });
 ```
 
+### Setup a machine with implementations
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  actions: {
+    someAction: () => {/* ... */}
+  },
+  guards: {
+    someGuard: ({ context }) => context.count <= 10
+  },
+  actors: {
+    someActor: fromPromise(async () => {/* ... */})
+  },
+  delays: {
+    someDelay: () => 1000
+  }
+}).createMachine({
+  // ... Rest of machine config
+})
+```
+
 ### Provide implementations
 
 ```ts
 import { createMachine } from 'xstate';
+import { someMachine } from './someMachine'
 
-const machine = createMachine({
-  // ...
-});
-
-const machineWithImpls = machine.provide({
+const machineWithImpls = someMachine.provide({
   actions: {
     /* ... */
   },

@@ -26,15 +26,15 @@ const toggleMachine = createMachine({
   states: {
     inactive: {
       on: {
-        TOGGLE: 'active'
-      }
+        TOGGLE: 'active',
+      },
     },
     active: {
       on: {
-        TOGGLE: 'inactive'
-      }
-    }
-  }
+        TOGGLE: 'inactive',
+      },
+    },
+  },
 });
 ```
 
@@ -54,8 +54,8 @@ const toggleMachine = createMachine({
       meta: {
         test: async (page) => {
           await page.waitFor('input:checked');
-        }
-      }
+        },
+      },
     },
     active: {
       on: {
@@ -64,10 +64,10 @@ const toggleMachine = createMachine({
       meta: {
         test: async (page) => {
           await page.waitFor('input:not(:checked)');
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -83,8 +83,8 @@ const toggleModel = createModel(toggleMachine).withEvents({
   TOGGLE: {
     exec: async (page) => {
       await page.click('input');
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -147,8 +147,8 @@ const toggleModel = createModel(toggleMachine).withEvents({
   TOGGLE: {
     exec: async (page) => {
       await page.click('input');
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -172,7 +172,7 @@ const todosModel = createModel(todosMachine).withEvents({
 const plans = todosModel.getShortestPathPlans({
   // Tell the algorithm to limit state/event adjacency map to states
   // that have less than 5 todos
-  filter: (state) => state.context.todos.length < 5
+  filter: (state) => state.context.todos.length < 5,
 });
 ```
 
@@ -188,10 +188,10 @@ Returns an array of testing plans based on the simple paths from the test modelâ
 
 ### `testModel.getPlanFromEvents(events, options)`
 
-| Argument  | Type               | Description                                                                         |
-| --------- | ------------------ | ----------------------------------------------------------------------------------- |
-| `events`  | EventObject[]      | The sequence of events to create the plan                                           |
-| `options` | { target: string } | An object with a `target` property that should match the target state of the events |
+| Argument  | Type                 | Description                                                                         |
+| --------- | -------------------- | ----------------------------------------------------------------------------------- |
+| `events`  | `EventObject[]`      | The sequence of events to create the plan                                           |
+| `options` | `{ target: string }` | An object with a `target` property that should match the target state of the events |
 
 Returns an array with a single testing plan with a single path generated from the `events`.
 
@@ -211,7 +211,7 @@ Tests that all state nodes were covered (traversed) in the exected tests.
 // Only test coverage for state nodes with a `.meta` property defined:
 
 testModel.testCoverage({
-  filter: (stateNode) => !!stateNode.meta
+  filter: (stateNode) => !!stateNode.meta,
 });
 ```
 

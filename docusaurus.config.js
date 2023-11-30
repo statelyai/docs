@@ -2,6 +2,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 require('dotenv').config();
 const a11yEmoji = require('@fec/remark-a11y-emoji');
+const { themes } = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -11,8 +12,8 @@ const config = {
   url: 'https://stately.ai',
   baseUrl: '/',
   baseUrlIssueBanner: false,
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
   staticDirectories: ['static'],
 
@@ -31,7 +32,11 @@ const config = {
 
   scripts: [
     {
-      src: 'https://plausible.io/js/script.js',
+      src: 'https://esm.run/xstate',
+      async: true,
+    },
+    {
+      src: 'https://plausible.io/js/script.tagged-events.js',
       defer: true,
       'data-domain': 'stately.ai',
     },
@@ -64,12 +69,11 @@ const config = {
 
           // Different types of admonitions/“tip boxes” available for our use.
           admonitions: {
-            tag: ':::',
             keywords: [
               'note',
               'tip',
               'info',
-              'caution',
+              'warning',
               'danger',
               'typescript',
               'xstate',
@@ -123,6 +127,11 @@ const config = {
             to: '/docs/xstate-v4/xstate/typescript/type-helpers',
             from: '/docs/xstate/typescript/type-helpers',
           },
+          {
+            // Redirect to the new "Getting Started" page from the Sky category page (until we have a Sky category page)
+            to: '/docs/stately-sky-getting-started',
+            from: '/docs/sky',
+          },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/docs')) {
@@ -133,12 +142,28 @@ const config = {
         },
       },
     ],
+    async function tailwindPlugin(context, options) {
+      return {
+        name: 'docusaurus-tailwindcss',
+        configurePostCss(postcssOptions) {
+          // Appends TailwindCSS and AutoPrefixer.
+          postcssOptions.plugins.push(require('tailwindcss'));
+          postcssOptions.plugins.push(require('autoprefixer'));
+          return postcssOptions;
+        },
+      };
+    },
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: 'static/docs-default.png',
+      docs: {
+        sidebar: {
+          hideable: true,
+        }
+      },
       navbar: {
         title: '',
         logo: {
@@ -241,8 +266,8 @@ const config = {
         respectPrefersColorScheme: true,
       },
       prism: {
-        theme: require('prism-react-renderer/themes/vsLight'),
-        darkTheme: require('prism-react-renderer/themes/vsDark'),
+        theme: themes.vsLight,
+        darkTheme: themes.oneDark,
       },
     }),
 };

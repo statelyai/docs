@@ -21,7 +21,7 @@ Spawn actors in `assign` action creators:
 // ...
 {
   actions: assign({
-    someRef: (context, event) => spawn(someMachine)
+    someRef: (context, event) => spawn(someMachine),
   });
 }
 // ...
@@ -41,7 +41,7 @@ Spawn different types of actors:
         new Promise((resolve, reject) => {
           // ...
         }),
-        'my-promise'
+        'my-promise',
       ),
 
     // From a callback
@@ -69,8 +69,8 @@ Spawn different types of actors:
       spawn(
         createMachine({
           // ...
-        })
-      )
+        }),
+      ),
   });
 }
 // ...
@@ -84,7 +84,7 @@ Sync state with an actor:
 // ...
 {
   actions: assign({
-    someRef: () => spawn(someMachine, { sync: true })
+    someRef: () => spawn(someMachine, { sync: true }),
   });
 }
 // ...
@@ -113,8 +113,8 @@ Send an event to an actor with the `send` action creator:
   actions: send(
     { type: 'SOME_EVENT' },
     {
-      to: (context) => context.someRef
-    }
+      to: (context) => context.someRef,
+    },
   );
 }
 // ...
@@ -128,7 +128,7 @@ Send an event with data to an actor using the `send` expression:
 // ...
 {
   actions: send((context, event) => ({ ...event, type: 'SOME_EVENT' }), {
-    to: (context) => context.someRef
+    to: (context) => context.someRef,
   });
 }
 // ...
@@ -155,7 +155,7 @@ Send an event with data from an actor to its parent using the `sendParent` expre
 {
   actions: sendParent((context, event) => ({
     ...context,
-    type: 'ANOTHER_EVENT'
+    type: 'ANOTHER_EVENT',
   }));
 }
 // ...

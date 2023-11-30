@@ -2,9 +2,6 @@
 title: State
 ---
 
-import EmbedMachine from '@site/src/components/EmbedMachine';
-import SkipDownLink from '@site/src/components/SkipDownLink';
-
 A state describes the machine’s status or mode, which could be as simple as *Paused* and *Playing*. A state machine can only be in one state at a time.
 
 These states are “finite”; the machine can only move through the states you’ve pre-defined.
@@ -14,54 +11,17 @@ These states are “finite”; the machine can only move through the states you�
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d"
 />
 
+:::studio
+
+You can visualize your state machines and easily add states in our drag-and-drop Stately editor. [Read more about states in Stately’s editor](editor-states-and-transitions.mdx).
+
+:::
+
 :::tip
 
 Watch our [“What are states?” video on YouTube](https://www.youtube.com/watch?v=z-6yhmSWUcc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=2) (53s).
 
 :::
-
-<SkipDownLink
-  text="Jump to learning more about the state object in XState"
-  link="#state-object"
-/>
-
-## Using states in Stately Studio
-
-In Stately Studio, the rounded rectangle boxes are states. The **!** warning icon in the machine above indicates an unreachable state. The state is unreachable because it isn’t connected to the [initial state](initial-states.mdx) by a [transition](transitions.mdx).
-
-### Create a state
-
-:::tip
-
-The fastest way to create a new state is by double-clicking in any empty space on the canvas.
-
-:::
-
-#### Create a new target state
-
-Each transition has a source state and a target state. To create a new target state from a source state:
-
-1. Select the source state.
-2. Press or drag from one of the <Plus size={18} /> handles on the left, right and bottom sides of the selected state, and release to create a connecting transition, event and new state.
-
-[Read more about transitioning between source and target states](transitions.mdx#using-transitions-and-events-in-stately-studio).
-
-#### Create a new child state
-
-[How to create child and parent states](parent-states.mdx).
-
-### Delete a state
-
-First, select the state you want to delete.
-
-#### Using the context menu
-
-1. Use the <MoreHorizontal size={18} /> triple dot icon button to open the Edit menu.
-2. Choose **Delete** to delete the selected state.
-
-#### Using backspace
-
-Use the <kbd>Backspace</kbd> key to delete the selected state.
 
 ## State object
 
@@ -258,27 +218,40 @@ state.matches({ form: 'valid' }); // false
 
 ## `state.output`
 
-The `state.output` property represents the output data of a state machine in its final state.
+The `state.output` property represents the output data of a state machine when it is in its top-level final state; i.e., `state.status === 'done'`.
 
-- `state.done` will be `true`
+```ts
+const state = actor.getSnapshot();
 
-## `state.meta`
-
-The `state.meta` property represents the metadata of all the state nodes in the `state`. It is an object with keys that represent the state node IDs, and values that are the metadata of that state node.
-
-## `state.toStrings`
-
-The `state.toStrings()` method returns an array of strings that represent _all_ of the state value paths. For example, assuming the current `state.value` is `{ red: 'stop' }`:
-
-```js
-console.log(state.value);
-// => { red: 'stop' }
-
-console.log(state.toStrings());
-// => ['red', 'red.stop']
+if (state.status === 'done') {
+  console.log(state.output);
+}
 ```
 
-The `state.toStrings()` method is useful for representing the current state in string-based environments, such as in CSS classes or data-attributes.
+## `state.getMeta()`
+
+The `state.getMeta()` method represents the metadata of all the state nodes in the `state`. It is an object with keys that represent the state node IDs, and values that are the metadata of that state node.
+
+```ts
+const feedbackMachine = createMachine({
+  id: 'feedback',
+  // ...
+  states: {
+    form: {
+      meta: {
+        view: 'shortForm',
+      }
+    }
+  }
+});
+
+const feedbackActor = createActor(feedbackMachine).start();
+
+// Assume the current state is 'form'
+const currentState = feedbackActor.getSnapshot();
+console.log(currentState.getMeta());
+// logs { 'feedback.form': { view:'shortForm' } }
+```
 
 ## State descriptions
 
@@ -289,7 +262,7 @@ states: {
   "Loading Move Destinations": {
     // highlight-start
     description:
-      "Load data from the server based on the entity's id and type (project or machine).\nResult includes the entity's current location, and the list or tree of valid destination options to which the user may move that entity.",
+      "Load data from the server based on the entity's id and type (project or machine). Result includes the entity's current location, and the list or tree of valid destination options to which the user may move that entity.",
     // highlight-end
     invoke: {
       src: "loadMoveData",
@@ -316,7 +289,39 @@ _Coming soon_
 
 ## Cheatsheet
 
-_Coming soon_
+### Read or match a state value
+
+```ts
+const state = actor.getSnapshot();
+
+const currentStateValue = state.value;
+
+const isLoading = state.matches('loading');
+```
+
+### Read state context
+
+```ts
+console.log(state.context);
+```
+
+### Read state output
+
+```ts
+if (state.status === 'done') {
+  // Output may exist
+  console.log(state.output);
+} else {
+  // Output does not exist
+  state.output === undefined;
+}
+```
+
+### Read state meta data
+
+```ts
+console.log(state.getMeta());
+```
 
 ## Further resources
 

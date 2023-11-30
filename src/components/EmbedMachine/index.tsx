@@ -1,6 +1,5 @@
-import React from 'react';
-import styles from './styles.module.css';
 import { useColorMode } from '@docusaurus/theme-common';
+import styles from './styles.module.css';
 
 type Embed = {
   name: string;

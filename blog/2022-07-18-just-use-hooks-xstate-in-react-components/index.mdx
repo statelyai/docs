@@ -1,11 +1,11 @@
 ---
-title: "“Just Use Hooks”: XState in React Components"
-description: "XState can be easily added to React components by using custom machine hooks for greater encapsulation and reusability."
+title: '“Just Use Hooks”: XState in React Components'
+description: 'XState can be easily added to React components by using custom machine hooks for greater encapsulation and reusability.'
 tags: [component, hook, stately, xstate, react, state machine, prop]
 authors: [kevin]
 image: /blog/2022-07-18-just-use-hooks-xstate-in-react-components.png
 slug: 2022-07-18-just-use-hooks-xstate-in-react-components
-date:  2022-07-18
+date: 2022-07-18
 ---
 
 Are you a React developer using [XState](https://xstate.js.org/) to model your application logic? Perhaps you’ve heard of XState but have been looking for an easy way to try it out in one of your projects. If so, then I’d like to share with you a pattern I was introduced to when first diving into codebase at Stately, that of using **custom machine hooks**. This lightweight, reusable way to integrate XState into React components is a delight to work with and I think you might like it as much as I do!
@@ -27,18 +27,18 @@ For those of you who are already using XState with React, you’re probably used
 Here is the code from the [Quick Start example](https://xstate.js.org/docs/packages/xstate-react/#quick-start) in the `@xstate/react` docs, where a `toggleMachine` ([view in the Editor](https://stately.ai/registry/editor/5e6286ca-5075-42da-9af8-99358530a0ac)) is created with `createMachine()` and then passed to `useMachine()` for use in a `Toggler` component.
 
 ```tsx
-import { useMachine } from "@xstate/react";
-import { createMachine } from "xstate";
+import { useMachine } from '@xstate/react';
+import { createMachine } from 'xstate';
 
 const toggleMachine = createMachine({
-  id: "toggle",
-  initial: "inactive",
+  id: 'toggle',
+  initial: 'inactive',
   states: {
     inactive: {
-      on: { TOGGLE: "active" },
+      on: { TOGGLE: 'active' },
     },
     active: {
-      on: { TOGGLE: "inactive" },
+      on: { TOGGLE: 'inactive' },
     },
   },
 });
@@ -47,10 +47,10 @@ export const Toggler = () => {
   const [state, send] = useMachine(toggleMachine);
 
   return (
-    <button onClick={() => send("TOGGLE")}>
-      {state.value === "inactive"
-        ? "Click to activate"
-        : "Active! Click to deactivate"}
+    <button onClick={() => send('TOGGLE')}>
+      {state.value === 'inactive'
+        ? 'Click to activate'
+        : 'Active! Click to deactivate'}
     </button>
   );
 };
@@ -67,30 +67,30 @@ But what if your component really doesn’t need access to all of those features
 Here’s an example of what that custom hook might look like, including a [React/TypeScript CodeSandbox version](https://codesandbox.io/s/usetogglemachine-example-1-lazy-machine-8zcbvs?file=/src/Toggler.tsx):
 
 ```ts
-import { useMachine } from "@xstate/react";
-import { useEffect } from "react";
-import { createMachine } from "xstate";
+import { useMachine } from '@xstate/react';
+import { useEffect } from 'react';
+import { createMachine } from 'xstate';
 
 export const useToggleMachine = (
-  initialActive: boolean = false
+  initialActive: boolean = false,
 ): [boolean, () => void] => {
   const [state, send] = useMachine(() =>
     createMachine({
-      id: "toggle",
-      initial: initialActive ? "active" : "inactive",
+      id: 'toggle',
+      initial: initialActive ? 'active' : 'inactive',
       states: {
         inactive: {
-          on: { TOGGLE: "active" },
+          on: { TOGGLE: 'active' },
         },
         active: {
-          on: { TOGGLE: "inactive" },
+          on: { TOGGLE: 'inactive' },
         },
       },
-    })
+    }),
   );
 
-  const isActive = state.matches("active");
-  const toggle = () => send("TOGGLE");
+  const isActive = state.matches('active');
+  const toggle = () => send('TOGGLE');
 
   return [isActive, toggle];
 };
@@ -123,8 +123,8 @@ The original version of this post included an example that used the infamous `us
 ```ts
 // This example is deprecated
 useEffect(() => {
-  if (initialActive && state.matches("inactive")) {
-    send("TOGGLE");
+  if (initialActive && state.matches('inactive')) {
+    send('TOGGLE');
   }
 }, [initialActive]);
 ```
@@ -136,17 +136,17 @@ Instead, I've updated the example by wrapping the call to `createMachine` in a f
 ```ts
 const [state, send] = useMachine(() =>
   createMachine({
-    id: "toggle",
-    initial: initialActive ? "active" : "inactive",
+    id: 'toggle',
+    initial: initialActive ? 'active' : 'inactive',
     states: {
       inactive: {
-        on: { TOGGLE: "active" },
+        on: { TOGGLE: 'active' },
       },
       active: {
-        on: { TOGGLE: "inactive" },
+        on: { TOGGLE: 'inactive' },
       },
     },
-  })
+  }),
 );
 ```
 
@@ -163,8 +163,8 @@ You can read about alternative methods and proposals in our [RFC for input](http
 We’ve looked at the input param for `useToggleMachine` so now let’s look at its return values.
 
 ```ts
-const isActive = state.matches("active");
-const toggle = () => send("TOGGLE");
+const isActive = state.matches('active');
+const toggle = () => send('TOGGLE');
 
 return [isActive, toggle];
 ```
@@ -183,7 +183,7 @@ What does this look like for the `Toggler` component to now use our `useToggleMa
 const Toggler = () => {
   const [isActive, toggle] = useToggleMachine(false); // Or pass true.
 
-  return <button onClick={toggle}>Click me ({isActive ? "✅" : "❌"})</button>;
+  return <button onClick={toggle}>Click me ({isActive ? '✅' : '❌'})</button>;
 };
 ```
 
