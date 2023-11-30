@@ -153,7 +153,9 @@ actor.subscribe({
 
 ## Lifecycle
 
-Invoked actors have a lifecycle that is managed by the parent machine. They are created and started when the state is entered, and stopped when the state is exited.
+Invoked actors have a lifecycle that is managed by the state they are invoked in. They are created and started when the state is entered, and stopped when the state is exited.
+
+If a state is entered and then immediately exited, e.g. due to an eventless ("always") transition, then no actors will be invoked on that state.
 
 ### Re-Entering
 
