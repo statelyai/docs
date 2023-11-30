@@ -111,6 +111,8 @@ const vitalsWorkflow = createMachine({
     }
   }
 })
+
+See [Multiple Actors](#multiple-actors) for more.
 ```
 
 For further examples, see:
@@ -562,7 +564,17 @@ _Coming soon_
 
 ## Multiple Actors
 
-_Coming soon_
+You can invoke multiple actors by specifying each in an array:
+
+```ts
+invoke: [
+  { id: 'actor1', src: 'someActor' },
+  { id: 'actor2', src: 'someActor' },
+  { id: 'logActor', src: 'logActor' }
+]
+```
+
+Each invocation will create a new instance of that actor, so even if the `src` of multiple actors are the same (e.g., `someActor` above), multiple instances of `someActor` will be invoked.
 
 ## Providing Implementations
 
