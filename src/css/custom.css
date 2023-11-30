@@ -1569,45 +1569,33 @@ a.link-box strong {
 
 .docs-intro {
   display: flex;
+  align-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: stretch;
-  align-items: stretch;
-  gap: 1rem;
-  margin: 2rem 0 1rem 0;
-}
-
-.docs-intro + h2 {
-  font-size: 1.6em;
-  text-align: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
 }
 
 .docs-intro h2:hover a.hash-link {
   opacity: 0;
 }
 
-.docs-intro-studio,
-.docs-intro-xstate {
-  flex: 0 1 18rem;
-  font-weight: var(--ifm-font-weight-semibold);
-}
-
-@media (min-width: 570px) {
-  .docs-intro-studio,
-  .docs-intro-xstate {
-    flex: 0 1 calc(50% - 0.5rem);
-  }
-}
-
 .docs-intro svg {
   display: block;
-  margin: 0 1rem;
-  width: 75%;
+  width: 100%;
+}
+
+.docs-intro h2 {
+  display: flex;
+  align-content: center;
+  margin: 0;
+  flex-basis: clamp(10rem, 15rem, 30%);
 }
 
 .docs-intro p {
-  padding: 0 1rem;
+  flex-grow: 1;
+  margin: 0;
+  flex-basis: 60%;
 }
 
 /* Tabs */
