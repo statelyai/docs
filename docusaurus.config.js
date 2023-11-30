@@ -146,6 +146,7 @@ const config = {
     [
       'docusaurus-plugin-typedoc-api',
       {
+        disableVersioning: true,
         projectRoot: `${__dirname}/xstate`,
         packages: [
           {
@@ -228,7 +229,7 @@ const config = {
           },
           { to: '/docs', label: 'Docs', position: 'right' },
           {
-            to: 'api/next',
+            to: 'api',
             label: 'API',
             position: 'right',
           },
