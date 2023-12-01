@@ -314,7 +314,7 @@ When using [hierarchical](https://xstate.js.org/docs/guides/hierarchical.html) a
 
 ## Persisted and Rehydrated State
 
-You can persist and rehydrate state with `useMachine(...)` via `options.state`:
+You can persist and rehydrate state with `useMachine(...)` via `options.snapshot`:
 
 ```js
 // Get the persisted state config object from somewhere, e.g. localStorage
@@ -324,7 +324,7 @@ const persistedState = JSON.parse(
 );
 
 const { state, send } = useMachine(someMachine, {
-  state: persistedState,
+  snapshot: persistedState,
 });
 
 // state will initially be that persisted state, not the machine’s initialState

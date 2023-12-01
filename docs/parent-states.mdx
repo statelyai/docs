@@ -29,9 +29,9 @@ In the video player above, the *Opened* state is a parent state to the *Playi
 
 The state machine itself is a parent state! It’s the root state, and it’s always active.
 
-It's normal to have a state machine that has no other states. This is useful for modeling a simple state machine that only handles events via transitions:
+It's normal to have a state machine that has no other states. This is useful for modeling a simple state machine that only handles events by executing actions in transitions.
 
-Example of a simple counting machine with increment, decrement, reset, and no states:
+Here is an example of a simple counting machine with `increment`, `decrement`, and `reset` events, and no states, other than the implicit top-level root state:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -102,11 +102,9 @@ _Coming soon_
 - If many states have common outgoing transitions, that's a good sign for putting them in a parent state
 - Parent states also represent sub-processes. Very useful when
 
-## TypeScript
-
-_Coming soon_
-
 ## Cheatsheet
+
+### Creating parent states
 
 ```ts
 // The machine is the root-level parent state

@@ -39,7 +39,7 @@ In the actor model, actors are objects that can communicate with each other. The
 
 Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **[actor logic creators](#actor-logic-creators)**.
 
-In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialState()`, `.getPersistedState()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
+In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialSnapshot()`, `.getPersistedSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
 ## Creating actors
 
@@ -156,21 +156,21 @@ subscription.unsubscribe();
 
 When the actor is stopped, all of its observers will automatically be unsubscribed.
 
-You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
+You can initialize actor logic at a specific persisted snapshot (state) by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
 ```ts
 const persistedState = JSON.parse(localStorage.getItem('some-persisted-state'));
 
 const actor = createActor(someLogic, {
   // highlight-start
-  state: persistedState,
+  snapshot: persistedState,
   // highlight-end
 });
 
 actor.subscribe(() => {
   localStorage.setItem(
     'some-persisted-state',
-    JSON.stringify(actor.getPersistedState()),
+    JSON.stringify(actor.getPersistedSnapshot()),
   );
 });
 
@@ -497,13 +497,13 @@ const countLogic: ActorLogic<
     }
     return state;
   },
-  getInitialState: () => ({
+  getInitialSnapshot: () => ({
     status: 'active',
     output: undefined,
     error: undefined,
     context: 0
   }),
-  getPersistedState: (s) => s
+  getPersistedSnapshot: (s) => s
 };
 
 const actor = createActor(countLogic)
@@ -556,16 +556,15 @@ const fetcher = fromPromise(
   },
 );
 
-const machine = createMachine({
-  types: {} as {
-    // highlight-start
-    actors: {
-      src: 'fetchData'; // src name (inline behaviors ideally inferred)
-      id: 'fetch1' | 'fetch2'; // possible ids (optional)
-      logic: typeof fetcher;
-    };
-    // highlight-end
-  },
+const machine = setup({
+  types: {
+    children: {} as {
+      fetch1: 'fetcher';
+      fetch2: 'fetcher';
+    }
+  }
+  actors: { fetcher }
+}).createMachine({
   invoke: {
     src: 'fetchData', // strongly typed
     id: 'fetch2', // strongly typed

@@ -73,9 +73,67 @@ console.log(playerActor.getSnapshot().value);
 // }
 ```
 
-## onDone transition
+## Parallel onDone transition
 
-_Coming soon_
+When all regions of a parallel state have reached their final states, the `onDone` transition of the parallel state is taken.
+
+In this example, the `onDone` transition of the parallel state is taken when both regions have reached their final states; that is, when `'grindingBeans'` reaches the `'grindingBeans.beansGround'` state and `'boilingWater'` reaches the `'boilingWater.waterBoiled'` state.
+
+```ts
+import { createMachine } from "xstate";
+
+export const machine = createMachine({
+  id: "coffee",
+  initial: "preparing",
+  states: {
+    preparing: {
+      states: {
+        grindBeans: {
+          initial: "grindingBeans",
+          states: {
+            grindingBeans: {
+              on: {
+                BEANS_GROUND: {
+                  target: "beansGround",
+                },
+              },
+            },
+            beansGround: {
+              // highlight-next-line
+              type: "final",
+            },
+          },
+        },
+        boilWater: {
+          initial: "boilingWater",
+          states: {
+            boilingWater: {
+              on: {
+                WATER_BOILED: {
+                  target: "waterBoiled",
+                },
+              },
+            },
+            waterBoiled: {
+              // highlight-next-line
+              type: "final",
+            },
+          },
+        },
+      },
+      type: "parallel",
+      // highlight-start
+      onDone: {
+        target: "makingCoffee",
+      },
+      // highlight-end
+    },
+    makingCoffee: {},
+  },
+});
+```
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=187dcde8-efed-4106-bfa7-59afadb2297f&mode=Simulate" />
 
 ## Modeling
 
@@ -85,10 +143,26 @@ _Coming soon_
 - Used for separation of concerns that _may_ affect each other (i.e. synchronization)
 - If completely separate, prefer `invoke` instead
 
-## TypeScript
-
-_Coming soon_
 
 ## Cheatsheet
 
-_Coming soon_
+### Create a parallel state
+
+```ts
+import { createMachine } from "xstate";
+
+const machine = createMachine({
+  // ...
+  states: {
+    type: 'parallel',
+    states: {
+      one: {/* ... */},
+      two: {/* ... */},
+      three: {/* ... */}
+    },
+    onDone: {
+      // Taken when all regions have reached their final states
+    }
+  }
+});
+```

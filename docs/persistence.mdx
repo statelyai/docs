@@ -6,13 +6,13 @@ Actors can persist their internal state and restore it later. **Persistence** re
 
 In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable & traceable.
 
-In XState, you can obtain the state to be persisted via `actor.getPersistedState()` and restore state via `createActor(behavior, { state: restoredState }).start()`:
+In XState, you can obtain the snapshot (state) to be persisted via `actor.getPersistedSnapshot()` and restore it via `createActor(behavior, { snapshot: restoredState }).start()`:
 
 ```ts
 const feedbackActor = createActor(feedbackMachine).start();
 
 // Get state to be persisted
-const persistedState = feedbackActor.getPersistedState();
+const persistedState = feedbackActor.getPersistedSnapshot();
 
 // Persist state
 localStorage.setItem('feedback', JSON.stringify(persistedState));
@@ -21,19 +21,19 @@ localStorage.setItem('feedback', JSON.stringify(persistedState));
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
 const restoredFeedbackActor = createActor(feedbackMachine, {
-  state: restoredState,
+  snapshot: restoredState,
 }).start();
 ```
 
 ## Persisting state
 
-You can obtain the state to be persisted via `actor.getPersistedState()`:
+You can obtain the state to be persisted via `actor.getPersistedSnapshot()`:
 
 ```ts
 const feedbackActor = createActor(feedbackMachine).start();
 
 // Get state to be persisted
-const persistedState = feedbackActor.getPersistedState();
+const persistedState = feedbackActor.getPersistedSnapshot();
 ```
 
 The internal state can be persisted from any actor, not only machines. Note that the persisted state is _not_ the same as the snapshot from `actor.getSnapshot()`; persisted state represents the internal state of the actor, while snapshots represent the actor's last emitted value:
@@ -47,14 +47,14 @@ console.log(snapshot);
 // logs 42
 
 // Get the persisted state
-const persistedState = promiseActor.getPersistedState();
+const persistedState = promiseActor.getPersistedSnapshot();
 console.log(persistedState);
 // logs { status: 'done', data: 42 }
 ```
 
 ## Restoring state
 
-You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `createActor(logic, { state: restoredState })`:
+You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `createActor(logic, { snapshot: restoredState })`:
 
 ```ts
 // Get persisted state
@@ -62,7 +62,7 @@ const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
 // Restore state
 const feedbackActor = createActor(feedbackMachine, {
-  state: restoredState,
+  snapshot: restoredState,
 });
 
 feedbackActor.start();
@@ -90,7 +90,7 @@ const feedbackMachine = createMachine({
 const feedbackActor = createActor(feedbackMachine).start();
 
 // Persist state
-const persistedState = feedbackActor.getPersistedState();
+const persistedState = feedbackActor.getPersistedSnapshot();
 localStorage.setItem('feedback', JSON.stringify(persistedState));
 
 //  ...
@@ -99,7 +99,7 @@ localStorage.setItem('feedback', JSON.stringify(persistedState));
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
 const restoredFeedbackActor = createActor(feedbackMachine, {
-  state: restoredState,
+  snapshot: restoredState,
 }).start();
 // Will restore both the feedbackActor and the invoked form actor at
 // their persisted states
@@ -107,53 +107,62 @@ const restoredFeedbackActor = createActor(feedbackMachine, {
 
 ## Event sourcing
 
-An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the events that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats).
+An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the events that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
 
 To implement event sourcing, you persist the events as they happen, and then replay them to restore the state of the actor:
 
-_Code example coming soon_
+```ts
+const events = [];
 
-- Useful for replaying actions
+const someActor = createActor(someMachine);
 
-## Strategies
+// Persist events
+someActor.subscribe(event => {
+  events.push(event);
+});
 
-- Storage
-  - Localstorage
-  - DB
-  - Cookies
-  - Filesystem
-  - URL
+someActor.start();
+
+// ...
+
+// Assuming the events are stored somewhere, e.g. in localStorage,
+// you can replay them to restore the state of the actor
+
+const restoredActor = createActor(someMachine);
+restoredActor.start();
+
+for (const event of events) {
+  // Replay events
+  restoredActor.send(event);
+}
+```
 
 ## Caveats
 
 There are some caveats to persisting & restoring state that you should be aware of:
 
 - Incompatible state: if the machine or actor logic changes, the restored state may be incompatible with the new logic.
-- Replaying actions: actions that have already been executed will not be re-executed. [Event sourcing] is preferred for this use-case.
+- Replaying actions: actions that have already been executed will not be re-executed. [Event sourcing](#event-sourcing) is preferred for this use-case.
 - Serialization: the state must be serializable, which means that it must be JSON-serializable. This means that you cannot persist functions, classes, or other non-serializable values.
-
-## TypeScript
-
-_Coming soon_
 
 ## Cheatsheet
 
-**Persisting state**
+### Persisting state
 
 ```ts
-const persistedState = actor.getPersistedState();
+const persistedState = actor.getPersistedSnapshot();
 ```
 
-**Restoring state**
+### Restoring state
 
 ```ts
 const restoredState = JSON.parse(localStorage.getItem('feedback'));
 
 const restoredActor = createActor(actorMachine, {
-  state: restoredState,
+  snapshot: restoredState,
 }).start();
 ```
 
 ## Resources
 
-_Coming soon_
+- [Blog: Persisting state in XState](/blog/2023-10-02-persisting-state)

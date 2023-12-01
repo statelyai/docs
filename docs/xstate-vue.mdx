@@ -364,7 +364,7 @@ For [hierarchical](https://xstate.js.org/docs/guides/hierarchical.html) and [par
 
 ## Persisted and rehydrated state
 
-You can persist and rehydrate state with `useMachine(...)` via `options.state`:
+You can persist and rehydrate state with `useMachine(...)` via `options.snapshot`:
 
 ```vue
 <script>
@@ -375,12 +375,12 @@ const persistedState = JSON.parse(
 
 export default {
   setup() {
-    const { state, send } = useMachine(someMachine, {
-      state: persistedState,
+    const { snapshot, send } = useMachine(someMachine, {
+      snapshot: persistedState,
     });
 
     // state will initially be that persisted state, not the machine’s initialState
-    return { state, send };
+    return { snapshot, send };
   },
 };
 </script>

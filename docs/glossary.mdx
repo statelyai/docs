@@ -12,11 +12,11 @@ Looking for more detailed information on these concepts? [Read the introduction 
 
 ## Actions
 
-An [action](actions.mdx) can be fired upon entry or exit of a state. Actions are “fire-and-forget processes”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions.
+An [action](actions.mdx) is an effect that is executed during a state transition. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action.
 
 ## Actors
 
-When you run a state machine, it becomes an [actor](actors.mdx); a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
+When you run a state machine, it becomes an [actor](actors.mdx), which is a running process that can receive events, send events, and change its behavior based on the events it receives, which can cause effects outside of the actor.
 
 ## After transitions
 
@@ -32,7 +32,7 @@ See [parent and child states](/#parent-and-child-states).
 
 ## Context
 
-[Context](context.mdx) is how you store data in a state machine actor. `context` is a special property available in all states and used to store data relevant to the state machine.
+[Context](context.mdx) is the place that contextual data is stored in a state machine actor.
 
 ## Delayed transitions
 

@@ -342,7 +342,7 @@ const fetchMachine = createMachine({
         onError: {
           target: 'failure',
           actions: assign({
-            error: ({ event }) => event.data,
+            error: ({ event }) => event.error,
           }),
         },
       },
@@ -453,7 +453,7 @@ const Loader = () => {
 
 ## Persisted and rehydrated State
 
-You can persist and rehydrate state with `useMachine(...)` via `options.state` in the 2nd argument:
+You can persist and rehydrate state with `useMachine(...)` via `options.snapshot` in the 2nd argument:
 
 ```js
 // ...
@@ -463,7 +463,7 @@ const persistedState = JSON.parse(localStorage.getItem('some-persisted-state-key
 
 const App = () => {
   const [state, send] = useMachine(someMachine, {
-    state: persistedState // provide persisted state config object here
+    snapshot: persistedState // provide persisted state config object here
   });
 
   // state will initially be that persisted state, not the machine’s initialState
