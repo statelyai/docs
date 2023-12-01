@@ -10,9 +10,9 @@ image: /blog/2023-12-01-xstate-v5.png
 
 # XState v5 is here
 
-Today, we’re happy to announce [XState v5](https://github.com/statelyai/xstate)! This is a new major version of XState focusing on actors and helping you get started with XState faster and more easily than previous versions.
+Today, we’re happy to finally release XState v5! This is a new major version of XState focusing on actors and helping you get started with XState faster and more easily than previous versions.
 
-State machine transitions take zero time, but transitioning from XState v4 to v5 took a long time. We released XState v4 in October 2018 and have been working on the next major version of XState for most of the years since. With over 25k stars on GitHub, we’ve been able to listen to and learn from those using XState in production and create a version that is more powerful yet simpler (and smaller!) than ever before.
+State machine transitions may take zero time, but transitioning from XState v4 to v5 took a long time. We released XState v4 in October 2018 and have been working on the next major version of XState for most of the years since. With over 25k stars on GitHub, 1 million weekly downloads on npm, and an amazing community, we’ve been able to listen to and learn from those using XState in production and create a version that is more powerful yet simpler (and smaller!) than ever before.
 
 ## Our vision for XState v5
 
@@ -30,7 +30,7 @@ With that said, we’ve also:
 - Reduced the bundle size, by a **lot**
 - Revamped the documentation and added many new examples
 
-Let’s take a look at some of my favorite new features.
+There are a ton of new features and improvements in this release. Let’s take a look at some of my favorite new features.
 
 ## Everything is an actor
 
@@ -598,14 +598,13 @@ const machine = createMachine({
 
 ## Stately Studio support for v5
 
-- Can already toggle between XState v4 and v5
-- Already supports importing from v5
-- Input, output, parameters coming soon
-- Code editor for actions, actors, guards coming soon (AI-generation feature too)
+Now that the XState v5 API is finally solidified, we're working hard on adding support for all of the new features and updates in [Stately Studio](https://stately.ai/editor). Currently, the studio can already import and export XState v5 code. Coming soon, we'll be adding support for `input`, `output`, and action/guard parameters. To give you full control, we're also close to releasing in-studio code editors for actions, actors, guards, and more. And with Stately AI, you'll even be able to generate the code for anything you want to implement, in fully correct XState v5 code.
 
 ## Future plans & ideas
 
-- [toPromise](https://github.com/statelyai/xstate/pull/4198)
-- [Step-based async logic](https://github.com/statelyai/xstate/pull/4190)
-- [Routable states](https://github.com/statelyai/xstate/pull/4184)
-- Typestates
+This isn't our final state. There's even more features and improvements to be made in XState v5, such as:
+
+- [A `toPromise()` helper function](https://github.com/statelyai/xstate/pull/4198) for converting actors to awaitable promises
+- [Step-based async logic](https://github.com/statelyai/xstate/pull/4190) for modeling steps in promise actors
+- [Routable states](https://github.com/statelyai/xstate/pull/4184) for explicitly modeling direct transitions to specific states at any time (useful for routing)
+- Typestates for constraining `context` types in specific states
