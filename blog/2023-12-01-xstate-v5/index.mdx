@@ -97,9 +97,9 @@ const callbackLogic = fromCallback(({ sendBack, receive }) => {
     sendBack(event);
   }
   
-	window.addEventListener('message', handler);
+  window.addEventListener('message', handler);
 
-	return () => { window.removeEventListener('message', handler); }
+  return () => { window.removeEventListener('message', handler); }
 });
 ```
 
@@ -152,10 +152,10 @@ Instead of magically setting `devTools: true`, the Inspect API lets you attach a
 ```jsx
 const actor = createActor(machine, {
   inspect: (inspectionEvent) => {
-		// type: '@xstate.actor' or
-		// type: '@xstate.snapshot' or
-		// type: '@xstate.event'
-		console.log(event);
+  // type: '@xstate.actor' or
+  // type: '@xstate.snapshot' or
+  // type: '@xstate.event'
+  console.log(event);
   }
 });
 ```
