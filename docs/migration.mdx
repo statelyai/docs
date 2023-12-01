@@ -1122,10 +1122,10 @@ const parentMachine = createMachine({
     // highlight-start
     onError: {
       actions: ({ context, event }) => {
-        console.log(event.data);
+        console.log(event.error);
         //  {
         //    type: ...,
-        //    data: {
+        //    error: {
         //      message: 'This is some error'
         //    }
         //  }

@@ -342,7 +342,7 @@ const fetchMachine = createMachine({
         onError: {
           target: 'failure',
           actions: assign({
-            error: ({ event }) => event.data,
+            error: ({ event }) => event.error,
           }),
         },
       },

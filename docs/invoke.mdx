@@ -59,7 +59,7 @@ const userMachine = createMachine({
         },
         onError: {
           target: 'failure',
-          actions: assign({ error: ({ event }) => event.data })
+          actions: assign({ error: ({ event }) => event.error })
         }
       }
       // highlight-end
@@ -133,7 +133,7 @@ invoke: {
   // highlight-start
   onError: {
     target: 'failure',
-    actions: assign({ error: ({ event }) => event.data })
+    actions: assign({ error: ({ event }) => event.error })
   }
   // highlight-end
 }
@@ -272,12 +272,16 @@ The `onError` transition can be an object:
     src: 'fetchItem',
     onDone: {
       target: 'success'
-      actions: ({ event }) => console.log(event.output)
+      actions: ({ event }) => {
+        console.log(event.output);
+      }
     },
     // highlight-start
     onError: {
       target: 'error',
-      actions: ({ event }) => console.error(event.data)
+      actions: ({ event }) => {
+        console.error(event.error);
+      }
     }
     // highlight-end
   }
@@ -301,7 +305,7 @@ Or, for simplicity, target-only transitions can be strings:
 ### `onError`
 
 - Transitions when invoked actor throws an error, or (for Promise-based actors) when the promise rejects
-- Event object `data` property is provided with actor’s error data
+- Event object `error` property is provided with actor’s error data
 
 ```ts
 invoke: {
@@ -309,7 +313,9 @@ invoke: {
   // highlight-start
   onError: {
     target: 'failure',
-    actions: ({ event }) => console.error(event.data)
+    actions: ({ event }) => {
+      console.error(event.error);
+    }
   }
   // highlight-end
 }
@@ -442,7 +448,7 @@ const userMachine = createMachine({
         },
         onError: {
           target: 'failure',
-          actions: assign({ error: ({ event }) => event.data })
+          actions: assign({ error: ({ event }) => event.error })
         }
       }
       // highlight-end
@@ -471,7 +477,7 @@ The resolved output is placed into a `'xstate.done.actor.<id>'` event, under the
 
 ### Promise Rejection
 
-If a Promise rejects, the `onError` transition will be taken with a `{ type: 'xstate.error.actor.<id>' }` event. The error data is available on the event's `data` property:
+If a Promise rejects, the `onError` transition will be taken with a `{ type: 'xstate.error.actor.<id>' }` event. The error data is available on the event's `error` property:
 
 ```ts
 import { createMachine, createActor, fromPromise, assign } from 'xstate'
@@ -518,8 +524,8 @@ const searchMachine = createMachine({
           actions: assign({
             errorMessage: ({ context, event }) => {
               // event is:
-              // { type: 'xstate.error.actor.<id>', data: 'No query specified' }
-              return event.data;
+              // { type: 'xstate.error.actor.<id>', error: 'No query specified' }
+              return event.error;
             }
           })
         },
