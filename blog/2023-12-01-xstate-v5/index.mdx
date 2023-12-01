@@ -353,16 +353,16 @@ const machine = setup({
   states: {
     thinking: {
       invoke: {
-				// string source strongly typed!
-				src: 'getChatCompletion',
-				onDone: {
-					target: 'processing',
-					actions: assign({
-						// event.output strongly typed!
-						completion: ({ event }) => event.output
-					})
-				}
-			}
+        // string source strongly typed!
+        src: 'getChatCompletion',
+        onDone: {
+          target: 'processing',
+            actions: assign({
+              // event.output strongly typed!
+              completion: ({ event }) => event.output
+            })
+        }
+      }
     },
     processing: {
       invoke: { src: 'processResult', /** ... **/ }
