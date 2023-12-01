@@ -29,7 +29,7 @@ export default function Index() {
     // We need the class name `twp` here to ensure the Tailwind reset gets applied to all children.
     <div className="twp">
       <Head>
-        <title>Stately | Your intelligent assistant for robust logic</title>
+        <title>Stately | Build complex logic intelligently</title>
         <meta
           content="width=device-width, initial-scale=1, viewport-fit=cover"
           name="viewport"
@@ -40,7 +40,7 @@ export default function Index() {
         />
         <meta
           property="og:title"
-          content="Stately - Your intelligent assistant for robust logic"
+          content="Stately - Build complex logic intelligently"
         />
         <meta property="og:url" content="https://stately.ai" />
         <meta
