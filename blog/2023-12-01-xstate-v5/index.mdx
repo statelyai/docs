@@ -18,7 +18,7 @@ State machine transitions may take zero time, but transitioning from XState v4 t
 
 As a reminder, XState is a fully open-source (MIT-licensed), zero-dependency state management & orchestration solution based on state machines, statecharts, and the actor model. **XState orchestrates any logic**, from promises to state machines and everything else. It is most useful for managing & orchestrating _complex app logic_ that goes beyond simple state management, and for making app logic visually collaborative, so that your entire team (technical and non-technical) can easily understand and contribute to it.
 
-You can try out XState v5 beta today by installing `xstate`:
+You can try out XState v5 today by installing `xstate`:
 
 ```bash
 npm i xstate
@@ -582,7 +582,7 @@ Oh, and by the way, they're type-safe! 🎉
 
 As with any major version, there are some breaking changes. We’ve tried to keep these to a minimum, but some are necessary to make XState v5 as powerful, flexible, simple, and strongly-typed as possible. [Read our guide for migrating from XState v4 to v5 and the list of breaking changes](https://stately.ai/docs/migration).
 
-One of the biggest changes is the consolidating of function arguments to a single "unified argument". Implementation functions previously took multiple arguments, making it hard to remember which argument to use or awkward to ignore certain arguments. In XState v5 beta, all implementation functions now take a single unified argument object, which contains `context`, `event`, and other properties relevant to the implementation function:
+One of the biggest changes is the consolidating of function arguments to a single "unified argument". Implementation functions previously took multiple arguments, making it hard to remember which argument to use or awkward to ignore certain arguments. In XState v5, all implementation functions now take a single unified argument object, which contains `context`, `event`, and other properties relevant to the implementation function:
 
 ```ts
 const machine = createMachine({
