@@ -13,7 +13,7 @@ export function ButtonLink({
   href: string;
   target?: '_blank' | '_self';
   rel?: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'medium' | 'large';
 }) {
   // Tailwind does not support string interpolation
   const bg =
@@ -27,11 +27,14 @@ export function ButtonLink({
       ? 'bg-orange-600'
       : 'bg-gray-800';
 
+  // TODO: make medium default, but check all uses of ButtonLink
   const sizeStyles =
     size === 'small'
       ? 'h-8 text-sm px-3'
       : size === 'large'
       ? ' h-16 text-base md:text-lg px-6'
+      : size === 'medium'
+      ? 'h-12 text-base px-4'
       : 'h-12 text-base px-4';
 
   const text = `text-base font-semibold text-gray-50`;
