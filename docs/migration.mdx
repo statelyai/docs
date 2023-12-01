@@ -1092,6 +1092,68 @@ actor.subscribe((state) => {
 
 **Pre-migration tip:** Update v4 projects to track history using `actor.subscribe()`.
 
+### Actions can throw errors without `escalate`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `escalate` action creator is removed. In XState v5 actions can throw errors, and they will propagate as expected. Errors can be handled using an `onError` transition.
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+const childMachine = createMachine({
+  // This will be sent to the parent machine that invokes this child
+  // highlight-start
+  entry: () => {
+    throw new Error('This is some error')
+  }
+  // highlight-end
+});
+
+const parentMachine = createMachine({
+  invoke: {
+    src: childMachine,
+    // highlight-start
+    onError: {
+      actions: ({ context, event }) => {
+        console.log(event.data);
+        //  {
+        //    type: ...,
+        //    data: {
+        //      message: 'This is some error'
+        //    }
+        //  }
+      }
+    }
+    // highlight-end
+  }
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+const childMachine = createMachine({
+  // highlight-start
+  entry: escalate('This is some error')
+  // highlight-end
+});
+
+/* ... */
+```
+
+</TabItem>
+</Tabs>
+
 ## Actors
 
 ### Use actor logic creators for `invoke.src` instead of functions
