@@ -28,9 +28,9 @@ npm i xstate
 
 In XState v4, **state machines and statecharts were the main focus**. Modeling complex logic in event-driven ways through state machines proved to be a solid strategy for the many companies using XState in production. We learned that XState is not only useful for managing frontend logic, like complex components or multi-step forms, but teams are also using it to manage backend workflows and critical business logic.
 
-But as the use-cases grew, it was clear that XState needed to evolve from managing the logic of one part of a system to orchestrating the logic of _many parts_ of a system that need to talk to each other. XState originally had **activities**, which were superseded by **invoked actors** (called “services” in v4). State machines and the actor model fit naturally together, as state machines can model the behavior of a single actor, and the actor model can model the behavior of many actors communicating with each other.
+But as the use cases grew, it was clear that XState needed to evolve from managing the logic of one part of a system to orchestrating the logic of _many parts_ of a system that need to talk to each other. XState originally had **activities**, which were superseded by **invoked actors** (called “services” in v4). State machines and the actor model fit naturally together, as state machines can model the behavior of a single actor, and the actor model can model the behavior of many actors communicating with each other.
 
-So now, in XState v5, **actors are the main focus**. State machines and statecharts are still an important part of XState, but they aren’t the only way you can model an actor’s behavior (although they’re arguably the most robust way). We want XState to be the versatile state orchestration library that enables developers to use the [actor model](/blog/2023-5-30-what-is-the-actor-model-and-when-should-i-use-it) to its full advantage, no matter how they choose to write their logic. Whether you’re writing async logic with promises, using observables, managing state with reducers, or handling any other kind of logic with callback functions, you can use XState to orchestrate your state in an event-driven way.
+So now, in XState v5, **actors are the main focus**. State machines and statecharts are still an important part of XState, but they aren’t the only way to model an actor’s behavior (although they’re arguably the most robust way). We want XState to be the versatile state orchestration library that enables developers to use the [actor model](/blog/2023-5-30-what-is-the-actor-model-and-when-should-i-use-it) to its full advantage, no matter how they choose to write their logic. Whether you’re writing async logic with promises, using observables, managing state with reducers, or handling any other kind of logic with callback functions, you can use XState to orchestrate your state in an event-driven way.
 
 With that said, we’ve also:
 
@@ -50,7 +50,7 @@ In XState v5, the **Actor** is the main unit of abstraction. Actors are simpler 
 - Can send and receive events (or “messages”) and react to them
 - Can create other actors
 
-If you’ve worked with libraries like Redux or Zustand, you may think this sounds somewhat like a “store”. And you’d be correct! Just like a store has its own internal state and can change its state when it receives an event, actors can do the that and more.
+If you’ve worked with libraries like Redux or Zustand, you may think this sounds somewhat like a “store”. And you’d be correct! Just like a store has its own internal state and can change its state when it receives an event, actors can do that and more.
 
 There are several [new actor logic creators](/docs/actors/#actor-logic-creators) in XState v5 for creating:
 
@@ -166,7 +166,7 @@ We will soon be releasing inspection devtools that visualize this information as
 
 ## Deep persistence
 
-We've written about [how to persist state](/blog/2023-10-02-persisting-state), and XState v5 takes persistence even ~~further~~ deeper. [Actor persistence](/docs/persistence) is a pattern where the internal state of an actor can be persisted and restored at any time. Whereas invoked/spawned actors were not persisted in XState v4, **actors are now deeply (recursively) persisted** in XState v5. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
+We’ve written about [how to persist state](/blog/2023-10-02-persisting-state), and XState v5 takes persistence even ~~further~~. [Actor persistence](/docs/persistence) is a pattern where the internal state of an actor can be persisted and restored at any time. Whereas invoked/spawned actors were not persisted in XState v4, **actors are now deeply (recursively) persisted** in XState v5. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
 
 In the following example, the state of the `mainActor` will be persisted, as well as the state of the invoked `someCounter` actor. When the `restoredActor` is started, it will start at the persisted state of `mainActor`, which includes the persisted state of `someCounter`:
 
