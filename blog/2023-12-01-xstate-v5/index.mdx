@@ -405,7 +405,48 @@ actor.getSnapshot().matches('green');
 
 On the theme of type improvements, dynamic action and guard parameters now make it possible to create strongly-typed action and guard implementations that are independent of the state machine:
 
-[TODO: TS example using setup() and dynamic action and guard parameters]
+```ts
+const machine = setup({
+  actions: {
+    greet: (_, params: { name: string }) => {
+      console.log(`Hello, ${params.name}!`);
+    }
+  },
+  guards: {
+    isGreaterThan: (_, params: { value: number; min: number }) => {
+      return params.value > params.min;
+    }
+  }
+}).createMachine({
+  context: ({ input }) => ({
+    user: input.user,
+    count: 0
+  }),
+  entry: {
+    type: 'greet',
+    // highlight-start
+    params: ({ context }) => ({
+      name: context.user.name
+    })
+    // highlight-end
+  },
+  on: {
+    dec: {
+      guard: {
+        type: 'isGreaterThan',
+        // highlight-start
+        params: ({ context, event }) => ({
+          value: context.count,
+          min: 0
+        })
+        // highlight-end
+      }
+    }
+  }
+});
+```
+
+This eliminates coupling of action implementations to the machine, and allows for greater flexibility in how you use them. It also reduces dependence on something like typegen, since we no longer need to predict the possible `context` or `event` types that an action can be called with.
 
 ## Enqueue actions
 
@@ -416,7 +457,6 @@ The `enqueueActions()` action creator makes it much easier to coordinate complex
 This is a much more natural way of writing effects, since you can use normal JavaScript to construct your effects.
 
 ## Self reference
-
 
 In the unified argument object, there is a `self` property that references the actor itself. This enables new, flexible patterns for actor communication, as you can pass this `self` reference to other actors in events:
 
