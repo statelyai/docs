@@ -93,7 +93,7 @@ const callbackLogic = fromCallback(({ sendBack, receive }) => {
 });
 ```
 
-And to create actors from that logic, you use the `createActor(logic)` function:
+And to create actors from that logic, you use the `createActor(logic)` function (renamed from `interpret()` in XState v4):
 
 ```jsx
 import { createActor } from 'xstate';
@@ -111,7 +111,23 @@ actor.start();
 actor.send({ type: 'greet', greeting: 'hello world' });
 ```
 
-No matter which kind of logic you create, the way you create actors is exactly the same. Actors are a powerful unit of abstraction, since they not only represent a single interface for handling almost anything that can happen in an application, but their communication is also clearly visualized in sequence diagrams (more on that soon).
+No matter which kind of logic you create, the way you create actors is exactly the same. Actors are a powerful unit of abstraction, since they not only represent a single interface for handling almost anything that can happen in an application, but actor-to-actor communication is also clearly visualized in sequence diagrams (which we'll be releasing soon). Furthermore, this simple abstraction enables you to create **composable actor logic**:
+
+```ts
+function withLogging(actorLogic) {
+  return {
+    ...actorLogic,
+    transition: (state, event, actorScope) => {
+      console.log('State:', state);
+      return actorLogic.transition(state, event, actorScope);
+    }
+  }
+}
+
+const actor = createActor(withLogging(someLogic));
+```
+
+With these building blocks, you can create higher-level abstractions like `withUndoRedo`, `withDebounce`, and even custom actor logic like `fromGenerator`, `fromWebSocket`, and more.
 
 ## Inspect API
 
@@ -140,43 +156,49 @@ We will soon be releasing inspection devtools that visualize this information as
 
 ## Deep persistence
 
-
-Actor persistence is a pattern where the internal state of an actor can be persisted and restored at any time. In XState v4, machines can invoke/spawn actors, but those child actors are not persisted. In XState v5 beta, actors are now deeply (recursively) persisted. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
+We've written about [how to persist state](TODO - blog link), and XState v5 takes persistence even ~~further~~ deeper. Actor persistence is a pattern where the internal state of an actor can be persisted and restored at any time. Whereas invoked/spawned actors were not persisted in XState v4, **actors are now deeply (recursively) persisted** in XState v5. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
 
 In the following example, the state of the `mainActor` will be persisted, as well as the state of the invoked `someCounter` actor. When the `restoredActor` is started, it will start at the persisted state of `mainActor`, which includes the persisted state of `someCounter`:
 
 ```ts
-const machine = createMachine({
+import { setup, createActor } from 'xstate';
+
+const machine = setup({
+  actors: {
+    counter: fromTransition(/* ... */)
+  }
+}).createMachine({
   invoke: {
+    // This will also be persisted!
     src: 'counter',
     id: 'someCounter',
   },
   // ...
 });
 
-const mainActor = interpret(machine);
+const mainActor = createActor(machine);
 mainActor.start();
 
 // Deeply persist state
 // Also persists the "someCounter" actor!
-const persistedState = mainActor.getPersistedState();
+const persistedState = mainActor.getPersistedSnapshot();
 
 // Restore state
-const restoredActor = interpret(machine, {
-  state: persistedState,
+const restoredActor = createActor(machine, {
+  snapshot: persistedState,
 });
 
 // Starts at recursively persisted state
 restoredActor.start();
 ```
 
-This is useful for both client-side (e.g. handling page refreshes) and server-side (e.g. persisting workflow state) use cases. Customizing persistence/restoration logic for actors is also possible, and we will document those options soon.
+This is useful for both client-side (e.g. handling page refreshes) and server-side (e.g. persisting workflow state) use cases.
 
 ## Reference actors anywhere
 
-As actors can spawn other actors, which in turn can spawn other actors, these connected actors form a natural hierarchy. This collection of connected actors is known as an actor system.
+As actors can spawn other actors, which in turn can spawn other actors, these connected actors form a natural hierarchy, known as an "actor system". In XState v4, actors could only easily communicate in a parent-child relationship, via `sendTo('child-id', ...)` and `sendParent(...)`. It was difficult and overly complicated to send events from one arbitrary actor to another in the same system.
 
-In XState v5 beta, calling `interpret(...)` to create a root actor will also create an implicit actor system. This enables a key feature called the **receptionist pattern**. The receptionist pattern means actors can be registered and looked up by their `systemId`, which is useful for actors that need to communicate with each other but don’t directly know about each other (i.e., actors not in a parent-child relationship).
+In XState v5, calling `createActor(...)` to create a root actor will also create an implicit actor system. This enables a key feature called the **receptionist pattern**. The receptionist pattern means actors can be registered and looked up by their `systemId`, which is useful for actors that need to communicate with each other but don’t directly know about each other (i.e., actors not in a parent-child relationship).
 
 For example, let’s say you have a `checkoutMachine` that orchestrates the state of an online shop. If you want a notifier actor to be available to any machines spawned anywhere within the `checkoutMachine` system, you can register it by providing a `systemId`:
 
@@ -200,7 +222,7 @@ const checkoutMachine = createMachine({
   },
 });
 
-const checkoutActor = interpret(checkoutMachine);
+const checkoutActor = createActor(checkoutMachine);
 checkoutActor.start();
 ```
 
@@ -224,7 +246,6 @@ The implicit system and receptionist pattern make it much easier to model arbitr
 
 ## **Input and output**
 
-
 In some cases where you want to specify initial “input data” for actors. Providing that input data in XState v4 was not easy. You had to either:
 
 - Create a factory machine function that took in some input data and returned a machine with that input data in context.
@@ -232,7 +253,7 @@ In some cases where you want to specify initial “input data” for actors. Pro
 
 Since only the machine should initially determine `context`, this was not ideal, as it was possible to initialize a machine at some impossible state. Additionally, you may want to consider some `context` properties _private_ (internal to the machine) and not externally configurable.
 
-In XState v5 beta, you can now provide input data to machines by passing it as the second argument to `interpret(machine, { input })`. This input data can be read by machines in the `context` initialization function:
+In XState v5, you can now provide input data to machines by passing it as the second argument to `createActor(machine, { input })`. This input data can be read by machines in the `context` initialization function:
 
 ```ts
 const greetingMachine = createMachine({
@@ -241,7 +262,7 @@ const greetingMachine = createMachine({
   }),
 });
 
-const greetingActor = interpret(greetingMachine, {
+const greetingActor = createActor(greetingMachine, {
   input: {
     name: 'David',
   },
@@ -255,16 +276,48 @@ const promiseLogic = fromPromise(({ input }) =>
   fetch(`https://api.example.com/users/${input.id}`).then((res) => res.json()),
 );
 
-const promiseActor = interpret(promiseLogic, {
+// Standalone promise actor
+const promiseActor = createActor(promiseLogic, {
   input: {
     id: 42,
   },
 });
+
+// From a machine
+const machine = setup({
+  actors: { promiseLogic }
+}).createMachine({
+  invoke: {
+    src: 'promiseLogic',
+    input: {
+      id: 42,
+    },
+  }
+})
 ```
 
 Actors can also have output, which represents their “done data” when they have reached their final state. It’s not just state machines that can have output; promise logic naturally resolves with output, and it may be possible to specify output for other actor logic types in the future.
 
-[TODO: expand]
+```ts
+const processMachine = createMachine({
+  id: 'some-process',
+  initial: 'pending',
+  context: {/* ... */},,
+  states: {
+    pending: {/* ... */},
+    transforming: {/* ... */},
+    done: {
+      type: 'final'
+    },
+  },
+  // highlight-start
+  output: ({ context }) => ({
+    status: 200,
+    result: context.transformedData,
+  })
+  // highlight-end
+});
+```
 
 ## Stronger type inference
 
@@ -314,9 +367,39 @@ const machine = setup({
 
 With `setup(...)`, you no longer need to do the double work of specifying the types of actors, actions, guards, delays, etc. **and** provide them later; just do it in that `setup(...)` function and the types will flow. It’s also much safer since you have the guarantee that those implementations exist, instead of hoping they’ll exist (or relying on typegen) when they’re provided later.
 
-The setup API also enables another magical feature: **strongly-type state values** ✨
+The setup API also enables another magical feature: **strongly-typed state values** ✨
 
-[TODO: TS example of strongly-typed state values and state.matches]
+```ts
+const machine = setup({
+  // ...
+}).createMachine({
+  initial: 'green',
+  states: {
+    green: {/* ... */},
+    yellow: {/* ... */},
+    red: {
+      initial: 'walk',
+      states: {
+        walk: {/* ... */},
+        run: {/* ... */}
+        stop: {/* ... */}
+      }
+    }
+  }
+});
+
+const actor = createActor(machine).start();
+
+// Strongly-typed state values!
+// Autocomplete will show:
+// - 'green'
+// - 'yellow'
+// - 'red'
+// - { red: 'walk' }
+// - { red: 'run' }
+// - { red:'stop' }
+actor.getSnapshot().matches('green');
+```
 
 ## Dynamic parameters
 
