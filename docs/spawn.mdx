@@ -1,23 +1,40 @@
 ---
-title: 'Spawning Actors'
+title: 'Spawn'
 description: 'You can use spawn to run actors. Actors created with spawn are spawning actors, and actors created with invoke are invoking actors.'
 ---
 
-Sometimes invoking [actors](actors.mdx) may not be flexible enough for your needs. In such cases, you might want to:
+Sometimes invoking [actors](actors.mdx) may not be flexible enough for your needs. For example, you might want to:
 
 - Invoke child machines that last across several states (machines invoked with `invoke` are always tied to that state)
 - Invoke a dynamic number of actors
 
-You can use a powerful tool called `spawn` to run these actors in these cases. Actors created with spawn are **spawning actors**, and actors created with invoke are **invoking actors**.
+You can do this by **spawning** an actor instead of invoking. Actors created by `spawnChild` (or the `spawn` helper function for `assign`) are **spawning actors**, and actors created with invoke are **invoking actors**.
 
 :::tip
 [Read about the difference between spawning and invoking actors](actors.mdx#invoking-and-spawning-actors).
 :::
 
-Spawning actors puts a reference to the machine in `context`, which means that you must always assign a spawned actor to context via `assign`:
+In most cases, prefer the `spawnChild` action creator, which spawns an actor with a configurable ID.
 
 ```ts
-import { createMachine, spawn, assign } from 'xstate';
+createMachine({
+  entry: spawnChild(childMachine, {
+    id: 'child'
+  })
+})
+```
+
+You can also use the `spawn` helper function within an `assign` created action, which allows you to store a reference to the spawned actor (an `ActorRef`) in the machine's `context`. However, if you use `spawn`, **make sure you remove the ActorRef from context to prevent memory leaks**.
+
+```ts
+const parentMachine = createMachine({
+  entry: [
+    assign({
+      childMachineRef: ({ spawn }) => spawn(childMachine, { id: 'child' }),
+    })
+  ]
+});
+```
 
 const childMachine = createMachine({
   /* ... */
