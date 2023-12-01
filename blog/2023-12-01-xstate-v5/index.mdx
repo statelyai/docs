@@ -50,7 +50,7 @@ In XState v5, the **Actor** is the main unit of abstraction. Actors are simpler 
 - Can send and receive events (or “messages”) and react to them
 - Can create other actors
 
-If you’ve worked with libraries like Redux or Zustand, you may think this sounds somewhat like a “store”. And you’d be correct! Just like a store has its own internal state and can change its state when it receives an event, actors can do that and more.
+If you’ve worked with libraries like Redux or Zustand, you may think this sounds somewhat like a “store.” And you’d be correct! Just like a store has its own internal state and can change its state when it receives an event, actors can do that and more.
 
 There are several [new actor logic creators](/docs/actors/#actor-logic-creators) in XState v5 for creating:
 
@@ -206,7 +206,7 @@ This is useful for both client-side (e.g. handling page refreshes) and server-si
 
 ## Reference actors anywhere
 
-As actors can spawn other actors, which in turn can spawn other actors, these connected actors form a natural hierarchy, known as an “actor system”. In XState v4, actors could only easily communicate in a parent-child relationship, via `sendTo('child-id', ...)` and `sendParent(...)`. It was difficult and overly complicated to send events from one arbitrary actor to another in the same system.
+As actors can spawn other actors, which in turn can spawn other actors, these connected actors form a natural hierarchy, known as an “actor system.” In XState v4, actors could only easily communicate in a parent-child relationship, via `sendTo('child-id', ...)` and `sendParent(...)`. It was difficult and overly complicated to send events from one arbitrary actor to another in the same system.
 
 In XState v5, calling `createActor(...)` to create a root actor will also create an implicit actor system. This enables a key feature called the **receptionist pattern**. The receptionist pattern means actors can be registered and looked up by their `systemId`, which is useful for actors that need to communicate with each other but don’t directly know about each other (i.e., actors not in a parent-child relationship).
 
@@ -614,7 +614,7 @@ In celebration of releasing XState v5, use the code `XSTATEV5` to get 35% off of
 
 ## Future plans & ideas
 
-This isn't our final state. There's even more features and improvements to be made in XState v5, such as:
+This isn’t our final state. There’s even more features and improvements to be made in XState v5, such as:
 
 - [A `toPromise()` helper function](https://github.com/statelyai/xstate/pull/4198) for converting actors to awaitable promises
 - [Step-based async logic](https://github.com/statelyai/xstate/pull/4190) for modeling steps in promise actors
