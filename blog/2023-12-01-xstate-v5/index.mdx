@@ -452,13 +452,45 @@ This eliminates coupling of action implementations to the machine, and allows fo
 
 The `enqueueActions()` action creator makes it much easier to coordinate complex actions in a single action creator. Think of it like a more intuitive combination of `pure()` and `choose()`, which are now replaced with this new action creator:
 
-[TODO: enqueueActions() example with enqueue() and check()]
+```ts
+const machine = createMachine({
+  // ...
+  entry: enqueueActions(({ context, event, enqueue, check }) => {
+    // assign action
+    enqueue.assign({
+      count: context.count + 1
+    });
 
-This is a much more natural way of writing effects, since you can use normal JavaScript to construct your effects.
+    // Conditional actions (replaces choose(...))
+    if (event.someOption) {
+      enqueue.sendTo('someActor', { type: 'blah', thing: context.thing });
+
+      // other actions
+      enqueue('namedAction');
+      // with params
+      enqueue({ type: 'greet', params: { message: 'hello' } });
+    } else {
+      // inline
+      enqueue(() => console.log('hello'));
+
+      // even built-in actions
+    }
+
+    // Use check(...) to conditionally enqueue actions based on a guard
+    if (check({ type: 'someGuard' })) {
+      // ...
+    }
+
+    // no return
+  })
+});
+```
+
+This is a much more natural way of writing effects, since you can use normal JavaScript to construct your effects. 
 
 ## Self reference
 
-In the unified argument object, there is a `self` property that references the actor itself. This enables new, flexible patterns for actor communication, as you can pass this `self` reference to other actors in events:
+In the dynamic functions that you can provide in an XState v5 machine config, there is now a `self` property that references the actor itself. This enables new, flexible patterns for actor communication, as you can pass this `self` reference to other actors in events:
 
 ```ts
 const pingMachine = createMachine({
@@ -486,39 +518,34 @@ const pongMachine = createMachine({
 
 ## **Higher-order guards**
 
-
-In XState v4, guards were simple functions on the `.cond` transition property that returned `true` or `false` to determine if a transition would be taken. To negate a guard or combine guards, you had to create a new guard, which resulted in duplication or redundant code. In XState v5 beta, you can now use higher-order guards, which are functions that take in guards (referenced and/or inline) and return a guard function. There are 3 built-in higher-order guard functions: `and([...guards])`, `or([...guards])`, and `not(guard)`:
+In XState v4, guards were simple functions on the `.cond` transition property that returned `true` or `false` to determine if a transition would be taken. To negate a guard or combine guards, you had to create a new guard, which resulted in duplication or redundant code. In XState v5, you can now use higher-order guards, which are functions that take in guards (referenced and/or inline) and return a guard function. There are 3 built-in higher-order guard functions: `and([...guards])`, `or([...guards])`, and `not(guard)`:
 
 ```ts
-import { createMachine, and, not } from 'xstate';
+import { setup, and, not } from 'xstate';
 
-const userMachine = createMachine(
-  {
-    // ...
-    on: {
-      doSomething: {
-        // Higher-order guard
-        // Renamed from "cond" (v4) -> "guard" (v5)
-        guard: and(['isAuthenticated', 'isAdmin', not('isBanned')]),
-      },
+const userMachine = setup({
+  guards: {
+    isAuthenticated: ({ context }) => context.user !== undefined,
+    isAdmin: ({ context }) => context.user.role === 'admin',
+    isBanned: ({ context }) => context.user.status === 'banned',
+  }
+}).createMachine({
+  // ...
+  on: {
+    doSomething: {
+      // Higher-order guard
+      // Renamed from "cond" (v4) -> "guard" (v5)
+      guard: and(['isAuthenticated', 'isAdmin', not('isBanned')]),
     },
   },
-  {
-    guards: {
-      isAuthenticated: ({ context }) => context.user !== undefined,
-      isAdmin: ({ context }) => context.user.role === 'admin',
-      isBanned: ({ context }) => context.user.status === 'banned',
-    },
-  },
-);
+});
 ```
 
-These higher-order guards can be combined in many different ways to express any complex condition. In the future, Stately visual tooling will be able to visualize complex conditional logic expressed in guards.
+These higher-order guards can be combined in many different ways to express any complex condition. In the future, Stately Studio will be able to visualize complex conditional logic expressed in guards.
 
 ## Partial event descriptors
 
-
-Partial event descriptors, also known as _partial wildcards_, are a powerful new feature in XState v5 beta that makes it easier to handle groups of events. In XState v4, you could use wildcards to handle any event that wasn’t matched by any other transition, but you had to be careful not to handle events that you didn’t intend to handle accidentally. In XState v5 beta, you can use partial event descriptors to handle groups of events by placing a wildcard after the delimiter (`.*`), and you can be explicit about which events you want to handle:
+Partial event descriptors, also known as _partial wildcards_, are a powerful new feature in XState v5 that makes it easier to handle groups of events. In XState v4, you could use wildcards to handle any event that wasn’t matched by any other transition, but you had to be careful not to handle events that you didn’t intend to handle accidentally. In XState v5, you can use partial event descriptors to handle groups of events by placing a wildcard after the delimiter (`.*`), and you can be explicit about which events you want to handle:
 
 ```ts
 const machine = createMachine({
@@ -533,13 +560,13 @@ const machine = createMachine({
 });
 ```
 
-[TODO: mention how they’re now type-safe: magical!]
+Oh, and by the way, they're type-safe! 🎉
 
 ## Migration and breaking changes
 
-As with any major version, there are some breaking changes. We’ve tried to keep these to a minimum, but some are necessary to make XState v5 beta as powerful and flexible as possible. [Read our current guide for migrating from XState v4 to v5 and the list of breaking changes](https://stately.ai/docs/migration).
+As with any major version, there are some breaking changes. We’ve tried to keep these to a minimum, but some are necessary to make XState v5 as powerful, flexible, simple, and strongly-typed as possible. [Read our guide for migrating from XState v4 to v5 and the list of breaking changes](https://stately.ai/docs/migration).
 
-The crowd has spoken. Most of you wanted a unified arguments object for all implementation functions. Implementation functions previously took multiple arguments, making it hard to remember which argument to use or awkward to ignore certain arguments. In XState v5 beta, all implementation functions now take a single unified argument object, which contains `context`, `event`, and other properties relevant to the implementation function:
+One of the biggest changes is the consolidating of function arguments to a single "unified argument". Implementation functions previously took multiple arguments, making it hard to remember which argument to use or awkward to ignore certain arguments. In XState v5 beta, all implementation functions now take a single unified argument object, which contains `context`, `event`, and other properties relevant to the implementation function:
 
 ```ts
 const machine = createMachine({
@@ -548,6 +575,7 @@ const machine = createMachine({
   },
   on: {
     increment: {
+      // highlight-start
       // Single argument, instead of:
       // guard: (_, event) => ...
       guard: ({ event }) => !Number.isNaN(event.value),
@@ -556,6 +584,7 @@ const machine = createMachine({
       actions: ({ context, event }) => {
         console.log(context, event);
       },
+      // highlight-end
     },
   },
 });
