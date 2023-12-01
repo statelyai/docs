@@ -322,7 +322,7 @@ const sidebars = {
       },
       collapsed: false,
       collapsible: true,
-      items: ['actors', 'invoke', 'spawn', 'system'],
+      items: ['actors', 'invoke', 'spawn', 'system', 'inspection'],
     },
     {
       type: 'doc',
