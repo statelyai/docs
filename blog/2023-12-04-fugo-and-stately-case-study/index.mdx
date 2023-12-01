@@ -14,10 +14,17 @@ In the always-changing world of digital signage for modern businesses, Fugo turn
 <!--truncate-->
 
 <p>
-    <img src="/blog/2023-12-04-fugo-and-stately-case-study/fugo_logo.png" alt="Fugo logo" width="255" height="255"/>
+  <img
+    src="/blog/2023-12-04-fugo-and-stately-case-study/fugo_logo.png"
+    alt="Fugo logo"
+    width="255"
+    height="255"
+  />
 </p>
 
-[Fugo](https://www.fugo.ai/) provides a comprehensive digital signage platform, providing their customers the ability to schedule, modify, and automate their branded screens at any time. Whether it be for holidays, shift changes, or a hotfix to a menu item, Fugo has their customers covered. This is exemplified by the sheer scale Fugo can meet for their customers. According to the lead developer, Marsel Atniashev, just one of their customers operates over 200 digital screens in 3 different countries. Needless to say, downtime is not negotiable when operating at this level, and Fugo's connected solution is able to accommodate customer needs with ease. Building a product this capable and complex is no small feat, so the development team at Fugo turned to Stately to help manage and orchestrate complex application logic. Their offerings can considered in two segments: the CMS and the Player.
+[Fugo](https://www.fugo.ai/) provides a comprehensive digital signage platform, providing their customers the ability to schedule, modify, and automate their branded screens at any time. Whether it be for holidays, shift changes, or a hotfix to a menu item, Fugo has their customers covered. This is exemplified by the sheer scale Fugo can meet for their customers. According to the lead developer, Marsel Atniashev, just one of their customers operates over 200 digital screens in 3 different countries. Needless to say, downtime is not negotiable when operating at this level, and Fugo's connected solution is able to accommodate customer needs with ease.
+
+Building a product this capable and complex is no small feat, so the development team at Fugo turned to Stately to help manage and orchestrate complex application logic. Their offerings can considered in two segments: the CMS and the Player.
 
 ## Comprehensive content management
 
@@ -33,13 +40,13 @@ The Player can be thought of as the “client” component for Fugo's platform. 
 
 ## Conveying the complex: communicating design concerns across teams
 
-At its core, Fugo's product offerings require **a lot** of state management. In the user-interface alone, the CMS needs to be able to manage several tasks like:
+At its core, Fugo's product offerings require _a lot_ of state management. In the user interface alone, the CMS needs to be able to manage several tasks like:
 
-- managing playlist order
-- tracking timers for how long each screen is visible within playlists
-- synchronizing with the Player.
+- Managing playlist order
+- Tracking timers for how long each screen is visible within playlists
+- Synchronizing with the Player
 
-While wrangling this without an explicit state machine is certainly possible, maintaining this logic without a proper framework adds significant overhead, lacks the ability to easily understand these processes, and allows plenty of room to introduce bugs. This is where Stately tooling comes in for the team. By representing their app logic as state machines, the team at Fugo is better able to understand the flows for their features. This makes adding and modifying functionality straightforward and easy to communicate. For example, the logic representing the process for taking screenshots can be found below:
+While wrangling this without an explicit state machine is certainly possible, maintaining this logic without a proper framework adds significant overhead, lacks the ability to easily understand these processes, and allows plenty of room to introduce bugs. This is where Stately's tooling comes in for the team. By representing their app logic as state machines, the team at Fugo is better able to understand the flows for their features. This makes adding and modifying functionality straightforward and easy to communicate. For example, the logic representing the process for taking screenshots can be found below:
 
 <EmbedMachine
   name="Screenshot Machine"
