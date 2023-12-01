@@ -32,10 +32,6 @@ const config = {
 
   scripts: [
     {
-      src: 'https://esm.run/xstate',
-      async: true,
-    },
-    {
       src: 'https://plausible.io/js/script.tagged-events.js',
       defer: true,
       'data-domain': 'stately.ai',
@@ -162,7 +158,7 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-        }
+        },
       },
       navbar: {
         title: '',
@@ -266,7 +262,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       prism: {
-        theme: themes.vsLight,
+        theme: themes.oneLight,
         darkTheme: themes.oneDark,
       },
     }),
