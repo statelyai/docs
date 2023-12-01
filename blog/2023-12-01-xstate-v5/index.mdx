@@ -14,11 +14,19 @@ Today, we’re happy to finally release XState v5! This is a new major version o
 
 State machine transitions may take zero time, but transitioning from XState v4 to v5 took a long time. We released XState v4 in October 2018 and have been working on the next major version of XState for most of the years since. With over 25k stars on GitHub, 1 million weekly downloads on npm, and an amazing community, we’ve been able to listen to and learn from those using XState in production and create a version that is more powerful yet simpler (and smaller!) than ever before.
 
+As a reminder, XState is a fully open-source (MIT-licensed), zero-dependency state management & orchestration solution based on state machines, statecharts, and the actor model. **XState orchestrates any logic**, from promises to state machines and everything else. It is most useful for managing & orchestrating _complex app logic_ that goes beyond simple state management, and for making app logic visually collaborative, so that your entire team (technical and non-technical) can easily understand and contribute to it.
+
+You can try out XState v5 beta today by installing `xstate`:
+
+```bash
+npm i xstate
+```
+
 ## Our vision for XState v5
 
-In XState v4, **state machines and statecharts were the main focus**. Modeling complex logic in event-driven ways through state machines proved to be a solid strategy for the many companies using XState in production. We learned that XState was not only useful for managing frontend logic, like complex components or multi-step forms, but teams were also using it to manage backend workflows and critical business logic.
+In XState v4, **state machines and statecharts were the main focus**. Modeling complex logic in event-driven ways through state machines proved to be a solid strategy for the many companies using XState in production. We learned that XState is not only useful for managing frontend logic, like complex components or multi-step forms, but teams are also using it to manage backend workflows and critical business logic.
 
-But as the use-cases grew, it was clear that XState needed to evolve from managing the logic of one thing to orchestrating the logic of many parts of a system that need to talk to each other. XState originally had **activities**, which were superseded by **invoked actors** (called “services” in v4). State machines and the actor model fit naturally together, as state machines can model the behavior of a single actor, and the actor model can model the behavior of many actors communicating with each other.
+But as the use-cases grew, it was clear that XState needed to evolve from managing the logic of one part of a system to orchestrating the logic of _many parts_ of a system that need to talk to each other. XState originally had **activities**, which were superseded by **invoked actors** (called “services” in v4). State machines and the actor model fit naturally together, as state machines can model the behavior of a single actor, and the actor model can model the behavior of many actors communicating with each other.
 
 So now, in XState v5, **actors are the main focus**. State machines and statecharts are still an important part of XState, but they aren’t the only way you can model an actor’s behavior (although they’re arguably the most robust way). We want XState to be the versatile state orchestration library that enables developers to use the actor model to its full advantage, no matter how they choose to write their logic. Whether you’re writing async logic with promises, using observables, managing state with reducers, or handling any other kind of logic with callback functions, you can use XState to orchestrate your state in an event-driven way.
 
