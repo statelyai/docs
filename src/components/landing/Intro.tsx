@@ -5,14 +5,13 @@ export function Intro() {
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
         <h1 className="text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
-          Your intelligent assistant for robust logic
+          Build complex logic intelligently
         </h1>
-        <ExampleRow />
 
         <div className="flex flex-col items-center w-full">
-          <p className="max-w-lg mt-24 mb-12 text-lg leading-normal tracking-tight text-center md:text-xl lg:text-2xl text-white/60 drop-shadow-sm">
-            Build and deploy workflows and app logic with AI enhanced,
-            collaborative tools
+          <p className="max-w-2xl mt-16 mb-8 text-base leading-normal tracking-tight text-center md:text-lg lg:text-xl text-white/60 drop-shadow-sm">
+            Your source of truth for visually creating, deploying, and analyzing
+            any type of logic, from frontend user flows to backend workflows.
           </p>
           <CallToActionButtons />
         </div>
@@ -32,61 +31,21 @@ export function Intro() {
   );
 }
 
-const exampleBox =
-  'px-4 py-2 border-[0.5px] border-blue-700/60 border-dotted rounded-md w-fit text-white/60 bg-gradient-to-b from-blue-900/60 to-blue-900/10 font-bold text-sm';
-
-const line = 'w-4 lg:w-12 h-[1px] bg-blue-800 self-center rounded-md';
-
-function ExampleRow() {
-  return (
-    <ul className="flex flex-wrap justify-center max-w-full gap-2 m-auto mt-20 select-none">
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Workflows</div>{' '}
-        <span className={line}></span>
-      </li>
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Chatbots</div>{' '}
-        <span className={line}></span>
-      </li>
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Multistep forms</div>{' '}
-        <span className={line}></span>
-      </li>
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Onboarding</div>{' '}
-        <span className={line}></span>
-      </li>
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Games</div> <span className={line}></span>
-      </li>
-      <li className="flex flex-wrap gap-2">
-        <div className={exampleBox}>Complex logic</div>{' '}
-        <span className={line}></span>
-      </li>
-      <li className={exampleBox}>
-        <span className="dot1">.</span>
-        <span className="dot2">.</span>
-        <span className="dot3">.</span>
-      </li>
-    </ul>
-  );
-}
-
 function CallToActionButtons() {
   return (
     <div className="flex justify-center gap-4 md:justify-start">
       <ButtonLink
-        size="large"
         background="pink"
         href="/editor?source=landing-page"
         target="_self"
+        size="medium"
       >
         Try the visual editor
       </ButtonLink>
       <ButtonLink
-        size="large"
         background="darkBlue"
         href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
+        size="medium"
       >
         Book a demo
       </ButtonLink>
