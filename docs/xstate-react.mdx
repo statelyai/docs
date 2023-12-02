@@ -12,7 +12,7 @@ The [@xstate/react package](https://github.com/statelyai/xstate/tree/main/packag
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add xstate@beta @xstate/react@beta
+yarn add xstate @xstate/react
 ```
 
 </TabItem>
@@ -20,7 +20,7 @@ yarn add xstate@beta @xstate/react@beta
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install xstate@beta @xstate/react@beta
+npm install xstate @xstate/react
 ```
 
 </TabItem>
@@ -115,9 +115,9 @@ const promiseLogic = fromPromise(async () => {
 const [state, send] = useActor(promiseLogic);
 ```
 
-### `useActorRef(machine, options?, observer?)`
+### `useActorRef(machine, options?)`
 
-A React hook that returns the `actorRef` created from the `machine` with the `options`, if specified. It starts the actor ref and runs it for the lifetime of the component. This is similar to `useActor`; however, `useActorRef` allows for a custom `observer` to subscribe to the `actorRef`.
+A React hook that returns the `actorRef` created from the `machine` with actor `options` that are passed to `createActor(logic, options)`, if specified. It starts the actor ref and runs it for the lifetime of the component. 
 
 The `useActorRef` is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor` that would flush each update from the machine to the React component, `useActorRef` instead returns a static reference (to just the machine actor) which will not rerender when its state changes.
 
@@ -127,9 +127,6 @@ To use a piece of state from the actorRef inside a render, use the `useSelector(
 
 - `actorLogic`
 - `options?` (optional) - Actor options
-- `observer?` (optional) - an observer or listener that listens to state updates:
-  - an observer (e.g., `{ next: (snapshot) => {/* ... */} }`)
-  - or a listener (e.g., `(snapshot) => {/* ... */}`)
 
 ```js
 import { useActorRef } from '@xstate/react';
@@ -200,20 +197,20 @@ const App = ({ actorRef }) => {
 };
 ```
 
-### `createActorContext(machine)`
+### `createActorContext(logic)`
 
-Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that creates an actor from the `machine` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
+Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that creates an actor from the provided actor `logic` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
 
 #### Arguments
 
-- `machine` - An [XState machine](machines.mdx)
+- `logic` - Actor logic, like an [XState machine](machines.mdx)
 
 Returns a React Context object that contains the following properties:
 
 - `Provider` - a React Context Provider component with the following props:
-  - `machine` - An [XState machine](machines.mdx) that must be of the same type as the machine passed to `createActorContext(...)`
+  - `logic` - Actor logic, such as an [XState machine](machines.mdx) ,that must be of the same type as the actor logic passed to `createActorContext(...)`
 - `useSelector(selector, compare?)` - a React hook that takes in a `selector` function and optional `compare` function and returns the selected value from the actor snapshot
-- `useActorRef()` - a React hook that returns the actor ref of the `machine` actor
+- `useActorRef()` - a React hook that returns the actor ref of the actor created from the actor `logic`
 
 Creating a React Context for the actor and providing it in app scope:
 
@@ -261,7 +258,7 @@ import { someMachine } from '../path/to/someMachine';
 function SomeComponent() {
   return (
     <SomeMachineContext.Provider
-      machine={someMachine.provide({
+      logic={someMachine.provide({
         actions: {
           someAction: differentImplementation,
         },

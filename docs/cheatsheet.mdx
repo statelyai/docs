@@ -2,7 +2,7 @@
 title: 'Cheatsheet'
 ---
 
-Use this cheatsheet to quickly look up the syntax for XState v5 beta.
+Use this cheatsheet to quickly look up the syntax for XState v5.
 
 ## Installing XState
 
@@ -10,7 +10,7 @@ Use this cheatsheet to quickly look up the syntax for XState v5 beta.
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install xstate@beta
+npm install xstate
 ```
 
 </TabItem>
@@ -18,7 +18,7 @@ npm install xstate@beta
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm install xstate@beta
+pnpm install xstate
 ```
 
 </TabItem>
@@ -26,7 +26,7 @@ pnpm install xstate@beta
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add xstate@beta
+yarn add xstate
 ```
 
 </TabItem>
@@ -319,7 +319,24 @@ actor.send({ type: 'toggle' });
 ```ts
 import { createMachine, createActor } from 'xstate';
 
-const machine = createMachine({
+const machine = setup({
+  // highlight-start
+  guards: {
+    canBeToggled: ({ context }) => context.canActivate,
+    isAfterTime: (_, params) => {
+      const { time } = params;
+      const [hour, minute] = time.split(':');
+      const now = new Date();
+      return now.getHours() > hour && now.getMinutes() > minute;
+    },
+  },
+  // highlight-end
+  actions: {
+    notifyNotAllowed: () => {
+      console.log('Cannot be toggled');
+    },
+  },
+}).createMachine({
   id: 'toggle',
   initial: 'active',
   context: {
@@ -354,26 +371,7 @@ const machine = createMachine({
   },
 });
 
-const actor = createActor(
-  machine.provide({
-    // highlight-start
-    guards: {
-      canBeToggled: ({ context }) => context.canActivate,
-      isAfterTime: (_, params) => {
-        const { time } = params;
-        const [hour, minute] = time.split(':');
-        const now = new Date();
-        return now.getHours() > hour && now.getMinutes() > minute;
-      },
-    },
-    // highlight-end
-    actions: {
-      notifyNotAllowed: () => {
-        console.log('Cannot be toggled');
-      },
-    },
-  }),
-);
+const actor = createActor(machine);
 
 actor.start();
 // logs 'Cannot be toggled'
@@ -413,7 +411,12 @@ const machine = setup({
             user: ({ event }) => event.output,
           }),
         },
-        onError: 'failure',
+        onError: {
+          target: 'failure',
+          actions: ({ event }) => {
+            console.log(event.error)
+          }
+        }
       },
       // highlight-end
     },
