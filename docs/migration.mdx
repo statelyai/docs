@@ -1873,6 +1873,42 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+## `@xstate/react`
+
+### `useInterpret()` is now `useActorRef()`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `useInterpret()` hook, which is used to return an `actorRef` ("service" in XState v4), is renamed to `useActorRef()`.
+
+<Tabs>
+<TabItem value="v5" label="XState v5 beta">
+
+```ts
+// ✅
+import { useActorRef } from '@xstate/react';
+
+const actorRef = useActorRef(machine); // or any other logic
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { useInterpret } from '@xstate/react';
+
+const service = useInterpret(machine);
+```
+
+</TabItem>
+</Tabs>
+
 ## New features
 
 _List coming soon_
