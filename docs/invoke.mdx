@@ -21,7 +21,7 @@ You can visualize your state machines and easily invoke actors in our drag-and-d
 Actors can be invoked within any state _except_ for the [top-level final state](final-states.mdx). In the following example, the `loading` state invokes a Promise-based actor:
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate'
+import { createMachine, createActor, fromPromise, assign } from 'xstate';
 
 const fetchUser = (userId: string) =>
   fetch(`https://example.com/${userId}`).then((response) => response.text());
@@ -29,23 +29,23 @@ const fetchUser = (userId: string) =>
 const userMachine = createMachine({
   types: {} as {
     context: {
-      userId: string,
-      user: object | undefined,
-      error: unknown
-    }
+      userId: string;
+      user: object | undefined;
+      error: unknown;
+    };
   },
   id: 'user',
   initial: 'idle',
   context: {
     userId: '42',
     user: undefined,
-    error: undefined
+    error: undefined,
   },
   states: {
     idle: {
       on: {
-        FETCH: { target: 'loading' }
-      }
+        FETCH: { target: 'loading' },
+      },
     },
     loading: {
       // highlight-start
@@ -55,42 +55,42 @@ const userMachine = createMachine({
         input: ({ context: { userId } }) => ({ userId }),
         onDone: {
           target: 'success',
-          actions: assign({ user: ({ event }) => event.output })
+          actions: assign({ user: ({ event }) => event.output }),
         },
         onError: {
           target: 'failure',
-          actions: assign({ error: ({ event }) => event.error })
-        }
-      }
+          actions: assign({ error: ({ event }) => event.error }),
+        },
+      },
       // highlight-end
     },
     success: {},
     failure: {
       on: {
-        RETRY: { target: 'loading' }
-      }
-    }
-  }
+        RETRY: { target: 'loading' },
+      },
+    },
+  },
 });
 ```
 
 Actors can also be invoked on the _root_ of the machine, and they will be active for the lifetime of their parent machine actor:
 
 ```ts
-import { fromEventObservable, fromEvent } from 'rxjs'
+import { fromEventObservable, fromEvent } from 'rxjs';
 const interactiveMachine = createMachine({
   // highlight-start
   invoke: {
     src: fromEventObservable(
-      () => fromEvent(document.body, 'click') as Subscribable<EventObject>
-    )
+      () => fromEvent(document.body, 'click') as Subscribable<EventObject>,
+    ),
   },
   // highlight-end
   on: {
     click: {
-      actions: ({ event }) => console.log(event)
-    }
-  }
+      actions: ({ event }) => console.log(event),
+    },
+  },
 });
 ```
 
@@ -105,19 +105,19 @@ const vitalsWorkflow = createMachine({
         { src: 'checkTirePressure' },
         { src: 'checkOilPressure' },
         { src: 'checkCoolantLevel' },
-        { src: 'checkBattery' }
-      ]
+        { src: 'checkBattery' },
+      ],
       // highlight-end
-    }
-  }
-})
+    },
+  },
+});
 ```
 
 For further examples, see:
-- [Reusing function and event definitions workflow](https://github.com/statelyai/xstate/tree/next/examples/workflow-reusing-functions/main.ts)
-- [Check inbox periodically (cron-based workflow)](https://github.com/statelyai/xstate/tree/next/examples/workflow-check-inbox/main.ts)
-- [Car vitals checks (SubFlow Repeat) workflow](https://github.com/statelyai/xstate/tree/next/examples/workflow-car-vitals)
 
+- [Reusing function and event definitions workflow](https://github.com/statelyai/xstate/tree/main/examples/workflow-reusing-functions/main.ts)
+- [Check inbox periodically (cron-based workflow)](https://github.com/statelyai/xstate/tree/main/examples/workflow-check-inbox/main.ts)
+- [Car vitals checks (SubFlow Repeat) workflow](https://github.com/statelyai/xstate/tree/main/examples/workflow-car-vitals)
 
 ## How are Actors Different From Actions?
 
@@ -145,8 +145,8 @@ Whereas errors thrown by actions can only be handled globally by a subscriber of
 actor.subscribe({
   error: (err) => {
     console.error(err);
-  }
-})
+  },
+});
 ```
 
 ## Lifecycle
@@ -218,15 +218,17 @@ The `src` can be [provided in the machine implementation](machines.mdx#providing
 const machine = createMachine({
   // …
   invoke: {
-    src: 'workflow' // string reference
-  }
+    src: 'workflow', // string reference
+  },
 });
 
-const actor = createActor(machine.provide({
-  actors: {
-    workflow: fromPromise(/* ... */) // provided
-  }
-}));
+const actor = createActor(
+  machine.provide({
+    actors: {
+      workflow: fromPromise(/* ... */), // provided
+    },
+  }),
+);
 ```
 
 ### `onDone`
@@ -262,6 +264,7 @@ loading: {
 }
 // ...
 ```
+
 :::
 
 The `onError` transition can be an object:
@@ -407,7 +410,7 @@ XState can invoke Promises as actors using the `fromPromise` actor logic creator
 If the state where the invoked promise is active is exited before the promise settles, the result of the promise is discarded.
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate'
+import { createMachine, createActor, fromPromise, assign } from 'xstate';
 
 // Function that returns a Promise
 // which resolves with some useful value
@@ -418,23 +421,23 @@ const fetchUser = (userId: string) =>
 const userMachine = createMachine({
   types: {} as {
     context: {
-      userId: string,
-      user: object | undefined,
-      error: unknown
-    }
+      userId: string;
+      user: object | undefined;
+      error: unknown;
+    };
   },
   id: 'user',
   initial: 'idle',
   context: {
     userId: '42',
     user: undefined,
-    error: undefined
+    error: undefined,
   },
   states: {
     idle: {
       on: {
-        FETCH: { target: 'loading' }
-      }
+        FETCH: { target: 'loading' },
+      },
     },
     loading: {
       // highlight-start
@@ -444,22 +447,22 @@ const userMachine = createMachine({
         input: ({ context: { userId } }) => ({ userId }),
         onDone: {
           target: 'success',
-          actions: assign({ user: ({ event }) => event.output })
+          actions: assign({ user: ({ event }) => event.output }),
         },
         onError: {
           target: 'failure',
-          actions: assign({ error: ({ event }) => event.error })
-        }
-      }
+          actions: assign({ error: ({ event }) => event.error }),
+        },
+      },
       // highlight-end
     },
     success: {},
     failure: {
       on: {
-        RETRY: { target: 'loading' }
-      }
-    }
-  }
+        RETRY: { target: 'loading' },
+      },
+    },
+  },
 });
 ```
 
@@ -480,7 +483,7 @@ The resolved output is placed into a `'xstate.done.actor.<id>'` event, under the
 If a Promise rejects, the `onError` transition will be taken with a `{ type: 'xstate.error.actor.<id>' }` event. The error data is available on the event's `error` property:
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate'
+import { createMachine, createActor, fromPromise, assign } from 'xstate';
 
 const search = (query: string) =>
   new Promise((resolve, reject) => {
@@ -497,21 +500,21 @@ const search = (query: string) =>
 const searchMachine = createMachine({
   types: {} as {
     context: {
-      results: object | undefined,
-      errorMessage: unknown
-    }
+      results: object | undefined;
+      errorMessage: unknown;
+    };
   },
   id: 'search',
   initial: 'idle',
   context: {
     results: undefined,
-    errorMessage: undefined
+    errorMessage: undefined,
   },
   states: {
     idle: {
       on: {
-        SEARCH: { target: 'searching' }
-      }
+        SEARCH: { target: 'searching' },
+      },
     },
     searching: {
       // highlight-start
@@ -526,19 +529,19 @@ const searchMachine = createMachine({
               // event is:
               // { type: 'xstate.error.actor.<id>', error: 'No query specified' }
               return event.error;
-            }
-          })
+            },
+          }),
         },
         onDone: {
           target: 'success',
-          actions: assign({ results: ({ event }) => event.output })
-        }
-      }
+          actions: assign({ results: ({ event }) => event.output }),
+        },
+      },
       // highlight-end
     },
     success: {},
-    failure: {}
-  }
+    failure: {},
+  },
 });
 ```
 
@@ -554,7 +557,7 @@ actor.subscribe({
 
 ```ts
 invoke: {
-  src: fromCallback(/* … */)
+  src: fromCallback(/* … */);
 }
 ```
 
@@ -564,7 +567,7 @@ _Coming soon_
 
 ```ts
 invoke: {
-  src: fromObservable(/* … */)
+  src: fromObservable(/* … */);
 }
 ```
 
@@ -574,7 +577,7 @@ _Coming soon_
 
 ```ts
 invoke: {
-  src: fromEventObservable(/* … */)
+  src: fromEventObservable(/* … */);
 }
 ```
 
@@ -584,7 +587,7 @@ _Coming soon_
 
 ```ts
 invoke: {
-  src: fromTransition(/* … */)
+  src: fromTransition(/* … */);
 }
 ```
 
@@ -594,7 +597,7 @@ _Coming soon_
 
 ```ts
 invoke: {
-  src: createMachine(/* … */)
+  src: createMachine(/* … */);
 }
 ```
 
@@ -606,21 +609,18 @@ An invoked actor (or [spawned actor](./spawn.mdx)) can _respond_ to another acto
 
 ```js
 // Parent
-actions: sendTo(
-  'childActor',
-  ({ self }) => ({
-    type: 'ping',
-    // highlight-next-line
-    sender: self
-  })
-);
+actions: sendTo('childActor', ({ self }) => ({
+  type: 'ping',
+  // highlight-next-line
+  sender: self,
+}));
 
 // Child
 actions: sendTo(
-    // highlight-next-line
+  // highlight-next-line
   ({ event }) => event.sender,
-  { type: 'pong' }
-)
+  { type: 'pong' },
+);
 ```
 
 In the following example, the `'client'` machine below sends the `'CODE'` event to the invoked `'auth-server'` service, which then responds with a `'TOKEN'` event after 1 second.
@@ -639,13 +639,13 @@ const authServerMachine = createMachine({
           actions: sendTo(
             ({ event }) => event.sender,
             { type: 'TOKEN' },
-            { delay: 1000 }
-          )
+            { delay: 1000 },
+          ),
           // highlight-end
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
 
 const authClientMachine = createMachine({
@@ -654,27 +654,28 @@ const authClientMachine = createMachine({
   states: {
     idle: {
       on: {
-        AUTH: { target: 'authorizing' }
-      }
+        AUTH: { target: 'authorizing' },
+      },
     },
     authorizing: {
       invoke: {
         id: 'auth-server',
-        src: authServerMachine
+        src: authServerMachine,
       },
       // highlight-start
-      entry: sendTo(
-        'auth-server',
-        ({ self }) => ({ type: 'CODE', sender: self })),
+      entry: sendTo('auth-server', ({ self }) => ({
+        type: 'CODE',
+        sender: self,
+      })),
       // highlight-end
       on: {
-        TOKEN: { target: 'authorized' }
-      }
+        TOKEN: { target: 'authorized' },
+      },
     },
     authorized: {
-      type: 'final'
-    }
-  }
+      type: 'final',
+    },
+  },
 });
 ```
 
@@ -692,8 +693,8 @@ You can invoke multiple actors by specifying each in an array:
 invoke: [
   { id: 'actor1', src: 'someActor' },
   { id: 'actor2', src: 'someActor' },
-  { id: 'logActor', src: 'logActor' }
-]
+  { id: 'logActor', src: 'logActor' },
+];
 ```
 
 Each invocation will create a new instance of that actor, so even if the `src` of multiple actors are the same (e.g., `someActor` above), multiple instances of `someActor` will be invoked.
@@ -712,9 +713,9 @@ Actors can be read on `snapshot.children.<actorId>`. The returned value is an `A
 
 ```ts
 actor.subscribe({
-  next (snapshot) {
-    console.log(Object.keys(snapshot.children))
-  }
+  next(snapshot) {
+    console.log(Object.keys(snapshot.children));
+  },
 });
 ```
 
