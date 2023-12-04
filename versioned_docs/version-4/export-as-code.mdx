@@ -2,54 +2,39 @@
 title: Export as code
 ---
 
-Exporting as code is useful if you want to use your machine with [XState](xstate/intro.mdx) inside your codebase or if you want to duplicate your machine without using **Fork**.
+Exporting as code is useful if you want to use your machine with [XState](/xstate/intro) inside your codebase or if you want to duplicate your machine without using **Fork**.
 
-Every feature of your state machine will be included in the code, except for colors and annotations.
+:::new
+
+You can now [export to StackBlitz and CodeSandbox](#export-to-codesandbox-and-stackblitz).
+
+:::
+
+Every feature of your state machine will be included in the code, except for [colors](colors.mdx) and [notes](annotations.mdx). Your last used export settings will be remembered next time you open the <Code size={18} /> **Code** panel.
 
 ## Export formats
 
-You can currently export your machine as:
+You can export as code from <Code size={18} /> **Code** panel or the <MoreHorizontal size={18} /> menu alongside the machine name in the machines list. 
+
+Use the **XState version 5 beta** toggle to choose between code supported by XState version 4 and XState version 5. Copy the code to your clipboard with the <Copy size={18} /> copy button.
 
 - JSON code for use with XState
 - JavaScript code for use with XState
 - TypeScript code for use with XState
+- Markdown (*beta*) for use in documentation ([available on Paid plans](studio-pro-plan.mdx))
+- Stories (*beta*) for use in requirements and documentation ([available on Paid plans](studio-pro-plan.mdx))
 - [Mermaid](https://mermaid.js.org) code and diagrams for use in GitHub, GitLab, and anywhere Mermaid is supported
 
-:::new
-
-You can now export to Mermaid code and diagrams.
-
-:::
-
-## How to export as code
-
-You can export as code by:
-
-- Using the <Code size={18} /> **Code** panel in the right tool menu
-- Using the <MoreHorizontal size={18} /> menu alongside the machine name in the machines list
-- Using the <Upload size={18} /> export icon button in the header
 
 :::studio
 
-You can also [import from code](import-from-code.mdx) in any of these locations.
+You can also [import from code](import-from-code.mdx) from <Code size={18} /> **Code** panel or the <MoreHorizontal size={18} /> menu alongside the machine name in the machines list.
 
 :::
 
-### Export to JSON, JavaScript, or TypeScript
+### Export to CodeSandbox and StackBlitz
 
-1. Use one of the options above to open the **Export to code** modal or <Code size={18} /> **Code** panel.
-2. Use the dropdown menu to choose from JSON, JavaScript, or TypeScript.
-3. Use the **XState version 5 beta** toggle to choose between code supported by XState version 4 and XState version 5 beta.
-4. Use the **Copy** button to copy the code to your clipboard.
-5. Paste into your code editor.
-
-### Export to Mermaid
-
-1. Use one of the options above to open the **Export to code** modal or <Code size={18} /> **Code** panel.
-2. Use the dropdown menu to choose Mermaid.
-3. Use the **Copy** button to copy the code to your clipboard.
-4. Use the **Preview** tab to preview the diagram and **Copy SVG** to copy the diagram SVG to your clipboard.
-5. Paste into your code or graphics editor.
+You can export your machines to CodeSandbox and StackBlitz from the <Code size={18} /> **Code** panel. The machine will be exported in your chosen format as a basic JavaScript app that uses XState to run the machine.
 
 :::tip
 
