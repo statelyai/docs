@@ -10,7 +10,7 @@ The actor model allows developers to build reliable message-based systems by usi
 When you run a state machine in XState, it becomes an actor.
 :::
 
-### What Defines An "Actor"?
+### What defines an "actor"?
 
 Actors are independent "live" objects that can communicate with each other via asynchronous message passing. In XState, we refer to these messages as [_events_](transitions.mdx).
 
@@ -30,7 +30,7 @@ An actor has its own internal, encapsulated state that only the actor itself can
 
 [Read more about XState actors and state](actors.mdx).
 
-## Communication With Events
+## Communication with events
 
 Actors communicate with other actors by sending and receiving events asynchronously. Actors use an internal “mailbox” that acts like an event queue, processing events one at a time.
 
@@ -43,15 +43,15 @@ Actors can spawn new actors, which is useful in situations where an actor needs 
 - [Read more about spawning actors in XState](spawn.mdx).
 - [Read about the difference between invoking and spawning actors in XState](actors.mdx#invoking-and-spawning-actors).
 
-## The Actor Model in Backend Development
+## The actor model in backend development
 
 The actor model is often used to coordinate backend systems. There are direct implementations of the Actor model, like [Akka](https://doc.akka.io/docs/akka/current/typed/guide/introduction.html) for the JVM. In [Erlang](https://www.erlang.org/docs), processes can be seen as actors, which can send and receive messages and spawn new processes. Erlang is used by massive distributed systems, like Discord and WhatsApp.
 
 In [Stately Sky](https://stately.ai/docs/stately-sky-getting-started), a state machine actor be used to manage long-running backend processes like medical patient onboarding flows, inventory management, or multi-player collaborative experiences like whiteboard canvases or games.
 
-## The Actor Model in Frontend Development
+## The actor model in frontend development
 
-The Actor model is especially useful for coordinating the many moving parts of a front-end web application.
+The actor model is especially useful for coordinating the many moving parts of a front-end web application.
 
 **Your front-end app is always a distributed system**, and managing distributed systems is where the actor model shines. This is because in a browser environment **you never really have a "global source of truth"**, you instead have **many independent sources of state and events**: 3rd-party components, local component state, local storage, query parameters, routers, network I/O, DOM events and their listeners, etc. 
 
