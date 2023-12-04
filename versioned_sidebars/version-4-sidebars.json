@@ -126,6 +126,11 @@
             "descriptions",
             {
               "type": "doc",
+              "label": "Assets",
+              "id": "assets"
+            },
+            {
+              "type": "doc",
               "label": "Colors",
               "id": "colors"
             }
