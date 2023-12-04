@@ -2,9 +2,9 @@
 title: 'Persistence'
 ---
 
-Actors can persist their internal state and restore it later. **Persistence** refers to storing the state of an actor in persistent storage, such as localStorage or a database. **Restoration** refers to restoring the state of an actor from persistent storage.
+[Actors](actors.mdx) can persist their internal state and restore it later. **Persistence** refers to storing the state of an actor in persistent storage, such as localStorage or a database. **Restoration** refers to restoring the state of an actor from persistent storage.
 
-In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable & traceable.
+In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable and traceable.
 
 In XState, you can obtain the snapshot (state) to be persisted via `actor.getPersistedSnapshot()` and restore it via `createActor(behavior, { snapshot: restoredState }).start()`:
 
@@ -54,7 +54,7 @@ console.log(persistedState);
 
 ## Restoring state
 
-You can restore an actor to a persisted state by passing the persisted state into the `state` option of the 2nd argument of `createActor(logic, { snapshot: restoredState })`:
+You can restore an actor to a persisted state by passing the persisted state into the `state` option of the second argument of `createActor(logic, { snapshot: restoredState })`:
 
 ```ts
 // Get persisted state
@@ -72,7 +72,7 @@ Actions from machine actors will _not_ be re-executed, because they are assumed 
 
 ## Deep persistence
 
-Persisting & restoring state from machine actors is deep; all invoked & spawned actors will be persisted & restored recursively.
+Persisting & restoring state from machine actors is deep; all [invoked](invoke.mdx) & [spawned actors](spawn.mdx) will be persisted and restored recursively.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -107,7 +107,7 @@ const restoredFeedbackActor = createActor(feedbackMachine, {
 
 ## Event sourcing
 
-An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the events that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
+An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the [events](transitions.mdx) that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
 
 To implement event sourcing, you persist the events as they happen, and then replay them to restore the state of the actor:
 
@@ -139,7 +139,7 @@ for (const event of events) {
 
 ## Caveats
 
-There are some caveats to persisting & restoring state that you should be aware of:
+There are some caveats to persisting and restoring state that you should be aware of:
 
 - Incompatible state: if the machine or actor logic changes, the restored state may be incompatible with the new logic.
 - Replaying actions: actions that have already been executed will not be re-executed. [Event sourcing](#event-sourcing) is preferred for this use-case.
