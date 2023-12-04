@@ -259,7 +259,7 @@
         },
         {
           "type": "link",
-          "label": "Migrate to XState v5 beta",
+          "label": "Migrate to XState v5",
           "href": "/docs/migration"
         },
         "xstate/installation",
