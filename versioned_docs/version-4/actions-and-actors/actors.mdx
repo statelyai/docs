@@ -3,6 +3,16 @@ title: Actors
 description: 'When you run a statechart, it becomes an actor: a running process that can receive and send messages, and change its behavior based on messages it receives.'
 ---
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+Read about [actors](/docs/actors) and [the actor model](/docs/the-actor-model) in XState v5.
+
+:::
+
 When you run a statechart, it becomes an actor: a running process that can receive messages, send messages and change its behavior based on the messages it receives, which can cause effects outside of the actor.
 
 An invoked actor is an actor that can execute its own actions and communicate with the machine. These invoked actors are started in a state and stopped when the state is exited.
