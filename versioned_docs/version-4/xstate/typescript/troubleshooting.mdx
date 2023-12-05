@@ -2,7 +2,15 @@
 title: Troubleshooting
 ---
 
-<!-- deps: ["context-typescript", "events-typescript"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about TypeScript in XState v5](/docs/machines#typescript).
+
+:::
 
 There are some known limitations with XState and TypeScript. We love TypeScript, and we’re _constantly_ pressing ahead to make it a better experience in XState.
 
@@ -82,8 +90,6 @@ createMachine(config, {
 ```
 
 Sometimes it’s also possible to move the implementation inline.
-
-<!-- TODO - remove the noErrors tag below when https://github.com/statelyai/xstate/pull/3217 is fixed-->
 
 ```ts
 import { createMachine } from 'xstate';
@@ -194,8 +200,6 @@ createMachine({
 ```
 
 ### Assign action behaving strangely
-
-<!-- TODO - rewrite this assign section when we figure out what's happening with the mixed syntax below-->
 
 When run in `strict: true` mode, assign actions can sometimes behave strangely.
 

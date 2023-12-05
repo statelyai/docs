@@ -5,12 +5,20 @@ description: 'Along with the assign action, XState has several other built-in ac
 
 # Built-in actions
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about XState v5’s built-in actions](/docs/actions#assign-action).
+
+:::
+
 Along with the [`assign`](context.mdx#assign-action) action, XState has several other built-in actions which can do different things in a state machine. We’ll introduce a couple of built-in actions for now and learn about the others later.
 
 ## Send action
 
-<!-- deps:
-  ["actions", "transitions-and-events", "self-transitions"] -->
 
 XState’s built-in `send` action is useful for when statecharts need to send events back to themselves.
 
@@ -120,15 +128,11 @@ Click on both `STEP` and `RAISE` events in the [visualizer](https://stately.ai/v
 
 ## Pure action
 
-<!-- deps: ["actions", "self-transitions"] -->
-
 The `pure` action is useful when you need to run a dynamic number of actions depending on the current machine’s state.
 
 `pure` lets you pass a function to the machine, which calculates the type and number of actions to be executed.
 
 In the example below, we check `context` to find which actions the machine should run.
-
-<!-- Remove noErrors when pure TS issue (https://github.com/statelyai/xstate/pull/3233) is fixed-->
 
 ```ts
 import { actions, createMachine } from 'xstate';

@@ -59,7 +59,7 @@ const config = {
             4: {
               label: 'XState v4',
               path: 'xstate-v4',
-              banner: 'unmaintained',
+              banner: 'none',
             },
           },
 
@@ -122,6 +122,18 @@ const config = {
           {
             to: '/docs/xstate-v4/xstate/typescript/type-helpers',
             from: '/docs/xstate/typescript/type-helpers',
+          },
+          {
+            to: '/docs/states',
+            from: '/docs/states/intro',
+          },
+          {
+            to: '/docs/state-machines-and-statecharts',
+            from: '/docs/xstate/basics/what-is-a-statechart',
+          },
+          {
+            to: '/docs/typegen',
+            from: '/docs/xstate/typescript/typegen',
           },
           {
             // Redirect to the new "Getting Started" page from the Sky category page (until we have a Sky category page)

@@ -5,7 +5,15 @@ description: 'States are used for handling your apps states which you know about
 
 # Context
 
-<!-- deps: ["states", "transitions-and-events", "actions"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about context in XState V5](/docs/context).
+
+:::
 
 Statecharts represent their finite state using `states` but can also handle states which are _not_ finite. These states might be:
 
@@ -29,8 +37,6 @@ const machine = createMachine({
 Next, we’ll see how to update the context using the assign action.
 
 ## Assign action
-
-<!-- deps: ["context", "actions", "self-transitions"] -->
 
 Assigning new values to the context in XState is done through the `assign` action and is the only way to change a machine’s context. **Never mutate a machine’s `context` externally**. Every context change should happen explicitly due to an event.
 
@@ -134,8 +140,6 @@ You can pass several `assign` actions in an array and they’ll be executed sequ
 
 ## Using context in actions
 
-<!-- deps: ["actions", "context"] -->
-
 When XState fires an action, the action receives several arguments. The first argument is the current `context` of the machine. The second argument is the most recent `event` sent to the machine.
 
 ```ts
@@ -167,8 +171,6 @@ createMachine(
 ```
 
 :::typescript TypeScript
-
-<!-- deps: [context, assign-action] -->
 
 ## TypeScript
 

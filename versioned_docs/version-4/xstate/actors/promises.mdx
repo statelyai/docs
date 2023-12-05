@@ -3,6 +3,16 @@ title: Promises
 description: 'The most common type of actors you’ll invoke are promise actors. Promise actors allow you to await the result of a promise before deciding what to do next.'
 ---
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about promises in XState V5](/docs/actors/#frompromise).
+
+:::
+
 The most common type of actors you’ll invoke are **promise actors**. Promise actors allow you to await the result of a promise before deciding what to do next.
 
 ```ts
@@ -31,12 +41,6 @@ const userMachine = createMachine(
   },
 );
 ```
-
-:::warningxstate
-
-XState v5 is in beta. [Check out XState v5 Beta on NPM](https://www.npmjs.com/package/xstate/v/5.0.0-beta.13).
-
-:::
 
 When a promise actor is resolved, a `done.invoke` event is sent back to the machine which includes its data, placed under the `data` property. For example:
 
