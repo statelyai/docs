@@ -142,9 +142,9 @@ const sidebars = {
             },
             'descriptions',
             {
-              "type": "doc",
-              "label": "Assets",
-              "id": "assets"
+              type: 'doc',
+              label: 'Assets',
+              id: 'assets',
             },
             {
               type: 'doc',
@@ -350,10 +350,8 @@ const sidebars = {
         'xstate-react',
         'xstate-vue',
         'xstate-svelte',
-        'xstate-fsm',
         'xstate-graph',
         'xstate-test',
-        'xstate-immer',
       ],
     },
     {
