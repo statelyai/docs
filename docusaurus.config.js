@@ -124,6 +124,18 @@ const config = {
             from: '/docs/xstate/typescript/type-helpers',
           },
           {
+            to: '/docs/states',
+            from: '/docs/states/intro',
+          },
+          {
+            to: '/docs/state-machines-and-statecharts',
+            from: '/docs/xstate/basics/what-is-a-statechart',
+          },
+          {
+            to: '/docs/typegen',
+            from: '/docs/xstate/typescript/typegen',
+          },
+          {
             // Redirect to the new "Getting Started" page from the Sky category page (until we have a Sky category page)
             to: '/docs/stately-sky-getting-started',
             from: '/docs/sky',
