@@ -142,6 +142,11 @@ const sidebars = {
             },
             'descriptions',
             {
+              "type": "doc",
+              "label": "Assets",
+              "id": "assets"
+            },
+            {
               type: 'doc',
               label: 'Tags',
               id: 'editor-tags',

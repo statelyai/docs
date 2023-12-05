@@ -16,7 +16,7 @@ A project is a collection of machines that helps you organize your personal mach
 
 You can access your projects from **My Projects** at the left of Stately Studio’s top bar when you’re signed into Stately Studio. **My Projects** lists your personal projects and is one of the locations where you can create new projects.
 
-When you select a project, the first machine in the project will open in Stately Studio’s editor. The other machines in your project are accessible from the **Machines** list in the left drawer menu.
+When you select a project, the first machine in the project will open in Stately Studio’s editor. The other machines in your project are accessible from the machines list in the left drawer menu.
 
 <p>
   <ThemedImage
@@ -34,31 +34,33 @@ You can create a new project when you first save a machine or from the **Create 
 
 #### Create a new project from **My Projects**
 
-1. Open **My Projects** from the link at the left of Stately Studio’s top bar.
-2. Use the **Create project** button.
-3. Name the project. The description and keyword fields are optional.
-4. Use the **Submit** button to create the new project.
+Open **My Projects** from the link at the left of Stately Studio’s top bar and use the <PlusSquare size={18}/> **Create project** button.
 
 #### Create a new project from Stately Studio’s editor
 
 The **Save** button will save your machine or prompt you to sign into Stately Studio before saving. Your project will have the same name as your current machine name.
 
-1. From the editor, use the **Save** button to save your current machine in a project.
-2. Choose **New Project** from the dropdown menu in the Save machine dialog.
-3. Use **Save** to save your machine and create your new project.
-
-Coming soon… How to move a machine between projects.
-
 ### Change a project’s visibility
 
 A project can be **public**, **unlisted**, or **private**. If the project is a shared team project, only team members with the **Owner** or **Admin** roles can change its visibility.
+
+:::studio
+
+The project’s visibility is display in the lower left corner of the canvas.
+
+:::
 
 - Public projects are visible to everyone. They are discoverable on the [Discover](discover.mdx) page and listed on your profile page.
 - Unlisted projects are visible to everyone with the project’s URL but are not findable on the Discover page or listed on your profile page.
 - Private projects are only visible to you and the team that owns the project.
 
-1. Use the **Share** button in Stately Studio’s top bar to open the Share dialog.
-2. Toggle the project’s visibility between **public**, **unlisted**, or **private** from the dropdown menu in the Share dialog.
+Use the **Share** button in Stately Studio’s top bar and toggle the project’s visibility between **public**, **unlisted**, or **private** from the dropdown menu in the Share dialog.
+
+:::studio
+
+Unlisted and Private projects are a paid feature of Stately Studio. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade to try our paid plans with a free trial](https://stately.ai/registry/billing).
+
+:::
 
 ### Favorite a project
 
@@ -66,12 +68,17 @@ You can favorite your own projects and other people’s projects. Favoriting a p
 
 You can favorite a project from **My Projects**, **Discover**, and team projects.
 
-1. Choose **Add to favorites** from the <MoreHorizontal size={18} /> triple dot contextual menu alongside the project’s name.
-2. Find your **Favorites** in the left sidebar of Stately Studio’s workspace.
+- Choose **Add to favorites** from the <MoreHorizontal size={18} /> triple dot contextual menu alongside the project’s name.
+- Find your **Favorites** in the left sidebar of Stately Studio’s workspace.
 
 #### Remove a project from your favorites
 
-You can remove a project from your favorites from **Favorites**, **My Projects**, **Discover**, and team projects.
+You can remove a project from your favorites from **Favorites**, **My Projects**, **Discover**, and team projects by choosing **Remove from favorites** from the <MoreHorizontal size={18} /> triple dot contextual menu alongside the project’s name.
 
-1. Choose **Remove from favorites** from the <MoreHorizontal size={18} /> triple dot contextual menu alongside the project’s name.
-2. The project will no longer be listed under **Favorites**.
+## Move a project to a different team
+
+You can move a project to a different team from the **Share** dialog. You can only move a project between teams if you have the [**Owner** role](teams.mdx#owner-role) on both teams.
+
+## Move a machine to a different project
+
+You can move a machine to a different team or to your personal projects from the <MoreHorizontal size={18} /> triple dot contextual menu alongside the machine’s name in the machines list. You can only move a machine between projects if you have the [**Owner** role](teams.mdx#owner-role), [**Admin** role](teams.mdx#admin-role), or [**Editor** role](teams.mdx#editor-role) in both projects.
