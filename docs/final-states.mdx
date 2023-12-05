@@ -31,6 +31,8 @@ const feedbackMachine = createMachine({
 });
 ```
 
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=7d3feeca-1017-4d94-87b3-cd5128682440" title="Feedback machine with final state"/>
+
 When a machine reaches the final state, it can no longer receive any events, and anything running inside it is canceled and cleaned up. The box with a surrounding border icon represents the final state.
 
 A machine can have multiple final states or no final states.
@@ -102,6 +104,8 @@ const coffeeMachine = createMachine({
   },
 });
 ```
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=95504ba2-3da2-4d70-a3b5-59bbcd31bf2d" title="Coffee machine with final states"/>
 
 ## Output
 
