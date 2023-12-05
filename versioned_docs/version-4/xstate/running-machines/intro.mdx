@@ -5,7 +5,15 @@ description: 'Depending on where you’re using XState, you’ll likely need to 
 
 # Running machines
 
-<!-- deps: ["transitions-and-events", "states", "context", "options-intro"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read the XState V5 docs](/docs/xstate).
+
+:::
 
 We’ve now covered configuring statecharts and setting up their states, transitions, and options.
 
@@ -114,17 +122,11 @@ const actor = interpret(machine).start();
 actor.stop();
 ```
 
-<!-- TODO - add reference section for interpret \-->
-
 `interpret` can run _anywhere JavaScript runs_, which means you can run XState in the browser, Node, Electron, React Native… anywhere!
-
-<!-- TODO - add URL below \-->
 
 Check out the reference docs on the interpret API for a full deep dive into everything a `actor` can do.
 
 ## State API
-
-<!-- deps: ["states", "running-machines-intro", "actions", "context"] -->
 
 When running your machine, you’ll want to query the machine to understand which state it’s in. When you run a machine using `interpret`, you can find the state as follows:
 
@@ -235,8 +237,6 @@ You can check if a state was _changed_ by the most recently received event. The 
 2. A value in context was changed.
 
 ## Running machines as pure functions
-
-<!-- deps: ["transitions-and-events","intro-to-state-api","actions"] -->
 
 You can use `machine.transition` to run your machine as a pure function without executing any of its actions. `machine.transition` is a pure function that takes two arguments:
 

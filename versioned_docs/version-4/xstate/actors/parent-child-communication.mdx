@@ -3,6 +3,16 @@ title: Parent to child communication
 description: 'Invoked actors can send events to their parent using the sendParent and sendBack methods. Child actors can also receive events from the parent.'
 ---
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about the `send-to` action in XState v5](/docs/actions#send-to-action).
+
+:::
+
 We’ve learned that invoked actors can send events to their parent via the invoked machine’s `sendParent` action and the invoked callback’s `sendBack` method. Child actors can also _receive_ events from the parent, allowing for bidirectional communication.
 
 You must give invoked actors a unique id with `invoke.id` to enable parent to child communication:

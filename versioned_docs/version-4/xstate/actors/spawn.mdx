@@ -5,7 +5,16 @@ description: 'You can use spawn to run actors. Actors created with spawn are spa
 
 # Spawning actors
 
-<!-- deps: ["assign-action", "machine-actors"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about spawning actors in XState v5](/docs/spawn).
+
+:::
+
 
 Sometimes invoking actors may not be flexible enough for your needs. In such cases, you might want to:
 
@@ -58,8 +67,6 @@ const parentMachine = createMachine({
 
 ## Sending events to spawned machines
 
-<!-- deps: ["spawning-machines"] -->
-
 Events can be sent to spawned actors by passing a function to `send` or `forwardTo`:
 
 ```ts
@@ -67,8 +74,6 @@ send({ type: 'INC' }, { to: (context) => context.counterRef });
 
 forwardTo((context) => context.counterRef);
 ```
-
-<!-- TODO - are there any other API's which need to be mentioned here?-->
 
 You can also forward _all_ events to the child by passing `autoForward` as an option to `spawn`:
 
@@ -89,8 +94,6 @@ const machine = createMachine({
 Passing `autoForward` will ensure that every event sent to the `machine` also gets forwarded to `childMachine`.
 
 ## Stopping spawned actors
-
-<!-- deps: [spawning-machines] -->
 
 When you want to stop a spawned actor, you can either stop the parent machine, which will stop all child actors automatically, or stop the actor via the `stop` action.
 
@@ -138,8 +141,6 @@ const parentMachine = createMachine(
 
 ## Spawning callbacks
 
-<!-- deps: ["spawning-machines"] -->
-
 Just like invoking callbacks, callbacks can be spawned as actors.
 
 ```ts
@@ -165,8 +166,6 @@ const machine = createMachine({
 Spawned callbacks behave exactly the same as invoked callbacks but with all the flexibility of `spawn`.
 
 ## Spawning observables
-
-<!-- deps: [spawning-machines, "observable-actors"] -->
 
 Just like invoking observables, observables can be spawned as actors:
 

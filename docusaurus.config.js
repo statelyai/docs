@@ -59,7 +59,7 @@ const config = {
             4: {
               label: 'XState v4',
               path: 'xstate-v4',
-              banner: 'unmaintained',
+              banner: 'none',
             },
           },
 
