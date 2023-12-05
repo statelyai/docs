@@ -4,7 +4,15 @@ title: History states
 
 # History states
 
-<!-- deps: ["parent-and-child-states","transitions-and-events","targeting-children","targeting-children-of-siblings"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about history states in XState V5](/docs/history-states).
+
+:::
 
 When using statecharts, sometimes you’ll want to relaunch a process in a previous state.
 
@@ -109,8 +117,6 @@ In the example above, we’ve changed the target of `TURN_ON` to target `powerOn
 A history state can’t be specified as its parent’s initial state as this will result in an infinite loop.
 
 ## Types of history state
-
-<!-- deps: ["history-states", "parallel-states"] -->
 
 You can specify two types of history state:
 
