@@ -5,8 +5,14 @@ const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
 const navigation = [
   { name: 'Docs', href: '/docs', current: false },
+  {
+    name: 'Case Studies',
+    href: ' https://stately.ai/blog/tags/case-study',
+    current: false,
+  },
   { name: 'Blog', href: '/blog', current: false },
   { name: 'Pricing', href: '/pricing', current: false },
+  {},
 ];
 
 function classNames(...classes) {
