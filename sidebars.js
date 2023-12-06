@@ -146,7 +146,7 @@ const sidebars = {
             'import-from-code',
             {
               type: 'doc',
-              label: 'Generate flow',
+              label: 'Generate with AI',
               id: 'generate-flow',
             },
             {
