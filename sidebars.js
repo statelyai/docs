@@ -89,10 +89,10 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Using Stately Studio',
+      label: 'Stately Studio',
       link: {
         type: 'generated-index',
-        title: 'Using Stately Studio',
+        title: 'Stately Studio',
         description: 'Learn how to use Stately Studio’s editor.',
         slug: '/category/studio',
         keywords: ['guides'],
