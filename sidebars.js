@@ -107,6 +107,26 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Stately Studio Pro',
+          id: 'studio-pro-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Team',
+          id: 'studio-team-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Enterprise',
+          id: 'studio-enterprise-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Community',
+          id: 'studio-community-plan',
+        },
+        {
+          type: 'doc',
           label: 'States and transitions',
           id: 'editor-states-and-transitions',
         },
@@ -238,26 +258,6 @@ const sidebars = {
             keywords: ['guides'],
           },
           items: [
-            {
-              type: 'doc',
-              label: 'Community plan',
-              id: 'studio-community-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Pro plan',
-              id: 'studio-pro-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Team plan',
-              id: 'studio-team-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Enterprise plan',
-              id: 'studio-enterprise-plan',
-            },
             {
               type: 'doc',
               label: 'Sign up',
