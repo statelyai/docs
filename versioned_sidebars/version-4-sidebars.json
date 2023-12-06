@@ -139,6 +139,7 @@
             "id": "design-mode"
           },
           "items": [
+            "import-from-code",
             {
               "type": "doc",
               "label": "Generate flow",
@@ -149,7 +150,6 @@
               "label": "Generate React app",
               "id": "generate-react"
             },
-            "import-from-code",
             "export-as-code",
             "generate-test-paths",
             "machine-restore",

@@ -144,8 +144,6 @@ const sidebars = {
           },
           items: [
             'import-from-code',
-            'export-as-code',
-            'generate-test-paths',
             {
               type: 'doc',
               label: 'Generate flow',
@@ -156,6 +154,8 @@ const sidebars = {
               label: 'Generate React app',
               id: 'generate-react',
             },
+            'export-as-code',
+            'generate-test-paths',
             {
               type: 'doc',
               label: 'Colors',
