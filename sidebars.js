@@ -132,6 +132,11 @@ const sidebars = {
             },
             {
               type: 'doc',
+              label: 'Generate React app',
+              id: 'generate-react',
+            },
+            {
+              type: 'doc',
               label: 'Colors',
               id: 'colors',
             },

@@ -124,6 +124,11 @@
               "label": "Generate flow",
               "id": "generate-flow"
             },
+            {
+              "type": "doc",
+              "label": "Generate React app",
+              "id": "generate-react"
+            },
             "import-from-code",
             "export-as-code",
             "machine-restore",
