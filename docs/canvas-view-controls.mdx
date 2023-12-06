@@ -64,35 +64,10 @@ Below is a preview of a machine _without_ the UI hidden.
 
 ## View controls
 
-<p style={{ maxWidth: '300px' }}>
-  <ThemedImage
-    alt="View controls in Stately Studio, numbered and labeled by the list below."
-    sources={{
-      light: '/canvas-view-controls/view-controls.png',
-      dark: '/canvas-view-controls/view-controls-dm.png',
-    }}
-  />
-</p>
-
-1. **Undo**
-2. **Redo**
-3. **Zoom out**
-4. Current zoom level. Press to open the zoom menu.
-5. **Zoom in**
-
-## Zoom menu and canvas context menu
-
-The zoom menu and canvas context menu contain the same options:
-
-- **Add [note](annotations.mdx)**
-- **[Autolayout](autolayout.mdx)**
-- **Zoom In**
-- **Zoom out**
-- **25%**: set zoom level to 25%
-- **50%**: set zoom level to 50%
-- **75%**: set zoom level to 75%
-- **100%**: set zoom level to 100%
-- **Fit to Content**: zoom to fit machine inside the currently visible canvas space
+- <Undo size={18}/> Undo
+- <Redo size={18}/> Redo
+- <Scan size={18}/> Center in view: Center currently selected item or entire machine in view.
+- Zoom in %: Current zoom level. Press to open the zoom menu.
 
 :::studio
 
