@@ -12,11 +12,31 @@ Prefer video? [Watch our Migration to XState v5 webinar on YouTube](https://www.
 
 :::
 
-:::warningxstate
+## TypeScript
 
-**XState v5 requires TypeScript version 5.0 or later.** For best results, use the latest TypeScript version.
+XState v5 and its related libraries are written in TypeScript, and utilize complex types to provide the best type safety and inference possible for you. **XState v5 requires TypeScript version 5.0 or greater.** For best results, use the latest TypeScript version.
 
-:::
+The following TypeScript guidelines are highly recommended: 
+
+- Use the latest version of TypeScript, version 5.0 or greater (required).
+
+  ```bash
+  npm install typescript@latest --save-dev
+  ```
+
+- Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and will also help catch errors in your code.
+
+  ```json5
+  {
+    "compilerOptions": {
+      // ...
+      "noImplicitAny": true,
+      "strictNullChecks": true
+      // or set `strict` to true, which includes `strictNullChecks`
+      // "strict": true
+    }
+  }
+  ```
 
 ## Creating machines and actors
 
