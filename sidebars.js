@@ -145,6 +145,7 @@ const sidebars = {
           items: [
             'import-from-code',
             'export-as-code',
+            'generate-test-paths',
             {
               type: 'doc',
               label: 'Generate flow',
