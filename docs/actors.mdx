@@ -461,7 +461,10 @@ const machine = createMachine({
   // ...
   states: {
     // ...
-    done: { type: 'final', output: 42 }
+    done: { type: 'final' }
+  },
+  output: {
+    count: 42
   }
 });
 
@@ -475,7 +478,7 @@ const output = await toPromise(actor);
 // highlight-end
 
 console.log(output);
-// => 42
+// => { count: 42 }
 ```
 
 If the actor is already done, the promise will resolve with the actor's `snapshot.output` immediately. If the actor is already errored, the promise will reject with the actor's `snapshot.error` immediately.
