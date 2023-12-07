@@ -1959,6 +1959,56 @@ const service = useInterpret(machine);
 </TabItem>
 </Tabs>
 
+
+### `useActor(logic)` now accepts actor logic, not an actor
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `useActor(logic)` hook now accepts _actor logic_ (such as `fromPromise(...)`, `createMachine(...)`, etc.) instead of an existing `ActorRef`.
+
+To use an existing `ActorRef`, use `actor.send(...)` to send events and `useSelector(actor, ...)` to get the snapshot:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useSelector } from '@xstate/react';
+
+function Component({ someActorRef }) {
+  const state = useSelector(someActorRef, (s) => s);
+
+  return (
+    <button onClick={() => someActorRef.send({ type: 'someEvent' })} />
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useActor } from '@xstate/react';
+
+function Component({ someActorRef }) {
+  const [state, send] = useActor(someActorRef);
+
+  return (
+    <button onClick={() => send({ type: 'someEvent' })} />
+  );
+}
+```
+
+</TabItem>
+</Tabs>
+
+
 ## New features
 
 _List coming soon_
