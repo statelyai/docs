@@ -17,7 +17,7 @@ Many React applications follow the Flux architecture popularised by [Redux](http
 
 This article won't go into depth on whether the Flux architecture is a good idea. David Khourshid's article [Redux is half a pattern](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7) goes into great detail here. For the purposes of this article, we're going to assume that you like having a global store, and you want to replicate it in XState.
 
-<!--truncate-->
+{/* truncate */}
 
 There are many reasons for wanting to do so. XState is second-to-none when it comes to managing complex asynchronous behaviour and modelling difficult problems. Managing this in Redux apps usually involves middleware: either [redux-thunk](https://github.com/reduxjs/redux-thunk), [redux-loop](https://github.com/redux-loop/redux-loop) or [redux-saga](https://github.com/redux-saga/redux-saga). Choosing XState gives you a first-class way to manage complexity.
 
