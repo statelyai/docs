@@ -69,7 +69,7 @@ function Quote({
   return (
     <div>
       <p className="text-white/90 mt-4 font-medium text-lg md:text-xl lg:text-2xl">
-        "{quote}"
+        “{quote}”
       </p>
       <p className="text-white/60 mt-4 mb-8 font-semibold">- {quoter}</p>
       <ButtonLink href={href} target="_blank" size="medium">
