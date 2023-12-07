@@ -450,6 +450,35 @@ const machine = createMachine({
 });
 ```
 
+## Actors as promises
+
+You can create a promise from any actor by using the `toPromise(actor)` function. The promise will resolve with the actor snapshot's `.output` when the actor is done (`snapshot.status === 'done'`) or reject with the actor snapshot's `.error` when the actor is errored (`snapshot.status === 'error'`).
+
+```ts
+import { createMachine, createActor, toPromise } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  states: {
+    // ...
+    done: { type: 'final', output: 42 }
+  }
+});
+
+const actor = createActor(machine);
+actor.start();
+
+// highlight-start
+// Creates a promise that resolves with the actor's output
+// or rejects with the actor's error
+const output = await toPromise(actor);
+
+console.log(output);
+// => 42
+```
+
+If the actor is already done, the promise will resolve with the actor's `snapshot.output` immediately. If the actor is already errored, the promise will reject with the actor's `snapshot.error` immediately.
+
 ## Higher-level actor logic
 
 Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
