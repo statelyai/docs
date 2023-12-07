@@ -20,7 +20,7 @@ export function CaseStudies() {
           <Quote
             quote="I can explain business logic to stakeholders using simulation in Stately Editor. After a long time away from coding, I can return and effectively understand the logic."
             quoter="Marsel Atniashev"
-            href="https://stately.ai/blog"
+            href="https://stately.ai/blog/2023-12-04-fugo-and-stately-case-study"
           />
         </div>
 
@@ -35,7 +35,7 @@ export function CaseStudies() {
           <Quote
             quote="I love the first class support in XState for side effects. That the side effects can be co-located with my code that triggers it and uses it, instead of having to put them somewhere else like with Redux"
             quoter="Taylor Lodge"
-            href="https://stately.ai/blog"
+            href="https://stately.ai/blog/2023-11-28-koordinates-and-stately-case-study"
           />
         </div>
 
