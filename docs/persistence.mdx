@@ -109,16 +109,26 @@ const restoredFeedbackActor = createActor(feedbackMachine, {
 
 An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the [events](transitions.mdx) that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
 
-To implement event sourcing, you persist the events as they happen, and then replay them to restore the state of the actor:
+One way to implement event sourcing is to persist the events as they happen using the [inspection API](/inspection), and then replay them to restore the state of the actor:
 
 ```ts
 const events = [];
 
-const someActor = createActor(someMachine);
+const someActor = createActor(someMachine, {
+  // Inspect and persist events
+  inspect: (inspectionEvent) => {
+    if (inspectionEvent.type === '@xstate.event') {
+      const event = inspectionEvent.event;
+      // Ignore XState events
+      if (event.type.startsWith('xstate.')) { return; }
 
-// Persist events
-someActor.subscribe(event => {
-  events.push(event);
+      // Only listen for events sent to the root actor
+      if (inspectionEvent.actorRef !== someActor) { return; }
+
+      // highlight-next-line
+      events.push(event);
+    }
+  }
 });
 
 someActor.start();
@@ -131,10 +141,12 @@ someActor.start();
 const restoredActor = createActor(someMachine);
 restoredActor.start();
 
+// highlight-start
 for (const event of events) {
   // Replay events
   restoredActor.send(event);
 }
+// highlight-end
 ```
 
 ## Caveats
