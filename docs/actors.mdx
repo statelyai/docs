@@ -472,6 +472,7 @@ actor.start();
 // Creates a promise that resolves with the actor's output
 // or rejects with the actor's error
 const output = await toPromise(actor);
+// highlight-end
 
 console.log(output);
 // => 42
