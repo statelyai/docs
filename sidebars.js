@@ -144,6 +144,7 @@ const sidebars = {
           },
           items: [
             'import-from-code',
+            'import-from-github',
             {
               type: 'doc',
               label: 'Generate with AI',
