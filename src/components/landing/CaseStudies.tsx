@@ -14,8 +14,8 @@ export function CaseStudies() {
         <div className="flex flex-col md:flex-row gap-4 md:gap-12 max-w-2xl">
           <img
             className="h-24 md:h-36 self-start"
-            src="/assets/landing/fugo-logo.png"
-            alt={`Fugo logo`}
+            src="/assets/landing/fugo-logo.svg"
+            alt={`Fugo`}
           />
           <Quote
             quote="I can explain business logic to stakeholders using simulation in Stately Editor. After a long time away from coding, I can return and effectively understand the logic."
@@ -28,8 +28,8 @@ export function CaseStudies() {
           <div>
             <img
               className="h-24 w-auto"
-              src="/assets/landing/koordinates-logo.png"
-              alt={`Koordinates logo`}
+              src="/assets/landing/koordinates-logo.svg"
+              alt={`Koordinates`}
             />
           </div>
           <Quote
@@ -49,7 +49,7 @@ export function CaseStudies() {
           <img
             className="h-24 md:h-36 self-start"
             src="/assets/landing/tidefi-logo.svg"
-            alt={`Tidefi logo`}
+            alt={`Tidefi`}
           />
         </div>
       </div>
