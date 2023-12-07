@@ -46,7 +46,7 @@ In Stately Studio, we refer to both state machines and statecharts as **machines
 
 A state describes the machine’s status or mode, which could be as simple as *Asleep* and *Awake*. A state machine can only be in one state at a time.
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/*  no alt because the image is already described in the surrounding text */}
 
 <p>
   <ThemedImage
@@ -80,7 +80,7 @@ How the dog goes between **asleep** and **awake** is through **transitions**. E
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/* no alt because the image is already described in the surrounding text */}
 
 <p>
   <ThemedImage
@@ -103,7 +103,7 @@ With its two finite states and transitions, this tiny dog process is a _Finite S
 
 ### Events and transitions in Stately Studio
 
-In Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state. [Read how to create events and transitions in Stately Studio](transitions.mdx).
+In Stately Studio, the arrows are transitions, and the rounded rectangles on the arrow’s lines are events. Each transition has a **source** state which comes before the transition, and a **target** state, which comes after the transition. The transition’s arrow starts from the source state and points to the target state. [Read how to create events and transitions in Stately Studio](editor-states-and-transitions.mdx).
 
 :::
 
@@ -113,9 +113,9 @@ When a state machine starts, it enters the **initial state** first. A machine 
 
 In a statechart describing the process of walking the dog, the initial state would be **waiting** to walk:
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/* no alt because the image is already described in the surrounding text */}
 
-<p>
+<p style={{'max-width': '500px'}}>
   <ThemedImage
     alt=""
     sources={{
@@ -165,7 +165,7 @@ A parent state is a state that can contain more states, also known as child stat
 
 A parent state is symbolised by a labelled rectangle box that acts as a container for its child states. Parent states are sometimes known as _compound states_.
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/* no alt because the image is already described in the surrounding text */}
 
 <p>
   <ThemedImage
@@ -196,7 +196,7 @@ A parallel state is a state where all of its child states, also known as regions
 
 Inside the **on a walk** parallel state, there could be two regions. One region contains the dog’s activity child states of **walking** and **running**, and the other region containing the dog’s tail states of **wagging** and **not wagging**. The dog can walk and wag its tail or run and wag its tail, it can also do both of these activities without wagging its tail.
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/* no alt because the image is already described in the surrounding text */}
 
 <p>
   <ThemedImage
@@ -223,9 +223,9 @@ A helpful way to describe a self-transition is “doing something, not going som
 
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
-<!-- no alt because the image is already described in the surrounding text -->
+{/*  no alt because the image is already described in the surrounding text */}
 
-<p>
+<p style={{'max-width': '500px'}}>
   <ThemedImage
     alt=""
     sources={{
