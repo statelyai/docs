@@ -1796,6 +1796,27 @@ actor.subscribe((state) => {
 </TabItem>
 </Tabs>
 
+### `state.nextEvents` has been removed
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `state.nextEvents` property is removed, since it is not a completely safe/reliable way of determining the next events that can be sent to the actor. If you want to get the next events according to the previous behavior, you can use this helper function:
+
+```ts
+import type { AnyMachineSnapshot } from 'xstate';
+
+function getNextEvents(snapshot: AnyMachineSnapshot) {
+  return [...new Set([...snapshot._nodes.flatMap((sn) => sn.ownEvents)])];
+}
+
+// Instead of `state.nextEvents`:
+const nextEvents = getNextEvents(state);
+```
+
 ## TypeScript
 
 ### Use `types` instead of `schema`
