@@ -1534,15 +1534,19 @@ ul.content-boxes {
 
 a.link-box,
 .content-boxes a.link-box {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  row-gap: 0.5rem;
   border: 1px solid var(--st-layout-border);
   border-radius: var(--ifm-breadcrumb-border-radius);
   box-shadow: none;
   color: var(--st-text);
-  display: block;
   margin: 0;
-  padding: 1rem;
+  padding: 2rem 1.5rem 1rem;
+  /* padding-top: 1rem; */
   text-decoration: none;
   width: 100%;
+  transition: border-color 0.2s ease;
 }
 
 a.link-box:hover,
@@ -1552,10 +1556,13 @@ a.link-box:focus {
 }
 
 a.link-box strong {
-  display: block;
   color: var(--st-text-link);
   font-size: 1.1rem;
   margin: 0.25rem 0;
+}
+
+a.link-box > p {
+  font-size: 0.8rem;
 }
 
 /* Index page list */
