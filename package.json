@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "repository": "https://github.com/statelyai/docs",
   "scripts": {
-    "postinstall": "git submodule init && git submodule update --remote && cd xstate && yarn",
+    "postinstall": "git submodule update --init --remote && cd xstate && yarn",
     "docusaurus": "docusaurus",
     "remark:once": "yarn remark --quiet --frail docs/**/* versioned_docs/**/*",
     "remark:watch": "yarn remark --quiet --frail --watch docs/**/* versioned_docs/**/*",
