@@ -164,6 +164,16 @@ const config = {
           { path: 'packages/xstate-test', slug: '@xstate/test' },
           { path: 'packages/xstate-vue', slug: '@xstate/vue' },
         ],
+        // We're sorting the packages here to ensure that the "xstate" package is first
+        sortPackages: (p1, p2) => {
+          if (p1.packageName === 'xstate') {
+            return -1;
+          } else if (p2.packageName === 'xstate') {
+            return 1;
+          } else {
+            return p1.packageName.localeCompare(p2.packageName);
+          }
+        },
       },
     ],
     async function tailwindPlugin(context, options) {
