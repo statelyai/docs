@@ -94,10 +94,10 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Using Stately Studio',
+      label: 'Stately Studio',
       link: {
         type: 'generated-index',
-        title: 'Using Stately Studio',
+        title: 'Stately Studio',
         description: 'Learn how to use Stately Studio’s editor.',
         slug: '/category/studio',
         keywords: ['guides'],
@@ -109,6 +109,26 @@ const sidebars = {
           type: 'doc',
           label: 'Introducing Stately Studio',
           id: 'studio',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Pro',
+          id: 'studio-pro-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Team',
+          id: 'studio-team-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Enterprise',
+          id: 'studio-enterprise-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Community',
+          id: 'studio-community-plan',
         },
         {
           type: 'doc',
@@ -129,12 +149,19 @@ const sidebars = {
           },
           items: [
             'import-from-code',
-            'export-as-code',
+            'import-from-github',
             {
               type: 'doc',
-              label: 'Generate flow',
+              label: 'Generate with AI',
               id: 'generate-flow',
             },
+            {
+              type: 'doc',
+              label: 'Generate React app',
+              id: 'generate-react',
+            },
+            'export-as-code',
+            'generate-test-paths',
             {
               type: 'doc',
               label: 'Colors',
@@ -238,26 +265,6 @@ const sidebars = {
             keywords: ['guides'],
           },
           items: [
-            {
-              type: 'doc',
-              label: 'Community plan',
-              id: 'studio-community-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Pro plan',
-              id: 'studio-pro-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Team plan',
-              id: 'studio-team-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Enterprise plan',
-              id: 'studio-enterprise-plan',
-            },
             {
               type: 'doc',
               label: 'Sign up',

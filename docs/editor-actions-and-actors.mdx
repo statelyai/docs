@@ -5,7 +5,7 @@ description: 'Learn how to use exit actions, entry actions, and transition actio
 
 # Actions and actors
 
-While the statechart is running, it can execute other effects called actions. You can fire an action upon entry or exit of a state. Actions are “fire-and-forget effects”; once the machine has fired the action, it moves on and forgets the action. You can also fire actions on transitions. [Read more about actions](actions.mdx).
+While the state machine is running, it can execute effects called actions. Actions are executed when a transition is triggered. Actions are “fire-and-forget effects”; once the machine has fired the action, it continues processing the transition and forgets the action. You can also fire actions when a state is entered or exited. [Read more about actions](/docs/actions).
 
 State machines can invoke actors as longer-running processes that can receive events, send events, and change their behavior based on the events they receive. You can invoke actors on entry to a state and stop on exit. [Read more about actors](actors.mdx).
 
