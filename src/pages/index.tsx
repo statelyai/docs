@@ -6,6 +6,7 @@ import { Footer } from '../components/landing/Footer';
 import { Intro } from '../components/landing/Intro';
 import { Navbar } from '../components/landing/Navbar';
 import { Testimonials } from '../components/landing/Testimonials';
+import { CaseStudies } from '../components/landing/CaseStudies';
 import '../css/landing-page.css';
 import '../css/landing-styles.css';
 
@@ -81,6 +82,7 @@ export default function Index() {
       <main className="bg-blue-950">
         <Intro />
         <Benefits />
+        <CaseStudies />
         <Testimonials />
         <FinalCallToAction />
       </main>

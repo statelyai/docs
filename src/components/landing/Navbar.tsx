@@ -5,8 +5,14 @@ const { Disclosure, Menu, Transition } = require('@headlessui/react');
 
 const navigation = [
   { name: 'Docs', href: '/docs', current: false },
+  {
+    name: 'Case Studies',
+    href: ' https://stately.ai/blog/tags/case-study',
+    current: false,
+  },
   { name: 'Blog', href: '/blog', current: false },
   { name: 'Pricing', href: '/pricing', current: false },
+  {},
 ];
 
 function classNames(...classes) {
@@ -20,7 +26,7 @@ export function Navbar() {
         <>
           <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="relative inline-flex items-center justify-center p-2 rounded-full text-white/60 hover:text-white focus:outline-none focus:ring-1 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
@@ -32,7 +38,7 @@ export function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+              <div className="flex items-center justify-center flex-1 md:items-stretch md:justify-start">
                 <div className="flex items-center flex-shrink-0">
                   <a href="/">
                     <img
@@ -44,8 +50,8 @@ export function Navbar() {
                     />
                   </a>
                 </div>
-                <div className="hidden sm:ml-6 sm:block md:flex">
-                  <div className="flex space-x-1">
+                <div className="hidden md:ml-4 lg:ml-6 md:block lg:flex">
+                  <div className="flex xl:space-x-1">
                     <FeaturesMenu />
 
                     {navigation.map((item) => (
@@ -58,7 +64,7 @@ export function Navbar() {
                       </NavLink>
                     ))}
                   </div>
-                  <div className="hidden ml-8 lg:flex">
+                  <div className="hidden ml-4 lg:flex">
                     <a
                       href="https://discord.gg/xstate"
                       className={classNames(
@@ -118,8 +124,8 @@ export function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
+              <div className="hidden lg:ml-6 md:block">
+                <div className="flex space-x-2 lg:space-x-4">
                   <NavLink href="/registry/login">Log in</NavLink>
 
                   <ButtonLink
@@ -134,7 +140,7 @@ export function Navbar() {
               </div>
             </div>
 
-            <Disclosure.Panel className="rounded-md shadow-lg sm:hidden bg-blue-850">
+            <Disclosure.Panel className="rounded-md shadow-lg md:hidden bg-blue-850">
               <div className="px-2 py-3 space-y-1">
                 {navigation.map((item) => (
                   <Disclosure.Button
