@@ -51,7 +51,7 @@ export function Navbar() {
                   </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:block md:flex">
-                  <div className="flex space-x-1">
+                  <div className="flex space-x-0.5 xl:space-x-1">
                     <FeaturesMenu />
 
                     {navigation.map((item) => (

@@ -43,7 +43,7 @@ export function CaseStudies() {
           <Quote
             quoter="Parker McMullin"
             quote="I was able to showcase the machine visualizer to the rest of the company, which was a delight. This helped convey the complexity of the UI pieces, and also helped to discuss how we should handle specific use cases in conjunction with the design mockups."
-            href="https://stately.ai/blog"
+            href="https://stately.ai/blog/2023-12-07-tidefi-and-stately-case-study"
           />
 
           <img
