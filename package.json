@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "repository": "https://github.com/statelyai/docs",
   "scripts": {
+    "postinstall": "git submodule update --init --remote && cd xstate && yarn",
     "docusaurus": "docusaurus",
     "remark:once": "yarn remark --quiet --frail docs/**/* versioned_docs/**/*",
     "remark:watch": "yarn remark --quiet --frail --watch docs/**/* versioned_docs/**/*",
@@ -61,6 +62,7 @@
     "@docusaurus/types": "^3.0.1",
     "@fec/remark-a11y-emoji": "^4.0.2",
     "concurrently": "^8.2.2",
+    "docusaurus-plugin-typedoc-api": "^4.0.1",
     "dotenv": "^16.3.1",
     "remark-cli": "^12.0.0",
     "remark-validate-links": "^13.0.0",
