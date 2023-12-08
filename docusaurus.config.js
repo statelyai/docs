@@ -204,6 +204,7 @@ const config = {
           alt: 'Stately',
           src: '/logo-black.svg',
           srcDark: '/logo-white-nobg.svg',
+          href: '/docs',
         },
         items: [
           {
