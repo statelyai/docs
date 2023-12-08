@@ -2262,13 +2262,15 @@ h2.pricing-heading {
   font-size: var(--font-large);
 }
 
-.pricing-text {
+.pricing-text, .pricing-text a {
   color: var(--chakra-colors-gray-50);
+  font-variation-settings: 'wght' 450;
 }
 
 .pricing-text.details {
   font-size: var(--font-small);
   color: var(--chakra-colors-gray-200);
+  font-variation-settings: 'wght' 500;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 1rem;
@@ -2288,6 +2290,17 @@ h2.pricing-heading {
   margin-left: 2rem;
   margin-bottom: 4rem;
 }
+
+.pricing-text a {
+  color: white;
+  text-decoration: none;
+}
+
+.pricing-text a:hover, .pricing-text a:active, .pricing-text a:focus {
+  color: var(--text-link);
+  text-decoration: underline;
+}
+
 
 .price-number {
   font-weight: 900;
