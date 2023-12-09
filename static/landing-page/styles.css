@@ -116,7 +116,7 @@
   --chakra-colors-gray-700: #45464f;
   --chakra-colors-gray-800: #2d2e34;
   --chakra-colors-gray-850: #212226;
-  --chakra-colors-gray-900: #151618;
+  --chakra-colors-gray-700: #151618;
 }
 
 /* when the viewport reaches X wide, scale up most of the font sizes */
@@ -2134,8 +2134,8 @@ path.edge {
     grid-template-columns: repeat(3, 1fr);
     margin-top: 3rem;
     grid-template-areas:
-      'community community community'
-      'professional team enterprise'
+      'community professional team '
+      'enterprise enterprise enterprise'
       'services services services';
   }
 
@@ -2160,10 +2160,13 @@ path.edge {
 .tier-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.11);
   margin-bottom: 1.5rem;
+  height: 15rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .badge {
-  background-color: #DB4206;
+  background-color: #db4206;
   border-radius: 0.3rem;
   color: white;
   font-size: 0.6em;
@@ -2180,6 +2183,16 @@ path.edge {
   font-weight: 500;
   font-variation-settings: 'wght' 500;
   font-size: var(--font-small);
+  margin-left: 1.5rem;
+}
+
+.feature-list > li::before {
+  content: '→';
+  display: block;
+  position: absolute;
+  right: 100%;
+  width: 1rem;
+  margin-right: 0.5rem;
 }
 
 .horizontal {
@@ -2198,7 +2211,7 @@ path.edge {
 
 .tier {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   width: 100%;
   background: var(--chakra-colors-gray-850);
   padding-inline-start: 1.5rem;
@@ -2212,6 +2225,10 @@ path.edge {
 
 .tier.professional .pricing-text {
   color: white;
+}
+
+.pricing-text strong {
+  font-variation-settings: 'wght' 700;
 }
 
 .tier.enterprise {
@@ -2230,9 +2247,9 @@ path.edge {
   margin-top: 0;
 }
 
-.tier.community {
+/* .tier.community {
   margin-bottom: 1rem;
-}
+} */
 
 .tier.services {
   margin-top: 1rem;
@@ -2262,7 +2279,8 @@ h2.pricing-heading {
   font-size: var(--font-large);
 }
 
-.pricing-text, .pricing-text a {
+.pricing-text,
+.pricing-text a {
   color: var(--chakra-colors-gray-50);
   font-variation-settings: 'wght' 450;
 }
@@ -2296,15 +2314,16 @@ h2.pricing-heading {
   text-decoration: none;
 }
 
-.pricing-text a:hover, .pricing-text a:active, .pricing-text a:focus {
+.pricing-text a:hover,
+.pricing-text a:active,
+.pricing-text a:focus {
   color: var(--text-link);
   text-decoration: underline;
 }
 
-
 .price-number {
-  font-weight: 900;
-  font-variation-settings: 'wght' 900;
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
   font-size: var(--font-xxl);
   margin: 0;
   /* hack for now to make community same height as professional with the detail text 
@@ -2319,12 +2338,12 @@ h2.pricing-heading {
     flex-wrap: wrap;
     padding-bottom: 0;
   }
-
+  /* 
   .tier.community {
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 0;
-  }
+  } */
 
   .tier.services .tier-header {
     border-bottom: none;
@@ -2332,26 +2351,26 @@ h2.pricing-heading {
     padding-right: 1.5rem;
   }
 
-  .tier.community .tier-header {
+  /* .tier.community .tier-header {
     display: flex;
     align-items: center;
     border-bottom: none;
     margin-bottom: 0;
     padding-right: 1.5rem;
   }
-  
+
   .tier.community .pricing-heading {
     align-items: center;
     display: flex;
     flex-wrap: nowrap;
     margin: 0;
-  }
+  } */
 
-  .tier.services .feature-list, .tier.community .feature-list {
+  .tier.services .feature-list {
     border-left: 1px solid rgba(255, 255, 255, 0.11);
     padding: 1rem 1.5rem;
   }
-
+  /* 
   .tier.community .feature-list {
     align-items: center;
     display: flex;
@@ -2359,7 +2378,7 @@ h2.pricing-heading {
     justify-content: space-between;
   }
 
-  .tier.community .community-text  {
+  .tier.community .community-text {
     color: white;
     font-size: calc(var(--font-small) * 1.05);
     flex-basis: auto;
@@ -2373,7 +2392,7 @@ h2.pricing-heading {
 
   .tier.community .get-started a {
     margin-left: 1.5rem;
-  }
+  } */
 }
 
 .details-wrapper {
