@@ -2012,6 +2012,17 @@ function Component({ someActorRef }) {
 
 ### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
 
+:::breakingchange
+
+Breaking change
+
+:::
+
+To keep consistent naming with the rest of XState and related libraries:
+
+- `state` is now `snapshot`
+- `service` is now `actor`
+
 <Tabs>
 <TabItem value="v5" label="XState v5">
 
