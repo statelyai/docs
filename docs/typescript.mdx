@@ -1,0 +1,95 @@
+---
+title: TypeScript
+---
+
+XState v5 and its related libraries are written in [TypeScript](https://www.typescriptlang.org), and utilize complex types to provide the best type safety and inference possible for you. 
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version.
+
+:::
+
+Follow these guidelines to ensure that your TypeScript project is ready to use XState v5:
+
+## Use the latest version of TypeScript
+
+Use the latest version of TypeScript, version 5.0 or greater is required.
+
+```bash
+   npm install typescript@latest --save-dev
+```
+
+## Set up your `tsconfig.json` file
+
+Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and will also help catch errors in your code. **(Strongly recommended)**.
+
+```json5
+// tsconfig.json
+{
+    "compilerOptions": {
+        // ...
+        // highlight-next-line
+        "strictNullChecks": true
+        // or set `strict` to true, which includes `strictNullChecks`
+        // "strict": true
+    }
+}
+```
+
+Set [`skipLibCheck`](https://www.typescriptlang.org/tsconfig#skipLibCheck) to `true` in your `tsconfig.json` file. (Recommended).
+
+```json5
+// tsconfig.json
+{
+    "compilerOptions": {
+        // ...
+        // highlight-next-line
+        "skipLibCheck": true
+    }
+}
+```
+
+## Specifying types
+
+You can specify TypeScript types inside the [machine config](machines.mdx) using the `.types` property:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  types: {} as {
+    context: { feedback: string };
+    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
+    actions: { type: 'logTelemetry' };
+  },
+});
+```
+
+These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
+
+If you are using the `setup(...)` function, you should provide the types in the `.types` property inside the setup function:
+
+```ts
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  types: {} as {
+    context: { feedback: string };
+    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
+  },
+  actions: {
+    logTelemetry: () => {
+      // TODO: implement
+    }
+  }
+}).createMachine({
+  // ...
+});
+```
+
+## Typegen
+
+[Typegen](/docs/developer-tools#xstate-typegen-files) does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
