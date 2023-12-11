@@ -16,7 +16,7 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
 
 ## Use the latest version of TypeScript
 
-Use the latest version of TypeScript, version 5.0 or greater is required.
+Use the latest version of TypeScript; version 5.0 or greater is required.
 
 ```bash
    npm install typescript@latest --save-dev
@@ -24,7 +24,7 @@ Use the latest version of TypeScript, version 5.0 or greater is required.
 
 ## Set up your `tsconfig.json` file
 
-Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and will also help catch errors in your code. **(Strongly recommended)**.
+Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and help catch errors in your code. **(Strongly recommended)**.
 
 ```json5
 // tsconfig.json
@@ -93,3 +93,4 @@ const feedbackMachine = setup({
 ## Typegen
 
 [Typegen](/docs/developer-tools#xstate-typegen-files) does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
+ 
