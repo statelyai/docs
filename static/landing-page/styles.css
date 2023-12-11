@@ -40,8 +40,8 @@
   --text-heading: var(--white);
   --text-footer: var(--grey00);
 
-  --font-xxsmall: 0.75rem;
-  --font-xsmall: 0.85rem;
+  --font-xxsmall: 0.8rem;
+  --font-xsmall: 0.9rem;
   --font-small: 0.95rem;
   --font-medium: 1rem;
   --font-2medium: 1.2rem;
@@ -108,7 +108,7 @@
   --chakra-colors-gray-25: #f7f8fa;
   --chakra-colors-gray-50: #efeff1;
   --chakra-colors-gray-100: #e1e2e5;
-  --chakra-colors-gray-200: #c6c7cd;
+  --chakra-colors-gray-200: #d4d5da;
   --chakra-colors-gray-200: #abacb5;
   --chakra-colors-gray-400: #8f919d;
   --chakra-colors-gray-500: #757785;
@@ -116,7 +116,7 @@
   --chakra-colors-gray-700: #45464f;
   --chakra-colors-gray-800: #2d2e34;
   --chakra-colors-gray-850: #212226;
-  --chakra-colors-gray-900: #151618;
+  --chakra-colors-gray-700: #151618;
 }
 
 /* when the viewport reaches X wide, scale up most of the font sizes */
@@ -2131,11 +2131,11 @@ path.edge {
   .pricing-grid {
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 33%);
     margin-top: 3rem;
     grid-template-areas:
-      'community community community'
-      'professional team enterprise'
+      'community professional team '
+      'enterprise enterprise enterprise'
       'services services services';
   }
 
@@ -2160,10 +2160,13 @@ path.edge {
 .tier-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.11);
   margin-bottom: 1.5rem;
+  height: 15rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .badge {
-  background-color: #DB4206;
+  background-color: #db4206;
   border-radius: 0.3rem;
   color: white;
   font-size: 0.6em;
@@ -2180,6 +2183,27 @@ path.edge {
   font-weight: 500;
   font-variation-settings: 'wght' 500;
   font-size: var(--font-small);
+  margin-left: 1.5rem;
+}
+
+.feature-list .small-text {
+  color: var(--chakra-colors-gray-200);
+  font-size: var(--font-xsmall);
+}
+
+.pricing-text a:hover .small-text,
+.pricing-text a:active .small-text,
+.pricing-text a:focus .small-text {
+  color: var(--text-link);
+}
+
+.feature-list > li::before {
+  content: '→';
+  display: block;
+  position: absolute;
+  right: 100%;
+  width: 1rem;
+  margin-right: 0.5rem;
 }
 
 .horizontal {
@@ -2198,7 +2222,7 @@ path.edge {
 
 .tier {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   width: 100%;
   background: var(--chakra-colors-gray-850);
   padding-inline-start: 1.5rem;
@@ -2210,8 +2234,12 @@ path.edge {
   background: var(--chakra-colors-gray-700);
 }
 
-.tier.professional .pricing-text {
+.tier.professional .pricing-text, .tier.team .pricing-text {
   color: white;
+}
+
+.pricing-text strong {
+  font-variation-settings: 'wght' 700;
 }
 
 .tier.enterprise {
@@ -2230,11 +2258,7 @@ path.edge {
   margin-top: 0;
 }
 
-.tier.community {
-  margin-bottom: 1rem;
-}
-
-.tier.services {
+.tier.services, .tier.enterprise {
   margin-top: 1rem;
 }
 
@@ -2262,26 +2286,26 @@ h2.pricing-heading {
   font-size: var(--font-large);
 }
 
-.pricing-text, .pricing-text a {
+.pricing-text,
+.pricing-text a {
   color: var(--chakra-colors-gray-50);
   font-variation-settings: 'wght' 450;
 }
 
 .pricing-text.details {
-  font-size: var(--font-small);
-  color: var(--chakra-colors-gray-200);
-  font-variation-settings: 'wght' 500;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 1rem;
-}
-
-.pricing-text.details-bold {
   font-size: var(--font-xxsmall);
   color: var(--chakra-colors-gray-200) !important;
   margin-top: 0.5rem;
   font-variation-settings: 'wght' 200;
+  margin-left: 1rem;
   max-width: 19ch;
+}
+
+.pricing-text .details-bold {
+  font-size: var(--font-small);
+  color: white;
+  display: block;
+  font-variation-settings: 'wght' 500;
 }
 
 .pricing-text.description {
@@ -2296,15 +2320,16 @@ h2.pricing-heading {
   text-decoration: none;
 }
 
-.pricing-text a:hover, .pricing-text a:active, .pricing-text a:focus {
+.pricing-text a:hover,
+.pricing-text a:active,
+.pricing-text a:focus {
   color: var(--text-link);
   text-decoration: underline;
 }
 
-
 .price-number {
-  font-weight: 900;
-  font-variation-settings: 'wght' 900;
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
   font-size: var(--font-xxl);
   margin: 0;
   /* hack for now to make community same height as professional with the detail text 
@@ -2314,65 +2339,21 @@ h2.pricing-heading {
 }
 
 @media (min-width: 1280px) {
-  .tier.services {
+  .tier.services, .tier.enterprise {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 0;
   }
 
-  .tier.community {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 0;
-  }
-
-  .tier.services .tier-header {
+  .tier.services .tier-header, .tier.enterprise .tier-header {
     border-bottom: none;
-    flex-basis: 33%;
+    flex-basis: calc(33% - 0.5rem);
     padding-right: 1.5rem;
   }
 
-  .tier.community .tier-header {
-    display: flex;
-    align-items: center;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-right: 1.5rem;
-  }
-  
-  .tier.community .pricing-heading {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    margin: 0;
-  }
-
-  .tier.services .feature-list, .tier.community .feature-list {
+  .tier.services .feature-list, .tier.enterprise .feature-list {
     border-left: 1px solid rgba(255, 255, 255, 0.11);
     padding: 1rem 1.5rem;
-  }
-
-  .tier.community .feature-list {
-    align-items: center;
-    display: flex;
-    padding: 0.5rem 0 0.5rem 1.5rem;
-    justify-content: space-between;
-  }
-
-  .tier.community .community-text  {
-    color: white;
-    font-size: calc(var(--font-small) * 1.05);
-    flex-basis: auto;
-    margin: 0;
-  }
-
-  .tier.community .get-started {
-    flex-basis: 26ch;
-    margin: 0;
-  }
-
-  .tier.community .get-started a {
-    margin-left: 1.5rem;
   }
 }
 
