@@ -213,11 +213,6 @@ const config = {
           },
           { to: '/docs', label: 'Docs', position: 'right' },
           {
-            to: '/api',
-            label: 'API',
-            position: 'right',
-          },
-          {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
             position: 'right',

@@ -4,12 +4,7 @@ title: '@xstate/vue'
 
 The [@xstate/vue package](https://github.com/statelyai/xstate/tree/main/packages/xstate-vue) contains utilities for using [XState](https://github.com/statelyai/xstate) with [Vue](https://github.com/vuejs/vue).
 
-:::warning
-
-## Vue 2
-
-If you’re using Vue 2.x, please see [the Vue recipe](https://xstate.js.org/docs/recipes/vue.html) instead, or use the [`xstate-vue2` package](https://github.com/ChrisShank/xstate-vue2) if you want to use the Vue Composition API.
-:::
+{/* TODO: Vue 2? */}
 
 ## Quick start
 
@@ -19,21 +14,7 @@ If you’re using Vue 2.x, please see [the Vue recipe](https://xstate.js.org/doc
 npm i xstate @xstate/vue
 ```
 
-### Via CDN
-
-```html
-<script src="https://unpkg.com/@xstate/vue/dist/xstate-vue.min.js"></script>
-```
-
-By using the global variable `XStateVue`
-
-or
-
-```html
-<script src="https://unpkg.com/@xstate/vue/dist/xstate-vue.fsm.min.js"></script>
-```
-
-By using the global variable `XStateVueFSM`
+{/* TODO: CDN? */}
 
 2. Import the `useMachine` composition function:
 
@@ -41,7 +22,7 @@ By using the global variable `XStateVueFSM`
 <template>
   <button @click="send('TOGGLE')">
     {{
-      state.value === 'inactive'
+      snapshot.value === 'inactive'
         ? 'Click to activate'
         : 'Active! Click to deactivate'
     }}
@@ -67,9 +48,9 @@ const toggleMachine = createMachine({
 
 export default {
   setup() {
-    const { state, send } = useMachine(toggleMachine);
+    const { snapshot, send } = useMachine(toggleMachine);
     return {
-      state,
+      snapshot,
       send,
     };
   },
@@ -90,15 +71,11 @@ A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduc
 
 **Returns** `{ state, send, service}`:
 
-- `state` - Represents the current state of the machine as an XState `State` object.
+- `snapshot` - Represents the current snapshot (state) of the machine as an XState `State` object.
 - `send` - A function that sends events to the running service.
-- `service` - The created service.
+- `actor` - The created actor ref.
 
-### `useActor(actor, getSnapshot)`
-
-A [Vue composition function](https://vuejs.org/guide/extras/composition-api-faq.html) that provides access to an existing [actor](https://xstate.js.org/docs/guides/actors.html).
-
-_Since 0.5.0_
+{/* TODO: useActor */}
 
 #### Arguments (_Since 0.5.0_)
 
@@ -128,10 +105,10 @@ const { state, send } = useActor(computed(() => props.someSpawnedActor));
 
 A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that returns the `service` created from the `machine` with the `options`, if specified. It also sets up a subscription to the `service` with the `observer`, if provided.
 
-#### Arguments (_Since 0.5.0_)
+#### Arguments 
 
 - `machine` - An [XState machine](https://xstate.js.org/docs/guides/machines.html) or a function that lazily returns a machine.
-- `options` (optional) - [Actor options](https://xstate.js.org/docs/guides/interpretation.html#options) and/or any of the following machine config options: `guards`, `actions`, `services`, `delays`, `immediate`, `context`, `state`.
+- `options` (optional) - [Actor options](https://xstate.js.org/docs/guides/interpretation.html#options) and/or any of the following machine config options: `guards`, `actions`, `actors`, `delays`, `snapshot`.
 - `observer` (optional) - an observer or listener that listens to state updates:
   - an observer (e.g., `{ next: (state) => {/* ... */} }`)
   - or a listener (e.g., `(state) => {/* ... */}`)
@@ -234,166 +211,3 @@ export default {
 };
 ```
 
-### `useMachine(machine)` with `@xstate/fsm`
-
-A [Vue composition function](https://v3.vuejs.org/guide/composition-api-introduction.html) that creates an actor from the given the given finite state `machine` from [`@xstate/fsm`] and starts a service that runs for the lifetime of the component.
-
-This special `useMachine` hook is imported from `@xstate/vue/lib/fsm`
-
-#### Arguments
-
-- `machine` - An [XState finite state machine (FSM)](https://xstate.js.org/docs/packages/xstate-fsm/).
-
-**Returns** an object `{state, send, service}`:
-
-- `state` - Represents the current state of the machine as an `@xstate/fsm` `StateMachine.State` object.
-- `send` - A function that sends events to the running service.
-- `service` - The created `@xstate/fsm` service.
-
-## Configuring machines
-
-Existing machines can be configured by passing the machine options as the 2nd argument of `useMachine(machine, options)`.
-
-Example: the `'fetchData'` service and `'notifySuccess'` action are both configurable:
-
-```vue
-<template>
-  <template v-if="state.value === 'idle'">
-    <button @click="send({ type: 'FETCH', query: 'something' })">
-      Search for something
-    </button>
-  </template>
-
-  <template v-else-if="state.value === 'loading'">
-    <div>Searching...</div>
-  </template>
-
-  <template v-else-if="state.value === 'success'">
-    <div>Success! {{ state.context.data }}</div>
-  </template>
-
-  <template v-else-if="state.value === 'failure'">
-    <p>{{ state.context.error.message }}</p>
-    <button @click="send('RETRY')">Retry</button>
-  </template>
-</template>
-
-<script>
-import { assign, createMachine } from 'xstate';
-import { useMachine } from '@xstate/vue';
-
-const fetchMachine = createMachine({
-  id: 'fetch',
-  initial: 'idle',
-  context: {
-    data: undefined,
-    error: undefined,
-  },
-  states: {
-    idle: {
-      on: { FETCH: 'loading' },
-    },
-    loading: {
-      invoke: {
-        src: 'fetchData',
-        onDone: {
-          target: 'success',
-          actions: assign({
-            data: (_context, event) => event.data,
-          }),
-        },
-        onError: {
-          target: 'failure',
-          actions: assign({
-            error: (_context, event) => event.data,
-          }),
-        },
-      },
-    },
-    success: {
-      entry: 'notifySuccess',
-      type: 'final',
-    },
-    failure: {
-      on: {
-        RETRY: 'loading',
-      },
-    },
-  },
-});
-
-export default {
-  props: {
-    onResolve: {
-      type: Function,
-      default: () => {},
-    },
-  },
-  setup(props) {
-    const { state, send } = useMachine(fetchMachine, {
-      actions: {
-        notifySuccess: (ctx) => props.onResolve(ctx.data),
-      },
-      services: {
-        fetchData: (_context, event) =>
-          fetch(`some/api/${event.query}`).then((res) => res.json()),
-      },
-    });
-    return {
-      state,
-      send,
-    };
-  },
-};
-</script>
-```
-
-## Matching states
-
-For [hierarchical](https://xstate.js.org/docs/guides/hierarchical.html) and [parallel](https://xstate.js.org/docs/guides/parallel.html) machines, the state values will be objects, not strings. In this case, it’s better to use [`state.matches(...)`](https://xstate.js.org/docs/guides/states.html#state-methods-and-getters):
-
-```vue
-<template>
-  <div>
-    <loader-idle v-if="state.matches('idle')" />
-    <loader-loading-user v-if-else="state.matches({ loading: 'user' })" />
-    <loader-loading-friends v-if-else="state.matches({ loading: 'friends' })" />
-  </div>
-</template>
-```
-
-## Persisted and rehydrated state
-
-You can persist and rehydrate state with `useMachine(...)` via `options.snapshot`:
-
-```vue
-<script>
-// Get the persisted state config object from somewhere, e.g. localStorage
-const persistedState = JSON.parse(
-  localStorage.getItem('some-persisted-state-key'),
-);
-
-export default {
-  setup() {
-    const { snapshot, send } = useMachine(someMachine, {
-      snapshot: persistedState,
-    });
-
-    // state will initially be that persisted state, not the machine’s initialState
-    return { snapshot, send };
-  },
-};
-</script>
-```
-
-## Migration from 0.4.0
-
-- For spawned actors created using `invoke` or `spawn(...)`, use the `useActor()` hook instead of `useService()`:
-
-  ```diff
-  -import { useService } from '@xstate/vue';
-  +import { useActor } from '@xstate/vue';
-
-  -const {state, send} = useService(someActor);
-  +const {state, send} = useActor(someActor);
-  ```

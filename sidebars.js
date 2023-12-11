@@ -55,11 +55,6 @@ const sidebars = {
         },
         'templates',
         'cheatsheet',
-        {
-          type: 'link',
-          href: '/api',
-          label: 'API',
-        },
       ],
     },
     {

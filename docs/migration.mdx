@@ -2008,6 +2008,62 @@ function Component({ someActorRef }) {
 </TabItem>
 </Tabs>
 
+## `@xstate/vue`
+
+### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+To keep consistent naming with the rest of XState and related libraries:
+
+- `state` is now `snapshot`
+- `service` is now `actor`
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useMachine } from '@xstate/vue';
+
+// ...
+
+const {
+  // highlight-next-line
+  snapshot, // Renamed from `state`
+  send,
+  // highlight-next-line
+  actor // Renamed from `service`
+} = useMachine(someMachine)
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/vue';
+
+// ...
+
+const {
+  // highlight-next-line
+  state, // Renamed to `snapshot` in @xstate/vue 3.0.0
+  send,
+  // highlight-next-line
+  service // Renamed to `actor` in @xstate/vue 3.0.0
+} = useMachine(someMachine)
+```
+
+</TabItem>
+</Tabs>
+
+
 
 ## New features
 
