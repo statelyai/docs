@@ -40,7 +40,7 @@
   --text-heading: var(--white);
   --text-footer: var(--grey00);
 
-  --font-xxsmall: 0.75rem;
+  --font-xxsmall: 0.8rem;
   --font-xsmall: 0.85rem;
   --font-small: 0.95rem;
   --font-medium: 1rem;
@@ -2223,7 +2223,7 @@ path.edge {
   background: var(--chakra-colors-gray-700);
 }
 
-.tier.professional .pricing-text {
+.tier.professional .pricing-text, .tier.team .pricing-text {
   color: white;
 }
 
@@ -2286,20 +2286,19 @@ h2.pricing-heading {
 }
 
 .pricing-text.details {
-  font-size: var(--font-small);
-  color: var(--chakra-colors-gray-200);
-  font-variation-settings: 'wght' 500;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 1rem;
-}
-
-.pricing-text.details-bold {
   font-size: var(--font-xxsmall);
   color: var(--chakra-colors-gray-200) !important;
   margin-top: 0.5rem;
   font-variation-settings: 'wght' 200;
+  margin-left: 1rem;
   max-width: 19ch;
+}
+
+.pricing-text .details-bold {
+  font-size: var(--font-small);
+  color: white;
+  display: block;
+  font-variation-settings: 'wght' 500;
 }
 
 .pricing-text.description {
