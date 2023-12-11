@@ -2131,7 +2131,7 @@ path.edge {
   .pricing-grid {
     display: grid;
     grid-gap: 0;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 33%);
     margin-top: 3rem;
     grid-template-areas:
       'community professional team '
@@ -2258,11 +2258,7 @@ path.edge {
   margin-top: 0;
 }
 
-/* .tier.community {
-  margin-bottom: 1rem;
-} */
-
-.tier.services {
+.tier.services, .tier.enterprise {
   margin-top: 1rem;
 }
 
@@ -2343,66 +2339,22 @@ h2.pricing-heading {
 }
 
 @media (min-width: 1280px) {
-  .tier.services {
+  .tier.services, .tier.enterprise {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 0;
   }
-  /* 
-  .tier.community {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 0;
-  } */
 
-  .tier.services .tier-header {
+  .tier.services .tier-header, .tier.enterprise .tier-header {
     border-bottom: none;
-    flex-basis: 33%;
+    flex-basis: calc(33% - 0.5rem);
     padding-right: 1.5rem;
   }
 
-  /* .tier.community .tier-header {
-    display: flex;
-    align-items: center;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-right: 1.5rem;
-  }
-
-  .tier.community .pricing-heading {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    margin: 0;
-  } */
-
-  .tier.services .feature-list {
+  .tier.services .feature-list, .tier.enterprise .feature-list {
     border-left: 1px solid rgba(255, 255, 255, 0.11);
     padding: 1rem 1.5rem;
   }
-  /* 
-  .tier.community .feature-list {
-    align-items: center;
-    display: flex;
-    padding: 0.5rem 0 0.5rem 1.5rem;
-    justify-content: space-between;
-  }
-
-  .tier.community .community-text {
-    color: white;
-    font-size: calc(var(--font-small) * 1.05);
-    flex-basis: auto;
-    margin: 0;
-  }
-
-  .tier.community .get-started {
-    flex-basis: 26ch;
-    margin: 0;
-  }
-
-  .tier.community .get-started a {
-    margin-left: 1.5rem;
-  } */
 }
 
 .details-wrapper {
