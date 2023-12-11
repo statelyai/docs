@@ -64,7 +64,7 @@ userFetcherActor.onDone((data) => {
 ```ts
 import { createActor, fromTransition } from 'xstate';
 
-const counter = fromTransition((state, event) => {
+const counter = fromTransition((state, event)) => {
   if (event.type === 'INCREMENT') {
     return { count: state.count + 1 };
   }
