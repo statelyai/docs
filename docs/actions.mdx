@@ -608,9 +608,9 @@ const machine = setup({
 });
 ```
 
-## Cheatsheet
+## Actions cheatsheet
 
-### Entry and exit actions
+### Cheatsheet: entry and exit actions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -633,7 +633,7 @@ const machine = createMachine({
 });
 ```
 
-### Transition actions
+### Cheatsheet: transition actions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -652,7 +652,7 @@ const machine = createMachine({
 });
 ```
 
-### Inline action functions
+### Cheatsheet: inline action functions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -672,7 +672,7 @@ const machine = createMachine({
 });
 ```
 
-### Setting up actions
+### Cheatsheet: setting up actions
 
 ```ts
 import { setup } from 'xstate';
@@ -695,7 +695,7 @@ const machine = setup({
 })
 ```
 
-### Providing actions
+### Cheatsheet: providing actions
 
 ```ts
 import { setup } from 'xstate';
@@ -719,7 +719,7 @@ const modifiedMachine = machine.provide({
 });
 ```
 
-### Assign action
+### Cheatsheet: assign action
 
 #### With property assigners
 
@@ -767,7 +767,7 @@ const countMachine = createMachine({
 });
 ```
 
-### Raise action
+### Cheatsheet: raise action
 
 ```ts
 import { createMachine, raise } from 'xstate';
@@ -783,7 +783,7 @@ const machine = createMachine({
 });
 ```
 
-### Send-to action
+### Cheatsheet: send-to action
 
 ```ts
 const machine = createMachine({
@@ -797,7 +797,7 @@ const machine = createMachine({
 });
 ```
 
-### Enqueue actions
+### Cheatsheet: enqueue actions
 
 ```ts
 import { createMachine, enqueueActions } from 'xstate';

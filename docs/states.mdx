@@ -295,9 +295,9 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 _Coming soon_
 
-## Cheatsheet
+## States cheatsheet
 
-### Read or match a state value
+### Cheatsheet: read or match a state value
 
 ```ts
 const state = actor.getSnapshot();
@@ -307,13 +307,13 @@ const currentStateValue = state.value;
 const isLoading = state.matches('loading');
 ```
 
-### Read state context
+### Cheatsheet: read state context
 
 ```ts
 console.log(state.context);
 ```
 
-### Read state output
+### Cheatsheet: read state output
 
 ```ts
 if (state.status === 'done') {
@@ -325,7 +325,7 @@ if (state.status === 'done') {
 }
 ```
 
-### Read state meta data
+### Cheatsheet: read state meta data
 
 ```ts
 console.log(state.getMeta());
