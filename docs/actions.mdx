@@ -456,9 +456,9 @@ import { createMachine, log } from 'xstate';
 
 const machine = createMachine({
   on: {
-    leverPulled: {
+    someEvent: {
       // highlight-start
-      actions: log('It’s alive!'),
+      actions: log('some message'),
       // highlight-end
     },
   },
@@ -769,7 +769,21 @@ const countMachine = createMachine({
 
 ### Raise action
 
-Coming soon...
+The `raise(...)` action raises (sends) an event to be received by the same machine immediately. Raised events are processed after the current transition is finished. This can be useful for triggering additional transitions within the same step based on the current event or state.
+
+```ts
+import { createMachine, raise } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: raise({ type: 'anotherEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
 
 ### Send-to action
 
