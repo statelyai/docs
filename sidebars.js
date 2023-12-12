@@ -56,6 +56,11 @@ const sidebars = {
         'templates',
         'cheatsheet',
         'typescript',
+        {
+          type: 'link',
+          label: 'API',
+          href: 'https://tsdocs.dev/docs/xstate',
+        },
       ],
     },
     {
