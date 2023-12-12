@@ -548,8 +548,29 @@ const countMachine = createMachine({
 
 ## Shorthands
 
-- For simple actions, can specify action string instead of object
-- Objects preferred for consistency
+For simple actions, you can specify an action string instead of an action object. Though we prefer using objects for consistency.
+
+```ts
+
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          // highlight-start
+          actions: ['track'],
+          // highlight-end
+        },
+      },
+    },
+  },
+});
+
+```
 
 ## TypeScript
 
