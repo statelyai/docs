@@ -348,7 +348,7 @@ secondActor.start();
 // ...
 ```
 
-### Event observable logic (`fromEventObservable(...)` {#fromeventobservable}
+### Event observable logic (`fromEventObservable(...)`) {#fromeventobservable}
 
 Event observable actor logic is described by an observable stream of [event objects](transitions.mdx#event-objects). Actors created from event observable logic (“event observable actors”) can:
 
@@ -577,6 +577,14 @@ function Component(props: { actor?: AnyActorRef }) {
 ```
 
 ## TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 You can strongly type the `actors` of your machine in the `types.actors` property of the machine config.
 

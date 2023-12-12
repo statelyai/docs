@@ -35,7 +35,15 @@ console.log(feedbackActor..getSnapshot().hasTag('visible'));
 
 ## TypeScript
 
-You can strongly type the `guards` of your machine in the `types.guards` property of the machine config.
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
+
+You can strongly type the `tags` of your machine in the `types.tags` property of the machine config.
 
 ```ts
 const machine = createMachine({

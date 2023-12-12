@@ -55,6 +55,7 @@ const sidebars = {
         },
         'templates',
         'cheatsheet',
+        'typescript',
       ],
     },
     {
