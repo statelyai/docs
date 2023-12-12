@@ -57,3 +57,8 @@ nick:
   image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/nick.png
   title: Stately Team
   url: https://github.com/cirephe
+
+parkermcmullin:
+  name: Parker McMullin
+  image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/tidefi.png
+  title: TIDEFI
