@@ -451,7 +451,19 @@ const machine = createMachine({
 
 The `log(...)` action is an easy way to log messages to the console.
 
-_Example coming soon_
+```ts
+import { createMachine, log } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    leverPulled: {
+      // highlight-start
+      actions: log('It’s alive!'),
+      // highlight-end
+    },
+  },
+});
+```
 
 
 ## Cancel action
