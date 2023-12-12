@@ -721,7 +721,7 @@ const modifiedMachine = machine.provide({
 
 ### Assign action
 
-**With property assigners**
+#### With property assigners
 
 ```ts
 import { createMachine } from 'xstate';
@@ -744,7 +744,7 @@ const countMachine = createMachine({
 });
 ```
 
-**With function assigners**
+#### With function assigners
 
 ```ts
 import { createMachine } from 'xstate';
@@ -769,8 +769,6 @@ const countMachine = createMachine({
 
 ### Raise action
 
-The `raise(...)` action raises (sends) an event to be received by the same machine immediately. Raised events are processed after the current transition is finished. This can be useful for triggering additional transitions within the same step based on the current event or state.
-
 ```ts
 import { createMachine, raise } from 'xstate';
 
@@ -787,7 +785,17 @@ const machine = createMachine({
 
 ### Send-to action
 
-Coming soon...
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      // highlight-start
+      actions: sendTo('someActor', { type: 'someEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
 
 ### Enqueue actions
 
