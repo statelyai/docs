@@ -648,6 +648,8 @@ actor.stop();
 ### Cheatsheet: state machine logic
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const toggleMachine = createMachine({
   id: 'toggle',
   initial: 'inactive',
