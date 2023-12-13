@@ -729,6 +729,7 @@ transitionActor.send({ type: 'increment' });
 ### Cheatsheet: observable logic
 
 ```ts
+import { fromObservable, createActor } from 'xstate';
 import { interval } from 'rxjs';
 
 const secondLogic = fromObservable(() => interval(1000));
