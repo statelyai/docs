@@ -772,6 +772,8 @@ canvasActor.start();
 ### Cheatsheet: callback logic
 
 ```ts
+import { fromCallback, createActor } from 'xstate';
+
 const callbackLogic = fromCallback(({ sendBack, receive }) => {
   let lockStatus = 'unlocked';
 
