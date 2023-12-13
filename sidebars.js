@@ -37,12 +37,12 @@ const sidebars = {
       collapsed: false,
       collapsible: true,
       items: [
+        'quick-start',
         {
           type: 'doc',
           label: 'Install XState',
           id: 'installation',
         },
-        'quick-start',
         {
           type: 'doc',
           label: 'Migrate to XState v5',
