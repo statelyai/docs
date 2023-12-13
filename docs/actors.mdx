@@ -692,6 +692,8 @@ promiseActor.start();
 ### Cheatsheet: transition function logic
 
 ```ts
+import { fromTransition, createActor } from 'xstate';
+
 const transitionLogic = fromTransition(
   (state, event) => {
     if (event.type === 'increment') {
