@@ -675,6 +675,8 @@ toggleActor.send({ type: 'toggle' });
 ### Cheatsheet: promise logic
 
 ```ts
+import { fromPromise, createActor } from 'xstate';
+
 const promiseLogic = fromPromise(() => {
   return fetch('https://example.com/...').then((data) => data.json());
 });
