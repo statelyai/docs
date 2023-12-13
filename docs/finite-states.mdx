@@ -2,9 +2,9 @@
 title: 'Finite states'
 ---
 
-A finite state is one of the possible states that a state machine can be in at any given time. It's called "finite" because there should be a limited number of possible states that the machine can be in. Finite states define how a machine "behaves" when in a state; e.g. a status or a mode. They represent how a machine "behaves" when in a state; e.g. a status or a mode; a machine can behave differently depending what state it is in.
+A finite state is one of the possible states that a state machine can be in at any given time. It’s called “finite” because there should be a limited number of possible states that the machine can be in. Finite states define how a machine “behaves” when in a state; e.g. a status or a mode. They represent how a machine “behaves” when in a state; e.g. a status or a mode; a machine can behave differently depending what state it is in.
 
-For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state".
+For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an “impossible state.”
 
 State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
 
@@ -97,7 +97,7 @@ const feedbackMachine = createMachine({
 
 ## State nodes
 
-In XState, a **state node** is a finite state "nodes" that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
+In XState, a **state node** is a finite state “nodes” that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
 
 ```ts
 // The machine is the root state node
@@ -129,7 +129,7 @@ const feedbackMachine = createMachine({
 
 ## Tags
 
-State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a "loading" tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
+State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a “loading”tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -166,7 +166,7 @@ Read more about [tags](tags.mdx).
 
 Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation.
 
-The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
+The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node’s ID as the key and the `.meta` data as the value:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -248,7 +248,7 @@ Read more about [events and transitions](transitions.mdx).
 
 ## Targets
 
-A transition's `target` property defines where the machine should go when the transition is taken. Normally, it targets a sibling state node:
+A transition’s `target` property defines where the machine should go when the transition is taken. Normally, it targets a sibling state node:
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -338,7 +338,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-When the state node doesn't change; i.e., the source and target state nodes are the same, the `target` property can be omitted:
+When the state node doesn’t change; i.e., the source and target state nodes are the same, the `target` property can be omitted:
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -427,10 +427,10 @@ In statecharts, there are other types of states:
 
 ## Modeling states
 
-- Start simple and shallow. Don't create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
+- Start simple and shallow. Don’t create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
 - Can model choice pseudostates
 
-## TypeScript
+## Finite states and TypeScript
 
 :::typescript
 
