@@ -99,7 +99,7 @@ const machine = createMachine({
 
 <EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=b2a299ef-efb8-4049-a242-2d197d27c931" title="Kettle with eventless transitions"/>
 
-## TypeScript
+## Eventless transitions and TypeScript
 
 :::typescript
 
@@ -129,9 +129,9 @@ const machine = createMachine({
 });
 ```
 
-## Cheatsheet
+## Eventless transitions cheatsheet
 
-### Root eventless (always) transition
+### Cheatsheet: root eventless (always) transition
 
 ```ts
 import { createMachine } from 'xstate';
@@ -145,7 +145,7 @@ const machine = createMachine({
 });
 ```
 
-### State eventless (always) transition
+### Cheatsheet: state eventless (always) transition
 
 ```ts
 const machine = createMachine({

@@ -213,6 +213,12 @@ const config = {
           },
           { to: '/docs', label: 'Docs', position: 'right' },
           {
+            href: 'https://tsdocs.dev/docs/xstate',
+            label: 'API',
+            position: 'right',
+            className: 'plausible-event-name=docs+api',
+          },
+          {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
             position: 'right',

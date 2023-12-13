@@ -4,15 +4,21 @@ title: 'Migrating from XState v4 to v5'
 
 The guide below explains how to migrate from XState version 4 to version 5. Migrating from XState v4 to v5 should be a straightforward process. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
 
+:::new
+
+Read [David’s blog post on the launch of XState v5](/blog/2023-12-01-xstate-v5).
+
+:::
+
 This guide is for developers who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
 
 :::video
 
-Prefer video? [Watch our Migration to XState v5 webinar on YouTube](https://www.youtube.com/watch?v=s-nqoIbIZac).
+Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/live/TRVjeil-y74).
 
 :::
 
-## TypeScript
+## XState v5 and TypeScript
 
 XState v5 and its related libraries are written in TypeScript, and utilize complex types to provide the best type safety and inference possible for you. **XState v5 requires TypeScript version 5.0 or greater.** For best results, use the latest TypeScript version.
 
@@ -2067,7 +2073,16 @@ const {
 
 ## New features
 
-_List coming soon_
+- [Create actor systems](system.mdx)
+- [New actor logic creators](/docs/actors#actor-logic-creators)
+- [Deep persistence for invoked and spawned actors](persistence.mdx)
+- [Provide input data to state machines and actors](input.mdx)
+- [Specify output “done data” for actors](output.mdx)
+- [Partial event descriptors (partial wildcards)](/docs/transitions#partial-wildcard-transitions)
+- [Enqueue actions](/docs/actions#enqueue-actions)
+- [Higher-level guards](/docs/guards#higher-level-guards)
+- [Setup API for specifying types and strongly-typed state values](/docs/machines#providing-implementations)
+- [Inspect API](inspection.mdx)
 
 ## Frequently asked questions
 

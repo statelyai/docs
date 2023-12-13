@@ -161,6 +161,82 @@ const processMachine = createMachine({
 });
 ```
 
-## Cheatsheet
+## Final states cheatsheet
 
-_Coming soon_
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      /* ... */
+    },
+    thanks: {
+      /* ... */
+    },
+    // highlight-start
+    closed: {
+      type: 'final',
+    },
+    // highlight-end
+    // ...
+  },
+  on: {
+    'feedback.close': {
+      target: '.closed',
+    },
+  },
+});
+```
+
+## Cheatsheet: final states in parallel states
+
+```ts
+import { createMachine} from 'xstate';
+
+const coffeeMachine = createMachine({
+  initial: 'preparation',
+  states: {
+    preparation: {
+      type: 'parallel',
+      states: {
+        beans: {
+          initial: 'grinding',
+          states: {
+            grinding: {
+              on: {
+                grindingComplete: 'ground',
+              },
+            },
+            // highlight-start
+            ground: {
+              type: 'final',
+            },
+            // highlight-end
+          },
+        },
+        water: {
+          initial: 'heating',
+          states: {
+            heating: {
+              always: {
+                guard: 'waterBoiling',
+                target: 'heated',
+              },
+            },
+            // highlight-start
+            heated: {
+              type: 'final',
+            },
+            // highlight-end
+          },
+        },
+      },
+      // highlight-next-line
+      onDone: 'brewing',
+    },
+    brewing: {},
+  },
+});
+```
