@@ -2,4 +2,30 @@
 title: 'Inspection'
 ---
 
-Coming soon: inspection API
+The Inspect API is a way to inspect the state transitions of your state machines and every aspect of actors in an actor system. Including:
+
+- Actor lifecycle
+- Actor event communication
+- Actor snapshot updates
+
+The Inspect API lets you attach an “inspector,” an observer that observes inspection events, to the root of an actor system:
+
+```jsx
+const actor = createActor(machine, {
+  inspect: (inspectionEvent) => {
+  // type: '@xstate.actor' or
+  // type: '@xstate.snapshot' or
+  // type: '@xstate.event'
+  console.log(event);
+  }
+});
+```
+
+The inspector will receive inspection events for every actor in the system, giving you granular visibility into everything happening, from how an individual actor is changing to how actors communicate with each other.
+
+
+:::studio
+
+We will soon release inspection devtools that visualize this information as state machine diagrams, sequence diagrams, and more.
+
+:::
