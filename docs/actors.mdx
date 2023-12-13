@@ -751,6 +751,7 @@ secondActor.start();
 ### Cheatsheet: event observable logic
 
 ```ts
+import { fromEventObservable, createActor } from 'xstate';
 import { fromEvent } from 'rxjs';
 
 const mouseClickLogic = fromEventObservable(() =>
