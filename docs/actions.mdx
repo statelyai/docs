@@ -258,6 +258,12 @@ const countMachine = createMachine({
 });
 ```
 
+:::studio
+
+You can create state machines with the `assign(...)` action in our drag-and-drop Stately editor. [Read more about built-in assign action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
+
 ## Raise action
 
 The raise action is a special action that _raises_ an event that is received by the same machine. Raising an event is how a machine can “send” an event to itself:
@@ -305,6 +311,12 @@ const machine = createMachine({
   );
 });
 ```
+
+:::studio
+
+You can create state machines with the `raise(...)` action in our drag-and-drop Stately editor. [Read more about the built-in raise action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
 
 ## Send-to action
 
@@ -377,6 +389,12 @@ const machine = createMachine({
   },
 });
 ```
+
+:::studio
+
+You can create state machines with the `sendTo(...)` action in our drag-and-drop Stately editor. [Read more about the built-in sendTo action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
 
 ## Enqueue actions
 
@@ -464,6 +482,12 @@ const machine = createMachine({
   },
 });
 ```
+
+:::studio
+
+You can create state machines with the `log(...)` action in our drag-and-drop Stately editor. [Read more about the built-in log action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
 
 
 ## Cancel action
