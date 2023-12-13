@@ -157,15 +157,15 @@ There are some caveats to persisting and restoring state that you should be awar
 - Replaying actions: actions that have already been executed will not be re-executed. [Event sourcing](#event-sourcing) is preferred for this use-case.
 - Serialization: the state must be serializable, which means that it must be JSON-serializable. This means that you cannot persist functions, classes, or other non-serializable values.
 
-## Cheatsheet
+## Persistence cheatsheet
 
-### Persisting state
+### Cheatsheet: persisting state
 
 ```ts
 const persistedState = actor.getPersistedSnapshot();
 ```
 
-### Restoring state
+### Cheatsheet: restoring state
 
 ```ts
 const restoredState = JSON.parse(localStorage.getItem('feedback'));

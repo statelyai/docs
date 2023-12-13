@@ -451,7 +451,19 @@ const machine = createMachine({
 
 The `log(...)` action is an easy way to log messages to the console.
 
-_Example coming soon_
+```ts
+import { createMachine, log } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: log('some message'),
+      // highlight-end
+    },
+  },
+});
+```
 
 
 ## Cancel action
@@ -536,8 +548,29 @@ const countMachine = createMachine({
 
 ## Shorthands
 
-- For simple actions, can specify action string instead of object
-- Objects preferred for consistency
+For simple actions, you can specify an action string instead of an action object. Though we prefer using objects for consistency.
+
+```ts
+
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          // highlight-start
+          actions: ['track'],
+          // highlight-end
+        },
+      },
+    },
+  },
+});
+
+```
 
 ## TypeScript
 
@@ -596,9 +629,9 @@ const machine = setup({
 });
 ```
 
-## Cheatsheet
+## Actions cheatsheet
 
-### Entry and exit actions
+### Cheatsheet: entry and exit actions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -621,7 +654,7 @@ const machine = createMachine({
 });
 ```
 
-### Transition actions
+### Cheatsheet: transition actions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -640,7 +673,7 @@ const machine = createMachine({
 });
 ```
 
-### Inline action functions
+### Cheatsheet: inline action functions
 
 ```ts
 import { createMachine } from 'xstate';
@@ -660,7 +693,7 @@ const machine = createMachine({
 });
 ```
 
-### Setting up actions
+### Cheatsheet: setting up actions
 
 ```ts
 import { setup } from 'xstate';
@@ -683,7 +716,7 @@ const machine = setup({
 })
 ```
 
-### Providing actions
+### Cheatsheet: providing actions
 
 ```ts
 import { setup } from 'xstate';
@@ -707,9 +740,9 @@ const modifiedMachine = machine.provide({
 });
 ```
 
-### Assign action
+### Cheatsheet: assign action
 
-**With property assigners**
+#### With property assigners
 
 ```ts
 import { createMachine } from 'xstate';
@@ -732,7 +765,7 @@ const countMachine = createMachine({
 });
 ```
 
-**With function assigners**
+#### With function assigners
 
 ```ts
 import { createMachine } from 'xstate';
@@ -755,15 +788,37 @@ const countMachine = createMachine({
 });
 ```
 
-### Raise action
+### Cheatsheet: raise action
 
-Coming soon...
+```ts
+import { createMachine, raise } from 'xstate';
 
-### Send-to action
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: raise({ type: 'anotherEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
 
-Coming soon...
+### Cheatsheet: send-to action
 
-### Enqueue actions
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      // highlight-start
+      actions: sendTo('someActor', { type: 'someEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
+
+### Cheatsheet: enqueue actions
 
 ```ts
 import { createMachine, enqueueActions } from 'xstate';
