@@ -812,10 +812,10 @@ const vitalsWorkflow = createMachine({
     CheckVitals: {
       // highlight-start
       invoke: [
-        { src: 'checkTirePressure' },
-        { src: 'checkOilPressure' },
-        { src: 'checkCoolantLevel' },
-        { src: 'checkBattery' },
+        { src: 'checkTirePressure', /* ... */ },
+        { src: 'checkOilPressure', /* ... */ },
+        { src: 'checkCoolantLevel', /* ... */ },
+        { src: 'checkBattery', /* ... */ },
       ],
       // highlight-end
     },
