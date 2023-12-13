@@ -10,7 +10,7 @@ The Inspect API is a way to inspect the state transitions of your state machines
 
 The Inspect API lets you attach an “inspector,” an observer that observes inspection events, to the root of an actor system:
 
-```jsx
+```tsx
 const actor = createActor(machine, {
   inspect: (inspectionEvent) => {
   // type: '@xstate.actor' or
