@@ -391,14 +391,15 @@ const machine = setup({
       initial: 'walk',
       states: {
         walk: {/* ... */},
-        run: {/* ... */}
+        run: {/* ... */},
         stop: {/* ... */}
       }
     }
   }
 });
 
-const actor = createActor(machine).start();
+const actor = createActor(machine)
+actor.start();
 
 // Strongly-typed state values!
 // Autocomplete will show:
