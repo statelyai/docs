@@ -150,32 +150,6 @@ const config = {
         },
       },
     ],
-    [
-      'docusaurus-plugin-typedoc-api',
-      {
-        disableVersioning: true,
-        projectRoot: `${__dirname}/xstate`,
-        packages: [
-          { path: 'packages/core', slug: 'xstate' },
-          { path: 'packages/xstate-graph', slug: '@xstate/graph' },
-          { path: 'packages/xstate-react', slug: '@xstate/react' },
-          { path: 'packages/xstate-solid', slug: '@xstate/solid' },
-          { path: 'packages/xstate-svelte', slug: '@xstate/svelte' },
-          { path: 'packages/xstate-test', slug: '@xstate/test' },
-          { path: 'packages/xstate-vue', slug: '@xstate/vue' },
-        ],
-        // We're sorting the packages here to ensure that the "xstate" package is first
-        sortPackages: (p1, p2) => {
-          if (p1.packageName === 'xstate') {
-            return -1;
-          } else if (p2.packageName === 'xstate') {
-            return 1;
-          } else {
-            return p1.packageName.localeCompare(p2.packageName);
-          }
-        },
-      },
-    ],
     async function tailwindPlugin(context, options) {
       return {
         name: 'docusaurus-tailwindcss',
