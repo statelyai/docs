@@ -38,7 +38,6 @@ import { createMachine } from 'xstate';
 
 const countingMachine = createMachine({
   id: 'counting',
-  initial: 'active',
   on: {
     increment: {
       actions: assign({ count: ({ context }) => context.count + 1 }),
