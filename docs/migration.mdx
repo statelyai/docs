@@ -2070,7 +2070,6 @@ const {
 </Tabs>
 
 
-
 ## New features
 
 - [Create actor systems](system.mdx)
@@ -2103,3 +2102,56 @@ Upvote or comment on [XState v5 compatibility for VS Code extension in our roadm
 TypeScript inference has been greatly improved in XState v5. Especially with features like the `setup()` API and dynamic parameters, the main use-cases for typegen are no longer needed.
 
 However, we recognize that there may still be some specific use-cases for typegen. Upvote or comment on [Typegen for XState v5 in our roadmap](https://feedback.stately.ai/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
+
+
+### How can I use both XState v4 and v5?
+
+You can use both XState v4 and v5 in the same project, which is useful for incrementally migrating to XState v5. To use both, add `"xstate5": "npm:xstate@5"` to your `package.json` manually or through the CLI:
+
+```bash
+npm i xstate5@npm:xstate@5
+```
+
+Then, you can import the v5 version of XState in your code:
+
+```ts
+import { createMachine } from 'xstate5';
+// or { createMachine as createMachine5 } from 'xstate5';
+```
+
+If you need to use different versions of an integration package, such as `@xstate/react`, you can use a similar strategy as above, but you will need to link to the correct version of XState in the integration package. This can be done by using a script:
+
+```bash
+npm i xstate5@npm:xstate@5 @xstate5/react@npm:@xstate/react@4
+```
+
+```js
+// xstate5-react-script.js
+const fs = require('fs-extra');
+const path = require('path');
+
+const rootNodeModules = path.join(__dirname, '..', 'node_modules');
+
+fs.ensureSymlinkSync(
+  path.join(rootNodeModules, 'xstate5'),
+  path.join(rootNodeModules, '@xstate5', 'react', 'node_modules', 'xstate'),
+);
+```
+
+```json5
+// package.json
+"scripts": {
+  "postinstall": "node xstate5-react-script.js"
+}
+```
+
+Then, you can use the XState v5 compatible version of `@xstate/react` in your code:
+
+```ts
+import { useMachine } from '@xstate5/react';
+// or { useMachine as useMachine5 } from '@xstate5/react';
+import { createMachine } from 'xstate5';
+// or { createMachine as createMachine5 } from 'xstate5';
+
+// ...
+```
