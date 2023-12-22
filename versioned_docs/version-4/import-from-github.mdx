@@ -19,26 +19,39 @@ There are three steps to setting up your GitHub repo as a connected project:
 2. Select the branch. You can choose any branch in your repo.
 3. Choose the files you want to sync. You can sync any JavaScript or TypeScript files, but only XState machines will be imported.
 
-:::tip
+### Auto-sync
 
-Enabling **auto-sync** will automatically fetch the latest changes from your connected repository every time you open the project in the Studio.
+Enabling **auto-sync** will automatically fetch the latest changes from your connected repository every time you open or refresh the project in the Studio.
 
-Disable auto-sync from the GitHub options found by clicking the repository name in the footer of the left drawer.
+Disable auto-sync from the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer.
 
-:::
+### Path for new files
 
-When a project is synced to GitHub:
+You can choose a **Path for new files** for when you create new machines in this connected project. These machines will be added at this relative path from the root of your repo. The default path is **src/stately-studio** and will be created in your repo when you create your first pull request in the Studio.
 
-- A GitHub <Github size={18}/> icon is displayed alongside the GitHub repo and branch names in the footer of the editor’s left drawer.
-- A GitHub <Github size={18}/> icon is displayed in the project information in the Projects list.
+### Create pull request
 
-### Create pull requests
+Open the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer. You can create pull requests from the GitHub options for any changes made to your machine.
 
-Open the GitHub options by clicking the repository name in the footer of the left drawer. You can create pull requests from the GitHub options for any changes made to your machine.
+#### Update pull request
+
+If you have already created a pull request for your machine, you can update the pull request with any changes you have made in the Studio. Open the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer and choose **Update pull request**.
 
 ### Sync multiple branches
 
 You can sync multiple branches in your GitHub repo to the same project in Stately Studio. Open the GitHub branch options from the branch name in the footer of the left drawer to choose additional branches.
+
+### Sync new machines created in Stately Studio
+
+Creating a new machine in Stately Studio in a connected project will flag the machine in your Machines list as **Not synced with GitHub**. You can sync the machine with your GitHub repo by [creating a pull request from the GitHub options](#create-pull-request) from the <Github size={18}/> repository name in the footer of the left drawer.
+
+Your new machine will be added to your repo at the [**Path for new files**](#path-for-new-files) you have chosen.
+
+### Sync changes to machines from GitHub
+
+If you have [auto-sync enabled](#auto-sync), any changes made to your GitHub repo will be synced to your project in Stately Studio when you open or refresh the project in the Studio.
+
+If you don’t have auto-sync enabled, you can sync any changes made to your GitHub repo using **Sync now** in the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer.
 
 ## GitHub permissions
 
