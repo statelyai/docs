@@ -286,6 +286,63 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+## The `spawn()` function has been removed
+
+Instead of using the imported `spawn()` function to create actors inside `assign(...)` actions:
+
+- Use the `spawnChild(...)` action creator (preferred)
+- Or use the `spawn(...)` method from the first argument passed to the assigner function inside of `assign(...)` actions (useful if you need the actor ref in `context`)
+
+Read the documentation on [spawning actors](./spawn.mdx) for more information.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+// highlight-next-line
+import { spawnChild, assign } from 'xstate';
+
+// Spawning a direct child:
+const machine1 = createMachine({
+  // ...
+  // highlight-start
+  entry: spawnChild('someChildLogic', {
+    id: 'someChild',
+  })
+  // highlight-end
+});
+
+// Spawning a child with the actor ref in `context`:
+const machine2 = createMachine({
+  // ...
+  entry: assign({
+    // highlight-next-line
+    child: ({ spawn }) => spawn('someChildLogic')
+  })
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌
+import { assign, spawn } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  entry: assign({
+    // highlight-next-line
+    child: () => spawn('someChildLogic')
+  })
+});
+```
+
+</TabItem>
+</Tabs>
+
 ## States
 
 ### Use `state.getMeta()` instead of `state.meta`
