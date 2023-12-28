@@ -1,0 +1,81 @@
+---
+title: Promise actors
+---
+
+Promise actors are actors that represent a promise that performs some asynchronous task. They may resolve with some output, or reject with an error.
+
+
+## Promise actor logic
+
+You can define promise actor logic using the `fromPromise(...)` actor logic creator, which takes a function that returns a promise and returns actor logic that can be used to create promise actor instances.
+
+```ts
+import { fromPromise, createActor } from 'xstate';
+
+async function getUser(id: string) {
+  // ...
+  return { id, /* other user data */ };
+}
+
+// highlight-start
+const promiseLogic = fromPromise(async () => {
+  const user = await getUser('123');
+
+  return user;
+});
+// highlight-end
+
+const promiseActor = createActor(promiseLogic);
+
+promiseActor.subscribe(snapshot => {
+  console.log(snapshot.status, snapshot.output);
+});
+
+promiseActor.start();
+
+// logs 'active', undefined
+// ... (after some time)
+// logs 'done', { id: '123', /* other user data */ }
+```
+
+## Promise actor input
+
+You can pass in `input` to a promise actor by passing it to the `createActor(...)` function as the `input` property of the second argument. In the promise logic (`fromPromise(promiseFn)`), you read the `input` property of the first argument passed to the promise function:
+
+```ts
+import { fromPromise, createActor } from 'xstate';
+
+const promiseLogic = fromPromise(async ({ input }) => {
+  const user = await getUser(input.id);
+
+  return user;
+});
+
+const promiseActor = createActor(promiseLogic, {
+  // highlight-next-line
+  input: { id: '123' }
+});
+```
+
+The `input` type is inferred from the promise function's first argument type. You can also provide an explicit `input` type in the second generic parameter:
+
+```ts
+import { fromPromise } from 'xstate';
+
+interface User {
+  name: string;
+  id: string;
+}
+
+const secondLogic = fromPromise(async ({ input }: { input: { id: string }}) => {
+  const user = await getUser(input.id); // User is inferred
+
+  return user;
+});
+
+const firstLogic = fromPromise<User, { id: string }>(async ({ input, self, /* ... */ }) => {
+  const user = await getUser(input.id);
+
+  return user;
+});
+```
