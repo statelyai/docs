@@ -4,11 +4,19 @@ title: Advanced transitions
 
 # Advanced transitions
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about transitions in XState V5](/docs/transitions).
+
+:::
+
 Parent and child states offer more opportunities for various types of transitions. You can transition from any state to any other state. XState has a few different syntaxes to help you out.
 
 ## Transitioning to a node’s own children
-
-<!-- deps: ["states", "parent-and-child-states"] -->
 
 Use the `.target` syntax to transition to a child state from a parent state.
 
@@ -33,8 +41,6 @@ const machine = createMachine({
 Whichever state the machine is in, whenever it receives a `HOVER` event, it’ll transition to the `hovered` state.
 
 ## Transitioning to another node’s children
-
-<!-- deps: ["states", "parent-and-child-states"] -->
 
 Transition directly into a node’s children using the `a.b` syntax.
 
@@ -67,8 +73,6 @@ In the example above, the machine transitions directly to `active.hovered` when 
 The `initial` state of `focused` inside `active` is ignored.
 
 ## Transitioning to any node
-
-<!-- deps: ["parent-and-child-states","transitions-and-events","targeting-children","targeting-children-of-siblings"] -->
 
 If you want to transition to _any_ state:
 

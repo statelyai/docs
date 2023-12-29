@@ -3,6 +3,16 @@ title: Options
 description: 'The statechart’s config describes how the machine behaves, the machine’s options are implementation details that expand the machine’s capabilities.'
 ---
 
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about providing implementations for your machines in XState v5](/docs/machines#providing-implementations).
+
+:::
+
 Statecharts require that a machine is separated into two parts. The first part is the machine’s **config**. The config describes _how the machine behaves_ — its states, events and transitions.
 
 The second part is a machine’s **options** — implementation details that expand the machine’s capabilities.
@@ -32,8 +42,6 @@ const helloMachine = createMachine({
 });
 ```
 
-<!-- Add visualisation to the above \-->
-
 As a visualization, the config is readable. But the machine doesn’t _do_ anything yet.
 
 **Options** let us pass an implementation for the `sayHello` action.
@@ -56,9 +64,6 @@ const helloMachine = createMachine(
 The separation between “what your code does” and “how your code does it” is powerful because it allows you to understand its purpose without requiring you to read through the implementation details.
 
 ## Option types
-
-<!-- deps: ["options-intro"] -->
-<!-- loom: 6b2dd2d32acf4e5cbf2d8910ab826616 -->
 
 There are four types of options you can pass to your statechart.
 
@@ -145,8 +150,6 @@ Delays are used in XState to represent timers and intervals. We’ll revisit del
 
 ## Options API
 
-<!-- deps: ["options-intro", "guards-actions-actors-delays-intro"] -->
-
 You can specify machine options in several places. Firstly, you can set options inside the machine itself:
 
 ```ts
@@ -166,12 +169,6 @@ const machine = createMachine(
   },
 );
 ```
-
-:::warningxstate
-
-XState v5 is in beta. [Check out XState v5 Beta on NPM](https://www.npmjs.com/package/xstate/v/5.0.0-beta.13).
-
-:::
 
 Or, you can specify options later with a `.withConfig` call:
 

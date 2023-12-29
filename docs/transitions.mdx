@@ -14,7 +14,7 @@ You can visualize your state machines and easily add transitions in our drag-and
 
 <EmbedMachine
   name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7"
+  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7&mode=Simulate"
 />
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
@@ -69,6 +69,58 @@ Transitions are selected by checking the deepest child states first. If the tran
 
 A state can transition to itself. This is known as a **self-transition**, and is useful for changing context and/or executing actions without changing the finite state. You can also use self-transitions to restart a state.
 
+**Root self-transitions:**
+
+```ts
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine({
+  context: { count: 0 },
+  // highlight-start
+  on: {
+    someEvent: {
+      // No target
+      actions: assign({
+        count: ({context}) => context.count + 1,
+      })
+    }
+  }
+  // highlight-end
+});
+```
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=91da1d57-b146-48fd-82ce-a9dd28b7261a" title="Root self-transition"/>
+
+**Self-transitions on states:**
+
+```ts
+import { createMachine, assign } from 'xstate';
+
+const machine = createMachine({
+  context: { count: 0 },
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: { activate: { target: 'active' } }
+    },
+    active: {
+      // highlight-start
+      on: {
+        someEvent: {
+          // No target
+          actions: assign({
+            count: ({context}) => context.count + 1,
+          })
+        }
+      }
+      // highlight-end
+    }
+  }
+});
+```
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=8763e570-3535-42b3-a2a2-8edd82d1207a" title="Self-transition on state"/>
+
 :::studio
 
 You can easily visualize self-transitions in Stately’s editor. [Read more about self-transitions in Stately’s editor](/docs/editor-states-and-transitions/#self-transitions).
@@ -113,9 +165,9 @@ Coming soon… example with `{ on: { target: '.child' } }`
 
 ## Re-entering
 
-By default, when a state machine transitions from a parent state to the same parent state or a descendent (child or deeper), it will not re-enter the parent state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state. It will not stop existing invoked actors or start new invoked actors.
+By default, when a state machine transitions from some state to the same state or from a parent state to a descendent (child, grandchild, etc.) of that parent state, it will not re-enter the state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state. It will not stop existing invoked actors or start new invoked actors.
 
-If you want the parent state to be re-entered, you can set the `reenter` property to `true`. This will cause the parent state to re-enter, executing the `exit` and `entry` actions of the parent state. It will stop existing invoked actors, and start new invoked actors.
+This can be changed with the transition `reenter` property: if you want the parent state to be re-entered, you can set `reenter: true`. This will cause the state to re-enter when transitioning to itself or descendent states, executing the `exit` and `entry` actions of the state. It will stop existing invoked actors, and start new invoked actors.
 
 :::tip
 
@@ -123,9 +175,92 @@ In XState v4, re-entering transitions were known as **external transitions**, an
 
 :::
 
-Coming soon… illustration showing no re-enter vs. re-enter
+**Self-transitions with `reenter: true`:**
 
-Coming soon… example with `{ target: '.child', reenter: true }`
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  initial: 'someState',
+  states: {
+    someState: {
+      entry: () => console.log('someState entered'),
+      exit: () => console.log('someState exited'),
+      on: {
+        'event.normal': {
+          target: 'someState', // or no target
+        },
+        'event.thatReenters': {
+          target: 'someState', // or no target
+          reenter: true,
+        }
+      }
+    }
+  }
+});
+
+const actor = createActor(machine);
+actor.start();
+
+actor.send({ type: 'event.normal' });
+// Does not log anything
+
+actor.send({ type: 'event.thatReenters' });
+// Logs:
+// "someState exited"
+// "someState entered"
+```
+
+**Parent-child (or descendent) transitions with `reenter: true`:**
+
+```ts
+const machine = createMachine({
+  initial: 'parentState',
+  states: {
+    parentState: {
+      entry: () => console.log('parentState entered'),
+      exit: () => console.log('parentState exited'),
+      on: {
+        'event.normal': {
+          target: '.someChildState'
+        },
+        'event.thatReenters': {
+          target: '.otherChildState',
+          reenter: true
+        }
+      },
+      initial: 'someChildState',
+      states: {
+        someChildState: {
+          entry: () => console.log('someChildState entered'),
+          exit: () => console.log('someChildState exited')
+        },
+        otherChildState: {
+          entry: () => console.log('otherChildState entered'),
+          exit: () => console.log('otherChildState exited')
+        }
+      }
+    }
+  }
+});
+
+const actor1 = createActor(machine);
+actor1.start();
+actor1.send({ type: 'event.normal' });
+// Logs:
+// "someChildState exited"
+// "someChildState entered"
+
+const actor2 = createActor(machine);
+actor2.start();
+console.log('---');
+actor2.send({ type: 'event.thatReenters' });
+// Logs:
+// "someChildState exited"
+// "parentState exited"
+// "parentState entered"
+// "otherChildState entered"
+```
 
 ## Transitions to any state
 
@@ -272,6 +407,14 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 ## TypeScript
 
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
+
 Transitions mainly use the event type that they are enabled by.
 
 ```ts
@@ -291,11 +434,11 @@ const machine = createMachine({
 });
 ```
 
-## Cheatsheet
+## Transitions cheatsheet
 
 Use our XState events and transitions cheatsheet below to get started quickly.
 
-### Event objects
+### Cheatsheet: event objects
 
 ```ts
 feedbackActor.send({
@@ -307,7 +450,7 @@ feedbackActor.send({
 });
 ```
 
-### Transition targets
+### Cheatsheet: transition targets
 
 ```ts
 const machine = createMachine({

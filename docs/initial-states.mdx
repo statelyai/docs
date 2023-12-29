@@ -39,6 +39,41 @@ Watch our [“What are initial states?” video on YouTube](https://www.youtube.
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=3ebc8874-2294-480b-a06e-74845337cd8d"
 />
 
-## Initial states in XState
+## Specifying an initial state
 
-More coming soon…
+Typically, a state machine will have multiple [finite states](finite-states.mdx) that it can be in. The `initial` property on the machine config specifies the initial state that the machine should start in.
+
+[Parent states](parent-states.mdx) also must specify an initial state in their `initial` property. The following `trafficLightMachine` will start in the `'green'` state, as it is specified in the `initial` property of the machine config.
+
+When the machine reaches the `'red'` parent state, it will also be in the `'red.walk'` state, as it is specified in the `initial` property of the `'red'` state.
+
+```ts
+import { createMachine } from 'xstate';
+
+const trafficLightMachine = createMachine({
+  // highlight-next-line
+  initial: 'green',
+  states: {
+    green: {/* ... */},
+    yellow: {/* ... */},
+    red: {
+      // highlight-next-line
+      initial: 'walk',
+      states: {
+        walk: {/* ... */},
+        wait: {/* ... */},
+        stop: {/* ... */},
+      }
+    },
+  }
+});
+
+const trafficLightActor = createActor(trafficLightMachine);
+
+trafficLightActor.subscribe(state => {
+  console.log(state.value);
+});
+
+trafficLightActor.start();
+// logs 'green'
+```

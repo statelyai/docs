@@ -2,7 +2,7 @@
 title: 'State machines'
 ---
 
-A [state machine](state-machines-and-statecharts.mdx) is a model that describes the behavior of something, for example an [actor](actors.mdx). [Finite state](finite-states.mdx) machines describe how the state of an actor transitions to another state when an event occurs.
+A [state machine](state-machines-and-statecharts.mdx) is a model that describes the behavior of something, for example an [actor](actors.mdx). [Finite state](finite-states.mdx) machines describe how the state of an actor transitions to another state when an [event](transitions.mdx) occurs.
 
 :::tip
 
@@ -75,16 +75,16 @@ feedbackActor.start();
 // logs 'question'
 ```
 
-You can also create an actor [from other types of logic](actors.mdx#actor-logic), such as functions, promises, and observables.
+You can also create an actor [from other types of logic](/docs/actors/#actor-logic), such as [functions](/docs/actors/#fromtransition), [promises](/docs/actors/#frompromise), and [observables](/docs/actors/#fromobservable).
 
 ## Providing implementations
 
-Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic. This includes:
+Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic (states and transitions). This includes:
 
-- [Actions](actions.mdx)
-- [Actors](actors.mdx)
-- [Guards](guards.mdx)
-- [Delays](delayed-transitions.mdx)
+- [Actions](actions.mdx), which are fire-and-forget side-effects.
+- [Actors](actors.mdx), which are entities that can communicate with the machine actor.
+- [Guards](guards.mdx), which are conditions that determine whether a transition should be taken.
+- [Delays](delayed-transitions.mdx), which specify the time before a delayed transition is taken or a delayed event is sent.
 
 The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`. 
 
@@ -93,21 +93,19 @@ import { setup } from 'xstate';
 
 const feedbackMachine = setup({
   // Default implementations
-  {
-    actions: {
-      doSomething: () => {
-        console.log('Doing something!');
-      },
+  actions: {
+    doSomething: () => {
+      console.log('Doing something!');
     },
-    actors: {
-      /* ... */
-    },
-    guards: {
-      /* ... */
-    },
-    delays: {
-      /* ... */
-    },
+  },
+  actors: {
+    /* ... */
+  },
+  guards: {
+    /* ... */
+  },
+  delays: {
+    /* ... */
   },
 }).createMachine({
   entry: { type: 'doSomething' },
@@ -177,13 +175,21 @@ const feedbackMachine = setup({
 
 ## Typegen
 
-Typegen does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
+[Typegen](/docs/developer-tools#xstate-typegen-files) does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
 
 ## API
 
-Coming soon… Link to API
+Coming soon…
 
-## TypeScript
+## Machines and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 The best way to provide strong typing for your machine is to use the `setup(...)` function and/or the `.types` property.
 
@@ -243,7 +249,7 @@ const feedbackMachine = setup({
 
 Use our XState machine cheatsheet below to get started quickly.
 
-### Create a machine
+### Cheatsheet: create a machine
 
 ```ts
 import { createMachine } from 'xstate';
@@ -257,7 +263,7 @@ const machine = createMachine({
 });
 ```
 
-### Setup a machine with implementations
+### Cheatsheet: setup a machine with implementations
 
 ```ts
 import { setup } from 'xstate';
@@ -280,7 +286,7 @@ const machine = setup({
 })
 ```
 
-### Provide implementations
+### Cheatsheet: provide implementations
 
 ```ts
 import { createMachine } from 'xstate';

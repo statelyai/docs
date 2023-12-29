@@ -14,8 +14,14 @@ Please note that Sky is currently in beta and will be changing rapidly.
 
 ## What you’ll need
 
-- A [Stately](https://stately.ai) account with a [Pro or Enterprise subscription](https://stately.ai/pricing).
+- A [Stately](https://stately.ai) account with a [Pro, Team, or Enterprise subscription](https://stately.ai/pricing).
 - Our [Stately Sky starter project](https://github.com/statelyai/sky-starter-app). Clone the repo to your local machine.
+
+:::studio
+
+Our premium users get unlimited use of Stately Sky while it’s in beta. You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade your existing plan](https://stately.ai/registry/billing).
+
+:::
 
 ## Getting started video
 
@@ -34,6 +40,14 @@ For this example, we’ll create a simple traffic light machine with three state
 
 :::xstate
 Sky only supports [XState](https://github.com/statelyai/xstate) V5 machines. The [changes in XState V5](/docs/migration.mdx) provide both a better developer experience and adhere to the [Actor Model](/docs/actor-model.mdx) more closely, allowing Sky to capably deploy machines that reliably communicate their state.
+:::
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
 :::
 
 ## Step 2: Create an API key

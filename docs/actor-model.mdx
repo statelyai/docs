@@ -2,7 +2,7 @@
 title: The Actor model
 ---
 
-The [Actor model](https://en.wikipedia.org/wiki/Actor_model) in computer science is a mathematical model of concurrent computation in which an "actor" is the basic building block.
+The [Actor model](https://en.wikipedia.org/wiki/Actor_model) in computer science is a mathematical model of concurrent computation in which an “actor” is the basic building block.
 
 The actor model allows developers to build reliable message-based systems by using actors to communicate. State machines and statecharts can model the logic of actors. These actors can communicate with each other, and with other actors, in the same way.
 
@@ -10,9 +10,9 @@ The actor model allows developers to build reliable message-based systems by usi
 When you run a state machine in XState, it becomes an actor.
 :::
 
-### What Defines An "Actor"?
+### What defines an “actor”?
 
-Actors are independent "live" objects that can communicate with each other via asynchronous message passing. In XState, we refer to these messages as [_events_](transitions.mdx).
+Actors are independent “live” objects that can communicate with each other via asynchronous message passing. In XState, we refer to these messages as [_events_](transitions.mdx).
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
@@ -22,7 +22,7 @@ Actors are independent "live" objects that can communicate with each other via a
   - Or emitting snapshots, which can be considered implicit events sent to subscribers.
 - Actors can create (spawn/invoke) new actors.
 
-You'll find strong similarities to the Actor model in software you may already be familiar with. The concept of objects encapsulating state and passing messages to each other may be familiar from Object-Oriented Programming. And actors are analagous to real-world physical concepts like cell biology, and communication in human relationships.
+You’ll find strong similarities to the actor model in software you may already be familiar with. The concept of objects encapsulating state and passing messages to each other may be familiar from Object-Oriented Programming. And actors are analagous to real-world physical concepts like cell biology, and communication in human relationships.
 
 ## State
 
@@ -30,7 +30,7 @@ An actor has its own internal, encapsulated state that only the actor itself can
 
 [Read more about XState actors and state](actors.mdx).
 
-## Communication With Events
+## Communication with events
 
 Actors communicate with other actors by sending and receiving events asynchronously. Actors use an internal “mailbox” that acts like an event queue, processing events one at a time.
 
@@ -43,17 +43,17 @@ Actors can spawn new actors, which is useful in situations where an actor needs 
 - [Read more about spawning actors in XState](spawn.mdx).
 - [Read about the difference between invoking and spawning actors in XState](actors.mdx#invoking-and-spawning-actors).
 
-## The Actor Model in Backend Development
+## The actor model in backend development
 
 The actor model is often used to coordinate backend systems. There are direct implementations of the Actor model, like [Akka](https://doc.akka.io/docs/akka/current/typed/guide/introduction.html) for the JVM. In [Erlang](https://www.erlang.org/docs), processes can be seen as actors, which can send and receive messages and spawn new processes. Erlang is used by massive distributed systems, like Discord and WhatsApp.
 
 In [Stately Sky](https://stately.ai/docs/stately-sky-getting-started), a state machine actor be used to manage long-running backend processes like medical patient onboarding flows, inventory management, or multi-player collaborative experiences like whiteboard canvases or games.
 
-## The Actor Model in Frontend Development
+## The actor model in frontend development
 
-The Actor model is especially useful for coordinating the many moving parts of a front-end web application.
+The actor model is especially useful for coordinating the many moving parts of a front-end web application.
 
-**Your front-end app is always a distributed system**, and managing distributed systems is where the actor model shines. This is because in a browser environment **you never really have a "global source of truth"**, you instead have **many independent sources of state and events**: 3rd-party components, local component state, local storage, query parameters, routers, network I/O, DOM events and their listeners, etc. 
+**Your front-end app is always a distributed system**, and managing distributed systems is where the actor model shines. This is because in a browser environment **you never really have a “global source of truth”**, you instead have **many independent sources of state and events**: 3rd-party components, local component state, local storage, query parameters, routers, network I/O, DOM events and their listeners, etc. 
 
 > […] there is no such thing as a single source of truth in any non-trivial application. All applications, even front-end apps, are distributed at some level. – via: [Redux is Half of a Pattern (2/2)](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-2-2-4jo3)
 
@@ -62,11 +62,11 @@ So even for simple web apps, with small app-specific state and a few known app-s
 ## XState
 
 Actors in XState can:
-- **Accept messages** as [events](transitions#event-objects) passed to their own internal logic, or for state machines as received by [transitions](transitions.mdx).
-- **Create more actors** within a state machine using `spawn` in an [`assign`](actions.mdx#assign-action), or using the `spawnChild` action creator. For details, see [Spawn](spawn.mdx).
-- **Send more messages** as events using `self.send` in their own logic, or [action creators](actions.mdx) like [`sendTo`](actions#send-to-action) or [`raise`](actions#raise-action) in a state machine.
+- **Accept messages** as [events](/docs/transitions/#event-objects) passed to their own internal logic, or for state machines as received by [transitions](transitions.mdx).
+- **Create more actors** within a state machine using `spawn` in an [`assign`](/docs/actions/#assign-action), or using the `spawnChild` action creator. For details, see [Spawn](spawn.mdx).
+- **Send more messages** as events using `self.send` in their own logic, or [action creators](actions.mdx) like [`sendTo`](/docs/actions/#send-to-action) or [`raise`](/docs/actions/#raise-action) in a state machine.
 
-Actors in XState have their own [actor logic](actors.mdx#actor-logic) which they use to:
+Actors in XState have their own [actor logic](/docs/actors/#actor-logic) which they use to:
 - **Make local decisions**
 - **Determine how to repond to the next message received**
 - **Modify their own private state** (but only affect each other via messaging)

@@ -4,7 +4,15 @@ title: Guarded actions
 
 # Guarded actions
 
-<!-- deps: ["actions", "guards", "transitions-and-events", "context"] -->
+:::warning
+
+**Docs for XState v4 are no longer maintained** 
+
+This page is no longer maintained as [XState V5 has been released](/blog/2023-12-01-xstate-v5).
+
+[Read about guards in XState V5](/docs/guards).
+
+:::
 
 You can use actions and guards together to run actions conditionally on transitions.
 
@@ -96,11 +104,7 @@ In the example above, if we have at least ten dollars in the account, we’ll lo
 
 Remember, **the cond always runs _before_ the action**. XState first checks if it should run the action by running the `cond`, and only then runs the action.
 
-<!-- TODO: write a tip (or section on its own) on using always to run actions on every transition… Sometimes you’ll want to run actions on every branch of a transition. Read our tip for that use case below. \-->
-
 ## The `choose` action
-
-<!-- deps: ["actions", "guards", "guarded-actions"] -->
 
 The `choose()` built-in action is an alternative API for guarded actions. `choose` lets you pick which actions should be executed based on some conditions inside the action itself.
 

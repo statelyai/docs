@@ -90,10 +90,10 @@
     },
     {
       "type": "category",
-      "label": "Using Stately Studio",
+      "label": "Stately Studio",
       "link": {
         "type": "generated-index",
-        "title": "Using Stately Studio",
+        "title": "Stately Studio",
         "description": "Learn how to use Stately Studio’s editor.",
         "slug": "/category/studio",
         "keywords": ["guides"]
@@ -102,6 +102,36 @@
       "collapsible": true,
       "items": [
         {
+          "type": "doc",
+          "label": "Stately Studio Pro",
+          "id": "studio-pro-plan"
+        },
+        {
+          "type": "doc",
+          "label": "Stately Studio Team",
+          "id": "studio-team-plan"
+        },
+        {
+          "type": "doc",
+          "label": "Stately Studio Enterprise",
+          "id": "studio-enterprise-plan"
+        },
+        {
+          "type": "doc",
+          "label": "Stately Studio Community",
+          "id": "studio-community-plan"
+        },
+        {
+          "type": "doc",
+          "label": "States and transitions",
+          "id": "editor-states-and-transitions"
+        },
+        {
+          "type": "doc",
+          "label": "Actions and actors",
+          "id": "editor-actions-and-actors"
+        },
+        {
           "type": "category",
           "label": "Design mode",
           "link": {
@@ -109,13 +139,20 @@
             "id": "design-mode"
           },
           "items": [
+            "import-from-code",
+            "import-from-github",
             {
               "type": "doc",
-              "label": "Generate flow",
+              "label": "Generate with AI",
               "id": "generate-flow"
             },
-            "import-from-code",
+            {
+              "type": "doc",
+              "label": "Generate React app",
+              "id": "generate-react"
+            },
             "export-as-code",
+            "generate-test-paths",
             "machine-restore",
             "autolayout",
             {
@@ -124,6 +161,11 @@
               "id": "annotations"
             },
             "descriptions",
+            {
+              "type": "doc",
+              "label": "Assets",
+              "id": "assets"
+            },
             {
               "type": "doc",
               "label": "Colors",
@@ -209,26 +251,6 @@
       "items": [
         {
           "type": "doc",
-          "label": "Community plan",
-          "id": "studio-community-plan"
-        },
-        {
-          "type": "doc",
-          "label": "Pro plan",
-          "id": "studio-pro-plan"
-        },
-        {
-          "type": "doc",
-          "label": "Team plan",
-          "id": "studio-team-plan"
-        },
-        {
-          "type": "doc",
-          "label": "Enterprise plan",
-          "id": "studio-enterprise-plan"
-        },
-        {
-          "type": "doc",
           "label": "Sign up",
           "id": "sign-up"
         },
@@ -259,7 +281,7 @@
         },
         {
           "type": "link",
-          "label": "Migrate to XState v5 beta",
+          "label": "Migrate to XState v5",
           "href": "/docs/migration"
         },
         "xstate/installation",

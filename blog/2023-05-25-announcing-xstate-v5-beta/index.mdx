@@ -8,7 +8,7 @@ image: /blog/2023-05-25-announcing-xstate-v5-beta.png
 date: 2023-05-25
 ---
 
-We’re excited to announce the v5 beta release of XState and related packages after many years of development.<!--truncate--> XState is a powerful, fully open-source (MIT-licensed) and zero-dependency state management & orchestration solution based on state machines, statecharts, and the actor model. It is currently being used in production by many companies for both frontend and backend applications.
+We’re excited to announce the v5 beta release of XState and related packages after many years of development.{/* truncate */} XState is a powerful, fully open-source (MIT-licensed) and zero-dependency state management & orchestration solution based on state machines, statecharts, and the actor model. It is currently being used in production by many companies for both frontend and backend applications.
 
 **XState orchestrates any logic**, from promises to state machines and everything in between.
 
@@ -28,7 +28,7 @@ One of the biggest items of feedback we’ve received about XState is that altho
 
 - **Simplified terminology**. Concepts shouldn’t have multiple names, so we have simplified terms wherever possible. The basic unit of abstraction in XState v5 beta is the **actor**, and we’ve removed some of the more confusing terms, such as “service” and “interpreter,” “transient transitions” to “eventless transitions,” “cond” to “guard", “internal: false” to “reenter: true,” and [more](https://stately.ai/docs/migration).
 - **Reduced API surface area**. Some of the new features, such as [input](#actor-input) made existing features redundant, such as `machine.withContext(...)`. We’ve also removed redundant functionality, such as `actor.onTransition(...)`, in favor of `actor.subscribe(...)`. [Read about all the breaking changes](https://stately.ai/docs/migration).
-- **Examples, examples, examples**. We’re adding many [XState v5 beta examples in the XState repository’s examples folder](https://github.com/statelyai/xstate/tree/next/examples) to help you quickly understand how XState can help with your use cases.
+- **Examples, examples, examples**. We’re adding many [XState v5 beta examples in the XState repository’s examples folder](https://github.com/statelyai/xstate/tree/main/examples) to help you quickly understand how XState can help with your use cases.
 - **Interactive documentation**. We’re working on adding interactive examples to the documentation, so you can visualize the concepts as you learn them.
 - **From zero to “hello world” as quickly as possible**. Our goal with XState v5 and the [updated documentation (work in progress)](https://stately.ai/docs/xstate-v5) is to make developers productive with XState quickly. A simple, complete counter example in XState looks like this:
 
@@ -160,16 +160,16 @@ const machine = createMachine({
   // ...
 });
 
-const mainActor = interpret(machine);
+const mainActor = createActor(machine);
 mainActor.start();
 
 // Deeply persist state
 // Also persists the "someCounter" actor!
-const persistedState = mainActor.getPersistedState();
+const persistedState = mainActor.getPersistedSnapshot();
 
 // Restore state
-const restoredActor = interpret(machine, {
-  state: persistedState,
+const restoredActor = createActor(machine, {
+  snapshot: persistedState,
 });
 
 // Starts at recursively persisted state
@@ -382,9 +382,9 @@ const machine = createMachine({
 
 ## Examples
 
-[Check out the TodoMVC example with React, TypeScript, and XState v5 beta](https://codesandbox.io/p/sandbox/github/statelyai/xstate/tree/next/examples/todomvc-react).
+[Check out the TodoMVC example with React, TypeScript, and XState v5 beta](https://codesandbox.io/p/sandbox/github/statelyai/xstate/tree/main/examples/todomvc-react).
 
-For more examples, [visit the `/examples` directory in the XState repository](https://github.com/statelyai/xstate/tree/next/examples).
+For more examples, [visit the `/examples` directory in the XState repository](https://github.com/statelyai/xstate/tree/main/examples).
 
 ## Migration and breaking changes
 

@@ -4,13 +4,48 @@ title: 'Migrating from XState v4 to v5'
 
 The guide below explains how to migrate from XState version 4 to version 5. Migrating from XState v4 to v5 should be a straightforward process. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
 
+:::new
+
+Read [David’s blog post on the launch of XState v5](/blog/2023-12-01-xstate-v5).
+
+:::
+
 This guide is for developers who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
 
 :::video
 
-Prefer video? [Watch our Migration to XState V5 beta webinar on YouTube](https://www.youtube.com/watch?v=s-nqoIbIZac).
+Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/live/TRVjeil-y74).
 
 :::
+
+## XState v5 and TypeScript
+
+XState v5 and its related libraries are written in TypeScript, and utilize complex types to provide the best type safety and inference possible for you. **XState v5 requires TypeScript version 5.0 or greater.** For best results, use the latest TypeScript version.
+
+Follow these guidelines to ensure that your TypeScript project is ready to use XState v5:
+
+- Use the latest version of TypeScript, version 5.0 or greater (required)
+
+  ```bash
+  npm install typescript@latest --save-dev
+  ```
+
+- Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and will also help catch errors in your code (strongly recommended)
+
+  ```json5
+  // tsconfig.json
+  {
+    "compilerOptions": {
+      // ...
+      // highlight-next-line
+      "strictNullChecks": true
+      // or set `strict` to true, which includes `strictNullChecks`
+      // "strict": true
+    }
+  }
+  ```
+
+- Set [`skipLibCheck`](https://www.typescriptlang.org/tsconfig#skipLibCheck) to `true` in your `tsconfig.json` file (recommended)
 
 ## Creating machines and actors
 
@@ -25,7 +60,7 @@ Breaking change
 The `Machine(config)` function is now called `createMachine(config)`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -62,7 +97,7 @@ Breaking change
 The `interpret()` function has been renamed to `createActor()`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -103,7 +138,7 @@ Breaking change
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -155,7 +190,7 @@ Breaking change
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input.mdx) instead:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -203,7 +238,7 @@ Breaking change
 Actions are now in predictable order by default, so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -251,6 +286,63 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### The `spawn()` function has been removed
+
+Instead of using the imported `spawn()` function to create actors inside `assign(...)` actions:
+
+- Use the `spawnChild(...)` action creator (preferred)
+- Or use the `spawn(...)` method from the first argument passed to the assigner function inside of `assign(...)` actions (useful if you need the actor ref in `context`)
+
+Read the documentation on [spawning actors](./spawn.mdx) for more information.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+// highlight-next-line
+import { spawnChild, assign } from 'xstate';
+
+// Spawning a direct child:
+const machine1 = createMachine({
+  // ...
+  // highlight-start
+  entry: spawnChild('someChildLogic', {
+    id: 'someChild',
+  })
+  // highlight-end
+});
+
+// Spawning a child with the actor ref in `context`:
+const machine2 = createMachine({
+  // ...
+  entry: assign({
+    // highlight-next-line
+    child: ({ spawn }) => spawn('someChildLogic')
+  })
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌
+import { assign, spawn } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  entry: assign({
+    // highlight-next-line
+    child: () => spawn('someChildLogic')
+  })
+});
+```
+
+</TabItem>
+</Tabs>
+
 ## States
 
 ### Use `state.getMeta()` instead of `state.meta`
@@ -264,7 +356,7 @@ Breaking change
 The `state.meta` property has been renamed to `state.getMeta()`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
   
 ```ts
 // ✅
@@ -302,7 +394,7 @@ Breaking change
 The `state.configuration` property has been renamed to `state._nodes`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
   
 ```ts
 // ✅
@@ -334,7 +426,7 @@ Breaking change
 Implementation functions now take in a single argument: an object with `context`, `event`, and other properties.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -361,7 +453,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### Use either `raise()` or `sendTo()`, not `send()`
+### `send()` is removed; use `raise()` or `sendTo()`
 
 :::breakingchange
 
@@ -374,7 +466,7 @@ The `send(...)` action creator is removed. Use `raise(...)` for sending events t
 Read the documentation on the [`sendTo` action](actions.mdx#send-to-action) and [`raise` action](actions.mdx#raise-action) for more information.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -413,6 +505,80 @@ const machine = createMachine({
 
 **Pre-migration tip:** Update v4 projects to use `sendTo` or `raise` instead of `send`.
 
+### Use `enqueueActions()` instead of `pure()` and `choose()`
+
+The `pure()` and `choose()` methods have been removed. Use `enqueueActions()` instead.
+
+For `pure()` actions:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+entry: [
+  enqueueActions(({ context, event, enqueue }) => {
+    enqueue('action1');
+    enqueue('action2');
+  })
+];
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+entry: [
+  pure(() => {
+    return [
+      'action1',
+      'action2'
+    ]
+  })
+];
+```
+
+</TabItem>
+</Tabs>
+
+For `choose()` actions:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+entry: [
+  enqueueActions(({ enqueue, check }) => {
+    if (check('someGuard')) {
+      enqueue('action1');
+      enqueue('action2');
+    }
+  })
+];
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+entry: [
+  choose([
+    {
+      guard: 'someGuard',
+      actions: ['action1', 'action2']
+    }
+  ]),
+];
+```
+
+</TabItem>
+</Tabs>
+
 ### `actor.send()` no longer accepts string types
 
 :::breakingchange
@@ -424,7 +590,7 @@ Breaking change
 String event types can no longer be sent to, e.g., `actor.send(event)`; you must send an event object instead:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -456,7 +622,7 @@ Breaking change
 String event types can no longer be sent to, e.g., `state.can(event)`; you must send an event object instead:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -486,7 +652,7 @@ Breaking change
 The `cond` transition property for guarded transitions is now called `guard`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -531,7 +697,7 @@ Breaking change
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`. These `params` are then passed to the 2nd argument of the action or guard implementation:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -610,7 +776,7 @@ Breaking change
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -659,7 +825,7 @@ Breaking change
 Eventless (“always”) transitions must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -713,7 +879,7 @@ Breaking change
 External transitions previously specified with `internal: false` are now specified with `reenter: true`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -759,7 +925,7 @@ Breaking change
 All transitions are implicitly internal. This change is relevant for transitions defined on compound state nodes with `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). If you relied on implicit re-entering of a compound state node, use `reenter: true`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -815,7 +981,7 @@ const machine = createMachine({
 </Tabs>
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -877,7 +1043,7 @@ Breaking change
 Child state nodes are always re-entered when they are targeted by transitions (both external and internal) defined on compound state nodes. This change is relevant only if a child state node has `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). Add a `stateIn` guard to prevent undesirable re-entry of the child state:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -888,7 +1054,7 @@ const machine = createMachine({
     compoundState: {
       on: {
         someEvent: {
-          guard: not(stateIn({ compoundState: 'childState' }),
+          guard: not(stateIn({ compoundState: 'childState' })),
           target: '.childState',
         },
       },
@@ -946,7 +1112,7 @@ Breaking change
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -990,7 +1156,7 @@ Breaking change
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1029,7 +1195,7 @@ Breaking change
 The `escalate` action creator is removed. In XState v5 actions can throw errors, and they will propagate as expected. Errors can be handled using an `onError` transition.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1048,10 +1214,10 @@ const parentMachine = createMachine({
     // highlight-start
     onError: {
       actions: ({ context, event }) => {
-        console.log(event.data);
+        console.log(event.error);
         //  {
         //    type: ...,
-        //    data: {
+        //    error: {
         //      message: 'This is some error'
         //    }
         //  }
@@ -1102,7 +1268,7 @@ The available actor logic creators are:
 See [Actors](actors.mdx) for more information.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1146,7 +1312,7 @@ const machine = createMachine({
 </Tabs>
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1186,7 +1352,7 @@ const machine = createMachine({
 </Tabs>
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1232,7 +1398,7 @@ Breaking change
 The `invoke.data` property is removed. If you want to provide context to invoked actors, use `invoke.input`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1288,7 +1454,7 @@ Breaking change
 To produce output data from a machine which reached its final state, use the top-level `output` property instead of `data`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1331,7 +1497,7 @@ const machine = createMachine({
 To provide a dynamically generated output, replace `invoke.data` with `invoke.output` and add a top-level `output` property:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1382,7 +1548,7 @@ Breaking change
 If you want to provide dynamic context to invoked actors, or produce dynamic output from final states, use a function instead of an object with property mappers.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1460,7 +1626,7 @@ Breaking change
 `services` have been renamed to `actors`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1512,7 +1678,7 @@ Breaking change
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1545,16 +1711,16 @@ Breaking change
 
 :::
 
-`interpret(machine).start(state)` is now `createActor(machine, { state }).start()`
+`interpret(machine).start(state)` is now `createActor(machine, { snapshot }).start()`
 
-To restore an actor at a specific state, you should now pass the state as the `state` property of the `options` argument of `createActor(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
+To restore an actor at a specific state, you should now pass the state as the `snapshot` property of the `options` argument of `createActor(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
-const actor = createActor(machine, { state: someState });
+const actor = createActor(machine, { snapshot: someState });
 actor.start();
 ```
 
@@ -1582,7 +1748,7 @@ Breaking change
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1625,7 +1791,7 @@ Breaking change
 The `actor.batch([...])` method for batching events is removed.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1660,7 +1826,7 @@ The `snapshot.done` property, which was previously in the snapshot object of sta
 
 <Tabs>
 
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1693,6 +1859,27 @@ actor.subscribe((state) => {
 </TabItem>
 </Tabs>
 
+### `state.nextEvents` has been removed
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `state.nextEvents` property is removed, since it is not a completely safe/reliable way of determining the next events that can be sent to the actor. If you want to get the next events according to the previous behavior, you can use this helper function:
+
+```ts
+import type { AnyMachineSnapshot } from 'xstate';
+
+function getNextEvents(snapshot: AnyMachineSnapshot) {
+  return [...new Set([...snapshot._nodes.flatMap((sn) => sn.ownEvents)])];
+}
+
+// Instead of `state.nextEvents`:
+const nextEvents = getNextEvents(state);
+```
+
 ## TypeScript
 
 ### Use `types` instead of `schema`
@@ -1706,7 +1893,7 @@ Breaking change
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1760,7 +1947,7 @@ XState Typegen does not fully support XState v5 yet. However, strongly-typed mac
 The `machineConfig.tsTypes` property has been renamed and is now at `machineConfig.types.typegen`.
 
 <Tabs>
-<TabItem value="v5" label="XState v5 beta">
+<TabItem value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1799,41 +1986,229 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+## `@xstate/react`
+
+### `useInterpret()` is now `useActorRef()`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `useInterpret()` hook, which is used to return an `actorRef` ("service" in XState v4), is renamed to `useActorRef()`.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import { useActorRef } from '@xstate/react';
+
+const actorRef = useActorRef(machine); // or any other logic
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { useInterpret } from '@xstate/react';
+
+const service = useInterpret(machine);
+```
+
+</TabItem>
+</Tabs>
+
+
+### `useActor(logic)` now accepts actor logic, not an actor
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+The `useActor(logic)` hook now accepts _actor logic_ (such as `fromPromise(...)`, `createMachine(...)`, etc.) instead of an existing `ActorRef`.
+
+To use an existing `ActorRef`, use `actor.send(...)` to send events and `useSelector(actor, ...)` to get the snapshot:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useSelector } from '@xstate/react';
+
+function Component({ someActorRef }) {
+  const state = useSelector(someActorRef, (s) => s);
+
+  return (
+    <button onClick={() => someActorRef.send({ type: 'someEvent' })} />
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useActor } from '@xstate/react';
+
+function Component({ someActorRef }) {
+  const [state, send] = useActor(someActorRef);
+
+  return (
+    <button onClick={() => send({ type: 'someEvent' })} />
+  );
+}
+```
+
+</TabItem>
+</Tabs>
+
+## `@xstate/vue`
+
+### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+To keep consistent naming with the rest of XState and related libraries:
+
+- `state` is now `snapshot`
+- `service` is now `actor`
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useMachine } from '@xstate/vue';
+
+// ...
+
+const {
+  // highlight-next-line
+  snapshot, // Renamed from `state`
+  send,
+  // highlight-next-line
+  actor // Renamed from `service`
+} = useMachine(someMachine)
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/vue';
+
+// ...
+
+const {
+  // highlight-next-line
+  state, // Renamed to `snapshot` in @xstate/vue 3.0.0
+  send,
+  // highlight-next-line
+  service // Renamed to `actor` in @xstate/vue 3.0.0
+} = useMachine(someMachine)
+```
+
+</TabItem>
+</Tabs>
+
+
 ## New features
 
-_List coming soon_
+- [Create actor systems](system.mdx)
+- [New actor logic creators](/docs/actors#actor-logic-creators)
+- [Deep persistence for invoked and spawned actors](persistence.mdx)
+- [Provide input data to state machines and actors](input.mdx)
+- [Specify output “done data” for actors](output.mdx)
+- [Partial event descriptors (partial wildcards)](/docs/transitions#partial-wildcard-transitions)
+- [Enqueue actions](/docs/actions#enqueue-actions)
+- [Higher-level guards](/docs/guards#higher-level-guards)
+- [Setup API for specifying types and strongly-typed state values](/docs/machines#providing-implementations)
+- [Inspect API](inspection.mdx)
 
-## Timeline
+## Frequently asked questions
 
-XState V5 is in beta, so there’s still work to be done. We anticipate the tools will be fully compatible with XState V5 beta by summer/fall 2023, with XState V5 stable being released by the end of 2023.
+### When will Stately Studio be compatible with XState v5?
 
-### When will XState V5 be out of beta?
+We are currently working on [Stately Studio](studio.mdx) compatibility with XState v5. Exporting to XState v5 (JavaScript or TypeScript) is already available. We are working on support for new XState v5 features, such as higher-order guards, partial event wildcards, and machine input/output.
 
-We hope to release XState V5 as a stable major release this year (2023) but can’t provide any exact estimates. The rough timeline is:
+Upvote or comment on [Stately Studio + XState v5 compatibility in our roadmap](https://feedback.stately.ai/editor/p/stately-studio-xstate-v5-compatibility) to stay updated on our progress.
 
-1. Get early feedback on XState V5 beta (`xstate@beta`)
-2. Ensure all related packages (e.g. `@xstate/react`, `@xstate/vue`) are fully compatible with XState V5
-3. Support V5 in typegen, `@xstate/inspect`, and related tools
-4. Support V5 (importing & exporting) in Stately Studio
-5. Release candidates
-6. Release XState V5 stable
-
-Upvote or comment on [XState V5 in our roadmap](https://feedback.stately.ai/xstate/p/xstate-v5) to be the first to find out when V5 is released.
-
-### When will Stately Studio be compatible with XState V5?
-
-We are currently working on [Stately Studio](studio.mdx) compatibility with XState V5. Exporting to XState V5 (JavaScript or TypeScript) will happen soonest, followed by support for new XState V5 features, such as higher-order guards, partial event wildcards, and machine input/output.
-
-Upvote or comment on [Stately Studio + XState V5 compatibility in our roadmap](https://feedback.stately.ai/editor/p/stately-studio-xstate-v5-compatibility) to stay updated on our progress.
-
-### When will the XState VS Code extension be compatible with XState V5?
+### When will the XState VS Code extension be compatible with XState v5?
 
 The [XState VS Code extension](xstate-vscode-extension.mdx) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway.
 
-Upvote or comment on [XState V5 compatibility for VS Code extension in our roadmap](https://feedback.stately.ai/devtools/p/xstate-v5-compatibility-for-vs-code-extension) to stay updated on our progress.
+Upvote or comment on [XState v5 compatibility for VS Code extension in our roadmap](https://feedback.stately.ai/devtools/p/xstate-v5-compatibility-for-vs-code-extension) to stay updated on our progress.
 
-### When will XState V5 have typegen?
+### When will XState v5 have typegen?
 
-[Typegen](typegen.mdx) automatically generates intelligent typings for XState and is not yet compatible with XState v5. We’re working on Typegen alongside the VS Code extension.
+TypeScript inference has been greatly improved in XState v5. Especially with features like the `setup()` API and dynamic parameters, the main use-cases for typegen are no longer needed.
 
-Upvote or comment on [Typegen for XState V5 in our roadmap](https://feedback.stately.ai/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
+However, we recognize that there may still be some specific use-cases for typegen. Upvote or comment on [Typegen for XState v5 in our roadmap](https://feedback.stately.ai/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
+
+
+### How can I use both XState v4 and v5?
+
+You can use both XState v4 and v5 in the same project, which is useful for incrementally migrating to XState v5. To use both, add `"xstate5": "npm:xstate@5"` to your `package.json` manually or through the CLI:
+
+```bash
+npm i xstate5@npm:xstate@5
+```
+
+Then, you can import the v5 version of XState in your code:
+
+```ts
+import { createMachine } from 'xstate5';
+// or { createMachine as createMachine5 } from 'xstate5';
+```
+
+If you need to use different versions of an integration package, such as `@xstate/react`, you can use a similar strategy as above, but you will need to link to the correct version of XState in the integration package. This can be done by using a script:
+
+```bash
+npm i xstate5@npm:xstate@5 @xstate5/react@npm:@xstate/react@4
+```
+
+```js
+// xstate5-react-script.js
+const fs = require('fs-extra');
+const path = require('path');
+
+const rootNodeModules = path.join(__dirname, '..', 'node_modules');
+
+fs.ensureSymlinkSync(
+  path.join(rootNodeModules, 'xstate5'),
+  path.join(rootNodeModules, '@xstate5', 'react', 'node_modules', 'xstate'),
+);
+```
+
+```json5
+// package.json
+"scripts": {
+  "postinstall": "node xstate5-react-script.js"
+}
+```
+
+Then, you can use the XState v5 compatible version of `@xstate/react` in your code:
+
+```ts
+import { useMachine } from '@xstate5/react';
+// or { useMachine as useMachine5 } from '@xstate5/react';
+import { createMachine } from 'xstate5';
+// or { createMachine as createMachine5 } from 'xstate5';
+
+// ...
+```

@@ -2,99 +2,56 @@
 title: '@xstate/react'
 ---
 
-The [@xstate/react package](https://github.com/statelyai/xstate/tree/main/packages/xstate-react) contains hooks for using [XState](https://github.com/statelyai/xstate) with [React](https://github.com/facebook/react/).
+The [@xstate/react package](https://github.com/statelyai/xstate/tree/main/packages/xstate-react) contains hooks and helper functions for using [XState](https://github.com/statelyai/xstate) with [React](https://github.com/facebook/react/).
 
-## Quick start
+## Templates
 
-1. Install `xstate` and `@xstate/react`:
+Use the following templates to get started quickly with XState and React:
+
+- [XState React template (CodeSandbox)](https://codesandbox.io/p/devbox/github/statelyai/xstate/tree/main/templates/react-ts)
+- [XState React template (StackBlitz)](https://stackblitz.com/github/statelyai/xstate/tree/main/templates/react-ts?file=%2Fsrc%2FfeedbackMachine.ts)
+
+## Installation
+
+Install the latest versions of both `xstate` and `@xstate/react`. `xstate` is a peer dependency of `@xstate/react`.
 
 <Tabs>
-<TabItem value="yarn" label="yarn">
+<TabItem value="npm" label="npm">
 
 ```bash
-yarn add xstate@beta @xstate/react@beta
+npm install xstate @xstate/react
 ```
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="pnpm" label="pnpm">
 
 ```bash
-npm install xstate@beta @xstate/react@beta
+pnpm install xstate @xstate/react
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add xstate @xstate/react
 ```
 
 </TabItem>
 </Tabs>
 
-2. Import the `useMachine` hook:
+:::studio
 
-```js
-import { useMachine } from '@xstate/react';
-import { createMachine } from 'xstate';
+Want to get started with React extra fast? Try the [generate React app feature in Stately Studio](generate-react.mdx).
 
-const toggleMachine = createMachine({
-  id: 'toggle',
-  initial: 'inactive',
-  states: {
-    inactive: {
-      on: { TOGGLE: 'active' },
-    },
-    active: {
-      on: { TOGGLE: 'inactive' },
-    },
-  },
-});
-
-export const Toggler = () => {
-  const [state, send] = useMachine(toggleMachine);
-
-  return (
-    <button onClick={() => send({ type: 'TOGGLE' })}>
-      {state.value === 'inactive'
-        ? 'Click to activate'
-        : 'Active! Click to deactivate'}
-    </button>
-  );
-};
-```
+:::
 
 ## Examples
 
 - [XState + React TodoMVC (CodeSandbox)](https://codesandbox.io/s/xstate-todomvc-33wr94qv1)
 
 ## API
-
-### `useMachine(machine, options?)`
-
-A [React hook](https://reactjs.org/hooks) that creates an actor from the given `machine` and starts an actor that runs for the lifetime of the component.
-
-#### Arguments
-
-- `machine` - An [XState machine](machines.mdx)
-- `options?` - [Actor options](machines.mdx#creating-actors-from-machines).
-
-**Returns** a tuple of `[state, send, actor]`:
-
-- `state` - Represents the current state of the machine as an XState `State` object.
-- `send` - A function that sends events to the running actor.
-- `actor` - The started actor.
-
-```js
-// Existing machine
-const [state, send] = useMachine(machine);
-
-// Machine with provided implementations
-// Will keep provided implementations up-to-date
-const [state, send] = useMachine(
-  machine.provide({
-    actions: {
-      doSomething: ({ context }) => {
-        // ...
-      },
-    },
-  }),
-);
-```
 
 ### `useActor(actorLogic)`
 
@@ -105,31 +62,89 @@ A [React hook](https://reactjs.org/hooks) that creates an actor from the the giv
 - `actorLogic` - The actor logic to create an actor from; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
 - `options?` (optional) - Actor options
 
-```js
+**Returns** a tuple of `[snapshot, send, actorRef]`:
+
+- `snapshot` - Represents the current state of the actor.
+- `send` - A function that sends events to the running actor.
+- `actorRef` - The started actor.
+
+#### Examples
+
+```tsx
+import { fromPromise } from 'xstate';
+import { useActor } from '@xstate/react';
+
 const promiseLogic = fromPromise(async () => {
-  const data = await getData(...);
+  const data = await getData(/* ... */);
 
   return data;
 });
 
-const [state, send] = useActor(promiseLogic);
+function Component() {
+  // highlight-next-line  
+  const [state, send] = useActor(promiseLogic);
+
+  if (state.status === 'done') {
+    return <div>{state.output}</div>;
+  }
+
+  if (state.status === 'active') {
+    return <div>Loading...</div>;
+  }
+
+  return null;
+}
 ```
 
-### `useActorRef(machine, options?, observer?)`
+### `useMachine(machine, options?)`
 
-A React hook that returns the `actorRef` created from the `machine` with the `options`, if specified. It starts the actor ref and runs it for the lifetime of the component. This is similar to `useActor`; however, `useActorRef` allows for a custom `observer` to subscribe to the `actorRef`.
-
-The `useActorRef` is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor` that would flush each update from the machine to the React component, `useActorRef` instead returns a static reference (to just the machine actor) which will not rerender when its state changes.
-
-To use a piece of state from the actorRef inside a render, use the `useSelector(...)` hook to subscribe to it.
+A [React hook](https://reactjs.org/hooks) that creates an actor from the given `machine` and starts an actor that runs for the lifetime of the component.
 
 #### Arguments
 
-- `actorLogic`
+- `machine` - An [XState machine](machines.mdx)
+- `options?` - [Actor options](machines.mdx#creating-actors-from-machines).
+
+**Returns** a tuple of `[snapshot, send, actorRef]`:
+
+- `snapshot` - Represents the current state of the machine.
+- `send` - A function that sends events to the running actor.
+- `actorRef` - The started actor.
+
+#### Examples
+
+```tsx
+import { useMachine } from '@xstate/react';
+
+function Component() {
+  const [snapshot, send] = useMachine(machine);
+  
+  // Machine with provided implementations
+  // Will keep provided implementations up-to-date
+  const [snapshot, send] = useMachine(
+    machine.provide({
+      actions: {
+        doSomething: ({ context }) => {
+          // ...
+        },
+      },
+    }),
+  );
+}
+```
+
+### `useActorRef(machine, options?)`
+
+A React hook that returns the `actorRef` created from the `machine` with actor `options` that are passed to `createActor(logic, options)`, if specified. It starts the actor ref and runs it for the lifetime of the component. 
+
+The `useActorRef(...)` hook is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor(...)` that would flush each update from the machine to the React component, `useActorRef(...)` instead returns a static reference (to just the machine actor) which will not rerender when its state changes.
+
+You can use the `useSelector(...)` hook to select part of the snapshot from the `actorRef` whenever it updates.
+
+#### Arguments
+
+- `actorLogic`- The actor logic to create an actor from; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
 - `options?` (optional) - Actor options
-- `observer?` (optional) - an observer or listener that listens to state updates:
-  - an observer (e.g., `{ next: (snapshot) => {/* ... */} }`)
-  - or a listener (e.g., `(snapshot) => {/* ... */}`)
 
 ```js
 import { useActorRef } from '@xstate/react';
@@ -172,6 +187,8 @@ A React hook that returns the selected value from the snapshot of an `actorRef`,
 - `getSnapshot` (optional) - a function that should return the latest emitted value from the `actor`.
   - Defaults to attempting to get the `actor.state`, or returning `undefined` if that does not exist. Will automatically pull the state from actor refs.
 
+#### Examples
+
 ```js
 import { useSelector } from '@xstate/react';
 
@@ -200,20 +217,20 @@ const App = ({ actorRef }) => {
 };
 ```
 
-### `createActorContext(machine)`
+### `createActorContext(logic)`
 
-Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that creates an actor from the `machine` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
+Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-deeply-with-context) that creates an actor from the provided actor `logic` and makes the actor available through React Context. There are helper methods for accessing state and the actor ref.
 
 #### Arguments
 
-- `machine` - An [XState machine](machines.mdx)
+- `logic` - Actor logic, like an [XState machine](machines.mdx)
 
 Returns a React Context object that contains the following properties:
 
 - `Provider` - a React Context Provider component with the following props:
-  - `machine` - An [XState machine](machines.mdx) that must be of the same type as the machine passed to `createActorContext(...)`
+  - `logic` - Actor logic, such as an [XState machine](machines.mdx) ,that must be of the same type as the actor logic passed to `createActorContext(...)`
 - `useSelector(selector, compare?)` - a React hook that takes in a `selector` function and optional `compare` function and returns the selected value from the actor snapshot
-- `useActorRef()` - a React hook that returns the actor ref of the `machine` actor
+- `useActorRef()` - a React hook that returns the actor ref of the actor created from the actor `logic`
 
 Creating a React Context for the actor and providing it in app scope:
 
@@ -261,7 +278,7 @@ import { someMachine } from '../path/to/someMachine';
 function SomeComponent() {
   return (
     <SomeMachineContext.Provider
-      machine={someMachine.provide({
+      logic={someMachine.provide({
         actions: {
           someAction: differentImplementation,
         },
@@ -342,7 +359,7 @@ const fetchMachine = createMachine({
         onError: {
           target: 'failure',
           actions: assign({
-            error: ({ event }) => event.data,
+            error: ({ event }) => event.error,
           }),
         },
       },
@@ -453,7 +470,7 @@ const Loader = () => {
 
 ## Persisted and rehydrated State
 
-You can persist and rehydrate state with `useMachine(...)` via `options.state` in the 2nd argument:
+You can persist and rehydrate state with `useMachine(...)` via `options.snapshot` in the 2nd argument:
 
 ```js
 // ...
@@ -463,7 +480,7 @@ const persistedState = JSON.parse(localStorage.getItem('some-persisted-state-key
 
 const App = () => {
   const [state, send] = useMachine(someMachine, {
-    state: persistedState // provide persisted state config object here
+    snapshot: persistedState // provide persisted state config object here
   });
 
   // state will initially be that persisted state, not the machine’s initialState

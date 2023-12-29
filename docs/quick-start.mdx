@@ -11,18 +11,18 @@ The fastest way to start with Stately Studio is to go to [state.new](https://sta
 
 :::
 
-## Installing XState V5 beta
+## Installing XState v5
 
 [XState](xstate.mdx) is a visual state management and orchestration library for JavaScript and TypeScript.
 
-Install the XState V5 beta using your preferred package manager:
+Install the XState v5 using your preferred package manager:
 
 
 <Tabs>
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install xstate@beta
+npm install xstate
 ```
 
 </TabItem>
@@ -30,7 +30,7 @@ npm install xstate@beta
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm install xstate@beta
+pnpm install xstate
 ```
 
 </TabItem>
@@ -38,15 +38,24 @@ pnpm install xstate@beta
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add xstate@beta
+yarn add xstate
 ```
 
 </TabItem>
 </Tabs>
 
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
+
+
 ## Create a machine
 
-In XState, a machine is an object that contains all the logic for an actor. In this example, we will create a simple toggle machine that can be in one of two states: `Active` or `Inactive`. The `toggle` event will toggle the state between `Active` and `Inactive`.
+In XState, a [machine](machines.mdx) is an object that contains all the logic for an [actor](actors.mdx). In this example, we will create a simple toggle machine that can be in one of two states: `Active` or `Inactive`. The `toggle` event will toggle the state between `Active` and `Inactive`.
 
 ```js
 import { createMachine } from 'xstate';
@@ -69,7 +78,7 @@ const toggleMachine = createMachine({
 
 ## Create an actor and send events
 
-Machine logic can be used to create an actor. An [actor](actors.mdx) is a running process that can receive messages (events), send messages and change its behavior based on the messages it receives.
+[Machine logic](/docs/actors#actor-logic) can be used to create an actor. An [actor](actors.mdx) is a running process that can receive messages (events), send messages and change its behavior based on the messages it receives.
 
 ```js
 import { createMachine, createActor } from 'xstate';

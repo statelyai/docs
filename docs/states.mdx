@@ -173,7 +173,7 @@ console.log(currentState.can({ type: 'feedback.submit' }));
 
 A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
 
-:::danger
+:::warningxstate
 The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
 :::
 
@@ -283,13 +283,21 @@ states: {
 }
 ```
 
-## TypeScript
+## States and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 _Coming soon_
 
-## Cheatsheet
+## States cheatsheet
 
-### Read or match a state value
+### Cheatsheet: read or match a state value
 
 ```ts
 const state = actor.getSnapshot();
@@ -299,13 +307,13 @@ const currentStateValue = state.value;
 const isLoading = state.matches('loading');
 ```
 
-### Read state context
+### Cheatsheet: read state context
 
 ```ts
 console.log(state.context);
 ```
 
-### Read state output
+### Cheatsheet: read state output
 
 ```ts
 if (state.status === 'done') {
@@ -317,7 +325,7 @@ if (state.status === 'done') {
 }
 ```
 
-### Read state meta data
+### Cheatsheet: read state meta data
 
 ```ts
 console.log(state.getMeta());

@@ -37,12 +37,12 @@ const sidebars = {
       collapsed: false,
       collapsible: true,
       items: [
+        'quick-start',
         {
           type: 'doc',
           label: 'Install XState',
           id: 'installation',
         },
-        'quick-start',
         {
           type: 'doc',
           label: 'Migrate to XState v5',
@@ -55,6 +55,12 @@ const sidebars = {
         },
         'templates',
         'cheatsheet',
+        'typescript',
+        {
+          type: 'link',
+          label: 'API',
+          href: 'https://tsdocs.dev/docs/xstate',
+        },
       ],
     },
     {
@@ -89,21 +95,41 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Using Stately Studio',
+      label: 'Stately Studio',
       link: {
         type: 'generated-index',
-        title: 'Using Stately Studio',
+        title: 'Stately Studio',
         description: 'Learn how to use Stately Studio’s editor.',
         slug: '/category/studio',
         keywords: ['guides'],
       },
-      collapsed: false,
+      collapsed: true,
       collapsible: true,
       items: [
         {
           type: 'doc',
           label: 'Introducing Stately Studio',
           id: 'studio',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Pro',
+          id: 'studio-pro-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Team',
+          id: 'studio-team-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Enterprise',
+          id: 'studio-enterprise-plan',
+        },
+        {
+          type: 'doc',
+          label: 'Stately Studio Community',
+          id: 'studio-community-plan',
         },
         {
           type: 'doc',
@@ -124,12 +150,19 @@ const sidebars = {
           },
           items: [
             'import-from-code',
-            'export-as-code',
+            'import-from-github',
             {
               type: 'doc',
-              label: 'Generate flow',
+              label: 'Generate with AI',
               id: 'generate-flow',
             },
+            {
+              type: 'doc',
+              label: 'Generate React app',
+              id: 'generate-react',
+            },
+            'export-as-code',
+            'generate-test-paths',
             {
               type: 'doc',
               label: 'Colors',
@@ -141,6 +174,11 @@ const sidebars = {
               id: 'annotations',
             },
             'descriptions',
+            {
+              type: 'doc',
+              label: 'Assets',
+              id: 'assets',
+            },
             {
               type: 'doc',
               label: 'Tags',
@@ -230,26 +268,6 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Community plan',
-              id: 'studio-community-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Pro plan',
-              id: 'studio-pro-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Team plan',
-              id: 'studio-team-plan',
-            },
-            {
-              type: 'doc',
-              label: 'Enterprise plan',
-              id: 'studio-enterprise-plan',
-            },
-            {
-              type: 'doc',
               label: 'Sign up',
               id: 'sign-up',
             },
@@ -293,15 +311,16 @@ const sidebars = {
         'states',
         'context',
         'input',
+        'output',
         'transitions',
         'eventless-transitions',
         'delayed-transitions',
         'actions',
         'guards',
+        'initial-states',
         'finite-states',
         'parent-states',
         'parallel-states',
-        'initial-states',
         'final-states',
         'history-states',
         'persistence',
@@ -321,12 +340,22 @@ const sidebars = {
       },
       collapsed: false,
       collapsible: true,
-      items: ['actors', 'invoke', 'spawn', 'system'],
+      items: ['actors', 'invoke', 'spawn', 'system', 'inspection'],
     },
     {
-      type: 'doc',
-      label: 'Testing',
-      id: 'testing',
+      type: 'category',
+      label: 'Guides',
+      link: {
+        type: 'generated-index',
+        title: 'Guides',
+        description:
+          'These guides cover different aspects such as using XState with immer, testing strategies, and other upcoming guides that will be added in the future. The purpose of these guides is to provide users with in-depth knowledge and practical examples to effectively utilize XState in their projects.',
+        slug: '/category/guides',
+        keywords: ['guides'],
+      },
+      collapsed: false,
+      collapsible: true,
+      items: ['testing', 'immer'],
     },
     {
       type: 'category',
@@ -344,10 +373,8 @@ const sidebars = {
         'xstate-react',
         'xstate-vue',
         'xstate-svelte',
-        'xstate-fsm',
         'xstate-graph',
         'xstate-test',
-        'xstate-immer',
       ],
     },
     {

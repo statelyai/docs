@@ -28,13 +28,15 @@ const feedbackActor = createActor(feedbackMachine, {
 
 :::studio
 
-Input is coming to Stately Studio’s editor soon…
+Input is coming to Stately Studio’s editor soon.
 
 :::
 
 ## Creating actors with input
 
-You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, etc.:
+You can pass `input` to any kind of actor by reading this input from the `input` property of the first argument to actor logic creators, such as `fromPromise()`, `fromTransition()`, `fromObservable()`, and other actor logic creators.
+
+**Input with `fromPromise()`:**
 
 ```ts
 import { createActor, fromPromise } from 'xstate';
@@ -57,7 +59,46 @@ userFetcherActor.onDone((data) => {
 });
 ```
 
-Coming soon… show examples for `fromTransition`, `fromObservable`, etc.
+**Input with `fromTransition()`:**
+
+```ts
+import { createActor, fromTransition } from 'xstate';
+
+const counter = fromTransition((state, event)) => {
+  if (event.type === 'INCREMENT') {
+    return { count: state.count + 1 };
+  }
+  return state;
+}, ({ input }) => ({
+  count: input.startingCount ?? 0,
+});
+
+const counterActor = createActor(counter, {
+  // highlight-start
+  input: {
+    startingCount: 10,
+  }
+});
+```
+
+**Input with `fromObservable()`:**
+
+```ts
+import { createActor, fromObservable } from 'xstate';
+import { interval } from 'rxjs';
+
+const intervalLogic = fromObservable(({ input }) => interval(input.interval));
+
+const intervalActor = createActor(intervalLogic, {
+  // highlight-start
+  input: {
+    interval: 1000,
+  },
+  // highlight-end
+})
+
+intervalActor.start();
+```
 
 ## Initial event input
 
@@ -222,11 +263,6 @@ const feedbackActor = createActor(feedbackMachine, {
 });
 ```
 
-- Coming soon… Usage with `@xstate/react`
-- Coming soon… Usage with `@xstate/vue`
-- Coming soon… Usage with `@xstate/svelte`
-- Coming soon… Usage with `@xstate/solid`
-
 ### Passing new data to an actor
 
 Changing the input will not cause the actor to be restarted. You need to send an event to the actor to pass the new data to the actor:
@@ -251,7 +287,15 @@ const Component = (props) => {
 };
 ```
 
-## TypeScript
+## Input and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 You can strongly type the `input` of your machine in the `types.input` property of the machine config.
 
@@ -287,11 +331,11 @@ const actor = createActor(machine, {
 });
 ```
 
-## Cheatsheet
+## Input cheatsheet
 
 Use our XState input cheatsheet below to get started quickly.
 
-### Providing input
+### Cheatsheet: providing input
 
 ```ts
 const feedbackActor = createActor(feedbackMachine, {
@@ -302,7 +346,7 @@ const feedbackActor = createActor(feedbackMachine, {
 });
 ```
 
-### Providing input to invoked actors
+### Cheatsheet: providing input to invoked actors
 
 ```ts
 const feedbackMachine = createMachine({
@@ -315,7 +359,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-### Providing dynamic input to invoked actors
+### Cheatsheet: providing dynamic input to invoked actors
 
 ```ts
 const feedbackMachine = createMachine({
@@ -329,7 +373,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-### Providing input to spawned actors
+### Cheatsheet: providing input to spawned actors
 
 ```ts
 const feedbackMachine = createMachine({

@@ -29,16 +29,15 @@ In the video player above, the *Opened* state is a parent state to the *Playi
 
 The state machine itself is a parent state! It’s the root state, and it’s always active.
 
-It's normal to have a state machine that has no other states. This is useful for modeling a simple state machine that only handles events via transitions:
+It’s normal to have a state machine that has no other states. This is useful for modeling a simple state machine that only handles events by executing actions in transitions.
 
-Example of a simple counting machine with increment, decrement, reset, and no states:
+Here is an example of a simple counting machine with `increment`, `decrement`, and `reset` events, and no states, other than the implicit top-level root state:
 
 ```ts
 import { createMachine } from 'xstate';
 
 const countingMachine = createMachine({
   id: 'counting',
-  initial: 'active',
   on: {
     increment: {
       actions: assign({ count: ({ context }) => context.count + 1 }),
@@ -56,7 +55,7 @@ const countingMachine = createMachine({
 
 ## Initial state
 
-The initial state of a parent state is the state that is entered when the parent state is entered. Parent states _must_ have an initial states.
+The [initial state](initial-states.mdx) of a parent state is the state that is entered when the parent state is entered. Parent states _must_ have an initial states.
 
 You specify the initial state via the `initial` property of the parent state, which is the key of the initial state in the `states` object:
 
@@ -82,31 +81,29 @@ const feedbackMachine = createMachine({
 });
 ```
 
-- Even if the parent state is never directly targeted and its child states are instead targeted, specifying the initial state in the `.initial` property is required. In this case, the `.initial` property can be any of the child states.
+Even if the parent state is never directly targeted and its child states are instead targeted, specifying the initial state in the `.initial` property is required. In this case, the `.initial` property can be any of the child states.
 
 ## Transitions on parent states
 
-A transition that targets a parent state will enter the parent state and its initial state. If that initial state is a parent state, then that state's initial state will be entered, and so on.
+A transition that targets a parent state will enter the parent state and its initial state. If that initial state is a parent state, then that state’s initial state will be entered, and so on.
 
 When an event is received, transitions on the deepest child nodes are checked first to see if any of them are enabled by that event. If no transitions are enabled, then transitions on the parent state are checked. If no transitions on the parent state are enabled, then transitions on the parent's parent state is checked, and so on.
 
 Transitions on a parent state can target child (or descendent) states. This is useful for modeling a transition that should go to a specific child state regardless of which child state is currently active.
 
-Transitions on a child state can target the parent state, though this is not common. A transition from a child state to its parent (or ancestor) state will also enter the parent state's initial state.
+Transitions on a child state can target the parent state, though this is not common. A transition from a child state to its parent (or ancestor) state will also enter the parent state’s initial state.
 
 ## Modeling
 
 _Coming soon_
 
-- Start with a flat structure; don't create parent states too early
-- If many states have common outgoing transitions, that's a good sign for putting them in a parent state
-- Parent states also represent sub-processes. Very useful when
+- Start with a flat structure; don’t create parent states too early
+- If many states have common outgoing transitions, that’s a good sign for putting them in a parent state
+- Parent states also represent sub-processes.
 
-## TypeScript
+## Parent states cheatsheet
 
-_Coming soon_
-
-## Cheatsheet
+### Cheatsheet: creating parent states
 
 ```ts
 // The machine is the root-level parent state

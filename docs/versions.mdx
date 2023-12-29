@@ -4,22 +4,19 @@ title: Version history
 
 # Version history
 
-Version history is helpful if you want to save checkpoints while modeling machines or mirror version changes in the rest of your codebase. New versions can be saved from the current machine using the **Version history** panel in the right tool menu when in **Design** mode.
+Version history is helpful if you want to save checkpoints while modeling machines or mirror version changes in the rest of your codebase. New versions can be saved from the current machine using the **Version history** panel in the lower left of the canvas.
 
-All users can view versions of public machines. Users on our Pro plan and team members can view and create versions for machines in team projects and their own machines in **My Projects**. [Read more about team roles and versions](#team-roles-and-versions).
+All users can view versions of public machines. Users on our premium plans can view and create versions for machines in team projects and their own machines in **My Projects**. [Read more about team roles and versions](#team-roles-and-versions).
 
 :::studio
 
-Version history is a Pro feature of the Stately Studio. [Check out the features on our Pro plan](/studio-pro-plan.mdx) or [upgrade to try the Pro plan with a 7-day free trial](https://stately.ai/registry/billing).
+Version history is a premium feature of Stately Studio. You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade your existing plan](https://stately.ai/registry/billing).
 
 :::
 
 ## Save a version
 
-You can save a new version of your machine when in **Design** mode.
-
-1. Open the **Version history** panel from the right tool menu.
-2. The **Current version** of the machine is selected by default. Use the **Save** button to create a new version from your current machine.
+Save a new version of your machine from the <History size={18} /> **Version history** panel in the lower left corner of the canvas.
 
 :::tip
 
@@ -27,37 +24,11 @@ The **Save** button will be disabled unless you have changed your machine since 
 
 :::
 
-Versions are named with their creation time by default and have the version creator’s avatar.
-
-<p>
-  <ThemedImage
-    alt="Version history panel opened from the right tool menu showing a list of versions."
-    sources={{
-      light: '/assets/versions/version-toolbox.png',
-      dark: '/assets/versions/version-toolbox-dm.png',
-    }}
-  />
-</p>
+Versions are named sequentially by default and have the version creator’s avatar. The version’s timestamp is always shown under the version name.
 
 ### Rename a version
 
-You can rename any version to something other than the version’s timestamp.
-
-1. Select the version name to reveal the text input.
-2. Enter the version’s new name.
-3. The new name will be autosaved when you hit enter or navigate away from the text input.
-
-<p>
-  <ThemedImage
-    alt="Selecting a version name in the Version history panel, showing the text input for the new name."
-    sources={{
-      light: '/assets/versions/version-rename.png',
-      dark: '/assets/versions/version-rename-dm.png',
-    }}
-  />
-</p>
-
-The version’s timestamp will still be shown under the version name.
+You can rename any version after double-clicking or focusing on the version name.
 
 ## Auto-saved versions
 
@@ -72,98 +43,41 @@ An initial version is automatically saved for new machines when:
 
 These versions are labeled “Initial version”.
 
+### Generated versions
+
+An version is also automatically saved for machines when you generate a flow from your existing machine. These versions are labeled with the text description used to generate the flow.
+
 ### Periodic snapshot versions
 
-To reduce the likelihood of data loss, versions are automatically saved hourly as long as edits have been made to the project machine. These versions are labeled with a timestamp that can be edited by you. They work just like other versions that you can view, restore, or delete.
+To reduce the likelihood of data loss, versions are automatically saved hourly as long as edits have been made to the project machine. These versions are labeled sequentially. They work just like other versions that you can view, restore, or delete.
 
 In the version list, these auto-saved versions are hidden by default but you can toggle their visibility to show them along with versions you explicitly save.
 
 ## View a version
 
-You can view any version by selecting that version in the **Version history**. The version will be shown in the Editor and read-only unless you restore that version using the **Restore** button.
+You can view any version by selecting that version in the **Version history**. The version will be shown in the Editor and read-only unless you restore that version using the <ArchiveRestore size={18}/> **Restore** button.
 
-<p>
-  <ThemedImage
-    alt="A version previewed in the Editor which highlights the top bar to show you’re in preview mode."
-    sources={{
-      light: '/assets/versions/version-preview.png',
-      dark: '/assets/versions/version-preview-dm.png',
-    }}
-  />
-</p>
-
-You can return to viewing the current version of your machine from **Return to current version** in the top bar or by selecting **Current Version** from the **Version history** in the right tool menu.
+You can return to viewing the current version of your machine from the <X size={18}/> close icon button in the top bar or by selecting **Current Version** from the **Version history** panel.
 
 ## Restore a version
 
-You can restore your current machine to any version from the version history.
+You can restore your current machine to any version from the <History size={18}/> **Version history** panel using the <ArchiveRestore size={18}/> restore icon button or using the <ArchiveRestore size={18}/> **Restore** button in the top bar when [viewing a version](#view-a-version).
 
-### Restore a version from the **Version history** panel
+:::tip
 
-1. Open the **Version history** panel from the right tool menu.
-2. Hover over the version you want to restore to reveal the restore icon button.
-3. Use the restore icon button to restore to your chosen version.
+You cannot restore a version when a machine is [locked](lock-machines.mdx). Unlock the machine from the machine <Info size={18} /> **Details** panel to re-enable restoring versions.
 
-<p>
-  <ThemedImage
-    alt="Version history panel with the restore icon revealed on hover."
-    sources={{
-      light: '/assets/versions/version-restore.png',
-      dark: '/assets/versions/version-restore-dm.png',
-    }}
-  />
-</p>
-
-### Restore a version when viewing a version
-
-When [viewing a version](#view-a-version), you can restore to that version using the **Restore** button in the top bar.
-
-<p>
-  <ThemedImage
-    alt="A version previewed in the Editor with an arrow pointing to the Restore button."
-    sources={{
-      light: '/assets/versions/version-restore-button.png',
-      dark: '/assets/versions/version-restore-button-dm.png',
-    }}
-  />
-</p>
+:::
 
 ## Create a new machine from a version
 
-You can also create a new machine from a version in your version history.
-
-1. Open the **Version history** panel from the right tool menu.
-2. Select the version from which you want to create a new machine. The version will be previewed in the Editor.
-3. Use the copy icon button in the top bar to create a new machine from that version.
-
-<p>
-  <ThemedImage
-    alt="A version previewed in the Editor with an arrow pointing to the Copy button."
-    sources={{
-      light: '/assets/versions/version-copy.png',
-      dark: '/assets/versions/version-copy-dm.png',
-    }}
-  />
-</p>
+You can also create a new machine from a version in your version history using the <Copy size={18}/> copy button in the top bar when [viewing a version](#view-a-version).
 
 Your new machine will be created and opened in the same project with the same name appended with “(copy).”
 
 ## Delete a version
 
-1. Open the **Version history** panel from the right tool menu.
-2. Select the version you want to delete. The version will be previewed in the Editor.
-3. Use the delete icon button in the top bar to delete that version.
-4. The current version will then be opened in the Editor.
-
-<p>
-  <ThemedImage
-    alt="A version previewed in the Editor with an arrow pointing to the Delete button."
-    sources={{
-      light: '/assets/versions/version-delete.png',
-      dark: '/assets/versions/version-delete-dm.png',
-    }}
-  />
-</p>
+Delete a machine version using the <Trash size={18}/> trash button in the top bar when [viewing a version](#view-a-version).
 
 ## Team roles and versions
 

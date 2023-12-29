@@ -1,3 +1,5 @@
+import Link from '@docusaurus/Link';
+
 export function Footer() {
   return (
     <div className="bg-blue-950 pb-24 pt-72">
@@ -31,6 +33,9 @@ function AllLinks() {
         <LinkItem href="#design">Features</LinkItem>
         <LinkItem href="/docs/">Documentation</LinkItem>
         <LinkItem href="https://github.com/statelyai/xstate">XState</LinkItem>
+        <LinkItem href="https://stately.ai/blog/tags/case-study">
+          Case studies
+        </LinkItem>
         <LinkItem href="/pricing/">Pricing</LinkItem>
       </LinkList>
       <LinkList title="Company">
@@ -40,7 +45,7 @@ function AllLinks() {
       </LinkList>
       <LinkList title="Resources">
         <LinkItem href="/privacy/">Privacy policy</LinkItem>
-        <LinkItem href="/code-of-conduct/">Code of Conduct</LinkItem>
+        <LinkItem href="/code-of-conduct/">Code of conduct</LinkItem>
       </LinkList>
 
       <LinkList title="Community">

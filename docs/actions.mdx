@@ -2,7 +2,7 @@
 title: 'Actions'
 ---
 
-Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined on transitions in the `actions: ...` property. Anywhere you can use an action, you can also declare it as an array to express multiple actions.
+Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined on transitions in the `actions: [...]` property. Actions can also be defined for any transition that enters a state in the state's `entry: [...]` property, or for any transition that exits a state in the state's `exit: [...]` property.
 
 :::studio
 
@@ -10,7 +10,7 @@ You can visualize your state machines and easily add actions in our drag-and-dro
 
 :::
 
-Actions can also be on a states’ `entry` or `exit`, also as a single action or an array.
+Actions can also be on a state’s `entry` or `exit`, also as a single action or an array.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -35,7 +35,7 @@ const feedbackMachine = createMachine({
   actions: {
     track: (_, params) => {
       track(params);
-      // tracks { response: 'good' }
+      // Tracks { response: 'good' }
     },
     showConfetti: () => {
       // ...
@@ -48,49 +48,22 @@ Examples of actions:
 
 - Logging a message
 - Sending a message to another [actor](actors.mdx)
-- _Coming soon: more examples_
+- Updating context
 
 ## Entry and exit actions
 
-Entry actions are actions that occur on any transition that enters a state node.
-
-Coming soon… illustation
-
-Exit actions are actions that occur on any transition that exits a state node.
-
-Coming soon… illustration
+Entry actions are actions that occur on any transition that enters a state node. Exit actions are actions that occur on any transition that exits a state node.
 
 Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
-Coming soon… example
-
-## Inline actions
-
-You can declare actions as inline functions:
-
-```ts
-import { createMachine } from 'xstate';
-
-const feedbackMachine = createMachine({
-  entry: [
-    // highlight-start
-    // Inline action
-    ({ context, event }) => {
-      console.log(/* ... */);
-    },
-    // highlight-end
-  ],
-});
-```
-
-Inline actions are useful for prototyping and simple cases but we generally recommended using serialized actions.
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=f46674a5-4da3-4aca-9900-17c6ef471f50" title="Feedback form"/>
 
 ## Action objects
 
 Action objects have an action `type` and an optional `params` object:
 
-- Action `type` describes the action. Actions with the same type have the same implementation.
-- Action `params` hold parameterized values that are relevant to the action.
+- The action `type` property describes the action. Actions with the same type have the same implementation.
+- The action `params` property hold parameterized values that are relevant to the action.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -117,30 +90,100 @@ const feedbackMachine = createMachine({
 });
 ```
 
-## Implementing actions
+## Dynamic action parameters
 
-You can add the implementations for named actions in the `actions` property of the 2nd argument of `createMachine(config, implementations)`:
+You can dynamically pass parameters in the `params` property to action objects by using a function that returns the params. The function takes in an object that contains the current `context` and `event` as arguments.
 
 ```ts
-const feedbackMachine = createMachine(
-  {
-    // Machine config
-    // ...
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: {
+    initialRating: 3
   },
-  {
+  entry: [{
+    type: 'logInitialRating',
     // highlight-start
-    actions: {
-      track: ({ context, event }, params) => {
-        // Action implementation
-        // ...
-      },
+    params: ({ context }) => ({
+      initialRating: context.initialRating
+    })
+    // highlight-end
+  }]
+});
+```
+
+This is a recommended approach for making actions more reusable, since you can define actions that do not rely on the machine’s `context` or `event` types.
+
+```ts
+import { setup } from 'xstate';
+
+// highlight-start
+function logInitialRating(_, params: { initialRating: number }) {
+  console.log(`Initial rating: ${params.initialRating}`);
+}
+// highlight-end
+
+const feedbackMachine = setup({
+  actions: { logInitialRating }
+}).createMachine({
+  context: { initialRating: 3 },
+  entry: [{
+    type: 'logInitialRating',
+    // highlight-start
+    params: ({ context }) => ({
+      initialRating: context.initialRating
+    })
+    // highlight-end
+  }]
+});
+```
+
+## Inline actions
+
+You can declare actions as inline functions:
+
+```ts
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  entry: [
+    // highlight-start
+    // Inline action
+    ({ context, event }) => {
+      console.log(/* ... */);
     },
     // highlight-end
+  ],
+});
+```
+
+Inline actions are useful for prototyping and simple cases but we generally recommended using action objects.
+
+## Implementing actions
+
+You can setup the implementations for named actions in the `actions` property of the `setup(...)` function
+
+```ts
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  // highlight-start
+  actions: {
+    track: ({ context, event }, params) => {
+      // Action implementation
+      // ...
+    },
+  }
+  // highlight-end
+}).createMachine(
+  {
+    // Machine config
+    entry: [{ type: 'track', params: { msg: 'entered' }}]
   },
 );
 ```
 
-These implementations can later be overridden by providing implementations in the `machine.provide(implementations)` method, which creates a new machine with the same config but with the provided implementations:
+You can also provide action implementations to override existing actions in the `machine.provide(...)` method, which creates a new machine with the same config but with the provided implementations:
 
 ```ts
 const feedbackActor = createActor(
@@ -148,7 +191,8 @@ const feedbackActor = createActor(
   feedbackMachine.provide({
     actions: {
       track: ({ context, event }, params) => {
-        // Overridden action implementation
+        // Different action implementation
+        // (overrides previous implementation)
         // ...
       },
     },
@@ -170,9 +214,11 @@ const countMachine = createMachine({
   },
   on: {
     increment: {
+      // highlight-start
       actions: assign({
         count: ({ context, event }) => context.count + event.value,
       }),
+      // highlight-end
     },
   },
 });
@@ -191,7 +237,7 @@ countActor.send({ type: 'increment', value: 2 });
 // logs 5
 ```
 
-For more dynamic assignments, the `assignments` argument may also be a function that returns the partial or full `context` value:
+For more dynamic assignments, the argument passed to `assign(...)` may also be a function that returns the partial or full `context` value:
 
 ```ts
 const countMachine = createMachine({
@@ -212,12 +258,24 @@ const countMachine = createMachine({
 });
 ```
 
+:::studio
+
+You can create state machines with the `assign(...)` action in our drag-and-drop Stately editor. [Read more about built-in assign action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
+
 ## Raise action
 
 The raise action is a special action that _raises_ an event that is received by the same machine. Raising an event is how a machine can “send” an event to itself:
 
 ```ts
-actions: raise({ type: 'someEvent', data: 'someData' });
+import { createMachine, raise } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  // highlight-next-line
+  entry: raise({ type: 'someEvent', data: 'someData' });
+});
 ```
 
 Internally, when an event is raised, it is placed into an “internal event queue”. After the current transition is finished, these events are processed in insertion order ([first-in first-out, or FIFO](<https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)>)). External events are only processed once all events in the internal event queue are processed.
@@ -225,14 +283,40 @@ Internally, when an event is raised, it is placed into an “internal event queu
 Raised events can be dynamic:
 
 ```ts
-raise(({ context, event }) => ({ type: 'SOME_EVENT' }));
+import { createMachine, raise } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  // highlight-start
+  entry: raise(({ context, event }) => ({
+    type: 'dynamicEvent',
+    data: context.someValue,
+  }))
+  // highlight-end
+});
 ```
 
 Events can also be raised with a delay, which will not place them in the internal event queue, since they will not be immediately processed:
 
+
 ```ts
-actions: raise({ type: 'someEvent' }, { delay: 1000 });
+import { createMachine, raise } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  entry: raise(
+    { type: 'someEvent' },
+    // highlight-next-line
+    { delay: 1000 }
+  );
+});
 ```
+
+:::studio
+
+You can create state machines with the `raise(...)` action in our drag-and-drop Stately editor. [Read more about the built-in raise action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
 
 ## Send-to action
 
@@ -306,23 +390,105 @@ const machine = createMachine({
 });
 ```
 
-## Pure action
+:::studio
 
-The `pure(...)` action is a higher-level action that returns an array of actions to be executed, without actually executing any effects (hence the name "pure").
+You can create state machines with the `sendTo(...)` action in our drag-and-drop Stately editor. [Read more about the built-in sendTo action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
-_Example coming soon_
+:::
+
+## Enqueue actions
+
+The `enqueueActions(...)` action creator is a higher-level action that enqueues actions to be executed sequentially, without actually executing any of the actions. It takes a callback that receives the `context`, `event` as well as `enqueue` and `check` functions:
+
+- The `enqueue(...)` function is used to enqueue an action. It takes an action object or action function:
+  ```ts
+  actions: enqueueActions(({ enqueue }) => {
+    // Enqueue an action object
+    enqueue({ type: 'greet', params: { message: 'hi' } });
+
+    // Enqueue an action function
+    enqueue(() => console.log('Hello'));
+
+    // Enqueue a simple action with no params
+    enqueue('doSomething');
+  })
+  ```
+- The `check(...)` function is used to conditionally enqueue an action. It takes a guard object or a guard function and returns a boolean that represents whether the guard evaluates to `true`:
+  ```ts
+  actions: enqueueActions(({ enqueue, check }) => {
+    if (check({ type: 'everythingLooksGood' })) {
+      enqueue('doSomething');
+    }
+  })
+  ```
+- There are also helper methos on `enqueue` for enqueueing built-in actions:
+  - `enqueue.assign(...)`: Enqueues an `assign(...)` action
+  - `enqueue.sendTo(...)`: Enqueues a `sendTo(...)` action
+  - `enqueue.raise(...)`: Enqueues a `raise(...)` action
+  - `enqueue.spawnChild(...)`: Enqueues a `spawnChild(...)` action
+  - `enqueue.stopChild(...)`: Enqueues a `stopChild(...)` action
+  - `enqueue.cancel(...)`: Enqueues a `cancel(...)` action
+
+Enqueued actions can be called conditionally, but they cannot be enqueued asynchronously.
+
+```ts
+const machine = createMachine({
+  // ...
+  entry: enqueueActions(({ context, event, enqueue, check }) => {
+    // assign action
+    enqueue.assign({
+      count: context.count + 1
+    });
+
+    // Conditional actions (replaces choose(...))
+    if (event.someOption) {
+      enqueue.sendTo('someActor', { type: 'blah', thing: context.thing });
+
+      // other actions
+      enqueue('namedAction');
+      // with params
+      enqueue({ type: 'greet', params: { message: 'hello' } });
+    } else {
+      // inline
+      enqueue(() => console.log('hello'));
+
+      // even built-in actions
+    }
+
+    // Use check(...) to conditionally enqueue actions based on a guard
+    if (check({ type: 'someGuard' })) {
+      // ...
+    }
+
+    // no return
+  })
+});
+```
 
 ## Log action
 
 The `log(...)` action is an easy way to log messages to the console.
 
-_Example coming soon_
+```ts
+import { createMachine, log } from 'xstate';
 
-## Choose action
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: log('some message'),
+      // highlight-end
+    },
+  },
+});
+```
 
-The `choose(...)` action is a higher-level action that returns an array of actions to be executed.
+:::studio
 
-_Example coming soon_
+You can create state machines with the `log(...)` action in our drag-and-drop Stately editor. [Read more about the built-in log action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
+
+:::
+
 
 ## Cancel action
 
@@ -352,21 +518,25 @@ const machine = createMachine({
 });
 ```
 
-## Stop action
+## Stop child action
 
-The `stop(...)` action stops a child actor. Actors can only be stopped from their parent actor:
+The `stopChild(...)` action stops a child actor. Actors can only be stopped from their parent actor:
 
 ```ts
+import { createMachine, stopChild } from 'xstate';
+
 const machine = createMachine({
   context: ({ spawn }) => ({
     spawnedRef: spawn(fromPromise(/* ... */), { id: 'spawnedId' }),
   }),
   on: {
     stopById: {
-      actions: stop('spawnedId'),
+      // highlight-next-line
+      actions: stopChild('spawnedId'),
     },
     stopByRef: {
-      actions: stop(({ context }) => context.spawnedRef),
+      // highlight-next-line
+      actions: stopChild(({ context }) => context.spawnedRef),
     },
   },
 });
@@ -374,9 +544,11 @@ const machine = createMachine({
 
 ## Modeling
 
-If you only need to execute actions in response to events, you can create a [self-transition](transitions.mdx#self-transitions) that only has `actions: [ ... ]` defined. For example, a machine that only needs to assign to `context` in transitions may look like this:
+If you only need to execute actions in response to events, you can create a [self-transition](/docs/transitions#self-transitions) that only has `actions: [ ... ]` defined. For example, a machine that only needs to assign to `context` in transitions may look like this:
 
 ```ts
+import { createMachine } from 'xstate';
+
 const countMachine = createMachine({
   context: {
     count: 0,
@@ -400,10 +572,39 @@ const countMachine = createMachine({
 
 ## Shorthands
 
-- For simple actions, can specify action string instead of object
-- Objects preferred for consistency
+For simple actions, you can specify an action string instead of an action object. Though we prefer using objects for consistency.
 
-## TypeScript
+```ts
+
+import { createMachine } from 'xstate';
+
+const feedbackMachine = createMachine({
+  // ...
+  states: {
+    // ...
+    question: {
+      on: {
+        'feedback.good': {
+          // highlight-start
+          actions: ['track'],
+          // highlight-end
+        },
+      },
+    },
+  },
+});
+
+```
+
+## Actions and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 You can strongly type the `actions` of your machine in the `types.actions` property of the machine config.
 
@@ -429,6 +630,240 @@ const machine = createMachine({
 });
 ```
 
-## Cheatsheet
+If you want to setup default action implementations, you can also use the `setup({ ... })` function:
 
-_Coming soon_
+```ts
+const machine = setup({
+  // highlight-start
+  actions: {
+    track: (_, params: { response: string }) => {
+      // ...
+    },
+    increment: (_, params: { value: number }) => {
+      // ...
+    }
+  }
+  // highlight-end
+}).createMachine({
+  // ...
+  entry: [
+    { type: 'track', params: { response: 'good' } },
+    { type: 'increment', params: { value: 1 } },
+  ]
+});
+```
+
+## Actions cheatsheet
+
+### Cheatsheet: entry and exit actions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // highlight-start
+  // Entry action on root
+  entry: [{ type: 'entryAction' }],
+  exit: [{ type: 'exitAction' }],
+  // highlight-end
+  initial: 'start',
+  states: {
+    start: {
+      // highlight-start
+      entry: [{ type:'startEntryAction' }],
+      exit: [{ type:'startExitAction' }],
+      // highlight-end
+    }
+  }
+});
+```
+
+### Cheatsheet: transition actions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      actions: [
+        // highlight-start
+        { type: 'doSomething' },
+        { type: 'doSomethingElse' },
+        // highlight-end
+      ]
+    }
+  }
+});
+```
+
+### Cheatsheet: inline action functions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      actions: [
+        // highlight-start
+        ({ context, event }) => {
+          console.log(context, event);
+        }
+        // highlight-end
+      ]
+    }
+  }
+});
+```
+
+### Cheatsheet: setting up actions
+
+```ts
+import { setup } from 'xstate';
+
+const someAction = () => {
+  //...
+}
+
+const machine = setup({
+  actions: {
+    someAction
+  }
+}).createMachine({
+  entry: [
+    // highlight-start
+    { type: 'someAction' }
+    // highlight-end
+  ],
+  // ...
+})
+```
+
+### Cheatsheet: providing actions
+
+```ts
+import { setup } from 'xstate';
+
+const someAction = () => {
+  //...
+}
+
+const machine = setup({
+  actions: {
+    someAction
+  }
+}).createMachine({
+  // ...
+});
+
+const modifiedMachine = machine.provide({
+  someAction: () => {
+    // Overridden action implementation
+  }
+});
+```
+
+### Cheatsheet: assign action
+
+#### With property assigners
+
+```ts
+import { createMachine } from 'xstate';
+
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      // highlight-start
+      actions: assign({
+        count: ({ context, event }) => {
+          return context.count + event.value;
+        }
+      }),
+      // highlight-end
+    },
+  },
+});
+```
+
+#### With function assigners
+
+```ts
+import { createMachine } from 'xstate';
+
+const countMachine = createMachine({
+  context: {
+    count: 0,
+  },
+  on: {
+    increment: {
+      // highlight-start
+      actions: assign(({ context, event }) => {
+        return {
+          count: context.count + event.value
+        };
+      }),
+      // highlight-end
+    },
+  },
+});
+```
+
+### Cheatsheet: raise action
+
+```ts
+import { createMachine, raise } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: raise({ type: 'anotherEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
+
+### Cheatsheet: send-to action
+
+```ts
+const machine = createMachine({
+  on: {
+    transmit: {
+      // highlight-start
+      actions: sendTo('someActor', { type: 'someEvent' }),
+      // highlight-end
+    },
+  },
+});
+```
+
+### Cheatsheet: enqueue actions
+
+```ts
+import { createMachine, enqueueActions } from 'xstate';
+
+const machine = createMachine({
+  // highlight-start
+  entry: enqueueActions(({ enqueue, check }) => {
+    enqueue({ type: 'someAction' });
+
+    if (check({ type: 'someGuard' })) {
+      enqueue({ type: 'anotherAction' });
+    }
+
+    enqueue.assign({
+      count: 0
+    })
+
+    enqueue.sendTo('someActor', { type: 'someEvent' });
+
+    enqueue.raise({ type: 'anEvent' })
+  })
+  // highlight-end
+});
+```

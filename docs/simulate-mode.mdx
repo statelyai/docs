@@ -3,7 +3,7 @@ title: 'Simulate mode'
 description: 'Tour the features in Stately editor’s Simulate mode, including a guide to all the panels and how to simulate your machines.'
 ---
 
-You can simulate your machine as if it were live in Simulate Mode. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue.
+You can simulate your machine as if it were live using the <Play size={18}/> **Simulate** button. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue.
 
 <EmbedMachine
   name="Simulate mode"
@@ -12,7 +12,7 @@ You can simulate your machine as if it were live in Simulate Mode. Your machine 
 
 ## Simulate events
 
-Press any available event to walk through your machine. Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the <ListOrderedIcon size={12} /> [Log](#log).
+Press any available event to walk through your machine on the canvas or using the event buttons in the <ListOrderedIcon size={12} /> **Simulation controls** panel. Use <RefreshCcw size={12}/> **Reset** in the canvas tools to return to the initial state and clear the [event log](#event-log).
 
 :::warning
 
@@ -20,22 +20,22 @@ Simulate mode is disabled if your machine contains errors. States and events wit
 
 :::
 
-### Eventless (always) events
+### Simulate eventless (always) events
 
-Eventless (always) events will be triggered instantly upon entering their source state unless they’re guarded with a condition.
+[Eventless (always) events](/docs/editor-states-and-transitions/#eventless-always-events) will be triggered instantly upon entering their source state unless they’re guarded with a condition.
 
-### Delayed (after) events
+### Simulate delayed (after) events
 
-Delayed (after) events will be taken automatically after completing the timer.
+[Delayed (after) events](/docs/editor-states-and-transitions/#delayed-after-events) will be taken automatically after completing the timer.
 
-## Log
+## Event log
 
-All triggered events are recorded, in order, in the <ListOrderedIcon size={12} /> Log panel, along with their target state. Press any event in the log panel list to return to that event. Press any state in the log panel list to return to that state.
+All triggered events are recorded, in order, in the <ListOrderedIcon size={12} /> **Simulation controls** panel, along with their target state. Press any event in the log panel list to return to that event. Press any state in the log panel list to return to that state.
 
-Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the <ListOrderedIcon size={12} /> [Log](#log).
+Use <RefreshCcw size={12}/> **Reset** to return to the initial state and clear the event log.
 
 :::studio
 
-[Live simulation mode](live-simulation.mdx) ([pro feature](studio-pro-plan.mdx)) helps you share your simulated machine with your team without screen sharing or screenshots.
+[Live simulation mode](live-simulation.mdx) ([premium feature](studio-pro-plan.mdx)) helps you share your simulated machine with your team without screen sharing or screenshots.
 
 :::

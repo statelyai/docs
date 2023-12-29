@@ -51,13 +51,21 @@ const checkoutMachine = createMachine({
 - If the history state is entered but the parent state was never visited, the parent's initial state is entered.
 - However, you can add a `target: 'childKey'` to specify the default child state that should be entered
 
-## TypeScript
+## History states and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 _Coming soon_
 
-## Cheatsheet
+## History states cheatsheet
 
-**Create a history state (shallow by default)**
+### Cheatsheet: create a history state (shallow by default)
 
 ```ts
 const machine = createMachine({
@@ -71,7 +79,7 @@ const machine = createMachine({
 });
 ```
 
-**Create a deep history state**
+### Cheatsheet: create a deep history state
 
 ```ts
 const machine = createMachine({
@@ -88,7 +96,7 @@ const machine = createMachine({
 });
 ```
 
-**Create a history state with a target**
+### Cheatsheet: create a history state with a target
 
 ```ts
 const machine = createMachine({

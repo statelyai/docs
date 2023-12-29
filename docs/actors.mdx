@@ -39,7 +39,7 @@ In the actor model, actors are objects that can communicate with each other. The
 
 Actor logic is the actor’s logical “model” (brain, blueprint, DNA, etc.) It describes how the actor should change behavior when receiving an event. You can create actor logic using **[actor logic creators](#actor-logic-creators)**.
 
-In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialState()`, `.getPersistedState()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
+In XState, actor logic is defined by an object implementing the `ActorLogic` interface, containing methods like `.transition(...)`, `.getInitialSnapshot()`, `.getPersistedSnapshot()`, and more. This object tells an interpreter how to update an actor’s internal state when it receives an event and which effects to execute (if any).
 
 ## Creating actors
 
@@ -156,21 +156,21 @@ subscription.unsubscribe();
 
 When the actor is stopped, all of its observers will automatically be unsubscribed.
 
-You can initialize actor logic at a specific persisted internal state by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
+You can initialize actor logic at a specific persisted snapshot (state) by passing the state in the second `options` argument of `createActor(logic, options)`. If the state is compatible with the actor logic, this will create an actor that will be started at that persisted state:
 
 ```ts
 const persistedState = JSON.parse(localStorage.getItem('some-persisted-state'));
 
 const actor = createActor(someLogic, {
   // highlight-start
-  state: persistedState,
+  snapshot: persistedState,
   // highlight-end
 });
 
 actor.subscribe(() => {
   localStorage.setItem(
     'some-persisted-state',
-    JSON.stringify(actor.getPersistedState()),
+    JSON.stringify(actor.getPersistedSnapshot()),
   );
 });
 
@@ -348,7 +348,7 @@ secondActor.start();
 // ...
 ```
 
-### Event observable logic (`fromEventObservable(...)` {#fromeventobservable}
+### Event observable logic (`fromEventObservable(...)`) {#fromeventobservable}
 
 Event observable actor logic is described by an observable stream of [event objects](transitions.mdx#event-objects). Actors created from event observable logic (“event observable actors”) can:
 
@@ -450,6 +450,39 @@ const machine = createMachine({
 });
 ```
 
+## Actors as promises
+
+You can create a promise from any actor by using the `toPromise(actor)` function. The promise will resolve with the actor snapshot's `.output` when the actor is done (`snapshot.status === 'done'`) or reject with the actor snapshot's `.error` when the actor is errored (`snapshot.status === 'error'`).
+
+```ts
+import { createMachine, createActor, toPromise } from 'xstate';
+
+const machine = createMachine({
+  // ...
+  states: {
+    // ...
+    done: { type: 'final' }
+  },
+  output: {
+    count: 42
+  }
+});
+
+const actor = createActor(machine);
+actor.start();
+
+// highlight-start
+// Creates a promise that resolves with the actor's output
+// or rejects with the actor's error
+const output = await toPromise(actor);
+// highlight-end
+
+console.log(output);
+// => { count: 42 }
+```
+
+If the actor is already done, the promise will resolve with the actor's `snapshot.output` immediately. If the actor is already errored, the promise will reject with the actor's `snapshot.error` immediately.
+
 ## Higher-level actor logic
 
 Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
@@ -497,13 +530,13 @@ const countLogic: ActorLogic<
     }
     return state;
   },
-  getInitialState: () => ({
+  getInitialSnapshot: () => ({
     status: 'active',
     output: undefined,
     error: undefined,
     context: 0
   }),
-  getPersistedState: (s) => s
+  getPersistedSnapshot: (s) => s
 };
 
 const actor = createActor(countLogic)
@@ -543,7 +576,15 @@ function Component(props: { actor?: AnyActorRef }) {
 }
 ```
 
-## TypeScript
+## Actors and TypeScript
+
+:::typescript
+
+**XState v5 requires TypeScript version 5.0 or greater.** 
+
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+
+:::
 
 You can strongly type the `actors` of your machine in the `types.actors` property of the machine config.
 
@@ -556,16 +597,15 @@ const fetcher = fromPromise(
   },
 );
 
-const machine = createMachine({
-  types: {} as {
-    // highlight-start
-    actors: {
-      src: 'fetchData'; // src name (inline behaviors ideally inferred)
-      id: 'fetch1' | 'fetch2'; // possible ids (optional)
-      logic: typeof fetcher;
-    };
-    // highlight-end
-  },
+const machine = setup({
+  types: {
+    children: {} as {
+      fetch1: 'fetcher';
+      fetch2: 'fetcher';
+    }
+  }
+  actors: { fetcher }
+}).createMachine({
   invoke: {
     src: 'fetchData', // strongly typed
     id: 'fetch2', // strongly typed
@@ -579,6 +619,183 @@ const machine = createMachine({
 });
 ```
 
-## Cheatsheet
+## Actors cheatsheet
 
-_Coming soon_
+### Cheatsheet: create an actor
+
+```ts
+import { createActor } from 'xstate';
+import { someActorLogic } from './someActorLogic.ts';
+
+// Create an actor from the actor logic
+const actor = createActor(someActorLogic);
+
+// Subscrube to an actor’s snapshot values and log them
+actor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+
+// Start the actor system
+actor.start();
+
+// Now the actor can receive events
+actor.send({ type: 'someEvent' });
+
+// Stops the root actor, actor system, and actors in the system
+actor.stop();
+```
+
+### Cheatsheet: state machine logic
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const toggleMachine = createMachine({
+  id: 'toggle',
+  initial: 'inactive',
+  states: {
+    inactive: {},
+    active: {},
+  },
+});
+
+const toggleActor = createActor(toggleMachine);
+
+toggleActor.subscribe((snapshot) => {
+  // snapshot is the machine’s state
+  console.log('state', snapshot.value);
+  console.log('context', snapshot.context);
+});
+toggleActor.start();
+// Logs 'inactive'
+toggleActor.send({ type: 'toggle' });
+// Logs 'active'
+```
+
+### Cheatsheet: promise logic
+
+```ts
+import { fromPromise, createActor } from 'xstate';
+
+const promiseLogic = fromPromise(() => {
+  return fetch('https://example.com/...').then((data) => data.json());
+});
+
+const promiseActor = createActor(promiseLogic);
+promiseActor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+promiseActor.start();
+
+```
+
+### Cheatsheet: transition function logic
+
+```ts
+import { fromTransition, createActor } from 'xstate';
+
+const transitionLogic = fromTransition(
+  (state, event) => {
+    if (event.type === 'increment') {
+      return {
+        ...state,
+        count: state.count + 1,
+      };
+    }
+    return state;
+  },
+  { count: 0 },
+);
+
+const transitionActor = createActor(transitionLogic);
+transitionActor.subscribe((snapshot) => {
+  console.log(snapshot);
+});
+transitionActor.start();
+// => {
+//   status: 'active',
+//   context: { count: 0 },
+//   ...
+// }
+
+transitionActor.send({ type: 'increment' });
+// => {
+//   status: 'active',
+//   context: { count: 1 },
+//   ...
+// }
+```
+
+### Cheatsheet: observable logic
+
+```ts
+import { fromObservable, createActor } from 'xstate';
+import { interval } from 'rxjs';
+
+const secondLogic = fromObservable(() => interval(1000));
+
+const secondActor = createActor(secondLogic);
+
+secondActor.subscribe((snapshot) => {
+  console.log(snapshot.context);
+});
+
+secondActor.start();
+// At every second:
+// Logs 0
+// Logs 1
+// Logs 2
+// ...
+```
+
+### Cheatsheet: event observable logic
+
+```ts
+import { fromEventObservable, createActor } from 'xstate';
+import { fromEvent } from 'rxjs';
+
+const mouseClickLogic = fromEventObservable(() =>
+  fromEvent(document.body, 'click') as Subscribable<EventObject>
+);
+
+const canvasMachine = createMachine({
+  invoke: {
+    // Will send mouse click events to the canvas actor
+    src: mouseClickLogic,
+  },
+});
+
+const canvasActor = createActor(canvasMachine);
+canvasActor.start();
+```
+
+### Cheatsheet: callback logic
+
+```ts
+import { fromCallback, createActor } from 'xstate';
+
+const callbackLogic = fromCallback(({ sendBack, receive }) => {
+  let lockStatus = 'unlocked';
+
+  const handler = (event) => {
+    if (lockStatus === 'locked') {
+      return;
+    }
+    sendBack(event);
+  };
+
+  receive((event) => {
+    if (event.type === 'lock') {
+      lockStatus = 'locked';
+    } else if (event.type === 'unlock') {
+      lockStatus = 'unlocked';
+    }
+  });
+
+  document.body.addEventListener('click', handler);
+
+  return () => {
+    document.body.removeEventListener('click', handler);
+  };
+});
+```

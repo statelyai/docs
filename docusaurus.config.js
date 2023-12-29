@@ -32,10 +32,6 @@ const config = {
 
   scripts: [
     {
-      src: 'https://esm.run/xstate',
-      async: true,
-    },
-    {
       src: 'https://plausible.io/js/script.tagged-events.js',
       defer: true,
       'data-domain': 'stately.ai',
@@ -63,7 +59,7 @@ const config = {
             4: {
               label: 'XState v4',
               path: 'xstate-v4',
-              banner: 'unmaintained',
+              banner: 'none',
             },
           },
 
@@ -128,6 +124,18 @@ const config = {
             from: '/docs/xstate/typescript/type-helpers',
           },
           {
+            to: '/docs/states',
+            from: '/docs/states/intro',
+          },
+          {
+            to: '/docs/state-machines-and-statecharts',
+            from: '/docs/xstate/basics/what-is-a-statechart',
+          },
+          {
+            to: '/docs/typegen',
+            from: '/docs/xstate/typescript/typegen',
+          },
+          {
             // Redirect to the new "Getting Started" page from the Sky category page (until we have a Sky category page)
             to: '/docs/stately-sky-getting-started',
             from: '/docs/sky',
@@ -162,7 +170,7 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-        }
+        },
       },
       navbar: {
         title: '',
@@ -170,6 +178,7 @@ const config = {
           alt: 'Stately',
           src: '/logo-black.svg',
           srcDark: '/logo-white-nobg.svg',
+          href: '/docs',
         },
         items: [
           {
@@ -177,6 +186,12 @@ const config = {
             position: 'right',
           },
           { to: '/docs', label: 'Docs', position: 'right' },
+          {
+            href: 'https://tsdocs.dev/docs/xstate',
+            label: 'API',
+            position: 'right',
+            className: 'plausible-event-name=docs+api',
+          },
           {
             href: 'https://stately.ai/registry/projects',
             label: 'Studio',
@@ -266,7 +281,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       prism: {
-        theme: themes.vsLight,
+        theme: themes.oneLight,
         darkTheme: themes.oneDark,
       },
     }),
