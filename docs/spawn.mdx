@@ -1,12 +1,100 @@
 ---
 title: 'Spawn'
+description: 'You can use spawn to run actors. Actors created with spawn are spawning actors, and actors created with invoke are invoking actors.'
 ---
 
-XState is based on the [actor model](actors.mdx). Spawned actors are managed by the state machine. This means the state machine takes care of starting the actor when it’s spawned and stopping it when it’s no longer needed, which can simplify your code and prevent bugs related to improper lifecycle management.
+Sometimes invoking [actors](actors.mdx) may not be flexible enough for your needs. For example, you might want to:
+
+- Invoke child machines that last across _several_ states
+- Invoke a _dynamic number_ of actors
+
+You can do this by **spawning** an actor instead of invoking. Actors created by spawning are **spawning actors**, and actors created with invoke are **invoking actors**.
 
 :::tip
 [Read about the difference between spawning and invoking actors](actors.mdx#invoking-and-spawning-actors).
 :::
+
+There are two ways to spawn: the `spawnChild` action creator, or the `spawn` helper function for `assign`.
+
+In most cases, prefer `spawnChild`, which causes an actor to be spawned, and can accept a configurable ID for the actor to reference it later:
+
+```ts
+createMachine({
+  entry: spawnChild(childMachine, {
+    id: 'child'
+  })
+})
+```
+
+You can use `spawnChild` for multiple spawned actors:
+
+```ts
+createMachine({
+  entry: [
+    spawnChild(childMachine, { id: 'child-1' }),
+    spawnChild(childMachine, { id: 'child-2' }),
+    spawnChild(childMachine, { id: 'child-3' })
+  ]
+})
+```
+
+You can also use the `spawn` helper function provided by the `assign` action creator, which allows you to store a reference to the spawned actor (an `ActorRef`) in the machine's `context`:
+
+```ts
+const parentMachine = createMachine({
+  entry: [
+    assign({
+      childMachineRef: ({ spawn }) => spawn(childMachine, { id: 'child' })
+    })
+  ]
+});
+```
+
+However, if you use `spawn`, **make sure you remove the ActorRef from `context` to prevent memory leaks** when the spawned actor is no longer needed:
+
+```ts
+actions: [
+  stop('child'),
+  assign({ childMachineRef: undefined })
+]
+```
+
+You can `spawn` as many actors as you need:
+
+```ts
+const childMachine = createMachine({
+  /* ... */
+});
+
+const parentMachine = createMachine({
+  entry: [
+    assign({
+      childMachineRefs: ({ spawn }) => [
+        // highlight-start
+        spawn(childMachine),
+        spawn(childMachine),
+        spawn(childMachine),
+        // highlight-end
+      ],
+    }),
+  ],
+});
+```
+
+If you don’t need to keep track of a reference to the spawned actor (e.g.: for anonymous spawned actors), you can use the `spawnChild` action creator. It does _not_ return a reference, but indicates to the XState interpreter that a new actor should be spawned:
+
+```ts
+createMachine({
+  entry: spawnChild('workflow', {
+    id: 'workflow'
+  })
+})
+```
+
+[Read more about the spawnChild action creator](actions.mdx#spawnChild).
+
+
+
 
 ## API
 
