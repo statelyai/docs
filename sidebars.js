@@ -308,11 +308,11 @@ const sidebars = {
       collapsible: true,
       items: [
         'actors',
+        'state-machine-actors',
         'promise-actors',
-        'function-actors',
+        'transition-actors',
         'callback-actors',
         'observable-actors',
-        'state-machine-actors',
         'invoke',
         'spawn',
         'system',

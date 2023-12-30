@@ -79,3 +79,67 @@ const firstLogic = fromPromise<User, { id: string }>(async ({ input, self, /* ..
   return user;
 });
 ```
+
+## Promise actor output
+
+To get the eventual resolved `output` of a promise actor, you can subscribe to the promise actor and check the `status` property of the snapshot. If the `status` is `'done'`, you can access the `output` property of the snapshot to get the resolved value. Otherwise, the `output` will be `undefined`.
+
+```ts
+import { fromPromise } from 'xstate';
+
+const promiseLogic = fromPromise(async () => {
+  const user = await getUser('123');
+
+  return user;
+});
+
+const promiseActor = createActor(promiseLogic);
+
+promiseActor.subscribe(snapshot => {
+  if (snapshot.status === 'done') {
+    console.log(snapshot.output);
+    // logs { id: '123', /* other user data */ }
+  }
+});
+```
+
+You can also use `toPromise(...)` to convert any actor, including promise actors, to a promise. This is useful if you want to `await` the `output` of an actor:
+
+```ts
+import { toPromise, createActor } from 'xstate';
+import { somePromiseLogic } from './somePromiseLogic';
+
+const promiseActor = createActor(somePromiseLogic);
+promiseActor.start();
+
+// highlight-next-line
+const output = await toPromise(promiseActor);
+
+console.log(output);
+// logs the resolved output of the promise actor
+```
+
+## Promise actor error handling
+
+If an error occurs in the promise logic, the promise actor will reject with the error. You can subscribe to the promise actor and check the `status` property of the snapshot. If the `status` is `'error'`, you can access the `error` property of the snapshot to get the error.
+
+```ts
+import { fromPromise } from 'xstate';
+
+const promiseLogic = fromPromise(async () => {
+  // ...
+  throw new Error('Something went wrong');
+});
+
+const promiseActor = createActor(promiseLogic);
+promiseActor.subscribe(snapshot => {
+  // highlight-start
+  if (snapshot.status === 'error') {
+    console.log(snapshot.error);
+    // logs 'Error: Something went wrong'
+  }
+  // highlight-end
+});
+
+promiseActor.start();
+```
