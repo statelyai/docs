@@ -1,3 +1,71 @@
 ---
 title: Callback Actors
 ---
+
+Callback actors are actors whose logic is represented by a function that can "callback" to the parent actor by sending events (via `sendBack(...)`). It can also `receive(...)` events from other actors.
+
+## Callback actor logic
+
+You can define callback actor logic using the `fromCallback(...)` actor logic creator, which takes a callback function and returns actor logic that can be used to create callback actors.
+
+```ts
+import { fromCallback, createActor, createMachine } from 'xstate';
+
+const resizeLogic = fromCallback(({ sendBack, receive }) => {
+  const resizeHandler = (event) => {
+    sendBack(event);
+  };
+
+  window.addEventListener('resize', resizeHandler);
+
+  const removeListener = () => {
+    window.removeEventListener('resize', resizeHandler);
+  }
+
+  receive(event => {
+    if (event.type === 'stopListening') {
+      console.log('Stopping listening');
+      removeListener();
+    }
+  })
+
+  // Cleanup function
+  return () => {
+    console.log('Cleaning up');
+    removeListener();
+  }
+});
+
+const machine = createMachine({
+  invoke: {
+    id: 'resize',
+    src: resizeLogic
+  },
+  on: {
+    stop: {
+      actions: sendTo('resize', { type:'stopListening' })
+    }
+  }
+});
+
+const actor = createActor(machine);
+actor.start();
+
+actor.send({ type: 'stop' });
+// logs "Stopping listening" from callback actor
+
+actor.stop();
+// logs "Cleaning up" from callback actor
+```
+
+## Callback actor input
+
+_Coming soon..._
+
+```ts
+import { fromCallback, createActor, createMachine } from 'xstate';
+
+const resizeLogic = fromCallback(({ sendBack, receive, input }) => {
+  // ...
+});
+```

@@ -1,3 +1,84 @@
 ---
-title: State Machine Actors
+title: State machine actors
 ---
+
+State machine actors are actors whose logic is represented by a finite state machine or statechart.
+
+## State machine actor logic
+
+You can define state machine actor logic using the `createMachine(...)` actor logic creator, which takes a finite state machine or statechart configuration object as its only argument.
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const toggleMachine = createMachine({
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: {
+        toggle: {
+          target: 'active'
+        }
+      }
+    },
+    active: {
+      on: {
+        toggle: {
+          target: 'inactive'
+        }
+      }
+    }
+  }
+});
+
+const toggleActor = createActor(toggleMachine);
+toggleActor.subscribe(snapshot => {
+  console.log(snapshot.value); // 'inactive' or 'active'
+});
+toggleActor.start();
+// logs 'inactive'
+
+toggleActor.send({ type: 'toggle' });
+// logs 'active'
+
+toggleActor.send({ type: 'toggle' });
+// logs 'inactive'
+```
+
+## State machine actor input
+
+You can pass in `input` to a promise actor by passing it to the `createActor(...)` function as the `input` property of the second argument. In the promise logic (`fromPromise(promiseFn)`), you read the `input` property of the first argument passed to the promise function:
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const feedbackMachine = createMachine({
+  context: ({ input }) => ({
+    rating: input.defaultRating
+  }),
+  initial: 'question',
+  states: {
+    question: {/* ... */},
+    // ...
+  }
+});
+
+const feedbackActor = createActor(feedbackMachine, {
+  // highlight-start
+  input: {
+    defaultRating: 3
+  }
+  // highlight-end
+});
+
+feedbackActor.subscribe(snapshot => {
+  console.log(snapshot.context);
+});
+
+feedbackActor.start();
+// logs { rating: 3 }
+```
+
+## State machine actor output
+
+See [the docs on output](./output.mdx) for more information.
