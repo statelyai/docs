@@ -355,9 +355,19 @@ const sidebars = {
     },
 
     {
-      type: 'doc',
-      label: 'Testing',
-      id: 'testing',
+      type: 'category',
+      label: 'Guides',
+      link: {
+        type: 'generated-index',
+        title: 'Guides',
+        description:
+          'These guides cover different aspects such as using XState with immer, testing strategies, and other upcoming guides that will be added in the future. The purpose of these guides is to provide users with in-depth knowledge and practical examples to effectively utilize XState in their projects.',
+        slug: '/category/guides',
+        keywords: ['guides'],
+      },
+      collapsed: false,
+      collapsible: true,
+      items: ['testing', 'immer'],
     },
     {
       type: 'category',

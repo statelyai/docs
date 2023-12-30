@@ -23,12 +23,20 @@ You can visualize your state machines and easily invoke actors in our drag-and-d
 Actors can be invoked within any state _except_ for the [top-level final state](final-states.mdx). In the following example, the `loading` state invokes a Promise-based actor:
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate';
+import { setup, createActor, fromPromise, assign } from 'xstate';
 
 const fetchUser = (userId: string) =>
   fetch(`https://example.com/${userId}`).then((response) => response.text());
 
-const userMachine = createMachine({
+const userMachine = setup({
+  actors: {
+    fetchUser: fromPromise(async ({ input }) => {
+      const user = await fetchUser(input.userId);
+      
+      return user;
+    })
+  }
+}).createMachine({
   types: {} as {
     context: {
       userId: string;
@@ -53,7 +61,7 @@ const userMachine = createMachine({
       // highlight-start
       invoke: {
         id: 'getUser',
-        src: fromPromise(({ input }) => fetchUser(input.userId)),
+        src: 'fetchUser',
         input: ({ context: { userId } }) => ({ userId }),
         onDone: {
           target: 'success',
