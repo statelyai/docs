@@ -54,7 +54,7 @@ However, if you use `spawn`, **make sure you remove the ActorRef from `context` 
 
 ```ts
 actions: [
-  stop('child'),
+  stopChild('child'),
   assign({ childMachineRef: undefined })
 ]
 ```
@@ -126,7 +126,7 @@ actions: assign({
 
 ## Stopping an actor
 
-- `actions: stop('some-id')`
+- `actions: stopChild('some-id')`
 
 - Note this does not clear it from the `context`
 
