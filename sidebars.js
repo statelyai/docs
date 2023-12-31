@@ -295,6 +295,32 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Actors',
+      link: {
+        type: 'generated-index',
+        title: 'Actors',
+        description:
+          'Learn how to use actors and the actor model in XState and Stately Studio.',
+        slug: '/category/actors',
+        keywords: ['guides'],
+      },
+      collapsed: false,
+      collapsible: true,
+      items: [
+        'actors',
+        'state-machine-actors',
+        'promise-actors',
+        'transition-actors',
+        'callback-actors',
+        'observable-actors',
+        'invoke',
+        'spawn',
+        'system',
+        'inspection',
+      ],
+    },
+    {
+      type: 'category',
       label: 'State machines',
       link: {
         type: 'generated-index',
@@ -327,21 +353,7 @@ const sidebars = {
         'tags',
       ],
     },
-    {
-      type: 'category',
-      label: 'Actors ',
-      link: {
-        type: 'generated-index',
-        title: 'Actors',
-        description:
-          'Learn how to use actors and the actor model in XState and Stately Studio.',
-        slug: '/category/actors',
-        keywords: ['guides'],
-      },
-      collapsed: false,
-      collapsible: true,
-      items: ['actors', 'invoke', 'spawn', 'system', 'inspection'],
-    },
+
     {
       type: 'category',
       label: 'Guides',

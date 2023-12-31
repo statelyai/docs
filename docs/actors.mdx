@@ -215,6 +215,16 @@ The types of actor logic you can create from XState are:
 - [Event observable logic (`fromEventObservable(...)`)](#fromeventobservable)
 - [Callback logic (`fromCallback(...)`)](#fromcallback)
 
+### Actor logic capabilities
+
+| | Receive events | Send events | Spawn actors | Input | Output |
+| --- | --- | --- | --- | --- | --- |
+| [State machine actors](./state-machine-actors.mdx) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [Promise actors](./promise-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ✅ |
+| [Transition actors](./transition-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
+| [Observable actors](./observable-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ❌ |
+| [Callback actors](./callback-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
+
 ### State machine logic (`createMachine(...)`) {#createmachine}
 
 You can describe actor logic as a [state machine](machines.mdx). Actors created from state machine actor logic can:
@@ -248,6 +258,8 @@ toggleActor.send({ type: 'toggle' });
 // Logs 'active'
 ```
 
+Learn more about [state machine actors.](./state-machine-actors.mdx)
+
 ### Promise logic (`fromPromise(...)`) {#frompromise}
 
 Promise actor logic is described by an async process that resolves or rejects after some time. Actors created from promise logic (“promise actors”) can:
@@ -280,6 +292,8 @@ promiseActor.start();
 //   ...
 // }
 ```
+
+Learn more about [promise actors.](./promise-actors.mdx)
 
 ### Transition function logic (`fromTransition(...)`) {#fromtransition}
 
@@ -321,6 +335,8 @@ transitionActor.send({ type: 'increment' });
 // }
 ```
 
+Learn more about [transition actors.](./transition-actors.mdx)
+
 ### Observable logic (`fromObservable(...)`) {#fromobservable}
 
 Observable actor logic is described by an [observable stream of values](#fromObservable). Actors created from observable logic (“observable actors”) can:
@@ -348,6 +364,8 @@ secondActor.start();
 // ...
 ```
 
+Learn more about [observable actors.](./observable-actors.mdx)
+
 ### Event observable logic (`fromEventObservable(...)`) {#fromeventobservable}
 
 Event observable actor logic is described by an observable stream of [event objects](transitions.mdx#event-objects). Actors created from event observable logic (“event observable actors”) can:
@@ -374,6 +392,8 @@ const canvasMachine = createMachine({
 const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
+
+Learn more about [observable actors.](./observable-actors.mdx)
 
 ### Callback logic (`fromCallback(...)`) {#fromcallback}
 
@@ -450,6 +470,8 @@ const machine = createMachine({
 });
 ```
 
+Learn more about [callback actors.](./callback-actors.mdx)
+
 ## Actors as promises
 
 You can create a promise from any actor by using the `toPromise(actor)` function. The promise will resolve with the actor snapshot's `.output` when the actor is done (`snapshot.status === 'done'`) or reject with the actor snapshot's `.error` when the actor is errored (`snapshot.status === 'error'`).
@@ -507,7 +529,7 @@ const loggingToggleLogic = withLogging(toggleLogic);
 
 Custom actor logic can be defined with an object that implements the `ActorLogic` interface.
 
-For example, here’s a custom actor logic object with a `transition` function that operates as a simple reducer:
+For example, here is a custom actor logic object with a `transition` function that operates as a simple reducer:
 
 ```ts
 import { createActor, EventObject, ActorLogic, Snapshot } from "xstate";
@@ -604,9 +626,11 @@ const machine = setup({
       fetch2: 'fetcher';
     }
   }
+  // highlight-next-line
   actors: { fetcher }
 }).createMachine({
   invoke: {
+    // highlight-start
     src: 'fetchData', // strongly typed
     id: 'fetch2', // strongly typed
     onDone: {
@@ -615,6 +639,7 @@ const machine = setup({
       },
     },
     input: { userId: '42' }, // strongly typed
+    // highlight-end
   },
 });
 ```
