@@ -4,6 +4,16 @@ title: Callback Actors
 
 Callback actors are actors whose logic is represented by a function that can "callback" to the parent actor by sending events (via `sendBack(...)`). It can also `receive(...)` events from other actors.
 
+## Callback actor capabilities
+
+| | Capability | Notes |
+| --- | --- | --- |
+| ✅ | Receive&nbsp;events | Callback actors can receive events via the `receive(event => {...})` function. |
+| ✅ | Send events | Callback actors can send events to its parent via `sendBack(event)`, or to other actors it has reference to, such as those provided in its `input`. |
+| ❌ | Spawn actors | Callback actors currently cannot spawn new actors. |
+| ✅ | Input | You can provide `input` to callback actors. |
+| ❌ | Output | Callback actors currently do not produce output – they are active indefinitely until they are stopped or an error occurs. |
+
 ## Callback actor logic
 
 You can define callback actor logic using the `fromCallback(...)` actor logic creator, which takes a callback function and returns actor logic that can be used to create callback actors.

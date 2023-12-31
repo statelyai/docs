@@ -10,6 +10,17 @@ All XState actors are observable.
 
 :::
 
+## Observable actor capabilities
+
+| | Capability | Notes |
+| --- | --- | --- |
+| ❌ | Receive&nbsp;events | Observable actors do not currently receive events. |
+| ✅ | Send events | Observable actors can send events to other actors it has reference to, such as those provided in its `input`. |
+| ❌ | Spawn actors | Observable actors currently cannot spawn new actors. |
+| ✅ | Input | You can provide `input` to observable actors. |
+| ❌ | Output | Observable actors currently do not produce output – they are active indefinitely until they are stopped, completed, or an error occurs. |
+
+
 ## Observable actor logic
 
 You can define observable actor logic using the `fromObservable(...)` actor logic creator, which takes a function that returns an observable and returns actor logic that can be used to create observable actors.

@@ -4,6 +4,15 @@ title: Promise actors
 
 Promise actors are actors that represent a promise that performs some asynchronous task. They may resolve with some output, or reject with an error.
 
+## Promise actor capabilities
+
+| | Capability | Notes |
+| --- | --- | --- |
+| ❌ | Receive&nbsp;events | Promise actors currently do not receive events. |
+| ✅ | Send events | Promise actors can send events to other actors it has reference to, such as those provided in its `input`. |
+| ❌ | Spawn actors | Promise actors currently cannot spawn new actors. |
+| ✅ | Input | You can provide `input` to promise actors. |
+| ✅ | Output | Promise actors can produce `output`, which is the resolved value of the promise. |
 
 ## Promise actor logic
 

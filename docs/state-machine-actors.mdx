@@ -4,6 +4,22 @@ title: State machine actors
 
 State machine actors are actors whose logic is represented by a finite state machine or statechart.
 
+:::xstate
+
+This page is just an overview on using state machines to represent actor logic. Read the documentation on [state machines](./machines.mdx) to learn about state machines in depth.
+
+:::
+
+## State machine actor capabilities
+
+| | Capability | Notes |
+| --- | --- | --- |
+| ✅ | Receive&nbsp;events | State machine actors can receive events directly (`actor.send(event)`) or from other actors. |
+| ✅ | Send events | State machine actors can send events to other actors it has reference to. |
+| ✅ | Spawn actors | State machine actors can spawn/invoke actors and have child actors. |
+| ✅ | Input | You can provide `input` to state machine actors. |
+| ✅ | Output | State machine actors can produce `output`. |
+
 ## State machine actor logic
 
 You can define state machine actor logic using the `createMachine(...)` actor logic creator, which takes a finite state machine or statechart configuration object as its only argument.
@@ -81,4 +97,4 @@ feedbackActor.start();
 
 ## State machine actor output
 
-See [the docs on output](./output.mdx) for more information.
+Read [state machine output](./output.mdx) for more information.
