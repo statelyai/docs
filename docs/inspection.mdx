@@ -82,6 +82,7 @@ The snapshot inspection event (`@xstate.snapshot`) is emitted when an actor's sn
 - `actorRef` - the reference to the actor
 - `rootId` - the session ID of the root actor of the system
 - `snapshot` - the most recent snapshot of the actor
+- `event` - the event that caused the snapshot to be updated
 
 Example of a snapshot inspection event:
 
@@ -94,6 +95,9 @@ Example of a snapshot inspection event:
     status: 'active',
     context: { count: 31 },
     // ...
+  },
+  event: {
+    type: 'increment'
   }
 }
 ```
