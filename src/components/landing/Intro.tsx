@@ -4,14 +4,15 @@ export function Intro() {
   return (
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
-        <h1 className="text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
-          Build complex logic intelligently
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-tighter text-center text-white/90 drop-shadow-sm max-w-[645px] m-auto">
+          Turn ideas into diagrams and code in minutes.
         </h1>
 
-        <div className="flex flex-col items-center w-full">
-          <p className="max-w-2xl mt-16 mb-8 text-base leading-normal tracking-tight text-center md:text-lg lg:text-xl text-white/60 drop-shadow-sm">
-            Your source of truth for visually creating, deploying, and analyzing
-            any type of logic, from frontend user flows to backend workflows.
+        <div className="flex flex-col items-center w-full pt-24">
+          <ConversionBoxes />
+          <p className="max-w-3xl mt-36 mb-16 text-lg leading-normal tracking-tight text-center md:text-xl lg:text-2xl text-white/60 drop-shadow-sm">
+            From frontend user flows to backend workflows, build and deploy any
+            type of logic with Stately as your source of truth.
           </p>
           <CallToActionButtons />
         </div>
@@ -28,6 +29,46 @@ export function Intro() {
         <Companies />
       </div>
     </section>
+  );
+}
+
+function ConversionBoxes() {
+  const boxStyles =
+    'bg-gradient-to-b from-gray-700/50 to-gray-700/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl py-4 px-6 h-fit max-w-xs';
+  const headerStyles = 'text-xl font-black';
+  const listStyles = 'text-white/60 text-sm pt-1 font-medium space-y-1';
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-36 w-fit max-w-4xl m-auto">
+      <div className={boxStyles}>
+        <h3 className={headerStyles}>Ideas</h3>
+        <ul className={listStyles}>
+          <li>Requirements</li>
+          <li>User stories</li>
+          <li>Features</li>
+          <li>Specifications</li>
+        </ul>
+      </div>
+
+      <div className={boxStyles}>
+        <h3 className={headerStyles}>Diagrams</h3>
+        <ul className={listStyles}>
+          <li>State machines</li>
+          <li>Flowcharts</li>
+          <li>Statecharts</li>
+          <li>Sequence diagrams</li>
+        </ul>
+      </div>
+
+      <div className={boxStyles}>
+        <h3 className={headerStyles}>Code</h3>
+        <ul className={listStyles}>
+          <li>Workflows</li>
+          <li>App logic</li>
+          <li>JS, TS, JSON</li>
+          <li>Mermaid</li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
