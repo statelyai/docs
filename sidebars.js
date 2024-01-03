@@ -150,7 +150,6 @@ const sidebars = {
           },
           items: [
             'import-from-code',
-            'import-from-github',
             {
               type: 'doc',
               label: 'Generate with AI',
@@ -204,6 +203,7 @@ const sidebars = {
           ],
         },
         'projects',
+        'import-from-github',
         {
           type: 'category',
           label: 'Stately Sky',

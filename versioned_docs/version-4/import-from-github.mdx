@@ -1,54 +1,86 @@
 ---
-title: Import from GitHub
-description: 'Import your machines from GitHub into the Stately Studio.'
+title: Connect GitHub repo
+description: 'Sync your machines from GitHub with Stately Studio.'
 ---
 
-There are currently two ways to import your machines from GitHub into the Stately Studio:
-
-1. [Import all machines from a GitHub repository](#import-all-machines-from-a-github-repository).
-2. [Import machines from a GitHub URL.](#import-machine-from-a-github-url)
+You can connect a GitHub repo to a new project in Stately Studio, keeping updates between GitHub and Stately Studio in sync. Connecting a GitHub repo allows you to import your existing machines from GitHub and push changes to your machines back to your repo as pull requests.
 
 :::studio
 
-Import from GitHub is a [premium feature](/studio-pro-plan.mdx) of the Stately Studio.
-
-We offer a **free trial** on the [Stately Studio Pro account](https://stately.ai/pricing) so you can explore how our Pro features work for you and your team.
+Connect GitHub repo is a premium feature of Stately Studio. You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade your existing plan](https://stately.ai/registry/billing).
 
 :::
 
-## Import all machines from a GitHub repository
+## Connect GitHub repo
 
-Use **Import from GitHub** to import all the machines from your GitHub repository into one project in the Stately Studio.
+Use the **Connect GitHub repo** button found in the Projects dashboard to start connecting a GitHub repo. There are three steps to setting up your GitHub repo as a connected project:
 
-:::info
+1. Select the repo. You can choose the repos based on your GitHub permissions.
+2. Select the branch. You can choose any branch in your repo.
+3. Choose the files you want to sync. You can sync any JavaScript or TypeScript files, but only XState machines will be imported.
 
-[Watch Anders demo Import from Github during our office hours](https://www.youtube.com/watch?v=k-ymwkyUBao&t=365s).
+:::tip
+
+Choose the XState version for your synced machines from the dropdown menu in the <Code size={18}/> **Code** panel.
 
 :::
 
-How to import all machines from a GitHub repository into a project:
+### Auto-sync
 
-1. Navigate to **My Projects** from the sidebar or the Stately menu.
-2. Use **Import from GitHub** to open the Import repo from GitHub modal.
-3. The GitHub integration will fetch all available repositories (public and private). The search bar helps you filter the available repositories.
-4. Choose the repository from which you wish to import machines.
-5. Stately Studio will import your machines into a new private project using the same name as your repository and open your project in the editor.
+Enabling **auto-sync** will automatically fetch the latest changes from your connected repository every time you open or refresh the project in the Studio.
 
-You can [rename the project from the Project settings](/docs/projects/#change-a-projects-name-description-and-keywords) and [change the project’s visibility from the editor’s share dialog](/docs/projects/#change-a-projects-visibility).
+Disable auto-sync from the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer.
 
-### Import from a specific branch
+### Path for new files
 
-Currently, the **Import from GitHub** feature imports all machines from the _default branch_ in your GitHub repository.
+You can choose a **Path for new files** for when you create new machines in this connected project. These machines will be added at this relative path from the root of your repo. The default path is **src/stately-studio** and will be created in your repo the first time you add new machines to a pull request.
 
-If you want to import machines from a different branch or from a pull request, we recommend [importing each machine from a GitHub URL](#import-machine-from-a-github-url).
+### Create pull request
+
+Open the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer. You can create pull requests from the GitHub options for any changes made to your machine.
+
+#### Update pull request
+
+If you have already created a pull request for your machine, you can update the pull request with any changes you have made in the Studio. Open the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer and choose **Update pull request**.
+
+### Sync multiple branches
+
+You can sync multiple branches in your GitHub repo to the same project in Stately Studio. Open the GitHub branch options from the branch name in the footer of the left drawer to choose additional branches.
+
+### Sync new machines created in Stately Studio
+
+Creating a new machine in Stately Studio in a connected project will flag the machine in your Machines list as **Not synced with GitHub**. You can sync the machine with your GitHub repo by [creating a pull request from the GitHub options](#create-pull-request) from the <Github size={18}/> repository name in the footer of the left drawer.
+
+Your new machine will be added to your repo at the [**Path for new files**](#path-for-new-files) you have chosen.
+
+### Sync changes to machines from GitHub
+
+If you have [auto-sync enabled](#auto-sync), any changes made to your GitHub repo will be synced to your project in Stately Studio when you open or refresh the project in the Studio.
+
+If you don’t have auto-sync enabled, you can sync any changes made to your GitHub repo using **Sync now** in the GitHub options from the <Github size={18}/> repository name in the footer of the left drawer.
 
 ## GitHub permissions
 
-Importing a machine with **Import from GitHub** or importing a machine with a GitHub URL will prompt you to **Allow integration** to give our GitHub integration access to your GitHub repositories.
+Importing your GitHub repos with **Connect GitHub repo** or importing a machine with a GitHub URL will prompt you to give our GitHub integration access to your GitHub repositories. You can choose from **Automatic setup** or **Personal access token**.
+
+### Automatic setup
+
+Automatic setup will enable access to all the repositories your GitHub user can access. You can [provide your own personal access token](#personal-access-token) if you need more granular control.
+
+### Personal access token
+
+For more granular control, you can provide a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). You can create a personal access token in your GitHub account settings under [Developer Settings](https://github.com/settings/tokens).
+
+To ensure GitHub Sync works correctly, you must grant the following permissions to your personal access token:
+
+- **Contents**: Allow **Read** access so Stately Studio can import your machines.
+- **Pull requests**: Allow **Read and write** access so Stately Studio can create pull requests for you (optional).
+
+You can update your personal access token from your user <Settings size={18}/> **Settings** in Stately Studio anytime.
 
 ## Import machine from a GitHub URL
 
-If you want to import a machine, or multiple machines, from a GitHub file, we recommend you use our feature to import from a GitHub URL.
+If you want to quickly import a machine, or multiple machines, from a GitHub file without syncing, you can import from a GitHub URL.
 
 1. Open a file containing one or more machines on GitHub.
 2. Modify the URL in the browser’s address bar to replace the `.com` with `.stately.ai`.
@@ -65,6 +97,6 @@ When your machine is hosted at GitHub:
 
 :::info
 
-Read more in [our blog post about importing a machine from a GitHub URL](https://stately.ai/blog/2023-03-09-import-all-machines-from-github-repo).
+Read more in [our blog post about importing a machine from a GitHub URL](https://stately.ai/blog/2023-02-06-github-import-machines).
 
 :::
