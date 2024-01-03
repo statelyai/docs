@@ -1,4 +1,4 @@
-import { ButtonLink } from './SharedComponents';
+import { ButtonLink, classNames } from './SharedComponents';
 
 export function Intro() {
   return (
@@ -39,17 +39,7 @@ function ConversionBoxes() {
   const listStyles = 'text-white/60 text-sm pt-1 font-medium space-y-1';
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-36 w-fit max-w-4xl m-auto">
-      <div className={boxStyles}>
-        <h3 className={headerStyles}>Ideas</h3>
-        <ul className={listStyles}>
-          <li>Requirements</li>
-          <li>User stories</li>
-          <li>Features</li>
-          <li>Specifications</li>
-        </ul>
-      </div>
-
-      <div className={boxStyles}>
+      <div className={classNames(boxStyles, 'lg:mt-24')}>
         <h3 className={headerStyles}>Diagrams</h3>
         <ul className={listStyles}>
           <li>State machines</li>
@@ -60,6 +50,16 @@ function ConversionBoxes() {
       </div>
 
       <div className={boxStyles}>
+        <h3 className={headerStyles}>Ideas</h3>
+        <ul className={listStyles}>
+          <li>Requirements</li>
+          <li>User stories</li>
+          <li>Features</li>
+          <li>Specifications</li>
+        </ul>
+      </div>
+
+      <div className={classNames(boxStyles, 'lg:mt-24')}>
         <h3 className={headerStyles}>Code</h3>
         <ul className={listStyles}>
           <li>Workflows</li>
