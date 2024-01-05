@@ -1,4 +1,16 @@
+import { useEffect, useLayoutEffect } from 'react';
 import { ButtonLink, classNames } from './SharedComponents';
+import { Side } from '@site/src/pages/arrows/types';
+import { Rect } from '@site/src/pages/arrows/rect';
+import {
+  bendPath,
+  getInnerGridLines,
+  getLineSegmentsFromGridLines,
+  getSvgPathFromSegments,
+  oppositeSide,
+  pathToD,
+} from '@site/src/pages/arrows/path';
+import { maybeStringToNumber } from '@site/src/pages/arrows/index';
 
 export function Intro() {
   return (
@@ -32,24 +44,290 @@ export function Intro() {
   );
 }
 
+interface DrawnPath {
+  redraw: () => void;
+}
+
+function useArrows(
+  config: Record<
+    string,
+    Array<{
+      target: string;
+      sourceSide?: 'top' | 'right' | 'bottom' | 'left';
+      targetSide?: 'top' | 'right' | 'bottom' | 'left';
+    }>
+  >,
+) {
+  useLayoutEffect(() => {
+    const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    svgEl.setAttribute(
+      'style',
+      `
+position: absolute;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+max-width: 100%;
+overflow: visible;
+pointer-events: none;
+z-index: 2;
+`,
+    );
+
+    const defEl = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'defs',
+    );
+
+    defEl.innerHTML = `
+<marker
+  id="arrow"
+  viewBox="0 0 10 10"
+  markerWidth="5"
+  markerHeight="5"
+  refX="0"
+  refY="5"
+  markerUnits="strokeWidth"
+  orient="auto"
+>
+  <path data-arrow="marker" d="M0,0 L0,10 L10,5 z" fill="currentcolor" />
+</marker>
+`;
+    svgEl.setAttribute('id', 'arrows');
+    svgEl.appendChild(defEl);
+    document.body.appendChild(svgEl);
+
+    return () => {
+      svgEl.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const nodeEls =
+      document.querySelectorAll<HTMLElement>('[data-edge-source]');
+    const paths: DrawnPath[] = [];
+    const resizeObserverFns: Array<() => void> = [];
+
+    function onResize(el: any, cb: (rect: Rect) => void) {
+      const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(() => {
+          if (el.ownerDocument.contains(el)) {
+            cb(el.getBoundingClientRect());
+          }
+        });
+      });
+      resizeObserver.observe(el);
+
+      resizeObserverFns.push(() => resizeObserver.unobserve(el));
+    }
+
+    const svgEl = document.querySelector('#arrows')! as SVGElement;
+
+    function drawPath(config: {
+      source: Element;
+      sourceSide: Side;
+      /**
+       * Distance (%) from left or top of source side.
+       *
+       * @default 0.5
+       */
+      sourcePosition?: number;
+      target: Element;
+      targetSide: Side;
+      /**
+       * Distance (%) from left or top of target side.
+       *
+       * @default 0.5
+       */
+      targetPosition?: number;
+      /**
+       * Distance (%) between start and end of zig-zag edge where it
+       * should cut across.
+       *
+       * @default 0.5
+       */
+      bendPosition?: number;
+      radius?: number;
+      color?: string;
+      attributes?: Record<string, string>;
+    }): DrawnPath {
+      const resolvedConfig = {
+        radius: 10,
+        ...config,
+      };
+
+      const { source, target } = resolvedConfig;
+
+      function getPathD() {
+        const svgRect = new Rect(svgEl.getBoundingClientRect());
+
+        const sourceRect = new Rect(source.getBoundingClientRect());
+        const targetRect = new Rect(target.getBoundingClientRect());
+        const startPoint = sourceRect.relativeSide(
+          resolvedConfig.sourceSide,
+          resolvedConfig.sourcePosition ?? 0.5,
+        );
+        let endPoint = targetRect.relativeSide(
+          resolvedConfig.targetSide,
+          resolvedConfig.targetPosition ?? 0.5,
+        );
+
+        if (
+          oppositeSide[resolvedConfig.sourceSide] ===
+            resolvedConfig.targetSide &&
+          resolvedConfig.targetPosition === undefined
+        ) {
+          if (
+            ['top', 'bottom'].includes(resolvedConfig.targetSide) &&
+            startPoint.x > targetRect.left &&
+            startPoint.x < targetRect.right
+          ) {
+            endPoint.x = startPoint.x;
+          } else if (
+            startPoint.y > targetRect.top &&
+            startPoint.y < targetRect.bottom
+          ) {
+            endPoint.y = startPoint.y;
+          }
+        }
+        startPoint.y -= svgRect.top;
+        endPoint.y -= svgRect.top;
+        const lines = getInnerGridLines(
+          startPoint,
+          endPoint,
+          resolvedConfig.bendPosition ?? 0.5,
+        );
+        const lineSegments = getLineSegmentsFromGridLines(
+          startPoint,
+          endPoint,
+          lines,
+        );
+
+        const svgPath = getSvgPathFromSegments(
+          lineSegments.allLineSegments,
+          startPoint,
+          endPoint,
+        );
+
+        const pathD = pathToD(bendPath(svgPath, resolvedConfig.radius));
+
+        return pathD;
+      }
+
+      const pathEl = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path',
+      );
+
+      pathEl.setAttribute('stroke', resolvedConfig.color ?? 'white');
+      pathEl.setAttribute('stroke-width', '2');
+      pathEl.setAttribute('fill', 'none');
+      pathEl.setAttribute('d', getPathD());
+      pathEl.setAttribute('marker-end', 'url(#arrow)');
+
+      if (resolvedConfig.attributes) {
+        Object.entries(resolvedConfig.attributes).forEach(([key, value]) => {
+          pathEl.setAttribute(key, value);
+        });
+      }
+      svgEl.appendChild(pathEl);
+
+      const obj = {
+        redraw: () => {
+          pathEl.setAttribute('d', getPathD());
+        },
+      };
+
+      onResize(source, obj.redraw);
+      onResize(target, obj.redraw);
+
+      return obj;
+    }
+
+    Object.entries(config).forEach(([nodeKey, nodeConfig]) => {
+      const elNode = document.querySelector<HTMLElement>(
+        `[data-edge-source="${nodeKey}"]`,
+      );
+      if (!elNode) {
+        return;
+      }
+
+      nodeConfig.forEach((targetConfig) => {
+        const elTarget = document.querySelector(
+          `[data-edge-source="${targetConfig.target}"]`,
+        );
+
+        if (!elTarget) {
+          return;
+        }
+
+        const sourceSide = targetConfig.sourceSide ?? 'bottom';
+        const targetSide = targetConfig.targetSide ?? 'top';
+        const sourcePosition = maybeStringToNumber(
+          elNode.dataset.edgeSourcePosition,
+        );
+        const targetPosition = maybeStringToNumber(
+          elNode.dataset.edgeTargetPosition,
+        );
+        const bendPosition = maybeStringToNumber(
+          elNode.dataset.edgeBendPosition,
+        );
+
+        paths.push(
+          drawPath({
+            source: elNode,
+            sourceSide,
+            sourcePosition,
+            target: elTarget,
+            targetSide,
+            targetPosition,
+            bendPosition,
+            attributes: {
+              class: 'edge',
+            },
+            radius: 20,
+          }),
+        );
+      });
+    });
+
+    const resizeHandler = () => {
+      paths.forEach((path) => path.redraw());
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+
+      resizeObserverFns.forEach((fn) => fn());
+    };
+  });
+}
+
 function ConversionBoxes() {
   const boxStyles =
-    'bg-gradient-to-b from-gray-700/50 to-gray-700/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl py-4 px-6 h-fit max-w-xs';
+    'bg-gradient-to-b from-gray-700/50 to-gray-700/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl py-4 px-6 h-fit w-80';
   const headerStyles = 'text-xl font-black';
   const listStyles = 'text-white/60 text-sm pt-1 font-medium space-y-1';
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-36 w-fit max-w-4xl m-auto">
-      <div className={classNames(boxStyles, 'lg:mt-24')}>
-        <h3 className={headerStyles}>Diagrams</h3>
-        <ul className={listStyles}>
-          <li>State machines</li>
-          <li>Flowcharts</li>
-          <li>Statecharts</li>
-          <li>Sequence diagrams</li>
-        </ul>
-      </div>
+  useArrows({
+    diagrams: [
+      {
+        target: 'code',
+        sourceSide: 'right',
+        targetSide: 'bottom',
+      },
+    ],
+  });
 
-      <div className={boxStyles}>
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-10 w-fit max-w-4xl m-auto">
+      <div
+        className={classNames(boxStyles, 'lg:col-start-1 lg:col-span-2')}
+        data-edge-source="ideas"
+      >
         <h3 className={headerStyles}>Ideas</h3>
         <ul className={listStyles}>
           <li>Requirements</li>
@@ -59,7 +337,26 @@ function ConversionBoxes() {
         </ul>
       </div>
 
-      <div className={classNames(boxStyles, 'lg:mt-24')}>
+      <div
+        className={classNames(
+          boxStyles,
+          'lg:row-start-2 lg:col-start-2 lg:col-span-3 justify-self-center',
+        )}
+        data-edge-source="diagrams"
+      >
+        <h3 className={headerStyles}>Diagrams</h3>
+        <ul className={listStyles}>
+          <li>State machines</li>
+          <li>Flowcharts</li>
+          <li>Statecharts</li>
+          <li>Sequence diagrams</li>
+        </ul>
+      </div>
+
+      <div
+        className={classNames(boxStyles, 'lg:col-start-4 lg:col-span-2')}
+        data-edge-source="code"
+      >
         <h3 className={headerStyles}>Code</h3>
         <ul className={listStyles}>
           <li>Workflows</li>
