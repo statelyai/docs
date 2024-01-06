@@ -565,23 +565,71 @@ actor.subscribe({
 
 ## Invoking Callbacks
 
+You can invoke [callback actor logic](./callback-actors.mdx) by:
+
+1. Setting up the callback actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the callback actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromCallback(/* … */);
-}
+import { setup, fromCallback } from 'xstate';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someCallback: fromCallback(({ input, sendBack, receive }) => {
+      // ...
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someCallback',
+    input: {/* ... */}
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [callback actor logic](./callback-actors.mdx) for more information on callback actors.
 
 ## Invoking Observables
 
+You can invoke [observable logic](./observable-actors.mdx) by:
+
+1. Setting up the observable logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the observable logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromObservable(/* … */);
-}
+import { setup, fromObservable } from 'xstate';
+import { interval } from 'rxjs';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someObservable: fromObservable(({ input }: { input: number }) => {
+      return interval(input.ms);
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someObservable',
+    input: { ms: 1000 },
+    onSnapshot: {
+      actions: ({ event }) => {
+        console.log(event.context); // 1, 2, 3, ...
+      }
+    }
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [observable actor logic](./observable-actors.mdx) for more information on observable actors.
 
 ## Invoking Event Observables
 
@@ -595,23 +643,76 @@ _Coming soon_
 
 ## Invoking Transitions
 
+You can invoke [transition actor logic](./transition-actors.mdx) by:
+
+1. Setting up the transition actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the transition actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromTransition(/* … */);
-}
+import { setup, fromTransition } from 'xstate';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someTransition: fromTransition((state, event, { input }) => {
+      // ...
+      return state;
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someTransition',
+    input: {/* ... */},
+    onSnapshot: {
+      actions: ({ event }) => {
+        console.log(event.context);
+      }
+    }
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [transition actor logic](./transition-actors.mdx) for more information on transition actors.
 
 ## Invoking Machines
 
+You can invoke [state machine actor logic](./state-machine-actors.mdx) by:
+
+1. Setting up the state machine actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the state machine actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: createMachine(/* … */);
-}
+import { setup } from 'xstate';
+
+const childMachine = setup({/* ... */}).createMachine({
+  context: ({ input }) => ({
+    // ...
+  }),
+  // ...
+});
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someMachine: childMachine
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someMachine',
+    input: {/* ... */}
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [state machine actor logic](./state-machine-actors.mdx) for more information on state machine actors.
 
 ## Sending Responses
 
@@ -741,7 +842,59 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-_Coming soon_
+You should the `setup({ ... })` API to properly infer types for invoked actor logic.
+
+```ts
+import { setup, fromPromise, assign } from 'xstate';
+
+interface User {
+  id: string;
+  name: string;
+}
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    fetchUser: fromPromise<User, { userId: string }>(async ({ input }) => {
+      const response = await fetch(`https://example.com/${input.userId}`);
+
+      return response.json();
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  context: {
+    user: null,
+    userId: 42
+  },
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        editUserDetails: { target: 'loadingUser' }
+      }
+    },
+    loadingUser: {
+      invoke: {
+        // highlight-start
+        src: 'fetchUser',
+        input: ({ context }) => ({
+          userId: context.userId // Type enforced to be string
+        }),
+        onDone: {
+          actions: assign({
+            user: ({ event }) => event.output // Strongly typed as User
+          })
+        }
+        // highlight-end
+      }
+    }
+  }
+});
+```
+
+More information coming soon.
 
 ## Invoke cheatsheet
 
