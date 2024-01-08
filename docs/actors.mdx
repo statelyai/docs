@@ -219,11 +219,11 @@ The types of actor logic you can create from XState are:
 
 | | Receive events | Send events | Spawn actors | Input | Output |
 | --- | --- | --- | --- | --- | --- |
-| [State machine actors](./state-machine-actors.mdx) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| [Promise actors](./promise-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ✅ |
-| [Transition actors](./transition-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
-| [Observable actors](./observable-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ❌ |
-| [Callback actors](./callback-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
+| [State machine actors](state-machine-actors.mdx) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [Promise actors](promise-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ✅ |
+| [Transition actors](transition-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
+| [Observable actors](observable-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ❌ |
+| [Callback actors](callback-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
 
 ### State machine logic (`createMachine(...)`) {#createmachine}
 
@@ -258,7 +258,7 @@ toggleActor.send({ type: 'toggle' });
 // Logs 'active'
 ```
 
-Learn more about [state machine actors.](./state-machine-actors.mdx)
+Learn more about [state machine actors.](state-machine-actors.mdx)
 
 ### Promise logic (`fromPromise(...)`) {#frompromise}
 
@@ -293,7 +293,7 @@ promiseActor.start();
 // }
 ```
 
-Learn more about [promise actors.](./promise-actors.mdx)
+Learn more about [promise actors.](promise-actors.mdx)
 
 ### Transition function logic (`fromTransition(...)`) {#fromtransition}
 
@@ -335,7 +335,7 @@ transitionActor.send({ type: 'increment' });
 // }
 ```
 
-Learn more about [transition actors.](./transition-actors.mdx)
+Learn more about [transition actors.](transition-actors.mdx)
 
 ### Observable logic (`fromObservable(...)`) {#fromobservable}
 
@@ -364,7 +364,7 @@ secondActor.start();
 // ...
 ```
 
-Learn more about [observable actors.](./observable-actors.mdx)
+Learn more about [observable actors.](observable-actors.mdx)
 
 ### Event observable logic (`fromEventObservable(...)`) {#fromeventobservable}
 
@@ -393,7 +393,7 @@ const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
 
-Learn more about [observable actors.](./observable-actors.mdx)
+Learn more about [observable actors.](observable-actors.mdx)
 
 ### Callback logic (`fromCallback(...)`) {#fromcallback}
 
@@ -470,7 +470,7 @@ const machine = createMachine({
 });
 ```
 
-Learn more about [callback actors.](./callback-actors.mdx)
+Learn more about [callback actors.](callback-actors.mdx)
 
 ## Actors as promises
 
