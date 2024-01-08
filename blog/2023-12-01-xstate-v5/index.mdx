@@ -152,10 +152,10 @@ Instead of magically setting `devTools: true`, the Inspect API lets you attach a
 ```jsx
 const actor = createActor(machine, {
   inspect: (inspectionEvent) => {
-  // type: '@xstate.actor' or
-  // type: '@xstate.snapshot' or
-  // type: '@xstate.event'
-  console.log(event);
+    // type: '@xstate.actor' or
+    // type: '@xstate.snapshot' or
+    // type: '@xstate.event'
+    console.log(inspectionEvent);
   }
 });
 ```
