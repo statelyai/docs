@@ -166,7 +166,7 @@ We will soon be releasing inspection devtools that visualize this information as
 
 ## Deep persistence
 
-We’ve written about [how to persist state](/blog/2023-10-02-persisting-state), and XState v5 takes persistence even ~~further~~. [Actor persistence](/docs/persistence) is a pattern where the internal state of an actor can be persisted and restored at any time. Whereas invoked/spawned actors were not persisted in XState v4, **actors are now deeply (recursively) persisted** in XState v5. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
+We’ve written about [how to persist state](/blog/2023-10-02-persisting-state), and XState v5 takes persistence even _further_. [Actor persistence](/docs/persistence) is a pattern where the internal state of an actor can be persisted and restored at any time. Whereas invoked/spawned actors were not persisted in XState v4, **actors are now deeply (recursively) persisted** in XState v5. Invoked/spawned actors will be persisted, as well as actors invoked/spawned from those actors, and so on.
 
 In the following example, the state of the `mainActor` will be persisted, as well as the state of the invoked `someCounter` actor. When the `restoredActor` is started, it will start at the persisted state of `mainActor`, which includes the persisted state of `someCounter`:
 
