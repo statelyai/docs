@@ -1,0 +1,68 @@
+---
+title: 'Introducing sources'
+description: 'With sources, you can now provide implementation code for your actions, actors, and guards, making syncing between the editor and your codebase a breeze.'
+authors: [farzad, laura]
+tags: [stately, editor, xstate, state machines, sources, actions, actors, guards]
+date: 2024-01-09
+slug: 2024-01-09-introducing-sources
+image: /blog/2024-01-09-introducing-sources.png
+---
+
+We’re excited to share with you a feature that unlocks a whole new level of power and flexibility in Stately’s editor: sources. With sources, you can now provide implementation code for your actions, actors, and guards, making syncing between the editor and your codebase a breeze.
+
+{/* truncate */}
+
+- One of the biggest benefits of using Stately’s editor is the ability to use your state machines as a source of truth.
+- This relies upon the ability to bi-directionally sync between visualising your state machine and integrating the implementation code in your codebase
+- Previously we had workarounds if you were trying to work bi-directionally between your visualised machine and code, you could add implementations *after* exporting your machine, or you could keep your machine in a separate file from your implemetations to make it easier to keep replacing your machine with the exported code without overwriting implementations, but you couldn’t provide implementations for your actions, actors, and guards in the editor, and importing your implementations from an existing machine would lose them
+- But that has all now changed with the introduction of sources
+
+Watch a demo of sources from our office hours at the end of December:
+
+<YouTube id="x-F1TPjz_lI"/>
+
+▶️ [Jump straight to the video chapter on sources](https://www.youtube.com/watch?v=x-F1TPjz_lI&t=318s).
+
+## What are sources?
+
+You can now provide source code for your actions, actors, and guards implementations from inside Stately’s editor. Access the **Sources** panel from left You can then edit the code to suit your needs.
+
+Custom source code OR
+
+### Actions are now named
+
+### Parameters
+
+### Logic templates
+
+When editing the sources for your actions, actors, or guards, you can also choose from logic templates. You can use the template buttons to quickly add the implementation code for XState’s [logic creators](/docs/actors#actor-logic-creators), [higher-level guards](/docs/guards#higher-level-guards), and [built-in actions](/docs/actions), and the correct XState imports will be added to your code for sync or export.
+
+```
+show the code generated from a template, with a screenshot of the sources panel/template, and a screenshot of the built-in action visualised on the canvas
+```
+
+And yes, this means that we can now import your existing source code from your state machines, visualize them on the canvas, show them as sources in the studio, and keep it in tact when exporting or syncing back to your codebase.
+
+If you’re going back and forth between your codebase and Stately’s editor, you can don’t have to worry about the implementation code getting lost or overwritten.
+
+Read our sources docs for more
+
+### XState built-in actions
+
+Previously when you added an action to your machine in the editor, you’d have the option to make it a custom action or choose from one of [XState’s built-in actions](TODO:) including [`assign()`](TODO:), [`raise()`](TODO:), and [`sendTo()`](TODO:). Now those built-in actions are shown as fully editable [logic templates](#logic-templates) in the sources panel. Built-in actions will still be shown with their action type on the canvas.
+
+![Built-in action on the canvas with the implementation showing in the sources panel](TODO:)
+
+## Importing sources from existing XState machines
+
+Unnamed actions
+
+## Bi-directional editing with sources and GitHub sync
+- Now with sync, you don’t even have to press an export button
+- Makes GitHub sync more powerful
+
+## Sources make Stately Sky more powerful
+
+- Stately Sky is now able to execute your actions, actors, and guards
+
+- Makes Stately Sky more powerful
