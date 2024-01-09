@@ -12,6 +12,7 @@ const config = {
   url: 'https://stately.ai',
   baseUrl: '/',
   baseUrlIssueBanner: false,
+  onBrokenAnchors: 'warn',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'icon.svg',
