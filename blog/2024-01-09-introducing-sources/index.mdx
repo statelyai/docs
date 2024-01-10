@@ -56,11 +56,17 @@ When importing a machine from your codebase, we’ll give your unnamed actions, 
 
 ```js
 createMachine({
-	entry: assign(: 1)
+  states: {
+    a: {
+      states: {
+        b: {entry: [assign({name: 'laura'})]}
+      }
+    },
+  }
 })
 ```
 
-Would be given a default name of `#machine name.a.b.entry[1]`. These default names are not visible in the editor but will be used in the synced or exported code unless you give your action, actor, or guard a name. After first importing your machine, we recommend you give all your actions, actors, and guards a name. Naming is a one-time step, and you can always rename them later. Giving your sources distinct names also means that multiple actors, actions, or guards can reference them, which can be really useful when combined with parameters.
+Would be given a default name of `inline:(machine).a.b#entry[0]`. These default names are not visible in the editor but will be used in the synced or exported code unless you give your action, actor, or guard a name. `inline:` is prepended to the name to make them more readable and easier to find in your code. After first importing your machine, we recommend you give all your actions, actors, and guards a name. Naming is a one-time step, and you can always rename them later. Giving your sources distinct names also means that multiple actors, actions, or guards can reference them, which can be really useful when combined with parameters.
 
 ### Action parameters
 
