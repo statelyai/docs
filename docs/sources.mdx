@@ -15,13 +15,13 @@ Sources for [delayed (after) transitions](delayed-transitions.mdx) are coming so
 
 You can add sources from the <Code size={18}/> **Sources** panel. Use the <PenSquare size={18} /> edit button alongside the action, actor, or guard on the canvas to open its source.
 
-You can also open the **Sources** panel without an action, actor, or guard selected. By default, the **Sources** panel shows all the sources in the machine, and you can also add new sources without refencing them with an action, actor, or guard. Sources that are currently referenced in the machine are highlighted in the **Sources** panel. Unused sources are dimmed.
+You can also open the **Sources** panel without selecting an action, actor, or guard. By default, the **Sources** panel shows all the sources in the machine, and you can also add new sources without referencing them with an action, actor, or guard. Sources currently referenced in the machine are highlighted in the **Sources** panel. Unused sources are dimmed.
 
-Each source requires a name (ID) and source code. The ID is used to reference the source code. The source code will be included in the generated code for the actor, action, or guard. Sources have distinct names so they can be referenced by multiple actors, actions, or guards.
+Each source requires a name (ID) and source code. The ID is used to reference the source code. The source code for the actor, action, or guard will be included in the generated code. Sources have distinct names, so multiple actors, actions, or guards can reference them.
 
 ### Unnamed actions, actors, and guards
 
-When importing a machine from your codebase, we’ll give them a default name based on its position in your machine config. For example the following action:
+When importing a machine from your codebase, actions, actors, and guards are assigned a default name based on its position in your machine config. For example, the following action:
 
 ```js
 createMachine({
@@ -29,11 +29,11 @@ createMachine({
 })
 ```
 
-Would be given a default name of `#machine name.a.b.entry[1]`. These default names are not visible in the editor, but will be used in the synced or exported code, unless you give your action, actor, or guard a name. After first importing your machine, we recommend you give all your actions, actors, and guards a name. This is a one-time step, and you can always rename them later.
+Would be given a default name of `#machine name.a.b.entry[1]`. These default names are not visible in the editor but will be used in the synced or exported code unless you give your action, actor, or guard a name. After first importing your machine, we recommend you give all your actions, actors, and guards a name. Naming is a one-time step, and you can always rename them later.
 
 ## Deleting sources
 
-You can only delete unused sources that are not referenced by any actors, actions, or guards. This prevents you from accidentally deleting a source that’s currently used in your machine.
+You can only delete unused sources that any actors, actions, or guards do not reference. This prevents you from accidentally deleting a currently used source in your machine.
 
 :::tip
 
