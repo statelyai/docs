@@ -149,7 +149,6 @@ const sidebars = {
             id: 'design-mode',
           },
           items: [
-            'import-from-code',
             {
               type: 'doc',
               label: 'Generate with AI',
@@ -160,8 +159,6 @@ const sidebars = {
               label: 'Generate React app',
               id: 'generate-react',
             },
-            'export-as-code',
-            'generate-test-paths',
             {
               type: 'doc',
               label: 'Colors',
@@ -202,8 +199,27 @@ const sidebars = {
             },
           ],
         },
+        {
+          type: 'category',
+          label: 'Code',
+          link: {
+            type: 'generated-index',
+            title: 'Code',
+            description: 'Learn how to use Stately Studio’s code.',
+            slug: '/category/code',
+            keywords: ['guides'],
+          },
+          collapsed: true,
+          collapsible: true,
+          items: [
+            'import-from-code',
+            'import-from-github',
+            'generate-test-paths',
+            'sources',
+            'export-as-code',
+          ],
+        },
         'projects',
-        'import-from-github',
         {
           type: 'category',
           label: 'Stately Sky',
