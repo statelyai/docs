@@ -8,11 +8,11 @@ slug: 2024-01-09-introducing-sources
 image: /blog/2024-01-09-introducing-sources.png
 ---
 
-We’re excited to share with you a feature that unlocks a whole new level of power and flexibility in Stately’s editor: sources. With sources, you can now provide implementation source code for your actions, actors, and guards, making syncing between the editor and your codebase a breeze.
+We’re excited to share a feature that unlocks a whole new level of power and flexibility in Stately’s editor: sources. With sources, you can now provide implementation source code for your actions, actors, and guards, making syncing between the editor and your codebase a breeze.
 
 {/* truncate */}
 
-One of the biggest benefits of using our Stately editor is the ability to use your state machines as a source of truth. Using your state machines as live documentation relies upon being able to bi-directionally sync between visualising your state machine and integrating the implementation code in your codebase. Previously we had workarounds for working bi-directionally; you could use the [XState VS Code extension](TODO:) or add your implementation code *after* exporting your machine. You could even keep your machine in a separate file from your implementations to make it easier to keep replacing your machine code with the exported code without overwriting your implementations. But you couldn’t provide implementations code in the editor, and importing your implementations from an existing machine would lose them. But that has all now changed with the introduction of sources!
+One of the most significant benefits of using our Stately editor is using your state machines as a source of truth. Using your state machines as live documentation relies upon bi-directionally syncing between visualizing your state machine and integrating the implementation code in your codebase. Previously, we had workarounds for bi-directional work; you could use the [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) or add your implementation code *after* exporting your machine. You could even keep your machine in a separate file from your implementations to make it easier to replace your machine code with the exported code without overwriting your implementations. But you couldn’t provide implementation code in the editor, and importing your implementations from an existing machine would lose them. But that has all now changed with the introduction of sources!
 
 *Watch a demo of sources from our office hours at the end of December:*
 
@@ -22,35 +22,37 @@ One of the biggest benefits of using our Stately editor is the ability to use yo
 
 ## What are sources?
 
-You can now provide source code for your actions, actors, and guards implementations from inside Stately’s editor using the <Code size={18} /> **Sources** panel. When an action, actor, or guard is selected, the **Sources** panel shows its source code. When there is no item selected on the canvas, the  **Sources** panel shows all the sources for your current machine.
+Using the <Code size={18} /> **Sources** panel, you can now provide source code for your actions, actors, and guards implementations from inside Stately’s editor.
 
-From the **Sources** panel, you can add custom source code to suit your needs, or choose from logic templates. Your source code will be included in your [live actors](/docs/stately-sky-getting-started), [synced projects](/docs/import-from-github), and [exported code](/docs/export-as-code) as found in the <Code size={18} /> **Code** panel.
+You can add custom source code from the **Sources** panel to suit your needs or choose from logic templates. Your source code will be included in your [live actors](/docs/stately-sky-getting-started), [synced projects](/docs/import-from-github), and [exported code](/docs/export-as-code), as found in the <Code size={18} /> **Code** panel. When an action, actor, or guard is selected, the **Sources** panel shows its source code. When no item selected on the canvas, the  **Sources** panel shows all the sources for your current machine.
 
 ### Logic templates
 
-When editing the sources for your actions, actors, or guards, you can also choose from logic templates. You can use the template buttons to quickly add the implementation code for XState’s [logic creators](/docs/actors#actor-logic-creators), [higher-level guards](/docs/guards#higher-level-guards), and [built-in actions](/docs/actions), and the correct XState imports will be added to your code for sync or export.
+You can also choose from logic templates when editing the sources for your actions, actors, or guards. Use the template buttons to quickly add the implementation code for XState’s [logic creators](/docs/actors#actor-logic-creators), [higher-level guards](/docs/guards#higher-level-guards), and [built-in actions](/docs/actions), and the correct XState imports will be added to your code for sync or export.
 
-```
-show the code generated from a template, with a screenshot of the sources panel/template, and a screenshot of the built-in action visualised on the canvas
-```
+<p>
+  <ThemedImage
+    alt="The sources panel open for a pizzaRecieced entry action. In the source code, the sendTo action is being used to send an event of pizzaRecieved to the reviewApp actor."
+    sources={{
+      light: '/blog/2024-01-09-introducing-sources/sources.png',
+      dark: '/blog/2024-01-09-introducing-sources/sources-dm.png',
+    }}
+  />
+</p>
 
-And yes, this means that we can now import your existing source code from your state machines, visualize them on the canvas, show them as sources in the studio, and keep it in tact when exporting or syncing back to your codebase.
-
-If you’re going back and forth between your codebase and Stately’s editor, you can don’t have to worry about the implementation code getting lost or overwritten.
+And yes, this means that we can now import your existing source code from your state machines, visualize them on the canvas, show them as sources in the studio, and keep your original code intact when exporting or syncing back to your codebase. In short, if you’re going back and forth between your codebase and Stately’s editor, you don’t have to worry about the implementation code getting lost or overwritten.
 
 ### XState built-in actions
 
-Previously when you added an action to your machine in the editor, you’d have the option to make it a custom action or choose from one of [XState’s built-in actions](TODO:) including [`assign()`](TODO:), [`raise()`](TODO:), and [`sendTo()`](TODO:). Now those built-in actions are shown as fully editable [logic templates](#logic-templates) in the sources panel. Built-in actions will still be shown with their action type on the canvas.
-
-![Built-in action on the canvas with the implementation showing in the sources panel](TODO:)
+Previously, when you added an action to your machine in the editor, you’d have the option to make it a custom action or choose from one of XState’s built-in actions, including [`assign()`](/docs/actions#assign-action), [`raise()`](/docs/actions#raise-action), and [`sendTo()`](/docs/actions#send-to-action). Those built-in actions are now shown as fully editable [logic templates](#logic-templates) in the sources panel, and built-in actions are still shown with their action type on the canvas.
 
 ### Actions, actors, and guards are now named
 
-Previously, not all actions, actors, and guards had names, especially if you had imported [inline actions](/docs/actions#inline-actions) or [inline guards](/docs/guards#inline-guards) from your XState machines. Now, when creating new actions, actors, or guards on the canvas, you’ll be prompted to give them a name.
+Previously, not all actions, actors, and guards had names, especially if you had imported [inline actions](/docs/actions#inline-actions) or [inline guards](/docs/guards#inline-guards) from your XState machines. Now, when creating new actions, actors, or guards on the canvas, you’ll be prompted to give them a name, which is an important addition when importing source code from existing XState machines.
 
 ### Importing sources from existing XState machines
 
-When importing a machine from your codebase, we’ll give them a default name based on its position in your machine config. For example the following action:
+When importing a machine from your codebase, we’ll give your unnamed actions, actors, and guards a default name based on their position in your machine config. For example, the following action:
 
 ```js
 createMachine({
@@ -58,18 +60,32 @@ createMachine({
 })
 ```
 
-Would be given a default name of `#machine name.a.b.entry[1]`. These default names are not visible in the editor, but will be used in the synced or exported code, unless you give your action, actor, or guard a name. After first importing your machine, we recommend you give all your actions, actors, and guards a name. This is a one-time step, and you can always rename them later.
+Would be given a default name of `#machine name.a.b.entry[1]`. These default names are not visible in the editor but will be used in the synced or exported code unless you give your action, actor, or guard a name. After first importing your machine, we recommend you give all your actions, actors, and guards a name. Naming is a one-time step, and you can always rename them later. Giving your sources distinct names also means that multiple actors, actions, or guards can reference them, which can be really useful when combined with parameters.
 
 ### Action parameters
 
+You can now add [parameters](/docs/actions#dynamic-action-parameters) to your actions! When adding or editing an action on the canvas, you can use the button to Add <Plus size={18}/> **parameter**. From here, you can add key-value pairs as parameters for dynamic input that can be used in your source code. Parameters don’t just open the possibility for more reusable actions; in the future [Simulation mode](/docs/simulation-mode) will be able to use these parameters to execute actions based on different inputs when simulating your machine.
+
+<p>
+  <ThemedImage
+    alt="The confirm_order event with a setOrderStatus transition action that’s open showing the options to add parameters, with a parameter added using the key of status and the value of confirmed."
+    sources={{
+      light: '/blog/2024-01-09-introducing-sources/action-params.png',
+      dark: '/blog/2024-01-09-introducing-sources/action-params-dm.png',
+    }}
+  />
+</p>
+
 ## Bi-directional editing with sources and GitHub sync
-- Now with sync, you don’t even have to press an export button
-- Makes GitHub sync more powerful
+
+If you haven’t checked it out yet, [read Kevin’s post on GitHub Sync](/blog/2024-01-09-introducing-bidirectional-github-sync), which we’re also releasing this week. [GitHub Sync](/docs/import-from-github) and sources are a powerful combination. With GitHub Sync, you don’t even need to use the export button to sync your machine with your codebase. And sources ensure that your code stays intact when syncing bi-directionally between your codebase and the editor.
 
 ## Sources make Stately Sky more powerful
 
-- Stately Sky is now able to execute your actions, actors, and guards
+Sources also bring huge benefits to [Stately Sky](/docs/stately-sky-getting-started), as your live actors can now execute the source code from your actions, actors, and guards in the cloud.
 
-- Makes Stately Sky more powerful
+## The future
 
-[Read more about sources in our docs](/docs/sources)
+We’re excited about sources because of all the features they enable in Stately Studio and your overall developer experience, helping Stately Studio become the visual collaborative source of truth for your app logic and workflows. 
+
+Using sources is free on all our plans, and you can [try our premium features, including GitHub Sync and Stately Sky, for free](https://stately.ai/pricing) on a [Pro plan](/docs/studio-pro-plan) or with your team on a [Team plan](/docs/studio-team-plan). You can [read more about sources in our docs](/docs/sources), and please share your feedback with us on our [social platforms](https://discord.stately.ai) or in our regular [office hours live streams](https://www.youtube.com/watch?v=-Jf9N-EaUx0&list=PLvWgkXBB3dd6PXbSoctwDXjWX-AQrxhds). If you want help getting started with sources or getting your team set up with Stately and XState, [the Stately team is available for workshops and consulting](https://stately.ai/pricing), and you can [book a demo call](https://calendly.com/d/yc8-3hq-rpc/request-a-demo) with us to learn more about how Stately can work for your team.
