@@ -36,11 +36,17 @@ Importing from a GitHub Repo is now easier and more robust. Users can automatica
 
 ### Editing power of Stately Studio
 
-Once a connected project has been created, its machines can be edited just like with other projects and machines. Use the visual editor to add or modify states and transitions. Effects can be added and a machine’s layout can be automatically or manually adjusted. Flows can be created or modified with AI generation. With a [Stately Studio Pro plan](https://stately.ai/docs/studio-pro-plan), machines versions can be saved and machines can even be run via Stately Sky. Studio also provides a number of other features like test generation and export options to code, markdown, or to external editors. But this work can all be in coordination with the underlying GitHub repo.
+Once a connected project has been created, its machines can be edited just like with other projects and machines. Use the visual editor to add or modify states and transitions. Effects can be added and a machine’s layout can be automatically or manually adjusted. Flows can be created or modified with AI generation. With a [Stately Studio Pro plan](https://stately.ai/docs/studio-pro-plan), machines versions can be saved and machines can even be run via Stately Sky.
+
+![Stately Studio has offers powerful free and premium features for working with your state machines after importing them from a GitHub repository.](premium-features.png)
+
+Studio also provides a number of other features like test generation and export options to code, markdown, or to external editors. But this work can all be in coordination with the underlying GitHub repo.
 
 ### Staying in sync with the GitHub repo
 
 By default, connected projects will automatically be synchronized with the GitHub repo every time the project loads. New files added to selected folders in the repository will appear in Studio. We’ll also warn of any deleted files that might cause machines to be deleted in Studio. It’s possible to opt out of this and to perform syncs manually but we recommend that this still be done fairly often to prevent potential conflicts.
+
+![By default, connected repos are auto-synced with the GitHub repo but this can be disabled if you want to manually sync instead.](auto-sync.png)
 
 A connected project starts out in sync with the branch that was specified during the import process. However, it is also possible to connect to additional repo branches. Under the hood, these branch connections are considered a different version of the connected project and it’s easy to switch between them, add new branches, or delete branch connections.
 
