@@ -171,7 +171,7 @@ By default, when a state machine transitions from a parent state to the same par
 
 However, if you want a transition to re-enter the parent state, set the transition's `reenter` property to `true`. Transitions that re-enter the state _will_ stop existing invoked actors and start new invoked actors.
 
-[Read more about re-entering states](transitions#re-entering).
+[Read more about re-entering states](/docs/transitions#re-entering).
 
 ## The `invoke` property API {#api}
 
@@ -189,12 +189,12 @@ An invocation is defined in a state node's configuration with the `invoke` prope
 
 The `src` represents the [actor logic](actors.mdx#actor-logic-creators) the machine should use when creating the actor. There are several actor logic creators available in XState:
 
-- [State machine logic (`createMachine`)](actors.mdx#createmachine)
-- [Promise logic (`fromPromise`)](actors.mdx#frompromise), where invoke will take the `onDone` transition on `resolve`, or the `onError` transition on `reject`
-- [Transition function logic (`fromTransition`)](actors.mdx#fromtransition), which follows the reducer pattern
-- [Observable logic (`fromObservable`)](actors.mdx#fromobservable), which can send events to the parent machine, and where invoke will take an `onDone` transition when completed
-- [Event observable logic (`fromEventObservable`)](actors.mdx#fromeventobservable), like Observable logic but for streams of event objects
-- [Callback logic (`fromCallback`)](actors.mdx#fromcallback), which can send events to and receive events from the parent machine
+- [State machine logic (`createMachine`)](/docs/actors/#createmachine)
+- [Promise logic (`fromPromise`)](/docs/actors/#frompromise), where invoke will take the `onDone` transition on `resolve`, or the `onError` transition on `reject`
+- [Transition function logic (`fromTransition`)](/docs/actors/#fromtransition), which follows the reducer pattern
+- [Observable logic (`fromObservable`)](/docs/actors/#fromobservable), which can send events to the parent machine, and where invoke will take an `onDone` transition when completed
+- [Event observable logic (`fromEventObservable`)](/docs/actors/#fromeventobservable), like Observable logic but for streams of event objects
+- [Callback logic (`fromCallback`)](/docs/actors/#fromcallback), which can send events to and receive events from the parent machine
 
 The invoke `src` can be _inline_ or _provided_.
 

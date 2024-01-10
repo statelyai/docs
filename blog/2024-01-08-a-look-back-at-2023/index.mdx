@@ -1,0 +1,135 @@
+---
+title: A look back at Stately in 2023
+description: As we start 2024, we wanted to look back at what the Stately team accomplished in 2023 and take a sneak peek at what you can expect from Stately in 2024.
+tags:
+  [
+    stately,
+    studio,
+    xstate,
+    highlights,
+    roadmap
+  ]
+authors: [laura]
+date: 2024-01-08
+slug: 2024-01-08-a-look-back-at-stately-in-2023
+image: /blog/2024-01-08-a-look-back-at-stately-in-2023.png
+---
+
+As we start 2024, we wanted to look back at what the Stately team accomplished in 2023 and take a sneak peek at what you can expect from Stately in 2024.
+
+{/* truncate */}
+
+## 2023 highlights
+
+2023 was a huge year for Stately. Among the many features we released to Stately Studio, we checked **42 requested features** (big and small) off our [feature requests to-do list](https://github.com/orgs/statelyai/projects/2), and we cut **229 releases** (that’s a release every 1.6 days!) We also did **39 [live streams](https://www.youtube.com/@Statelyai/streams)**, shared **54 [blog posts](/blog)**, and released the massive [XState V5](https://stately.ai/blog/2023-12-01-xstate-v5).
+
+Some of our favorite features include:
+
+### Deploying to the cloud with Stately Sky
+
+Our [launch of Stately Sky last year](/blog/2023-11-13-introducing-stately-sky) brought executable machines to the Studio. With Stately Sky, you can run your machines in the cloud, automate onboarding flows with state machines, execute and monitor backend workflows, persist frontend state between refreshes, and create and manage multi-user sessions.
+
+Check out our docs for [a comprehensive guide to starting with Stately Sky](/docs/stately-sky-getting-started), and [watch my talk from NodeConf EU](https://www.youtube.com/watch?v=FamZ0grhyK8), where I demoed using Stately Sky for a collaborative soundscape.
+
+<YouTube id="FamZ0grhyK8"/>
+
+### Stately AI
+
+One of our biggest highlights of 2023 was the introduction of AI-assisted features to Stately Studio, which we nicknamed **Stately AI**. With Stately AI, you can generate complex state machines from simple text descriptions. 
+
+For example, I generated the following machine with the text prompt “*A booking system for pet grooming. Pet owners can book, reschedule, and cancel appointments. When appointments have been made, pet owners get a notification, as well as a reminder of their appointment 24 hours before the appointment time.*”:
+
+<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/092bf401-2d65-48ae-969c-99b4a7eeb87f?machineId=f6aea607-9319-462c-a241-0736a1d2b001" title="Pet grooming booking system" />
+
+You can also use Stately AI to [generate a summary](/blog/2023-11-20-stately-studio-2-0#generate-summary) of your machine, which is really useful for documentation. I used this feature to generate the following summary of the machine above:
+
+> This state machine represents a pet grooming booking system. It helps pet owners book, reschedule, and cancel appointments for their pets. The system has different states that represent different stages of the booking process. The initial state is "Idle", which means the system is waiting for a pet owner to start the booking process. When a pet owner wants to book an appointment, they trigger the "book" event. This transitions the system to the "Appointment Booked" state, indicating that an appointment has been successfully booked. From the "Appointment Booked" state, the pet owner can choose to reschedule or cancel the appointment. If they choose to reschedule, the system transitions to the "Appointment Rescheduled" state, indicating that the appointment has been rescheduled to a new time. If they choose to cancel, the system transitions to the "Appointment Canceled" state, indicating that the appointment has been canceled. Additionally, the system can send a reminder to the pet owner 24 hours before the appointment from the "Appointment Booked" or "Appointment Rescheduled" states. This transitions the system to the "Reminder Sent" state. From the "Reminder Sent" state, if the pet owner wants to book a new appointment, they can trigger the "book" event, which transitions the system back to the "Appointment Booked" state. Each state has associated actions that are performed when transitioning to that state. These actions include notifying the pet owner about the booking, rescheduling, cancellation, or sending a reminder. Overall, this state machine helps manage the pet grooming booking process, ensuring that appointments are booked, rescheduled, or canceled smoothly, and reminders are sent to pet owners.
+
+But that isn’t all!
+
+### Generating React prototypes based on your machines
+
+We also released the ability to [generate React app code](/docs/generate-react) based on your machines, which is a great way to prototype your app logic quickly. Stately AI adds more magic to your React prototypes with the option to **Enhance app** once generated, which builds out a UI for your app and enables you to go from a text description to a working prototype in less than a minute.
+
+<p>
+  <ThemedImage
+    alt="Enhancing an app in Stately’s editor, showing a pet grooming appointment app in the appointment booked state, with colored buttons generated for reschedule, cancel, and send reminder."
+    sources={{
+      light: '/blog/2024-01-08-a-look-back-at-2023/generate-react-app.png',
+      dark: '/blog/2024-01-08-a-look-back-at-2023/generate-react-app-dm.png',
+    }}
+  />
+</p>
+
+
+### Import any app logic
+
+We want to make it easy to visualize app logic from any code as a state machine. So we’ve started with Zustand, Redux, and Redux Toolkit. You can now import your logic from any of these libraries into Stately Studio, and we’ll visualize it as a state machine. Import your existing app logic to generate up-to-date diagrams and customizable documentation for your logic, easily detect logical errors, and quickly generate test cases.
+
+### Adding assets to states
+
+Stately Studio has been able to add images to state and event descriptions for a while now, but you had to upload the images somewhere in the cloud and then add the image using markdown. Now, you can [drag an image on to a state](/docs/assets), and it’s automatically uploaded and added to your machine. And you’re not just limited to images; you can drag any file onto your state, and it will be displayed as a linked asset. Assets are a game-changer for improving documentation and easily linking to other resources.
+
+<p>
+  <ThemedImage
+    alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/drag-assets.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/drag-assets-dm.png',
+    }}
+  />
+</p>
+
+### Stately inspector
+
+Since Stately Studio succeeded the old Stately viz, we’ve been working to bring some of our favorite features from the viz into the editor. One of the last things we released in 2023 was a new package for [@statelyai/inspect](https://github.com/statelyai/inspect), which builds upon the old XState inspector, enabling developers to visually inspect state transitions *and* actor communication in any JavaScript/TypeScript app. You can visualize your state machines and generate sequence diagrams for how your actors communicate. You can use Stately Inspect with or without XState, with any framework or library, or none at all. [Watch our last office hours from 2023 for David’s demo of the Stately inspector](https://www.youtube.com/watch?v=x-F1TPjz_lI&t=103s).
+
+<YouTube id="x-F1TPjz_lI"/>
+
+### The enhanced editor experience of Stately Studio 2.0
+
+If you haven’t tried the Studio in the last few months, you’ll notice a considerable difference in the editor experience. We’ve reorganized the panels, header, and footer, so you’ll get more information about your machine visible to you when you want it. We’ve also made it easier for you to quickly create and edit your flows with quick actions and fewer clicks required to get to the actions you use most. There are also new options for you when you create a new machine to start with a blank canvas or starter template, import your existing app logic (not just from XState!), or generate a machine from a text description using AI.
+
+### Improved autolayout
+
+Another massive change you’ll notice in the editor is that autolayout is better than ever. We’ve improved the algorithm so imported machines are laid out more logically in a way that’s much easier to read, and transition lines now try to re-route around states and events as you move them to keep your machine tidy and readable.
+
+![Using autolayout to turn a spaghetti state machine with many overlapping transition lines, to a clearer state machine where each state is separated and it’s easy to follow the transition lines.](autolayout-optimised.gif)
+
+### XState version 5
+
+And, of course, after five years of hard work, we also [released XState version 5](/blog/2023-12-01-xstate-v5). You can already import and export XState V5 machines in Stately Studio, and we’re working on full support and more advanced features for the Studio to improve the developer experience even more in 2024, so you can visualize your app logic, whether it’s written in XState or not.
+
+## 2024 roadmap
+
+The Stately team has hit the ground running in 2024. We’re not even one week into 2024 yet, and we’ve already released GitHub Sync and sources for actions, actors, and guards. Stay tuned for blog posts about those features.
+
+We’ve got big plans for the next year; here’s a sneak peek at what you can expect from Stately in 2024:
+
+### Update to XState VS Code extension
+
+Our focus for the beginning of 2024 is improving the features already in Stately and XState, which means our first priority for 2024 is bringing the [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) up to date with Stately Studio. We’ll add full support for XState V5 and work towards extensions for other IDEs.
+
+### Improved XState V5 support in the Studio
+
+Stately Studio already supports XState V5 machines, allowing you to import your XState V5 machines into the Studio and export machines as XState V5. But we’re working on even greater support for XState V5 in the Studio. Look out for a blog post on sources for actions, actors, and guards later this week. And this is just the beginning of what we have planned.
+
+### Sequence diagram
+
+One of the features that always gets folks excited in [our office hours live streams](https://www.youtube.com/playlist?list=PLvWgkXBB3dd6PXbSoctwDXjWX-AQrxhds) are sequence diagrams for your app logic. [Check out an early version of the sequence diagram](https://www.youtube.com/live/x-F1TPjz_lI?si=w1PcBQQWQPe-20WT&t=318) as part of Stately Inspect. You can look forward to sequence diagrams like this in Stately Studio very soon!
+
+### Visualizing actor hierarchy
+
+With [XState’s greater focus on the actor model](https://stately.ai/blog/2023-12-01-xstate-v5#everything-is-an-actor), we’ll continue to make it easier for you to visualize your app logic in Stately Studio, enabling you to visualize the hierarchy of your actors and how they communicate with each other.
+
+### Export to PNG and SVG
+
+We’ve had a basic export to PNG feature in Stately Studio for a while now, but we’re working on a more advanced export feature, making it even easier for you to share your state machines with your team. We’ll improve the export to PNG feature and add the ability to export to SVG. Your documentation will never look better!
+
+### Import from Mermaid diagrams
+
+Last year, we introduced the option to [export to Mermaid](https://stately.ai/blog/2023-07-20-export-to-mermaid). In 2024, we want to add the option to import from Mermaid and even more of your favorite formats. We want to make it easy for you to visualize your app logic in Stately Studio.
+
+## What do you want from Stately in 2024?
+
+In 2024, our ultimate goal is for Stately to be the best visual collaborative source of truth for your app logic and workflows. Have you got a feature request? [Share your feature request on our new feature request board](https://feedback.stately.ai/). Do you want to share how your team is using Stately and XState? [Join our Discord](https://discord.stately.ai). Do you want a custom tour of Stately Studio for your team? [Book a demo with the Stately team](https://calendly.com/d/yc8-3hq-rpc/request-a-demo).
