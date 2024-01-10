@@ -15,9 +15,9 @@ Sources for [delayed (after) transitions](delayed-transitions.mdx) are coming so
 
 You can add sources from the <Code size={18}/> **Sources** panel. Use the <PenSquare size={18} /> edit button alongside the action, actor, or guard on the canvas to open its source.
 
-You can also open the **Sources** panel without an action, actor, or guard selected. By default, the **Sources** panel shows all the sources in the machine, and you can also add new sources without associating them with an action, actor, or guard. Sources that are currently referenced in the machine are highlighted in the **Sources** panel. Unused sources are dimmed.
+You can also open the **Sources** panel without an action, actor, or guard selected. By default, the **Sources** panel shows all the sources in the machine, and you can also add new sources without refencing them with an action, actor, or guard. Sources that are currently referenced in the machine are highlighted in the **Sources** panel. Unused sources are dimmed.
 
-Each source has a name (ID) and source code. The ID is used to reference the source code. The source code will be included in the generated code for the actor, action, or guard.
+Each source requires a name (ID) and source code. The ID is used to reference the source code. The source code will be included in the generated code for the actor, action, or guard. Sources have distinct names so they can be referenced by multiple actors, actions, or guards.
 
 ### Unnamed actions, actors, and guards
 
