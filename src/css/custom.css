@@ -909,6 +909,33 @@ html div[class*='announcementBar'] [class*='announcementBarContent'] {
   padding: 0.35rem 0 !important;
 }
 
+/* Allow layout to breathe (override Docusaurus defaults) */
+
+@media (min-width: 600px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 728px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 984px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 1240px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+
 /* Search */
 
 /* centre search bar on widest viewports */
@@ -1051,6 +1078,11 @@ html [class*='toggleButton'] {
 }
 
 /* Table of contents list */
+
+.col--2 {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .table-of-contents__link--active {
   color: var(--st-text-link);
