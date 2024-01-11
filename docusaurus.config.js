@@ -228,6 +228,11 @@ const config = {
         style: 'light',
         links: [
           {
+            label: 'Changelog',
+            href: 'https://stately.ai/blog/tags/changelog',
+            target: '_self',
+          },
+          {
             label: 'Roadmap',
             href: 'https://feedback.stately.ai',
             target: '_self',
