@@ -13,25 +13,17 @@ State machines can invoke actors as longer-running processes that can receive ev
 
 ## Add actions
 
+- Select a state or transition and use <Zap size={18} /> **Action**.
 - Select a state and use <Plus size={18} /> **Entry action** or **Exit action**.
-- Select a transition and use <Plus size={18} /> **Action**.
 - Select a state or transition, open the <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** or <Plus size={18} /> **Action**  button and choose **Add entry action**, **Add exit action**, or **Add action**.
 
-Use the <Edit size={18} /> edit icon button to open the **Action** panel and add custom action parameters. Actions are created as custom actions by default, but you can also use [XState built-in actions](#xstate-built-in-actions).
+Use the <Edit size={18} /> edit icon button to open the <Code size={18} /> **Sources** panel and add custom implementation code. Actions are created as custom actions by default, but you can also use [XState built-in actions](#xstate-built-in-actions).
 
 To remove an action, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
 
-### XState built-in actions
+### Add action parameters
 
-You can choose from the following built-in XState actions, which will be formatted in your [exported code](export-as-code.mdx). The options are:
-
-- [assign](/docs/actions/#assign-action): assigns data to the state context.
-- [raise](/docs/actions/#raise-action): raises an event that is received by the same machine.
-- [log](/docs/actions/#log-action): an easy way to log messages to the console.
-- [sendTo](/docs/actions/#send-to-action): sends an event to a specific actor.
-- [stop](/docs/actions/#stop-action): stops a child actor.
-
-To add a built-in action, first [add an action](#add-actions). [Read more about actions in XState](/docs/actions).
+You can add action parameters by selecting the action and using add <Plus size={18} /> **parameter**.
 
 ## Add invoked actors
 
@@ -49,7 +41,9 @@ In the video player above, the *startVideo* actor is invoked when the video pl
 - Select a state and use <PlayCircle size={18} /> **Invoke**.
 - Select a state, open the state <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** button and choose **Add invoked actor**.
 
-Use the <Edit size={18} /> edit icon button to open the **Invoked actor** panel and enter the actor’s source logic and ID. The ID can be used with the [`sendTo` or `stop` actions](#xstate-built-in-actions) to stop and send events to the actor.
+Use the <Edit size={18} /> edit icon button to open the <Code size={18}/ > **Sources** panel and enter the actor’s source logic. 
+
+Provide your actor with an ID so it can be used with the [`sendTo` or `stop` actions](#xstate-built-in-actions) to stop and send events to the actor. You can add actor input by selecting the actor and using add <Plus size={18} /> **input property**.
 
 To remove an actor, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
 
@@ -61,6 +55,19 @@ To remove an actor, use the <kbd>Backspace</kbd> key, *right-click* and choose *
 - Subsequent new transitions will be created as invoke error events.
 
 To change an invoke done or invoke error event back into a regular transition, Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the transition, and from **Event type**, choose **Always**.
+
+### XState built-in actions
+
+You can use the following built-in XState actions from the logic templates in the <Code size={18}/> **[Sources](sources.mdx)** panel, which will be formatted in your [exported code](export-as-code.mdx). The options are:
+
+- [assign](/docs/actions/#assign-action): assigns data to the state context.
+- [raise](/docs/actions/#raise-action): raises an event that is received by the same machine.
+- [log](/docs/actions/#log-action): an easy way to log messages to the console.
+- [sendTo](/docs/actions/#send-to-action): sends an event to a specific actor.
+- [stop](/docs/actions/#stop-action): stops a child actor.
+
+- [Read more about actions in XState](/docs/actions).
+- [Read more about actors in XState](/docs/actors).
 
 ### Spawning actors in Stately’s editor
 
