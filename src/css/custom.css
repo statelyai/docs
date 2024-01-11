@@ -853,7 +853,7 @@ code {
   margin-right: 0;
 }
 
-@media (min-width: 1049px) {
+@media (min-width: 1115px) {
   .navbar__brand {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
