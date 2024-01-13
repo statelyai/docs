@@ -853,7 +853,7 @@ code {
   margin-right: 0;
 }
 
-@media (min-width: 1049px) {
+@media (min-width: 1115px) {
   .navbar__brand {
     margin-right: 0;
     width: calc(var(--doc-sidebar-width) - 1rem);
@@ -907,6 +907,33 @@ html div[class*='announcementBar'] {
 html div[class*='announcementBar'] [class*='announcementBarContent'] {
   background: none !important;
   padding: 0.35rem 0 !important;
+}
+
+/* Allow layout to breathe (override Docusaurus defaults) */
+
+@media (min-width: 600px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 728px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 984px) {
+
+  .container {
+    max-width: 100%;
+  }
+}
+@media (min-width: 1240px) {
+
+  .container {
+    max-width: 100%;
+  }
 }
 
 /* Search */
@@ -1051,6 +1078,11 @@ html [class*='toggleButton'] {
 }
 
 /* Table of contents list */
+
+.col--2 {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .table-of-contents__link--active {
   color: var(--st-text-link);
@@ -1749,7 +1781,8 @@ ul.footer__links {
 
 .footer__links li:nth-of-type(1),
 .footer__links li:nth-of-type(2),
-.footer__links li:nth-of-type(3) {
+.footer__links li:nth-of-type(3),
+.footer__links li:nth-of-type(4) {
   width: 100%;
 }
 
@@ -1757,7 +1790,7 @@ ul.footer__links {
   margin-top: 1rem;
 }
 
-.footer__links li:nth-of-type(3) {
+.footer__links li:nth-of-type(4) {
   margin-bottom: 1.25rem;
 }
 
@@ -1828,7 +1861,7 @@ span.footer__link-item a:active {
       'link-one . github discord mastodon twitter youtube linkedin'
       'link-two . . . . . . .'
       'link-thr . form form form form form form'
-      '. . form form form form form form';
+      'link-fou . form form form form form form';
     align-content: start;
     gap: 0;
     margin-top: 1rem;
@@ -1844,24 +1877,27 @@ span.footer__link-item a:active {
     grid-area: link-thr;
   }
   .footer__links li:nth-of-type(4) {
-    grid-area: github;
+    grid-area: link-fou;
   }
   .footer__links li:nth-of-type(5) {
-    grid-area: discord;
+    grid-area: github;
   }
   .footer__links li:nth-of-type(6) {
-    grid-area: mastodon;
+    grid-area: discord;
   }
   .footer__links li:nth-of-type(7) {
-    grid-area: twitter;
+    grid-area: mastodon;
   }
   .footer__links li:nth-of-type(8) {
-    grid-area: youtube;
+    grid-area: twitter;
   }
   .footer__links li:nth-of-type(9) {
-    grid-area: linkedin;
+    grid-area: youtube;
   }
   .footer__links li:nth-of-type(10) {
+    grid-area: linkedin;
+  }
+  .footer__links li:nth-of-type(11) {
     grid-area: form;
   }
 
@@ -1882,9 +1918,9 @@ span.footer__link-item a:active {
       );
     grid-template-areas:
       '. link-one . github discord mastodon twitter youtube linkedin'
-      '. link-two . . . . . . .'
-      '. link-thr . form form form form form form'
-      '. . . form form form form form form';
+      '. link-two . .      .       .        .       .       .'
+      '. link-thr . form   form    form     form    form    form'
+      '. link-fou . form   form    form     form    form    form';
   }
 }
 
@@ -1905,7 +1941,7 @@ span.footer__link-item a:active {
       'link-one . github discord mastodon twitter youtube linkedin'
       'link-two . . . . . . .'
       'link-thr . form form form form form form'
-      '. . form form form form form form';
+      'link-fou . form form form form form form';
   }
 }
 

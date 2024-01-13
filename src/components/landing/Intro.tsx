@@ -4,14 +4,14 @@ export function Intro() {
   return (
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
-        <h1 className="text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
-          Build complex logic intelligently
+        <h1 className="max-w-2xl m-auto text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
+          Turn ideas into diagrams and code in minutes.
         </h1>
 
         <div className="flex flex-col items-center w-full">
           <p className="max-w-2xl mt-16 mb-8 text-base leading-normal tracking-tight text-center md:text-lg lg:text-xl text-white/60 drop-shadow-sm">
-            Your source of truth for visually creating, deploying, and analyzing
-            any type of logic, from frontend user flows to backend workflows.
+            From frontend user flows to backend workflows, visually build and
+            deploy any type of logic with Stately as your source of truth.
           </p>
           <CallToActionButtons />
         </div>

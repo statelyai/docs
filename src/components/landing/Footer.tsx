@@ -27,7 +27,7 @@ function AllLinks() {
             width="86"
           />
         </a>
-        <p className="text-white/60 mt-5 text-base">&copy; 2023 Stately</p>
+        <p className="text-white/60 mt-5 text-base">&copy; 2024 Stately</p>
       </div>
       <LinkList title="Product">
         <LinkItem href="#design">Features</LinkItem>

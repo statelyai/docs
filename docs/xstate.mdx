@@ -46,7 +46,7 @@ yarn add xstate
 ## Create a simple machine
 
 ```js
-import { createMachine, createActor } from 'xstate';
+import { createMachine, assign, createActor } from 'xstate';
 
 const countMachine = createMachine({
   context: {

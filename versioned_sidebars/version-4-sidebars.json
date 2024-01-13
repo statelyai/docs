@@ -139,7 +139,6 @@
             "id": "design-mode"
           },
           "items": [
-            "import-from-code",
             {
               "type": "doc",
               "label": "Generate with AI",
@@ -150,8 +149,6 @@
               "label": "Generate React app",
               "id": "generate-react"
             },
-            "export-as-code",
-            "generate-test-paths",
             "machine-restore",
             "autolayout",
             {
@@ -202,8 +199,27 @@
         "user-preferences"
       ]
     },
+    {
+      "type": "category",
+      "label": "Code",
+      "link": {
+        "type": "generated-index",
+        "title": "Code",
+        "description": "Learn how to use Stately Studio’s code.",
+        "slug": "/category/code",
+        "keywords": ["guides"]
+      },
+      "collapsed": true,
+      "collapsible": true,
+      "items": [
+        "import-from-code",
+        "import-from-github",
+        "generate-test-paths",
+        "sources",
+        "export-as-code"
+      ]
+    },
     "projects",
-    "import-from-github",
     {
       "type": "doc",
       "label": "Teams",
