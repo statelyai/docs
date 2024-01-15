@@ -350,7 +350,7 @@ Or, for simplicity, target-only transitions can be strings:
 ### `onSnapshot`
 
 - Transitions when invoked actor emits a new snapshot
-- Event gets `data` with actor's snapshot
+- Event gets `snapshot` with actor's snapshot
 - Not available for callback actors
 
 ```ts
@@ -358,7 +358,7 @@ invoke: {
   src: 'getUser',
   // highlight-start
   onSnapshot: {
-    actions: ({ event }) => console.log(event.data)
+    actions: ({ event }) => console.log(event.snapshot)
   }
   // highlight-end
 }
@@ -621,7 +621,7 @@ const machine = setup({
     input: { ms: 1000 },
     onSnapshot: {
       actions: ({ event }) => {
-        console.log(event.context); // 1, 2, 3, ...
+        console.log(event.snapshot.context); // 1, 2, 3, ...
       }
     }
   }
@@ -901,12 +901,20 @@ More information coming soon.
 ### Cheatsheet: invoke an actor
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate';
+import { setup, createActor, fromPromise, assign } from 'xstate';
 
 const fetchUser = (userId: string) =>
   fetch(`https://example.com/${userId}`).then((response) => response.text());
 
-const userMachine = createMachine({
+const userMachine = setup({
+  actors: {
+    getUser: fromPromise(async ({ input }: { input: { userId: string }}) => {
+      const data = await fetchUser(input.userId);
+
+      return data
+    })
+  }
+}).createMachine({
   // …
   states: {
     idle: {
@@ -918,7 +926,7 @@ const userMachine = createMachine({
       // highlight-start
       invoke: {
         id: 'getUser',
-        src: fromPromise(({ input }) => fetchUser(input.userId)),
+        src: 'getUser',
         input: ({ context: { userId } }) => ({ userId }),
         onDone: {
           target: 'success',

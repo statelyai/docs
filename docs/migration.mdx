@@ -1272,15 +1272,19 @@ See [Actors](actors.mdx) for more information.
 
 ```ts
 // ✅
-import { fromPromise, createMachine } from 'xstate';
+import { fromPromise, setup } from 'xstate';
 
-const machine = createMachine({
-  invoke: {
-    src: fromPromise(async ({ input }) => {
+const machine = setup({
+  actors: {
+    getUser: fromPromise(async ({ input }: { input: { userId: string } }) => {
       const data = await getData(input.userId);
       // ...
       return data;
-    }),
+    })
+  }
+}).createMachine({
+  invoke: {
+    src: 'getUser',
     input: ({ context, event }) => ({
       userId: context.userId,
     }),
