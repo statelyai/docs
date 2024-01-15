@@ -1,0 +1,110 @@
+---
+title: Statecharts - What’s in a name?
+description: Introducing a new Stately Style feature for quickly applying styles to the names in your state machine including tips and guidlines for naming conventions
+tags: [stately, studio, coding conventions, naming, git, GitHub]
+authors: [kevin]
+date: 2024-01-15
+slug: 2024-01-15-statecharts-whats-in-a-name
+image: /blog/TODO.png
+---
+
+Statecharts and visual diagrams are such a powerful way to organize, and convey information. All of those lovely “boxes and arrows” convey meaningful relationships, indicate sequential order, and direct flows in a way that’s easier to understand quickly. Add to that the ability to embed assets in your diagrams and you’re well on your way towards creating truly expressive, executable software diagrams. But there’s still one thing that statecharts have that should make them easy to understand. Text.
+
+{/* truncate */}
+
+When I say text, I’m largely referring to names. States, events, actors, actions, and guards all have names. These are important since they’re included in the executable code or other [formats that are exported from Studio](https://stately.ai/docs/export-as-code) , functioning as unique ids (or shared) so they’re not just for decoration. Many users often ask us for guidance on how to name things in their state machines and in XState.
+
+Some of these requests relate to semantic meaning in regards to the elements of a statechart. Should a state be named “Awake” or “Waking Up”? Should an event be called “Shuffle the deck” or “Shuffling”? The other questions we get are more cosmetic like, “Should state names start with a capital letter?” or “Should multi-word names be separated by spaces, dashes, or underscores?” The former deserves an answer like “it depends” because it does depened on many things: What is the state really doing? What are the names of the other states or events? Does the state have child states and, if so, what’s their purpose and how are they named? You get the picture. The latter group gets an equally frustrating answer, the same answer I get whenever I travel and ask locals “Do I need to tip in this country?”. And that answer is… “Up to you.”
+
+But don’t worry, I wouldn’t leave you hanging out to dry when it comes to something as hard as naming. Here are some basic guidelines to consider when it comes to naming things in your statecharts:
+
+### Clarity of meaning
+
+Just like with naming anything in code, it’s helpful to pick names that are brief, not generic, yet contain just enough information to be unambiguous. Make names “minimally meaningful”.
+
+State name examples:
+
+- "Idle" instead of "State1"
+- "Door Closed" instead of "Closed"
+- "Payment Processing" instead of "State_Awaiting_Payment"
+
+Event name examples:
+
+- "UserClickedSubmit" instead of "Event1"
+- "TemperatureExceededThreshold" instead of "ThresholdReached"
+- "PaymentReceived" instead of "Event_Payment_Received"
+
+### Improved readability
+
+One of my favorite tips for statechart naming is to use contrasting styles. Contrast is a key ingredient for many things we love from food to color, art, and music. The readability of statecharts can also benefit from contrast. If you use SHOUTY_UPPERCASE event names the please don’t also use that case for state names or… anything else in the same machine really. At the same time, don’t just name every state, event, and action in “plain lower case” unless you want your statechart to be read like the equivalent of a bored teen with “vocal fry”. Differentiation can help readers distinguish certain elements of the statechart from others and this applies to readability on the editor canvas as well as in code.
+
+### Consistency is Key
+
+You can do whatever you want (remember, “Up to you”) but whatever you decide, try to be consistent. Readers will learn the convention you choose and they’ll be able to rely on it. If you name states “Waiting”, “Downloading”, “Synchronizing” then when they see another word ending in “ing” they’ll probably assume it’s also a state. If you name entry actions and exit actions on states as well as actions on transitions all with camelCase then it’s clear that these are actions regardless of what they’re attached to. So remember, consistency is key and in an XState config object, most of these names end up exported as actual object keys!
+
+### Conventions and maintenance
+
+From consistency, conventions often emerge. These could be conventions adhered to across a statechart, an entire project or across all of the projects of a particular user or team. This makes the work easier to understand and easier to maintain, thereby streamlining collaboration.
+
+### Focusing on more important issues
+
+In the code world, developers used to fight about all sorts of crucial issues like line length, how to format ternary statements, etc. But then Prettier came along and there was nothing left to debate other than how to configure Prettier. In earlier days, importing XState machines into the Studio at times resembled a pile of shapes begging to be manually laid out. But we’ve made significant improvements to the Studio editor’s layout algorithm so that flows much better and there’s less dragging needed on the part of users. Conventions are important but there are more urgent tasks than sweating little details even if you still desire the benefits of consistent and intentional style.
+
+### Introducing Stately Style
+
+In order to help you put your debates and tired typing fingers to rest, we’re introducing a small but useful feature to help you improve your statecharts and keep on building your software in style! Think of this like the Prettier of XState and statecharts, all within [Stately Studio](https://stately.ai/studio).
+
+<p>
+  <ThemedImage
+    alt="Connect a project to a GitHub repository by clicking the Connect GitHub button."
+    sources={{
+      light: '/blog/2024-01-15-statecharts-whats-in-a-name/stately-style.png',
+      dark: '/blog/2024-01-15-statecharts-whats-in-a-name/stately-style-dm.png',
+    }}
+  />
+</p>
+
+In the Details panel of each machine in the Studio you can now find a set up controls for configuring and applying styles to the following elements of your statechart: states, events, actors, actions, and guards
+
+Naming styles include
+
+- Title Case
+- Sentence case
+- UPPER_CASE
+- PascalCase
+- camelCase
+- kebab-case
+- snake_case
+- lower case
+- dot.case \*
+- case.dot.reverse \*
+
+Select a naming convention or style from some or all of the dropdowns and click the Apply styles button. You can change style selections and re-apply styles at any time. You can even use Command-Z or hit the Undo button in the bottom bar to undo the last change(s).
+
+**Bonus -** We’ve even included a couple of preconfigured style setting buttons like The Stately Style and XState Classic and we may add more in the future. So, if you don’t even want to bother selecting from each dropdown or if you want a starting point from which to customize further, you can click The Stately Style and see what we often use at Stately.
+
+### What is dot.case and case.dot.reverse?
+
+You may notice that the Transitions dropdown includes 2 additional style options, [dot.case](http://dot.case) and reverse.dot.case. The first option, dot.case is just a dot delimited string to name something like “play.video”. However, the second option, “case.dot.reverse” allows for a feature called [Wildcard transitions](https://stately.ai/docs/transitions#wildcard-transitions). Not only can you transform a name like “Play video” to “video.play” but you can then manually edit that to be “video._” which means that the transition will happen whenever it receives any event name starting with “video.” like “video.play”, ‘video.pause”, or “video.stop”. Once you manually edit an event name to include a wildcard “_”, it will be ignored by further style changes until you edit it again to remove the “\*”.
+
+### How this can help your workflow?
+
+**Target different audiences** - Diagrams in the Studio can be consumed by team members of different roles and disciplines and each audience may have a visual style they prefer. Between developers, designers, and product professionals, some folks are going to like their Title Case whereas others are going to prefer snake_case.
+
+**Style for export uses** - Similarly, the machine config may be [exported for different targets](https://stately.ai/docs/export-as-code) such TS/JS code, markdown, stories, mermaid, etc. Some naming conventions just look better or more appropriate depending on the export target.
+
+**Save styles with Version History** - Stately studio members on our [Pro plan](https://stately.ai/docs/studio-pro-plan) or our [Team plan](https://stately.ai/docs/studio-team-plan) can save versions of their work with [Version History](https://stately.ai/docs/versions). You can easily apply multiple sets of styles, [save each as a version](https://stately.ai/docs/versions#save-a-version), and then [view those versions](https://stately.ai/docs/versions#view-a-version) at any time or [restore a version](https://stately.ai/docs/versions#restore-a-version) to restore and move forward with from that point on.
+
+**Style machines to commit back to a GitHub repo** - We recently released [GitHub Sync](https://stately.ai/docs/import-from-github) with the ability to create pull requests to commit back to repos. Just like with machine layout and other edits made in the Studio, styling statechart names can also be done in the Studio and submitted as a pull request.
+
+### Where could we go from here?
+
+- We could include the ability to style tags along with states, events, and the rest
+- Auto-apply styles for new elements just added to the statechart. For now, just click the Apply styles button as often as you want.
+- Exporting diagrams as images - Many users have requested exporting statecharts as images like PNG or SVG so being able to apply machine-wide styles with a single click would make these images look great.
+- Project or System-wide styles - As we continue to support [systems](https://stately.ai/docs/system) we could consider applying styles to all machines in a project or across sytems.
+- VSCode extension - We are actively working on features for our [VSCode extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) and styling names, a type of code-editor refactoring feature, just might make its way into the extension.
+
+### Summary
+
+Naming and styles is a matter of taste but also an opportunity for customization and personalization for individual users or teams. Manual renaming and enforcing conventions is quite tedious and time consuming so it’s more efficient to apply styles with a single click. Considering how easy it is now to apply styles, undo them, try out other combinations, and save your work, you can be free to experiment and to arrive at a style that best suits you. When your machines look good, you’re lookin’ good too!
