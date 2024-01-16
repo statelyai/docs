@@ -2,4 +2,95 @@
 title: Inspector
 ---
 
-Docs coming soon
+# Stately Inspector
+
+Stately Inspector is a tool that allows you to inspect your application’s state visually. It primarily works with frontend applications using XState but can also work with backend code and code that uses any state management solution.
+
+:::new
+
+[Read about our recent release of Stately Inspector on our blog](/blog/2024-01-15-stately-inspector/).
+
+:::
+
+## Install Stately Inspector
+
+To inspect applications with Stately Inspector, install [Stately Inspect](https://github.com/statelyai/inspect) from npm via `@statelyai/inspect`:
+
+```bash
+npm install @statelyai/inspect
+```
+
+Then import the relevant inspector creator into your app. The creator is used to create an inspector (e.g., a browser or WebSocket inspector) that you can use to either connect to XState actors and/or manually send inspection events to Stately Inspector:
+
+```ts
+import { createActor } from 'xstate';
+// highlight-next-line
+import { createBrowserInspector } from '@statelyai/inspect';
+import { machine } from './machine';
+
+// highlight-next-line
+const inspector = createBrowserInspector();
+
+// ...
+
+const actor = createActor(machine, {
+  // highlight-next-line
+  inspect: inspector.inspect,
+  // ... other actor options
+});
+
+actor.start();
+```
+
+When you run your app, a new tab or popup window will open with the Inspector.
+
+## Sending inspection events
+
+The `@statelyai/inspect` package will send inspection events to the connected Stately Inspector. There are currently three kinds of events sent:
+
+- Actor creation events
+- Actor-to-actor communication events
+- Actor snapshot changes
+
+When you pass in the `inspect` option to the actor options in XState’s `createActor(machine, options)` function, it will automatically send all of these inspection events.
+
+For usage with other state management solutions, you can manually send inspection events using the following methods:
+
+- `inspector.actor(actor, snapshot, info)` - send actor creation events
+- `inspector.event(actor, event, info)` - send actor-to-actor communication events
+- `inspector.snapshot(actor, snapshot, info)` - send actor snapshot changes
+
+```ts
+import { createBrowserInspector } from '@statelyai/inspect';
+
+const inspector = createBrowserInspector();
+
+// Imagine a todo app...
+inspector.actor('todos');
+
+// When a todo is created
+inspector.actor('todo-1', {
+  context: { status: 'active' }
+});
+
+// When a user completes a todo
+inspector.event('todo-1', { type: 'todo.complete' });
+
+// When a todo changes
+inspector.snapshot('todo-1', {
+  context: { status: 'completed' }
+});
+
+// When the todos actor (not the user) sends an event to a todo
+inspector.event('todo-1', { type: 'todo.update' }, {
+  source: 'todos'
+});
+
+// ... etc.
+
+```
+
+The three types of inspection events contain everything that Stately Inspector needs to generate two kinds of real-time diagrams automatically:
+
+- **State machine diagrams** (if a state machine definition is provided)
+- **Sequence diagrams**
