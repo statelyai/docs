@@ -1,16 +1,14 @@
 ---
 title: Introducing Stately Inspector
-description: Stately Inspector is a tool that allows you to visually inspect the state of your application in real-time. It works with code that uses any state management solution.
+description: Stately Inspector is a universal tool that enables you to visually inspect the state of any application, frontend or backend, with the visualization of Stately’s editor.
 authors: [david]
 tags: [inspector, stately, xstate, actors, devtools]
 date: 2024-01-15
 slug: 2024-01-15-stately-inspector
-image: /blog/2024-01-15-stately-inspector.png
+image: /blog/2024-01-15-introducing-stately-inspector.png
 ---
 
-One of the most popular features of our legacy Stately viz was its ability to inspect your app in real-time using the @xstate/inspect tools. We wanted to bring this functionality into a universal tool that enables you to visually inspect the state of any application, frontend or backend, with the visuals of Stately’s editor. So we built Stately Inspector.
-
-{/* truncate */}
+One of the most popular features of our legacy Stately viz was its ability to inspect your app in real-time using the @xstate/inspect tools. We wanted to bring this functionality into a universal tool that enables you to visually inspect the state of any application, frontend or backend, with the visualization of [Stately’s editor](https://state.new). So we built Stately Inspector.{/* truncate */}
 
 ## What is Stately Inspector?
 
@@ -50,9 +48,18 @@ const actor = createActor(machine, {
 actor.start();
 ```
 
-Now, when you run your app, you should see a new tab open in your browser that looks something like this:
+Now, when you run your app, you should see a new tab or popup open in your browser that looks something like this:
 
-{/* TODO: screenshot */}
+<p>
+  <ThemedImage
+    alt="The Stately Inspector view, showing a state machine for the pizza ordering process. The current state and available event is highlighted in green."
+    sources={{
+      light: '/blog/2024-01-15-introducing-stately-inspector/inspector.png',
+      dark: '/blog/2024-01-15-introducing-stately-inspector/inspector-dm.png',
+    }}
+  />
+</p>
+
 
 ## Sending inspection events
 
@@ -105,16 +112,25 @@ The above is a contrived example demonstrating how you can instrument inspector 
 - **State machine diagrams** (if a state machine definition is provided)
 - **Sequence diagrams**
 
-{/* TODO: screenshot of state machine and sequence diagram, side-by-side */}
+<p>
+  <ThemedImage
+    alt="The Stately Inspector view, showing a state machine and a sequence diagram for the pizza ordering process side-by-side."
+    sources={{
+      light: '/blog/2024-01-15-introducing-stately-inspector/machine-and-sequence-diagram.png',
+      dark: '/blog/2024-01-15-introducing-stately-inspector/machine-and-sequence-diagram-dm.png',
+    }}
+  />
+</p>
+
 
 ## Coming soon
 
 The goal of Stately Inspector is to be a universal tool that enables you to visually inspect the state of any application, frontend or backend. Right now, it’s optimized for XState (with `inspector.inspect`) or non-XState (with `inspector.actor(...)`, `inspector.event(...)`, `inspector.snapshot(...)`) state management solutions in frontend applications. We would love your feedback so that we can prioritize:
 
-- **A websocket inspector creator**: inspect frontend and/or backend applications remotely.
-- **Bidirectional communication**: send events from Stately Inspector to your live application.
-- **Middleware for popular libraries**: e.g., Redux, MobX, Zustand, and more.
-- **Sync with Stately Studio**: enrich inspected machines with information (layouts, colors, assets, annotations, etc.) from Stately Studio.
-- **Analytics**: view real-time analytics of flows in your application.
+- **[A websocket inspector creator](https://github.com/statelyai/feedback/issues/387)**: inspect frontend and/or backend applications remotely.
+- **[Bidirectional communication](https://github.com/statelyai/feedback/issues/388)**: send events from Stately Inspector to your live application.
+- **[Middleware for popular libraries](https://github.com/statelyai/feedback/issues/389)**: e.g., Redux, MobX, Zustand, and more.
+- **[Sync with Stately Studio](https://github.com/statelyai/feedback/issues/390)**: enrich inspected machines with information (layouts, colors, assets, annotations, etc.) from Stately Studio.
+- **[Analytics](https://github.com/statelyai/feedback/issues/391)**: view real-time analytics of flows in your application.
 
 [Let us know your thoughts on our Discord server](https://discord.stately.ai) or [submit a feature request on our GitHub board](https://feedback.stately.ai). Want to be the first to know about upcoming features? Subscribe to our [YouTube channel](https://www.youtube.com/@Statelyai) or [follow us on LinkedIn](https://www.linkedin.com/company/statelyai/) to avoid missing our next office hours live stream.
