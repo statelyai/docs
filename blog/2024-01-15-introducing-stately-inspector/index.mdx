@@ -1,0 +1,114 @@
+---
+title: Introducing Stately Inspector
+description: 
+authors: [david]
+tags: [inspector, stately]
+date: 2024-01-15
+slug: 2024-01-15-stately-inspector
+image: /blog/2024-01-15-stately-inspector.png
+---
+
+{/* TODO: intro */}
+
+## What is Stately Inspector?
+
+Stately Inspector is a tool that allows you to visually inspect the state of your application. It primarily works with frontend applications using XState, but it can work with backend code and code that uses any state management solution.
+
+## Installing Stately Inspect
+
+To inspect applications with Stately Inspector, install [Stately Inspect](https://github.com/statelyai/inspect) from npm via `@statelyai/inspect`:
+
+```bash
+npm install @statelyai/inspect
+```
+
+Then, import the relevant inspector creator into your app. This is used to create an inspector (e.g. a browser or websocket inspector) that you can use to either connect to XState actors and/or manually send inspection events to Stately Inspector:
+
+```ts
+import { createActor } from 'xstate';
+// highlight-next-line
+import { createBrowserInspector } from '@statelyai/inspect';
+import { machine } from './machine';
+
+// highlight-next-line
+const inspector = createBrowserInspector();
+
+// ...
+
+const actor = createActor(machine, {
+  // highlight-next-line
+  inspect: inspector.inspect,
+  // ... other actor options
+});
+
+actor.start();
+```
+
+Now when you run your app, you should see a new tab open in your browser that looks something like this:
+
+{/* TODO: screenshot */}
+
+## Sending Inspection Events
+
+The `@statelyai/inspect` package will send inspection events to the connected Stately Inspector. There are currently 3 kinds of events sent:
+
+- Actor creation events
+- Actor-to-actor communication events
+- Actor snapshot changes
+
+When you pass in the `inspect` option to the actor options in XState's `createActor(machine, options)` function, it will automatically send all of these inspection events.
+
+For usage with other state management solutions, you can manually send inspection events using the following methods:
+
+- `inspector.actor(actor, snapshot, info)` - send actor creation events
+- `inspector.event(actor, event, info)` - send actor-to-actor communication events
+- `inspector.snapshot(actor, snapshot, info)` - send actor snapshot changes
+
+```ts
+import { createBrowserInspector } from '@statelyai/inspect';
+
+const inspector = createBrowserInspector();
+
+// Imagine a todo app...
+inspector.actor('todos');
+
+// When a todo is created
+inspector.actor('todo-1', {
+  context: { status: 'active' }
+});
+
+// When a user completes a todo
+inspector.event('todo-1', { type: 'todo.complete' });
+
+// When a todo changes
+inspector.snapshot('todo-1', {
+  context: { status: 'completed' }
+});
+
+// When the todos actor (not the user) sends an event to a todo
+inspector.event('todo-1', { type: 'todo.update' }, {
+  source: 'todos'
+});
+
+// ... etc.
+
+```
+
+The above is a contrived example demonstrating how you can instrument inspector events at any time from any part of your app. The 3 types of inspection events contain everything that Stately Inspector needs to automatically generate two kinds of real-time diagrams:
+
+- **State machine diagrams** (if a state machine definition is provided)
+- **Sequence diagrams**
+
+{/* TODO: screenshot of state machine and sequence diagram, side-by-side */}
+
+## Coming soon
+
+The goal of Stately Inspector is to be a universal tool that enables you to visually inspect the state of any application, frontend or backend. Right now, it's optimized for XState (with `inspector.inspect`) or non-XState (with `inspector.actor(...)`, `inspector.event(...)`, `inspector.snapshot(...)`) state management solutions in frontend applications. We would love your feedback so that we can prioritize:
+
+- **A websocket inspector creator**: inspect frontend and/or backend applications remotely)
+- **Bidirectional communication**: send events from Stately Inspector to your live application
+- **Middleware for popular libraries**: e.g. Redux, MobX, Zustand, and more
+- **Sync with Stately Studio**: enrich inspected machines with information (layouts, colors, assets, annotations, etc.) from Stately Studio
+- **Analytics**: view real-time analytics of flows in your application
+
+{/* TODO: link to submit feedback */}
