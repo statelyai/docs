@@ -55,6 +55,8 @@ function useArrows(
       target: string;
       sourceSide?: 'top' | 'right' | 'bottom' | 'left';
       targetSide?: 'top' | 'right' | 'bottom' | 'left';
+      // used for window.matchMedia(media)
+      media?: string;
     }>
   >,
 ) {
@@ -318,6 +320,7 @@ function ConversionBoxes() {
         target: 'code',
         sourceSide: 'right',
         targetSide: 'bottom',
+        media: '(min-width: 1024px)',
       },
     ],
   });
