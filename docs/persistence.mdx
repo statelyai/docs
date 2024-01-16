@@ -145,8 +145,6 @@ const someActor = createActor(someMachine, {
   inspect: (inspectionEvent) => {
     if (inspectionEvent.type === '@xstate.event') {
       const event = inspectionEvent.event;
-      // Ignore XState events
-      if (event.type.startsWith('xstate.')) { return; }
 
       // Only listen for events sent to the root actor
       if (inspectionEvent.actorRef !== someActor) { return; }

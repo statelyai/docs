@@ -171,7 +171,7 @@ By default, when a state machine transitions from a parent state to the same par
 
 However, if you want a transition to re-enter the parent state, set the transition's `reenter` property to `true`. Transitions that re-enter the state _will_ stop existing invoked actors and start new invoked actors.
 
-[Read more about re-entering states](transitions#re-entering).
+[Read more about re-entering states](/docs/transitions#re-entering).
 
 ## The `invoke` property API {#api}
 
@@ -189,12 +189,12 @@ An invocation is defined in a state node's configuration with the `invoke` prope
 
 The `src` represents the [actor logic](actors.mdx#actor-logic-creators) the machine should use when creating the actor. There are several actor logic creators available in XState:
 
-- [State machine logic (`createMachine`)](actors.mdx#createmachine)
-- [Promise logic (`fromPromise`)](actors.mdx#frompromise), where invoke will take the `onDone` transition on `resolve`, or the `onError` transition on `reject`
-- [Transition function logic (`fromTransition`)](actors.mdx#fromtransition), which follows the reducer pattern
-- [Observable logic (`fromObservable`)](actors.mdx#fromobservable), which can send events to the parent machine, and where invoke will take an `onDone` transition when completed
-- [Event observable logic (`fromEventObservable`)](actors.mdx#fromeventobservable), like Observable logic but for streams of event objects
-- [Callback logic (`fromCallback`)](actors.mdx#fromcallback), which can send events to and receive events from the parent machine
+- [State machine logic (`createMachine`)](/docs/actors/#createmachine)
+- [Promise logic (`fromPromise`)](/docs/actors/#frompromise), where invoke will take the `onDone` transition on `resolve`, or the `onError` transition on `reject`
+- [Transition function logic (`fromTransition`)](/docs/actors/#fromtransition), which follows the reducer pattern
+- [Observable logic (`fromObservable`)](/docs/actors/#fromobservable), which can send events to the parent machine, and where invoke will take an `onDone` transition when completed
+- [Event observable logic (`fromEventObservable`)](/docs/actors/#fromeventobservable), like Observable logic but for streams of event objects
+- [Callback logic (`fromCallback`)](/docs/actors/#fromcallback), which can send events to and receive events from the parent machine
 
 The invoke `src` can be _inline_ or _provided_.
 
@@ -350,7 +350,7 @@ Or, for simplicity, target-only transitions can be strings:
 ### `onSnapshot`
 
 - Transitions when invoked actor emits a new snapshot
-- Event gets `data` with actor's snapshot
+- Event gets `snapshot` with actor's snapshot
 - Not available for callback actors
 
 ```ts
@@ -358,7 +358,7 @@ invoke: {
   src: 'getUser',
   // highlight-start
   onSnapshot: {
-    actions: ({ event }) => console.log(event.data)
+    actions: ({ event }) => console.log(event.snapshot)
   }
   // highlight-end
 }
@@ -565,23 +565,71 @@ actor.subscribe({
 
 ## Invoking Callbacks
 
+You can invoke [callback actor logic](./callback-actors.mdx) by:
+
+1. Setting up the callback actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the callback actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromCallback(/* … */);
-}
+import { setup, fromCallback } from 'xstate';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someCallback: fromCallback(({ input, sendBack, receive }) => {
+      // ...
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someCallback',
+    input: {/* ... */}
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [callback actor logic](./callback-actors.mdx) for more information on callback actors.
 
 ## Invoking Observables
 
+You can invoke [observable logic](./observable-actors.mdx) by:
+
+1. Setting up the observable logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the observable logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromObservable(/* … */);
-}
+import { setup, fromObservable } from 'xstate';
+import { interval } from 'rxjs';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someObservable: fromObservable(({ input }: { input: number }) => {
+      return interval(input.ms);
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someObservable',
+    input: { ms: 1000 },
+    onSnapshot: {
+      actions: ({ event }) => {
+        console.log(event.snapshot.context); // 1, 2, 3, ...
+      }
+    }
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [observable actor logic](./observable-actors.mdx) for more information on observable actors.
 
 ## Invoking Event Observables
 
@@ -595,23 +643,76 @@ _Coming soon_
 
 ## Invoking Transitions
 
+You can invoke [transition actor logic](./transition-actors.mdx) by:
+
+1. Setting up the transition actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the transition actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: fromTransition(/* … */);
-}
+import { setup, fromTransition } from 'xstate';
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someTransition: fromTransition((state, event, { input }) => {
+      // ...
+      return state;
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someTransition',
+    input: {/* ... */},
+    onSnapshot: {
+      actions: ({ event }) => {
+        console.log(event.context);
+      }
+    }
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [transition actor logic](./transition-actors.mdx) for more information on transition actors.
 
 ## Invoking Machines
 
+You can invoke [state machine actor logic](./state-machine-actors.mdx) by:
+
+1. Setting up the state machine actor logic in the `actors` object of the `setup({ actors: { ... } })` call
+2. Invoking the state machine actor logic by its source name (`src`) in the `invoke` property of a state
+
 ```ts
-invoke: {
-  src: createMachine(/* … */);
-}
+import { setup } from 'xstate';
+
+const childMachine = setup({/* ... */}).createMachine({
+  context: ({ input }) => ({
+    // ...
+  }),
+  // ...
+});
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    someMachine: childMachine
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  invoke: {
+    src: 'someMachine',
+    input: {/* ... */}
+  }
+  // highlight-end
+});
 ```
 
-_Coming soon_
+Read [state machine actor logic](./state-machine-actors.mdx) for more information on state machine actors.
 
 ## Sending Responses
 
@@ -741,19 +842,79 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-_Coming soon_
+You should the `setup({ ... })` API to properly infer types for invoked actor logic.
+
+```ts
+import { setup, fromPromise, assign } from 'xstate';
+
+interface User {
+  id: string;
+  name: string;
+}
+
+const machine = setup({
+  actors: {
+    // highlight-start
+    fetchUser: fromPromise<User, { userId: string }>(async ({ input }) => {
+      const response = await fetch(`https://example.com/${input.userId}`);
+
+      return response.json();
+    })
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  context: {
+    user: null,
+    userId: 42
+  },
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        editUserDetails: { target: 'loadingUser' }
+      }
+    },
+    loadingUser: {
+      invoke: {
+        // highlight-start
+        src: 'fetchUser',
+        input: ({ context }) => ({
+          userId: context.userId // Type enforced to be string
+        }),
+        onDone: {
+          actions: assign({
+            user: ({ event }) => event.output // Strongly typed as User
+          })
+        }
+        // highlight-end
+      }
+    }
+  }
+});
+```
+
+More information coming soon.
 
 ## Invoke cheatsheet
 
 ### Cheatsheet: invoke an actor
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate';
+import { setup, createActor, fromPromise, assign } from 'xstate';
 
 const fetchUser = (userId: string) =>
   fetch(`https://example.com/${userId}`).then((response) => response.text());
 
-const userMachine = createMachine({
+const userMachine = setup({
+  actors: {
+    getUser: fromPromise(async ({ input }: { input: { userId: string }}) => {
+      const data = await fetchUser(input.userId);
+
+      return data
+    })
+  }
+}).createMachine({
   // …
   states: {
     idle: {
@@ -765,7 +926,7 @@ const userMachine = createMachine({
       // highlight-start
       invoke: {
         id: 'getUser',
-        src: fromPromise(({ input }) => fetchUser(input.userId)),
+        src: 'getUser',
         input: ({ context: { userId } }) => ({ userId }),
         onDone: {
           target: 'success',

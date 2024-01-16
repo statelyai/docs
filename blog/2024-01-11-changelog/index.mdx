@@ -1,0 +1,44 @@
+---
+title: Changelog Week 2 2024
+description: We’ve had a busy start to 2024 with the release of GitHub Sync, sources, and draft projects. We’ve also made plenty of improvements and fixed a few bugs.
+authors: [laura]
+tags: [changelog, new]
+date: 2024-01-11
+slug: 2024-01-11-changelog
+image: /blog/2024-01-11-changelog.png
+---
+
+We’ve had a busy start to 2024 with the release of GitHub Sync, sources, and draft projects. We’ve also made plenty of improvements and fixed a few bugs.{/* truncate */}
+
+## GitHub Sync
+
+You can connect a GitHub repo to a new project in Stately Studio, keeping updates between GitHub and Stately Studio in sync. Connecting a GitHub repo allows you to import your existing machines from GitHub and push changes to your machines back to your repo as pull requests. [Read more about GitHub Sync in our recent blog post](/blog/2024-01-09-introducing-bidirectional-github-sync).
+
+*GitHub Sync is a premium feature of Stately Studio. You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](/docs/studio-pro-plan), [Team plan](/docs/studio-team-plan), [Enterprise plan](/docs/studio-enterprise-plan) or [upgrade your existing plan](https://stately.ai/registry/billing).*
+
+## Sources
+
+Using the <Code size={18} /> **Sources** panel, you can now provide source code for your actions, actors, and guards implementations inside Stately’s editor. You can add custom source code from the **Sources** panel to suit your needs or choose from logic templates. Your source code will be included in your [live actors](/docs/stately-sky-getting-started), [synced projects](/docs/import-from-github), and [exported code](/docs/export-as-code), as found in the <Code size={18} /> **Code** panel. [Read more about sources in our recent blog post](/blog/2024-01-09-introducing-sources).
+
+To complement sources, you can also now add [parameters](/docs/actions#dynamic-action-parameters) to your actions and input to your actors! When adding or editing an action or actor on the canvas, you can use the button to add <Plus size={18}/> **parameter** or add <Plus size={18}/> **input**. From here, you can add key-value pairs as dynamic input for your source code. Parameters don’t just open the possibility for more reusable actions and actors; in the future, [Simulation mode](/docs/simulation-mode) and live actors will be able to use these parameters to execute actions based on different inputs when simulating your machine.
+
+## Draft projects
+
+When you visit [state.new](https://state.new), we will now automatically create a new Drafts project for your machine or add your machine to your existing Drafts project. The last machine you created at state.new will also be migrated to your Drafts project the first time you visit state.new. You will now also be directed to sign in when you visit state.new unless you’re already signed in.
+
+## Improvements
+
+- We’ve added support in Stately’s editor for inline guards, inline actors and action parameters. These will now be imported, displayed in your machine, and exported correctly. Imported inline actors, actions, and guards are now given a unique ID. [Read the sources docs for more information about naming actions, actors, and guards](/docs/sources/#unnamed-actions-actors-and-guards).
+- You can now give your workflows custom names when deploying them with Stately Sky.
+- You can now use Simulate mode in your embedded machines.
+- [The signup and login page](https://stately.ai/registry/login) now has a new look.
+
+## Bug fixes
+
+- We now always show the lock button in the machine Details panel as active (not disabled) and added a spinner to indicate when the lock status is changing.
+- We fixed a bug where the editor would not work on reload if you had added a `.` to a node name.
+- We fixed an error where creating invoked actors could sometimes crash the editor.
+
+## We’d love your feedback
+
+Are you using any of our new or beta features? We’d love to hear your feedback. You can [chat with us on Discord](https://discord.stately.ai) or [leave a feature request on our GitHub feedback board](https://github.com/orgs/statelyai/projects/2).
