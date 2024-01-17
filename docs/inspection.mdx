@@ -8,6 +8,14 @@ The Inspect API is a way to inspect the state transitions of your state machines
 - Actor event communication
 - Actor snapshot updates
 
+:::new
+
+[We’ve recently released Stately Inspector](/blog/2024-01-15-stately-inspector/), a universal tool that enables you to visually inspect the state of any application, frontend or backend, with the visualization of Stately’s editor.
+
+[Learn more about Stately Inspector](inspector.mdx)
+
+:::
+
 The Inspect API lets you attach an “inspector,” an observer that observes inspection events, to the root of an actor system:
 
 ```tsx
@@ -101,11 +109,3 @@ Example of a snapshot inspection event:
   }
 }
 ```
-
-:::studio
-
-We will soon release inspection devtools that visualize this information as state machine diagrams, sequence diagrams, and more.
-
-For now, see [`@statelyai/inspect`](https://github.com/statelyai/xstate/tree/main/packages/inspect) for a way to visualize state machines.
-
-:::
