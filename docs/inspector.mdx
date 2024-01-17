@@ -29,13 +29,13 @@ import { createBrowserInspector } from '@statelyai/inspect';
 import { machine } from './machine';
 
 // highlight-next-line
-const inspector = createBrowserInspector();
+const { inspect } = createBrowserInspector();
 
 // ...
 
 const actor = createActor(machine, {
   // highlight-next-line
-  inspect: inspector.inspect,
+  inspect,
   // ... other actor options
 });
 
@@ -43,6 +43,40 @@ actor.start();
 ```
 
 When you run your app, a new tab or popup window will open with the Inspector.
+
+:::tip
+
+When using the browser inspector, ensure that the popup window is not blocked by your browser’s popup blocker.
+
+:::
+
+## Inspector options
+
+You can pass the following options to the browser inspector:
+
+- `filter` - a function that takes an inspection event and returns `true` if the event should be sent to the Stately Inspector.
+- `serialize` - a function that takes an inspection event and allows you to serialize it before sending it to the Stately Inspector.
+- `autoStart` - whether to automatically start the inspector. Defaults to `true`.
+  - If `autoStart: false`, you can start the inspector by calling `inspector.start()`.
+- `url` - the URL of the Stately Inspector to open. Defaults to `https://stately.ai/inspector`.
+- `iframe` - the `<iframe>` element to use for the inspector. Defaults to `null`.
+
+**Example usage:**
+
+```ts
+import { createBrowserInspector } from '@statelyai/inspect';
+
+const inspector = createBrowserInspector({
+  filter: (inspEvent) => {
+    if (inspEvent.type === '@xstate.event') {
+      // Skip mouse drag events
+      return inspEvent.event.type !== 'mouse.drag';
+    }
+    return true;
+  },
+  iframe: document.getElementById('inspector-iframe')
+})
+```
 
 ## Sending inspection events
 
@@ -94,3 +128,4 @@ The three types of inspection events contain everything that Stately Inspector n
 
 - **State machine diagrams** (if a state machine definition is provided)
 - **Sequence diagrams**
+
