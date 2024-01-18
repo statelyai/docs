@@ -2187,7 +2187,7 @@ npm i xstate5@npm:xstate@5 @xstate5/react@npm:@xstate/react@4 --force
 ```
 
 ```js
-// xstate5-react-script.js
+// scripts/xstate5-react-script.js
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -2202,7 +2202,7 @@ fs.ensureSymlinkSync(
 ```json5
 // package.json
 "scripts": {
-  "postinstall": "node xstate5-react-script.js"
+  "postinstall": "node scripts/xstate5-react-script.js"
 }
 ```
 
