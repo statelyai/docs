@@ -512,19 +512,31 @@ If the actor is already done, the promise will resolve with the actor's `snapsho
 Higher-level actor logic enhances existing actor logic with additional functionality. For example, you can create actor logic that logs or persists actor state:
 
 ```ts
-function withLogging(actorLogic) {
+import { fromTransition, type AnyActorLogic } from 'xstate';
+
+const toggleLogic = fromTransition((state, event) => {
+  if (event.type === 'toggle') {
+    return state === 'paused' ? 'playing' : 'paused';
+  }
+
+  return state;
+}, 'paused');
+
+// highlight-start
+function withLogging<T extends AnyActorLogic>(actorLogic: T) {
   const enhancedLogic = {
     ...actorLogic,
     transition: (state, event, actorCtx) => {
       console.log('State:', state);
       return actorLogic.transition(state, event, actorCtx);
     },
-  };
+  } satisfies T;
 
   return enhancedLogic;
 }
 
 const loggingToggleLogic = withLogging(toggleLogic);
+// highlight-end
 ```
 
 ## Custom actor logic
