@@ -378,16 +378,21 @@ Event observable actor logic is described by an observable stream of [event obje
 Sending events to event observable actors will have no effect.
 
 ```ts
+import { setup, fromEventObservable } from 'xstate';
 import { fromEvent } from 'rxjs';
 
 const mouseClickLogic = fromEventObservable(() =>
   fromEvent(document.body, 'click') as Subscribable<EventObject>
 );
 
-const canvasMachine = createMachine({
+const canvasMachine = setup({
+  actors: {
+    mouseLogicClick
+  }
+}).createMachine({
   invoke: {
     // Will send mouse click events to the canvas actor
-    src: mouseClickLogic,
+    src: 'mouseClickLogic',
   },
 });
 
@@ -443,22 +448,30 @@ You may choose to use `sendBack` to report caught errors to the parent actor. Th
 Callback functions cannot be `async` functions. But it is possible to execute a Promise within a callback function.
 
 ```ts
-const machine = createMachine({
+import { setup, fromCallback } from 'xstate';
+
+const someCallback = fromCallback(({ sendBack }) => {
+  // highlight-start
+  somePromise()
+    .then((data) => sendBack({ type: 'done', data }))
+    .catch((error) => sendBack({ type: 'error', data: error }));
+  // highlight-end
+
+  return () => {
+    /* cleanup function */
+  };
+})
+
+const machine = setup({
+  actors: {
+    someCallback
+  }
+}).createMachine({
   initial: 'running',
   states: {
     running: {
       invoke: {
-        src: fromCallback(({ sendBack }) => {
-          // highlight-start
-          somePromise()
-            .then((data) => sendBack({ type: 'done', data }))
-            .catch((error) => sendBack({ type: 'error', data: error }));
-          // highlight-end
-
-          return () => {
-            /* cleanup function */
-          };
-        }),
+        src: 'someCallback',
       },
       // highlight-start
       on: {
@@ -790,17 +803,21 @@ secondActor.start();
 ### Cheatsheet: event observable logic
 
 ```ts
-import { fromEventObservable, createActor } from 'xstate';
+import { setup, fromEventObservable, createActor } from 'xstate';
 import { fromEvent } from 'rxjs';
 
 const mouseClickLogic = fromEventObservable(() =>
   fromEvent(document.body, 'click') as Subscribable<EventObject>
 );
 
-const canvasMachine = createMachine({
+const canvasMachine = setup({
+  actors: {
+    mouseClickLogic
+  }
+}).createMachine({
   invoke: {
     // Will send mouse click events to the canvas actor
-    src: mouseClickLogic,
+    src: 'mouseClickLogic',
   },
 });
 

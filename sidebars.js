@@ -350,6 +350,7 @@ const sidebars = {
       collapsible: true,
       items: [
         'machines',
+        'setup',
         'states',
         'context',
         'input',

@@ -19,7 +19,7 @@ Callback actors are actors whose logic is represented by a function that can "ca
 You can define callback actor logic using the `fromCallback(...)` actor logic creator, which takes a callback function and returns actor logic that can be used to create callback actors.
 
 ```ts
-import { fromCallback, createActor, createMachine } from 'xstate';
+import { fromCallback, createActor, setup } from 'xstate';
 
 const resizeLogic = fromCallback(({ sendBack, receive }) => {
   const resizeHandler = (event) => {
@@ -46,14 +46,18 @@ const resizeLogic = fromCallback(({ sendBack, receive }) => {
   }
 });
 
-const machine = createMachine({
+const machine = setup({
+  actors: {
+    resizeLogic
+  }
+}).createMachine({
   invoke: {
     id: 'resize',
-    src: resizeLogic
+    src: 'resizeLogic'
   },
   on: {
     stop: {
-      actions: sendTo('resize', { type:'stopListening' })
+      actions: sendTo('resize', { type: 'stopListening' })
     }
   }
 });
@@ -73,9 +77,24 @@ actor.stop();
 _Coming soon..._
 
 ```ts
-import { fromCallback, createActor, createMachine } from 'xstate';
+import { fromCallback, createActor, setup } from 'xstate';
 
 const resizeLogic = fromCallback(({ sendBack, receive, input }) => {
+  input.defaultSize; // 100
   // ...
+});
+
+const machine = setup({
+  actors: {
+    resizeLogic
+  }
+}).createMachine({
+  // ...
+  invoke: {
+    src: 'resizeLogic',
+    input: {
+      defaultSize: 100
+    }
+  }
 });
 ```

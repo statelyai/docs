@@ -79,25 +79,27 @@ You can also define referenced delays by specifying a string delay key, and prov
 For example:
 
 ```ts
-const machine = createMachine(
+import { setup } from 'xstate';
+
+const machine = setup({
+  // highlight-start
+  delays: {
+    timeout: 1000,
+  },
+  // highlight-end
+}).createMachine(
   {
     initial: 'idle',
     states: {
       idle: {
         after: {
+          // highlight-next-line
           timeout: { target: 'nextState' },
         },
       },
       nextState: {},
     },
-  },
-  {
-    // highlight-start
-    delays: {
-      timeout: 1000,
-    },
-    // highlight-end
-  },
+  }
 );
 ```
 
@@ -119,38 +121,7 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `delays` of your machine in the `types.delays` property of the machine config.
-
-```ts
-const machine = createMachine({
-  types: {} as {
-    // highlight-start
-    delays: 'shortTimeout' | 'longTimeout' | 'eventually';
-    // highlight-end
-    // ...
-  },
-  // ...
-  after: {
-    // Autocompleted
-    shortTimeout: {
-      /* ... */
-    },
-  },
-  on: {
-    someEvent: {
-      actions: raise(
-        { type: 'anotherEvent' },
-        {
-          // Autocompleted
-          delay: 'eventually',
-        },
-      ),
-    },
-  },
-});
-```
-
-You can also setup the delay using the `setup()` function:
+You can strongly type the `delays` of your machine by setting up the the delays in the `setup()` function:
 
 ```ts
 import { setup } from 'xstate';
