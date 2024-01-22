@@ -45,7 +45,7 @@ One useful way to think about naming in statecharts is to roughly map its elemen
    - Actions are operations executed in response to events or state transitions. They should be verbs or verb phrases that describe what action is being taken. For instance, **`sendRequest`**, **`displayError`**, **`updateData`**.
 4. **Guards**: Often Adjectives or Past Participles
    - Guards are conditional checks that determine if a transition should occur. They can be named with adjectives or past participles that describe the condition being met. Examples include **`isLoggedIn`**, **`hasValidData`**, **`isExpired`**. You’ll notice these are similar to how you might name boolean variables in code.
-5. **Hierarchical States**: Compound Nouns
+5. **Parent states**: Compound Nouns
    - For nested states, these can also be nouns like regular states or they could be adjectives indicating a subordinate level of the parent state which is a noun. An example might be a state called **`Viewing Shopping Cart`** with child states **`Empty`** and **`Populated`**.
 6. **Invoked Actors**: Nouns or Gerunds
    - When a statechart invokes a service (like an API call), these are often named with nouns or gerunds (nouns derived from verbs and ending in -ing) that describe the service's function. Examples are **`fetchingData`**, **`userAuthentication`**.
