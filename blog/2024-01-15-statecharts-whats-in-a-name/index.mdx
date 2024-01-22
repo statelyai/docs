@@ -1,6 +1,6 @@
 ---
-title: Statecharts - What’s in a name?
-description: An overview of naming conventions for statecharts, including tips and guidlines for naming
+title: State Machines - What’s in a name?
+description: An overview of naming conventions for state machines, including tips and guidlines for naming
 tags:
   [
     stately,
@@ -18,7 +18,7 @@ slug: 2024-01-15-statecharts-whats-in-a-name
 image: /blog/TODO.png
 ---
 
-Statecharts and visual diagrams are such a powerful way to organize, and convey information. All of those lovely “boxes and arrows” convey meaningful relationships, indicate sequential order, and direct flows in a way that’s easier to understand since it's visual. Add to that the ability to [attach assets to your diagrams](https://stately.ai/docs/assets) and you’re well on your way towards creating truly expressive, executable software diagrams. But there’s still one thing that statecharts have that should make them easy to understand. Text.
+State machines and visual diagrams are such a powerful way to organize, and convey information. All of those lovely “boxes and arrows” convey meaningful relationships, indicate sequential order, and direct flows in a way that’s easier to understand since it's visual. Add to that the ability to [attach assets to your diagrams](https://stately.ai/docs/assets) and you’re well on your way towards creating truly expressive, executable software diagrams. But there’s still one thing that state machines have that should make them easy to understand. Text.
 
 {/* truncate */}
 
@@ -31,11 +31,11 @@ We can break down some of these questions into two categories:
 
 ## What or how should I name this thing?
 
-This question is largely about semantics and in this case that means how do the names used in a statechart convey the purpose and meaning of the elements and their role in a statechart? Should a state be named **`Load`**, **`Loader`**, **`Loading`**, or **`Loaded`**? Should an event be named **`Submit`**, **`Submit form`**, **`Form submitted`**, **`On submit`**, or **`Form submission`**? There are indeed many options to choose from and there's no one right answer. But there are some guidelines that can help you make the best choice.
+This question is largely about semantics and in this case that means how do the names used in a state machine convey the purpose and meaning of the elements and their role in a state machine? Should a state be named **`Load`**, **`Loader`**, **`Loading`**, or **`Loaded`**? Should an event be named **`Submit`**, **`Submit form`**, **`Form submitted`**, **`On submit`**, or **`Form submission`**? There are indeed many options to choose from and there's no one right answer. But there are some guidelines that can help you make the best choice.
 
-**Mapping parts of speech to statecharts**
+**Mapping parts of speech to state machines**
 
-One useful way to think about naming in statecharts is to roughly map its elements to various parts of speech. This is what that might look like:
+One useful way to think about naming in state machines is to roughly map its elements to various parts of speech. This is what that might look like:
 
 1. **States**: typically nouns or adjectives
    - States represent different conditions or modes of being. Therefore, they are often named with nouns or adjectives that describe the status or quality of the system. For example, **`idle`**, **`loading`**, **`authenticated`**, or **`error`**.
@@ -48,9 +48,9 @@ One useful way to think about naming in statecharts is to roughly map its elemen
 5. **Parent states**: Compound Nouns
    - For nested states, these can also be nouns like regular states or they could be adjectives indicating a subordinate level of the parent state which is a noun. An example might be a state called **`Viewing Shopping Cart`** with child states **`Empty`** and **`Populated`**.
 6. **Invoked Actors**: Nouns or Gerunds
-   - When a statechart invokes a service (like an API call), these are often named with nouns or gerunds (nouns derived from verbs and ending in -ing) that describe the service's function. Examples are **`fetchingData`**, **`userAuthentication`**.
+   - When a state machine invokes a service (like an API call), these are often named with nouns or gerunds (nouns derived from verbs and ending in -ing) that describe the service's function. Examples are **`fetchingData`**, **`userAuthentication`**.
 
-By aligning the names in statecharts with these parts of speech, the structure and functionality of the statechart become more intuitive and easier to understand, facilitating better communication and documentation.
+By aligning the names in state machines with these parts of speech, the structure and functionality of the state machine becomes more intuitive and easier to understand, facilitating better communication and documentation.
 
 ### Be brief yet specific
 
@@ -93,7 +93,7 @@ Some of the examples later in the paper did demonstrate the use of state and eve
   />
 </p>
 
-By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this statechart inspired by this example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=8ead8108-3959-4db2-a335-9411a19a3416) or [see the full example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=1df8a151-0c54-4aac-be55-21560360c311) borrowed from the book.
+By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this state machine inspired by this example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=8ead8108-3959-4db2-a335-9411a19a3416) or [see the full example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=1df8a151-0c54-4aac-be55-21560360c311) borrowed from the book.
 
 <p>
   <ThemedImage
@@ -134,7 +134,7 @@ states: {
 }
 ```
 
-I personally like this convention for events because it visually distinguishes them from other name in the statechart and its lack of heavy capitalization make it look more **`streamlined.for.action`**, like events should be!
+I personally like this convention for events because it visually distinguishes them from other name in the state machine and its lack of heavy capitalization make it look more **`streamlined.for.action`**, like events should be!
 
 :::warning
 
@@ -144,15 +144,15 @@ Unlike for event names, it is currently not possible to include a `.` when namin
 
 ## Other tips
 
-Here are some additional considerations to think about when choosing a naming style for use with XState to make your statecharts more readable and easier to understand.
+Here are some additional considerations to think about when choosing a naming style for use with XState to make your state machines more readable and easier to understand.
 
 ### Improved readability
 
-One of my favorite tips for statechart naming is to use contrasting styles. Contrast is a key ingredient for many things we love from food to color, art, and music. The readability of statecharts can also benefit from contrast. If you use **`SHOUTY_UPPERCASE`** event names the please don’t also use that case for state names or… anything else in the same machine really. At the same time, don’t just name every state, event, and action in **`plain old lower case`** unless you want your statechart to be read like the equivalent of a bored teen with “vocal fry”. Differentiation can help readers distinguish certain elements of the statechart from others and this applies to readability on the editor canvas as well as in code.
+One of my favorite tips for state machine naming is to use contrasting styles. Contrast is a key ingredient for many things we love from food to color, art, and music. The readability of state machines can also benefit from contrast. If you use **`SHOUTY_UPPERCASE`** event names the please don’t also use that case for state names or… anything else in the same machine really. At the same time, don’t just name every state, event, and action in **`plain old lower case`** unless you want your state machine to be read like the equivalent of a bored teen with “vocal fry”. Differentiation can help readers distinguish certain elements of the state machine from others and this applies to readability on the editor canvas as well as in code.
 
 ### Know your audience
 
-The fact that Statey Studio can turn these executable diagrams into code is certainly powerful but what if much of your intended audience is less technical and will be viewing your statecharts in the Studio? Some viewers may be more accustomed to reading some of the naming styles more than others, for example, **`Sentence case`** as opposed to **`snake_case`**. Users on the [Studio Pro Plan](https://stately.ai/docs/studio-pro-plan) can make use of Version History to create differently styled version of the same statechart and share them with different audiences either by [sharing the URL to a specific machine version](https://stately.ai/docs/url#copy-the-url-from-the-browser-address-bar) or by [exporting to markdown, Stories, tests, etc](https://stately.ai/docs/export-as-code).
+The fact that Statey Studio can turn these executable diagrams into code is certainly powerful but what if much of your intended audience is less technical and will be viewing your state machines in the Studio? Some viewers may be more accustomed to reading some of the naming styles more than others, for example, **`Sentence case`** as opposed to **`snake_case`**. Users on the [Studio Pro Plan](https://stately.ai/docs/studio-pro-plan) can make use of Version History to create differently styled version of the same state machines and share them with different audiences either by [sharing the URL to a specific machine version](https://stately.ai/docs/url#copy-the-url-from-the-browser-address-bar) or by [exporting to markdown, Stories, tests, etc](https://stately.ai/docs/export-as-code).
 
 ### Consistency is Key
 
@@ -160,7 +160,7 @@ Choose whatever you want but try to be consistent. Readers will hopefully unders
 
 ### Conventions and maintenance
 
-From consistency, conventions often emerge. These could be conventions adhered to across a statechart, an entire project or across all of the projects of a particular user or team. This makes the work easier to understand and easier to maintain, thereby facilitating collaboration.
+From consistency, conventions often emerge. These could be conventions adhered to across a state machine, an entire project or across all of the projects of a particular user or team. This makes the work easier to understand and easier to maintain, thereby facilitating collaboration.
 
 ### Summary
 
