@@ -18,6 +18,7 @@ Callback actors are actors whose logic is represented by a function that can "ca
 
 You can define callback actor logic using the `fromCallback(...)` actor logic creator, which takes a callback function and returns actor logic that can be used to create callback actors.
 
+```ts
 import { createActor, createMachine, fromCallback, sendTo, setup } from 'xstate';
 
 const resizeLogic = fromCallback(({ sendBack, receive }) => {
