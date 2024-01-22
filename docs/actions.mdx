@@ -13,7 +13,19 @@ You can visualize your state machines and easily add actions in our drag-and-dro
 Actions can also be on a state’s `entry` or `exit`, also as a single action or an array.
 
 ```ts
-const feedbackMachine = createMachine({
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  actions: {
+    track: (_, params: unknown) => {
+      track(params);
+      // Tracks { response: 'good' }
+    },
+    showConfetti: () => {
+      // ...
+    }
+  }
+}).createMachine({
   // ...
   states: {
     // ...
@@ -31,17 +43,7 @@ const feedbackMachine = createMachine({
       entry: ['showConfetti'],
     }
   }
-}, {
-  actions: {
-    track: (_, params) => {
-      track(params);
-      // Tracks { response: 'good' }
-    },
-    showConfetti: () => {
-      // ...
-    }
-  }
-})
+});
 ```
 
 Examples of actions:
@@ -66,7 +68,13 @@ Action objects have an action `type` and an optional `params` object:
 - The action `params` property hold parameterized values that are relevant to the action.
 
 ```ts
-const feedbackMachine = createMachine({
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  actions: {
+    track: (_, params: unknown) => {/* ... */}
+  }
+}).createMachine({
   // ...
   states: {
     // ...
@@ -95,9 +103,15 @@ const feedbackMachine = createMachine({
 You can dynamically pass parameters in the `params` property to action objects by using a function that returns the params. The function takes in an object that contains the current `context` and `event` as arguments.
 
 ```ts
-import { createMachine } from 'xstate';
+import { setup } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  actions: {
+    logInitialRating: (_, params: { initialRating: number }) => {
+      // ...
+    }
+  }
+}).createMachine({
   context: {
     initialRating: 3
   },
@@ -208,7 +222,13 @@ The `assign(...)` action is a special action that assigns data to the state cont
 Assignments can be an object of key-value pairs where the keys are `context` keys and the values are either static values or expressions that return the new value:
 
 ```ts
-const countMachine = createMachine({
+import { setup } from 'xstate';
+
+const countMachine = setup({
+  types: {
+    events: {} as { type: 'increment'; value: number }
+  }
+}).createMachine({
   context: {
     count: 0,
   },
@@ -240,7 +260,13 @@ countActor.send({ type: 'increment', value: 2 });
 For more dynamic assignments, the argument passed to `assign(...)` may also be a function that returns the partial or full `context` value:
 
 ```ts
-const countMachine = createMachine({
+import { setup } from 'xstate';
+
+const countMachine = setup({
+  types: {
+    events: {} as { type: 'increment'; value: number }
+  }
+}).createMachine({
   context: {
     count: 0,
   },
