@@ -102,7 +102,7 @@ When XState was released in 2016, many of the early examples demonstrated use of
 
 ### XState v5 and `dot.case`
 
-Fast forward to 2024, with the [recent release of XState v5](https://stately.ai/blog/2023-12-01-xstate-v5), one particular style convention for event names is strongly encouraged and that's **`dot.case`**. If you recall in the image of the Quartz watch, above, there were events similar to **`battery.inserted`**, **`battery.removed`**, and **`weak battery.dies`**. This style allows for a [new feature in XState v5 called wildcard transitions](https://stately.ai/docs/transitions#wildcard-transitions). For example, if you had an action called `logBatteryStatus` you could listen to that event with a wildcard transition like this:
+Fast forward to 2024, with the [recent release of XState v5](https://stately.ai/blog/2023-12-01-xstate-v5), one particular style convention for event names is strongly encouraged and that's **`dot.case`**. If you recall in the image of the Quartz watch, above, there were events similar to **`battery.inserted`**, **`battery.removed`**, and **`weak battery.dies`**. This style allows for a [new feature in XState v5 called wildcard transitions](https://stately.ai/docs/transitions#wildcard-transitions). For example, if you had an action called `logBatteryStatus` you could register that action with any number of events matching **`battery.*`**, a wildcard transition:
 
 ```typescript
 states: {
