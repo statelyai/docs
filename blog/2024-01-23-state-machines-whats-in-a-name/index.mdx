@@ -30,6 +30,11 @@ We can break down some of these questions into two categories:
 1. [What or how should I name this thing](#what-or-how-should-i-name-this-thing)?
 2. [What style should that name be in](#what-style-should-that-name-be-in)?
 
+<EmbedMachine
+  name="A state machine demonstrating a particular naming convention with states using Title Case, events using dot.case, actions and actors using camelCase and guards using lower case."
+  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=db0e655e-f16f-4a30-97a7-a0081b73d532"
+/>
+
 ## What or how should I name this thing?
 
 This question is largely about semantics and in this case that means how do the names used in a state machine convey the purpose and meaning of the elements and their role in a state machine? Should a state be named **`Load`**, **`Loader`**, **`Loading`**, or **`Loaded`**? Should an event be named **`Submit`**, **`Submit form`**, **`Form submitted`**, **`On submit`**, or **`Form submission`**? There are indeed many options to choose from and there's no one right answer. But there are some guidelines that can help you make the best choice.
@@ -78,7 +83,7 @@ Some of the examples later in the paper did demonstrate the use of state and eve
 
 ![An example of states and events from a statechart depicting the alarm on a Citizen Quartz watch.](./../../static/blog/2024-01-23-state-machines-whats-in-a-name/watch-batteries.png)
 
-By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this state machine inspired by this example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=8ead8108-3959-4db2-a335-9411a19a3416) or [see the full example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=1df8a151-0c54-4aac-be55-21560360c311) borrowed from the book.
+By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this state machine inspired by this example](https://stately.ai/registry/editor/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=5b186011-088e-4c1c-be95-9a489a126b13) or [see the full example](https://stately.ai/registry/editor/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=24adba0d-a6ac-4e79-836c-e0d91bb7ab85) borrowed from the book.
 
 ![Part of a statechart for a physical CD player including states for when the CD is playing, stopped, paused, and events transitioning the machine from state to state.](./../../static/blog/2024-01-23-state-machines-whats-in-a-name/horrocks-cd.png)
 
@@ -141,9 +146,11 @@ From consistency, conventions often emerge. These could be conventions adhered t
 
 ### Summary
 
+Naming conventions and namings styles are a matter of taste but also an opportunity for customization and personalization at the individual or team level. The most important thing is readability, consistency and using naming to convey meaning.
+
 <EmbedMachine
   name="A state machine for part of the CD player example showing states for when the CD is loaded and the CD is stopped, playing, and paused."
-  embedURL="https://stately.ai/registry/editor/embed/a30747cf-7262-449f-97ff-d4ce85b24411?mode=Design&machineId=8ead8108-3959-4db2-a335-9411a19a3416"
+  embedURL="https://stately.ai/studio/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?mode=design&machineId=5b186011-088e-4c1c-be95-9a489a126b13"
 />
 
-Naming conventions and namings styles are a matter of taste but also an opportunity for customization and personalization at the individual or team level. The most important thing is readability, consistency and using naming to convey meaning. Sometimes putting attention into the little details goes a long way towards ensuring that machines not only look good but are as understandable as possible.
+Sometimes putting attention into the little details goes a long way towards ensuring that machines not only look good but are as understandable as possible. And remember, when your state machines look good, you look good too!
