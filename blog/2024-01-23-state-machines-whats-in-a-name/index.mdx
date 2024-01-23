@@ -72,41 +72,15 @@ Event name examples:
 
 When statecharts were first introduced in [“Statecharts: A visual formalism for complex systems” (Harel, 1987)](https://www.inf.ed.ac.uk/teaching/courses/seoc/2005_2006/resources/statecharts.pdf), there was relatively little discussion of naming conventions and many of the diagrams used letters and numbers to represent states and events. The innovations that statecharts introduced were focused on visually representing relationships needed to support real world software use cases such as hierarchy, parallelism, history states, etc.
 
-<p>
-  <ThemedImage
-    alt="An example of parallel states taken from Statecharts: A visual formalism for complex systems by David Harel."
-    sources={{
-      light:
-        '/blog/2024-01-23-state-machines-whats-in-a-name/orthogonality.png',
-      dark: '/blog/2024-01-23-state-machines-whats-in-a-name/orthogonality.png',
-    }}
-  />
-</p>
+![An example of parallel states taken from Statecharts: A visual formalism for complex systems by David Harel.](./../../static/blog/2024-01-23-state-machines-whats-in-a-name/orthogonality.png)
 
 Some of the examples later in the paper did demonstrate the use of state and event labels but these were usually single words or short phrases without attention paid to style. Interestingly enough, this example makes use of a **`dot.case`** style for event names which you can [jump ahead and read about here](#xstate-v5-and-dotcase).
 
-<p>
-  <ThemedImage
-    alt="An example of states and events from a statechart depicting the alarm on a Citizen Quartz watch."
-    sources={{
-      light:
-        '/blog/2024-01-23-state-machines-whats-in-a-name/watch-batteries.png',
-      dark: '/blog/2024-01-23-state-machines-whats-in-a-name/watch-batteries.png',
-    }}
-  />
-</p>
+![An example of states and events from a statechart depicting the alarm on a Citizen Quartz watch.](./../../static/blog/2024-01-23-state-machines-whats-in-a-name/watch-batteries.png)
 
 By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this state machine inspired by this example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=8ead8108-3959-4db2-a335-9411a19a3416) or [see the full example](https://stately.ai/registry/editor/6541bdd9-e250-47c8-9a5e-fa1352cd5088?mode=design&machineId=1df8a151-0c54-4aac-be55-21560360c311) borrowed from the book.
 
-<p>
-  <ThemedImage
-    alt="Part of a statechart for a physical CD player including states for when the CD is playing, stopped, paused, and events transitioning the machine from state to state."
-    sources={{
-      light: '/blog/2024-01-23-state-machines-whats-in-a-name/horrocks-cd.png',
-      dark: '/blog/2024-01-23-state-machines-whats-in-a-name/horrocks-cd.png',
-    }}
-  />
-</p>
+![Part of a statechart for a physical CD player including states for when the CD is playing, stopped, paused, and events transitioning the machine from state to state.](./../../static/blog/2024-01-23-state-machines-whats-in-a-name/horrocks-cd.png)
 
 Over the decades since those early writings on statecharts, the emergence of nearly all of the major programming languages in use today have popularized a number of naming conventions for code. Here are some of the most common styles you can choose from when naming states, events, actions, and guards in XState:
 
