@@ -5,9 +5,21 @@ title: 'Input'
 Input refers to the data provided to a state machine that influences its behavior. In [XState](xstate.mdx), you provide input when creating an [actor](actors.mdx) using the second argument of the `createActor(machine, { input })` function:
 
 ```ts
-import { createActor, createMachine } from 'xstate';
+import { createActor, setup } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  types: {
+    context: {} as {
+      userId: string;
+      feedback: string;
+      rating: number;
+    },
+    input: {} as {
+      userId: string;
+      defaultRating: number;
+    }
+  }
+}).createMachine({
   context: ({ input }) => ({
     userId: input.userId,
     feedback: '',
@@ -41,7 +53,7 @@ You can pass `input` to any kind of actor by reading this input from the `input`
 ```ts
 import { createActor, fromPromise } from 'xstate';
 
-const userFetcher = fromPromise(({ input }) => {
+const userFetcher = fromPromise(({ input }: { input: { userId: string } }) => {
   return fetch(`/users/${input.userId}`).then((res) => res.json());
 });
 
@@ -69,7 +81,7 @@ const counter = fromTransition((state, event)) => {
     return { count: state.count + 1 };
   }
   return state;
-}, ({ input }) => ({
+}, ({ input }: { input: { startingCount?: number } }) => ({
   count: input.startingCount ?? 0,
 });
 
@@ -87,7 +99,9 @@ const counterActor = createActor(counter, {
 import { createActor, fromObservable } from 'xstate';
 import { interval } from 'rxjs';
 
-const intervalLogic = fromObservable(({ input }) => interval(input.interval));
+const intervalLogic = fromObservable(({ input }: { input: { interval: number } }) => {
+  return interval(input.interval);
+});
 
 const intervalActor = createActor(intervalLogic, {
   // highlight-start
@@ -130,9 +144,17 @@ const feedbackActor = createActor(feedbackMachine, {
 You can provide input to invoked actors via the `input` property of the `invoke` configuration:
 
 ```ts
-import { createActor, createMachine } from 'xstate';
+import { createActor, setup } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  actors: {
+    liveFeedback: fromPromise(({ input }: { input: { domain: string } }) => {
+      return fetch(`https://${input.domain}/feedback`).then((res) =>
+        res.json(),
+      );
+    }),
+  }
+}).createMachine({
   invoke: {
     src: 'liveFeedback',
     // highlight-start
@@ -141,23 +163,23 @@ const feedbackMachine = createMachine({
     },
     // highlight-end
   },
-}).provide({
-  actors: {
-    liveFeedback: fromPromise(({ input }) => {
-      return fetch(`https://${input.domain}/feedback`).then((res) =>
-        res.json(),
-      );
-    }),
-  },
 });
 ```
 
 The `invoke.input` property can be a static input value or a function that returns the input value. The function will be called with an object that contains the current `context` and `event`:
 
 ```ts
-import { createActor, createMachine } from 'xstate';
+import { createActor, setup } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  actors: {
+    // highlight-start
+    fetchUser: fromPromise(({ input }) => {
+      return fetch(`/users/${input.userId}`).then((res) => res.json());
+    }),
+    // highlight-end
+  },
+}).createMachine({
   context: {
     userId: '',
     feedback: '',
@@ -169,14 +191,6 @@ const feedbackMachine = createMachine({
     input: ({ context }) => ({ userId: context.userId }),
   },
   // ...
-}).provide({
-  actors: {
-    // highlight-start
-    fetchUser: fromPromise(({ input }) => {
-      return fetch(`/users/${input.userId}`).then((res) => res.json());
-    }),
-    // highlight-end
-  },
 });
 ```
 
@@ -185,9 +199,28 @@ const feedbackMachine = createMachine({
 You can provide input to spawned actors via the `input` property of the `spawn` configuration:
 
 ```ts
-import { createActor, createMachine } from 'xstate';
+import { createActor, setup, type AnyActorRef } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  types: {
+    context: {} as {
+      userId: string;
+      feedback: string;
+      rating: number;
+      emailRef: AnyActorRef;
+    }
+  },
+  actors: {
+    // highlight-start
+    emailUser: fromPromise(({ input }: { input: { userId: string } }) => {
+      return fetch(`/users/${input.userId}`, {
+        method: 'POST',
+        // ...
+      });
+    }),
+    // highlight-end
+  },
+}).createMachine({
   context: {
     userId: '',
     feedback: '',
@@ -208,17 +241,6 @@ const feedbackMachine = createMachine({
     },
   },
   // ...
-}).provide({
-  actors: {
-    // highlight-start
-    emailUser: fromPromise(({ input }) => {
-      return fetch(`/users/${input.userId}`, {
-        method: 'POST',
-        // ...
-      });
-    }),
-    // highlight-end
-  },
 });
 ```
 
@@ -297,25 +319,26 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `input` of your machine in the `types.input` property of the machine config.
+You can strongly type the `input` of your machine in the `types.input` property of the machine setup.
 
 ```ts
-import { createActor, createMachine } from 'xstate';
+import { createActor, setup } from 'xstate';
 
-const machine = createMachine({
-  types: {} as {
+const machine = setup({
+  types: {
     // highlight-start
-    input: {
+    input: {} as {
       userId: string;
       defaultRating: number;
     };
     // highlight-end
-    context: {
+    context: {} as {
       userId: string;
       feedback: string;
       rating: number;
     };
   },
+}).createMachine({
   context: ({ input }) => ({
     userId: input.userId,
     feedback: '',

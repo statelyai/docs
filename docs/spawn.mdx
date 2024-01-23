@@ -104,8 +104,9 @@ actions: assign({
 - `spawn(actorBehavior, options?)`
   - `actorBehavior` - The behavior of the actor to spawn. This can be a function, promise, observable, or callback.
   - `options` - Options for spawning the actor.
-    - `id` - The ID of the actor. This is used to reference the actor in the state machine.
-    - `input`
+    - `id` (optional) - The ID of the actor. This is used to reference the actor in the state machine.
+    - `input` (optional) - The input to pass to the actor.
+    - `systemId` (optional) - A string identifing the actor, unique system-wide.
 
 ## Source
 
