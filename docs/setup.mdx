@@ -40,6 +40,12 @@ const machine = setup({
 })
 ```
 
+:::warning
+
+Ensure you are using the latest version of TypeScript (version 5.0 or higher). See the docs on [TypeScript usage with XState](./typescript.mdx) for more information.
+
+:::
+
 ## Setting up types
 
 Machine types should be setup in the `types` property of `setup({ types })`. This is where you can setup the types for your machine, including:
@@ -50,6 +56,8 @@ Machine types should be setup in the `types` property of `setup({ types })`. Thi
 - Types for `actions`, including action `params`
 - Types for `guards`, including guard `params`
 - Types for `actors`
+
+
 
 ## Migrating from `createMachine`
 
