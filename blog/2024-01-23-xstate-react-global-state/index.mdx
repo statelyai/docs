@@ -12,13 +12,13 @@ slug: 2024-01-23-xstate-react-global-state
 image: /blog/2024-01-23-xstate-react-global-state.png
 ---
 
-XState is a versatile state management & orchestration library that works with any framework, including React with the [`@xstate/react`](./xstate-react.mdx) package. For many apps, managing global state is a requirement, and there are many options for sharing global state in React, like using [React Context](https://react.dev/learn/passing-data-deeply-with-context) or libraries like [Redux](https://redux.js.org/), [MobX](https://mobx.js.org/), and [Zustand](https://github.com/pmndrs/zustand).
+XState is a versatile state management & orchestration library that works with any framework, including React with the [`@xstate/react`](/docs/xstate-react) package. For many apps, managing global state is a requirement, and there are many options for sharing global state in React, like using [React Context](https://react.dev/learn/passing-data-deeply-with-context) or libraries like [Redux](https://redux.js.org/), [MobX](https://mobx.js.org/), and [Zustand](https://github.com/pmndrs/zustand).
 
 The `@xstate/react` package makes it simple to manage component-level state with hooks like `useMachine()` and `useActor()`, but it works equally well for managing global state 🌎{/* truncate */}
 
 ## Global state
 
-The simplest way to manage global state is to share an [actor](./actors.mdx) instance between components. Think of an actor as a "store" – you can subscribe to its state updates ("snapshots") and send events to it.
+The simplest way to manage global state is to share an [actor](/docs/actors) instance between components. Think of an actor as a "store" – you can subscribe to its state updates ("snapshots") and send events to it.
 
 You can consume that actor in any component either by passing it as a prop or referencing it directly from module scope.
 
