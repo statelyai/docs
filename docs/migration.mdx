@@ -2075,6 +2075,91 @@ function Component({ someActorRef }) {
 </TabItem>
 </Tabs>
 
+## Use `machine.provide()` to provide implementations in hooks
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+For dynamically creating machines with provided implementations, the `useMachine(...)`, `useActor(...)`, and `useActorRef(...)` hooks no longer accept:
+
+- Lazy machine creators as the 1st argument
+- Implementations passed to the 2nd argument
+
+Instead, `machine.provide(...)` should be passed directly to the 1st argument.
+
+The `@xstate/react` package considers machines with the same configuration to be the same machine, so it will minimize rerenders but still keep the provided implementations up-to-date.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(someMachine.provide({
+    actions: {
+      doSomething: () => {
+        props.onSomething?.(); // Kept up-to-date
+      }
+    }
+  }));
+
+  // ...
+}
+```
+
+</TabItem>
+
+<TabItem value="v4 arguments" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(someMachine, {
+    actions: {
+      doSomething: () => {
+        props.onSomething?.();
+      }
+    }
+  });
+
+  // ...
+}
+```
+
+</TabItem>
+
+<TabItem value="v4 function" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(() => someMachine.withConfig({
+    actions: {
+      doSomething: () => {
+        props.onSomething?.();
+      }
+    }
+  }));
+
+  // ...
+}
+```
+
+</TabItem>
+</Tabs>
+
 ## `@xstate/vue`
 
 ### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
