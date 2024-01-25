@@ -633,13 +633,32 @@ Read [observable actor logic](./observable-actors.mdx) for more information on o
 
 ## Invoking Event Observables
 
-```ts
-invoke: {
-  src: fromEventObservable(/* … */);
-}
-```
+You can invoke [event observables](TODO) by using the `fromEventObservable(...)` actor logic creator. Event observable logic is similar to observable logic in that the parent actor subscribes to the event observable; however, the emitted values of an event observable are expected to be events that are _sent_ to the invoking (parent) actor directly.
 
-_Coming soon_
+```ts
+import { setup, fromEventObservable } from 'xstate';
+
+const mouseClicks = fromEventObservable(/* ... */);
+
+const machine = setup({
+  actors: {
+    mouseClicks
+  }
+}).createMachine({
+  // ...
+  invoke: {
+    src: 'mouseClicks'
+    // No `onSnapshot` or `onDone` needed; events are sent directly to
+    // the machine actor
+  },
+  on: {
+    // Sent by the event observable actor
+    click: {
+      // ...
+    }
+  }
+})
+```
 
 ## Invoking Transitions
 
@@ -812,7 +831,20 @@ Each invocation will create a new instance of that actor, so even if the `src` o
 
 ## Testing
 
-_Coming soon_
+You can test invoked actors by asserting that the parent actor receives expected events from the invoked actor.
+
+```ts
+
+const machine = setup({
+  actors: {
+    countLogic
+  }
+}).createMachine({
+  invoke: {
+    src: 'countLogic'
+  }
+})
+```
 
 ## Referencing Invoked Actors
 
@@ -894,7 +926,7 @@ const machine = setup({
 });
 ```
 
-More information coming soon.
+Read the documentation on [setting up state machines](./setup.mdx) for more information.
 
 ## Invoke cheatsheet
 

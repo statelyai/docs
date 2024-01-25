@@ -74,12 +74,21 @@ actor.stop();
 
 ## Callback actor input
 
-_Coming soon..._
+You can pass `input` when creating callback actors, which is passed to the callback actor logic in the `input` property of the first argument.
 
 ```ts
-import { fromCallback, createActor, setup } from 'xstate';
+import {
+  fromCallback,
+  createActor,
+  setup,
+  type EventObject
+} from 'xstate';
 
-const resizeLogic = fromCallback(({ sendBack, receive, input }) => {
+const resizeLogic = fromCallback<EventObject, { defaultSize: number }>(({
+  sendBack,
+  receive,
+  input // Typed as { defaultSize: number }
+}) => {
   input.defaultSize; // 100
   // ...
 });

@@ -153,15 +153,42 @@ const feedbackMachine = createMachine({
 });
 ```
 
-Coming soon… assign example
-
 ## Parent to child transitions
 
-When a state machine receives an event, it will first check the deepest ([atomic](state-machines-and-statecharts.mdx#atomic-states)) state to see if there is any enabled transition. If not, the parent state is checked, and so on, until the machine reaches the root state.
+When a state machine actor receives an event, it will first check the deepest ([atomic](state-machines-and-statecharts.mdx#atomic-states)) state to see if there is any enabled transition. If not, the parent state is checked, and so on, until the state machine reaches the root state.
 
 When you want an event to transition to a state regardless of which sibling state is active, a useful pattern is to transition from the parent state to the child state.
 
-Coming soon… example with `{ on: { target: '.child' } }`
+For example, the below state machine will transition to the `colorMode.system` state on the `mode.reset` event regardless of which state it is currently in.
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  id: 'colorMode',
+  initial: 'system',
+  states: {
+    system: {},
+    auto: {},
+    light: {
+      on: {
+        'mode.toggle': { target: 'dark' }
+      }
+    },
+    dark: {
+      on: {
+        'mode.toggle': { target: 'light' }
+      }
+    }
+  },
+  on: {
+    'mode.reset': {
+      // highlight-next-line
+      target: '.system'
+    }
+  }
+});
+```
 
 ## Re-entering
 
