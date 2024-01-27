@@ -461,6 +461,33 @@ const machine = createMachine({
 });
 ```
 
+## Frequently asked questions {#faqs}
+
+<details>
+<summary>
+How can I listen for events sent to actors?
+</summary>
+
+You can use the [inspection API](./inspection.mdx) to listen for all inspection events in an actor system. The `@xstate.event` inspection event contains information about events sent from one actor to another (or itself):
+
+```ts
+import { createActor } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = createActor(someMachine, {
+  inspect: (inspectionEvent) => {
+    if (inspectionEvent.type === '@xstate.event') {
+      // highlight-start
+      // The event object sent from one actor to another
+      console.log(inspectionEvent.event);
+      // highlight-end
+    }
+  }
+});
+```
+
+</details>
+
 ## Transitions cheatsheet
 
 Use our XState events and transitions cheatsheet below to get started quickly.
