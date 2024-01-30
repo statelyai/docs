@@ -1,0 +1,213 @@
+---
+title: Migrating XState machines from v4 to v5
+description: A walkthrough of migrating an existing XState v4 machine to XState v5
+tags: [stately, studio, breaking changes, state machines, xstate]
+authors: [kevin]
+date: 2024-02-02
+slug: 2024-02-02-migrating-xstate-machines-from-v4-to-v5
+image: /blog/2024-02-02-migrating-xstate-machines-from-v4-to-v5.png
+---
+
+We recently announced the recent release of XState v5! During its beta phase, we produced a migration guide, specifically to call out breaking changes and to give developers “live updates” regarding api changes, many based on user feedback, as they evolved. This post is a walkthrough to migrating existing XState machines from v4 to v5 and is intended to be a companion to the migration guide.
+
+{/* truncate */}
+
+We at Stately have dozens of XState machines in our own Stately Studio code base and have been migrating those to XState v5 as well. This article is a guided walkthrough of that migration process based on the steps we have undertaken and is meant as a compliment to the Migration Guide.
+
+The following is a list of steps you can take to migrate an existing XState v4 machine to XState v5.
+
+1. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
+2. [Convert action strings to “parameterized actions”](#2-convert-actions-strings-to-parameterized-actions)
+3. [Move implementations or stubs to `setup()`](#3-move-implementations-or-stubs-to-setup)
+4. [Provide concrete implementations](#4-provide-concrete-implementations)
+
+### 1. Move types to `setup()` and remove typegen
+
+One of the first migration steps, based on a breaking change, is to move any TypeScript types from `schema` to be under a new `types` property in the object passed to the new `setup()` function.
+
+If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
+
+```ts
+// Before
+const machine = createMachine({
+  ...
+  tsTypes: {} as import('./myMachine.typegen').Typegen0,
+  schema: {
+    context: {} as {
+      /* type context props */
+    },
+    events: {} as {
+      /* type events */
+    },
+    services: {} as {
+      /* type services */
+    },
+  }
+});
+```
+
+```ts
+// After
+const machine = setup({
+  types: {
+    context: {} as {
+      /* type context props */
+    },
+    events: {} as {
+      /* type events */
+    },
+    // Type actors here
+    input: {} as {
+      nameOfActorSource1: {
+        output: {
+          prop1: string;
+          prop2: number;
+          /* etc */
+        };
+      };
+      nameOfActorSource2: {
+        /* type actor */
+      };
+      nameOfActorSource3: {
+        /* type actor */
+      };
+    },
+  },
+  /* implementations */
+  actions: {},
+  guards: {},
+  actors: {},
+}).createMachine({
+  /* machine config */
+});
+```
+
+Tip: You can still pass `types` to `createMachine` if you are using that on its own and if you prefer. However, if you chain `setup().createMachine()` then you must pass `types` to `setup()`.
+
+### 2. Convert actions strings to “parameterized actions”
+
+We can now convert actions to “parameterized actions” which allows us to map event properties to an explicit `params` object (or primitive value). The `params` will later be received by our action implementation functions and their values will already be typed. It’s not necessary to type the event objects here.
+
+```ts
+// Before
+const machine = createMachine({
+  on: {
+    next: {
+      actions: ['doThis', 'doThat'],
+    },
+  },
+  states: {
+    first: {
+      entry: 'whenEntering',
+      exit: 'whenExiting',
+    },
+  },
+});
+```
+
+```ts
+// After
+const machine = setup({
+  types: {
+    events: {} as {
+      type: 'next';
+      prop1: string;
+      prop2: number;
+      prop3: boolean;
+    },
+  },
+  /* more setup */
+}).createMachine({
+  on: {
+    next: {
+      target: 'first',
+      actions: [
+        {
+          type: 'doThis',
+          // Later, the action implementation function will be
+          // passed this string value as the 2nd arg, params.
+          params: ({ event }) => event.prop1,
+        },
+        {
+          type: 'doThat',
+          // Later, the action implementation function will be
+          // passed this number value as the 2nd arg, params.
+          params: ({ event }) => event.prop2,
+        },
+      ],
+    },
+  },
+  states: {
+    first: {
+      entry: {
+        type: 'whenEntering',
+        // Later, the action implementation function will be
+        // passed only these 2 values as the 2nd arg, params.
+        params: ({ event }) => ({
+          prop1: event.prop1,
+          prop2: event.prop2,
+        }),
+      },
+      exit: {
+        type: 'whenExiting',
+        // Later, the action implementation function will be
+        // passed only these 2 values as the 2nd arg, params.
+        params: ({ event }) => ({
+          prop2: event.prop2,
+          prop3: event.prop3,
+        }),
+      },
+    },
+  },
+});
+```
+
+### 3. Move implementations or stubs to `setup()`
+
+We need to provide implementations for actions, guards, and actors in the object passed to `setup({ /* implementations here */ })`. If the machine has everything it needs to carry out these implementations on its own then it’s convenient to pass implementations in `setup()`.
+
+:::info
+Even dependencies that are external to the machine can be made available to the machine.
+
+**Injecting dependencies using the machine’s `input`**
+
+Dependencies can be made available to the internal workings of a machine by passing them via `input` to that machine.
+
+```ts
+setup({
+  input: {},
+});
+```
+
+**Injecting dependencies by sending an event**
+
+Dependencies can be made available to the internal workings of a machine by sending them along with an event. These refs can either be used by actions or actors that receive this event or you could store them in context using an `assign` action.
+
+```ts
+send({ type: 'refs.inject', someRef, anotherRef });
+```
+
+:::
+
+However, in some cases it's just not feasible or convenient to inject dependencies; maybe there are too many or these are already passed as props into a component from somewhere else. In those cases, at the very least, we need to provide a “stub” of these implementations if they’re meant to be overridden later, by passing them to `.provide({ /* implementations here */ })`.
+
+```ts
+setup({
+  actions: {
+    doThis: (_, prop1: string) => {
+      // Do somethhing with the prop1 value
+      // in this implementation
+    },
+    // Just stub this if it will be overridden
+    doThat: (_, prop2: number) => {},
+    whenEntering: (_, params: { prop1: string; prop2: number }) => {
+      // Do somethhing with prop1 and prop2 values
+      // in this implementation
+    },
+    // Just stub this if it will be overridden
+    whenExiting: (_, params: { prop2: number; prop3: boolean }) => {},
+  },
+});
+```
+
+### 4. Provide concrete implementations
