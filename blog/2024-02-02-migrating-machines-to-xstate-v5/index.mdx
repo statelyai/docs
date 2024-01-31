@@ -396,12 +396,12 @@ function App() {
 }
 ```
 
+In this case, the [provider is passed a `logic` prop](https://stately.ai/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](https://stately.ai/docs/xstate-react#useactorrefmachine-options) to access the actor ref and send events to the machine that is using these concrete implementations.
+
 :::info
 
 These implementation functions do not need to be typed because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-move-implementations-or-stubs-to-setup).
 
 :::
-
-In this case, the [provider is passed a `logic` prop](https://stately.ai/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](https://stately.ai/docs/xstate-react#useactorrefmachine-options) to access the actor ref and send events to the machine that is using these concrete implementations.
 
 ### Summary
