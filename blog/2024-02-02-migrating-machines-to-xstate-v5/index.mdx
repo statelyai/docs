@@ -38,7 +38,7 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
 2. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
 3. [Convert action strings to parameterized actions](#3-convert-actions-strings-to-parameterized-actions)
-4. [Include implementations or stubs to `setup()`](#4-move-implementations-or-stubs-to-setup)
+4. [Include implementations or stubs in `setup()`](#4-move-implementations-or-stubs-to-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
 ## 1. Install XState v5 and dependencies
@@ -265,7 +265,7 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-## 4. Include implementations or stubs to `setup()`
+## 4. Include implementations or stubs in `setup()`
 
 We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
