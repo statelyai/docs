@@ -36,7 +36,7 @@ We at Stately have dozens of XState machines in our own [Stately Studio](https:/
 The following is a sequence of steps you can follow to migrate an existing XState v4 machine to XState v5. The order is merely a recommendation, not a requirement.
 
 1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
-2. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
+2. [Move types to `setup()` and remove typegen](#2-move-types-to-setup-and-remove-typegen)
 3. [Convert action strings to parameterized actions](#3-convert-actions-strings-to-parameterized-actions)
 4. [Include implementations or stubs in `setup()`](#4-move-implementations-or-stubs-to-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
@@ -79,27 +79,10 @@ const machine = setup({
   types: {} as {
     context: {
       /* type context props */
-    },
+    };
     events: {
       /* type events */
-    },
-    // Type actors here
-    input:  {
-      nameOfActorSource1: {
-        output: {
-          prop1: string;
-          prop2: number;
-          /* etc */
-        };
-      };
-      nameOfActorSource2: {
-        /* type actor */
-      };
-      nameOfActorSource3: {
-        /* type actor */
-      };
-    },
-  }
+    };
   },
   /* implementations */
   actions: {},
