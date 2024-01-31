@@ -146,7 +146,7 @@ You can still pass `types` to `createMachine()` if you are using that on its own
 
 If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
 
-### 3. Convert actions strings to parameterized actions
+## 3. Convert actions strings to parameterized actions
 
 We must now [convert any action name strings to action objects](https://stately.ai/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
 
