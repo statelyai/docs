@@ -321,7 +321,7 @@ setup({
           inputProp1: string;
           inputProp2: number;
         };
-      }): Promise<Machine> => {
+      }): Promise<Item[]> => {
         throw new Error('Not implemented');
       },
     ),
@@ -342,7 +342,7 @@ setup({
   actors: {
     doSomethingAsync: fromPromise<
       // Promise-wrapped output
-      Machine,
+      Item[],
       // input
       {
         inputProp1: string;
