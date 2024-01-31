@@ -247,40 +247,7 @@ const machine = createMachine({
 
 ### 4. Move implementations or stubs to `setup()`
 
-We must provide implementations for actions, guards, and actors in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up with a combination of concrete implementations and stubs.
-
-:::info
-
-Even dependencies that are external to the machine can be made available to the machine.
-
-:::
-
-**Injecting dependencies using the machine’s `input`**
-
-Dependencies can be made available to the internal workings of a machine by passing them via `input` to that machine.
-
-```ts
-setup({
-  input: {
-    externalDependency1: someRef,
-    externalDependency2: anotherRef,
-  },
-});
-```
-
-**Injecting dependencies by sending an event**
-
-Dependencies can be made available to the internal workings of a machine by sending them along with an event. These refs can either be used by actions or actors that receive this event or you could store them in context using an `assign` action.
-
-```ts
-send({
-  type: 'refs.inject',
-  externalDependency1,
-  externalDependency2,
-});
-```
-
-However, in some cases it's just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. In that case, we need to provide a “stub” of these implementations in `setup()` that are meant to be overridden later.
+We must provide implementations for actions, guards, and actors in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
 ```ts
 setup({
@@ -301,7 +268,40 @@ setup({
 });
 ```
 
-### 4. Provide concrete implementations
+:::info
+
+Even dependencies that are external to the machine can be made available to the machine.
+
+:::
+
+#### Injecting dependencies using the machine’s `input`
+
+Dependencies can be made available to the internal workings of a machine by passing them via `input` to that machine.
+
+```ts
+setup({
+  input: {
+    externalDependency1: someRef,
+    externalDependency2: anotherRef,
+  },
+});
+```
+
+#### Injecting dependencies by sending an event
+
+Dependencies can be made available to the internal workings of a machine by sending them along with an event. These refs can either be used by actions or actors that receive this event or you could store them in context using an `assign` action.
+
+```ts
+send({
+  type: 'refs.inject',
+  externalDependency1,
+  externalDependency2,
+});
+```
+
+However, in some cases it's just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
+
+### 5. Provide concrete implementations
 
 Stately Studio is a NextJS application so we are using the [@xstate/react](https://stately.ai/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
 
