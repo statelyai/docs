@@ -1,24 +1,41 @@
 ---
 title: Migrating machines to XState v5
 description: A walkthrough of migrating an existing XState v4 machine to XState v5
-tags: [stately, studio, breaking changes, state machines, xstate]
+tags:
+  [
+    stately,
+    studio,
+    breaking changes,
+    migration,
+    XState v5,
+    state machines,
+    xstate,
+  ]
 authors: [kevin]
 date: 2024-02-02
 slug: 2024-02-02-migrating-machines-to-xstate-v5
 image: /blog/2024-02-02-migrating-machines-to-xstate-v5.png
 ---
 
-We recently announced the recent release of XState v5! During its beta phase, we created a migration guide, specifically to call out breaking changes and to give developers onging updates regarding api changes. This post is a walkthrough to migrating existing XState machines from v4 to v5 and is intended to be more of a step-by-step companion to the migration guide.
+We recently announced the recent release of XState v5! During its beta phase, we created a [migration guide](https://stately.ai/docs/migration), specifically to call out breaking changes and to give developers onging updates regarding api changes. This post is a walkthrough of migrating existing XState machines from v4 to v5 and is intended to be more of a step-by-step companion to the migration guide. It also focuses on migrating [XState machines that are using TypeScript](https://stately.ai/docs/typescript).
 
 {/* truncate */}
 
-We at Stately have dozens of XState machines in our own Stately Studio code base and have been migrating those to XState v5 as well. As you can imagine, we use XState v5 in our own applications and have been migrating our existing machines to v5 as well. We’ve learned a lot about the migration process and wanted to share that with you.
+:::info
 
-The following is a list of steps you can take to migrate an existing XState v4 machine to XState v5.
+Read [David’s blog post on the launch of XState v5](/blog/2023-12-01-xstate-v5).
+
+Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/live/TRVjeil-y74).
+
+:::
+
+We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. We’ve learned a lot about the migration process and wanted to share some of the experience to make yours even smoother.
+
+The following is a sequence of steps you can follow to migrate an existing XState v4 machine to XState v5. The order is merely a recommendation, not a requirement.
 
 1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
 2. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
-3. [Convert action strings to “parameterized actions”](#3-convert-actions-strings-to-parameterized-actions)
+3. [Convert action strings to parameterized actions](#3-convert-actions-strings-to-parameterized-actions)
 4. [Move implementations or stubs to `setup()`](#4-move-implementations-or-stubs-to-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
@@ -42,15 +59,13 @@ If you have many state machines and would like to incrementally migrate those to
 
 :::tip
 
-You can also default `xstate` to v5 and use `xstate4` for v4.
+Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
 
 :::
 
 ### 2. Move types to `setup()` and remove typegen
 
-One of the first migration steps, based on a breaking change, is to move any TypeScript types from `schema` to be under a new `types` property in the object passed to the new `setup()` function.
-
-If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
+One of the first migration steps, based on a breaking change, is to remove any TypeScript types in `schema` from v4. These types should then be [included under a new `types` property](https://stately.ai/docs/typescript#specifying-types) in the object passed to the new `setup()` function.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -59,15 +74,15 @@ If you were previously using typegen in v4, you can also delete `tsTypes` as the
 import { setup } from 'xstate';
 
 const machine = setup({
-  types: {
-    context: {} as {
+  types: {} as {
+    context: {
       /* type context props */
     },
-    events: {} as {
+    events: {
       /* type events */
     },
     // Type actors here
-    input: {} as {
+    input:  {
       nameOfActorSource1: {
         output: {
           prop1: string;
@@ -82,6 +97,7 @@ const machine = setup({
         /* type actor */
       };
     },
+  }
   },
   /* implementations */
   actions: {},
@@ -126,7 +142,9 @@ You can still pass `types` to `createMachine()` if you are using that on its own
 
 :::
 
-### 3. Convert actions strings to “parameterized actions”
+If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
+
+### 3. Convert actions strings to parameterized actions
 
 We must now [convert any action name strings to action objects](https://stately.ai/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
 
@@ -249,6 +267,12 @@ const machine = createMachine({
 
 We must provide implementations for actions, guards, and actors in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
+:::info
+
+When using TypeScript, the implementations passed to `setup()` must include types for the 2nd params argument.
+
+:::
+
 ```ts
 setup({
   actions: {
@@ -268,15 +292,15 @@ setup({
 });
 ```
 
-:::info
+:::tip
 
 Even dependencies that are external to the machine can be made available to the machine.
 
 :::
 
-#### Injecting dependencies using the machine’s `input`
+**Injecting external dependencies with `input`**
 
-Dependencies can be made available to the internal workings of a machine by passing them via `input` to that machine.
+If dependencies are not expected to change throughout the lifetime of the machine, then you can pass them as `input` to `setup()` and they will become available from within the machine.
 
 ```ts
 setup({
@@ -287,9 +311,9 @@ setup({
 });
 ```
 
-#### Injecting dependencies by sending an event
+**Injecting external dependencies by sending an event**
 
-Dependencies can be made available to the internal workings of a machine by sending them along with an event. These refs can either be used by actions or actors that receive this event or you could store them in context using an `assign` action.
+If dependencies are expected to change over time, then you can send an event to the machine, as often as necessary (whenever dependencies change), to update the machine with the latest dependencies. For example, an event containing refs to these dependencies can be used by registered actions or actors or they can be stored in context using an `assign` action for future use.
 
 ```ts
 send({
@@ -311,13 +335,13 @@ import { machine } from './machine';
 const actorRef = useActorRef(
   machine.provide({
     actions: {
-      doThat: (_, prop2: number) => {
+      doThat: (_, prop2) => {
         // Concrete implementation here
         console.log(prop2);
       },
-      whenExiting: (_, params: { prop2: number; prop3: boolean }) => {
+      whenExiting: (_, params) => {
         // Concrete implementation here
-        console.log(prop2, prop3);
+        console.log(params.prop2, params.prop3);
       },
     },
   }),
@@ -355,13 +379,13 @@ function App() {
     <MachineContext.Provider
       logic={machine.provide({
         actions: {
-          doThat: (_, prop2: number) => {
+          doThat: (_, prop2) => {
             // Concrete implementation here
             console.log(prop2);
           },
-          whenExiting: (_, params: { prop2: number; prop3: boolean }) => {
+          whenExiting: (_, params) => {
             // Concrete implementation here
-            console.log(prop2, prop3);
+            console.log(params.prop2, params.prop3);
           },
         },
       })}
@@ -372,4 +396,12 @@ function App() {
 }
 ```
 
-In this case, the provider is passed a `logic` prop whose value is the machine with the provided implementations. This is useful if you want to provide different implementations to different instances of the same machine.
+:::info
+
+These implementation functions do not need to be typed because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-move-implementations-or-stubs-to-setup).
+
+:::
+
+In this case, the [provider is passed a `logic` prop](https://stately.ai/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](https://stately.ai/docs/xstate-react#useactorrefmachine-options) to access the actor ref and send events to the machine that is using these concrete implementations.
+
+### Summary
