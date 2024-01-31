@@ -269,9 +269,11 @@ We must [provide implementations for actions, guards, and actors](https://statel
 
 :::info
 
-When using TypeScript, the implementations passed to `setup()` must include types for the 2nd params argument.
+When using TypeScript, the implementations passed to `setup()` must include types for the 2nd `params` argument.
 
 :::
+
+#### Stubbing actions
 
 ```ts
 setup({
@@ -292,11 +294,87 @@ setup({
 });
 ```
 
-:::tip
+:::info
 
-Even dependencies that are external to the machine can be made available to the machine.
+Stubbed actions can contain an empty function body `() => {}`
 
 :::
+
+#### Stubbing guards
+
+```ts
+setup({
+  guards: {
+    'is this ready': (_, prop1: string) => {
+      // Concrete implementation here
+      return prop1.length > 0;
+    },
+    // Stubbed implementation
+    'are we there yet': (_, prop2: number) => false,
+  },
+});
+```
+
+:::info
+
+Stubbed guards must return a boolean value, either `true` or `false`.
+
+:::
+
+#### Stubbing actors
+
+Invoked actors can be stubbed with the actual actor creator helper function that will be used in the real implementation. The main purpose here is to type the `input` and `output` of the actor. There are two ways to do this:
+
+This first way is more transferrable across other types of logic creators.
+
+```ts
+setup({
+  actors: {
+    doSomethingAsync: fromPromise(
+      async (_: {
+        input: {
+          machineId: string;
+          versionId?: string;
+          machineName?: string;
+        };
+      }): Promise<Machine> => {
+        throw new Error('Not implemented');
+      },
+    ),
+  },
+});
+```
+
+:::warning
+
+Stubbed actors must throw an error as a way of enforcing that they will be overridden later.
+
+:::
+
+The second way is a bit shorter and more specific to `fromPromise`.
+
+```ts
+setup({
+  actors: {
+    doSomethingAsync: fromPromise<
+      // Promise-wrapped output
+      Machine,
+      // input
+      {
+        machineId: string;
+        versionId?: string;
+        machineName?: string;
+      }
+    >(async () => {
+      throw new Error('Not implemented');
+    }),
+  },
+});
+```
+
+#### Reducing external dependencies
+
+Even dependencies that are external to the machine can be made available to the machine using one of the following methods:
 
 **Injecting external dependencies with `input`**
 
