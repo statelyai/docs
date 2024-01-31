@@ -265,9 +265,9 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
-### 4. Include implementations or stubs to `setup()`
+## 4. Include implementations or stubs to `setup()`
 
-We must [provide implementations for actions, guards, and actors](https://stately.ai/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
+We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
 :::info
 
@@ -275,7 +275,7 @@ When using TypeScript, the implementations passed to `setup()` must include type
 
 :::
 
-#### Stubbing actions
+### Stubbing actions
 
 ```ts
 setup({
@@ -302,7 +302,7 @@ Stubbed actions can contain an empty function body `() => {}`
 
 :::
 
-#### Stubbing guards
+### Stubbing guards
 
 ```ts
 setup({
@@ -376,7 +376,7 @@ setup({
 
 Even dependencies that are external to the machine can be made available to the machine using one of the following methods:
 
-**Injecting external dependencies with `input`**
+#### Injecting external dependencies with `input`
 
 If dependencies are not expected to change throughout the lifetime of the machine, then you can pass them as `input` to `setup()` and they will become available from within the machine.
 
@@ -389,7 +389,7 @@ setup({
 });
 ```
 
-**Injecting external dependencies by sending an event**
+#### Injecting external dependencies by sending an event
 
 If dependencies are expected to change over time, then you can send an event to the machine, as often as necessary (whenever dependencies change), to update the machine with the latest dependencies. For example, an event containing refs to these dependencies can be used by registered actions or actors or they can be stored in context using an `assign` action for future use.
 
@@ -405,7 +405,7 @@ However, in some cases it's just not feasible or convenient to inject dependenci
 
 ## 5. Provide concrete implementations
 
-Stately Studio is a NextJS application so we are using the [@xstate/react](https://stately.ai/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
+Stately Studio is a NextJS application so we are using the [@xstate/react](/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
 
 ```ts
 import { useActorRef } from '@xstate/react';
@@ -474,7 +474,7 @@ function App() {
 }
 ```
 
-In this case, the [provider is passed a `logic` prop](https://stately.ai/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](https://stately.ai/docs/xstate-react#useactorrefmachine-options) to access the actor ref and send events to the machine that is using these concrete implementations.
+In this case, the [provider is passed a `logic` prop](/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](/docs/xstate-react#useactorrefmachine-options) to access the actor ref and send events to the machine that is using these concrete implementations.
 
 :::info
 
@@ -490,7 +490,7 @@ This is a bit more involved as we need to define 3 things:
 2. Register the `invoke` in a state in the main machine config.
 3. Provide a concrete implementation for the actor if not already passing it to `setup()`.
 
-**Registering the `invoke` in a state in the main machine config**
+#### Registering the `invoke` in a state in the main machine config
 
 This is similar to how invoked actors were registered in v4. The main difference is we also define the `input` here where we map event values to input values. The actions registered with `onDone` and `onError` are also defined as objects with `params` just like [we saw before with transition actions and entry/exit actions](#3-convert-actions-strings-to-parameterized-actions).
 
@@ -531,7 +531,7 @@ createMachine({
 });
 ```
 
-**Providing a concrete implementation for the actor if not already passing it to `setup()`**
+#### Providing a concrete implementation for the actor if not already passing it to `setup()`
 
 If we only defined a stub for the actor creator function in `setup()` then we must provide a concrete implementation for the actor with our other concrete implementations.
 
@@ -562,4 +562,4 @@ const actorRef = useActorRef(
 
 By following the sequence of steps above, you should be able to migrate your existing XState v4 machines to XState v5 and get all of the types working with little to no need for type narrowing via assertions or type guards.
 
-I hope this walkthrough has been helpful in migrating your existing XState v4 machines to XState v5. If you have any questions or feedback, please [reach out to us on [our Discord](https://discord.gg/xstate).
+I hope this walkthrough has been helpful in migrating your existing XState v4 machines to XState v5. If you have any questions or feedback, please [reach out to us on our Discord](https://discord.gg/xstate).
