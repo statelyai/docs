@@ -263,12 +263,12 @@ When using TypeScript, the implementations passed to `setup()` must include type
 ```ts
 setup({
   actions: {
-    doThis: (_, params: string) => {
+    doThis: (_, params: { prop: string }) => {
       // Concrete implementation here
-      console.log(params);
+      console.log(params.prop);
     },
     // Stubbed implementation
-    doThat: (_, params: number) => {},
+    doThat: (_, params: { prop: number }) => {},
     whenEntering: (_, params: { prop1: string; prop2: number }) => {
       // Concrete implementation here
       console.log(prop1, prop2);
@@ -290,12 +290,12 @@ Stubbed actions should use an empty function body `() => {}`
 ```ts
 setup({
   guards: {
-    'is this ready': (_, params: string) => {
+    'is this ready': (_, params: { list: string[] }) => {
       // Concrete implementation here
-      return params.length > 0;
+      return params.list.length > 0;
     },
     // Stubbed implementation
-    'are we there yet': (_, params: number) => false,
+    'are we there yet': (_, params: { distance: number }) => false,
   },
 });
 ```
