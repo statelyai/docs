@@ -8,46 +8,56 @@ slug: 2024-02-02-migrating-xstate-machines-from-v4-to-v5
 image: /blog/2024-02-02-migrating-xstate-machines-from-v4-to-v5.png
 ---
 
-We recently announced the recent release of XState v5! During its beta phase, we produced a migration guide, specifically to call out breaking changes and to give developers “live updates” regarding api changes, many based on user feedback, as they evolved. This post is a walkthrough to migrating existing XState machines from v4 to v5 and is intended to be a companion to the migration guide.
+We recently announced the recent release of XState v5! During its beta phase, we created a migration guide, specifically to call out breaking changes and to give developers onging updates regarding api changes. This post is a walkthrough to migrating existing XState machines from v4 to v5 and is intended to be more of a step-by-step companion to the migration guide.
 
 {/* truncate */}
 
-We at Stately have dozens of XState machines in our own Stately Studio code base and have been migrating those to XState v5 as well. This article is a guided walkthrough of that migration process based on the steps we have undertaken and is meant as a compliment to the Migration Guide.
+We at Stately have dozens of XState machines in our own Stately Studio code base and have been migrating those to XState v5 as well. As you can imagine, we use XState v5 in our own applications and have been migrating our existing machines to v5 as well. We’ve learned a lot about the migration process and wanted to share that with you.
 
 The following is a list of steps you can take to migrate an existing XState v4 machine to XState v5.
 
-1. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
-2. [Convert action strings to “parameterized actions”](#2-convert-actions-strings-to-parameterized-actions)
-3. [Move implementations or stubs to `setup()`](#3-move-implementations-or-stubs-to-setup)
-4. [Provide concrete implementations](#4-provide-concrete-implementations)
+1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
+2. [Move types to `setup()` and remove typegen](#1-move-types-to-setup-and-remove-typegen)
+3. [Convert action strings to “parameterized actions”](#3-convert-actions-strings-to-parameterized-actions)
+4. [Move implementations or stubs to `setup()`](#4-move-implementations-or-stubs-to-setup)
+5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
-### 1. Move types to `setup()` and remove typegen
+### 1. Install XState v5 and dependencies
+
+The first step will be to [install XState v5](https://stately.ai/docs/xstate#installation). You can also install library-specific dependencies if you're using XState with [React](https://stately.ai/docs/xstate-react), [Vue](https://stately.ai/docs/xstate-vue), or [Svelte](https://stately.ai/docs/xstate-svelte).
+
+If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the steps listed here](https://stately.ai/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you've completed those steps, you'll end up with both dependencies in your `package.json`. Here's an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
+
+```json5
+// package.json after completing the steps in the migration guide
+{
+  dependencies: {
+    xstate: '4.38.2',
+    xstate5: 'npm:xstate@5.6.0',
+    '@xstate/react': '3.2.2',
+    '@xstate/react5': 'npm:@xstate/react@4.0.3',
+  },
+}
+```
+
+:::tip
+
+You can also default `xstate` to v5 and use `xstate4` for v4.
+
+:::
+
+### 2. Move types to `setup()` and remove typegen
 
 One of the first migration steps, based on a breaking change, is to move any TypeScript types from `schema` to be under a new `types` property in the object passed to the new `setup()` function.
 
 If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
 
-```ts
-// Before
-const machine = createMachine({
-  ...
-  tsTypes: {} as import('./myMachine.typegen').Typegen0,
-  schema: {
-    context: {} as {
-      /* type context props */
-    },
-    events: {} as {
-      /* type events */
-    },
-    services: {} as {
-      /* type services */
-    },
-  }
-});
-```
+<Tabs>
+<TabItem value="v5" label="XState v5">
 
 ```ts
-// After
+import { setup } from 'xstate';
+
 const machine = setup({
   types: {
     context: {} as {
@@ -82,31 +92,78 @@ const machine = setup({
 });
 ```
 
-Tip: You can still pass `types` to `createMachine` if you are using that on its own and if you prefer. However, if you chain `setup().createMachine()` then you must pass `types` to `setup()`.
+</TabItem>
 
-### 2. Convert actions strings to “parameterized actions”
-
-We can now convert actions to “parameterized actions” which allows us to map event properties to an explicit `params` object (or primitive value). The `params` will later be received by our action implementation functions and their values will already be typed. It’s not necessary to type the event objects here.
+<TabItem value="v4" label="XState v4">
 
 ```ts
-// Before
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
-  on: {
-    next: {
-      actions: ['doThis', 'doThat'],
+  ...
+  tsTypes: {} as import('./myMachine.typegen').Typegen0,
+  schema: {
+    context: {} as {
+      /* type context props */
     },
-  },
-  states: {
-    first: {
-      entry: 'whenEntering',
-      exit: 'whenExiting',
+    events: {} as {
+      /* type events */
     },
-  },
+    services: {} as {
+      /* type services */
+    },
+  }
 });
 ```
 
+</TabItem>
+</Tabs>
+
+:::warning
+
+You can still pass `types` to `createMachine()` if you are using that on its own and if you prefer. However, if you chain `setup().createMachine()` then you must pass `types` to the call to `setup({ types: {} })`.
+
+:::
+
+### 3. Convert actions strings to “parameterized actions”
+
+We must now [convert any action name strings to action objects](https://stately.ai/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
+
+We can define `params` as a [static value](https://stately.ai/docs/actions#action-objects)
+
 ```ts
-// After
+actions: [
+  {
+    // Action type
+    type: 'track',
+    // Action params
+    params: { response: 'good' },
+  },
+],
+```
+
+We can also use [dynamic action parameters](https://stately.ai/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
+
+```ts
+entry: [
+  {
+    type: 'logInitialRating',
+    params: ({ context }) => ({
+      initialRating: context.initialRating,
+    }),
+  },
+];
+```
+
+Here is a more complete example of converting action strings to parameterized actions:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { setup } from 'xstate';
+
 const machine = setup({
   types: {
     events: {} as {
@@ -162,12 +219,41 @@ const machine = setup({
 });
 ```
 
-### 3. Move implementations or stubs to `setup()`
+</TabItem>
 
-We need to provide implementations for actions, guards, and actors in the object passed to `setup({ /* implementations here */ })`. If the machine has everything it needs to carry out these implementations on its own then it’s convenient to pass implementations in `setup()`.
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    next: {
+      actions: ['doThis', 'doThat'],
+    },
+  },
+  states: {
+    first: {
+      entry: 'whenEntering',
+      exit: 'whenExiting',
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+### 4. Move implementations or stubs to `setup()`
+
+We must provide implementations for actions, guards, and actors in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up with a combination of concrete implementations and stubs.
 
 :::info
+
 Even dependencies that are external to the machine can be made available to the machine.
+
+:::
 
 **Injecting dependencies using the machine’s `input`**
 
@@ -175,7 +261,10 @@ Dependencies can be made available to the internal workings of a machine by pass
 
 ```ts
 setup({
-  input: {},
+  input: {
+    externalDependency1: someRef,
+    externalDependency2: anotherRef,
+  },
 });
 ```
 
@@ -184,30 +273,34 @@ setup({
 Dependencies can be made available to the internal workings of a machine by sending them along with an event. These refs can either be used by actions or actors that receive this event or you could store them in context using an `assign` action.
 
 ```ts
-send({ type: 'refs.inject', someRef, anotherRef });
+send({
+  type: 'refs.inject',
+  externalDependency1,
+  externalDependency2,
+});
 ```
 
-:::
-
-However, in some cases it's just not feasible or convenient to inject dependencies; maybe there are too many or these are already passed as props into a component from somewhere else. In those cases, at the very least, we need to provide a “stub” of these implementations if they’re meant to be overridden later, by passing them to `.provide({ /* implementations here */ })`.
+However, in some cases it's just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you wish to not tightly couple the machine to those dependencies. In that case, we need to provide a “stub” of these implementations in `setup()` that are meant to be overridden later.
 
 ```ts
 setup({
   actions: {
     doThis: (_, prop1: string) => {
-      // Do somethhing with the prop1 value
-      // in this implementation
+      // Concrete implementation here
+      console.log(prop1);
     },
-    // Just stub this if it will be overridden
+    // Stubbed implementation
     doThat: (_, prop2: number) => {},
     whenEntering: (_, params: { prop1: string; prop2: number }) => {
-      // Do somethhing with prop1 and prop2 values
-      // in this implementation
+      // Concrete implementation here
+      console.log(prop1, prop2);
     },
-    // Just stub this if it will be overridden
+    // Stubbed implementation
     whenExiting: (_, params: { prop2: number; prop3: boolean }) => {},
   },
 });
 ```
 
 ### 4. Provide concrete implementations
+
+, by passing them to `.provide({ /* implementations here */ })`.
