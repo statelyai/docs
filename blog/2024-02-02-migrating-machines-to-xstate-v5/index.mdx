@@ -29,7 +29,7 @@ Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/l
 
 :::
 
-We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. We’ve learned a lot about the migration process and wanted to share some of the experience to make yours even smoother.
+We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. I've learned a lot about the migration process, especially after consulting my expert teammate, Mateusz (@andarist), and I wanted to share some tips from my experience to make yours even smoother.
 
 The following is a sequence of steps you can follow to migrate an existing XState v4 machine to XState v5. The order is merely a recommendation, not a requirement.
 
@@ -557,3 +557,7 @@ const actorRef = useActorRef(
 ```
 
 ### Summary
+
+By following the sequence of steps above, you should be able to migrate your existing XState v4 machines to XState v5 and get all of the types working with little to no need for type narrowing via assertions or type guards.
+
+I hope this walkthrough has been helpful in migrating your existing XState v4 machines to XState v5. If you have any questions or feedback, please [reach out to us on [our Discord](https://discord.gg/xstate).
