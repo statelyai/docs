@@ -401,7 +401,7 @@ send({
 
 However, in some cases it's just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
 
-### 5. Provide concrete implementations
+## 5. Provide concrete implementations
 
 Stately Studio is a NextJS application so we are using the [@xstate/react](https://stately.ai/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
 
