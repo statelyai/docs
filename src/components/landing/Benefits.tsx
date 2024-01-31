@@ -104,11 +104,21 @@ function DesignSection() {
                 <div className="grid md:grid-cols-2">
                   <div className="p-12">
                     <FeatureText>
-                      <Strong>Attach images and other assets to states</Strong>{' '}
+                      <Strong>Embed Figma designs or attach images and other assets to states</Strong>{' '}
                       to view mockups, requirements documents, and more
                       alongside the code.
                     </FeatureText>
                     <div className="grid pt-12 gap-8">
+
+                    <div className="flex gap-4">
+                        <CheckCircleIcon className="text-pink-300 mt-1" />
+                        <div className="flex-1">
+                          <FeatureText>
+                            Embedded Figma frames stay in sync with your design files.
+                          </FeatureText>
+                        </div>
+                      </div>
+
                       <div className="flex gap-4">
                         <CheckCircleIcon className="text-pink-300 mt-1" />
                         <div className="flex-1">
