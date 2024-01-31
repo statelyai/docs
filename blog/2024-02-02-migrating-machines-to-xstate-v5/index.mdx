@@ -307,12 +307,12 @@ Stubbed actions should use an empty function body `() => {}`
 ```ts
 setup({
   guards: {
-    'is this ready': (_, prop1: string) => {
+    'is this ready': (_, params: string) => {
       // Concrete implementation here
-      return prop1.length > 0;
+      return params.length > 0;
     },
     // Stubbed implementation
-    'are we there yet': (_, prop2: number) => false,
+    'are we there yet': (_, params: number) => false,
   },
 });
 ```
