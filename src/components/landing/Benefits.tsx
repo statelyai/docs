@@ -369,13 +369,13 @@ function XStateSection() {
             />
           </Feature>
 
-          <Feature box comingSoon>
+          <Feature box>
             <FeatureText>
-              <Strong>Inspect running apps</Strong> in the visual editor to help
+              <Strong>Inspect running apps</Strong> with Stately Inspector to help
               build, test, and debug your logic.
             </FeatureText>
           </Feature>
-          <Feature box comingSoon>
+          <Feature box>
             <FeatureText>
               <Strong>Visualize communication between actors</Strong> in a
               system with sequence diagrams.
