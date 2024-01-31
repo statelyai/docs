@@ -65,7 +65,7 @@ Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
 
 :::
 
-### 2. Move types to `setup()` and remove typegen
+## 2. Move types to `setup()` and remove typegen
 
 One of the first migration steps, based on a breaking change, is to remove any TypeScript types in `schema` from v4. These types should then be [included under a new `types` property](/docs/typescript#specifying-types) in the object passed to the new `setup()` function.
 
