@@ -333,9 +333,8 @@ setup({
     doSomethingAsync: fromPromise(
       async (_: {
         input: {
-          machineId: string;
-          versionId?: string;
-          machineName?: string;
+          inputProp1: string;
+          inputProp2: number;
         };
       }): Promise<Machine> => {
         throw new Error('Not implemented');
@@ -361,9 +360,8 @@ setup({
       Machine,
       // input
       {
-        machineId: string;
-        versionId?: string;
-        machineName?: string;
+        inputProp1: string;
+        inputProp2: number;
       }
     >(async () => {
       throw new Error('Not implemented');
@@ -408,7 +406,7 @@ However, in some cases it's just not feasible or convenient to inject dependenci
 Stately Studio is a NextJS application so we are using the [@xstate/react](https://stately.ai/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
 
 ```ts
-import { machine } from './machine';
+import { useActorRef } from '@xstate/react';
 
 const actorRef = useActorRef(
   machine.provide({
@@ -450,7 +448,7 @@ export const MachineContext = createActorContext(machine);
 It can then be imported and used in a component tree:
 
 ```tsx
-import { MachineContext } from './MachineContext';
+import { MachineContext } from './machine';
 
 function App() {
   return (
@@ -481,5 +479,81 @@ In this case, the [provider is passed a `logic` prop](https://stately.ai/docs/xs
 These implementation functions do not need to be explicitly typed again here because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-move-implementations-or-stubs-to-setup).
 
 :::
+
+#### Providing actor implementations
+
+This is a bit more involved as we need to define 3 things:
+
+1. Provide either a [concrete implementation or a stub for the actor creator function in `setup()`](#stubbing-actors)
+2. Register the `invoke` in a state in the main machine config.
+3. Provide a concrete implementation for the actor if not already passing it to `setup()`.
+
+**Registering the `invoke` in a state in the main machine config**
+
+This is similar to how invoked actors were registered in v4. The main difference is we also define the `input` here where we map event values to input values. The actions registered with `onDone` and `onError` are also defined as objects with `params` just like [we saw before with transition actions and entry/exit actions](#3-convert-actions-strings-to-parameterized-actions).
+
+```ts
+import { createMachine } from 'xstate';
+
+createMachine({
+  /* machine config */
+  states: {
+    /* other states */
+    someState: {
+      invoke: {
+        src: 'doSomethingAsync', // required
+        id: 'doSomethingAsync', // optional
+        input: ({ event }) => ({
+          inputProp1: event.prop1,
+          inputProp2: event.prop2,
+        }),
+        onDone: {
+          target: 'Idle',
+          actions: [
+            {
+              type: 'showSuccessToast',
+            },
+            {
+              type: 'handleOutputOnSuccess',
+              params: ({ event }) => event.output,
+            },
+          ],
+        },
+        onError: {
+          target: 'Idle',
+          actions: [{ type: 'showErrorToast' }],
+        },
+      },
+    },
+  },
+});
+```
+
+**Providing a concrete implementation for the actor if not already passing it to `setup()`**
+
+If we only defined a stub for the actor creator function in `setup()` then we must provide a concrete implementation for the actor with our other concrete implementations.
+
+```ts
+import { useActorRef } from '@xstate/react';
+
+const actorRef = useActorRef(
+  machine.provide({
+    actors: {
+      doSomethingAsync: fromPromise(
+        ({
+          input,
+        }: {
+          input: {
+            inputProp1: string;
+            inputProp2: number;
+          };
+        }) => {
+          return trpcProxyClient.stuff.asyncstuff.mutate(input);
+        },
+      ),
+    },
+  }),
+);
+```
 
 ### Summary
