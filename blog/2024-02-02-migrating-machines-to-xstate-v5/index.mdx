@@ -140,7 +140,7 @@ const machine = createMachine({
 
 :::warning
 
-You can still pass `types` to `createMachine()` if you are using that on its own and if you prefer. However, if you chain `setup().createMachine()` then you must pass `types` to the call to `setup({ types: {} })`.
+When chaining `setup().createMachine()` in v5, `types` can only be defined on the object passed to `setup()` and not on the config object passed to `.createMachine()`. Example: `setup({ types: {} }).createMachine({})`.
 
 :::
 
