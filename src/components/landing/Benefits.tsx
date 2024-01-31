@@ -4,8 +4,10 @@ import {
   CalendarIcon,
   CheckCircleIcon,
   FileDownIcon,
+  GithubIcon,
   MergeIcon,
   PartyPopperIcon,
+  ShareIcon,
   ShieldCheckIcon,
   SparklesIcon,
   Wand2Icon,
@@ -62,7 +64,7 @@ function DesignSection() {
           </div>
 
           <div className="grid w-full gap-12 pt-24 md:grid-cols-2">
-            <div className="md:col-span-2">
+          <div className="md:col-span-2">
               <Feature noPadding box>
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 p-12">
                   <FeatureText>
@@ -333,7 +335,7 @@ function XStateSection() {
           <div className="md:col-span-2 lg:col-span-3">
             <Feature box noPadding>
               <div>
-                <div className="pb-24 pt-12 pl-12">
+                <div className="p-12 pb-6">
                   <FeatureText>
                     <Strong>Generate tests automatically</Strong> to keep
                     coverage robust and up-to-date.
@@ -349,39 +351,54 @@ function XStateSection() {
               </div>
             </Feature>
           </div>
+        </div>
+
+        <div className="grid justify-center w-full gap-12 md:grid-cols-1 lg:grid-cols-2 pt-12">
 
           <Feature box>
-            <FeatureText>
-              <Strong>Export all of your generated code</Strong> in Javascript
+            <div className="flex">
+              <ShareIcon className="h-[24px] self-start mt-1 text-orange-300" />
+              <div className="flex-1 pl-6">
+                <FeatureText>
+                <Strong>Export all of your generated code</Strong> in Javascript
               or Typescript.
-            </FeatureText>
-            <FeatureText>
+                </FeatureText>
+              </div>
+            </div>
+          </Feature>
+          <Feature box>
+            <div className="flex">
+              <GithubIcon className="h-[24px] self-start text-orange-300" />
+              <div className="flex-1 pl-6">
               <Strong>Connect with Github</Strong> to sync Stately with your
               codebase.
-            </FeatureText>
+              </div>
+            </div>
+          </Feature>
 
+        </div>
+
+        <div className="md:col-span-2 pt-12">
+          <Feature noPadding box>
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 p-12">
+              <FeatureText>
+                <Strong>Inspect running apps</Strong> with Stately Inspector to help
+              test, and debug your logic.
+              </FeatureText>
+              <FeatureText>
+                <Strong>Visualize communication between actors</Strong> in your running app with sequence diagrams.
+              </FeatureText>
+            </div>
             <img
-              alt="GitHub"
-              src="/assets/landing/github-white.svg"
-              width="24"
-              height="24"
-              className="h-[24px] self-start"
+              alt="The Stately Inspector view, showing a state machine and a sequence diagram for the pizza ordering process side-by-side."
+              src="/assets/landing/inspector.png"
+              className="w-full h-auto rounded-b-2xl"
+              height="385"
+              width="1207"
             />
           </Feature>
-
-          <Feature box comingSoon>
-            <FeatureText>
-              <Strong>Inspect running apps</Strong> in the visual editor to help
-              build, test, and debug your logic.
-            </FeatureText>
-          </Feature>
-          <Feature box comingSoon>
-            <FeatureText>
-              <Strong>Visualize communication between actors</Strong> in a
-              system with sequence diagrams.
-            </FeatureText>
-          </Feature>
         </div>
+
       </BenefitSection>
     </AnimateAwayGradient>
   );
