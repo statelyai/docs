@@ -541,6 +541,43 @@ const actorRef = useActorRef(
 );
 ```
 
+## Other housekeeping
+
+Remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  ...
+}).createMachine({
+  ...
+  // preserveActionOrder and
+  // predictableActionArguments are no longer needed
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  preserveActionOrder: true,
+  predictableActionArguments: true,
+  ...
+});
+```
+
+</TabItem>
+</Tabs>
+
 ## Summary
 
 By following the sequence of steps above, you should be able to migrate your existing XState v4 machines to XState v5 and get all of the types working with little to no need for type narrowing via assertions or type guards.
