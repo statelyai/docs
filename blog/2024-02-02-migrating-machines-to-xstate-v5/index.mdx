@@ -185,14 +185,14 @@ const machine = setup({
         {
           type: 'doThis',
           // Later, the action implementation function will be
-          // passed this string value as the 2nd arg, params.
-          params: ({ event }) => event.prop1,
+          // passed this string value in the 2nd arg, params.
+          params: ({ event }) => ({ prop1: event.prop1 }),
         },
         {
           type: 'doThat',
           // Later, the action implementation function will be
-          // passed this number value as the 2nd arg, params.
-          params: ({ event }) => event.prop2,
+          // passed this number value in the 2nd arg, params.
+          params: ({ event }) => ({ prop2: event.prop2 }),
         },
       ],
     },
