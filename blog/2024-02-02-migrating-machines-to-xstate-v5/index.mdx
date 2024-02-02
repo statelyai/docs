@@ -210,8 +210,8 @@ const machine = setup({
       actions: [
         {
           guard: {
-            type: 'is this what I want',
-            params: ({ event }) => ({ wanted: event.wanted }),
+            type: 'is this ready',
+            params: ({ event }) => ({ ready: event.ready }),
           },
           type: 'doThis',
           // Later, the action implementation function will be
