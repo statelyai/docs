@@ -521,7 +521,7 @@ The following 3 things must be defined:
 
 #### Registering the `invoke` in a state in the main machine config
 
-This is similar to how invoked actors were registered in v4. The main difference is we also define the `input` here where we map event values to input values. The actions registered with `onDone` and `onError` are also defined as objects with `params` just like [we saw before with transition actions and entry/exit actions](#3-convert-actions-strings-to-parameterized-actions).
+This is similar to how invoked actors were registered in v4. The main difference is we also define the `input` here where we map event values to input values. The actions registered with `onDone` and `onError` are also defined as objects with `params` just like [we saw before with transition actions and entry/exit actions](#3-convert-action-and-guard-strings-to-parameterized-objects).
 
 ```ts
 import { createMachine } from 'xstate';
