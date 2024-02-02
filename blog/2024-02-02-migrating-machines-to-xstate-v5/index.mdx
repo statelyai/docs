@@ -274,6 +274,12 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+:::tip
+
+When mapping `event` props, the action `params` you define can technically be any value, not just an object. But it is encouraged to use an object for consistency and to make it clear what the implementation functions will receive.
+
+:::
+
 ## 4. Include implementations or stubs in `setup()`
 
 We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
