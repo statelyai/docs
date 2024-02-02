@@ -37,7 +37,7 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 
 1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
 2. [Move types to `setup()` and remove typegen](#2-move-types-to-setup-and-remove-typegen)
-3. [Convert action strings to parameterized actions](#3-convert-actions-strings-to-parameterized-actions)
+3. [Convert action and guard strings to parameterized objects](#3-convert-action-and-guard-strings-to-parameterized-objects)
 4. [Include implementations or stubs in `setup()`](#4-move-implementations-or-stubs-to-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
@@ -155,9 +155,9 @@ When chaining `setup().createMachine()` in v5, `types` can only be defined on th
 
 If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5. Typing events in actions and guards can be done using type narrowing in those implementations. However, the following sections will show you how you can type a new `params` argument passed to those implementations.
 
-## 3. Convert actions strings to parameterized actions
+## 3. Convert action and guard strings to parameterized objects
 
-We must now [convert any action name strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
+We must now [convert any named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
 
 We can define `params` as a [static value](/docs/actions#action-objects)
 
@@ -209,6 +209,10 @@ const machine = setup({
       target: 'first',
       actions: [
         {
+          guard: {
+            type: 'is this what I want',
+            params: ({ event }) => ({ wanted: event.wanted }),
+          },
           type: 'doThis',
           // Later, the action implementation function will be
           // passed this string value in the 2nd arg, params.
