@@ -430,7 +430,7 @@ send({
 });
 ```
 
-However, in some cases it's just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
+However, in some cases it’s just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
 
 ## 5. Provide concrete implementations
 
@@ -587,9 +587,11 @@ const actorRef = useActorRef(
 );
 ```
 
-## Other housekeeping
+## Housekeeping and troubleshooting
 
-Remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
+### Remove `preserveActionOrder` and `predictableActionArguments`
+
+You can now remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -623,6 +625,22 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
+
+### Troubleshooting TypeScript errors
+
+You may likely see many TypeScript errors along the way so don’t get discouraged. For example, in order to fully migrate any one `action` in your machine, you’ll likely need to convert it to a parameterized object in the machine config, provide a typed implementation or stub in `setup()` before your optionally provided concrete implementation will not have a TypeScript error.
+
+:::info
+
+If you see a TypeScript error underlying one of your state names in the machine config, it is most likely because there is a type error with an `action` or `guard` within that state.
+
+:::
+
+TypeScript may have trouble pinpointing the exact location of the error in the machine config so it will often highlight the state name instead.
+
+![States, events, and transitions](/blog/2024-02-02-migrating-machines-to-xstate-v5/misleading-typescript-error.png)
+
+In the example, above, the real source of the error is that the 'trackUpgradeModalLearnMoreClick' has not yet been converted to an action object. Fixing that will make the error under the "Click to learn more" state name go away.
 
 ## Summary
 
