@@ -31,7 +31,7 @@ Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/l
 
 :::
 
-We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. I've learned a lot about the migration process, especially after consulting my expert teammate, Mateusz (@andarist), and I wanted to share some tips from my experience to make yours even smoother.
+We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. I’ve learned a lot about the migration process, especially after consulting my expert teammate, Mateusz (@andarist), and I wanted to share some tips from my experience to make yours even smoother.
 
 The following is a sequence of steps you can follow to migrate an existing XState v4 machine to XState v5. The order is merely a recommendation, not a requirement.
 
@@ -43,9 +43,9 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 
 ## 1. Install XState v5 and dependencies
 
-The first step will be to [install XState v5](/docs/xstate#installation). You can also install library-specific dependencies if you're using XState with [React](/docs/xstate-react), [Vue](/docs/xstate-vue), or [Svelte](/docs/xstate-svelte).
+The first step will be to [install XState v5](/docs/xstate#installation). You can also install library-specific dependencies if you’re using XState with [React](/docs/xstate-react), [Vue](/docs/xstate-vue), or [Svelte](/docs/xstate-svelte).
 
-If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the migration steps listed here](/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you've completed those steps, you'll end up with both dependencies in your `package.json`. Here's an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
+If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the migration steps listed here](/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you’ve completed those steps, you’ll end up with both dependencies in your `package.json`. Here’s an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
 
 ```json5
 // package.json after completing the steps in the migration guide
@@ -67,7 +67,7 @@ Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
 
 ## 2. Move types to `setup()` and remove typegen
 
-One of the first migration steps, based on a breaking change, is to remove any TypeScript types in `schema` from v4. These types should then be [included under a new `types` property](/docs/typescript#specifying-types) in the object passed to the new `setup()` function.
+One of the first migration steps, based on a breaking change, is to remove any TypeScript types from the `schema` property of the machine config from v4. These types should now be [included under a new `types` property](/docs/typescript#specifying-types) in the object passed to the new `setup({})` function.
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -121,13 +121,39 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+When defining types, you may have noticed in past examples that an empty object is often cast as the types you want for each property like `events` and `actions`.
+
+```ts
+const machine = setup({
+  types: {
+    context: {} as {
+    };
+    events: {} as {
+    };
+  },
+})
+```
+
+That still works but but it’s even easier to just cast the whole types object all at once.
+
+```ts
+const machine = setup({
+  types: {} as {
+    context: {};
+    events: {};
+  },
+});
+```
+
 :::warning
 
-When chaining `setup().createMachine()` in v5, `types` can only be defined on the object passed to `setup()` and not on the config object passed to `.createMachine()`. Example: `setup({ types: {} }).createMachine({})`.
+When chaining `setup().createMachine()` in v5, `types` can only be defined on the object passed to `setup()` and not on the config object passed to `.createMachine()`. Example: `setup({ types: {} }).createMachine({})`. A chained call to `createMachine()` only accepts the one argument, the machine config.
 
 :::
 
-If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5.
+### Remove typegen
+
+If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5. Typing events in actions and guards can be done using type narrowing in those implementations. However, the following sections will show you how you can type a new `params` argument passed to those implementations.
 
 ## 3. Convert actions strings to parameterized actions
 
