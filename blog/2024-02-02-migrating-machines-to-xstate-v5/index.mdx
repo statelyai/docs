@@ -630,6 +630,8 @@ const machine = createMachine({
 
 You may likely see many TypeScript errors along the way so don’t get discouraged. For example, in order to fully migrate any one `action` in your machine, you’ll likely need to convert it to a parameterized object in the machine config, provide a typed implementation or stub in `setup()` before your optionally provided concrete implementation will not have a TypeScript error.
 
+Furthermore, TypeScript could continue complaining about the `actions` implementations passed to `setup()` until the very last action has been included there and typed properly. This is because TypeScript is checking the entire machine config and all of its implementations at once.
+
 :::info
 
 If you see a TypeScript error underlying one of your state names in the machine config, it is most likely because there is a type error with an `action` or `guard` within that state.
