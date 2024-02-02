@@ -38,7 +38,7 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
 2. [Move types to `setup()` and remove typegen](#2-move-types-to-setup-and-remove-typegen)
 3. [Convert action and guard strings to parameterized objects](#3-convert-action-and-guard-strings-to-parameterized-objects)
-4. [Include implementations or stubs in `setup()`](#4-move-implementations-or-stubs-to-setup)
+4. [Include implementations or stubs in `setup()`](#4-include-implementations-or-stubs-in-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
 ## 1. Install XState v5 and dependencies
@@ -296,9 +296,9 @@ When mapping `event` props, the action or guard `params` you define can technica
 
 We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
-:::info
+:::warning
 
-When using TypeScript, the implementations passed to `setup()` must include types for the 2nd `params` argument.
+When using TypeScript, it is necessary to type the 2nd `params` argument passed to each implementation function.
 
 :::
 
@@ -326,6 +326,8 @@ setup({
 :::info
 
 Stubbed actions should use an empty function body `() => {}`
+
+Your `assign` actions will either be implemented in the machine config or passed to `setup()` and not [implemented externally](#5-provide-concrete-implementations) as they should have access to whatever they need between the typed `event` or the typed `params`.
 
 :::
 
@@ -505,7 +507,7 @@ In this case, the [provider is passed a `logic` prop](/docs/xstate-react#createa
 
 :::info
 
-These implementation functions do not need to be explicitly typed again here because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-move-implementations-or-stubs-to-setup).
+These implementation functions do not need to be explicitly typed again here because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-include-implementations-or-stubs-in-setup).
 
 :::
 
