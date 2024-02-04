@@ -89,7 +89,7 @@ const toggleMachine = createMachine({
 
 // Create an actor that you can send events to.
 // Note: the actor is not started yet!
-const actor = createActor(machine);
+const actor = createActor(toggleMachine);
 
 // Subscribe to snapshots (emitted state changes) from the actor
 actor.subscribe((snapshot) => {
