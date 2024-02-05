@@ -179,16 +179,33 @@ If you were previously using typegen in v4, you can also delete `tsTypes` as the
 
 ## 3. Convert action and guard strings to parameterized objects
 
-We must now [convert any named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object (or primitive value) that will be received at runtime by our action implementations. There are two ways to do this:
+In certain cases it can be helpful to convert some of our action and guard strings in the machine config to be parameterized objects. One of the major benefits is that this allows you to explicitly map `event` properties to a `params` object for your implementation functions so that they're automatically typed and there's no need for additional [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+
+In XState v4, we might have an event registered in the machine config like this:
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    next: {
+      actions: ['track'],
+    },
+  },
+  states: {
+    ...
+  },
+});
+```
+
+We can [convert named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object that will be received at runtime by our implementation functions. There are two ways to do this:
 
 We can define `params` as a [static value](/docs/actions#action-objects)
 
 ```ts
 actions: [
   {
-    // Action type
     type: 'track',
-    // Action params
     params: { response: 'good' },
   },
 ],
@@ -197,20 +214,23 @@ actions: [
 We can also use [dynamic action parameters](/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
 
 ```ts
-entry: [
+actions: [
   {
-    type: 'logInitialRating',
-    params: ({ context }) => ({
-      initialRating: context.initialRating,
+    type: 'track',
+    params: ({ event }) => ({
+      rating: event.rating,
     }),
   },
-];
+],
 ```
 
-Here is a more complete example of converting action strings to parameterized actions:
+:::tip
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+When mapping `event` props, the action or guard `params` you define can technically be any value, not just an object. But it is encouraged to use an object for consistency and to make it clear what the implementation functions will receive.
+
+:::
+
+Here is a more complete example of converting action strings to parameterized actions:
 
 ```ts
 import { setup } from 'xstate';
@@ -274,37 +294,23 @@ const machine = setup({
 });
 ```
 
-</TabItem>
+Converting to objects is particularly helpful for transition actions or guards on those actions that will make use of `event` props so that these can be typed and used in the implementation functions. On the other hand, for `entry` and `exit` actions or actions and guards that only require `context` props, you can continue using the name as a `string` or even use an inline function for your action or guard. This is because `context` is always available to the machine and its types don’t vary.
 
-<TabItem value="v4" label="XState v4">
+For example, these events are still perfectly fine in XState v5 as they were in v4:
 
 ```ts
-// ❌ DEPRECATED
-import { createMachine } from 'xstate';
+import { setup } from 'xstate';
 
-const machine = createMachine({
-  on: {
-    next: {
-      actions: ['doThis', 'doThat'],
-    },
-  },
+const machine = setup({ ... })
+.createMachine({
   states: {
     first: {
-      entry: 'whenEntering',
-      exit: 'whenExiting',
+      entry: 'track',
+      exit: 'track',
     },
   },
 });
 ```
-
-</TabItem>
-</Tabs>
-
-:::tip
-
-When mapping `event` props, the action or guard `params` you define can technically be any value, not just an object. But it is encouraged to use an object for consistency and to make it clear what the implementation functions will receive.
-
-:::
 
 ## 4. Include implementations or stubs in `setup()`
 
