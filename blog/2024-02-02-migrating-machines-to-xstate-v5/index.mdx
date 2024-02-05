@@ -43,9 +43,19 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 
 ## 1. Install XState v5 and dependencies
 
-The first step will be to [install XState v5](/docs/xstate#installation). If you’re using a framework or library like [React](/docs/xstate-react), [Vue](/docs/xstate-vue), or [Svelte](/docs/xstate-svelte), you should also install the XState v5 compatible dependencies.
+The first step will be to [install XState v5](/docs/xstate#installation). If you’re using a framework or library, you can also install one of the integration package:
 
-If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the migration steps listed here](/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you’ve completed those steps, you’ll end up with both dependencies in your `package.json`. Here’s an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
+- [React](/docs/xstate-react)
+- [Vue](/docs/xstate-vue)
+- [Svelte](/docs/xstate-svelte)
+
+### Installing both XState v4 and v5 simultaneously
+
+If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the migration steps listed here](/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you’ve completed those steps, you’ll end up with both dependencies in your `package.json`.
+
+In order to install the integration packages, you’ll need to [run a script](/docs/migration#how-can-i-use-both-xstate-v4-and-v5).
+
+Here’s an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
 
 :::tip
 
@@ -64,6 +74,8 @@ Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
   },
 }
 ```
+
+### Importing from versioned packages
 
 If using a dual installation (v5 alongside of v4), or even if only using v5, you will need to make sure you import the XState functions from the v5 packages in your code. At the top of your file, import functions like `setup`, `assign`, and other action creators from a `xstatev5` package.
 
