@@ -89,6 +89,8 @@ Calling `setup().createMachine()` from XState v5 but then calling `assign` from 
 
 One of the first migration steps, based on a breaking change, is to remove any TypeScript types from the `schema` property of the machine config from v4. These types should now be [included under a new `types` property](/docs/typescript#specifying-types) in the object passed to the new `setup({})` function.
 
+Passing types to `createMachine({ schema: {} })` is still supported in v5, however, passing them to `setup({})` is preferred since it automates implementations for actions (and more) to types.
+
 <Tabs>
 <TabItem value="v5" label="XState v5">
 
@@ -118,7 +120,7 @@ const machine = setup({
 <TabItem value="v4" label="XState v4">
 
 ```ts
-// ❌ DEPRECATED
+// The v4 way still works with v5 but is not the preferred way
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
