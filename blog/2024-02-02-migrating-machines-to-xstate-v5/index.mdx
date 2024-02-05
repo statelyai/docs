@@ -328,13 +328,13 @@ When using TypeScript, it is necessary to type the 2nd `params` argument passed 
 setup({
   actions: {
     doThis: (_, params: { prop: string }) => {
-      // Concrete implementation here
+      // You can include a concrete implementation here
       console.log(params.prop);
     },
     // Stubbed implementation
     doThat: (_, params: { prop: number }) => {},
     whenEntering: (_, params: { prop1: string; prop2: number }) => {
-      // Concrete implementation here
+      // You can include a concrete implementation here
       console.log(prop1, prop2);
     },
     // Stubbed implementation
@@ -343,13 +343,19 @@ setup({
 });
 ```
 
-:::info
+:::tip
 
-Stubbed actions should use an empty function body `() => {}`
+Stubbed actions should be defined with an empty function body `() => {}` or they can be defined with a thrown error to enforce that they will be overridden later.
 
-Your `assign` actions will either be implemented in the machine config or passed to `setup()` and not [implemented externally](#5-provide-concrete-implementations) as they should have access to whatever they need between the typed `event` or the typed `params`.
+```
+actionName: (_, params: { prop: string }) => {
+  throw new Error('Not implemented');
+},
+```
 
 :::
+
+Any `assign` actions, passed to `setup()`, shouldn’t require anything external to the machine config since they set values based on context or typed `params`.
 
 ### Stubbing guards
 
