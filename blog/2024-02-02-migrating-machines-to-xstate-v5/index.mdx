@@ -202,8 +202,8 @@ Here is a more complete example of converting action strings to parameterized ac
 import { setup } from 'xstate';
 
 const machine = setup({
-  types: {
-    events: {} as {
+  types: {} as {
+    events: {
       type: 'next';
       prop1: string;
       prop2: number;
