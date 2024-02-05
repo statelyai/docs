@@ -148,7 +148,7 @@ That still works but but it’s even easier to just cast the whole types object 
 const machine = setup({
   types: {} as {
     context: {};
-    events: {};
+    events: { type: 'EVENT' };
   },
 });
 ```
