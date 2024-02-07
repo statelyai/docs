@@ -87,7 +87,16 @@ If you want to quickly import a machine, or multiple machines, from a GitHub fil
 3. The editor will then display your imported machine.
 4. **Save** the machine to enable editing and easily find your machine in your projects later.
 
-Importing from a GitHub URL works with files in any branch in your private repositories, any public repositories, and any files in pull requests.
+Importing from a GitHub URL works with files in any branch in your private repositories, public repositories, and files in pull requests.
+
+### Bookmarklet
+
+Use the bookmarklet below to import single file machines from GitHub with one click. 
+
+1. Add a new bookmark to your browser
+2. Set the bookmark’s web address to the following:
+    ```javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();```
+3. Click the bookmarklet when viewing a GitHub file containing one or more machines to import that machine to Stately Studio.
 
 ### Example
 
