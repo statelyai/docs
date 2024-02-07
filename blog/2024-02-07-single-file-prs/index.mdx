@@ -1,0 +1,53 @@
+---
+title: Edit a state machine from GitHub without touching any code
+description: Import a state machine from GitHub to Stately, edit the machine, and make a pull request back to GitHub without touching any code.
+authors: [laura]
+tags: [new, github, github sync, import, pr, pull request]
+date: 2024-02-07
+slug: 2024-02-07-single-file-pr
+image: /blog/2024-02-07-single-file-pr.png
+---
+
+You use XState in your codebase, and you want to make a change to a state machine. You don’t want to touch any code but want to make a pull request back to GitHub. Our single file import feature lets you do it all in the browser.
+
+{/* truncate */}
+
+This time last year, [we introduced importing a single file into the Stately Studio from GitHub](/blog/2023-02-06-github-import-machines). Now, we’re taking it a step further. As part of our [bi-directional GitHub integration](/blog/2024-01-09-introducing-bidirectional-github-sync), you can import a state machine (or multiple state machines!) from a single file in GitHub, make changes in Stately Studio, and make a pull request back to GitHub without touching any code. You can do it all in the browser; no code editor required.
+
+## Quickly visualize any state machine from GitHub
+
+![Using a bookmarklet to import a state machine from GitHub to Stately Studio](single-file-import.gif)
+
+To get any state machine from GitHub into Stately Studio, just change the `.com` part of the URL to `.stately.ai`. For example, `https://github.com/username/repo/blob/main/apps/superMachine.ts`, becomes
+`https://github.stately.ai/username/repo/blob/main/apps/superMachine.ts`. Hit enter, and you’ll be taken to Stately Studio with the machine visualized and ready to edit.
+
+Or, for even speedier access, use our bookmarklet. Just drag the following bookmarklet link to your bookmarks:
+
+<p>
+<a style={{'border': '1px solid', 'borderRadius': '1rem', 'padding': '0.5rem 0.75rem'}} href="javascript:(function()%7Bjavascript%3A(function()%7B%20location.href%20%3D%20'https%3A%2F%2Fgithub.stately.ai%2F'%20%2B%20window.location.pathname%3B%7D)()%3B%7D)()%3B">GitHub → Stately</a>
+</p>
+
+Or add the bookmarklet manually:
+
+1. Add a new bookmark to your browser.
+2. Set the bookmark’s web address to the following:
+    ```javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();```
+3. Click the bookmarklet when viewing a GitHub file containing one or more machines to import that machine to Stately Studio.
+
+You only need a [GitHub personal access token](/docs/import-from-github/#github-personal-access-token) and a [Stately Pro account, which you can try with a free trial](https://stately.ai/pricing).
+
+## Make GitHub pull requests from inside Stately Studio
+
+Once your machine is in Stately Studio, you can make your changes. When you’re ready to make a pull request back to GitHub, use the **Create pull request** button in the top bar. Now we’re developers here at Stately, so we know you don’t necessarily want to make a pull request if you don’t know what the code looks like, so before your pull request is created, you can see a code diff of the changes you’ve made in Stately Studio.
+
+<p>
+  <ThemedImage
+    alt="The pull request modal in Stately Studio showing deleted lines of code in red and inserted lines of code in green."
+    sources={{
+      light: '/blog/2024-02-07-single-file-prs/diff.png',
+      dark: '/blog/2024-02-07-single-file-prs/diff-dm.png',
+    }}
+  />
+</p>
+
+Our GitHub integration is a premium feature of Stately Studio. You can try our premium plans with a free trial. [Sign up today](https://stately.ai) or [check out our Pro plan](/docs/studio-pro-plan), [Team plan](/docs/studio-team-plan), and [Enterprise plan](/docs/studio-enterprise-plan) features.
