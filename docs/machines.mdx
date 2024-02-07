@@ -135,6 +135,40 @@ feedbackActor.start();
 // logs 'Doing something else!'
 ```
 
+## Determining the next state
+
+When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
+
+```ts
+import { getNextSnapshot } from 'xstate';
+import { feedbackMachine } from './feedbackMachine';
+
+const nextSnapshot = getNextSnapshot(
+  feedbackMachine,
+  feedbackMachine.resolveState({ value: 'question' }),
+  { type: 'feedback.good' }
+);
+
+console.log(nextSnapshot.value);
+// logs 'thanks'
+```
+
+You can also determine the initial state of a machine using the `getInitialSnapshot(…)` function:
+
+```ts
+import { getInitialSnapshot } from 'xstate';
+import { feedbackMachine } from './feedbackMachine';
+
+const initialSnapshot = getInitialSnapshot(
+  feedbackMachine,
+  // optional input
+  { defaultRating: 3 }
+);
+
+console.log(initialSnapshot.value);
+// logs 'question'
+```
+
 ## Specifying types
 
 You can specify TypeScript types inside the machine config using the `.types` property:

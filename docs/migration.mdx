@@ -343,6 +343,60 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### Use `getNextSnapshot(…)` instead of `machine.transition(…)`
+
+The `machine.transition(…)` method now requires an "actor scope" for the 3rd argument, which is internally created by `createActor(…)`. Instead, use `getNextSnapshot(…)` to get the next snapshot from some actor logic based on the current snapshot and event:
+
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import {
+  createMachine,
+  // highlight-next-line
+  getNextSnapshot
+} from 'xstate';
+
+const machine = createMachine({
+  // ...
+});
+
+// highlight-start
+const nextState = getNextSnapshot(
+  machine, 
+  machine.resolveState({ value: 'green' }),
+  { type: 'timer' }
+);
+// highlight-end
+
+nextState.value; // yellow
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // ...
+});
+
+const nextState = machine.transition(
+  'green',
+  { type: 'timer' }
+);
+
+nextState.value; // yellow
+```
+
+</TabItem>
+</Tabs>
+
 ## States
 
 ### Use `state.getMeta()` instead of `state.meta`
