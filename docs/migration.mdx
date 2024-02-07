@@ -467,6 +467,83 @@ state.configuration;
 </TabItem>
 </Tabs>
 
+### Read events from inspection API instead of `state.events`
+
+The `state.events` property has been removed, because events are not part of state, unless you explicitly add them to the state's `context`. Use the [inspection API](./inspection.mdx) to observe events instead, or add the event explicitly to the state's `context`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+  
+```ts
+// ✅
+import { createActor } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = createActor(someMachine, {
+  // highlight-start
+  inspect: (inspEvent) => {
+    if (inspEvent.type === '@xstate.event') {
+      console.log(inspEvent.event);
+    }
+  }
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="v5-alt" label="XState v5 (context)">
+  
+```ts
+// ✅
+import { setup, createActor } from 'xstate';
+
+const someMachine = setup({
+  // ...
+  actions: {
+    // highlight-start
+    recordEvent: assign({
+      event: ({ event }) => event
+    })
+    // highlight-end
+  }
+}).createMachine({
+  context: { event: undefined },
+  on: {
+    someEvent: {
+      // ... 
+      // highlight-next-line
+      actions: ['recordEvent']
+    }
+  }
+});
+
+const someActor = createActor(someMachine);
+someActor.subscribe(snapshot => {
+  // highlight-next-line
+  console.log(snapshot.context.event);
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { interpret } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = interpret(someMachine);
+actor.subscribe(state => {
+  // highlight-next-line
+  console.log(state.event); // Removed
+});
+```
+
+</TabItem>
+</Tabs>
+
 ## Events and transitions
 
 ### Implementation functions receive a single argument
