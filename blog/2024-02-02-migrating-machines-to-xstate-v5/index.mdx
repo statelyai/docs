@@ -117,7 +117,9 @@ const machine = createMachine({
       };
     },
     services: {} as {
-      /* type services */
+      fetchUserDetails: {
+        data: { email: string, name: string };
+      };
     },
   }
 });
