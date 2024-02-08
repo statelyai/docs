@@ -82,3 +82,15 @@ export function SectionTitle({ children }) {
     </h2>
   );
 }
+
+export function TextLink({ href, target = '_blank', children }) {
+  return (
+    <a
+      href={href}
+      target={target}
+      className="font-medium text-blue-400 hover:text-blue-500"
+    >
+      {children}
+    </a>
+  );
+}

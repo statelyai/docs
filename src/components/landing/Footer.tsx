@@ -33,6 +33,7 @@ function AllLinks() {
         <LinkItem href="#design">Features</LinkItem>
         <LinkItem href="/docs/">Documentation</LinkItem>
         <LinkItem href="https://github.com/statelyai/xstate">XState</LinkItem>
+        <LinkItem href="/agent/">Stately Agent</LinkItem>
         <LinkItem href="https://stately.ai/blog/tags/case-study">
           Case studies
         </LinkItem>
