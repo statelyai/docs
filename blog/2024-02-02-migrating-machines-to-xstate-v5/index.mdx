@@ -223,9 +223,9 @@ Typegen is no longer supported in XState v5 so you can remove `tsTypes` from you
 
 ## 3. Convert action and guard strings to parameterized objects
 
-In many cases it can be helpful to convert action and guard strings in the machine config to parameterized objects. This is particularly helpful for actions and guards on transitions if they require use of `event` props. This allows you to explicitly map `event` properties to a `params` object for your implementation functions so that they're automatically typed and there's no need for additional [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+We can convert action and guard strings in the machine config to parameterized objects. This is particularly helpful for actions and guards on transitions if they require use of `event` props. This allows you to explicitly map `event` properties to a `params` object for your implementation functions so that they're automatically typed and there's no need for additional [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
 
-On the other hand, for `entry` and `exit` actions or actions and guards that only require `context` props, you can continue using the name as a `string` or even use an inline function for your action or guard. This is because `context` is always available to the machine and its types don’t vary.
+On the other hand, you can continue to use reference string named `entry` and `exit` actions or guards if they only make use of `context` values (already typed). Even inline functions can be used for these in the config.
 
 For example, these events are still perfectly fine in XState v5 as they were in v4:
 
