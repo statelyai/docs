@@ -198,7 +198,7 @@ When chaining `setup({ types: {} }).createMachine({})` in v5, we can only define
 
 ### Remove typegen
 
-If you were previously using typegen in v4, you can also delete `tsTypes` as there is no more typegen in v5. Typing events in actions and guards can be done using type narrowing in those implementations. However, the following sections will show you how you can type a new `params` argument passed to those implementations.
+If you were previously using typegen in v4, you can now delete `tsTypes` as there is no more typegen in v5. Without typegen, typing events in actions and guards must be done manually using type narrowing in implementation functions. However, the following sections will show you how you can type a new `params` argument passed to those implementations and skip manual type narrowing.
 
 ## 3. Convert action and guard strings to parameterized objects
 
