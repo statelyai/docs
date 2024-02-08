@@ -104,10 +104,17 @@ const machine = createMachine({
   tsTypes: {} as import('./myMachine.typegen').Typegen0,
   schema: {
     context: {} as {
-      /* type context props */
+      prop1: string;
+      prop2: number;
     },
-    events: {} as {
-      /* type events */
+    events: {} as
+    | {
+        type: 'next';
+        value: number;
+    } | {
+        type: 'back';
+        value: number;
+      };
     },
     services: {} as {
       /* type services */
@@ -126,11 +133,18 @@ import { setup } from 'xstate';
 const machine = setup({
   types: {} as {
     context: {
-      /* type context props */
+      prop1: string;
+      prop2: number;
     };
-    events: {
-      /* type events */
-    };
+    events:
+      | {
+          type: 'next';
+          value: number;
+        }
+      | {
+          type: 'back';
+          value: number;
+        };
   },
   /* implementations */
   actions: {},
