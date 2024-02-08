@@ -168,20 +168,24 @@ When defining types, you may have noticed in past examples that an empty object 
 const machine = setup({
   types: {
     context: {} as {
+      prop1: string;
+      prop2: number;
     };
-    events: {} as {
-    };
+    events: {} as { type: 'next' } | { type: 'next' };
   },
 })
 ```
 
-That still works but but it’s even easier to just cast the whole types object all at once.
+That still works but but it’s even easier to just cast the whole types object all at once with `types: {} as {}`.
 
 ```ts
 const machine = setup({
   types: {} as {
-    context: {};
-    events: { type: 'EVENT' };
+    context: {
+      prop1: string;
+      prop2: number;
+    };
+    events: { type: 'next' } | { type: 'next' };
   },
 });
 ```
