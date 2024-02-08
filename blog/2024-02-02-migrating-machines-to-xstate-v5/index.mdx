@@ -192,7 +192,7 @@ const machine = setup({
 
 :::warning
 
-When chaining `setup().createMachine()` in v5, `types` can only be defined on the object passed to `setup()` and not on the config object passed to `.createMachine()`. Example: `setup({ types: {} }).createMachine({})`. A chained call to `createMachine()` only accepts the one argument, the machine config.
+When chaining `setup({ types: {} }).createMachine({})` in v5, we can only define types on the object passed to `setup` and not on the config object passed to `createMachine`
 
 :::
 
