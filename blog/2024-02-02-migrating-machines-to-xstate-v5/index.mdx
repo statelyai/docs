@@ -251,7 +251,14 @@ const machine = setup({
 });
 ```
 
-However, in XState v4, you may have a **transition event** registered in the machine config like this:
+For transition events and guards, we can [convert named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object that will be received at runtime by our implementation functions. There are two ways to do this:
+
+1. We can define `params` as a [static value](/docs/actions#action-objects)
+2. Use [dynamic action parameters](/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
+
+<Tabs>
+
+<TabItem value="v4" label="XState v4">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -261,38 +268,51 @@ const machine = createMachine({
     next: {
       actions: ['track'],
     },
-  },
-  states: {
-    ...
+    back: {
+      actions: ['track'],
+    },
   },
 });
 ```
 
-We can [convert named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object that will be received at runtime by our implementation functions. There are two ways to do this:
+</TabItem>
 
-We can define `params` as a [static value](/docs/actions#action-objects)
-
-```ts
-actions: [
-  {
-    type: 'track',
-    params: { response: 'good' },
-  },
-],
-```
-
-We can also use [dynamic action parameters](/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
+<TabItem value="v5" label="XState v5">
 
 ```ts
-actions: [
-  {
-    type: 'track',
-    params: ({ event }) => ({
-      rating: event.rating,
-    }),
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    next: {
+      actions: [
+        {
+          type: 'track',
+          // Statically defined params
+          params: { response: 'good' },
+        },
+      ],
+    },
+    back: {
+      actions: [
+        {
+          type: 'track',
+          // Dynamically defined params
+          params: ({ event }) => ({
+            rating: event.rating,
+          }),
+        },
+      ],
+    },
   },
-],
+});
 ```
+
+</TabItem>
+
+</Tabs>
+
+This may appear a bit more verbose in v5 but it will allow us to skip manual type narrowing in our implementation functions. The `params` object will be automatically typed based on the `event` properties we map to it.
 
 :::tip
 
@@ -366,7 +386,7 @@ const machine = setup({
 
 ## 4. Include implementations or stubs in `setup()`
 
-We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to receive dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
+We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to reference dependencies from the outside world, then these will be stubs that will be overridden later. You may end up passing a combination of concrete implementations and stubs to `setup()` which is perfectly fine.
 
 :::warning
 
