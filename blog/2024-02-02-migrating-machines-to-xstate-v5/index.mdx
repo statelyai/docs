@@ -232,12 +232,20 @@ For example, these events are still perfectly fine in XState v5 as they were in 
 ```ts
 import { setup } from 'xstate';
 
-const machine = setup({ ... })
+const machine = setup({
+  types: {} as {
+    context: {
+      prop1: string;
+    };
+  }
+} })
 .createMachine({
   states: {
     first: {
       entry: 'track',
-      exit: 'track',
+      exit: ({ context }) => {
+        console.log(context.prop1, 'is already typed');
+      },
     },
   },
 });
