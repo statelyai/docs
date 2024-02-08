@@ -526,17 +526,16 @@ setup({
 
 #### Injecting external dependencies by sending an event
 
-If dependencies are expected to change over time, then you can send an event to the machine, as often as necessary (whenever dependencies change), to update the machine with the latest dependencies. For example, an event containing refs to these dependencies can be used by registered actions or actors or they can be stored in context using an `assign` action for future use.
+If dependencies are expected to change over time, then you can send these updates as events to the machine. For example, an event containing a ref to a dependency can be stored in `context` for use by the machine.
 
 ```ts
 send({
   type: 'refs.inject',
-  externalDependency1,
-  externalDependency2,
+  externalDependency,
 });
 ```
 
-However, in some cases it’s just not feasible or convenient to inject dependencies. There may be too many dependencies or perhaps you seek to avoid tightly coupling the machine to those dependencies. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
+However, in some cases it’s just not feasible or convenient to inject dependencies. There may be too many dependencies or you might wish to avoid tightly coupling them to the machine. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
 
 ## 5. Provide concrete implementations
 
