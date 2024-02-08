@@ -651,12 +651,12 @@ const machine = createMachine({
 ```ts
 import { setup } from 'xstate';
 
+// preserveActionOrder and
+// predictableActionArguments have been removed
 const machine = setup({
   ...
 }).createMachine({
   ...
-  // preserveActionOrder and
-  // predictableActionArguments are no longer needed
 });
 ```
 
