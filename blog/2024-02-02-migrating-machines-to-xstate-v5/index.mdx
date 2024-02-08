@@ -92,30 +92,6 @@ One of the first migration steps, based on a breaking change, is to remove any T
 Passing types to `createMachine({ schema: {} })` is still supported in v5, however, passing them to `setup({})` is preferred since it automates implementations for actions (and more) to types.
 
 <Tabs>
-<TabItem value="v5" label="XState v5">
-
-```ts
-import { setup } from 'xstate';
-
-const machine = setup({
-  types: {} as {
-    context: {
-      /* type context props */
-    };
-    events: {
-      /* type events */
-    };
-  },
-  /* implementations */
-  actions: {},
-  guards: {},
-  actors: {},
-}).createMachine({
-  /* machine config */
-});
-```
-
-</TabItem>
 
 <TabItem value="v4" label="XState v4">
 
@@ -141,6 +117,32 @@ const machine = createMachine({
 ```
 
 </TabItem>
+
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {} as {
+    context: {
+      /* type context props */
+    };
+    events: {
+      /* type events */
+    };
+  },
+  /* implementations */
+  actions: {},
+  guards: {},
+  actors: {},
+}).createMachine({
+  /* machine config */
+});
+```
+
+</TabItem>
+
 </Tabs>
 
 When defining types, you may have noticed in past examples that an empty object is often cast as the types you want for each property like `events` and `actions`.
@@ -628,6 +630,22 @@ const actorRef = useActorRef(
 You can now remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
 
 <Tabs>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  preserveActionOrder: true,
+  predictableActionArguments: true,
+  ...
+});
+```
+
+</TabItem>
+
 <TabItem value="v5" label="XState v5">
 
 ```ts
@@ -644,20 +662,6 @@ const machine = setup({
 
 </TabItem>
 
-<TabItem value="v4" label="XState v4">
-
-```ts
-// ❌ DEPRECATED
-import { createMachine } from 'xstate';
-
-const machine = createMachine({
-  preserveActionOrder: true,
-  predictableActionArguments: true,
-  ...
-});
-```
-
-</TabItem>
 </Tabs>
 
 ### Troubleshooting TypeScript errors
