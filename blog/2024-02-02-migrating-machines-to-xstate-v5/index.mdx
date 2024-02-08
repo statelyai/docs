@@ -87,9 +87,25 @@ If using a dual installation (v4 and v5 simultaneously), or even if only using v
 
 :::warning
 
-Calling `setup().createMachine()` from XState v5 but then calling `assign` from v4 within a v5 machine could result in type errors.
+Avoid mismatching! Calling `createMachine({})` from XState v5 but then calling an XState function like `assign`, imported from v4, could result in type errors.
 
 :::
+
+```ts
+// In a v5 machines...
+const machine = setup().createMachine({
+  context: {
+    prop: 'defaultValue',
+  },
+  on: {
+    next: {
+      // Make sure to import assign from the v5 package
+      // and not from v4!
+      actions: assign({ prop: 'value' }),
+    },
+  },
+});
+```
 
 ## 2. Move types to `setup()` and remove typegen
 
