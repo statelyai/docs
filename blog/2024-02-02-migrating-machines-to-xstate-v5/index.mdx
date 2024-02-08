@@ -747,9 +747,9 @@ If you see a TypeScript error underlying one of your state names in the machine 
 
 TypeScript may have trouble pinpointing the exact location of the error in the machine config so it will often highlight the state name instead.
 
-![States, events, and transitions](/blog/2024-02-02-migrating-machines-to-xstate-v5/misleading-typescript-error.png)
+![Misleading typescript error highlighting a state when its internal action type is the problem](/blog/2024-02-02-migrating-machines-to-xstate-v5/misleading-typescript-error.png)
 
-In the example, above, the real source of the error is that the `trackUpgradeModalLearnMoreClick` action has not yet been converted to an action object. Fixing that will make the error under the "Click to learn more" state name go away.
+In the example, above, the real source of the error is that the `trackUpgradeModalLearnMoreClick` action has not yet been converted to an action object. Fix that and the error under the "Click to learn more" state name goes away.
 
 ## Summary
 
