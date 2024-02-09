@@ -164,43 +164,6 @@ function Benefits() {
           </FeatureP>
         </FeatureBox>
       </div>
-      <P2>
-        One challenge with writing code that uses LLMs is the need to manage
-        increasingly elaborate and fragile prompts and prompt sequences.
-      </P2>
-      <P2>
-        Another challenge is insufficient guardrails to prevent the system from
-        behaving in ways that are not useful or safe.
-      </P2>
-      <P2>
-        Stately Agents provide one solution to this by giving a structured way
-        to move more responsibility to familiar state-machine-based code which
-        you control.
-      </P2>
-      <P2>
-        For building the capability to handle important, complex, or repeatable
-        goals, LLM-based processing should be at precise steps in the call chain
-        of software. Many other current approaches more interested in exploring
-        autonomous behavior, in contrast, trade off developer control in favor
-        of abstracting away subtask generation and execution.
-      </P2>
-      <P2>
-        LLMs excel at handling fuzziness. For example, if your inputs for some
-        task are questions rather than mere{' '}
-        <code className="text-lg">string</code>s and your outputs are answers
-        that go beyond pristine <code className="text-lg">number</code>
-        s, then it may be a good time to pull out an LLM.
-      </P2>
-      <P2>
-        Using LLMs at what they are best, structured through state machine
-        guided agents, can increase the performance where it matters while
-        giving developers fine-grained control over the agent's behavior.
-      </P2>
-      <P2>
-        Stately Agent is still an early alpha product, and we have many more
-        plans for the future. We'd love to hear your feedback about how it works
-        for you and where we should take it next!
-      </P2>
     </section>
   );
 }
