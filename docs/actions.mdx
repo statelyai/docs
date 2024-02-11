@@ -416,6 +416,8 @@ const machine = createMachine({
 });
 ```
 
+Delayed actions can be cancelled by their `id`. See [`cancel(...)`](https://stately.ai/docs/actions#cancel-action).
+
 :::studio
 
 You can create state machines with the `sendTo(...)` action in our drag-and-drop Stately editor. [Read more about the built-in sendTo action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
