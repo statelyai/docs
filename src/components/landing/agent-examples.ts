@@ -1,5 +1,5 @@
 export const joke = `import OpenAI from 'openai';
-import { fromMachine, fromPromise, setup } from 'xstate';
+import { fromPromise, setup } from 'xstate';
 import { createAgent, createOpenAIAdapter } from '@statelyai/agent';
 import { jokeRater } from './agents';
 
