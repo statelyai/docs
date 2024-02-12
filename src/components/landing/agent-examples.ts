@@ -26,10 +26,6 @@ const getJokeCompletion = llmAdapter.fromChat(
   (topic: string) => \`Tell me a joke about \${topic}.\`
 );
 
-// fromMachine() lets the agent ask another agent for help,
-// or just make use of knowledge encoded in a different state machine.
-const rateJoke = fromMachine(jokeRater);
-
 // fromEvent() lets the agent decide what to do based on the prompt
 // from the events connected to the current state.
 const decide = llmAdapter.fromEvent(
