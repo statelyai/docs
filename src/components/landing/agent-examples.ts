@@ -17,7 +17,8 @@ const llmAdapter = createOpenAIAdapter(openai, {
 //
 // Actors are built "from" some type of logic (the actor's logical model/brain/blueprint). 
 // This describes how the actor should change behavior when receiving an event. 
-// Actor logic can be scaffolded from general types like \`fromMachine()\` and \`fromPromise()\`
+// Actor logic can be scaffolded from general types like state machines,
+// promises using \`fromPromise()\`,
 // or more specific ones like \`fromChat()\`.
 //
 // fromChat() lets the agent perform tasks using a basic prompt template.
