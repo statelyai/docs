@@ -61,7 +61,7 @@ const jokerAgentLogic = setup({
   actors: {
     getJokeCompletion,
     getTopic,
-    rateJoke,
+    rateJoke: jokeRater,
     decide,
   },
 }).createMachine(
