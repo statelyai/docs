@@ -116,6 +116,7 @@ export function Counter() {
   const count = useSelector(countActor, (state) => state.context.count);
 
   return (
+    // highlight-next-line
     <button onClick={() => countActor.send({ type: 'inc' })}>
       Current count: {count}
     </button>
