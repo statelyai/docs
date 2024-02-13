@@ -123,7 +123,7 @@ export function Counter() {
 }
 ```
 
-## Global effects
+## Effects and lifecycles
 
 Actors are not limited to being state stores. They can also be used to manage side effects, like HTTP requests, or to trigger side effects from within the actor. Because of this, you may not want actors to start immediately. You can use the `.start()` method to start the actor at an appropriate time, such as when the app mounts.
 
@@ -145,6 +145,8 @@ export function App() {
   // ...
 }
 ```
+
+Likewise, you can also control when the actor stops by calling `actor.stop()`.
 
 ## Global state with React Context
 
