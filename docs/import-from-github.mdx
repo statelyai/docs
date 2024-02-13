@@ -67,7 +67,7 @@ Importing your GitHub repos with **Connect GitHub repo** or importing a machine 
 
 Automatic setup will enable access to all the repositories your GitHub user can access. You can [provide your own personal access token](#personal-access-token) if you need more granular control.
 
-### Personal access token
+### GitHub personal access token
 
 For more granular control, you can provide a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). You can create a personal access token in your GitHub account settings under [Developer Settings](https://github.com/settings/tokens).
 
@@ -87,7 +87,25 @@ If you want to quickly import a machine, or multiple machines, from a GitHub fil
 3. The editor will then display your imported machine.
 4. **Save** the machine to enable editing and easily find your machine in your projects later.
 
-Importing from a GitHub URL works with files in any branch in your private repositories, any public repositories, and any files in pull requests.
+Importing from a GitHub URL works with files in any branch in your private repositories, public repositories, and files in pull requests. 
+
+### Pull requests
+
+Once you’ve made changes to your imported machine, you can use the **Create pull request** button to create a PR back to the source GitHub repository. If you want to make a pull request from your imported machine, you’ll need to provide a [GitHub personal access token](#github-personal-access-token).
+
+### Bookmarklet
+
+Use the bookmarklet below to import single file machines from GitHub with one click. 
+
+1. Add a new bookmark to your browser
+2. Set the bookmark’s web address to the following:
+    ```javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();```
+3. Click the bookmarklet when viewing a GitHub file containing one or more machines to import that machine to Stately Studio.
+
+Or drag the following bookmarklet link to your bookmarks:
+
+<a style={{border: '1px solid', borderRadius: '1rem', padding: '0.5rem 0.75rem'}} href="javascript:(function()%7Bjavascript%3A(function()%7B%20location.href%20%3D%20'https%3A%2F%2Fgithub.stately.ai%2F'%20%2B%20window.location.pathname%3B%7D)()%3B%7D)()%3B">GitHub → Stately</a>
+
 
 ### Example
 

@@ -343,6 +343,60 @@ const machine = createMachine({
 </TabItem>
 </Tabs>
 
+### Use `getNextSnapshot(…)` instead of `machine.transition(…)`
+
+The `machine.transition(…)` method now requires an "actor scope" for the 3rd argument, which is internally created by `createActor(…)`. Instead, use `getNextSnapshot(…)` to get the next snapshot from some actor logic based on the current snapshot and event:
+
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+import {
+  createMachine,
+  // highlight-next-line
+  getNextSnapshot
+} from 'xstate';
+
+const machine = createMachine({
+  // ...
+});
+
+// highlight-start
+const nextState = getNextSnapshot(
+  machine, 
+  machine.resolveState({ value: 'green' }),
+  { type: 'timer' }
+);
+// highlight-end
+
+nextState.value; // yellow
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  // ...
+});
+
+const nextState = machine.transition(
+  'green',
+  { type: 'timer' }
+);
+
+nextState.value; // yellow
+```
+
+</TabItem>
+</Tabs>
+
 ## States
 
 ### Use `state.getMeta()` instead of `state.meta`
@@ -408,6 +462,83 @@ state._nodes;
 ```ts
 // ❌ DEPRECATED
 state.configuration;
+```
+
+</TabItem>
+</Tabs>
+
+### Read events from inspection API instead of `state.events`
+
+The `state.events` property has been removed, because events are not part of state, unless you explicitly add them to the state's `context`. Use the [inspection API](./inspection.mdx) to observe events instead, or add the event explicitly to the state's `context`:
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+  
+```ts
+// ✅
+import { createActor } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = createActor(someMachine, {
+  // highlight-start
+  inspect: (inspEvent) => {
+    if (inspEvent.type === '@xstate.event') {
+      console.log(inspEvent.event);
+    }
+  }
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="v5-alt" label="XState v5 (context)">
+  
+```ts
+// ✅
+import { setup, createActor } from 'xstate';
+
+const someMachine = setup({
+  // ...
+  actions: {
+    // highlight-start
+    recordEvent: assign({
+      event: ({ event }) => event
+    })
+    // highlight-end
+  }
+}).createMachine({
+  context: { event: undefined },
+  on: {
+    someEvent: {
+      // ... 
+      // highlight-next-line
+      actions: ['recordEvent']
+    }
+  }
+});
+
+const someActor = createActor(someMachine);
+someActor.subscribe(snapshot => {
+  // highlight-next-line
+  console.log(snapshot.context.event);
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { interpret } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = interpret(someMachine);
+actor.subscribe(state => {
+  // highlight-next-line
+  console.log(state.event); // Removed
+});
 ```
 
 </TabItem>
@@ -2069,6 +2200,91 @@ function Component({ someActorRef }) {
   return (
     <button onClick={() => send({ type: 'someEvent' })} />
   );
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Use `machine.provide()` to provide implementations in hooks
+
+:::breakingchange
+
+Breaking change
+
+:::
+
+For dynamically creating machines with provided implementations, the `useMachine(...)`, `useActor(...)`, and `useActorRef(...)` hooks no longer accept:
+
+- Lazy machine creators as the 1st argument
+- Implementations passed to the 2nd argument
+
+Instead, `machine.provide(...)` should be passed directly to the 1st argument.
+
+The `@xstate/react` package considers machines with the same configuration to be the same machine, so it will minimize rerenders but still keep the provided implementations up-to-date.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```tsx
+// ✅
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(someMachine.provide({
+    actions: {
+      doSomething: () => {
+        props.onSomething?.(); // Kept up-to-date
+      }
+    }
+  }));
+
+  // ...
+}
+```
+
+</TabItem>
+
+<TabItem value="v4 arguments" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(someMachine, {
+    actions: {
+      doSomething: () => {
+        props.onSomething?.();
+      }
+    }
+  });
+
+  // ...
+}
+```
+
+</TabItem>
+
+<TabItem value="v4 function" label="XState v4">
+
+```tsx
+// ❌ DEPRECATED
+import { useMachine } from '@xstate/react';
+import { someMachine } from './someMachine';
+
+function Component(props) {
+  const [state, send] = useMachine(() => someMachine.withConfig({
+    actions: {
+      doSomething: () => {
+        props.onSomething?.();
+      }
+    }
+  }));
+
+  // ...
 }
 ```
 

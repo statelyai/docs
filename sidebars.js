@@ -172,6 +172,11 @@ const sidebars = {
             'descriptions',
             {
               type: 'doc',
+              label: 'Embed Figma',
+              id: 'figma',
+            },
+            {
+              type: 'doc',
               label: 'Assets',
               id: 'assets',
             },

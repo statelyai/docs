@@ -122,9 +122,51 @@ actions: assign({
 
 ## Stopping an actor
 
-- `actions: stopChild('some-id')`
+You can stop a child actor via the "stop child" action. This action is created from the `stopChild(id)` action creator.
 
-- Note this does not clear it from the `context`
+```ts
+import { setup, stopChild } from 'xstate';
+
+const machine = setup({
+  // ...
+}).createMachine({
+  context: ({ spawn }) => ({
+    something: spawn('something', { id: 'thing' })
+  }),
+  // ...
+  on: {
+    'thing.stop': {
+      actions: stopChild('thing')
+    },
+    'thing.stopFromContext': {
+      actions: stopChild(({ context }) => context.something)
+    }
+  }
+});
+```
+
+Stopping a child actor does _not_ remove it from `context`. To remove it from context, use the [`assign(...)` action creator](./context.mdx):
+
+```ts
+import { setup, stopChild } from 'xstate';
+
+const machine = setup({
+  // ...
+}).createMachine({
+  context: ({ spawn }) => ({
+    something: spawn('something', { id: 'thing' })
+  }),
+  // ...
+  on: {
+    'thing.stop': {
+      actions: [
+        stopChild('thing'),
+        assign({ something: undefined })
+      ]
+    }
+  }
+});
+```
 
 ## Spawn and TypeScript
 

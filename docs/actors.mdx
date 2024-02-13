@@ -387,7 +387,7 @@ const mouseClickLogic = fromEventObservable(() =>
 
 const canvasMachine = setup({
   actors: {
-    mouseLogicClick
+    mouseClickLogic
   }
 }).createMachine({
   invoke: {
@@ -668,6 +668,35 @@ const machine = setup({
     input: { userId: '42' }, // strongly typed
     // highlight-end
   },
+});
+```
+
+## Testing 
+
+The general strategy for testing actors is to send events and assert that the actor reaches an expected state, which can be observed either by:
+
+- Subscribing to its emitted snapshots via `actor.subscribe(...)`
+- Or reading the latest snapshot via `actor.getSnapshot()`.
+
+```ts
+test('some actor', async () => {
+  const actor = createActor(fromTransition((state, event) => {
+    if (event.type === 'inc') {
+      return { count: state.count + 1 }
+    }
+    return state;
+  }, { count: 0 }));
+
+  // Start the actor
+  actor.start();
+
+  // Send event(s)
+  actor.send({ type: 'inc' });
+  actor.send({ type: 'inc' });
+  actor.send({ type: 'inc' });
+
+  // Assert the expected result
+  expect(actor.getSnapshot().context).toEqual({ count: 3 });
 });
 ```
 

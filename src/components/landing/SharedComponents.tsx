@@ -70,7 +70,7 @@ export function classNames(...classes) {
 export function ComingSoon() {
   return (
     <div className="text-sm text-white/90 bg-orange-800 font-bold px-4 py-2 w-fit rounded-full select-none">
-      Coming soon
+      Coming to Stately Studio soon
     </div>
   );
 }
