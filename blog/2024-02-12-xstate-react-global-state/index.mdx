@@ -148,6 +148,12 @@ export function App() {
 
 Likewise, you can also control when the actor stops by calling `actor.stop()`.
 
+:::info
+
+Actors used globally must be explicitly started (`actor.start()`). When using `@xstate/react` hooks such as `useMachine(…)`, `useSelector(…)`, etc., the actor is started and stopped automatically.
+
+:::
+
 ## Global state with React Context
 
 If you prefer to use [React Context](https://react.dev/learn/passing-data-deeply-with-context) to share global state, you can adapt the above pattern to use a React Context provider and consumer.
