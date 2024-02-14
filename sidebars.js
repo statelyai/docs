@@ -375,7 +375,21 @@ const sidebars = {
         'tags',
       ],
     },
-
+    {
+      type: 'category',
+      label: 'Agents',
+      link: {
+        type: 'generated-index',
+        title: 'Agents',
+        description:
+          'Learn how to use AI agents with XState and Stately Studio.',
+        slug: '/category/agents',
+        keywords: ['agents'],
+      },
+      collapsed: true,
+      collapsible: true,
+      items: ['agents'],
+    },
     {
       type: 'category',
       label: 'Guides',
