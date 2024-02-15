@@ -26,6 +26,20 @@ export function Intro() {
           />
         </div>
         <Companies />
+        <div className="flex flex-col items-center mt-12 max-w-md m-auto">
+          <div className="text-white/90 text-md lg:text-lg mb-6">
+            Want to get your team onboarded with XState or Stately? Whether it's
+            consulting sessions, XState workshops, or a custom solution, we're
+            here to help!
+          </div>
+          <ButtonLink
+            background="darkBlue"
+            href="mailto:support@stately.ai?subject=I'm interested in the Stately Studio services"
+            size="medium"
+          >
+            Contact us
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );
