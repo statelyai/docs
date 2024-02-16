@@ -1,5 +1,205 @@
 ---
-title: 'Agents'
+title: 'AI Agents'
 ---
 
-TODO
+An AI agent is an autonomous entity that observes an environment, decides what to do (based on its internal policy), and performs actions towards achieving its goals. In terms of the actor model, an agent can be considered an actor that can:
+
+- **Receive events**, such as an instruction on what to do next, which goal to accomplish, or an observation of the environment
+- **Send events**, which would cause actions to be performed on the environment
+- **Store state**, which can be used to remember contextual information about the environment
+- **Spawn other agents**, which can be used to create a hierarchy of agents that can work together and coordinate their actions to achieve a goal
+
+The Stately Agent (`@statelyai/agent) package makes it easy to create agents and agent behavior based on the actor model and state machines.
+
+## Installation
+
+Install `@statelyai/agent` and `xstate`, as well as OpenAI (more LLM adapters will be added in the near future) into your Node project.
+
+
+<Tabs>
+<TabItem value="npm" label="npm">
+
+```bash
+npm install @statelyai/agent xstate openai
+```
+
+</TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install @statelyai/agent xstate openai
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add @statelyai/agent xstate openai
+```
+
+</TabItem>
+</Tabs>
+
+## Quick start
+
+1. Create an LLM adapter.
+
+:::info
+
+Currently, only OpenAI is supported. More adapters will be added in the near future.
+
+:::
+
+```ts
+import OpenAI from 'openai';
+import { createOpenAIAdapter } from '@statelyai/agent';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const llmAdapter = createOpenAIAdapter(openai, {
+  model: 'gpt-3.5-turbo-1106'
+});
+```
+
+2. Create agent abilities.
+
+```ts
+const getJokeCompletion = llmAdapter.fromChat(
+  (topic: string) => `Tell me a joke about ${topic}.`
+);
+
+const rateJoke = llmAdapter.fromChat(
+  (joke: string) => `Rate this joke on a scale of 1 to 10: ${joke}`
+);
+
+const decide = llmAdapter.fromEvent(
+  (lastRating: string) =>
+    `Choose what to do next, given the previous rating of the joke: ${lastRating}`
+);
+```
+
+3. Create a state machine that describes the agent's behavior.
+
+```ts
+const jokeMachine = setup({
+  actors: {
+    getJokeCompletion,
+    rateJoke,
+    decide,
+  },
+  actions: {
+    assignTopic: assign({/* ... */}),
+
+  }
+}).createMachine({
+  context: {
+    // ...
+  },
+    states: {
+    waitingForTopic: {
+      invoke: {
+        src: 'getTopic',
+        onDone: {
+          actions: 'assignTopic',
+          target: 'tellingJoke',
+        },
+      },
+    },
+    tellingJoke: {
+      invoke: {
+        src: 'getJokeCompletion',
+        input: ({ context }) => context.topic,
+        onDone: {
+          actions: 'assignJoke',
+          target: 'rateJoke',
+        },
+      },
+    },
+    rateJoke: {
+      invoke: {
+        src: 'rateJoke',
+        input: ({ context }) => context.jokes[context.jokes.length - 1]!,
+        onDone: {
+          actions: 'assignLastRating',
+          target: 'decide',
+        },
+      },
+    },
+    decide: {
+      invoke: {
+        src: 'decide',
+        input: ({ context }) => context.lastRating!,
+      },
+      on: {
+        askForTopic: {
+          target: 'waitingForTopic',
+          actions: log("That joke wasn't good enough. Let's try again."),
+          description:
+            'Ask for a new topic, because the last joke rated 6 or lower',
+        },
+        endJokes: {
+          target: 'end',
+          actions: log('That joke was good enough. Goodbye!'),
+          description: 'End the jokes, since the last joke rated 7 or higher',
+        },
+      },
+    },
+    end: {
+      type: 'final',
+    },
+  },
+});
+```
+
+TODO: state machine diagram
+
+## Adapters
+
+An adapter wraps LLM providers such as OpenAI and provides a unified interface for creating agent logic.
+
+```ts
+import { createOpenAIAdapter } from '@statelyai/agent';
+
+const llmAdapter = createOpenAIAdapter(openai, {
+  model: 'gpt-3.5-turbo-1106'
+});
+
+const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
+
+const getReviewStream = llmAdapter.fromChatStream(/* ... */);
+
+const decide = llmAdapter.fromEvent((lastRating: string) => `Choose what to do next, given the previous rating of the joke: ${lastRating}`);
+
+const execTool = llmAdapter.fromTool(() => `...`, {
+  getWeather: {
+    description: 'Get the weather',
+    run: async () => {
+      //...
+    }
+  }
+});
+```
+
+## Agent logic
+
+Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent.
+
+### From chat (`adapter.fromChat(…)`)
+
+Gets a chat completion from a prompt.
+
+### From chat stream (`adapter.fromChatStream(…)`)
+
+Gets a chat completion stream from a prompt.
+
+### From event (`adapter.fromEvent(…)`)
+
+Chooses an event to send to the parent actor based on the current state and sends it.
+
+### From tool (`adapter.fromTool(…)`)
+
+Chooses a tool to run based on the current state and runs it.
