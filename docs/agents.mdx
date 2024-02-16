@@ -155,6 +155,8 @@ const jokeMachine = setup({
 });
 ```
 
+4. Create the state-machine-powered agent.
+
 TODO: state machine diagram
 
 ## Adapters
@@ -186,20 +188,176 @@ const execTool = llmAdapter.fromTool(() => `...`, {
 
 ## Agent logic
 
-Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent.
+Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent. Agent logic goes beyond just being a wrapper and provides the ability to use the agent's state machine to intelligently determine which action to take next.
+
+Agent logic is most powerful when used with a state-machine-powered agent, but you can also create standalone actors from agent logic, which is useful for testing and simple tasks.
 
 ### From chat (`adapter.fromChat(…)`)
 
 Gets a chat completion from a prompt.
 
+```ts
+// ...
+
+const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
+
+const actor = createActor(getJokeCompletion, {
+  input: 'donuts'
+});
+
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Eventually logs a chat completion from the prompt "Tell me a joke about donuts."
+});
+
+actor.start();
+```
+
 ### From chat stream (`adapter.fromChatStream(…)`)
 
 Gets a chat completion stream from a prompt.
 
+```ts
+// ...
+
+const getJokeCompletionStream = llmAdapter.fromChatStream((topic: string) => `Tell me a joke about ${topic}.`);
+
+const actor = createActor(getJokeCompletionStream, {
+  input: 'donuts'
+});
+
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Continuously logs chat completion parts from the prompt "Tell me a joke about donuts."
+});
+
+actor.start();
+```
+
 ### From event (`adapter.fromEvent(…)`)
 
-Chooses an event to send to the parent actor based on the current state and sends it.
+Chooses an event to send to the parent actor based on the current state and sends it. This is best used within a state machine.
+
+```ts
+import { createAgent, createSchemas } from '@statelyai/agent';
+
+// ...
+
+const decide = llmAdapter.fromEvent((situation: string) => `
+Current situation: ${situation}
+
+Decide what to do next.
+`);
+
+const schemas = createSchemas({
+  context: {/* ... */},
+  events: {
+    stay: {
+      type: 'object',
+      description: 'Stay in the current situation',
+    },
+    go: {
+      type: 'object',
+      description: 'Go somewhere else',
+      properties: {
+        speed: {
+          type: 'string',
+          description: 'Speed to go',
+          enum: ['slow', 'fast'],
+        }
+      }
+    }
+  }
+});
+
+const machine = setup({
+  types: schemas.types,
+  schemas,
+  actors: {
+    decide
+  }
+}).createMachine({
+  context: {
+    situation: 'Something dangerous approaches.'
+  },
+  initial: 'deciding',
+  states: {
+    deciding: {
+      invoke: {
+        src: 'decide'
+      },
+      on: {
+        stay: {/* ... */},
+        go: {/* ... */}
+      }
+    },
+    stayed: {/* ... */},
+    went: {/* ... */}
+  },
+});
+
+const agent = createAgent(machine);
+agent.subscribe(snapshot => {
+  console.log(snapshot.value);
+  // Logs 'deciding' and then 'go'
+});
+
+agent.start();
+```
 
 ### From tool (`adapter.fromTool(…)`)
 
 Chooses a tool to run based on the current state and runs it.
+
+```ts
+const toolChoice = llmAdapter.fromTool((instruction: string) => `Follow the instruction: ${instruction}`, {
+  makeIllustration: {
+    description: 'Make an illustration',
+    run: async () => {/* ... */},
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'The name of the illustration',
+        },
+      },
+      required: ['name'],
+    },
+  },
+  getWeather: {
+    description: 'Get the weather for a location',
+    run: async () => {/* ... */},
+    inputSchema: {
+      type: 'object',
+      properties: {
+        location: {
+          type: 'object',
+          properties: {
+            city: {
+              type: 'string',
+              description: 'The name of the city',
+            },
+            state: {
+              type: 'string',
+              description: 'The name of the state',
+            },
+          },
+          required: ['city', 'state'],
+        },
+      },
+      required: ['location'],
+    },
+  },
+});
+
+const actor = createActor(toolChoice, {
+  input: 'draw a picture of a donut'
+});
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Eventually logs an illustration
+})
+
+actor.start();
+```
