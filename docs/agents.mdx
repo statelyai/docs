@@ -186,6 +186,28 @@ const execTool = llmAdapter.fromTool(() => `...`, {
 });
 ```
 
+## State machine agents
+
+A state machine agent is an agent that uses a state machine to determine what to do next. It will typically use agent logic to communicate with an LLM provider, but it can also use other actors to perform tasks, or even no actors at all if the agent is only a simple state machine (classic AI).
+
+The `createAgent(machine, options)` function creates an "agent actor", which is an [actor](actors.mdx) that can send and receive events, store internal state, spawn other actors, and perform actions. It is currently a thin wrapper around `createActor(…)`, but in the future, it will provide options for caching, history, logging, tracing, token optimizations/constraints, and more.
+
+```ts
+import { createAgent } from '@statelyai/agent';
+
+import { jokeMachine } from './jokeMachine';
+
+const agent = createAgent(jokeMachine, {
+  input: 'donuts'
+});
+
+agent.subscribe(snapshot => {
+  console.log(snapshot);
+});
+
+agent.start();
+```
+
 ## Agent logic
 
 Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent. Agent logic goes beyond just being a wrapper and provides the ability to use the agent's state machine to intelligently determine which action to take next.
