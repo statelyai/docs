@@ -1,0 +1,389 @@
+---
+title: 'AI Agents'
+---
+
+An AI agent is an autonomous entity that observes an environment, decides what to do (based on its internal policy), and performs actions towards achieving its goals. In terms of the actor model, an agent can be considered an actor that can:
+
+- **Receive events**, such as an instruction on what to do next, which goal to accomplish, or an observation of the environment
+- **Send events**, which would cause actions to be performed on the environment
+- **Store state**, which can be used to remember contextual information about the environment
+- **Spawn other agents**, which can be used to create a hierarchy of agents that can work together and coordinate their actions to achieve a goal
+
+The [Stately Agent (`@statelyai/agent`)](https://github.com/statelyai/agent) package makes it easy to create agents and agent behavior based on the actor model and state machines.
+
+## Installation
+
+Install `@statelyai/agent` and `xstate`, as well as OpenAI (more LLM adapters will be added in the near future) into your Node project.
+
+
+<Tabs>
+<TabItem value="npm" label="npm">
+
+```bash
+npm install @statelyai/agent xstate openai
+```
+
+</TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install @statelyai/agent xstate openai
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add @statelyai/agent xstate openai
+```
+
+</TabItem>
+</Tabs>
+
+## Quick start
+
+1. Create an LLM adapter.
+
+:::info
+
+Currently, only OpenAI is supported. More adapters will be added in the near future.
+
+:::
+
+```ts
+import OpenAI from 'openai';
+import { createOpenAIAdapter } from '@statelyai/agent';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const llmAdapter = createOpenAIAdapter(openai, {
+  model: 'gpt-3.5-turbo-1106'
+});
+```
+
+2. Create agent abilities.
+
+```ts
+const getJokeCompletion = llmAdapter.fromChat(
+  (topic: string) => `Tell me a joke about ${topic}.`
+);
+
+const rateJoke = llmAdapter.fromChat(
+  (joke: string) => `Rate this joke on a scale of 1 to 10: ${joke}`
+);
+
+const decide = llmAdapter.fromEvent(
+  (lastRating: string) =>
+    `Choose what to do next, given the previous rating of the joke: ${lastRating}`
+);
+```
+
+3. Create a state machine that describes the agent's behavior.
+
+```ts
+const jokeMachine = setup({
+  actors: {
+    getJokeCompletion,
+    rateJoke,
+    decide,
+  },
+  actions: {
+    assignTopic: assign({/* ... */}),
+
+  }
+}).createMachine({
+  context: {
+    // ...
+  },
+    states: {
+    waitingForTopic: {
+      invoke: {
+        src: 'getTopic',
+        onDone: {
+          actions: 'assignTopic',
+          target: 'tellingJoke',
+        },
+      },
+    },
+    tellingJoke: {
+      invoke: {
+        src: 'getJokeCompletion',
+        input: ({ context }) => context.topic,
+        onDone: {
+          actions: 'assignJoke',
+          target: 'rateJoke',
+        },
+      },
+    },
+    rateJoke: {
+      invoke: {
+        src: 'rateJoke',
+        input: ({ context }) => context.jokes[context.jokes.length - 1]!,
+        onDone: {
+          actions: 'assignLastRating',
+          target: 'decide',
+        },
+      },
+    },
+    decide: {
+      invoke: {
+        src: 'decide',
+        input: ({ context }) => context.lastRating!,
+      },
+      on: {
+        askForTopic: {
+          target: 'waitingForTopic',
+          actions: log("That joke wasn't good enough. Let's try again."),
+          description:
+            'Ask for a new topic, because the last joke rated 6 or lower',
+        },
+        endJokes: {
+          target: 'end',
+          actions: log('That joke was good enough. Goodbye!'),
+          description: 'End the jokes, since the last joke rated 7 or higher',
+        },
+      },
+    },
+    end: {
+      type: 'final',
+    },
+  },
+});
+```
+
+4. Create the state-machine-powered agent.
+
+TODO: state machine diagram
+
+## Adapters
+
+An adapter wraps LLM providers such as OpenAI and provides a unified interface for creating agent logic.
+
+```ts
+import { createOpenAIAdapter } from '@statelyai/agent';
+
+const llmAdapter = createOpenAIAdapter(openai, {
+  model: 'gpt-3.5-turbo-1106'
+});
+
+const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
+
+const getReviewStream = llmAdapter.fromChatStream(/* ... */);
+
+const decide = llmAdapter.fromEvent((lastRating: string) => `Choose what to do next, given the previous rating of the joke: ${lastRating}`);
+
+const execTool = llmAdapter.fromTool(() => `...`, {
+  getWeather: {
+    description: 'Get the weather',
+    run: async () => {
+      //...
+    }
+  }
+});
+```
+
+## State machine agents
+
+A state machine agent is an agent that uses a state machine to determine what to do next. It will typically use agent logic to communicate with an LLM provider, but it can also use other actors to perform tasks, or even no actors at all if the agent is only a simple state machine (classic AI).
+
+The `createAgent(machine, options)` function creates an "agent actor", which is an [actor](actors.mdx) that can send and receive events, store internal state, spawn other actors, and perform actions. It is currently a thin wrapper around `createActor(…)`, but in the future, it will provide options for caching, history, logging, tracing, token optimizations/constraints, and more.
+
+```ts
+import { createAgent } from '@statelyai/agent';
+
+import { jokeMachine } from './jokeMachine';
+
+const agent = createAgent(jokeMachine, {
+  input: 'donuts'
+});
+
+agent.subscribe(snapshot => {
+  console.log(snapshot);
+});
+
+agent.start();
+```
+
+## Agent logic
+
+Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent. Agent logic goes beyond just being a wrapper and provides the ability to use the agent's state machine to intelligently determine which action to take next.
+
+Agent logic is most powerful when used with a state-machine-powered agent, but you can also create standalone actors from agent logic, which is useful for testing and simple tasks.
+
+### From chat (`adapter.fromChat(…)`)
+
+Gets a chat completion from a prompt.
+
+```ts
+// ...
+
+const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
+
+const actor = createActor(getJokeCompletion, {
+  input: 'donuts'
+});
+
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Eventually logs a chat completion from the prompt "Tell me a joke about donuts."
+});
+
+actor.start();
+```
+
+### From chat stream (`adapter.fromChatStream(…)`)
+
+Gets a chat completion stream from a prompt.
+
+```ts
+// ...
+
+const getJokeCompletionStream = llmAdapter.fromChatStream((topic: string) => `Tell me a joke about ${topic}.`);
+
+const actor = createActor(getJokeCompletionStream, {
+  input: 'donuts'
+});
+
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Continuously logs chat completion parts from the prompt "Tell me a joke about donuts."
+});
+
+actor.start();
+```
+
+### From event (`adapter.fromEvent(…)`)
+
+Chooses an event to send to the parent actor based on the current state and sends it. This is best used within a state machine.
+
+```ts
+import { createAgent, createSchemas } from '@statelyai/agent';
+
+// ...
+
+const decide = llmAdapter.fromEvent((situation: string) => `
+Current situation: ${situation}
+
+Decide what to do next.
+`);
+
+const schemas = createSchemas({
+  context: {/* ... */},
+  events: {
+    stay: {
+      type: 'object',
+      description: 'Stay in the current situation',
+    },
+    go: {
+      type: 'object',
+      description: 'Go somewhere else',
+      properties: {
+        speed: {
+          type: 'string',
+          description: 'Speed to go',
+          enum: ['slow', 'fast'],
+        }
+      }
+    }
+  }
+});
+
+const machine = setup({
+  types: schemas.types,
+  schemas,
+  actors: {
+    decide
+  }
+}).createMachine({
+  context: {
+    situation: 'Something dangerous approaches.'
+  },
+  initial: 'deciding',
+  states: {
+    deciding: {
+      invoke: {
+        src: 'decide'
+      },
+      on: {
+        stay: {/* ... */},
+        go: {/* ... */}
+      }
+    },
+    stayed: {/* ... */},
+    went: {/* ... */}
+  },
+});
+
+const agent = createAgent(machine);
+agent.subscribe(snapshot => {
+  console.log(snapshot.value);
+  // Logs 'deciding' and then 'go'
+});
+
+agent.start();
+```
+
+### From tool (`adapter.fromTool(…)`)
+
+Chooses a tool to run based on the current state and runs it.
+
+```ts
+const toolChoice = llmAdapter.fromTool((instruction: string) => `Follow the instruction: ${instruction}`, {
+  makeIllustration: {
+    description: 'Make an illustration',
+    run: async () => {/* ... */},
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'The name of the illustration',
+        },
+      },
+      required: ['name'],
+    },
+  },
+  getWeather: {
+    description: 'Get the weather for a location',
+    run: async () => {/* ... */},
+    inputSchema: {
+      type: 'object',
+      properties: {
+        location: {
+          type: 'object',
+          properties: {
+            city: {
+              type: 'string',
+              description: 'The name of the city',
+            },
+            state: {
+              type: 'string',
+              description: 'The name of the state',
+            },
+          },
+          required: ['city', 'state'],
+        },
+      },
+      required: ['location'],
+    },
+  },
+});
+
+const actor = createActor(toolChoice, {
+  input: 'draw a picture of a donut'
+});
+actor.subscribe(snapshot => {
+  console.log(snapshot.output);
+  // Eventually logs an illustration
+})
+
+actor.start();
+```
+
+## Examples
+
+See the current examples in the [examples directory](https://github.com/statelyai/agent/tree/main/examples).
