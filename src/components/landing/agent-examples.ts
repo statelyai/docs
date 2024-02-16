@@ -1,9 +1,14 @@
-export const joke = `import OpenAI from 'openai';
+export const joke = `// Stately Agents are XState actors that are guided by a state machine.
+// They can send and receive events, spawn other agents, 
+// and make decisions based on their current state.
+// To set one up we need to give it abilities then define its internal state machine.
+
+import OpenAI from 'openai';
 import { fromPromise, setup } from 'xstate';
 import { createAgent, createOpenAIAdapter } from '@statelyai/agent';
 import { jokeRater } from './agents';
 
-// Set up the services and models you want to use.
+// 1. Create an LLM adapter.
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,15 +17,7 @@ const llmAdapter = createOpenAIAdapter(openai, {
   model: 'gpt-3.5-turbo-1106',
 });
 
-// Stately Agents are state machine constructed XState actors.
-// They accomplish goals by using other actors to perform tasks.
-//
-// Actors are built "from" some type of logic (the actor's logical model/brain/blueprint). 
-// This describes how the actor should change behavior when receiving an event. 
-// Actor logic can be scaffolded from general types like state machines,
-// promises using \`fromPromise()\`,
-// or more specific ones like \`fromChat()\`.
-//
+// 2. Set up the abilities the agent will use.
 // fromChat() lets the agent perform tasks using a basic prompt template.
 const getJokeCompletion = llmAdapter.fromChat(
   (topic: string) => \`Tell me a joke about \${topic}.\`
@@ -51,7 +48,7 @@ const schemas = createSchemas({
   // ... Define schemas ...
 });
 
-// Create the agent and start it.
+// 3. Create a state machine that describes the agent's behavior.
 const jokerAgentLogic = setup({
   schemas,
   types: schemas.types,
@@ -65,9 +62,11 @@ const jokerAgentLogic = setup({
   // ... Define an XState machine that invokes abilities as needed ...
 );
 
+// 4. Create the agent and start it.
 const agent = createAgent(jokerAgentLogic);
 agent.start();
 
+// 5. Use the agent.
 // Send events to the agent to give it instructions.
 // How it handles them will depend on its current state.
 // This gives developers more safety and control.

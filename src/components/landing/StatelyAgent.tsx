@@ -69,16 +69,16 @@ function AgentIntro() {
         </div>
         <div className="flex flex-col items-center">
           <P>
-            Write familiar JavaScript/Typescript. Full control. <br />
+            Write familiar JavaScript/TypeScript. Full control. <br />
             No lock-in. Open source.
           </P>
           <div>
             <ButtonLink
               size="large"
               background="pink"
-              href="https://www.github.com/statelyai/agent"
+              href="https://www.stately.ai/docs/agents"
             >
-              <GithubIcon className="mr-4" /> Read the docs
+              Read the docs
             </ButtonLink>
           </div>
         </div>
