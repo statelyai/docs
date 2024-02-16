@@ -215,6 +215,9 @@ function FeaturesMenu() {
           <NavMenuItem href="#build">Build</NavMenuItem>
           <NavMenuItem href="#deploy">Deploy</NavMenuItem>
           <NavMenuItem href="#understand">Understand</NavMenuItem>
+          <div className="border-t border-white/10 mt-2 pt-2">
+            <NavMenuItem href="/agent/">AI Agents</NavMenuItem>
+          </div>
         </Menu.Items>
       </Transition>
     </Menu>
