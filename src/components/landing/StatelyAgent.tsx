@@ -16,7 +16,7 @@ export function StatelyAgent() {
           background="pink"
           href="https://www.github.com/statelyai/agent"
         >
-          Try out Stately Agent and XState
+          <GithubIcon className="mr-4" /> Try out Stately Agent and XState
         </ButtonLink>
       </div>
     </>
