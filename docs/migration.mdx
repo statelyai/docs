@@ -397,6 +397,53 @@ nextState.value; // yellow
 </TabItem>
 </Tabs>
 
+### Send events explictly instead of using `autoForward`
+
+The `autoForward` property on invoke configs has been removed. Instead, send events explicitly.
+
+In general, it's _not_ recommended to forward all events to an actor. Instead, only forward the specific events that the actor needs.
+
+<Tabs>
+<TabItem value="v5" label="XState v5">
+
+```ts
+// ✅
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someSource',
+    id: 'someId'
+  },
+  // highlight-start
+  always: {
+    // Forward events to the invoked actor
+    // This will not cause an infinite loop in XState v5
+    actions: sendTo('someId', ({ event }) => event)
+  }
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌
+const machine = createMachine({
+  // ...
+  invoke: {
+    src: 'someSource',
+    id: 'someId'
+    // highlight-next-line
+    autoForward: true // deprecated
+  }
+});
+```
+
+</TabItem>
+</Tabs>
+
 ## States
 
 ### Use `state.getMeta()` instead of `state.meta`
