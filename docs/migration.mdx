@@ -484,6 +484,30 @@ Breaking change
 
 :::
 
+```ts
+import { type StateValue } from 'xstate';
+
+export function getStateValueStrings(stateValue: StateValue): string[] {
+  if (typeof stateValue === 'string') {
+    return [stateValue];
+  }
+  const valueKeys = Object.keys(stateValue);
+
+  return valueKeys.concat(
+    ...valueKeys.map((key) =>
+      getStateValueStrings(stateValue[key], delimiter).map(
+        (s) => key + delimiter + s
+      )
+    )
+  );
+}
+
+// ...
+
+const stateValueStrings = getStateValueStrings(stateValue);
+// e.g. ['green', 'yellow', 'red', 'red.walk', 'red.wait', …]
+```
+
 ### Use `state._nodes` instead of `state.configuration`
 
 :::breakingchange
