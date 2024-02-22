@@ -476,7 +476,7 @@ state.meta;
 </TabItem>
 </Tabs>
 
-### The `state.getStrings()` method has been removed
+### The `state.toStrings()` method has been removed
 
 :::breakingchange
 
@@ -495,9 +495,7 @@ export function getStateValueStrings(stateValue: StateValue): string[] {
 
   return valueKeys.concat(
     ...valueKeys.map((key) =>
-      getStateValueStrings(stateValue[key], delimiter).map(
-        (s) => key + delimiter + s
-      )
+      getStateValueStrings(stateValue[key]!).map((s) => key + '.' + s)
     )
   );
 }
