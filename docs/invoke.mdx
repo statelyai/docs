@@ -284,7 +284,7 @@ The `onError` transition can be an object:
   invoke: {
     src: 'fetchItem',
     onDone: {
-      target: 'success'
+      target: 'success',
       actions: ({ event }) => {
         console.log(event.output);
       }
@@ -308,7 +308,7 @@ Or, for simplicity, target-only transitions can be strings:
   invoke: {
     src: 'fetchItem',
     // highlight-start
-    onDone: 'success'
+    onDone: 'success',
     onError: 'error'
     // highlight-end
   }
