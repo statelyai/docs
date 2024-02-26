@@ -312,6 +312,7 @@ const sidebars = {
         'keyboard-shortcuts',
         'canvas-view-controls',
         'user-preferences',
+        'studio-api',
       ],
     },
     {
