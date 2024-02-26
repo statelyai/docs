@@ -753,7 +753,7 @@ actions: sendTo(
 );
 ```
 
-In the following example, the `'client'` machine below sends the `'CODE'` event to the invoked `'auth-server'` service, which then responds with a `'TOKEN'` event after 1 second.
+In the following example, the `'client'` machine below sends the `'CODE'` event to the invoked `'auth-server'` actor, which then responds with a `'TOKEN'` event after 1 second.
 
 ```js
 import { createActor, createMachine, sendTo } from 'xstate';

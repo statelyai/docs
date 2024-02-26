@@ -46,7 +46,7 @@ yarn add xstate @xstate/svelte
 
 ### `useMachine(machine, options?)`
 
-A function that creates an actor from the given `machine` and starts a service that runs for the lifetime of the component.
+A function that creates an actor from the given `machine` and starts an actor that runs for the lifetime of the component.
 
 **Arguments**
 
@@ -61,7 +61,7 @@ A function that creates an actor from the given `machine` and starts a service t
 
 ### `useSelector(actorRef, selector, compare?, getSnapshot?)`
 
-A function that returns [Svelte store](https://svelte.dev/docs#svelte_store) representing the selected value from the snapshot of an `actorRef`, such as a service. The store will only be updated when the selected value changes, as determined by the optional `compare` function.
+A function that returns [Svelte store](https://svelte.dev/docs#svelte_store) representing the selected value from the snapshot of an `actorRef`, such as an actor. The store will only be updated when the selected value changes, as determined by the optional `compare` function.
 
 **Arguments**
 
