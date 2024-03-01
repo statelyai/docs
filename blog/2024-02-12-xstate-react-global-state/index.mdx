@@ -165,6 +165,9 @@ import { createContext } from 'react';
 const someMachine = createMachine(/* ... */);
 const someActor = createActor(someMachine);
 
+// Don't forget to start the actor!
+someActor.start();
+
 // `someActor` is passed to `createContext` mostly for type safety
 // highlight-next-line
 export const SomeActorContext = createContext(someActor);
