@@ -374,6 +374,7 @@ const sidebars = {
         'history-states',
         'persistence',
         'tags',
+        'event-emitter',
       ],
     },
     {

@@ -1,0 +1,73 @@
+---
+title: Event emitter
+---
+
+State machines in XState have the ability to emit events using the `emit(event)` action creator. This allows external event handlers to be notified of specific events.
+
+```ts
+import { setup, emit } from 'xstate';
+
+const machine = setup({
+  actions: {
+    emitEvent: emit({ type: 'notification' })
+  }
+}).createMachine({
+  // ...
+  on: {
+    someEvent: {
+      actions: { type: 'emitEvent' }
+    }
+  }
+});
+
+const actor = createActor(machine);
+
+actor.on('notification', (event) => {
+  console.log('Notification received!', event);
+});
+
+actor.start();
+
+actor.send({ type: 'someEvent' });
+// Logs:
+// "Notification received!"
+// { type: "notification" }
+```
+
+## Emit action
+
+The emit action is a special action that _emits_ an event to any external event handlers. The emitted event can be statically or dynamically defined:
+
+```ts
+import { setup, emit } from 'xstate';
+
+const machine = setup({
+  actions: {
+    // highlight-start
+    // Emitting a statically-defined event
+    emitStaticEvent: emit({
+      type: 'someStaticEvent',
+      data: 42
+    }),
+    // highlight-end
+
+    // highlight-start
+    // Emitting a dynamically-defined event based on context
+    emitDynamicEvent: emit(({ context }) => ({
+      type: 'someDynamicEvent',
+      data: context.someData
+    }))
+    // highlight-end
+  }
+}).createMachine({
+  // ...
+  on: {
+    someEvent: {
+      actions: [
+        { type: 'emitStaticEvent' },
+        { type: 'emitDynamicEvent' }
+      ]
+    }
+  }
+});
+```
