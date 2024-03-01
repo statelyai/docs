@@ -1122,7 +1122,7 @@ Breaking change
 
 :::
 
-All transitions are implicitly internal. This change is relevant for transitions defined on compound state nodes with `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). If you relied on implicit re-entering of a compound state node, use `reenter: true`:
+All transitions are **internal by default**. This change is relevant for transitions defined on state nodes with `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). If you relied on the previous XState v4 behavior where transitions implicitly re-entered a state node, use `reenter: true`:
 
 <Tabs>
 <TabItem value="v5" label="XState v5">
@@ -1135,12 +1135,18 @@ const machine = createMachine({
     compoundState: {
       entry: 'someAction',
       on: {
+        // highlight-start
         someEvent: {
           target: 'compoundState.childState',
           // Reenters the `compoundState` state,
           // just like an external transition
           reenter: true,
         },
+        selfEvent: {
+          target: 'childState',
+          reenter: true
+        }
+        // highlight-end
       },
       initial: 'childState',
       states: {
@@ -1163,10 +1169,15 @@ const machine = createMachine({
     compoundState: {
       entry: 'someAction',
       on: {
+        // highlight-start
         someEvent: {
           // implicitly external
           target: 'compoundState.childState', // non-relative target
         },
+        selfEvent: {
+          target: 'compoundState'
+        }
+        // highlight-end
       },
       initial: 'childState',
       states: {
