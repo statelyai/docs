@@ -2,6 +2,8 @@
 title: Event emitter
 ---
 
+_Since XState version 5.9.0_
+
 State machines in XState have the ability to emit events using the `emit(event)` action creator. This allows external event handlers to be notified of specific events.
 
 ```ts
@@ -9,12 +11,14 @@ import { setup, emit } from 'xstate';
 
 const machine = setup({
   actions: {
+    // highlight-next-line
     emitEvent: emit({ type: 'notification' })
   }
 }).createMachine({
   // ...
   on: {
     someEvent: {
+      // highlight-next-line
       actions: { type: 'emitEvent' }
     }
   }
@@ -22,9 +26,11 @@ const machine = setup({
 
 const actor = createActor(machine);
 
+// highlight-start
 actor.on('notification', (event) => {
   console.log('Notification received!', event);
 });
+// highlight-end
 
 actor.start();
 
@@ -34,7 +40,7 @@ actor.send({ type: 'someEvent' });
 // { type: "notification" }
 ```
 
-## Emit action
+## Emit action creator
 
 The emit action is a special action that _emits_ an event to any external event handlers. The emitted event can be statically or dynamically defined:
 
@@ -70,4 +76,43 @@ const machine = setup({
     }
   }
 });
+```
+
+## Event handlers
+
+You can attach event handlers to the actor to listen for emitted events by using `actor.on(event, handler)`:
+
+```ts
+const someActor = createActor(someMachine);
+
+// highlight-start
+someActor.on('someEvent', (emittedEvent) => {
+  // Handle the emitted event
+  console.log(emittedEvent);
+});
+// highlight-end
+
+someActor.start();
+```
+
+The `actor.on(…)` method returns a subscription object. You can call `.unsubscribe()` on it to remove the handler:
+
+```ts
+const someActor = createActor(someMachine);
+
+// highlight-start
+const subscription = someActor.on('someEvent', (emittedEvent) => {
+  // Handle the emitted event
+  console.log(emittedEvent);
+});
+// highlight-end
+
+someActor.start();
+
+// ...
+
+// highlight-start
+// Stop listening for events
+subscription.unsubscribe();
+// highlight-end
 ```
