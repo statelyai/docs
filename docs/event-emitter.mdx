@@ -116,3 +116,43 @@ someActor.start();
 subscription.unsubscribe();
 // highlight-end
 ```
+
+## TypeScript
+
+You can strongly type emitted events by defining the emitted event types in the `types.emitted` property of the `setup(…)` function:
+
+```ts
+import { setup, emit, createActor } from 'xstate';
+
+const machine = setup({
+  types: {
+    // highlight-start
+    emitted: {} as 
+      | { type: 'notification'; message: string; }
+      | { type: 'error'; error: Error; },
+    // highlight-end
+    // ...
+  }
+}).createMachine({
+  // ...
+  on: {
+    someEvent: {
+      actions: [
+        // highlight-start
+        // Strongly typed emitted event
+        emit({ type: 'notification', message: 'Hello' })
+        // highlight-end
+      ]
+    }
+  }
+});
+
+const actor = createActor(machine);
+
+// highlight-start
+// Strongly typed event handler
+actor.on('notification', (event) => {
+  console.log(event.message); // string
+});
+// highlight-end
+```
