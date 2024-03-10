@@ -59,7 +59,8 @@ const sidebars = {
         {
           type: 'link',
           label: 'API',
-          href: 'https://tsdocs.dev/docs/xstate',
+          // href: 'https://tsdocs.dev/docs/xstate',
+          href: 'https://www.jsdocs.io/package/xstate',
         },
       ],
     },
