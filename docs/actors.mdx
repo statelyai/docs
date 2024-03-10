@@ -88,7 +88,7 @@ An example of the difference between invoking and spawning actors could occur in
 
 ## Actor snapshots
 
-When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor’s snapshot synchronously via `actor.getSnapshot()`.
+When an actor receives an event, its internal state may change. An actor may emit a **snapshot** when a state transition occurs. You can read an actor’s snapshot synchronously via `actor.getSnapshot()`, or you can subscribe to snapshots via `actor.subscribe(observer)`.
 
 ```ts
 import { fromPromise, createActor } from 'xstate';
@@ -117,6 +117,8 @@ countActor.getSnapshot();
 //   ...
 // }
 ```
+
+## Subscriptions
 
 You can subscribe to an actor’s snapshot values via `actor.subscribe(observer)`. The observer will receive the actor’s snapshot value when it is emitted. The observer can be:
 
@@ -204,6 +206,31 @@ const snapshot = await waitFor(
 
 console.log(snapshot.output);
 // => 100
+```
+
+## Error handling
+
+You can subscribe to errors thrown by an actor using the `error` callback in the observer object passed to `actor.subscribe()`. This allows you to handle errors emitted by the actor logic.
+
+```ts
+import { createActor } from 'xstate';
+import { someMachine } from './someMachine';
+
+const actor = createActor(someMachine);
+
+actor.subscribe({
+  next: (snapshot) => {
+    // ...
+  },
+  // highlight-start
+  error: (err) => {
+    // Handle the error here
+    console.error(err);
+  }
+  // highlight-end
+});
+
+actor.start();
 ```
 
 ## Actor logic creators
