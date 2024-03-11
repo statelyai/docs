@@ -60,7 +60,7 @@ A [React hook](https://reactjs.org/hooks) that creates an actor from the the giv
 #### Arguments
 
 - `actorLogic` - The actor logic to create an actor from; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
-- `options?` (optional) - Actor options
+- `options?` (optional) - Actor options.
 
 **Returns** a tuple of `[snapshot, send, actorRef]`:
 
@@ -103,7 +103,7 @@ A [React hook](https://reactjs.org/hooks) that creates an actor from the given `
 #### Arguments
 
 - `machine` - An [XState machine](machines.mdx)
-- `options?` - [Actor options](machines.mdx#creating-actors-from-machines).
+- `options?` (optional) - Actor options.
 
 **Returns** a tuple of `[snapshot, send, actorRef]`:
 
@@ -144,7 +144,7 @@ You can use the `useSelector(...)` hook to select part of the snapshot from the 
 #### Arguments
 
 - `actorLogic`- The actor logic to create an actor from; e.g. `createMachine(...)`, `fromPromise(...)`, etc.
-- `options?` (optional) - Actor options
+- `options?` (optional) - Actor options.
 
 ```js
 import { useActorRef } from '@xstate/react';
