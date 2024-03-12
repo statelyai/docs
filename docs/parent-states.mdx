@@ -93,6 +93,52 @@ Transitions on a parent state can target child (or descendent) states. This is u
 
 Transitions on a child state can target the parent state, though this is not common. A transition from a child state to its parent (or ancestor) state will also enter the parent state’s initial state.
 
+## Child final states
+
+When a child final state of a parent state is reached, that parent state is considered "done". The `onDone` transition of that parent state is automatically taken.
+
+```ts
+import { createMachine } from 'xstate';
+
+const coffeeMachine = createMachine({
+  initial: 'preparation',
+  states: {
+    preparation: {
+      initial: 'weighing',
+      states: {
+        weighing: {
+          on: {
+            weighed: {
+              target: 'grinding'
+            }
+          }
+        },
+        grinding: {
+          on: {
+            ground: 'ready'
+          }
+        },
+        // highlight-start
+        ready: {
+          // Child final state of parent state 'preparation'
+          type: 'final'
+        }
+        // highlight-end
+      },
+      // highlight-start
+      // Transition will be taken when child final state is reached
+      onDone: {
+        target: 'brewing'
+      }
+      // highlight-end
+    },
+    brewing: {
+      // ...
+    }
+  }
+});
+```
+
 ## Modeling
 
 _Coming soon_

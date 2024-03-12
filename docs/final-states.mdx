@@ -48,7 +48,49 @@ A top-level final state is a final state that is a direct child state of the mac
 
 ## Child final states
 
-When a child final state of a compound state is reached, that compound state is considered "done". The `onDone` transition of that compound state is taken.
+When a child final state of a [parent (compound) state](./parent-states.mdx) is reached, that parent state is considered "done". The `onDone` transition of that parent state is automatically taken.
+
+```ts
+import { createMachine } from 'xstate';
+
+const coffeeMachine = createMachine({
+  initial: 'preparation',
+  states: {
+    preparation: {
+      initial: 'weighing',
+      states: {
+        weighing: {
+          on: {
+            weighed: {
+              target: 'grinding'
+            }
+          }
+        },
+        grinding: {
+          on: {
+            ground: 'ready'
+          }
+        },
+        // highlight-start
+        ready: {
+          // Child final state of parent state 'preparation'
+          type: 'final'
+        }
+        // highlight-end
+      },
+      // highlight-start
+      // Transition will be taken when child final state is reached
+      onDone: {
+        target: 'brewing'
+      }
+      // highlight-end
+    },
+    brewing: {
+      // ...
+    }
+  }
+});
+```
 
 ## Final states in parallel states
 
