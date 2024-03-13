@@ -63,12 +63,14 @@ toggleActor.send({ type: 'toggle' });
 
 ## State machine actor input
 
-You can pass in `input` to a promise actor by passing it to the `createActor(...)` function as the `input` property of the second argument. In the promise logic (`fromPromise(promiseFn)`), you read the `input` property of the first argument passed to the promise function:
+You can pass in `input` to a state machine actor by passing it to the `createActor(...)` function as the `input` property of the second argument. In the state machine (`setupFiles(…).createMachine(…)`), you read the `input` property of the first argument passed to the `context` function:
 
 ```ts
-import { createMachine, createActor } from 'xstate';
+import { setup, createActor } from 'xstate';
 
-const feedbackMachine = createMachine({
+const feedbackMachine = setup({
+  // ...
+}).createMachine({
   context: ({ input }) => ({
     rating: input.defaultRating
   }),
