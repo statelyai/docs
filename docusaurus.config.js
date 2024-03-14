@@ -188,7 +188,8 @@ const config = {
           },
           { to: '/docs', label: 'Docs', position: 'right' },
           {
-            href: 'https://tsdocs.dev/docs/xstate',
+            // href: 'https://tsdocs.dev/docs/xstate',
+            href: 'https://www.jsdocs.io/package/xstate',
             label: 'API',
             position: 'right',
             className: 'plausible-event-name=docs+api',
