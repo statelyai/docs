@@ -2,9 +2,9 @@
 title: Delayed (after) transitions
 ---
 
-**Delayed transitions** are transitions that only happen after a set amount of time. Delayed transitions are handy for building timeouts and intervals into your application logic. If another event occurs before the end of the timer, the transition doesn’t complete.
+**Delayed transitions** are transitions that are triggered after a set amount of time. Delayed transitions are useful for building timeouts and intervals into your application logic. If another event occurs before the end of the timer, the transition doesn’t complete.
 
-Delayed transitions are defined on the `after` property in milliseconds. They are often referred to as “after” transitions.
+Delayed transitions are defined on the `after` property of a state node, either as a number (measured in milliseconds) or as a string that references a delay defined in the `delays` setup object.
 
 :::studio
 
@@ -52,7 +52,7 @@ Watch our [“Delayed (after) transitions” video on YouTube](https://www.youtu
 
 You can define delays in a few ways: [inlined](#inlined-delays), [referenced](#referenced-delays), and as an expression.
 
-### Inlined delays
+## Inlined delays
 
 You can define an inlined delay by specifying the delay time (in milliseconds) directly:
 
@@ -72,7 +72,7 @@ const machine = createMachine({
 
 This will transition to the `nextState` state after 1000ms.
 
-### Referenced delays
+## Referenced delays
 
 You can also define referenced delays by specifying a string delay key, and providing the actual delay time separately.
 
@@ -101,6 +101,44 @@ const machine = setup({
     },
   }
 );
+```
+
+## Dynamic delays
+
+Delays can also be dynamically defined as a function that returns the delay time in milliseconds:
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {
+    context: {} as {
+      attempts: number
+    }
+  },
+  // highlight-start
+  delays: {
+    timeout: ({ context }) => {
+      return context.attempts * 1000;
+    },
+  },
+  // highlight-end
+}).createMachine({
+  initial: 'attempting',
+  states: {
+    attempting: {
+      after: {
+        // highlight-start
+        timeout: {
+          actions: assign({ attempts: (context) => context.attempts + 1 }),
+          target: 'attempting',
+        },
+        // highlight-end
+      },
+    },
+    // ...
+  },
+});
 ```
 
 ## Lifecycle
