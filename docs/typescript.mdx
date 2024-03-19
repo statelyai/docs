@@ -126,6 +126,12 @@ const feedbackMachine = setup({
 
 ## Asserting events
 
+:::info
+
+It is strongly recommended to use dynamic parameters instead of directly accessing the event object whenever possible for improved type safety and reusability.
+
+:::
+
 If using dynamic parameters is infeasible and you must use the event in an action or guard implementation, you can assert the event type using the `assertEvent(...)` helper function:
 
 ```ts
@@ -174,3 +180,5 @@ const machine = createMachine({
 [Typegen](/docs/developer-tools#xstate-typegen-files) does not yet support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
 
 If you were previously using typegen to narrow down events used in actions or guards, you can use [the `assertEvent(...)` helper function](#asserting-events) to narrow down the event type.
+import { info } from "autoprefixer"
+
