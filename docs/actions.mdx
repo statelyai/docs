@@ -493,6 +493,34 @@ const machine = createMachine({
 });
 ```
 
+You can use parameters with referenced enqueue actions:
+
+```ts
+import { setup, enqueueActions } from 'xstate';
+
+const machine = setup({
+  actions: {
+    // highlight-start
+    doThings: enqueueActions(({ enqueue }, params: { name: string }) => {
+      enqueue({ type: 'greet', params: { name } });
+      // ...
+    }),
+    // highlight-end
+    greet: (_, params: { name: string }) => {
+      console.log(`Hello ${params.name}!`);
+    }
+  }
+}).createMachine({
+  // ...
+  // highlight-start
+  entry: {
+    type: 'doThings',
+    params: { name: 'World' }
+  }
+  // highlight-end
+});
+```
+
 ## Log action
 
 The `log(...)` action is an easy way to log messages to the console.
