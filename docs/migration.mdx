@@ -985,14 +985,30 @@ const machine = createMachine({
     knownEvent: {
       // ...
     },
+    // highlight-start
     '*': {
       // unknown event
       actions: ({ event }) => {
         throw new Error(`Unknown event: ${event.type}`);
       },
     },
+    // highlight-end
   },
 });
+
+const actor = createActor(machine);
+
+actor.subscribe({
+  // highlight-start
+  error: (err) => {
+    console.error(err);
+  }
+  // highlight-end
+});
+
+actor.start();
+
+actor.send({ type: 'unknownEvent' });
 ```
 
 </TabItem>
@@ -1009,6 +1025,10 @@ const machine = createMachine({
     },
   },
 });
+
+const service = interpret(machine);
+
+service.send({ type: 'unknownEvent' });
 ```
 
 </TabItem>
