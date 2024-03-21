@@ -128,7 +128,7 @@ export const toggleMachine = createMachine({
 
 [Context](context.mdx) is how you store data in a state machine actor.
 
-```js
+```ts
 import { assign, createMachine } from 'xstate';
 
 export const toggleMachine = createMachine({
@@ -148,6 +148,59 @@ export const toggleMachine = createMachine({
     },
   },
 });
+```
+
+## Add input
+
+[Input](input.mdx) is how initial data can be provided to a machine actor.
+
+[Guards](guards.mdx) are used to conditionally allow or disallow transitions.
+
+```ts
+import { assign, createMachine } from 'xstate';
+
+export const toggleMachine = createMachine({
+  id: 'toggle',
+  // highlight-next-line
+  context: ({ input }) => ({
+    count: 0,
+    // highlight-next-line
+    maxCount: input.maxCount
+  }),
+  initial: 'Inactive',
+  states: {
+    Inactive: {
+      on: {
+        toggle: {
+          // Only trigger toggle transition if count is less than maxCount
+          // highlight-next-line
+          guard: ({ context }) => context.count < context.maxCount,
+          target: 'Active'
+        }
+      }
+    },
+    Active: {
+      entry: assign({
+        count: ({ context }) => context.count + 1
+      }),
+      on: { toggle: 'Inactive' },
+      after: { 2000: 'Inactive' },
+    },
+  },
+});
+
+const actor = createActor(toggleMachine, {
+  // highlight-next-line
+  input: { maxCount: 10 }
+});
+
+actor.subscribe(snapshot => {
+  console.log('State:', snapshot.value);
+});
+
+actor.start();
+
+actor.send({ type: 'toggle' });
 ```
 
 ## Use your machine with a framework
