@@ -14,15 +14,20 @@ const feedbackMachine = setup({
       feedback: string;
       rating: number;
     },
+    // highlight-start
     input: {} as {
       userId: string;
       defaultRating: number;
     }
+    // highlight-end
   }
 }).createMachine({
+  // highlight-next-line
   context: ({ input }) => ({
+    // highlight-next-line
     userId: input.userId,
     feedback: '',
+    // highlight-next-line
     rating: input.defaultRating,
   }),
   // ...
