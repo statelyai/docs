@@ -77,17 +77,31 @@ Lazy initial context is evaluated per actor, so each actor will have its own `co
 You can provide input data to a machine’s initial `context` by passing an `input` property to the `createActor(machine, { input })` function and using the `input` property from the first argument in the `context` function:
 
 ```ts
-const feedbackMachine = createMachine({
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  types: {
+    // highlight-start
+    input: {} as {
+      defaultRating: number
+    }
+    // highlight-end
+  }
+}).createMachine({
+  // highlight-next-line
   context: ({ input }) => ({
     feedback: '',
+    // highlight-next-line
     rating: input.defaultRating,
   }),
 });
 
 const feedbackActor = createActor(feedbackMachine, {
+  // highlight-start
   input: {
     defaultRating: 5,
   },
+  // highlight-end
 }).start();
 
 console.log(feedbackActor.getSnapshot().context.rating);
@@ -213,16 +227,30 @@ const machine = createMachine({
 ### Cheatsheet: input
 
 ```ts
-const machine = createMachine({
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  types: {
+    // highlight-start
+    input: {} as {
+      defaultRating: number
+    }
+    // highlight-end
+  }
+}).createMachine({
+  // highlight-next-line
   context: ({ input }) => ({
     feedback: '',
+    // highlight-next-line
     rating: input.defaultRating,
   }),
 });
 
-const feedbackActor = createActor(machine, {
+const feedbackActor = createActor(feedbackMachine, {
+  // highlight-start
   input: {
     defaultRating: 5,
   },
-});
+  // highlight-end
+}).start();
 ```
