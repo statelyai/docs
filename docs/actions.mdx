@@ -424,6 +424,98 @@ You can create state machines with the `sendTo(...)` action in our drag-and-drop
 
 :::
 
+## Send-parent action
+
+The `sendParent(...)` action is a special action that sends an event to the parent actor, if it exists.
+
+:::tip
+
+It is recommended to use `sendTo(...)` by to pass actor refs (e.g. the parent actor ref) to other actors via [input](./input.ts) or events and storing those actor refs in `context` rather than using `sendParent(...)`. This avoids tight coupling between actors and can be more type-safe.
+
+<details>
+<summary>Example using input:</summary>
+
+```ts
+import { createMachine, sendParent } from 'xstate';
+
+const childMachine = createMachine({
+  context: ({ input }) => ({
+    parentRef: input.parentRef
+  }),
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: sendTo(
+        ({ context }) => context.parentRef,
+        { type: 'tellParentSomething' }
+      ),
+      // highlight-end
+    }
+  }
+});
+
+const parentMachine = createMachine({
+  // ...
+  invoke: {
+    id: 'child',
+    src: childMachine,
+    // highlight-start
+    input: ({ self }) => ({
+      parentRef: self
+    })
+    // highlight-end
+  },
+  on: {
+    tellParentSomething: {
+      actions: () => {
+        console.log('Child actor told parent something');
+      }
+    }
+  }
+});
+
+const parentActor = createActor(parentMachine);
+
+parentActor.start();
+```
+
+</details>
+
+:::
+
+```ts
+import { createMachine, sendParent } from 'xstate';
+
+const childMachine = createMachine({
+  on: {
+    someEvent: {
+      // highlight-start
+      actions: sendParent({ type: 'tellParentSomething' }),
+      // highlight-end
+    }
+  }
+});
+
+const parentMachine = createMachine({
+  // ...
+  invoke: {
+    id: 'child',
+    src: childMachine
+  },
+  on: {
+    tellParentSomething: {
+      actions: () => {
+        console.log('Child actor told parent something');
+      }
+    }
+  }
+});
+
+const parentActor = createActor(parentMachine);
+
+parentActor.start();
+```
+
 ## Enqueue actions
 
 The `enqueueActions(...)` action creator is a higher-level action that enqueues actions to be executed sequentially, without actually executing any of the actions. It takes a callback that receives the `context`, `event` as well as `enqueue` and `check` functions:
