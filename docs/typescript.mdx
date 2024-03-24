@@ -26,7 +26,6 @@ Use the latest version of TypeScript; version 5.0 or greater is required.
 
 - Set [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) to `true` in your `tsconfig.json` file. This will ensure that our types work correctly and help catch errors in your code. **(Strongly recommended)**.
 - Set [`skipLibCheck`](https://www.typescriptlang.org/tsconfig#skipLibCheck) to `true` in your `tsconfig.json` file. (Recommended).
-- Set [`exactOptionalPropertyTypes`](https://www.typescriptlang.org/tsconfig#exactOptionalPropertyTypes) to `true` in your `tsconfig.json` file. This will prevent assigning to `undefined` in partial assignments using the `assign(...)` action creator. (Recommended).
 
 ```json5
 // tsconfig.json
@@ -40,9 +39,6 @@ Use the latest version of TypeScript; version 5.0 or greater is required.
 
     // highlight-next-line
     "skipLibCheck": true,
-
-    // highlight-next-line
-    "exactOptionalPropertyTypes": true
   }
 }
 ```
