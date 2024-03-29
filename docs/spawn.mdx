@@ -127,8 +127,14 @@ You can stop a child actor via the "stop child" action. This action is created f
 ```ts
 import { setup, stopChild } from 'xstate';
 
+
 const machine = setup({
-  // ...
+  actors: {
+    something: fromPromise(async () => {
+      // Some actor logic
+      return 'Some response';
+    })
+  }
 }).createMachine({
   context: ({ spawn }) => ({
     something: spawn('something', { id: 'thing' })
