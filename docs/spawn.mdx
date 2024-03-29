@@ -125,8 +125,7 @@ actions: assign({
 You can stop a child actor via the "stop child" action. This action is created from the `stopChild(id)` action creator.
 
 ```ts
-import { setup, stopChild } from 'xstate';
-
+import { setup, stopChild, fromPromise } from 'xstate';
 
 const machine = setup({
   actors: {
@@ -142,9 +141,11 @@ const machine = setup({
   // ...
   on: {
     'thing.stop': {
+      // highlight-next-line
       actions: stopChild('thing')
     },
     'thing.stopFromContext': {
+      // highlight-next-line
       actions: stopChild(({ context }) => context.something)
     }
   }
