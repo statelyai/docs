@@ -37,10 +37,14 @@ const feedbackMachine = setup({
           ]
         }
       },
-      exit: ['exitAction']
+      exit: [
+        { type: 'exitAction' }
+      ]
     }
     thanks: {
-      entry: ['showConfetti'],
+      entry: [
+        { type: 'showConfetti' }
+      ],
     }
   }
 });
@@ -56,7 +60,7 @@ Examples of actions:
 
 Entry actions are actions that occur on any transition that enters a state node. Exit actions are actions that occur on any transition that exits a state node.
 
-Entry and exit actions are defined using the `entry: ...` and `exit: ...` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
+Entry and exit actions are defined using the `entry: [...]` and `exit: [...]` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
 <EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=f46674a5-4da3-4aca-9900-17c6ef471f50" title="Feedback form"/>
 
@@ -754,7 +758,34 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `actions` of your machine in the `types.actions` property of the machine config.
+To strongly setup action types, use the `setup({ ... })` function and place the action implementations in the `actions: { ... }` object. The key is the action type and the value is the action function implementation.
+
+You should also strongly type the parameters of the action function, which are passed as the second argument to the action function.
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  // highlight-start
+  actions: {
+    track: (_, params: { response: string }) => {
+      // ...
+    },
+    increment: (_, params: { value: number }) => {
+      // ...
+    }
+  }
+  // highlight-end
+}).createMachine({
+  // ...
+  entry: [
+    { type: 'track', params: { response: 'good' } },
+    { type: 'increment', params: { value: 1 } },
+  ]
+});
+```
+
+If you are not using `setup({ ... })` (strongly recommended), you can strongly type the `actions` of your machine in the `types.actions` property of the machine config.
 
 ```ts
 const machine = createMachine({
@@ -775,29 +806,6 @@ const machine = createMachine({
     { type: 'track', params: { response: 'good' } },
     { type: 'increment', params: { value: 1 } },
   ],
-});
-```
-
-If you want to setup default action implementations, you can also use the `setup({ ... })` function:
-
-```ts
-const machine = setup({
-  // highlight-start
-  actions: {
-    track: (_, params: { response: string }) => {
-      // ...
-    },
-    increment: (_, params: { value: number }) => {
-      // ...
-    }
-  }
-  // highlight-end
-}).createMachine({
-  // ...
-  entry: [
-    { type: 'track', params: { response: 'good' } },
-    { type: 'increment', params: { value: 1 } },
-  ]
 });
 ```
 
