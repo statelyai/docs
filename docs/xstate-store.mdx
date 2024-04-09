@@ -195,7 +195,7 @@ If you want to use [Immer](https://immerjs.github.io/immer/) to update the `cont
 
 ```ts
 import { createStoreWithProducer } from '@xstate/store';
-// higlight-next-line
+// highlight-next-line
 import { produce } from 'immer';
 
 const store = createStoreWithProducer(
@@ -232,6 +232,7 @@ If you are using React, you can use the `useSelector(store, selector)` hook to s
 
 ```tsx
 import { createStore } from '@xstate/store';
+// highlight-next-line
 import { useSelector } from '@xstate/store/react';
 
 // Create a store
