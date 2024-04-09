@@ -4,6 +4,12 @@ title: '@xstate/store'
 
 XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate.mdx) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
 
+:::info
+
+The `@xstate/store` library requires TypeScript version 5.4 or above.
+
+:::
+
 ## Installation
 
 <Tabs>
@@ -92,7 +98,7 @@ Updating `context` in transitions is similar to using the [`assign` action](./co
 import { createStore } from '@xstate/store';
 
 const store = createStore(
-  { count: 0, incremented: false, /* ... */ }
+  { count: 0, incremented: false, /* ... */ },
   {
     // highlight-start
     inc: {
@@ -111,7 +117,7 @@ Or you can update the entire `context` by using a function:
 import { createStore } from '@xstate/store';
 
 const store = createStore(
-  { count: 0, incremented: false, /* ... */ }
+  { count: 0, incremented: false, /* ... */ },
   {
     // highlight-start
     inc: (context, event) => {
@@ -133,7 +139,7 @@ You do not need to spread the `...context` when updating the entire `context` wi
 import { createStore } from '@xstate/store';
 
 const store = createStore(
-  { count: 0, incremented: false, /* ... */ }
+  { count: 0, incremented: false, /* ... */ },
   {
     reset: (context, event) => {
       // highlight-start
@@ -161,7 +167,7 @@ For strong typing, you should specify the payload type of the `event` object in 
 import { createStore } from '@xstate/store';
 
 const store = createStore(
-  { name: 'David', count: 0 }
+  { name: 'David', count: 0 },
   {
     // highlight-start
     updateName: (context, event: { name: string }) => {
@@ -278,7 +284,7 @@ import { createActor } from 'xstate';
 // Instead of:
 // const store = createStore( ... };
 const storeLogic = fromStore(
-  { count: 0, incremented: false, /* ... */ }
+  { count: 0, incremented: false, /* ... */ },
   {
     // highlight-start
     inc: {
