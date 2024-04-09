@@ -270,7 +270,10 @@ You may notice that stores are very similar to [actors in XState](./actors.mdx).
 However, if you have existing XState code, and you enjoy the simplicity of creating store logic with `@xstate/store`, you can use the `fromStore(context, transitions)` actor logic creator to create XState-compatible store logic that can be passed to the `createActor(storeLogic)` function:
 
 ```ts
+// highlight-start
 import { fromStore } from '@xstate/store';
+import { createActor } from 'xstate';
+// highlight-end
 
 // Instead of:
 // const store = createStore( ... };
@@ -286,17 +289,29 @@ const storeLogic = fromStore(
     // highlight-end
   }
 );
+
+const store = createActor(storeLogic);
+store.subscribe(snapshot => {
+  console.log(snapshot);
+});
+store.start();
+
+store.send({
+  type: 'inc'
+});
 ```
 
 In short, you can convert `createStore(…)` to `fromStore(…)` just by changing one line of code. Note that `fromStore(…)` returns _store logic_, and not a store actor instance. Store logic is passed to `createActor(storeLogic)` to create a store actor instance:
 
-```diff
--const store = createStore({
-+const storeLogic = fromStore({
-  // ...
+```ts
+// Instead of:
+// const store = createStore({
+const storeLogic = fromStore({
+  // (same arguments as `createStore`)
 });
 
-+const actor = createActor(storeLogic);
+// Create the store (actor)
+const storeActor = createActor(storeLogic);
 ```
 
 Using `fromStore(…)` to create store actor logic also has the advantage of allowing you to provide `input` by using a context function that takes in the `input` and _returns_ the initial `context`:
@@ -399,7 +414,7 @@ const machine = setup({
   }
   // highlight-end
 }).createMachine({
-  // ...
+  // Same as the previous example
 });
 ```
 
