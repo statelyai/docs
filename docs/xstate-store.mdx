@@ -1,0 +1,404 @@
+---
+title: '@xstate/store'
+---
+
+XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate.mdx) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
+
+## Installation
+
+<Tabs>
+<TabItem value="npm" label="npm">
+
+```bash
+npm install @xstate/store
+```
+
+</TabItem>
+
+<TabItem value="pnpm" label="pnpm">
+
+```bash
+pnpm install @xstate/store
+```
+
+</TabItem>
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add @xstate/store
+```
+
+</TabItem>
+</Tabs>
+
+## Quick start
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  // Initial context
+  { count: 0, name: 'David' },
+  // Transitions
+  {
+    inc: {
+      count: (context) => context.count + 1
+    },
+    add: {
+      count: (context, event: { num: number }) => context.count + event.num
+    },
+    changeName: {
+      name: (context, event: { newName: string }) => event.newName
+    }
+  }
+);
+
+// Get the current state (snapshot)
+console.log(store.getSnapshot());
+// => {
+//   status: 'active',
+//   context: { count: 0, name: 'David' }
+// }
+
+// Subscribe to snapshot changes
+store.subscribe((snapshot) => {
+  console.log(snapshot.context);
+});
+
+// Send an event
+store.send({ type: 'inc' });
+// logs { count: 1, name: 'David' }
+
+store.send({ type: 'add', num: 10 });
+// logs { count: 11, name: 'David' }
+
+store.send({ type: 'changeName', newName: 'Jenny' });
+// logs { count: 11, name: 'Jenny' }
+```
+
+## Creating a store
+
+To create a store, you need to pass in two arguments to the `createStore(…)` function:
+
+1. The initial `context`
+2. An object for `transitions` (event handlers) where:
+  - The keys are the event types (e.g. `"inc"`, `"add"`, `"changeName"`)
+  - The values are the `state` updates to apply when the event is sent to the store, as either an object or a function.
+
+Updating `context` in transitions is similar to using the [`assign` action](./context.mdx) in XState. You can update specific `context` properties by using an object:
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  { count: 0, incremented: false, /* ... */ }
+  {
+    // highlight-start
+    inc: {
+      count: (context, event) => context.count + 1,
+      // Static values do not need to be wrapped in a function
+      incremented: true
+    }
+    // highlight-end
+  }
+);
+```
+
+Or you can update the entire `context` by using a function:
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  { count: 0, incremented: false, /* ... */ }
+  {
+    // highlight-start
+    inc: (context, event) => {
+      // ...
+
+      return {
+        count: context.count + 1,
+        incremented: true
+      }
+    }
+    // highlight-end
+  }
+);
+```
+
+You do not need to spread the `...context` when updating the entire `context` with a function. The return value of the function will be merged into the current `context`.
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  { count: 0, incremented: false, /* ... */ }
+  {
+    reset: (context, event) => {
+      // highlight-start
+      // No need to use `...context`
+      // `incremented` and other properties will be preserved
+      return {
+        count: 0,
+      }
+      // highlight-end
+    }
+  }
+);
+```
+
+## Transition functions
+
+A transition function is a function that takes the current `context` and an `event` object, and returns:
+
+- The partial or entire `context` object to update (if using a function assigner)
+- The context property value to update (if using an object assigner).
+
+For strong typing, you should specify the payload type of the `event` object in the transition function.
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  { name: 'David', count: 0 }
+  {
+    // highlight-start
+    updateName: (context, event: { name: string }) => {
+      return {
+        name: event.name
+      }
+    },
+    inc: {
+      count: (context, event: { by: number }) => {
+        return context.count + event.by;
+      }
+    }
+    // highlight-end
+  }
+);
+
+store.send({
+  type: 'updateName',
+  name: 'Jenny' // Strongly-typed as `string`
+});
+
+store.send({
+  type: 'inc',
+  by: 10 // Strongly-typed as `number`
+});
+```
+
+## Using Immer
+
+If you want to use [Immer](https://immerjs.github.io/immer/) to update the `context`, you can do so by passing in the `produce` function as the first argument to `createStoreWithProducer(producer, …)`.
+
+```ts
+import { createStoreWithProducer } from '@xstate/store';
+// higlight-next-line
+import { produce } from 'immer';
+
+const store = createStoreWithProducer(
+  // highlight-start
+  // Producer
+  produce,
+  // highlight-end
+  // Initial context
+  { count: 0, todos: [] },
+  // Transitions
+  {
+    inc: (context, event: { by: number }) => {
+      // highlight-start
+      // No return; handled by Immer
+      context.count += event.by;
+      // highlight-end
+    },
+    addTodo: (context, event: { todo: string }) => {
+      // highlight-start
+      // No return; handled by Immer
+      context.todos.push(event.todo);
+      // highlight-end
+    }
+  });
+
+// ...
+```
+
+Note that you cannot use the object assigner syntax when using `createStoreFromProducer(…)`, nor is it even necessary.
+
+## Usage with React
+
+If you are using React, you can use the `useSelector(store, selector)` hook to subscribe to the store and get the current state.
+
+```tsx
+import { createStore } from '@xstate/store';
+import { useSelector } from '@xstate/store/react';
+
+// Create a store
+const store = createStore(
+  { count: 0, name: 'David' },
+  {
+    inc: {
+      count: (context) => context.count + 1
+    }
+  });
+
+// Use the `useSelector` hook to subscribe to the store
+function Component(props) {
+  // highlight-next-line
+  const count = useSelector(store, (state) => state.context.count);
+
+  // This component displays the count and has a button to increment it
+  return (
+    <div>
+      // highlight-start
+      Count: {count}
+      <button onClick={() => store.send({ type: 'inc' })}>Increment</button>
+      // highlight-end
+    </div>
+  );
+}
+```
+
+A store can be shared with multiple components, which will all receive the same snapshot from the store instance. Stores are useful for global state management.
+
+## Using XState Store with XState
+
+You may notice that stores are very similar to [actors in XState](./actors.mdx). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
+
+However, if you have existing XState code, and you enjoy the simplicity of creating store logic with `@xstate/store`, you can use the `fromStore(context, transitions)` actor logic creator to create XState-compatible store logic that can be passed to the `createActor(storeLogic)` function:
+
+```ts
+import { fromStore } from '@xstate/store';
+
+// Instead of:
+// const store = createStore( ... };
+const storeLogic = fromStore(
+  { count: 0, incremented: false, /* ... */ }
+  {
+    // highlight-start
+    inc: {
+      count: (context, event) => context.count + 1,
+      // Static values do not need to be wrapped in a function
+      incremented: true
+    }
+    // highlight-end
+  }
+);
+```
+
+In short, you can convert `createStore(…)` to `fromStore(…)` just by changing one line of code. Note that `fromStore(…)` returns _store logic_, and not a store actor instance. Store logic is passed to `createActor(storeLogic)` to create a store actor instance:
+
+```diff
+-const store = createStore({
++const storeLogic = fromStore({
+  // ...
+});
+
++const actor = createActor(storeLogic);
+```
+
+Using `fromStore(…)` to create store actor logic also has the advantage of allowing you to provide `input` by using a context function that takes in the `input` and _returns_ the initial `context`:
+
+```ts
+import { fromStore } from '@xstate/store';
+
+// highlight-start
+const storeLogic = fromStore((initialCount: number) => ({
+  count: initialCount,
+}), {
+// highlight-end
+  // ...
+});
+
+const actor = createActor(storeLogic, {
+  // highlight-next-line
+  input: 42
+});
+```
+
+## Converting stores to state machines
+
+If you have a store that you want to convert to a state machine in XState, you can convert it in a straightforward way:
+
+1. Use `createMachine(…)` (imported from `xstate`) instead of `createStore(…)` (imported from `@xstate/store`) to create a state machine.
+1. Move the first argument (the initial `context` object) to the `context` property of the machine configuration.
+1. Move the second argument (the `transitions` object) to the `on` property of the machine configuration.
+1. Wrap the assignments in an `assign(…)` action creator (imported from `xstate`) and move that to the `actions` property of the transition.
+1. Destructure `context` and `event` from the first argument instead of them being separate arguments.
+
+For example, here is our store before conversion:
+```ts
+import { createMachine } from 'xstate';
+
+// 1. Use `createMachine(…)` instead of `createStore(…)`
+const store = createStore(
+  // 2. Move the first argument (the initial `context` object)
+  // to the `context` property of the machine configuration
+  { count: 0, name: 'David' },
+  // 3. Move the second argument (the `transitions` object)
+  // to the `on` property of the machine configuration
+  {
+    inc: {
+      // 4. Wrap the assignments in `assign(…)`
+      // 5. Destructure `context` and `event` from the first argument
+      count: (context, event: { by: number }) => context.count + event.by
+    }
+  });
+
+const machine = createMachine({
+  // ...
+});
+```
+
+And here is the store as a state machine after conversion:
+```ts
+import { createMachine } from 'xstate';
+
+// const store = createStore(
+//   { count: 0, name: 'David' },
+//   {
+//     inc: {
+//       count: (context, event: { by: number }) => context.count + event.by
+//     }
+//   });
+
+// 1. Use `createMachine(…)` instead of `createStore(…)`
+const machine = createMachine({
+  // 2. Move the first argument (the initial `context` object)
+  // to the `context` property of the machine configuration
+  context: {
+    count: 0,
+    name: 'David'
+  },
+  // 3. Move the second argument (the `transitions` object)
+  // to the `on` property of the machine configuration
+  on: {
+    inc: {
+      // 4. Wrap the assignments in `assign(…)`
+      actions: assign({
+        // 5. Destructure `context` and `event` from the first argument
+        count: ({ context, event }) => context.count + event.by
+      })
+    }
+  }
+});
+```
+
+For stronger typing, use the [`setup(…)` function](./setup.mdx) to strongly type the `context` and `events`:
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  // highlight-start
+  types: {
+    context: {} as { count: number; name: string },
+    events: {} as { type: 'inc'; by: number }
+  }
+  // highlight-end
+}).createMachine({
+  // ...
+});
+```
+

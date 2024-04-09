@@ -421,6 +421,7 @@ const sidebars = {
       collapsed: true,
       collapsible: true,
       items: [
+        'xstate-store',
         'xstate-react',
         'xstate-vue',
         'xstate-svelte',
