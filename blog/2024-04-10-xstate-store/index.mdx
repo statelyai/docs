@@ -1,6 +1,6 @@
 ---
 title: Introducing XState Store
-description: XState Store
+description: A simple and small state management library inspired by XState
 tags:
   [
     xstate,
@@ -11,7 +11,6 @@ tags:
 authors: [david]
 date: 2024-04-10
 slug: 2024-04-10-xstate-store
-image: 
 ---
 
 Does the world need another state management library? Probably not, but if you've been interested in XState, you're going to want to check this one out.
@@ -63,12 +62,15 @@ store.send({ type: 'inc', by: 2 });
 Even in React:
 
 ```tsx
+// highlight-next-line
 import { useSelector } from '@xstate/store/react';
 import { store } from './store';
 
 function Counter() {
+  // highlight-next-line
   const count = useSelector(store, (state) => state.context.count);
 
+  // highlight-next-line
   return <button onClick={() => store.send({ type: 'inc', by: 1 })}>
     {count}
   </button>;
@@ -240,73 +242,12 @@ const store = createStoreWithProducer(
   });
 ```
 
-## Comparison
+## What's next
 
-XState Store does not claim to be a replacement for any other state management library. The decision for which library to use should be based on your requirements and your team's preferences. Here's a quick comparison of `@xstate/store` with other popular state management libraries, for reference only.
+New features are _not_ planned for `@xstate/store` since it aims to remain small, simple, and focused. However, we would like to add integrations with other frameworks (such as Vue, Angular, Svelte, Solid, etc.) and would greatly appreciate community contributions for those. And we can't forget about examples; keep an eye out for those in the `/examples` directory of the XState repo, such as [this small React counter example](https://github.com/statelyai/xstate/tree/main/examples/store-counter-react).
 
-:::info
+Other than that, the next thing for you to do is to try it out! If you've used Zustand, Redux, Pinia, or XState, you'll find `@xstate/store` very familiar. Please keep in mind that you should choose the state management library that best suits your requirements and your team's preferences. However, it is straightforward to migrate to (and from) `@xstate/store` to Redux, Zustand, Pinia, XState, or other state management libraries if needed.
 
-This is not an exhaustive comparison. It references examples from [the Zustand documentation](https://docs.pmnd.rs/zustand/getting-started/comparison).
+Our goal with `@xstate/store` is to provide a simple yet powerful _event-based_ state management solution that is type-safe. We believe that indirect (event-based) state management leads to better organization of application logic, especially as it grows in complexity, and `@xstate/store` is a great starting point for that approach.
 
-:::
-
-### XState Store
-
-```ts
-import { createStore } from 'xstate';
-
-const store = createStore({
-  count: 0
-}, {
-  increment: {
-    count: (context, event: { qty: number }) => context.count + event.qty
-  },
-  decrement: {
-    count: (context, event: { qty: number }) => context.count - event.qty
-  }
-});
-
-// Use the `useSelector(…)` hook to subscribe to the store in React components
-```
-
-### Zustand
-
-```ts
-import { create } from 'zustand'
-
-type State = {
-  count: number
-}
-
-type Actions = {
-  increment: (qty: number) => void
-  decrement: (qty: number) => void
-}
-
-const useCountStore = create<State & Actions>((set) => ({
-  count: 0,
-  increment: (qty: number) => set((state) => ({ count: state.count + qty })),
-  decrement: (qty: number) => set((state) => ({ count: state.count - qty })),
-}));
-```
-
-### Redux Toolkit
-
-```ts
-import { createSlice, configureStore } from '@reduxjs/toolkit'
-
-const countSlice = createSlice({
-  name: 'count',
-  initialState: { value: 0 },
-  reducers: {
-    incremented: (state, qty: number) => {
-      state.value += qty
-    },
-    decremented: (state, qty: number) => {
-      state.value -= qty
-    },
-  },
-})
-
-const countStore = configureStore({ reducer: countSlice.reducer })
-```
+Give it a try, and feel free to ask any questions in [our Discord](https://discord.gg/xstate) or report bugs in [the XState GitHub repo](https://github.com/statelyai/xstate/issues). We're always looking for feedback on how we can improve the experience!

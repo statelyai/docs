@@ -1,3 +1,8 @@
 {
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
+  }
 }
