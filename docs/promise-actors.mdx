@@ -130,7 +130,7 @@ console.log(output);
 
 ## Promise actor error handling
 
-If an error occurs in the promise logic, the promise actor will reject with the error. You can subscribe to the promise actor and check the `status` property of the snapshot. If the `status` is `'error'`, you can access the `error` property of the snapshot to get the error.
+If an error occurs in the promise logic, the promise actor will reject with the error. You can subscribe to the promise actor and check the `status` property of the snapshot in an **error observer** (the `error` property of the observer object).
 
 ```ts
 import { fromPromise } from 'xstate';
@@ -141,13 +141,13 @@ const promiseLogic = fromPromise(async () => {
 });
 
 const promiseActor = createActor(promiseLogic);
-promiseActor.subscribe(snapshot => {
+promiseActor.subscribe({
   // highlight-start
-  if (snapshot.status === 'error') {
-    console.log(snapshot.error);
+  error: (error) => {
+    console.error(error);
     // logs 'Error: Something went wrong'
   }
-  // highlight-end
+    // highlight-end
 });
 
 promiseActor.start();
