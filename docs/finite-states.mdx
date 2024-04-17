@@ -156,7 +156,7 @@ const feedbackMachine = createMachine({
 
 const feedbackActor = createActor(feedbackMachine).start();
 
-console.log(feedbackActor..getSnapshot().hasTag('visible'));
+console.log(feedbackActor.getSnapshot().hasTag('visible'));
 // logs true
 ```
 
