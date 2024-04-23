@@ -133,7 +133,7 @@ For further examples, see:
 
 Actions are “fire-and-forget”; as soon as their execution starts, the state machine running the actions forgets about them. If you specify an action as `async`, **the action won’t be awaited before moving to the next state**. Remember: transitions are always _zero-time_ (states transition synchronously).
 
-Invoked actors can do asynchronous work _and_ communicate with their parent machine actor. They they can send and receive events. Invoked machine actors can even invoke or spawn their own child actors.
+Invoked actors can do asynchronous work _and_ communicate with their parent machine actor. They can send and receive events. Invoked machine actors can even invoke or spawn their own child actors.
 
 Unlike actions, errors thrown by invoked actors can be handled directly:
 
