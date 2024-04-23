@@ -135,7 +135,7 @@ restoredActor.start();
 
 An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the [events](transitions.mdx) that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
 
-One way to implement event sourcing is to persist the events as they happen using the [inspection API](/inspection), and then replay them to restore the state of the actor:
+One way to implement event sourcing is to persist the events as they happen using the [inspection API](inspection.mdx), and then replay them to restore the state of the actor:
 
 ```ts
 const events = [];

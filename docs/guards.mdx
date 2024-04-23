@@ -218,26 +218,31 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `guards` of your machine in the `types.guards` property of the machine config.
+You can strongly type the `guards` of your machine by setting up their implementations in `setup({ guards: { … } })`. You can provide the `params` type in the 2nd argument of the guard function:
 
 ```ts
-const machine = createMachine({
-  types: {} as {
-    // highlight-start
-    guards:
-      | {
-          type: 'isGreaterThan';
-          params: {
-            count: number;
-          };
-        }
-      | { type: 'isAllowed' };
-    // highlight-end
-  },
+import { setup } from 'xstate';
+
+const machine = setup({
+  // highlight-start
+  guards: {
+    isGreaterThan: (_, params: { count: number; min: number; }) => {
+      return params.count > params.min;
+    }
+  }
+  // highlight-end
+}).createMachine({
   // ...
   on: {
-    event: {
-      guard: { type: 'isGreaterThan', params: { count: 5 } },
+    someEvent: {
+      guard: {
+        type: 'isGreaterThan',
+        // Strongly-typed params
+        params: ({ event }) => ({
+          count: event.count,
+          min: 10
+        })
+      },
       // ...
     },
   },
