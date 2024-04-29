@@ -219,6 +219,52 @@ const feedbackActor = createActor(
 );
 ```
 
+## Built-in actions
+
+XState provides a number of useful built-in actions that are a core part of the logic of your state machines, and not merely side-effects.
+
+:::warning
+
+Built-in actions, such as `assign(…)`, `sendTo(…)`, and `raise(…)`, are **not imperative**; they return a special [action object](#action-objects) (e.g. `{ type: 'xstate.assign', … }`) that are interpreted by the state machine. Do not call built-in action in custom action functions.
+
+```ts
+// ❌ This will have no effect
+const machine = createMachine({
+  context: { count: 0 },
+  // highlight-start
+  entry: ({ context }) => {
+    // This action creator only returns an action object
+    // like { type: 'xstate.assign', ... }
+    assign({ count: context.count + 1 });
+  }
+  // highlight-end
+});
+
+// ✅ This will work as expected
+const machine = createMachine({
+  context: { count: 0 },
+  // highlight-start
+  entry: assign({
+    count: ({ context }) => context.count + 1
+  })
+  // highlight-end
+});
+
+// ✅ Imperative built-in actions are available in `enqueueActions(…)`
+const machine = createMachine({
+  context: { count: 0 },
+  // highlight-start
+  entry: enqueueActions(({ context, enqueue }) => {
+    enqueue.assign({
+      count: context.count + 1
+    });
+  })
+  // highlight-end
+});
+```
+
+:::
+
 ## Assign action
 
 The `assign(...)` action is a special action that assigns data to the state context. The `assignments` argument in `assign(assignments)` is where assignments to context are specified.
