@@ -334,6 +334,12 @@ const countMachine = setup({
 });
 ```
 
+:::warningxstate
+
+Do not mutate the `context` object. Instead, you should use the `assign(...)` action to update `context` immutably. If you mutate the `context` object, you may get unexpected behavior, such as mutating the `context` of other actors.
+
+:::
+
 :::studio
 
 You can create state machines with the `assign(...)` action in our drag-and-drop Stately editor. [Read more about built-in assign action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
