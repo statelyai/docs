@@ -152,3 +152,36 @@ promiseActor.subscribe({
 
 promiseActor.start();
 ```
+
+## Stopping promise actors
+
+You can stop a promise actor created using `createActor(promiseLogic)` by calling `.stop()` on the actor instance. This will discard the resolved or rejected value of the promise and dispose of any subscriptions to the promise actor.
+
+You can also **abort** a promise actor by passing the `signal` to it:
+
+```ts
+import { fromPromise, createActor } from 'xstate';
+
+const promiseLogic = fromPromise(async ({
+  input,
+  // highlight-next-line
+  signal
+}) => {
+  // highlight-start
+  // Pass the signal to abort fetching if signaled
+  const data = await fetch('/some/url', { signal });
+  // highlight-end
+
+  return data;
+});
+
+const promiseActor = createActor(promiseLogic);
+promiseActor.start();
+
+// ...
+
+// highlight-start
+// Abort the promise actor
+promiseActor.stop();
+// highlight-end
+```
