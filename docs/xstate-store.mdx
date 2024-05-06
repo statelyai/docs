@@ -480,7 +480,7 @@ const store = createStore({
 const Component = () => {
   const count = useSelector(store, (state) => state.context.count);
   const increment = () => store.send({ type: 'increment' });
-  const decrement = () => store.send({ type: 'increment' });
+  const decrement = () => store.send({ type: 'decrement' });
   // ...
 }
 ```
