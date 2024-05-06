@@ -479,8 +479,8 @@ const store = createStore({
 
 const Component = () => {
   const count = useSelector(store, (state) => state.context.count);
-  const increment = () => store.send({ type: 'increment' });
-  const decrement = () => store.send({ type: 'decrement' });
+  const increment = (qty) => store.send({ type: 'increment', qty });
+  const decrement = (qty) => store.send({ type: 'decrement', qty });
   // ...
 }
 ```
