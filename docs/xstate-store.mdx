@@ -424,3 +424,63 @@ const machine = setup({
 });
 ```
 
+## Comparison
+
+This section compares XState Store to other popular state management libraries in TypeScript. It is meant for reference purposes only, and not intended to favor one approach over the other. The examples are copied from [Zustand's comparison docs](https://docs.pmnd.rs/zustand/getting-started/comparison).
+
+### Compare to Zustand
+
+**Zustand**
+```ts
+import { create } from 'zustand'
+
+type State = {
+  count: number
+}
+
+type Actions = {
+  increment: (qty: number) => void
+  decrement: (qty: number) => void
+}
+
+const useCountStore = create<State & Actions>((set) => ({
+  count: 0,
+  increment: (qty: number) => set((state) => ({
+    count: state.count + qty
+  })),
+  decrement: (qty: number) => set((state) => ({
+    count: state.count - qty
+  })),
+}));
+
+const Component = () => {
+  const count = useCountStore((state) => state.count)
+  const increment = useCountStore((state) => state.increment)
+  const decrement = useCountStore((state) => state.decrement)
+  // ...
+}
+```
+
+**XState Store**
+```ts
+import { createStore } from '@xstate/store';
+import { useSelector } from '@xstate/store/react';
+
+const store = createStore({
+  count: 0
+}, {
+  increment: (context, { qty }: { qty: number }) => ({
+    count: context.count + qty
+  }),
+  decrement: (context, { qty }: { qty: number }) => ({
+    count: context.count - qty
+  })
+});
+
+const Component = () => {
+  const count = useSelector(store, (state) => state.context.count)
+  const increment = () => store.send({ type: 'increment' });
+  const decrement = () => store.send({ type: 'increment' });
+  // ...
+}
+```
