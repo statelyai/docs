@@ -2498,8 +2498,21 @@ import { createMachine } from 'xstate5';
 
 If you need to use different versions of an integration package, such as `@xstate/react`, you can use a similar strategy as above, but you will need to link to the correct version of XState in the integration package. This can be done by using a script:
 
+```json5
+// package.json
+"scripts": {
+  "postinstall": "node scripts/xstate5-react-script.js"
+},
+// We trick @xstate5/react into having a peer dependency on xstate v4, which bypasses the --legacy-peer-deps error
+"overrides": {
+  "@xstate5/react": {
+    "xstate": "^4"
+  }
+}
+```
+
 ```bash
-npm i xstate5@npm:xstate@5 @xstate5/react@npm:@xstate/react@4 --force
+npm i xstate5@npm:xstate@5 @xstate5/react@npm:@xstate/react@4
 ```
 
 ```js
@@ -2513,13 +2526,6 @@ fs.ensureSymlinkSync(
   path.join(rootNodeModules, 'xstate5'),
   path.join(rootNodeModules, '@xstate5', 'react', 'node_modules', 'xstate'),
 );
-```
-
-```json5
-// package.json
-"scripts": {
-  "postinstall": "node scripts/xstate5-react-script.js"
-}
 ```
 
 Then, you can use the XState v5 compatible version of `@xstate/react` in your code:
