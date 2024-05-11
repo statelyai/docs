@@ -346,7 +346,8 @@ const feedbackMachine = createMachine({
     prompt: {
       on: {
         // highlight-start
-        // This will match any event that starts with 'feedback.':
+        // This will match the 'feedback' event as well as
+        // any event that starts with 'feedback.', e.g.:
         // 'feedback.good', 'feedback.bad', etc.
         'feedback.*': { target: 'form' },
         // highlight-end
@@ -362,8 +363,8 @@ The wildcard character (`*`) can only be used in the suffix of an event descript
 
 ### Valid wildcard examples
 
-- ✅ `mouse.*`: matches `mouse.click`, `mouse.move`, etc.
-- ✅ `mouse.click.*`: matches `mouse.click.left`, `mouse.click.right`, etc.
+- ✅ `mouse.*`: matches `mouse`, `mouse.click`, `mouse.move`, etc.
+- ✅ `mouse.click.*`: matches `mouse.click`, `mouse.click.left`, `mouse.click.right`, etc.
 
 ### Invalid wildcard
 
