@@ -8,7 +8,7 @@ XState v5 and its related libraries are written in [TypeScript](https://www.type
 
 **XState v5 requires TypeScript version 5.0 or greater.** 
 
-For best results, use the latest TypeScript version.
+For best results, use the **latest TypeScript version**.
 
 :::
 
@@ -164,6 +164,45 @@ const machine = createMachine({
     }
   }
 })
+```
+
+## Type helpers
+
+XState provides some type helpers to make it easier to work with types in TypeScript.
+
+### `ActorRefFrom<T>`
+
+Results in an `ActorRef` from the provided `T` actor logic parameter, which is useful for creating strongly-typed actors. The `T` parameter can be any `ActorLogic`, such as the return value of `createMachine(…)`, or any other actor logic, such as `fromPromise(…)` or `fromObservable(…)`.
+
+```ts
+import { type ActorRefFrom } from 'xstate';
+import { someMachine } from './someMachine';
+
+type SomeActorRef = ActorRefFrom<typeof someMachine>;
+```
+
+### `SnapshotFrom<T>`
+
+Results in a `Snapshot` from the provided `T` parameter, which is useful for creating strongly-typed snapshots. The `T` parameter can be any `ActorLogic` or `ActorRef`.
+
+```ts
+import { type SnapshotFrom } from 'xstate';
+import { someMachine } from './someMachine';
+
+type SomeSnapshot = SnapshotFrom<typeof someMachine>;
+```
+
+### `EventFromLogic<T>`
+
+Results in an union of all event types defined in the provided `T` actor logic parameter. Useful for type-safe event handling.
+
+```ts
+import { type EventFromLogic } from 'xstate';
+import { someMachine } from './someMachine';
+
+// SomeEvent would be a union of all event
+// types defined in `someMachine`.
+type SomeEvent = EventFromLogic<typeof someMachine>;
 ```
 
 ## Typegen
