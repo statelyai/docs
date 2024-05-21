@@ -81,6 +81,10 @@ import { setup } from 'xstate';
 
 const feedbackMachine = setup({
   types: {
+    context: {} as {
+      feedback: string;
+      rating: number;
+    },
     // highlight-start
     input: {} as {
       defaultRating: number
