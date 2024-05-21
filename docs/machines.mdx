@@ -171,31 +171,17 @@ console.log(initialSnapshot.value);
 
 ## Specifying types
 
-You can specify TypeScript types inside the machine config using the `.types` property:
-
-```ts
-import { createMachine } from 'xstate';
-
-const feedbackMachine = createMachine({
-  types: {} as {
-    context: { feedback: string };
-    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
-    actions: { type: 'logTelemetry' };
-  },
-});
-```
-
-These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
-
-If you are using the `setup(...)` function, you should provide the types in the `.types` property inside the setup function:
+You can specify TypeScript types inside the machine setup using the `.types` property:
 
 ```ts
 import { setup } from 'xstate';
 
 const feedbackMachine = setup({
-  types: {} as {
-    context: { feedback: string };
-    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
+  types: {
+    context: {} as { feedback: string },
+    events: {} as
+      | { type: 'feedback.good' }
+      | { type: 'feedback.bad' }
   },
   actions: {
     logTelemetry: () => {
@@ -206,6 +192,8 @@ const feedbackMachine = setup({
   // ...
 });
 ```
+
+These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
 ## Typegen
 
@@ -243,8 +231,10 @@ const someActor = fromPromise(async () => {
 
 const feedbackMachine = setup({
   types: {
-    context: {} as { count: number };
-    events: {} as { type: 'increment' } | { type: 'decrement' };
+    context: {} as { count: number },
+    events: {} as 
+      | { type: 'increment' }
+      | { type: 'decrement' }
   },
   actions: {
     someAction

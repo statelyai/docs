@@ -44,15 +44,18 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-The `output` property can be typed in the machine `.types` property:
+The `output` property can be typed in the `.types` property of the machine setup:
 
 ```ts
-import { createMachine, createActor } from 'xstate';
+import { setup, createActor } from 'xstate';
 
-const machine = createMachine({
+const machine = setup({
+  // highlight-start
   types: {
     output: {} as { total: number }
-  },
+  }
+  // highlight-end
+}).createMachine({
   // ...
   output: ({ context }) => ({
     total: context.items.reduce((total, item) => total + item.price, 0),

@@ -43,19 +43,21 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `tags` of your machine in the `types.tags` property of the machine config.
+You can strongly type the `tags` of your machine in the `types.tags` property of the machine setup.
 
 ```ts
-const machine = createMachine({
-  types: {} as {
-    // highlight-start
-    tags: 'pending' | 'success' | 'error';
-    // highlight-end
-  },
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {
+    // highlight-next-line
+    tags: {} as 'pending' | 'success' | 'error'
+  }
+}).createMachine({
   // ...
   states: {
     loadingUser: {
-      tags: ['pending'],
+      tags: ['pending'], // Strongly-typed
     },
   },
 });

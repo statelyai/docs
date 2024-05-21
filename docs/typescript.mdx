@@ -51,9 +51,11 @@ The recommended way to strongly type your machine is to use the `setup(...)` fun
 import { setup } from 'xstate';
 
 const feedbackMachine = setup({
-  types: {} as {
-    context: { feedback: string };
-    events: { type: 'feedback.good' } | { type: 'feedback.bad' };
+  types: {
+    context: {} as { feedback: string },
+    events: {} as
+      | { type: 'feedback.good' }
+      | { type: 'feedback.bad' }
   },
   actions: {
     logTelemetry: () => {

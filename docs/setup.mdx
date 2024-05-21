@@ -20,8 +20,8 @@ const machine = setup({
   types: {
     context: {} as { count: number },
     events: {} as 
-    | { type: 'inc' }
-    | { type: 'dec' }
+      | { type: 'inc' }
+      | { type: 'dec' }
   },
   actions: {
     increment: assign({

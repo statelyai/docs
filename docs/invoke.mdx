@@ -29,6 +29,13 @@ const fetchUser = (userId: string) =>
   fetch(`https://example.com/${userId}`).then((response) => response.text());
 
 const userMachine = setup({
+  types: {
+    context: {} as {
+      userId: string;
+      user: object | undefined;
+      error: unknown;
+    }
+  },
   actors: {
     fetchUser: fromPromise(async ({ input }) => {
       const user = await fetchUser(input.userId);
@@ -37,13 +44,6 @@ const userMachine = setup({
     })
   }
 }).createMachine({
-  types: {} as {
-    context: {
-      userId: string;
-      user: object | undefined;
-      error: unknown;
-    };
-  },
   id: 'user',
   initial: 'idle',
   context: {
@@ -420,7 +420,7 @@ XState can invoke Promises as actors using the `fromPromise` actor logic creator
 If the state where the invoked promise is active is exited before the promise settles, the result of the promise is discarded.
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate';
+import { setup, createActor, fromPromise, assign } from 'xstate';
 
 // Function that returns a Promise
 // which resolves with some useful value
@@ -428,14 +428,15 @@ import { createMachine, createActor, fromPromise, assign } from 'xstate';
 const fetchUser = (userId: string) =>
   fetch(`/api/users/${userId}`).then((response) => response.json());
 
-const userMachine = createMachine({
-  types: {} as {
-    context: {
+const userMachine = setup({
+  types: {
+    context: {} as {
       userId: string;
       user: object | undefined;
       error: unknown;
-    };
-  },
+    }
+  }
+}).createMachine({
   id: 'user',
   initial: 'idle',
   context: {
@@ -493,7 +494,7 @@ The resolved output is placed into a `'xstate.done.actor.<id>'` event, under the
 If a Promise rejects, the `onError` transition will be taken with a `{ type: 'xstate.error.actor.<id>' }` event. The error data is available on the event's `error` property:
 
 ```ts
-import { createMachine, createActor, fromPromise, assign } from 'xstate';
+import { setup, createActor, fromPromise, assign } from 'xstate';
 
 const search = (query: string) =>
   new Promise((resolve, reject) => {
@@ -507,13 +508,14 @@ const search = (query: string) =>
   });
 
 // ...
-const searchMachine = createMachine({
-  types: {} as {
-    context: {
+const searchMachine = setup({
+  types: {
+    context: {} as {
       results: object | undefined;
       errorMessage: unknown;
-    };
-  },
+    }
+  }
+}).createMachine({
   id: 'search',
   initial: 'idle',
   context: {

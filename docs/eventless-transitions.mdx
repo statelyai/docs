@@ -114,7 +114,9 @@ Eventless transitions can potentially be enabled by any event, so the `event` ty
 ```ts
 const machine = createMachine({
   types: {} as {
-    events: { type: 'greet'; message: string } | { type: 'submit' };
+    events:
+      | { type: 'greet'; message: string }
+      | { type: 'submit' };
   },
   // ...
   always: {
