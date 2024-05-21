@@ -158,10 +158,11 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You can strongly type the `context` of your machine in the `types.context` property of the machine config.
+You can strongly type the `context` of your machine in the `types.context` property of the actor setup..
 
 ```ts
-const machine = createMachine({
+import { setup } from 'xstate';
+const machine = setup({
   types: {} as {
     // highlight-start
     context: {
@@ -169,7 +170,8 @@ const machine = createMachine({
       rating: number;
     };
     // highlight-end
-  },
+  }
+}).createMachine({
   // Initial context
   context: {
     feedback: '',
@@ -231,6 +233,10 @@ import { setup } from 'xstate';
 
 const feedbackMachine = setup({
   types: {
+    context: {} as {
+      feedback: string;
+      rating: number;
+    },
     // highlight-start
     input: {} as {
       defaultRating: number
