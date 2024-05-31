@@ -2,7 +2,10 @@
 title: '@xstate/graph'
 ---
 
-The [@xstate/graph package](https://github.com/statelyai/xstate/tree/main/packages/xstate-graph) contains graph algorithms and utilities for XState machines.
+The [@xstate/graph package](https://github.com/statelyai/xstate/tree/main/packages/xstate-graph) contains graph algorithms and utilities for:
+
+- **Generating paths** for state machines
+- **Testing any application** by using state machines for model-based testing
 
 ## Quick start
 
@@ -21,6 +24,61 @@ import { getSimplePaths } from '@xstate/graph';
 const machine = createMachine(/* ... */);
 const paths = getSimplePaths(machine);
 ```
+
+## Generating paths
+
+Since state machines & statecharts are directed graphs, we can use graph algorithms to generate paths between states.
+
+
+### `getShortestPaths(logic, options?)`
+
+Generates and returns an array of **shortest paths** from the initial state of the `logic` (e.g. a state machine) to every other state.
+
+### `getSimplePaths(logic, options?)`
+
+Generates and returns an array of **simple paths** from the initial state of the `logic` (e.g. a state machine) to every other state.
+
+### `getAdjacencyMap(logic, options?)`
+
+Generates and returns an **adjacency map** of the `logic` (e.g. a state machine) where:
+
+- The **key** is the stringified state
+- The **value** is an object containing:
+  - The `state` object
+  - A `transitions` object, where:
+    - The **key** is the stringified event
+    - The **value** is an object containing:
+      - The `event` object
+      - The next `state` object
+
+### `adjacencyMapToArray(adjacencyMap)`
+
+Returns an array of objects containing `state`, `event`, and `nextState` triples.
+
+## Model-based testing
+
+Model-based testing is a form of testing that uses state machines to model the behavior of the system under test.
+
+### `TestModel`
+
+### `createTestModel(machine, options?)`
+
+Creates a `TestModel` instance from a given state machine and test model options. The `TestModel` instance has the following methods:
+
+### `testModel.getShortestPaths(options?)`
+
+### `testModel.getShortestPathsFrom(paths, options?)`
+
+### `testModel.getSimplePaths(options?)`
+
+### `testModel.getSimplePathsFrom(paths, options?)`
+
+### `testModel.getPathsFromEvents(events, options?)`
+
+### `testModel.getAdjacencyMap()`
+
+### `testModel.testPath(path, params, options?)`
+
 
 ## API
 
