@@ -117,6 +117,20 @@ subscription.unsubscribe();
 // highlight-end
 ```
 
+## Wildcard event handlers
+
+You can listen for _any_ emitted event by listening for the wildcard `'*'`:
+
+```ts
+const someActor = createActor(someMachine);
+
+actor.on('*', (emitted) => {
+  console.log(emitted); // Any emitted event
+});
+```
+
+The `emitted` event will be typed as the union of all possible events that can be emitted from the machine.
+
 ## TypeScript
 
 You can strongly type emitted events by defining the emitted event types in the `types.emitted` property of the `setup(…)` function:
