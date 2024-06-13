@@ -92,7 +92,7 @@ countActor.send({ type: 'SET', value: 10 });
 ## Create a more complex machine
 
 ```js
-import { createMachine, createActor } from 'xstate';
+import { createMachine, assign, createActor } from 'xstate';
 
 const textMachine = createMachine({
   context: {
