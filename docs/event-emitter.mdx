@@ -4,7 +4,9 @@ title: Event emitter
 
 _Since XState version 5.9.0_
 
-State machines in XState have the ability to emit events using the `emit(event)` action creator. This allows external event handlers to be notified of specific events.
+State machines and other types of actor logic in XState have the ability to emit events. This allows external event handlers to be notified of specific events.
+
+With state machines, you can emit events using the `emit(event)` action creator.
 
 ```ts
 import { setup, emit } from 'xstate';
@@ -40,9 +42,87 @@ actor.send({ type: 'someEvent' });
 // { type: "notification" }
 ```
 
+## Emitting events from actor logic
+
+For promise actors, transition actors, observable actors, and callback actors, you can use the `emit` method from the arguments to emit events.
+
+
+**Promise actors**
+
+```ts
+import { fromPromise } from 'xstate';
+
+// highlight-next-line
+const logic = fromPromise(async ({ emit }) => {
+  // ...
+  // highlight-start
+  emit({
+    type: 'emitted',
+    msg: 'hello'
+  });
+  // highlight-end
+  // ...
+});
+```
+
+**Transition actors**
+
+```ts
+import { fromTransition } from 'xstate';
+
+// highlight-next-line
+const logic = fromTransition((state, event, { emit }) => {
+  // ...
+  // highlight-start
+  emit({
+    type: 'emitted',
+    msg: 'hello'
+  });
+  // highlight-end
+  // ...
+  return state;
+}, {});
+```
+
+**Observable actors**
+
+```ts
+import { fromObservable } from 'xstate';
+
+// highlight-next-line
+const logic = fromObservable(({ emit }) => {
+  // ...
+  // highlight-start
+  emit({
+    type: 'emitted',
+    msg: 'hello'
+  });
+  // highlight-end
+  // ...
+});
+```
+
+**Callback actors**
+
+```ts
+import { fromCallback } from 'xstate';
+
+// highlight-next-line
+const logic = fromCallback(({ emit }) => {
+  // ...
+  // highlight-start
+  emit({
+    type: 'emitted',
+    msg: 'hello'
+  });
+  // highlight-end
+  // ...
+});
+```
+
 ## Emit action creator
 
-The emit action is a special action that _emits_ an event to any external event handlers. The emitted event can be statically or dynamically defined:
+The emit action is a special action that _emits_ an event to any external event handlers from state machine logic. The emitted event can be statically or dynamically defined:
 
 ```ts
 import { setup, emit } from 'xstate';
