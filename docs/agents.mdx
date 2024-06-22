@@ -13,14 +13,17 @@ The [Stately Agent (`@statelyai/agent`)](https://github.com/statelyai/agent) pac
 
 ## Installation
 
-Install `@statelyai/agent` and `xstate`, as well as OpenAI (more LLM adapters will be added in the near future) into your Node project.
-
+Install the following dependencies:
+- `@statelyai/agent@beta` – Stately.ai Agent, currently in beta
+- `@ai-sdk/openai` – The Vercel AI SDK for OpenAI, which provides access to the OpenAI API
+- `xstate` – Library for managing state machines and statecharts
+- `zod` – Library for type-safe schema validation
 
 <Tabs>
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install @statelyai/agent xstate openai
+npm install @statelyai/agent @ai-sdk/openai xstate zod 
 ```
 
 </TabItem>
@@ -28,7 +31,7 @@ npm install @statelyai/agent xstate openai
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm install @statelyai/agent xstate openai
+pnpm install @statelyai/agent @ai-sdk/openai xstate zod 
 ```
 
 </TabItem>
@@ -36,7 +39,7 @@ pnpm install @statelyai/agent xstate openai
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add @statelyai/agent xstate openai
+yarn add @statelyai/agent @ai-sdk/openai xstate zod 
 ```
 
 </TabItem>
@@ -44,345 +47,325 @@ yarn add @statelyai/agent xstate openai
 
 ## Quick start
 
-1. Create an LLM adapter.
+1. Add your provider's API key to your `.env` file.
 
-:::info
+```bash
+OPENAI_API_KEY="sk-abCDE..."
+```
 
-Currently, only OpenAI is supported. More adapters will be added in the near future.
-
-:::
+2. Create an agent.
 
 ```ts
-import OpenAI from 'openai';
-import { createOpenAIAdapter } from '@statelyai/agent';
+import { openai } from '@ai-sdk/openai';
+import { createAgent } from '@statelyai/agent';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const llmAdapter = createOpenAIAdapter(openai, {
-  model: 'gpt-3.5-turbo-1106'
+const agent = createAgent({
+  model: openai('gpt-4-turbo'),
+  name: 'todo',
+  events: {}
 });
 ```
 
-2. Create agent abilities.
+3. Add event schemas using Zod. These are the events that the agent is allowed to "cause" (i.e. send to the actor)
 
 ```ts
-const getJokeCompletion = llmAdapter.fromChat(
-  (topic: string) => `Tell me a joke about ${topic}.`
-);
+import { openai } from '@ai-sdk/openai';
+import { createAgent } from '@statelyai/agent';
+import { z } from 'zod';
 
-const rateJoke = llmAdapter.fromChat(
-  (joke: string) => `Rate this joke on a scale of 1 to 10: ${joke}`
-);
-
-const decide = llmAdapter.fromEvent(
-  (lastRating: string) =>
-    `Choose what to do next, given the previous rating of the joke: ${lastRating}`
-);
-```
-
-3. Create a state machine that describes the agent's behavior.
-
-```ts
-const jokeMachine = setup({
-  actors: {
-    getJokeCompletion,
-    rateJoke,
-    decide,
-  },
-  actions: {
-    assignTopic: assign({/* ... */}),
-
+const agent = createAgent({
+  model: openai('gpt-4-turbo'),
+  name: 'todo',
+  // highlight-start
+  events: {
+    'todo.add': z.object({
+      todo: z
+        .object({
+          title: z.string().describe('The title of the todo'),
+          content: z.string().describe('The content of the todo'),
+          completed: z
+            .boolean()
+            .describe('The completed value of the todo')
+            .optional(),
+        })
+        .describe('Adds a new todo'),
+    }),
+    'todo.toggle': z.object({
+      todoId: z.string().describe('The ID of the todo to toggle'),
+      completed: z.boolean().describe('The new completed value').optional(),
+    }),
   }
+  // highlight-end
+});
+```
+
+3. Interact with a [state machine actor](./state-machine-actors.mdx) that accepts those events.
+
+```ts
+import { setup, createActor } from 'xstate';
+import { agent } from './agent';
+
+const todoMachine = setup({
+  // ...
 }).createMachine({
-  context: {
-    // ...
-  },
-    states: {
-    waitingForTopic: {
-      invoke: {
-        src: 'getTopic',
-        onDone: {
-          actions: 'assignTopic',
-          target: 'tellingJoke',
-        },
-      },
-    },
-    tellingJoke: {
-      invoke: {
-        src: 'getJokeCompletion',
-        input: ({ context }) => context.topic,
-        onDone: {
-          actions: 'assignJoke',
-          target: 'rateJoke',
-        },
-      },
-    },
-    rateJoke: {
-      invoke: {
-        src: 'rateJoke',
-        input: ({ context }) => context.jokes[context.jokes.length - 1]!,
-        onDone: {
-          actions: 'assignLastRating',
-          target: 'decide',
-        },
-      },
-    },
-    decide: {
-      invoke: {
-        src: 'decide',
-        input: ({ context }) => context.lastRating!,
-      },
+  // ...
+});
+
+const todoActor = createActor(todoMachine);
+
+// highlight-next-line
+agent.interact(todoMachine);
+
+todoActor.start();
+```
+
+## Creating an agent
+
+You can create an agent using the `createAgent(settings)` function. There are required settings:
+
+- `name` - The name of the agent, used for logging and agent learning purposes
+- `model` - The [AI SDK language model](https://sdk.vercel.ai/docs/foundations/providers-and-models) to use for generating text and making tool calls
+- `events` - An object of [Zod](https://zod.dev/) event schemas that the agent can trigger (i.e. events it can send to some live environment that it is interacting with)
+
+```ts
+import { createAgent } from '@statelyai/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+const agent = createAgent({
+  name: 'barista',
+  model: openai('gpt-4-turbo'),
+  events: {
+    'barista.makeDrink': z.object({
+      drink: z.enum(['espresso', 'latte', 'cappuccino']),
+    }).describe('Makes a drink'),
+  }
+});
+```
+
+You can specify additional settings to customize the agent's behavior:
+
+- `description` - A description of the agent, used for logging and agent learning purposes, as well as for agents that call other agents (multi-agent systems)
+- `planner` - An async function that takes the `agent` and planner `input` and resolves with an `AgentPlan` that potentially includes the `steps` and the `nextEvent` to execute to achieve the `input.goal`. This function is used to determine what the agent should do next when making a decision based on the current state (`input.state`) and goal (`input.goal`).
+- `logic` - The agent logic function that is used to determine what an agent does when it receives an agent event, such as `"agent.feedback"`, `"agent.observe"`, `"agent.message"`, or `"agent.plan"`.
+
+## Making decisions
+
+The most important feature of a Stately agent is the ability to make decisions based on the current state and goal. This is done using the `agent.decide(input)` async function, which takes an `input` object that contains the current state, state machine, and goal, and resolves with an `AgentPlan`.
+
+For example, suppose you have the following `baristaMachine` state machine:
+
+```ts
+import { createMachine } from 'xstate';
+
+export const baristaMachine = createMachine({
+  initial: 'idle',
+  states: {
+    idle: {
       on: {
-        askForTopic: {
-          target: 'waitingForTopic',
-          actions: log("That joke wasn't good enough. Let's try again."),
-          description:
-            'Ask for a new topic, because the last joke rated 6 or lower',
-        },
-        endJokes: {
-          target: 'end',
-          actions: log('That joke was good enough. Goodbye!'),
-          description: 'End the jokes, since the last joke rated 7 or higher',
-        },
+        'barista.makeDrink': 'makingDrink',
       },
     },
-    end: {
-      type: 'final',
+    makingDrink: {
+      on: {
+        'barista.drinkMade': 'idle',
+      }
     },
   },
 });
 ```
 
-4. Create the state-machine-powered agent.
-
-TODO: state machine diagram
-
-## Adapters
-
-An adapter wraps LLM providers such as OpenAI and provides a unified interface for creating agent logic.
+You can then use the `agent.decide(input)` function to determine what the agent should do next:
 
 ```ts
-import { createOpenAIAdapter } from '@statelyai/agent';
+import { createAgent } from '@statelyai/agent';
+import { baristaMachine } from './baristaMachine';
 
-const llmAdapter = createOpenAIAdapter(openai, {
-  model: 'gpt-3.5-turbo-1106'
+const agent = createAgent({
+  name: 'barista',
+  model: openai('gpt-4-turbo'),
+  events: {
+    'barista.makeDrink': z.object({
+      drink: z.enum(['espresso', 'latte', 'cappuccino']),
+    }).describe('Makes a drink')
+  }
 });
 
-const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
+async function handleOrder(order, state) {
+  const resolvedState = baristaMachine.resolveState(state)
+  // highlight-start
+  const plan = await agent.decide({
+    state: resolvedState,
+    machine: baristaMachine,
+    goal: `A customer made this order: ${order}`,
+  });
+  // highlight-end
 
-const getReviewStream = llmAdapter.fromChatStream(/* ... */);
+  return plan;
+}
 
-const decide = llmAdapter.fromEvent((lastRating: string) => `Choose what to do next, given the previous rating of the joke: ${lastRating}`);
+handleOrder('I want a latte please', { value: 'idle' });
+// Resolves with an `AgentPlan` that includes:
+// {
+//   // ...
+//   nextEvent: { type: 'barista.makeDrink', drink: 'latte' },
+// }
+```
 
-const execTool = llmAdapter.fromTool(() => `...`, {
-  getWeather: {
-    description: 'Get the weather',
-    run: async () => {
-      //...
-    }
+## Interacting with state machines
+
+An agent can interact with existing state machine actors to determine what to do next. While the state machine actor is running, the agent will do the following cycle:
+
+1. The agent **observes state changes**
+  - The observation is remembered in the agent's state
+2. The agent **determines** if it needs to make a decision based on the current state
+3. If it does, the agent **makes a decision** in the form of an `AgentPlan`.
+4. If an `AgentPlan` is formed, the agent triggers the next event (`plan.nextEvent`) on the state machine actor.
+  - The plan is remembered in the agent's state.
+4. The agent goes back to step 1, and the cycle continues.
+
+```ts
+import { createAgent } from '@statelyai/agent';
+import { createActor } from 'xstate';
+import { jokeMachine } from './jokeMachine';
+
+const agent = createAgent({
+  name: 'joke-teller',
+  model: openai('gpt-4'),
+  events: {
+    'agent.tellJoke': z.object({
+      joke: z.string().describe('The joke text'),
+    }),
+    'agent.rateJoke': z.object({
+      rating: z.number().min(1).max(10),
+      explanation: z.string(),
+    }),
+    // ...
+  }
+});
+
+const jokeActor = createActor(jokeMachine).start();
+
+agent.interact(jokeActor, (observed) => {
+  if (observed.state.matches('tellingJoke')) {
+    return { goal: `Tell a joke about ${observed.state.context.topic}` };
+  }
+  if (observed.state.matches('ratingJoke')) {
+    return { goal: `Rate this joke: ${observed.state.context.joke}` };
   }
 });
 ```
 
 ## State machine agents
 
-A state machine agent is an agent that uses a state machine to determine what to do next. It will typically use agent logic to communicate with an LLM provider, but it can also use other actors to perform tasks, or even no actors at all if the agent is only a simple state machine (classic AI).
+You can invoke Stately agents as part of a state machine, ensuring that it will follow the state machine's transitions as specified and trigger the appropriate events. This is done by using any of the following [actor logic creators](./actors.mdx):
 
-The `createAgent(machine, options)` function creates an "agent actor", which is an [actor](actors.mdx) that can send and receive events, store internal state, spawn other actors, and perform actions. It is currently a thin wrapper around `createActor(…)`, but in the future, it will provide options for caching, history, logging, tracing, token optimizations/constraints, and more.
+### `fromText(agent)`
+
+Returns [promise actor logic](TODO) that resolves with the generated text result from the [Vercel AI SDK](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-text#generatetext).
+
+When invoked/spawned, this actor will also add the user and assistant messages to agent memory.
 
 ```ts
-import { createAgent } from '@statelyai/agent';
+import { createAgent, fromText } from '@statelyai/agent';
+import { setup } from 'xstate';
 
-import { jokeMachine } from './jokeMachine';
+const agent = createAgent(/* ... */);
 
-const agent = createAgent(jokeMachine, {
-  input: 'donuts'
+const machine = setup({
+  actors: {
+    assistant: fromText(agent),
+  }
+}).createMachine({
+  initial: 'greeting',
+  context: x => ({
+    time: x.input.time
+  }),
+  states: {
+    greeting: {
+      invoke: {
+        src: 'assistant',
+        input: x => ({
+          context: {
+            time: x.context.time
+          },
+          goal: 'Produce a greeting depending on the time of day.'
+        }),
+        onDone: {
+          target: 'greeted',
+          actions: x => {
+            console.log(x.output.text);
+          }
+        },
+      },
+    },
+    greeted: {
+      type: 'final'
+    }
+  }
 });
 
-agent.subscribe(snapshot => {
-  console.log(snapshot);
+const actor = createActor(machine, {
+  input: { time: Date.now() }
 });
 
-agent.start();
+actor.start();
 ```
+
+### `fromTextStream(agent)`
+
+Returns [observable actor logic](TODO) that streams the text from the [Vercel AI SDK](https://sdk.vercel.ai/docs/reference/ai-sdk-core/stream-text).
+
+When invoked/spawned, this actor will also add the user and assistant messages to agent memory.
+
+TODO: example
+
+### `fromDecision(agent)`
+
+Returns [promise actor logic](TODO) that resolves with the **agent plan** that should accomplish the goal (`input.goal`), if it is able to create one.
+
+When invoked/spawned, this actor will also add the user and assistant messages to agent memory, as well as the plan that it created.
+
+## Observability
+
+- Can observe observations, plans, messages, and feedback via `agent.on('message', (message) => {})`
+- Can manually add feedback observations via `agent.addFeedback(…)`
+
+### `agent.addObservation(observation)`
+
+TODO
+
+### `agent.addFeedback(feedback)`
+
+TODO
+
+### `agent.addPlan(plan)`
+
+TODO
+
+### `agent.addMessage(message)`
+
+TODO
+
+## Generating text
+
+You can use the `agent.generateText(input)` method to generate text from an input. This extends the `generateText(…)` function from the [Vercel AI SDK](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-text#generatetext) by:
+
+- Adding the user and assistant messages to agent memory
+- Providing the ability to retrieve previous observations, feedback, plans and messages from agent memory
+
+## Streaming text
+
+You can use the `agent.streamText(input)` method to stream text from an input. This extends the `streamText(…)` function from the [Vercel AI SDK](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-text#generatetext) by:
+
+- Adding the user and assistant messages to agent memory
+- Providing the ability to retrieve previous observations, feedback, plans and messages from agent memory
 
 ## Agent logic
 
 Agent logic is [actor logic](TODO) that has the specific purpose of performing LLM tasks for the agent. Agent logic goes beyond just being a wrapper and provides the ability to use the agent's state machine to intelligently determine which action to take next.
 
 Agent logic is most powerful when used with a state-machine-powered agent, but you can also create standalone actors from agent logic, which is useful for testing and simple tasks.
-
-### From chat (`adapter.fromChat(…)`)
-
-Gets a chat completion from a prompt.
-
-```ts
-// ...
-
-const getJokeCompletion = llmAdapter.fromChat((topic: string) => `Tell me a joke about ${topic}.`);
-
-const actor = createActor(getJokeCompletion, {
-  input: 'donuts'
-});
-
-actor.subscribe(snapshot => {
-  console.log(snapshot.output);
-  // Eventually logs a chat completion from the prompt "Tell me a joke about donuts."
-});
-
-actor.start();
-```
-
-### From chat stream (`adapter.fromChatStream(…)`)
-
-Gets a chat completion stream from a prompt.
-
-```ts
-// ...
-
-const getJokeCompletionStream = llmAdapter.fromChatStream((topic: string) => `Tell me a joke about ${topic}.`);
-
-const actor = createActor(getJokeCompletionStream, {
-  input: 'donuts'
-});
-
-actor.subscribe(snapshot => {
-  console.log(snapshot.output);
-  // Continuously logs chat completion parts from the prompt "Tell me a joke about donuts."
-});
-
-actor.start();
-```
-
-### From event (`adapter.fromEvent(…)`)
-
-Chooses an event to send to the parent actor based on the current state and sends it. This is best used within a state machine.
-
-```ts
-import { createAgent, createSchemas } from '@statelyai/agent';
-
-// ...
-
-const decide = llmAdapter.fromEvent((situation: string) => `
-Current situation: ${situation}
-
-Decide what to do next.
-`);
-
-const schemas = createSchemas({
-  context: {/* ... */},
-  events: {
-    stay: {
-      type: 'object',
-      description: 'Stay in the current situation',
-    },
-    go: {
-      type: 'object',
-      description: 'Go somewhere else',
-      properties: {
-        speed: {
-          type: 'string',
-          description: 'Speed to go',
-          enum: ['slow', 'fast'],
-        }
-      }
-    }
-  }
-});
-
-const machine = setup({
-  types: schemas.types,
-  schemas,
-  actors: {
-    decide
-  }
-}).createMachine({
-  context: {
-    situation: 'Something dangerous approaches.'
-  },
-  initial: 'deciding',
-  states: {
-    deciding: {
-      invoke: {
-        src: 'decide'
-      },
-      on: {
-        stay: {/* ... */},
-        go: {/* ... */}
-      }
-    },
-    stayed: {/* ... */},
-    went: {/* ... */}
-  },
-});
-
-const agent = createAgent(machine);
-agent.subscribe(snapshot => {
-  console.log(snapshot.value);
-  // Logs 'deciding' and then 'go'
-});
-
-agent.start();
-```
-
-### From tool (`adapter.fromTool(…)`)
-
-Chooses a tool to run based on the current state and runs it.
-
-```ts
-const toolChoice = llmAdapter.fromTool((instruction: string) => `Follow the instruction: ${instruction}`, {
-  makeIllustration: {
-    description: 'Make an illustration',
-    run: async () => {/* ... */},
-    inputSchema: {
-      type: 'object',
-      properties: {
-        name: {
-          type: 'string',
-          description: 'The name of the illustration',
-        },
-      },
-      required: ['name'],
-    },
-  },
-  getWeather: {
-    description: 'Get the weather for a location',
-    run: async () => {/* ... */},
-    inputSchema: {
-      type: 'object',
-      properties: {
-        location: {
-          type: 'object',
-          properties: {
-            city: {
-              type: 'string',
-              description: 'The name of the city',
-            },
-            state: {
-              type: 'string',
-              description: 'The name of the state',
-            },
-          },
-          required: ['city', 'state'],
-        },
-      },
-      required: ['location'],
-    },
-  },
-});
-
-const actor = createActor(toolChoice, {
-  input: 'draw a picture of a donut'
-});
-actor.subscribe(snapshot => {
-  console.log(snapshot.output);
-  // Eventually logs an illustration
-})
-
-actor.start();
-```
 
 ## Examples
 
