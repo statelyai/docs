@@ -9,7 +9,13 @@ An AI agent is an autonomous entity that observes an environment, decides what t
 - **Store state**, which can be used to remember contextual information about the environment
 - **Spawn other agents**, which can be used to create a hierarchy of agents that can work together and coordinate their actions to achieve a goal
 
-The [Stately Agent (`@statelyai/agent`)](https://github.com/statelyai/agent) package makes it easy to create agents and agent behavior based on the actor model and state machines.
+The [Stately Agent (`@statelyai/agent`)](https://github.com/statelyai/agent) package makes it simple to create agents and agent behavior based on the actor model and state machines. These agents can do much more than generate text and execute function calls; Stately Agent is a framework for:
+
+- **Storing message history** between the user and assistant when using the generative text features
+- **Making observations** of an environment, recording the transitions (previous state, event, next state) so it can understand the environment
+- **Receiving feedback** on decisions it makes, so it can retrieve and corrolate feedback so that it can make more informed decisions
+- **Making plans** in its decision-making progress, so that it not only predicts the very next decision to make, but a sequence of decisions that ideally reaches the goal
+- **Short-term and long-term memory** for remembering message history, observations, feedback, and plans that it makes.
 
 ## Installation
 
