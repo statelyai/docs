@@ -492,7 +492,7 @@ It is recommended to use `sendTo(...)` by to pass actor refs (e.g. the parent ac
 <summary>Example using input:</summary>
 
 ```ts
-import { createMachine, sendParent } from 'xstate';
+import { createMachine, sendTo } from 'xstate';
 
 const childMachine = createMachine({
   context: ({ input }) => ({
