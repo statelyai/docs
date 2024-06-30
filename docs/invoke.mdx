@@ -246,6 +246,7 @@ const actor = createActor(
 - Transitions when invoked actor is complete
 - Event object `output` property is provided with actor's output data
 - Not available for callback actors
+- Multiple targets are permissible, provided they are accompanied by guards.
 
 :::warning
 Don't get the `onDone` property on a state confused with `invoke.onDone` - they are similar transitions, but refer to different things.
