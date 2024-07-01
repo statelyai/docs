@@ -131,7 +131,7 @@ You can create an agent using the `createAgent(settings)` function. There are re
 
 - `name` - The name of the agent, used for logging and agent learning purposes
 - `model` - The [AI SDK language model](https://sdk.vercel.ai/docs/foundations/providers-and-models) to use for generating text and making tool calls
-- `events` - An object of [Zod](https://zod.dev/) event schemas that the agent can trigger (i.e. events it can send to some live environment that it is interacting with)
+- `events` - A mapping of event types to [Zod](https://zod.dev/) event schemas that the agent can trigger (i.e. events it can send to some live environment that it is interacting with)
 
 ```ts
 import { createAgent } from '@statelyai/agent';
@@ -145,6 +145,7 @@ const agent = createAgent({
     'barista.makeDrink': z.object({
       drink: z.enum(['espresso', 'latte', 'cappuccino']),
     }).describe('Makes a drink'),
+    // ...
   }
 });
 ```
@@ -339,11 +340,32 @@ When invoked/spawned, this actor will also add the user and assistant messages t
 
 ### `agent.addObservation(observation)`
 
-TODO
+You can add an observation (`{ prevState, event, state, … }`) to an agent's memory by calling `agent.addObservation(observation)`. This function returns an `AgentObservation` object that includes the provided observation details as well as an observation `id` so that the observation can be referenced in feedback, if applicable.
+
+```ts
+const observation = agent.addObservation({
+  prevState: { value: 'idle', context: {} },
+  event: { type: 'grindBeans' },
+  state: { value: 'grindingBeans', context: {} },
+});
+```
 
 ### `agent.addFeedback(feedback)`
 
-TODO
+```ts
+const observation = agent.addObservation({
+  // ...
+});
+
+const feedback = agent.addFeedback({
+  observationId: observation.id,
+  goal: 'Make an iced coffee',
+  attributes: {
+    feedback: 'Water should not be boiled for an iced coffee',
+    score: -10
+  }
+});
+```
 
 ### `agent.addPlan(plan)`
 
@@ -351,7 +373,7 @@ TODO
 
 ### `agent.addMessage(message)`
 
-TODO
+If you want to manually add a message between the assistant and user to agent memory, you can call `agent.addMessage(message)` to do so. This is automatically called when calling `agent.generateText(…)`, `agent.streamText(…)`, or the `fromText(…)` and `fromTextStream(…)` actor logic creators. You should avoid calling this manually.
 
 ## Generating text
 
