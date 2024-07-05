@@ -130,7 +130,7 @@ const machine = setup({
       after: {
         // highlight-start
         timeout: {
-          actions: assign({ attempts: (context) => context.attempts + 1 }),
+          actions: assign({ attempts: ({ context }) => context.attempts + 1 }),
           target: 'attempting',
         },
         // highlight-end
