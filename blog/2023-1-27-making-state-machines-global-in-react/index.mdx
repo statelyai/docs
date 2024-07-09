@@ -44,15 +44,15 @@ This provider will make the actor available to any component that consumes it. Y
 
 ## Consuming the actor context
 
-To consume the actor in a component, you can use the `useActor()` hook to get the `state` and `send` function, or you can use `useSelector(selector, compare?)` hook to derive a specific value from the snapshot:
+To consume the actor in a component, you can use the `useActorRef()` hook to get the `state` and `send` function, or you can use `useSelector(selector, compare?)` hook to derive a specific value from the snapshot:
 
 ```tsx
 // ./SomeComponent.tsx
 import { SomeMachineContext } from './App';
 
 function SomeComponent() {
-  // Read full snapshot and get `send` function from `useActor()`
-  const [state, send] = SomeMachineContext.useActor();
+  // Read full snapshot and get `send` function from `useActorRef()`
+  const [state, send] = SomeMachineContext.useActorRef();
   // Or derive a specific value from the snapshot with `useSelector()`
   const count = SomeMachineContext.useSelector((state) => state.context.count);
 
