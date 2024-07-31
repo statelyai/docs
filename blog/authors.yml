@@ -62,3 +62,9 @@ parkermcmullin:
   name: Parker McMullin
   image_url: https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/avatars/tidefi.png
   title: TIDEFI
+
+hipsterbrown:
+  name: Nick Hehr
+  image_url: https://github.com/HipsterBrown.png
+  title: Viam Dev Advocate
+  url: https://github.com/hipsterbrown
