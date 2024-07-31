@@ -163,7 +163,7 @@ In the final snippet we can see the third iteration of the common move handler o
 
 With our initial analysis of the game code done, let's try modeling it all in Stately Studio!
 
-**Modeling in Stately Studio**
+## Modeling in Stately Studio
 
 The completed state machine:
 
@@ -188,7 +188,7 @@ The final action will look nearly identical to the previous one: we execute the 
 
 Even before including the generated state machine configuration in the codebase, this high level view of the robot's control logic is a fantastic tool for including in the documentation and teaching other members of the team how it should work.
 
-**Refactoring the code**
+## Refactoring the code
 
 To kick off the implementation of this state machine, I took the generated TypeScript code for XState v5 from Stately Studio and added it to the `main.ts` for the claw game app to start filling in the actions and actors.
 
@@ -485,7 +485,7 @@ Once the modeling was complete, the process of refactoring the code to use `xsta
 
 You can view the full refactor PR here: https://github.com/viam-labs/claw-game/pull/17
 
-**Reflecting**
+## Reflecting
 
 View it in action: 
 
