@@ -216,11 +216,12 @@ State machines are very powerful and useful, but sometimes you don't need all th
 ```ts
 // highlight-next-line
 import { fromTransition, createActor } from 'xstate';
+import { useSelector } from '@xstate/react'
 
 // highlight-start
 // Actor logic
 const counterLogic = fromTransition((state, event) => {
-  if (event.type === 'INC') {
+  if (event.type === 'inc') {
     return { count: state.count + 1 };
   }
   return state;
