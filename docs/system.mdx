@@ -48,7 +48,7 @@ Actors can be registered with the system so that any other actor in the system c
 Invoked actors are registered with a system-wide `systemId` in the `invoke` object:
 
 ```ts
-import { createMachine, createActor } from 'xstate';
+import { createMachine, createActor, sendTo } from 'xstate';
 
 const formMachine = createMachine({
   // ...
@@ -66,8 +66,8 @@ const formMachine = createMachine({
 const feedbackMachine = createMachine({
   invoke: {
     // highlight-next-line
-    systemId: 'notifier',
-    src: notifierMachine,
+    systemId: 'formMachine',
+    src: formMachine,
   },
   // ...
   states: {
@@ -169,7 +169,7 @@ actor.start();
 ### Cheatsheet: register an invoked actor with the system
 
 ```ts
-import { createMachine, createActor } from 'xstate';
+import { createMachine, createActor, sendTo } from 'xstate';
 
 const formMachine = createMachine({
   // ...
@@ -187,8 +187,8 @@ const formMachine = createMachine({
 const feedbackMachine = createMachine({
   invoke: {
     // highlight-next-line
-    systemId: 'notifier',
-    src: notifierMachine,
+    systemId: 'formMachine',
+    src: formMachine,
   },
   // ...
   states: {
