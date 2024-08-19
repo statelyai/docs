@@ -486,7 +486,7 @@ The `sendParent(...)` action is a special action that sends an event to the pare
 
 :::tip
 
-It is recommended to use `sendTo(...)` by to pass actor refs (e.g. the parent actor ref) to other actors via [input](./input.ts) or events and storing those actor refs in `context` rather than using `sendParent(...)`. This avoids tight coupling between actors and can be more type-safe.
+It is recommended to use `sendTo(...)` to pass actor refs (e.g. the parent actor ref) to other actors via [input](./input.ts) or events and storing those actor refs in `context` rather than using `sendParent(...)`. This avoids tight coupling between actors and can be more type-safe.
 
 <details>
 <summary>Example using input:</summary>
