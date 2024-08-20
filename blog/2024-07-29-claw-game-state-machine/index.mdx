@@ -11,6 +11,8 @@ The term "robots" invokes a fascinating range of ideas, from manually controlled
 
 [Viam](https://www.viam.com/) provides an open source software stack and set of cloud services that makes managing all types of robots (and other smart machines) accessible to developers without any prior hardware experience. To help demonstrate the types of experience that can be built with Viam, the developer advocacy team [built an arcade claw game](https://docs.viam.com/tutorials/projects/claw-game/) that used an industrial robot arm and arcade claw that could be operated using a single-page web application powered by [TypeScript SDK](https://ts.viam.dev/).
 
+{/* truncate */}
+
 ![a large arcade cabinet full of black, red, and green balls surrounding a robotic arm with an arcade claw attached at tehe top end](./viam-claw-game.jpg)
 
 Even for a relatively-constrained experience, managing the various possible actions and states to operate the arm made maintaining the code for the web application quite tough for anyone who wanted to update some feature. It was important to handle any errors related to potential collisions of the arm against any obstacles as it moved, as well as prevent commands from being sent to the arms while it was actively moving or grabbing. Also, as an open source example, we wanted the code to be understood by developers who were learning about Viam without getting lost in the UI-specific logic.
