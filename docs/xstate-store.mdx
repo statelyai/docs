@@ -349,6 +349,10 @@ function Component(props) {
 
 A store can be shared with multiple components, which will all receive the same snapshot from the store instance. Stores are useful for global state management.
 
+## Usage with Solid
+
+_Documentation coming soon!_
+
 ## Using XState Store with XState
 
 You may notice that stores are very similar to [actors in XState](./actors.mdx). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
@@ -393,7 +397,12 @@ In short, you can convert `createStore(…)` to `fromStore(…)` just by changin
 // Instead of:
 // const store = createStore({
 const storeLogic = fromStore({
-  // (same arguments as `createStore`)
+  context: {
+    // ...
+  },
+  on: {
+    // ...
+  },
 });
 
 // Create the store (actor)
