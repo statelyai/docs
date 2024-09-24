@@ -274,6 +274,62 @@ You can listen for emitted events using the `store.on(...)` method, which create
 
 Note that you can strongly type emitted events in the `types.emitted` property of the store config object, just like in XState. This ensures type safety when emitting and listening for events.
 
+## Inspection
+
+Just like with XState, you can use the [Inspect API](./inspection.mdx) to inspect events sent to the store and state transitions within the store by using the .inspect method:
+
+```ts
+const store = createStore({
+  // ...
+});
+
+// highlight-start
+store.inspect((inspectionEvent) => {
+  // type: '@xstate.snapshot' or
+  // type: '@xstate.event'
+  console.log(inspectionEvent);
+});
+// highlight-end
+```
+
+:::info
+
+Since the store is automatically started, inspectors will immediately receive the initial state snapshot.
+
+:::
+
+The `.inspect(…)` method returns a subscription object:
+
+```ts
+const sub = store.inspect((inspectionEvent) => {
+  console.log(inspectionEvent);
+});
+
+// Stop listening for inspection events
+sub.unsubscribe();
+```
+
+You can use the [Stately Inspector](./inspector.mdx) to inspect and visualize the state of the store.
+
+```ts
+// highlight-next-line
+import { createBrowserInspector } from '@statelyai/inspect';
+import { createStore } from '@xstate/store';
+
+const store = createStore({
+  // ...
+});
+
+// highlight-start
+const inspector = createBrowserInspector({
+  // ...
+});
+// highlight-end
+
+// highlight-next-line
+store.inspect(inspector);
+```
+
 ## Using Immer
 
 If you want to use [Immer](https://immerjs.github.io/immer/) to update the `context`, you can do so by passing in the `produce` function as the first argument to `createStoreWithProducer(producer, …)`.
