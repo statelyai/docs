@@ -546,40 +546,62 @@ parentActor.start();
 
 </details>
 
-:::
+<details>
+<summary>Example using input (TypeScript):</summary>
 
 ```ts
-import { createMachine, sendParent } from 'xstate';
+import { ActorRef, createActor, log, sendTo, setup, Snapshot } from 'xstate';
 
-const childMachine = createMachine({
-  on: {
-    someEvent: {
-      // highlight-start
-      actions: sendParent({ type: 'tellParentSomething' }),
-      // highlight-end
+// highlight-start
+type ChildEvent = {
+  type: 'tellParentSomething';
+  data?: string;
+};
+type ParentActor = ActorRef<Snapshot<unknown>, ChildEvent>;
+// highlight-end  
+
+const childMachine = setup({
+  types: {
+    context: {} as {
+      parentRef: ParentActor
+    },
+    input: {} as {
+      parentRef: ParentActor;
     },
   },
+}).createMachine({
+  context: ({ input: { parentRef } }) => ({parentRef}),
+// highlight-start
+  entry: sendTo(({ context }) => context.parentRef, {
+    type: 'tellParentSomething',
+    data: 'Hi parent!',
+  }),
+// highlight-end  
 });
 
-const parentMachine = createMachine({
-  // ...
+export const parent = setup({
+  actors: { child: childMachine },
+}).createMachine({
+// highlight-start
   invoke: {
-    id: 'child',
-    src: childMachine,
+    src: 'child',
+    input: ({ self }) => ({
+      parentRef: self,
+    }),
   },
+// highlight-end
   on: {
     tellParentSomething: {
-      actions: () => {
-        console.log('Child actor told parent something');
-      },
+      actions: log( ({event:{data}})=> `Child actor says "${data}"`),
     },
   },
 });
 
-const parentActor = createActor(parentMachine);
-
-parentActor.start();
+createActor(parent).start();
 ```
+</details>
+
+:::
 
 ## Enqueue actions
 
