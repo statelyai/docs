@@ -1,0 +1,69 @@
+---
+title: WebinarGeek x Stately - Making Streaming Webinars More Reliable
+description: WebinarGeek leans on Stately tooling to manage the inherent complexities in building the best user-friendly webinar platform on the internet.
+tags: [case study, study, webinargeek, xstate, state machines, streaming]
+authors: [gavin]
+date: 2024-11-12
+slug: 2024-11--webinargeek-and-stately-case-study
+---
+
+[WebinarGeek](https://www.webinargeek.com/) leans on [Stately](https://stately.ai) tooling to manage the inherent complexities in building the best user-friendly webinar platform on the internet.
+
+{/* truncate */}
+
+### WebinarGeek: a comprehensive webinar platform with batteries included
+
+<p>
+  <ThemedImage
+    alt="WebinarGeek logo"
+    sources={{
+      light:
+        '/blog/2024-11-12-webinargeek-and-stately-case-study/Black-Logo-webinargeek.svg',
+      dark: '/blog/2024-11-12-webinargeek-and-stately-case-study/Logo-webinargeek-wit-klein.svg',
+    }}
+  />
+</p>
+
+In today's remote-first world, where teams are more distributed than ever before and user needs are more complex than ever before, the demand for a capable webinar platform has skyrocketed. Remote teams all need a platform for effective communication and collaboration and businesses need a way to reach their customers, enable and gauge user interaction, and be able to scale outreach as necessary. Meet WebinarGeek, the premier streaming platform for hosting webinars. WebinarGeek takes the complexity out of juggling users' own “go-lives” by providing an easy-to-use yet feature rich interface. Users can roll out fully live or hybrid sessions, create paywalls with premium webinars, and even integrate with existing industry-leading marketing tools to better understand their audiences.
+
+### Wrangling in complexity
+
+Any professional working in web broadcasting would agree that streaming media is anything but trivial. Underneath WebinarGeek's slick interface lies a massive amount of technical complexity. For handling streams alone, the team at WebinarGeek has to wrangle WebRTC and all its concerns, like managing RTMP and several other protocols. On top of that, WebinarGeek offers differentiating features for their users, like the ability to automate webinar streams to give the illusion of live streaming and integrating with popular marketing platforms. Orchestrating all these dependencies to work together consistently required a comprehensive framework for managing several stateful components, so the team at WebinarGeek turned to Stately tooling to accomplish this.
+
+WebinarGeek's platform was originally built as a monolithic Ruby on Rails application back in 2015, and the original implementation wasn't ideal. While Ruby on Rails was an excellent technical choice for building the software that managed accounts and the webinar itself, synchronizing with various events on the streaming page was difficult to implement, introducing limitations for newer features that could be implemented. For example, only one presenter could be on-screen at a time and the frontend would struggle responding to various video player events. The streaming page was responsible for managing tons of _implicit_ state and event management, but there was no core framework in place to handle this. This eventually led to spread out, disparate logic with no real context and became difficult to maintain and add new functionality to.
+
+### The “Great Refactor”: a UI overhaul with Stately tooling
+
+The team knew that a refactoring had to happen, but it wasn't until the 2020 pandemic that such a need took center stage. Demand for comprehensive streaming solutions skyrocketed with the wave of professionals working remotely, and WebinarGeek's traffic skyrocketed. To meet the demand, to scale more efficiently, and to handle heavy user interactions, the team decided to rebuild the app's streaming page with ReactJS and Typescript. With prior experience as their guide, the team knew they would need a state management library to handle all the possible events flowing through the frontend. While React gives developers the ability to create incredibly responsive applications, only re-rendering elements that have actually changed _when_ they need to change, the team found that juggling `useEffect`, `useState`, and `useContext` were not very scalable. These hooks, while useful, are not ideal for colocating business logic in a single layer for re-usability. The team investigated several alternatives, like React-Query, Redux, and XState. Ultimately, WebinarGeek settled on XState for its simple declarative programming model for handling transitions, visualizing their rather complex logic, and firing side effects. It turned out that composing their business logic with state machines made perfect sense on their streaming page. Now, the team had the ability to create _explicit_ states that more closely mirrored what was actually happening on the frontend, like “Live” and “Ended” to represent states of the running stream. By defining all possible interactions as explicit events, the team was able to implement all their business logic in a single place, and this ensured that proper side effects would always execute when transitioning from one state to another. As an example, a timer must always start when the stream has transitioned to “Live”, and an evaluation form must be presented to the audience when the webinar has transitioned to “Ended” .
+
+Building in this way, with explicit states and introducing barriers for what events to respond to, ultimately gave the team more confidence in adding more complex logic to their streaming page. As an example, during a given webinar, the application has to orchestrate events coming from various sources, like WebRTC, user button clicks, the video player, and even web sockets. All of these events have special considerations that need to be addressed, but they are all in service of achieving similar business goals. This cohesion allowed the WebinarGeek team to rebuild and ship the new streaming page in less than a year. As an example, state machine below illustrates the flow for loading new messages into the chat window:
+
+<EmbedMachine
+  name="Chat Window New Message Flow"
+  embedURL="https://stately.ai/registry/editor/embed/bfc1bb17-1586-466b-8616-8f2ac841598f?mode=design&machineId=afde01f8-1314-4590-b9be-2fd5dafe90d2"
+/>
+
+### Reducing complexity and increasing resilience
+
+Because state machines only allow transitions whenever **allowed** events occur, the team is actually able to implement features with less code than in their previous version. Bouwe, one of the core engineers at WebinarGeek, had this to say about the reliability Stately tooling offers:
+
+> “You get so much more reliability from your logic, because of the nature of state machines If you have an XState experienced team, you start thinking in terms of state machines.”
+
+Statements like this inspire the Stately team to continue building tools that give developers a robust experience building more fault-tolerant applications. Not only has WebinarGeek rebuilt their streaming page to scale for requests, but they've also engineered it to scale for feature development. With their logic defined as state machines in a single location, context can be better absorbed by the developers, leading to a much faster burn rate and more features shipped in less time. Even though these machines live in the same place, it does not mean they aren't able to handle wholly different tasks. The WebinarGeek team has a collection of over 100 state machines, all individually scoped to the specific problem they mean to solve. For example, the state machine below demonstrates how the team handles the initialization of other **actors,** or state machine instances:
+
+<EmbedMachine
+  name="Actor Manager Machine"
+  embedURL="https://stately.ai/registry/editor/embed/427bc3fa-4096-43ec-87c6-e11e5353aa4f?mode=design&machineId=de091123-5634-481b-aa18-ff9d254403ae"
+/>
+
+This Actor Manager machine lazy-loads instances of other machines, loads any relevant data the actors need, and collects relevant events as they travel through the actor system. This manager also act as an error boundary, logging any captured errors to an external sink for reviewing later. These configurations can vary wildly in their application, like different webinar details, different users and their roles, and bespoke individual settings configured by end users. But, while these concerns are different, loading their _configurations_ is the same, and that process can be reused for all of these. It's also important to note that having a manager in place serves an important purpose around performance. Loading and instantiating only what is needed at the time makes for a faster and more responsive experience without pulling in unnecessary content.
+
+This approach makes use of the Actor Model, a very powerful programming paradigm that treats consolidated and modular logical components as individual units, or actors, that all have their own internal state and understand how to communicate with each other. It gives a ton of flexibility when creating complex systems, and allows for each component (actor) to be tested either as part of a larger system or independently, as long as each actor's inputs are satisfied. Stately relies heavily on the actor model , allowing users to define their individual actors as their own state charts and facilitating the communication between them.
+
+With a visual means of drafting machines, the team is able to quickly build new flows as-needed and communicate exactly how these systems work with team members that may not be technical. From Nick Worrall, engineer on the WebinarGeek team:
+
+> “Using the Stately Studio, we can prototype new flows together with our tech lead and designer to make sure the business requirements are met. From there we copy the generated code into our project, build the UI in react and integrate it with other machines in the system.”
+
+### WebinarGeek x Stately: moving forward
+
+Fundamentally, WebinarGeek is laser-focused on providing their users with a capable platform to be more productive, and this is exemplified by how they listen to their users when implementing new features. Building integrations like support for HubSpot gives their users more flexibility and reduces the need to hop from one system to another just to solve a single task. This aligns with the core mission at Stately, where we aim to give users a single place to share and collaborate on app logic. And, thanks to the Stately Studio, the team can move faster and break nothing, sharing their logic in the same way a designer would share their page mockups. Collaboration is at the heart of what we do at Stately, and we're honored to have WebinarGeek take a chance on our tooling to build a more robust, more scalable, and more streamlined application!
