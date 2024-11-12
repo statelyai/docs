@@ -15,10 +15,14 @@ Actions can also be on a state’s `entry` or `exit`, also as a single action or
 ```ts
 import { setup } from 'xstate';
 
+function trackResponse(response: string) {
+  // ...
+}
+
 const feedbackMachine = setup({
   actions: {
-    track: (_, params: unknown) => {
-      track(params);
+    track: (_, params: { response: string }) => {
+      trackResponse(params.response);
       // Tracks { response: 'good' }
     },
     showConfetti: () => {
@@ -62,7 +66,10 @@ Entry actions are actions that occur on any transition that enters a state node.
 
 Entry and exit actions are defined using the `entry: [...]` and `exit: [...]` attributes on a state node. You can fire multiple entry and exit actions on a state. Top-level final states cannot have exit actions, since the machine is stopped and no further transitions can occur.
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=f46674a5-4da3-4aca-9900-17c6ef471f50" title="Feedback form"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=f46674a5-4da3-4aca-9900-17c6ef471f50"
+  title="Feedback form"
+/>
 
 ## Action objects
 
@@ -76,8 +83,10 @@ import { setup } from 'xstate';
 
 const feedbackMachine = setup({
   actions: {
-    track: (_, params: unknown) => {/* ... */}
-  }
+    track: (_, params: { response: string }) => {
+      /* ... */
+    },
+  },
 }).createMachine({
   // ...
   states: {
@@ -113,20 +122,22 @@ const feedbackMachine = setup({
   actions: {
     logInitialRating: (_, params: { initialRating: number }) => {
       // ...
-    }
-  }
+    },
+  },
 }).createMachine({
   context: {
-    initialRating: 3
+    initialRating: 3,
   },
-  entry: [{
-    type: 'logInitialRating',
-    // highlight-start
-    params: ({ context }) => ({
-      initialRating: context.initialRating
-    })
-    // highlight-end
-  }]
+  entry: [
+    {
+      type: 'logInitialRating',
+      // highlight-start
+      params: ({ context }) => ({
+        initialRating: context.initialRating,
+      }),
+      // highlight-end
+    },
+  ],
 });
 ```
 
@@ -142,17 +153,19 @@ function logInitialRating(_, params: { initialRating: number }) {
 // highlight-end
 
 const feedbackMachine = setup({
-  actions: { logInitialRating }
+  actions: { logInitialRating },
 }).createMachine({
   context: { initialRating: 3 },
-  entry: [{
-    type: 'logInitialRating',
-    // highlight-start
-    params: ({ context }) => ({
-      initialRating: context.initialRating
-    })
-    // highlight-end
-  }]
+  entry: [
+    {
+      type: 'logInitialRating',
+      // highlight-start
+      params: ({ context }) => ({
+        initialRating: context.initialRating,
+      }),
+      // highlight-end
+    },
+  ],
 });
 ```
 
@@ -187,18 +200,16 @@ import { setup } from 'xstate';
 const feedbackMachine = setup({
   // highlight-start
   actions: {
-    track: ({ context, event }, params) => {
+    track: (_, params: { msg: string }) => {
       // Action implementation
       // ...
     },
-  }
-  // highlight-end
-}).createMachine(
-  {
-    // Machine config
-    entry: [{ type: 'track', params: { msg: 'entered' }}]
   },
-);
+  // highlight-end
+}).createMachine({
+  // Machine config
+  entry: [{ type: 'track', params: { msg: 'entered' } }],
+});
 ```
 
 You can also provide action implementations to override existing actions in the `machine.provide(...)` method, which creates a new machine with the same config but with the provided implementations:
@@ -236,7 +247,7 @@ const machine = createMachine({
     // This action creator only returns an action object
     // like { type: 'xstate.assign', ... }
     assign({ count: context.count + 1 });
-  }
+  },
   // highlight-end
 });
 
@@ -245,8 +256,8 @@ const machine = createMachine({
   context: { count: 0 },
   // highlight-start
   entry: assign({
-    count: ({ context }) => context.count + 1
-  })
+    count: ({ context }) => context.count + 1,
+  }),
   // highlight-end
 });
 
@@ -256,9 +267,9 @@ const machine = createMachine({
   // highlight-start
   entry: enqueueActions(({ context, enqueue }) => {
     enqueue.assign({
-      count: context.count + 1
+      count: context.count + 1,
     });
-  })
+  }),
   // highlight-end
 });
 ```
@@ -276,8 +287,8 @@ import { setup } from 'xstate';
 
 const countMachine = setup({
   types: {
-    events: {} as { type: 'increment'; value: number }
-  }
+    events: {} as { type: 'increment'; value: number },
+  },
 }).createMachine({
   context: {
     count: 0,
@@ -314,8 +325,8 @@ import { setup } from 'xstate';
 
 const countMachine = setup({
   types: {
-    events: {} as { type: 'increment'; value: number }
-  }
+    events: {} as { type: 'increment'; value: number },
+  },
 }).createMachine({
   context: {
     count: 0,
@@ -373,13 +384,12 @@ const machine = createMachine({
   entry: raise(({ context, event }) => ({
     type: 'dynamicEvent',
     data: context.someValue,
-  }))
+  })),
   // highlight-end
 });
 ```
 
 Events can also be raised with a delay, which will not place them in the internal event queue, since they will not be immediately processed:
-
 
 ```ts
 import { createMachine, raise } from 'xstate';
@@ -496,18 +506,17 @@ import { createMachine, sendTo } from 'xstate';
 
 const childMachine = createMachine({
   context: ({ input }) => ({
-    parentRef: input.parentRef
+    parentRef: input.parentRef,
   }),
   on: {
     someEvent: {
       // highlight-start
-      actions: sendTo(
-        ({ context }) => context.parentRef,
-        { type: 'tellParentSomething' }
-      ),
+      actions: sendTo(({ context }) => context.parentRef, {
+        type: 'tellParentSomething',
+      }),
       // highlight-end
-    }
-  }
+    },
+  },
 });
 
 const parentMachine = createMachine({
@@ -517,17 +526,17 @@ const parentMachine = createMachine({
     src: childMachine,
     // highlight-start
     input: ({ self }) => ({
-      parentRef: self
-    })
+      parentRef: self,
+    }),
     // highlight-end
   },
   on: {
     tellParentSomething: {
       actions: () => {
         console.log('Child actor told parent something');
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 const parentActor = createActor(parentMachine);
@@ -537,46 +546,69 @@ parentActor.start();
 
 </details>
 
-:::
+<details>
+<summary>Example using input (TypeScript):</summary>
 
 ```ts
-import { createMachine, sendParent } from 'xstate';
+import { ActorRef, createActor, log, sendTo, setup, Snapshot } from 'xstate';
 
-const childMachine = createMachine({
-  on: {
-    someEvent: {
-      // highlight-start
-      actions: sendParent({ type: 'tellParentSomething' }),
-      // highlight-end
-    }
-  }
+// highlight-start
+type ChildEvent = {
+  type: 'tellParentSomething';
+  data?: string;
+};
+type ParentActor = ActorRef<Snapshot<unknown>, ChildEvent>;
+// highlight-end  
+
+const childMachine = setup({
+  types: {
+    context: {} as {
+      parentRef: ParentActor
+    },
+    input: {} as {
+      parentRef: ParentActor;
+    },
+  },
+}).createMachine({
+  context: ({ input: { parentRef } }) => ({parentRef}),
+// highlight-start
+  entry: sendTo(({ context }) => context.parentRef, {
+    type: 'tellParentSomething',
+    data: 'Hi parent!',
+  }),
+// highlight-end  
 });
 
-const parentMachine = createMachine({
-  // ...
+export const parent = setup({
+  actors: { child: childMachine },
+}).createMachine({
+// highlight-start
   invoke: {
-    id: 'child',
-    src: childMachine
+    src: 'child',
+    input: ({ self }) => ({
+      parentRef: self,
+    }),
   },
+// highlight-end
   on: {
     tellParentSomething: {
-      actions: () => {
-        console.log('Child actor told parent something');
-      }
-    }
-  }
+      actions: log( ({event:{data}})=> `Child actor says "${data}"`),
+    },
+  },
 });
 
-const parentActor = createActor(parentMachine);
-
-parentActor.start();
+createActor(parent).start();
 ```
+</details>
+
+:::
 
 ## Enqueue actions
 
 The `enqueueActions(...)` action creator is a higher-level action that enqueues actions to be executed sequentially, without actually executing any of the actions. It takes a callback that receives the `context`, `event` as well as `enqueue` and `check` functions:
 
 - The `enqueue(...)` function is used to enqueue an action. It takes an action object or action function:
+
   ```ts
   actions: enqueueActions(({ enqueue }) => {
     // Enqueue an action object
@@ -587,15 +619,16 @@ The `enqueueActions(...)` action creator is a higher-level action that enqueues 
 
     // Enqueue a simple action with no params
     enqueue('doSomething');
-  })
+  });
   ```
+
 - The `check(...)` function is used to conditionally enqueue an action. It takes a guard object or a guard function and returns a boolean that represents whether the guard evaluates to `true`:
   ```ts
   actions: enqueueActions(({ enqueue, check }) => {
     if (check({ type: 'everythingLooksGood' })) {
       enqueue('doSomething');
     }
-  })
+  });
   ```
 - There are also helper methods on `enqueue` for enqueueing built-in actions:
   - `enqueue.assign(...)`: Enqueues an `assign(...)` action
@@ -613,7 +646,7 @@ const machine = createMachine({
   entry: enqueueActions(({ context, event, enqueue, check }) => {
     // assign action
     enqueue.assign({
-      count: context.count + 1
+      count: context.count + 1,
     });
 
     // Conditional actions (replaces choose(...))
@@ -637,7 +670,7 @@ const machine = createMachine({
     }
 
     // no return
-  })
+  }),
 });
 ```
 
@@ -656,15 +689,15 @@ const machine = setup({
     // highlight-end
     greet: (_, params: { name: string }) => {
       console.log(`Hello ${params.name}!`);
-    }
-  }
+    },
+  },
 }).createMachine({
   // ...
   // highlight-start
   entry: {
     type: 'doThings',
-    params: { name: 'World' }
-  }
+    params: { name: 'World' },
+  },
   // highlight-end
 });
 ```
@@ -692,7 +725,6 @@ const machine = createMachine({
 You can create state machines with the `log(...)` action in our drag-and-drop Stately editor. [Read more about the built-in log action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
 :::
-
 
 ## Cancel action
 
@@ -779,7 +811,6 @@ const countMachine = createMachine({
 For simple actions, you can specify an action string instead of an action object. Though we prefer using objects for consistency.
 
 ```ts
-
 import { createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
@@ -797,14 +828,13 @@ const feedbackMachine = createMachine({
     },
   },
 });
-
 ```
 
 ## Actions and TypeScript
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -825,15 +855,15 @@ const machine = setup({
     },
     increment: (_, params: { value: number }) => {
       // ...
-    }
-  }
+    },
+  },
   // highlight-end
 }).createMachine({
   // ...
   entry: [
     { type: 'track', params: { response: 'good' } },
     { type: 'increment', params: { value: 1 } },
-  ]
+  ],
 });
 ```
 
@@ -878,11 +908,11 @@ const machine = createMachine({
   states: {
     start: {
       // highlight-start
-      entry: [{ type:'startEntryAction' }],
-      exit: [{ type:'startExitAction' }],
+      entry: [{ type: 'startEntryAction' }],
+      exit: [{ type: 'startExitAction' }],
       // highlight-end
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -899,9 +929,9 @@ const machine = createMachine({
         { type: 'doSomething' },
         { type: 'doSomethingElse' },
         // highlight-end
-      ]
-    }
-  }
+      ],
+    },
+  },
 });
 ```
 
@@ -917,11 +947,11 @@ const machine = createMachine({
         // highlight-start
         ({ context, event }) => {
           console.log(context, event);
-        }
+        },
         // highlight-end
-      ]
-    }
-  }
+      ],
+    },
+  },
 });
 ```
 
@@ -932,20 +962,20 @@ import { setup } from 'xstate';
 
 const someAction = () => {
   //...
-}
+};
 
 const machine = setup({
   actions: {
-    someAction
-  }
+    someAction,
+  },
 }).createMachine({
   entry: [
     // highlight-start
-    { type: 'someAction' }
+    { type: 'someAction' },
     // highlight-end
   ],
   // ...
-})
+});
 ```
 
 ### Cheatsheet: providing actions
@@ -955,12 +985,12 @@ import { setup } from 'xstate';
 
 const someAction = () => {
   //...
-}
+};
 
 const machine = setup({
   actions: {
-    someAction
-  }
+    someAction,
+  },
 }).createMachine({
   // ...
 });
@@ -968,7 +998,7 @@ const machine = setup({
 const modifiedMachine = machine.provide({
   someAction: () => {
     // Overridden action implementation
-  }
+  },
 });
 ```
 
@@ -989,7 +1019,7 @@ const countMachine = createMachine({
       actions: assign({
         count: ({ context, event }) => {
           return context.count + event.value;
-        }
+        },
       }),
       // highlight-end
     },
@@ -1011,7 +1041,7 @@ const countMachine = createMachine({
       // highlight-start
       actions: assign(({ context, event }) => {
         return {
-          count: context.count + event.value
+          count: context.count + event.value,
         };
       }),
       // highlight-end
@@ -1065,13 +1095,13 @@ const machine = createMachine({
     }
 
     enqueue.assign({
-      count: 0
-    })
+      count: 0,
+    });
 
     enqueue.sendTo('someActor', { type: 'someEvent' });
 
-    enqueue.raise({ type: 'anEvent' })
-  })
+    enqueue.raise({ type: 'anEvent' });
+  }),
   // highlight-end
 });
 ```
