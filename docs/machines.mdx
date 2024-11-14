@@ -86,7 +86,7 @@ Machine implementations are the language-specific code that is executed but is n
 - [Guards](guards.mdx), which are conditions that determine whether a transition should be taken.
 - [Delays](delayed-transitions.mdx), which specify the time before a delayed transition is taken or a delayed event is sent.
 
-The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`. 
+The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`.
 
 ```ts
 import { setup } from 'xstate';
@@ -112,7 +112,7 @@ const feedbackMachine = setup({
   // ... rest of machine config
 });
 
-const feedbackActor = createActor(feedbackMachine)
+const feedbackActor = createActor(feedbackMachine);
 
 feedbackActor.start();
 // logs 'Doing something!'
@@ -129,13 +129,60 @@ const customFeedbackMachine = feedbackMachine.provide({
   },
 });
 
-const feedbackActor = createActor(customFeedbackMachine)
+const feedbackActor = createActor(customFeedbackMachine);
 
 feedbackActor.start();
 // logs 'Doing something else!'
 ```
 
+## Transitioning state
+
+_Since XState version 5.19.0_
+
+When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
+
+```ts
+// highlight-next-line
+import { initialTransition, transition } from 'xstate';
+
+const machine = createMachine({
+  initial: 'pending',
+  states: {
+    pending: {
+      on: {
+        start: { target: 'started' },
+      },
+    },
+    started: {
+      entry: 'doSomething',
+    },
+  },
+});
+
+// highlight-next-line
+const [initialState, initialActions] = initialTransition(machine);
+
+console.log(initialState.value);
+// logs 'pending'
+
+console.log(initialActions);
+// logs []
+
+// highlight-next-line
+const nextState = transition(machine, initialState, { type: 'start' });
+
+console.log(nextState.value);
+// logs 'started'
+
+console.log(nextState.actions);
+// logs [{ type: 'doSomething', … }]
+```
+
 ## Determining the next state
+
+:::warning
+It is recommended to use the `initialTransition(…)` and `transition(…)` functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which will be deprecated.
+:::
 
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
 
@@ -146,7 +193,7 @@ import { feedbackMachine } from './feedbackMachine';
 const nextSnapshot = getNextSnapshot(
   feedbackMachine,
   feedbackMachine.resolveState({ value: 'question' }),
-  { type: 'feedback.good' }
+  { type: 'feedback.good' },
 );
 
 console.log(nextSnapshot.value);
@@ -162,7 +209,7 @@ import { feedbackMachine } from './feedbackMachine';
 const initialSnapshot = getInitialSnapshot(
   feedbackMachine,
   // optional input
-  { defaultRating: 3 }
+  { defaultRating: 3 },
 );
 
 console.log(initialSnapshot.value);
@@ -179,15 +226,13 @@ import { setup } from 'xstate';
 const feedbackMachine = setup({
   types: {
     context: {} as { feedback: string },
-    events: {} as
-      | { type: 'feedback.good' }
-      | { type: 'feedback.bad' }
+    events: {} as { type: 'feedback.good' } | { type: 'feedback.bad' },
   },
   actions: {
     logTelemetry: () => {
       // TODO: implement
-    }
-  }
+    },
+  },
 }).createMachine({
   // ...
 });
@@ -209,7 +254,7 @@ Coming soon…
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -220,7 +265,9 @@ The best way to provide strong typing for your machine is to use the `setup(...)
 ```ts
 import { setup, fromPromise } from 'xstate';
 
-const someAction = () => {/* ... */};
+const someAction = () => {
+  /* ... */
+};
 
 const someGuard = ({ context }) => context.count <= 10;
 
@@ -232,19 +279,17 @@ const someActor = fromPromise(async () => {
 const feedbackMachine = setup({
   types: {
     context: {} as { count: number },
-    events: {} as 
-      | { type: 'increment' }
-      | { type: 'decrement' }
+    events: {} as { type: 'increment' } | { type: 'decrement' },
   },
   actions: {
-    someAction
+    someAction,
   },
   guards: {
-    someGuard
+    someGuard,
   },
   actors: {
-    someActor
-  }
+    someActor,
+  },
 }).createMachine({
   initial: 'counting',
   states: {
@@ -255,19 +300,19 @@ const feedbackMachine = setup({
         onDone: {
           actions: ({ event }) => {
             event.output; // strongly-typed as number
-          }
-        }
+          },
+        },
       },
       on: {
         increment: {
           guard: { type: 'someGuard' }, // strongly-typed
           actions: assign({
-            count: ({ context }) => context.count + 1
-          })
-        }
+            count: ({ context }) => context.count + 1,
+          }),
+        },
       },
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -296,27 +341,31 @@ import { setup } from 'xstate';
 
 const machine = setup({
   actions: {
-    someAction: () => {/* ... */}
+    someAction: () => {
+      /* ... */
+    },
   },
   guards: {
-    someGuard: ({ context }) => context.count <= 10
+    someGuard: ({ context }) => context.count <= 10,
   },
   actors: {
-    someActor: fromPromise(async () => {/* ... */})
+    someActor: fromPromise(async () => {
+      /* ... */
+    }),
   },
   delays: {
-    someDelay: () => 1000
-  }
+    someDelay: () => 1000,
+  },
 }).createMachine({
   // ... Rest of machine config
-})
+});
 ```
 
 ### Cheatsheet: provide implementations
 
 ```ts
 import { createMachine } from 'xstate';
-import { someMachine } from './someMachine'
+import { someMachine } from './someMachine';
 
 const machineWithImpls = someMachine.provide({
   actions: {
