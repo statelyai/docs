@@ -54,23 +54,33 @@ const trafficLightMachine = createMachine({
   // highlight-next-line
   initial: 'green',
   states: {
-    green: {/* ... */},
-    yellow: {/* ... */},
+    green: {
+      /* ... */
+    },
+    yellow: {
+      /* ... */
+    },
     red: {
       // highlight-next-line
       initial: 'walk',
       states: {
-        walk: {/* ... */},
-        wait: {/* ... */},
-        stop: {/* ... */},
-      }
+        walk: {
+          /* ... */
+        },
+        wait: {
+          /* ... */
+        },
+        stop: {
+          /* ... */
+        },
+      },
     },
-  }
+  },
 });
 
 const trafficLightActor = createActor(trafficLightMachine);
 
-trafficLightActor.subscribe(state => {
+trafficLightActor.subscribe((state) => {
   console.log(state.value);
 });
 

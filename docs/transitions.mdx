@@ -30,11 +30,11 @@ const feedbackMachine = createMachine({
     question: {
       on: {
         'feedback.good': {
-          target: 'thanks'
-        }
-      }
+          target: 'thanks',
+        },
+      },
     },
-    thanks: {}
+    thanks: {},
   },
 });
 ```
@@ -81,15 +81,18 @@ const machine = createMachine({
     someEvent: {
       // No target
       actions: assign({
-        count: ({context}) => context.count + 1,
-      })
-    }
-  }
+        count: ({ context }) => context.count + 1,
+      }),
+    },
+  },
   // highlight-end
 });
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=91da1d57-b146-48fd-82ce-a9dd28b7261a" title="Root self-transition"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=91da1d57-b146-48fd-82ce-a9dd28b7261a"
+  title="Root self-transition"
+/>
 
 **Self-transitions on states:**
 
@@ -101,7 +104,7 @@ const machine = createMachine({
   initial: 'inactive',
   states: {
     inactive: {
-      on: { activate: { target: 'active' } }
+      on: { activate: { target: 'active' } },
     },
     active: {
       // highlight-start
@@ -109,17 +112,20 @@ const machine = createMachine({
         someEvent: {
           // No target
           actions: assign({
-            count: ({context}) => context.count + 1,
-          })
-        }
-      }
+            count: ({ context }) => context.count + 1,
+          }),
+        },
+      },
       // highlight-end
-    }
-  }
+    },
+  },
 });
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=8763e570-3535-42b3-a2a2-8edd82d1207a" title="Self-transition on state"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=8763e570-3535-42b3-a2a2-8edd82d1207a"
+  title="Self-transition on state"
+/>
 
 :::studio
 
@@ -172,21 +178,21 @@ const machine = createMachine({
     auto: {},
     light: {
       on: {
-        'mode.toggle': { target: 'dark' }
-      }
+        'mode.toggle': { target: 'dark' },
+      },
     },
     dark: {
       on: {
-        'mode.toggle': { target: 'light' }
-      }
-    }
+        'mode.toggle': { target: 'light' },
+      },
+    },
   },
   on: {
     'mode.reset': {
       // highlight-next-line
-      target: '.system'
-    }
-  }
+      target: '.system',
+    },
+  },
 });
 ```
 
@@ -220,10 +226,10 @@ const machine = createMachine({
         'event.thatReenters': {
           target: 'someState', // or no target
           reenter: true,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 });
 
 const actor = createActor(machine);
@@ -249,26 +255,26 @@ const machine = createMachine({
       exit: () => console.log('parentState exited'),
       on: {
         'event.normal': {
-          target: '.someChildState'
+          target: '.someChildState',
         },
         'event.thatReenters': {
           target: '.otherChildState',
-          reenter: true
-        }
+          reenter: true,
+        },
       },
       initial: 'someChildState',
       states: {
         someChildState: {
           entry: () => console.log('someChildState entered'),
-          exit: () => console.log('someChildState exited')
+          exit: () => console.log('someChildState exited'),
         },
         otherChildState: {
           entry: () => console.log('otherChildState entered'),
-          exit: () => console.log('otherChildState exited')
-        }
-      }
-    }
-  }
+          exit: () => console.log('otherChildState exited'),
+        },
+      },
+    },
+  },
 });
 
 const actor1 = createActor(machine);
@@ -437,7 +443,7 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -451,11 +457,9 @@ import { setup } from 'xstate';
 const machine = setup({
   types: {
     // highlight-start
-    events: {} as
-      | { type: 'greet'; message: string }
-      | { type: 'submit' }
+    events: {} as { type: 'greet'; message: string } | { type: 'submit' },
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   on: {
@@ -490,7 +494,7 @@ const actor = createActor(someMachine, {
       console.log(inspectionEvent.event);
       // highlight-end
     }
-  }
+  },
 });
 ```
 

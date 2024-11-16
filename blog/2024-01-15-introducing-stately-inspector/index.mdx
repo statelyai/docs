@@ -16,7 +16,7 @@ Stately Inspector is a tool that allows you to inspect your application’s stat
 
 [Watch a demo of Stately Inspector in our most recent office hours](https://www.youtube.com/live/-Jf9N-EaUx0?feature=shared&t=408):
 
-<YouTube id="-Jf9N-EaUx0"/>
+<YouTube id="-Jf9N-EaUx0" />
 
 ## Installing Stately Inspect
 
@@ -60,7 +60,6 @@ Now, when you run your app, you should see a new tab or popup open in your brows
   />
 </p>
 
-
 ## Sending inspection events
 
 The `@statelyai/inspect` package will send inspection events to the connected Stately Inspector. There are currently three kinds of events sent:
@@ -87,7 +86,7 @@ inspector.actor('todos');
 
 // When a todo is created
 inspector.actor('todo-1', {
-  context: { status: 'active' }
+  context: { status: 'active' },
 });
 
 // When a user completes a todo
@@ -95,16 +94,19 @@ inspector.event('todo-1', { type: 'todo.complete' });
 
 // When a todo changes
 inspector.snapshot('todo-1', {
-  context: { status: 'completed' }
+  context: { status: 'completed' },
 });
 
 // When the todos actor (not the user) sends an event to a todo
-inspector.event('todo-1', { type: 'todo.update' }, {
-  source: 'todos'
-});
+inspector.event(
+  'todo-1',
+  { type: 'todo.update' },
+  {
+    source: 'todos',
+  },
+);
 
 // ... etc.
-
 ```
 
 The above is a contrived example demonstrating how you can instrument inspector events at any time from any part of your app. The three types of inspection events contain everything that Stately Inspector needs to generate two kinds of real-time diagrams automatically:
@@ -116,12 +118,12 @@ The above is a contrived example demonstrating how you can instrument inspector 
   <ThemedImage
     alt="The Stately Inspector view, showing a state machine and a sequence diagram for the pizza ordering process side-by-side."
     sources={{
-      light: '/blog/2024-01-15-introducing-stately-inspector/machine-and-sequence-diagram.png',
+      light:
+        '/blog/2024-01-15-introducing-stately-inspector/machine-and-sequence-diagram.png',
       dark: '/blog/2024-01-15-introducing-stately-inspector/machine-and-sequence-diagram-dm.png',
     }}
   />
 </p>
-
 
 ## Coming soon
 

@@ -12,7 +12,10 @@ Embedding Figma frames is a premium feature of Stately Studio. You can try State
 
 :::
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=07a2b829-fc69-487c-af11-d6bb56c282a5" title="States with Figma assets"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=07a2b829-fc69-487c-af11-d6bb56c282a5"
+  title="States with Figma assets"
+/>
 
 ## How to embed Figma frames
 
@@ -26,6 +29,7 @@ As Figma frames are a special type of [asset](assets.mdx), you can [change the d
 ### Syncing Figma frames
 
 Your embedded Figma frame will stay up to date with the latest changes in your Figma file unless:
+
 - [you lock your machine](#locked-machines-with-figma-frames)
 - [you revoke your Figma personal access token](#revoking-your-figma-personal-access-token)
 - [your Figma personal access token expires](#revoking-your-figma-personal-access-token)
@@ -44,10 +48,10 @@ To ensure Embed Figma works correctly, you must grant the following permissions 
 
 - **File content**: Allow **Read-only** access so Stately Studio can sync your embedded Figma frames to your machines.
 
-You can update your Figma personal access token from your user <Settings size={18}/> **Settings** in Stately Studio anytime. 
+You can update your Figma personal access token from your user <Settings size={18}/> **Settings** in Stately Studio anytime.
 
 ### Revoking your Figma personal access token
 
-If you need to revoke your Figma personal access token, you can do so from your Figma account settings. 
+If you need to revoke your Figma personal access token, you can do so from your Figma account settings.
 
 When you revoke your Figma personal access token or your token expires, Stately Studio will no longer be able to sync your embedded Figma frames to your machines. The last synced version of your embedded Figma frames will remain in your machines for 14 days. After 14 days, Figma will entirely revoke access to the frame.

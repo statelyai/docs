@@ -45,7 +45,10 @@ const feedbackMachine = createMachine(
 );
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=2e91a914-7f83-45fe-9216-e1b5c495a44a" title="Feedback form with guards"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=2e91a914-7f83-45fe-9216-e1b5c495a44a"
+  title="Feedback form with guards"
+/>
 
 ## Multiple guarded transitions
 
@@ -212,7 +215,7 @@ on: {
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -226,10 +229,10 @@ import { setup } from 'xstate';
 const machine = setup({
   // highlight-start
   guards: {
-    isGreaterThan: (_, params: { count: number; min: number; }) => {
+    isGreaterThan: (_, params: { count: number; min: number }) => {
       return params.count > params.min;
-    }
-  }
+    },
+  },
   // highlight-end
 }).createMachine({
   // ...
@@ -240,8 +243,8 @@ const machine = setup({
         // Strongly-typed params
         params: ({ event }) => ({
           count: event.count,
-          min: 10
-        })
+          min: 10,
+        }),
       },
       // ...
     },

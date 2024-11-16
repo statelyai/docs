@@ -125,7 +125,7 @@ const resolvedState = someMachine.resolveState({
 // Restore the actor
 const restoredActor = createActor(someMachine, {
   // highlight-next-line
-  snapshot: resolvedState
+  snapshot: resolvedState,
 });
 
 restoredActor.start();
@@ -147,12 +147,14 @@ const someActor = createActor(someMachine, {
       const event = inspectionEvent.event;
 
       // Only listen for events sent to the root actor
-      if (inspectionEvent.actorRef !== someActor) { return; }
+      if (inspectionEvent.actorRef !== someActor) {
+        return;
+      }
 
       // highlight-next-line
       events.push(event);
     }
-  }
+  },
 });
 
 someActor.start();

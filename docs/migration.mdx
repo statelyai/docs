@@ -35,13 +35,13 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
   ```json5
   // tsconfig.json
   {
-    "compilerOptions": {
+    compilerOptions: {
       // ...
       // highlight-next-line
-      "strictNullChecks": true
+      strictNullChecks: true,
       // or set `strict` to true, which includes `strictNullChecks`
       // "strict": true
-    }
+    },
   }
   ```
 
@@ -309,7 +309,7 @@ const machine1 = createMachine({
   // highlight-start
   entry: spawnChild('someChildLogic', {
     id: 'someChild',
-  })
+  }),
   // highlight-end
 });
 
@@ -318,8 +318,8 @@ const machine2 = createMachine({
   // ...
   entry: assign({
     // highlight-next-line
-    child: ({ spawn }) => spawn('someChildLogic')
-  })
+    child: ({ spawn }) => spawn('someChildLogic'),
+  }),
 });
 ```
 
@@ -335,8 +335,8 @@ const machine = createMachine({
   // ...
   entry: assign({
     // highlight-next-line
-    child: () => spawn('someChildLogic')
-  })
+    child: () => spawn('someChildLogic'),
+  }),
 });
 ```
 
@@ -347,7 +347,6 @@ const machine = createMachine({
 
 The `machine.transition(…)` method now requires an "actor scope" for the 3rd argument, which is internally created by `createActor(…)`. Instead, use `getNextSnapshot(…)` to get the next snapshot from some actor logic based on the current snapshot and event:
 
-
 <Tabs>
 <TabItem value="v5" label="XState v5">
 
@@ -356,7 +355,7 @@ The `machine.transition(…)` method now requires an "actor scope" for the 3rd a
 import {
   createMachine,
   // highlight-next-line
-  getNextSnapshot
+  getNextSnapshot,
 } from 'xstate';
 
 const machine = createMachine({
@@ -365,9 +364,9 @@ const machine = createMachine({
 
 // highlight-start
 const nextState = getNextSnapshot(
-  machine, 
+  machine,
   machine.resolveState({ value: 'green' }),
-  { type: 'timer' }
+  { type: 'timer' },
 );
 // highlight-end
 
@@ -386,10 +385,7 @@ const machine = createMachine({
   // ...
 });
 
-const nextState = machine.transition(
-  'green',
-  { type: 'timer' }
-);
+const nextState = machine.transition('green', { type: 'timer' });
 
 nextState.value; // yellow
 ```
@@ -412,14 +408,14 @@ const machine = createMachine({
   // ...
   invoke: {
     src: 'someSource',
-    id: 'someId'
+    id: 'someId',
   },
   // highlight-start
   always: {
     // Forward events to the invoked actor
     // This will not cause an infinite loop in XState v5
-    actions: sendTo('someId', ({ event }) => event)
-  }
+    actions: sendTo('someId', ({ event }) => event),
+  },
   // highlight-end
 });
 ```
@@ -495,8 +491,8 @@ export function getStateValueStrings(stateValue: StateValue): string[] {
 
   return valueKeys.concat(
     ...valueKeys.map((key) =>
-      getStateValueStrings(stateValue[key]!).map((s) => key + '.' + s)
-    )
+      getStateValueStrings(stateValue[key]!).map((s) => key + '.' + s),
+    ),
   );
 }
 
@@ -549,20 +545,21 @@ import { createActor } from 'xstate';
 import { someMachine } from './someMachine';
 
 const actor = createActor(someMachine, {
-  // highlight-start
-  inspect: (inspEvent) => {
-    if (inspEvent.type === '@xstate.event') {
-      console.log(inspEvent.event);
-    }
-  }
-  // highlight-end
+// highlight-start
+inspect: (inspEvent) => {
+if (inspEvent.type === '@xstate.event') {
+console.log(inspEvent.event);
+}
+}
+// highlight-end
 });
-```
+
+````
 
 </TabItem>
 
 <TabItem value="v5-alt" label="XState v5 (context)">
-  
+
 ```ts
 // ✅
 import { setup, createActor } from 'xstate';
@@ -580,7 +577,7 @@ const someMachine = setup({
   context: { event: undefined },
   on: {
     someEvent: {
-      // ... 
+      // ...
       // highlight-next-line
       actions: ['recordEvent']
     }
@@ -592,7 +589,7 @@ someActor.subscribe(snapshot => {
   // highlight-next-line
   console.log(snapshot.context.event);
 });
-```
+````
 
 </TabItem>
 
@@ -604,7 +601,7 @@ import { interpret } from 'xstate';
 import { someMachine } from './someMachine';
 
 const actor = interpret(someMachine);
-actor.subscribe(state => {
+actor.subscribe((state) => {
   // highlight-next-line
   console.log(state.event); // Removed
 });
@@ -720,7 +717,7 @@ entry: [
   enqueueActions(({ context, event, enqueue }) => {
     enqueue('action1');
     enqueue('action2');
-  })
+  }),
 ];
 ```
 
@@ -732,11 +729,8 @@ entry: [
 // ❌ DEPRECATED
 entry: [
   pure(() => {
-    return [
-      'action1',
-      'action2'
-    ]
-  })
+    return ['action1', 'action2'];
+  }),
 ];
 ```
 
@@ -756,7 +750,7 @@ entry: [
       enqueue('action1');
       enqueue('action2');
     }
-  })
+  }),
 ];
 ```
 
@@ -770,8 +764,8 @@ entry: [
   choose([
     {
       guard: 'someGuard',
-      actions: ['action1', 'action2']
-    }
+      actions: ['action1', 'action2'],
+    },
   ]),
 ];
 ```
@@ -1002,7 +996,7 @@ actor.subscribe({
   // highlight-start
   error: (err) => {
     console.error(err);
-  }
+  },
   // highlight-end
 });
 
@@ -1164,8 +1158,8 @@ const machine = createMachine({
         },
         selfEvent: {
           target: 'childState',
-          reenter: true
-        }
+          reenter: true,
+        },
         // highlight-end
       },
       initial: 'childState',
@@ -1195,8 +1189,8 @@ const machine = createMachine({
           target: 'compoundState.childState', // non-relative target
         },
         selfEvent: {
-          target: 'compoundState'
-        }
+          target: 'compoundState',
+        },
         // highlight-end
       },
       initial: 'childState',
@@ -1297,7 +1291,7 @@ const machine = createMachine({
       },
     },
   },
-})
+});
 ```
 
 </TabItem>
@@ -1434,8 +1428,8 @@ const childMachine = createMachine({
   // This will be sent to the parent machine that invokes this child
   // highlight-start
   entry: () => {
-    throw new Error('This is some error')
-  }
+    throw new Error('This is some error');
+  },
   // highlight-end
 });
 
@@ -1452,10 +1446,10 @@ const parentMachine = createMachine({
         //      message: 'This is some error'
         //    }
         //  }
-      }
-    }
+      },
+    },
     // highlight-end
-  }
+  },
 });
 ```
 
@@ -1467,7 +1461,7 @@ const parentMachine = createMachine({
 // ❌ DEPRECATED
 const childMachine = createMachine({
   // highlight-start
-  entry: escalate('This is some error')
+  entry: escalate('This is some error'),
   // highlight-end
 });
 
@@ -1511,8 +1505,8 @@ const machine = setup({
       const data = await getData(input.userId);
       // ...
       return data;
-    })
-  }
+    }),
+  },
 }).createMachine({
   invoke: {
     src: 'getUser',
@@ -1727,7 +1721,6 @@ const machine = createMachine({
 
 </TabItem>
 </Tabs>
-
 
 To provide a dynamically generated output, replace `invoke.data` with `invoke.output` and add a top-level `output` property:
 
@@ -2257,7 +2250,6 @@ const service = useInterpret(machine);
 </TabItem>
 </Tabs>
 
-
 ### `useActor(logic)` now accepts actor logic, not an actor
 
 :::breakingchange
@@ -2280,9 +2272,7 @@ import { useSelector } from '@xstate/react';
 function Component({ someActorRef }) {
   const state = useSelector(someActorRef, (s) => s);
 
-  return (
-    <button onClick={() => someActorRef.send({ type: 'someEvent' })} />
-  );
+  return <button onClick={() => someActorRef.send({ type: 'someEvent' })} />;
 }
 ```
 
@@ -2297,9 +2287,7 @@ import { useActor } from '@xstate/react';
 function Component({ someActorRef }) {
   const [state, send] = useActor(someActorRef);
 
-  return (
-    <button onClick={() => send({ type: 'someEvent' })} />
-  );
+  return <button onClick={() => send({ type: 'someEvent' })} />;
 }
 ```
 
@@ -2332,13 +2320,15 @@ import { useMachine } from '@xstate/react';
 import { someMachine } from './someMachine';
 
 function Component(props) {
-  const [state, send] = useMachine(someMachine.provide({
-    actions: {
-      doSomething: () => {
-        props.onSomething?.(); // Kept up-to-date
-      }
-    }
-  }));
+  const [state, send] = useMachine(
+    someMachine.provide({
+      actions: {
+        doSomething: () => {
+          props.onSomething?.(); // Kept up-to-date
+        },
+      },
+    }),
+  );
 
   // ...
 }
@@ -2358,8 +2348,8 @@ function Component(props) {
     actions: {
       doSomething: () => {
         props.onSomething?.();
-      }
-    }
+      },
+    },
   });
 
   // ...
@@ -2376,13 +2366,15 @@ import { useMachine } from '@xstate/react';
 import { someMachine } from './someMachine';
 
 function Component(props) {
-  const [state, send] = useMachine(() => someMachine.withConfig({
-    actions: {
-      doSomething: () => {
-        props.onSomething?.();
-      }
-    }
-  }));
+  const [state, send] = useMachine(() =>
+    someMachine.withConfig({
+      actions: {
+        doSomething: () => {
+          props.onSomething?.();
+        },
+      },
+    }),
+  );
 
   // ...
 }
@@ -2420,8 +2412,8 @@ const {
   snapshot, // Renamed from `state`
   send,
   // highlight-next-line
-  actor // Renamed from `service`
-} = useMachine(someMachine)
+  actor, // Renamed from `service`
+} = useMachine(someMachine);
 ```
 
 </TabItem>
@@ -2439,13 +2431,12 @@ const {
   state, // Renamed to `snapshot` in @xstate/vue 3.0.0
   send,
   // highlight-next-line
-  service // Renamed to `actor` in @xstate/vue 3.0.0
-} = useMachine(someMachine)
+  service, // Renamed to `actor` in @xstate/vue 3.0.0
+} = useMachine(someMachine);
 ```
 
 </TabItem>
 </Tabs>
-
 
 ## New features
 
@@ -2479,7 +2470,6 @@ Upvote or comment on [XState v5 compatibility for VS Code extension in our roadm
 TypeScript inference has been greatly improved in XState v5. Especially with features like the `setup()` API and dynamic parameters, the main use-cases for typegen are no longer needed.
 
 However, we recognize that there may still be some specific use-cases for typegen. Upvote or comment on [Typegen for XState v5 in our roadmap](https://feedback.stately.ai/xstate/p/typegen-for-xstate-v5) to stay updated on our progress.
-
 
 ### How can I use both XState v4 and v5?
 

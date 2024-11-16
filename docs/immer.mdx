@@ -55,7 +55,7 @@ const machine = createMachine({
   id: 'todos',
   context: {
     todos: [],
-    filter: 'all'
+    filter: 'all',
   },
   // ...
   on: {
@@ -63,29 +63,32 @@ const machine = createMachine({
       // highlight-start
       // Using Immer to update a single context property
       actions: assign({
-        todos: ({ context, event }) => produce(context.todos, draftTodos => {
-          const todo = draftTodos.find(t => t.id === event.todo.id);
-          todo.completed = true;
-        })
-      })
+        todos: ({ context, event }) =>
+          produce(context.todos, (draftTodos) => {
+            const todo = draftTodos.find((t) => t.id === event.todo.id);
+            todo.completed = true;
+          }),
+      }),
       // highlight-end
     },
     'todos.add': {
       // highlight-start
       // Using Immer to update multiple context properties
-      actions: assign(({ context, event }) => produce(context, draftContext => {
-        draftContext.todos.push({
-          id: event.todo.id,
-          description: event.todo.description,
-          completed: false
-        });
+      actions: assign(({ context, event }) =>
+        produce(context, (draftContext) => {
+          draftContext.todos.push({
+            id: event.todo.id,
+            description: event.todo.description,
+            completed: false,
+          });
 
-        if (draftContext.filter === 'all') {
-          draftContext.filter = 'active';
-        }
-      }))
+          if (draftContext.filter === 'all') {
+            draftContext.filter = 'active';
+          }
+        }),
+      ),
       // highlight-end
-    }
-  }
+    },
+  },
 });
 ```

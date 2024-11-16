@@ -71,11 +71,16 @@ const promiseLogic = fromPromise(async ({ input }) => {
 ```jsx
 import { fromTransition } from 'xstate';
 
-const transitionLogic = fromTransition((state, event) => {
-  switch (event.type) {
-    // reducer logic; you know the drill
-  }
-}, { count: 0 });
+const transitionLogic = fromTransition(
+  (state, event) => {
+    switch (
+      event.type
+      // reducer logic; you know the drill
+    ) {
+    }
+  },
+  { count: 0 },
+);
 ```
 
 **Observable actor logic**
@@ -95,11 +100,13 @@ import { fromCallback } from 'xstate';
 const callbackLogic = fromCallback(({ sendBack, receive }) => {
   const handler = (event) => {
     sendBack(event);
-  }
-  
+  };
+
   window.addEventListener('message', handler);
 
-  return () => { window.removeEventListener('message', handler); }
+  return () => {
+    window.removeEventListener('message', handler);
+  };
 });
 ```
 
@@ -112,7 +119,7 @@ import { createActor } from 'xstate';
 
 const actor = createActor(someLogic);
 
-actor.subscribe(snapshot => {
+actor.subscribe((snapshot) => {
   console.log(snapshot);
 });
 
@@ -130,8 +137,8 @@ function withLogging(actorLogic) {
     transition: (state, event, actorScope) => {
       console.log('State:', state);
       return actorLogic.transition(state, event, actorScope);
-    }
-  }
+    },
+  };
 }
 
 const actor = createActor(withLogging(someLogic));
@@ -156,7 +163,7 @@ const actor = createActor(machine, {
     // type: '@xstate.snapshot' or
     // type: '@xstate.event'
     console.log(inspectionEvent);
-  }
+  },
 });
 ```
 
@@ -175,8 +182,8 @@ import { setup, createActor } from 'xstate';
 
 const machine = setup({
   actors: {
-    counter: fromTransition(/* ... */)
-  }
+    counter: fromTransition(/* ... */),
+  },
 }).createMachine({
   invoke: {
     // This will also be persisted!
@@ -293,15 +300,15 @@ const promiseActor = createActor(promiseLogic, {
 
 // From a machine
 const machine = setup({
-  actors: { promiseLogic }
+  actors: { promiseLogic },
 }).createMachine({
   invoke: {
     src: 'promiseLogic',
     input: {
       id: 42,
     },
-  }
-})
+  },
+});
 ```
 
 Actors can also have [output](/docs/output), which represents their “done data” when they have reached their final state. It’s not just state machines that can have output; promise logic naturally resolves with output, and it may be possible to specify output for other actor logic types in the future.
@@ -385,20 +392,30 @@ const machine = setup({
 }).createMachine({
   initial: 'green',
   states: {
-    green: {/* ... */},
-    yellow: {/* ... */},
+    green: {
+      /* ... */
+    },
+    yellow: {
+      /* ... */
+    },
     red: {
       initial: 'walk',
       states: {
-        walk: {/* ... */},
-        run: {/* ... */},
-        stop: {/* ... */}
-      }
-    }
-  }
+        walk: {
+          /* ... */
+        },
+        run: {
+          /* ... */
+        },
+        stop: {
+          /* ... */
+        },
+      },
+    },
+  },
 });
 
-const actor = createActor(machine)
+const actor = createActor(machine);
 actor.start();
 
 // Strongly-typed state values!
@@ -423,24 +440,24 @@ const machine = setup({
   actions: {
     greet: (_, params: { name: string }) => {
       console.log(`Hello, ${params.name}!`);
-    }
+    },
   },
   guards: {
     isGreaterThan: (_, params: { value: number; min: number }) => {
       return params.value > params.min;
-    }
-  }
+    },
+  },
 }).createMachine({
   context: ({ input }) => ({
     user: input.user,
-    count: 0
+    count: 0,
   }),
   entry: {
     type: 'greet',
     // highlight-start
     params: ({ context }) => ({
-      name: context.user.name
-    })
+      name: context.user.name,
+    }),
     // highlight-end
   },
   on: {
@@ -450,12 +467,12 @@ const machine = setup({
         // highlight-start
         params: ({ context, event }) => ({
           value: context.count,
-          min: 0
-        })
+          min: 0,
+        }),
         // highlight-end
-      }
-    }
-  }
+      },
+    },
+  },
 });
 ```
 
@@ -471,7 +488,7 @@ const machine = createMachine({
   entry: enqueueActions(({ context, event, enqueue, check }) => {
     // assign action
     enqueue.assign({
-      count: context.count + 1
+      count: context.count + 1,
     });
 
     // Conditional actions (replaces choose(...))
@@ -495,7 +512,7 @@ const machine = createMachine({
     }
 
     // no return
-  })
+  }),
 });
 ```
 
@@ -543,7 +560,7 @@ const userMachine = setup({
     isAuthenticated: ({ context }) => context.user !== undefined,
     isAdmin: ({ context }) => context.user.role === 'admin',
     isBanned: ({ context }) => context.user.status === 'banned',
-  }
+  },
 }).createMachine({
   // ...
   on: {

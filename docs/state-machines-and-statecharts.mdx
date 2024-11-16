@@ -46,7 +46,7 @@ In Stately Studio, we refer to both state machines and statecharts as **state ma
 
 A state describes the machine’s status or mode, which could be as simple as *Asleep* and *Awake*. A state machine can only be in one state at a time.
 
-{/*  no alt because the image is already described in the surrounding text */}
+{/* no alt because the image is already described in the surrounding text */}
 
 <p>
   <ThemedImage
@@ -90,7 +90,7 @@ const dogMachine = createMachine({
       // ...
     },
     //...
-  }
+  },
   // highlight-end
 });
 ```
@@ -143,18 +143,18 @@ const dogMachine = createMachine({
       // highlight-start
       on: {
         'wakes up': 'awake',
-      }
+      },
       // highlight-end
     },
     awake: {
       // highlight-start
       on: {
         'falls asleep': 'asleep',
-      }
+      },
       // highlight-end
     },
     //...
-  }
+  },
 });
 ```
 
@@ -251,9 +251,9 @@ A helpful way to describe a self-transition is “doing something, not going som
 
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
-{/*  no alt because the image is already described in the surrounding text */}
+{/* no alt because the image is already described in the surrounding text */}
 
-<p style={{'max-width': '500px'}}>
+<p style={{ 'max-width': '500px' }}>
   <ThemedImage
     alt=""
     sources={{

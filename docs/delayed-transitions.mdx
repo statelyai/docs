@@ -40,7 +40,10 @@ const pushTheButtonGame = createMachine({
 });
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=78c59862-fc40-4b1e-8f9c-42f1b2ddc410" title="Push the button game"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=78c59862-fc40-4b1e-8f9c-42f1b2ddc410"
+  title="Push the button game"
+/>
 
 :::tip
 
@@ -87,20 +90,18 @@ const machine = setup({
     timeout: 1000,
   },
   // highlight-end
-}).createMachine(
-  {
-    initial: 'idle',
-    states: {
-      idle: {
-        after: {
-          // highlight-next-line
-          timeout: { target: 'nextState' },
-        },
+}).createMachine({
+  initial: 'idle',
+  states: {
+    idle: {
+      after: {
+        // highlight-next-line
+        timeout: { target: 'nextState' },
       },
-      nextState: {},
     },
-  }
-);
+    nextState: {},
+  },
+});
 ```
 
 ## Dynamic delays
@@ -113,8 +114,8 @@ import { setup } from 'xstate';
 const machine = setup({
   types: {
     context: {} as {
-      attempts: number
-    }
+      attempts: number;
+    },
   },
   // highlight-start
   delays: {
@@ -153,7 +154,7 @@ Delayed transition timers are canceled when the state is exited.
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -169,13 +170,15 @@ const machine = setup({
   delays: {
     shortTimeout: 1000,
     longTimeout: 5000,
-    eventually: 10_000
-  }
+    eventually: 10_000,
+  },
   // highlight-end
 }).createMachine({
   after: {
-    shortTimeout: {/* ... */}
-  }
+    shortTimeout: {
+      /* ... */
+    },
+  },
 });
 ```
 

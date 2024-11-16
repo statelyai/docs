@@ -558,47 +558,48 @@ type ChildEvent = {
   data?: string;
 };
 type ParentActor = ActorRef<Snapshot<unknown>, ChildEvent>;
-// highlight-end  
+// highlight-end
 
 const childMachine = setup({
   types: {
     context: {} as {
-      parentRef: ParentActor
+      parentRef: ParentActor;
     },
     input: {} as {
       parentRef: ParentActor;
     },
   },
 }).createMachine({
-  context: ({ input: { parentRef } }) => ({parentRef}),
-// highlight-start
+  context: ({ input: { parentRef } }) => ({ parentRef }),
+  // highlight-start
   entry: sendTo(({ context }) => context.parentRef, {
     type: 'tellParentSomething',
     data: 'Hi parent!',
   }),
-// highlight-end  
+  // highlight-end
 });
 
 export const parent = setup({
   actors: { child: childMachine },
 }).createMachine({
-// highlight-start
+  // highlight-start
   invoke: {
     src: 'child',
     input: ({ self }) => ({
       parentRef: self,
     }),
   },
-// highlight-end
+  // highlight-end
   on: {
     tellParentSomething: {
-      actions: log( ({event:{data}})=> `Child actor says "${data}"`),
+      actions: log(({ event: { data } }) => `Child actor says "${data}"`),
     },
   },
 });
 
 createActor(parent).start();
 ```
+
 </details>
 
 :::

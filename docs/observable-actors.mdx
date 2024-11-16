@@ -12,14 +12,13 @@ All XState actors are observable.
 
 ## Observable actor capabilities
 
-| | Capability | Notes |
-| --- | --- | --- |
-| ❌ | Receive&nbsp;events | Observable actors do not currently receive events. |
-| ✅ | Send events | Observable actors can send events to other actors it has reference to, such as those provided in its `input`. |
-| ❌ | Spawn actors | Observable actors currently cannot spawn new actors. |
-| ✅ | Input | You can provide `input` to observable actors. |
-| ❌ | Output | Observable actors currently do not produce output – they are active indefinitely until they are stopped, completed, or an error occurs. |
-
+|     | Capability          | Notes                                                                                                                                   |
+| --- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ❌  | Receive&nbsp;events | Observable actors do not currently receive events.                                                                                      |
+| ✅  | Send events         | Observable actors can send events to other actors it has reference to, such as those provided in its `input`.                           |
+| ❌  | Spawn actors        | Observable actors currently cannot spawn new actors.                                                                                    |
+| ✅  | Input               | You can provide `input` to observable actors.                                                                                           |
+| ❌  | Output              | Observable actors currently do not produce output – they are active indefinitely until they are stopped, completed, or an error occurs. |
 
 ## Observable actor logic
 
@@ -33,7 +32,7 @@ import { interval } from 'rxjs';
 const intervalLogic = fromObservable(() => interval(1000));
 
 const intervalActor = createActor(intervalLogic);
-intervalActor.subscribe(snapshot => {
+intervalActor.subscribe((snapshot) => {
   console.log(snapshot.context);
 });
 
@@ -55,9 +54,9 @@ const intervalLogic = fromObservable(({ input }) => interval(input.interval));
 
 const intervalActor = createActor(intervalLogic, {
   // highlight-next-line
-  input: { interval: 10_000 }
+  input: { interval: 10_000 },
 });
-intervalActor.subscribe(snapshot => {
+intervalActor.subscribe((snapshot) => {
   console.log(snapshot.context);
 });
 

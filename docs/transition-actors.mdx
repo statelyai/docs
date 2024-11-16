@@ -11,13 +11,13 @@ This is very similar to a _reducer function_ in libraries like Redux.
 
 ## Transition actor capabilities
 
-| | Capability | Notes |
-| --- | --- | --- |
-| ✅ | Receive&nbsp;events | Transition actors receive events to modify its state. |
-| ✅ | Send events | Transition actors can send events to other actors it has reference to, such as those provided in its `input`. Note that doing this would be _impure_. |
-| ❌ | Spawn actors | Transition actors currently cannot spawn new actors. |
-| ✅ | Input | You can provide `input` to transition actors. |
-| ❌ | Output | Transition actors currently do not produce output – they are active indefinitely until they are stopped or an error occurs. |
+|     | Capability          | Notes                                                                                                                                                 |
+| --- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅  | Receive&nbsp;events | Transition actors receive events to modify its state.                                                                                                 |
+| ✅  | Send events         | Transition actors can send events to other actors it has reference to, such as those provided in its `input`. Note that doing this would be _impure_. |
+| ❌  | Spawn actors        | Transition actors currently cannot spawn new actors.                                                                                                  |
+| ✅  | Input               | You can provide `input` to transition actors.                                                                                                         |
+| ❌  | Output              | Transition actors currently do not produce output – they are active indefinitely until they are stopped or an error occurs.                           |
 
 ## Transition actor logic
 
@@ -31,22 +31,25 @@ The actor logic creator returns actor logic that can be used to create transitio
 ```ts
 import { fromTransition, createActor } from 'xstate';
 
-const countLogic = fromTransition((state, event) => {
-  switch (event.type) {
-    case 'increment': {
-      return { count: state.count + 1 };
+const countLogic = fromTransition(
+  (state, event) => {
+    switch (event.type) {
+      case 'increment': {
+        return { count: state.count + 1 };
+      }
+      case 'decrement': {
+        return { count: state.count - 1 };
+      }
+      default: {
+        return state;
+      }
     }
-    case 'decrement': {
-      return { count: state.count - 1 };
-    }
-    default: {
-      return state;
-    }
-  }
-}, { count: 0 }); // Initial state
+  },
+  { count: 0 },
+); // Initial state
 
 const countActor = createActor(countLogic);
-countActor.subscribe(snapshot => {
+countActor.subscribe((snapshot) => {
   console.log(snapshot.context);
 });
 countActor.start();
@@ -66,20 +69,23 @@ You can pass in `input` to a transition actor, which will be passed to the funct
 ```ts
 import { fromTransition, createActor } from 'xstate';
 
-const countLogic = fromTransition((state, event) => {
-  // ...
-// highlight-start
-}, ({ input }: { input: number }) => ({
-  count: input  // Initial state
-}));
+const countLogic = fromTransition(
+  (state, event) => {
+    // ...
+    // highlight-start
+  },
+  ({ input }: { input: number }) => ({
+    count: input, // Initial state
+  }),
+);
 // highlight-end
 
 const countActor = createActor(countLogic, {
   // highlight-next-line
-  input: 42
+  input: 42,
 });
 
-countActor.subscribe(snapshot => {
+countActor.subscribe((snapshot) => {
   console.log(snapshot.context);
   // logs { count: 42 }
 });
