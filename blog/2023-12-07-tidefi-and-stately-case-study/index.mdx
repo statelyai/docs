@@ -59,10 +59,16 @@ I was able to showcase the machine visualizer to the rest of the company, which 
 
 Several months down the road, our team was running into some challenges of transmitting data between pages. Most pages had a machine that controlled the flow, and then there were other machines meant for data subscriptions, connection handling, etc. I decided to model a traditional hub-and-spoke actor system by:
 
-<ol style={{'list-style-type': 'lower-alpha'}}>
-<li>nesting actors underneath a root actor</li>
-<li>broadcasting an INIT event to register actors and facilitate storing references</li>
-<li>handle some communication via broadcasts, and others as direct events or data queries</li>
+<ol style={{ 'list-style-type': 'lower-alpha' }}>
+  <li>nesting actors underneath a root actor</li>
+  <li>
+    broadcasting an INIT event to register actors and facilitate storing
+    references
+  </li>
+  <li>
+    handle some communication via broadcasts, and others as direct events or
+    data queries
+  </li>
 </ol>
 
 In the [XState Discord](https://discord.stately.ai), this concept came up several times, and my implementation was tweaked until it was fairly easy to reason with, and performant. To my delight, the XState team created an RFC to introduce actor systems and the “receptionist” pattern! It was a joy to have real-world experience to contribute to the discussion and prove or challenge parts of the API. Now it is a built-in part of XState v5! I can remove dozens of lines of code and instead utilize my root actor as a system with individually named actors in a tree underneath.

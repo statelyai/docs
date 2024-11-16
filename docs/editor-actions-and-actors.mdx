@@ -9,17 +9,20 @@ While the state machine is running, it can execute effects called actions. Actio
 
 State machines can invoke actors as longer-running processes that can receive events, send events, and change their behavior based on the events they receive. You can invoke actors on entry to a state and stop on exit. [Read more about actors](actors.mdx).
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?code=834448b4-3b8b-4de9-8b2e-353fd2b342de&mode=design&machineId=000b2694-2267-413c-8477-988cc750d581" title="Demo of actions and actors"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?code=834448b4-3b8b-4de9-8b2e-353fd2b342de&mode=design&machineId=000b2694-2267-413c-8477-988cc750d581"
+  title="Demo of actions and actors"
+/>
 
 ## Add actions
 
 - Select a state or transition and use <Zap size={18} /> **Action**.
 - Select a state and use <Plus size={18} /> **Entry action** or **Exit action**.
-- Select a state or transition, open the <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** or <Plus size={18} /> **Action**  button and choose **Add entry action**, **Add exit action**, or **Add action**.
+- Select a state or transition, open the <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** or <Plus size={18} /> **Action** button and choose **Add entry action**, **Add exit action**, or **Add action**.
 
 Use the <Edit size={18} /> edit icon button to open the <Code size={18} /> **Sources** panel and add custom implementation code. Actions are created as custom actions by default, but you can also use [XState built-in actions](#xstate-built-in-actions).
 
-To remove an action, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
+To remove an action, use the <kbd>Backspace</kbd> key, _right-click_ and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
 
 ### Add action parameters
 
@@ -41,20 +44,20 @@ In the video player above, the *startVideo* actor is invoked when the video pl
 - Select a state and use <PlayCircle size={18} /> **Invoke**.
 - Select a state, open the state <Info size={18} /> **Details** panel from the right tool menu, and use the <Plus size={18} /> **Effect** button and choose **Add invoked actor**.
 
-Use the <Edit size={18} /> edit icon button to open the <Code size={18}/ > **Sources** panel and enter the actor’s source logic. 
+Use the <Edit size={18} /> edit icon button to open the <Code size={18}/ > **Sources** panel and enter the actor’s source logic.
 
 Provide your actor with an ID so it can be used with the [`sendTo` or `stop` actions](#xstate-built-in-actions) to stop and send events to the actor. You can add actor input by selecting the actor and using add <Plus size={18} /> **input property**.
 
-To remove an actor, use the <kbd>Backspace</kbd> key, *right-click* and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
+To remove an actor, use the <kbd>Backspace</kbd> key, _right-click_ and choose **Delete**, or use the <Trash size={18} /> delete icon button in the **Details** panel.
 
 #### Invoke done and invoke error events
 
 **Invoke done events** and **invoke error events** transition from a state once its invocation has been completed or returns an error. The source state must have an invoked actor to create an invoke done or invoke error event.
 
-- Select the state with an invoked actor and create a new transition from that state. The first new transition will be created as an invoke done event. 
+- Select the state with an invoked actor and create a new transition from that state. The first new transition will be created as an invoke done event.
 - Subsequent new transitions will be created as invoke error events.
 
-To change an invoke done or invoke error event back into a regular transition, Use the <MoreHorizontal size={18} /> triple dot menu or *right-click* the transition, and from **Event type**, choose **Always**.
+To change an invoke done or invoke error event back into a regular transition, Use the <MoreHorizontal size={18} /> triple dot menu or _right-click_ the transition, and from **Event type**, choose **Always**.
 
 ### XState built-in actions
 

@@ -21,9 +21,9 @@ In most cases, prefer `spawnChild`, which causes an actor to be spawned, and can
 ```ts
 createMachine({
   entry: spawnChild(childMachine, {
-    id: 'child'
-  })
-})
+    id: 'child',
+  }),
+});
 ```
 
 You can use `spawnChild` for multiple spawned actors:
@@ -33,9 +33,9 @@ createMachine({
   entry: [
     spawnChild(childMachine, { id: 'child-1' }),
     spawnChild(childMachine, { id: 'child-2' }),
-    spawnChild(childMachine, { id: 'child-3' })
-  ]
-})
+    spawnChild(childMachine, { id: 'child-3' }),
+  ],
+});
 ```
 
 You can also use the `spawn` helper function provided by the `assign` action creator, which allows you to store a reference to the spawned actor (an `ActorRef`) in the machine's `context`:
@@ -44,19 +44,16 @@ You can also use the `spawn` helper function provided by the `assign` action cre
 const parentMachine = createMachine({
   entry: [
     assign({
-      childMachineRef: ({ spawn }) => spawn(childMachine, { id: 'child' })
-    })
-  ]
+      childMachineRef: ({ spawn }) => spawn(childMachine, { id: 'child' }),
+    }),
+  ],
 });
 ```
 
 However, if you use `spawn`, **make sure you remove the ActorRef from `context` to prevent memory leaks** when the spawned actor is no longer needed:
 
 ```ts
-actions: [
-  stopChild('child'),
-  assign({ childMachineRef: undefined })
-]
+actions: [stopChild('child'), assign({ childMachineRef: undefined })];
 ```
 
 You can `spawn` as many actors as you need:
@@ -86,9 +83,9 @@ If you don’t need to keep track of a reference to the spawned actor (e.g.: for
 ```ts
 createMachine({
   entry: spawnChild('workflow', {
-    id: 'workflow'
-  })
-})
+    id: 'workflow',
+  }),
+});
 ```
 
 ## API
@@ -132,23 +129,23 @@ const machine = setup({
     something: fromPromise(async () => {
       // Some actor logic
       return 'Some response';
-    })
-  }
+    }),
+  },
 }).createMachine({
   context: ({ spawn }) => ({
-    something: spawn('something', { id: 'thing' })
+    something: spawn('something', { id: 'thing' }),
   }),
   // ...
   on: {
     'thing.stop': {
       // highlight-next-line
-      actions: stopChild('thing')
+      actions: stopChild('thing'),
     },
     'thing.stopFromContext': {
       // highlight-next-line
-      actions: stopChild(({ context }) => context.something)
-    }
-  }
+      actions: stopChild(({ context }) => context.something),
+    },
+  },
 });
 ```
 
@@ -161,17 +158,14 @@ const machine = setup({
   // ...
 }).createMachine({
   context: ({ spawn }) => ({
-    something: spawn('something', { id: 'thing' })
+    something: spawn('something', { id: 'thing' }),
   }),
   // ...
   on: {
     'thing.stop': {
-      actions: [
-        stopChild('thing'),
-        assign({ something: undefined })
-      ]
-    }
-  }
+      actions: [stopChild('thing'), assign({ something: undefined })],
+    },
+  },
 });
 ```
 
@@ -179,7 +173,7 @@ const machine = setup({
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 

@@ -64,7 +64,7 @@ function DesignSection() {
           </div>
 
           <div className="grid w-full gap-12 pt-24 md:grid-cols-2">
-          <div className="md:col-span-2">
+            <div className="md:col-span-2">
               <Feature noPadding box>
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 p-12">
                   <FeatureText>
@@ -106,17 +106,20 @@ function DesignSection() {
                 <div className="grid md:grid-cols-2">
                   <div className="p-12">
                     <FeatureText>
-                      <Strong>Embed Figma designs or attach images and other assets to states</Strong>{' '}
+                      <Strong>
+                        Embed Figma designs or attach images and other assets to
+                        states
+                      </Strong>{' '}
                       to view mockups, requirements documents, and more
                       alongside the code.
                     </FeatureText>
                     <div className="grid pt-12 gap-8">
-
-                    <div className="flex gap-4">
+                      <div className="flex gap-4">
                         <CheckCircleIcon className="text-pink-300 mt-1" />
                         <div className="flex-1">
                           <FeatureText>
-                            Embedded Figma frames stay in sync with your design files.
+                            Embedded Figma frames stay in sync with your design
+                            files.
                           </FeatureText>
                         </div>
                       </div>
@@ -354,14 +357,13 @@ function XStateSection() {
         </div>
 
         <div className="grid justify-center w-full gap-12 md:grid-cols-1 lg:grid-cols-2 pt-12">
-
           <Feature box>
             <div className="flex">
               <ShareIcon className="h-[24px] self-start mt-1 text-orange-300" />
               <div className="flex-1 pl-6">
                 <FeatureText>
-                <Strong>Export all of your generated code</Strong> in Javascript
-              or Typescript.
+                  <Strong>Export all of your generated code</Strong> in
+                  Javascript or Typescript.
                 </FeatureText>
               </div>
             </div>
@@ -370,23 +372,23 @@ function XStateSection() {
             <div className="flex">
               <GithubIcon className="h-[24px] self-start text-orange-300" />
               <div className="flex-1 pl-6">
-              <Strong>Connect with Github</Strong> to sync Stately with your
-              codebase.
+                <Strong>Connect with Github</Strong> to sync Stately with your
+                codebase.
               </div>
             </div>
           </Feature>
-
         </div>
 
         <div className="md:col-span-2 pt-12">
           <Feature noPadding box>
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 p-12">
               <FeatureText>
-                <Strong>Inspect running apps</Strong> with Stately Inspector to help
-              test, and debug your logic.
+                <Strong>Inspect running apps</Strong> with Stately Inspector to
+                help test, and debug your logic.
               </FeatureText>
               <FeatureText>
-                <Strong>Visualize communication between actors</Strong> in your running app with sequence diagrams.
+                <Strong>Visualize communication between actors</Strong> in your
+                running app with sequence diagrams.
               </FeatureText>
             </div>
             <img
@@ -398,7 +400,6 @@ function XStateSection() {
             />
           </Feature>
         </div>
-
       </BenefitSection>
     </AnimateAwayGradient>
   );

@@ -81,7 +81,7 @@ const promiseLogic = fromPromise(async () => {
 });
 
 function Component() {
-  // highlight-next-line  
+  // highlight-next-line
   const [state, send] = useActor(promiseLogic);
 
   if (state.status === 'done') {
@@ -118,7 +118,7 @@ import { useMachine } from '@xstate/react';
 
 function Component() {
   const [snapshot, send] = useMachine(machine);
-  
+
   // Machine with provided implementations
   // Will keep provided implementations up-to-date
   const [snapshot, send] = useMachine(
@@ -135,7 +135,7 @@ function Component() {
 
 ### `useActorRef(machine, options?)`
 
-A React hook that returns the `actorRef` created from the `machine` with actor `options` that are passed to `createActor(logic, options)`, if specified. It starts the actor ref and runs it for the lifetime of the component. 
+A React hook that returns the `actorRef` created from the `machine` with actor `options` that are passed to `createActor(logic, options)`, if specified. It starts the actor ref and runs it for the lifetime of the component.
 
 The `useActorRef(...)` hook is useful when you want fine-grained control, e.g. to add logging, or minimize re-renders. In contrast to `useActor(...)` that would flush each update from the machine to the React component, `useActorRef(...)` instead returns a static reference (to just the machine actor) which will not rerender when its state changes.
 

@@ -75,4 +75,4 @@ agent.send({ type: 'giveTopic', topic: 'chickens' });
 // See what the agent is doing at any time.
 agent.subscribe((state) => {
   console.log(state.value, state.context);
-})`
+})`;

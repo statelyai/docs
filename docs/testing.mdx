@@ -23,19 +23,19 @@ test('some actor', async () => {
     actions: {
       notify: (_, params) => {
         notifiedMessages.push(params.message);
-      }
-    }
+      },
+    },
   }).createMachine({
     initial: 'inactive',
     states: {
       inactive: {
-        on: { toggle: { target: 'active' } }
+        on: { toggle: { target: 'active' } },
       },
       active: {
         entry: { type: 'notify', params: { message: 'Active!' } },
-        on: { toggle: { target: 'inactive' } }
-      }
-    }
+        on: { toggle: { target: 'inactive' } },
+      },
+    },
   });
 
   const actor = createActor(machine);
@@ -48,7 +48,7 @@ test('some actor', async () => {
 
   // 3. Assert
   expect(actor.getSnapshot().value).toBe('active');
-  expect(notifiedMessages).toEqual(['Active!', 'Active!']);;
+  expect(notifiedMessages).toEqual(['Active!', 'Active!']);
 });
 ```
 

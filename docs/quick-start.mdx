@@ -17,7 +17,6 @@ The fastest way to start with Stately Studio is to go to [state.new](https://sta
 
 Install the XState v5 using your preferred package manager:
 
-
 <Tabs>
 <TabItem value="npm" label="npm">
 
@@ -46,12 +45,11 @@ yarn add xstate
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
 :::
-
 
 ## Create a machine
 
@@ -141,7 +139,7 @@ export const toggleMachine = createMachine({
     },
     Active: {
       entry: assign({
-        count: ({ context }) => context.count + 1
+        count: ({ context }) => context.count + 1,
       }),
       on: { toggle: 'Inactive' },
       after: { 2000: 'Inactive' },
@@ -165,7 +163,7 @@ export const toggleMachine = createMachine({
   context: ({ input }) => ({
     count: 0,
     // highlight-next-line
-    maxCount: input.maxCount
+    maxCount: input.maxCount,
   }),
   initial: 'Inactive',
   states: {
@@ -175,13 +173,13 @@ export const toggleMachine = createMachine({
           // Only trigger toggle transition if count is less than maxCount
           // highlight-next-line
           guard: ({ context }) => context.count < context.maxCount,
-          target: 'Active'
-        }
-      }
+          target: 'Active',
+        },
+      },
     },
     Active: {
       entry: assign({
-        count: ({ context }) => context.count + 1
+        count: ({ context }) => context.count + 1,
       }),
       on: { toggle: 'Inactive' },
       after: { 2000: 'Inactive' },
@@ -191,10 +189,10 @@ export const toggleMachine = createMachine({
 
 const actor = createActor(toggleMachine, {
   // highlight-next-line
-  input: { maxCount: 10 }
+  input: { maxCount: 10 },
 });
 
-actor.subscribe(snapshot => {
+actor.subscribe((snapshot) => {
   console.log('State:', snapshot.value);
 });
 
@@ -218,9 +216,7 @@ const App = () => {
   return (
     <div>
       <div>Value: {state.value}</div>
-      <button onClick={() => send({ type: 'toggle' })}>
-        Toggle
-      </button>
+      <button onClick={() => send({ type: 'toggle' })}>Toggle</button>
     </div>
   );
 };

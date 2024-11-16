@@ -24,14 +24,23 @@ To get any state machine from GitHub into Stately Studio, just change the `.com`
 Or, for even speedier access, use our bookmarklet. Just drag the following bookmarklet link to your bookmarks:
 
 <p>
-<a style={{border: '1px solid', borderRadius: '1rem', padding: '0.5rem 0.75rem'}} href="javascript:(function()%7Bjavascript%3A(function()%7B%20location.href%20%3D%20'https%3A%2F%2Fgithub.stately.ai%2F'%20%2B%20window.location.pathname%3B%7D)()%3B%7D)()%3B">GitHub → Stately</a>
+  <a
+    style={{
+      border: '1px solid',
+      borderRadius: '1rem',
+      padding: '0.5rem 0.75rem',
+    }}
+    href="javascript:(function()%7Bjavascript%3A(function()%7B%20location.href%20%3D%20'https%3A%2F%2Fgithub.stately.ai%2F'%20%2B%20window.location.pathname%3B%7D)()%3B%7D)()%3B"
+  >
+    GitHub → Stately
+  </a>
 </p>
 
 Or add the bookmarklet manually:
 
 1. Add a new bookmark to your browser.
 2. Set the bookmark’s web address to the following:
-    ```javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();```
+   `javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();`
 3. Click the bookmarklet when viewing a GitHub file containing one or more machines to import that machine to Stately Studio.
 
 You only need a [GitHub personal access token](/docs/import-from-github/#github-personal-access-token) and a [Stately Pro account, which you can try with a free trial](https://stately.ai/pricing).

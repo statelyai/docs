@@ -12,7 +12,10 @@ Invoking an actor is useful for managing synchronous or asynchronous work that t
 
 :::
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21&mode=design" title="User" />
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21&mode=design"
+  title="User"
+/>
 
 :::studio
 
@@ -34,15 +37,15 @@ const userMachine = setup({
       userId: string;
       user: object | undefined;
       error: unknown;
-    }
+    },
   },
   actors: {
     fetchUser: fromPromise(async ({ input }) => {
       const user = await fetchUser(input.userId);
-      
+
       return user;
-    })
-  }
+    }),
+  },
 }).createMachine({
   id: 'user',
   initial: 'idle',
@@ -434,8 +437,8 @@ const userMachine = setup({
       userId: string;
       user: object | undefined;
       error: unknown;
-    }
-  }
+    },
+  },
 }).createMachine({
   id: 'user',
   initial: 'idle',
@@ -513,8 +516,8 @@ const searchMachine = setup({
     context: {} as {
       results: object | undefined;
       errorMessage: unknown;
-    }
-  }
+    },
+  },
 }).createMachine({
   id: 'search',
   initial: 'idle',
@@ -580,16 +583,18 @@ const machine = setup({
     // highlight-start
     someCallback: fromCallback(({ input, sendBack, receive }) => {
       // ...
-    })
+    }),
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   // highlight-start
   invoke: {
     src: 'someCallback',
-    input: {/* ... */}
-  }
+    input: {
+      /* ... */
+    },
+  },
   // highlight-end
 });
 ```
@@ -612,9 +617,9 @@ const machine = setup({
     // highlight-start
     someObservable: fromObservable(({ input }: { input: number }) => {
       return interval(input.ms);
-    })
+    }),
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   // highlight-start
@@ -624,9 +629,9 @@ const machine = setup({
     onSnapshot: {
       actions: ({ event }) => {
         console.log(event.snapshot.context); // 1, 2, 3, ...
-      }
-    }
-  }
+      },
+    },
+  },
   // highlight-end
 });
 ```
@@ -644,12 +649,12 @@ const mouseClicks = fromEventObservable(/* ... */);
 
 const machine = setup({
   actors: {
-    mouseClicks
-  }
+    mouseClicks,
+  },
 }).createMachine({
   // ...
   invoke: {
-    src: 'mouseClicks'
+    src: 'mouseClicks',
     // No `onSnapshot` or `onDone` needed; events are sent directly to
     // the machine actor
   },
@@ -657,9 +662,9 @@ const machine = setup({
     // Sent by the event observable actor
     click: {
       // ...
-    }
-  }
-})
+    },
+  },
+});
 ```
 
 ## Invoking Transitions
@@ -678,21 +683,23 @@ const machine = setup({
     someTransition: fromTransition((state, event, { input }) => {
       // ...
       return state;
-    })
+    }),
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   // highlight-start
   invoke: {
     src: 'someTransition',
-    input: {/* ... */},
+    input: {
+      /* ... */
+    },
     onSnapshot: {
       actions: ({ event }) => {
         console.log(event.context);
-      }
-    }
-  }
+      },
+    },
+  },
   // highlight-end
 });
 ```
@@ -709,7 +716,9 @@ You can invoke [state machine actor logic](./state-machine-actors.mdx) by:
 ```ts
 import { setup } from 'xstate';
 
-const childMachine = setup({/* ... */}).createMachine({
+const childMachine = setup({
+  /* ... */
+}).createMachine({
   context: ({ input }) => ({
     // ...
   }),
@@ -719,16 +728,18 @@ const childMachine = setup({/* ... */}).createMachine({
 const machine = setup({
   actors: {
     // highlight-start
-    someMachine: childMachine
+    someMachine: childMachine,
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   // highlight-start
   invoke: {
     src: 'someMachine',
-    input: {/* ... */}
-  }
+    input: {
+      /* ... */
+    },
+  },
   // highlight-end
 });
 ```
@@ -836,16 +847,15 @@ Each invocation will create a new instance of that actor, so even if the `src` o
 You can test invoked actors by asserting that the parent actor receives expected events from the invoked actor.
 
 ```ts
-
 const machine = setup({
   actors: {
-    countLogic
-  }
+    countLogic,
+  },
 }).createMachine({
   invoke: {
-    src: 'countLogic'
-  }
-})
+    src: 'countLogic',
+  },
+});
 ```
 
 ## Referencing Invoked Actors
@@ -870,7 +880,7 @@ actor.subscribe({
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -893,38 +903,38 @@ const machine = setup({
       const response = await fetch(`https://example.com/${input.userId}`);
 
       return response.json();
-    })
+    }),
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   context: {
     user: null,
-    userId: 42
+    userId: 42,
   },
   initial: 'idle',
   states: {
     idle: {
       on: {
-        editUserDetails: { target: 'loadingUser' }
-      }
+        editUserDetails: { target: 'loadingUser' },
+      },
     },
     loadingUser: {
       invoke: {
         // highlight-start
         src: 'fetchUser',
         input: ({ context }) => ({
-          userId: context.userId // Type enforced to be string
+          userId: context.userId, // Type enforced to be string
         }),
         onDone: {
           actions: assign({
-            user: ({ event }) => event.output // Strongly typed as User
-          })
-        }
+            user: ({ event }) => event.output, // Strongly typed as User
+          }),
+        },
         // highlight-end
-      }
-    }
-  }
+      },
+    },
+  },
 });
 ```
 
@@ -942,12 +952,12 @@ const fetchUser = (userId: string) =>
 
 const userMachine = setup({
   actors: {
-    getUser: fromPromise(async ({ input }: { input: { userId: string }}) => {
+    getUser: fromPromise(async ({ input }: { input: { userId: string } }) => {
       const data = await fetchUser(input.userId);
 
-      return data
-    })
-  }
+      return data;
+    }),
+  },
 }).createMachine({
   // …
   states: {
@@ -1015,10 +1025,10 @@ const vitalsWorkflow = createMachine({
     CheckVitals: {
       // highlight-start
       invoke: [
-        { src: 'checkTirePressure', /* ... */ },
-        { src: 'checkOilPressure', /* ... */ },
-        { src: 'checkCoolantLevel', /* ... */ },
-        { src: 'checkBattery', /* ... */ },
+        { src: 'checkTirePressure' /* ... */ },
+        { src: 'checkOilPressure' /* ... */ },
+        { src: 'checkCoolantLevel' /* ... */ },
+        { src: 'checkBattery' /* ... */ },
       ],
       // highlight-end
     },

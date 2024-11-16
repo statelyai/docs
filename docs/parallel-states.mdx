@@ -80,51 +80,51 @@ When all regions of a parallel state have reached their final states, the `onDon
 In this example, the `onDone` transition of the parallel state is taken when both regions have reached their final states; that is, when `'grindingBeans'` reaches the `'grindingBeans.beansGround'` state and `'boilingWater'` reaches the `'boilingWater.waterBoiled'` state.
 
 ```ts
-import { createMachine } from "xstate";
+import { createMachine } from 'xstate';
 
 export const machine = createMachine({
-  id: "coffee",
-  initial: "preparing",
+  id: 'coffee',
+  initial: 'preparing',
   states: {
     preparing: {
       states: {
         grindBeans: {
-          initial: "grindingBeans",
+          initial: 'grindingBeans',
           states: {
             grindingBeans: {
               on: {
                 BEANS_GROUND: {
-                  target: "beansGround",
+                  target: 'beansGround',
                 },
               },
             },
             beansGround: {
               // highlight-next-line
-              type: "final",
+              type: 'final',
             },
           },
         },
         boilWater: {
-          initial: "boilingWater",
+          initial: 'boilingWater',
           states: {
             boilingWater: {
               on: {
                 WATER_BOILED: {
-                  target: "waterBoiled",
+                  target: 'waterBoiled',
                 },
               },
             },
             waterBoiled: {
               // highlight-next-line
-              type: "final",
+              type: 'final',
             },
           },
         },
       },
-      type: "parallel",
+      type: 'parallel',
       // highlight-start
       onDone: {
-        target: "makingCoffee",
+        target: 'makingCoffee',
       },
       // highlight-end
     },
@@ -143,26 +143,31 @@ _Coming soon_
 - Used for separation of concerns that _may_ affect each other (i.e. synchronization)
 - If completely separate, prefer `invoke` instead
 
-
 ## Parallel states cheatsheet
 
 ### Cheatsheet: create a parallel state
 
 ```ts
-import { createMachine } from "xstate";
+import { createMachine } from 'xstate';
 
 const machine = createMachine({
   // ...
   states: {
     type: 'parallel',
     states: {
-      one: {/* ... */},
-      two: {/* ... */},
-      three: {/* ... */}
+      one: {
+        /* ... */
+      },
+      two: {
+        /* ... */
+      },
+      three: {
+        /* ... */
+      },
     },
     onDone: {
       // Taken when all regions have reached their final states
-    }
-  }
+    },
+  },
 });
 ```

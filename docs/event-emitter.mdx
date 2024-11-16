@@ -14,16 +14,16 @@ import { setup, emit } from 'xstate';
 const machine = setup({
   actions: {
     // highlight-next-line
-    emitEvent: emit({ type: 'notification' })
-  }
+    emitEvent: emit({ type: 'notification' }),
+  },
 }).createMachine({
   // ...
   on: {
     someEvent: {
       // highlight-next-line
-      actions: { type: 'emitEvent' }
-    }
-  }
+      actions: { type: 'emitEvent' },
+    },
+  },
 });
 
 const actor = createActor(machine);
@@ -46,7 +46,6 @@ actor.send({ type: 'someEvent' });
 
 For promise actors, transition actors, observable actors, and callback actors, you can use the `emit` method from the arguments to emit events.
 
-
 **Promise actors**
 
 ```ts
@@ -58,7 +57,7 @@ const logic = fromPromise(async ({ emit }) => {
   // highlight-start
   emit({
     type: 'emitted',
-    msg: 'hello'
+    msg: 'hello',
   });
   // highlight-end
   // ...
@@ -76,7 +75,7 @@ const logic = fromTransition((state, event, { emit }) => {
   // highlight-start
   emit({
     type: 'emitted',
-    msg: 'hello'
+    msg: 'hello',
   });
   // highlight-end
   // ...
@@ -95,7 +94,7 @@ const logic = fromObservable(({ emit }) => {
   // highlight-start
   emit({
     type: 'emitted',
-    msg: 'hello'
+    msg: 'hello',
   });
   // highlight-end
   // ...
@@ -113,7 +112,7 @@ const logic = fromCallback(({ emit }) => {
   // highlight-start
   emit({
     type: 'emitted',
-    msg: 'hello'
+    msg: 'hello',
   });
   // highlight-end
   // ...
@@ -133,7 +132,7 @@ const machine = setup({
     // Emitting a statically-defined event
     emitStaticEvent: emit({
       type: 'someStaticEvent',
-      data: 42
+      data: 42,
     }),
     // highlight-end
 
@@ -141,20 +140,17 @@ const machine = setup({
     // Emitting a dynamically-defined event based on context
     emitDynamicEvent: emit(({ context }) => ({
       type: 'someDynamicEvent',
-      data: context.someData
-    }))
+      data: context.someData,
+    })),
     // highlight-end
-  }
+  },
 }).createMachine({
   // ...
   on: {
     someEvent: {
-      actions: [
-        { type: 'emitStaticEvent' },
-        { type: 'emitDynamicEvent' }
-      ]
-    }
-  }
+      actions: [{ type: 'emitStaticEvent' }, { type: 'emitDynamicEvent' }],
+    },
+  },
 });
 ```
 
@@ -221,12 +217,12 @@ import { setup, emit, createActor } from 'xstate';
 const machine = setup({
   types: {
     // highlight-start
-    emitted: {} as 
-      | { type: 'notification'; message: string; }
-      | { type: 'error'; error: Error; },
+    emitted: {} as
+      | { type: 'notification'; message: string }
+      | { type: 'error'; error: Error },
     // highlight-end
     // ...
-  }
+  },
 }).createMachine({
   // ...
   on: {
@@ -234,11 +230,11 @@ const machine = setup({
       actions: [
         // highlight-start
         // Strongly typed emitted event
-        emit({ type: 'notification', message: 'Hello' })
+        emit({ type: 'notification', message: 'Hello' }),
         // highlight-end
-      ]
-    }
-  }
+      ],
+    },
+  },
 });
 
 const actor = createActor(machine);

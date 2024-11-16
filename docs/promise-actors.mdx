@@ -6,13 +6,13 @@ Promise actors are actors that represent a promise that performs some asynchrono
 
 ## Promise actor capabilities
 
-| | Capability | Notes |
-| --- | --- | --- |
-| ❌ | Receive&nbsp;events | Promise actors currently do not receive events. |
-| ✅ | Send events | Promise actors can send events to other actors it has reference to, such as those provided in its `input`. |
-| ❌ | Spawn actors | Promise actors currently cannot spawn new actors. |
-| ✅ | Input | You can provide `input` to promise actors. |
-| ✅ | Output | Promise actors can produce `output`, which is the resolved value of the promise. |
+|     | Capability          | Notes                                                                                                      |
+| --- | ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ❌  | Receive&nbsp;events | Promise actors currently do not receive events.                                                            |
+| ✅  | Send events         | Promise actors can send events to other actors it has reference to, such as those provided in its `input`. |
+| ❌  | Spawn actors        | Promise actors currently cannot spawn new actors.                                                          |
+| ✅  | Input               | You can provide `input` to promise actors.                                                                 |
+| ✅  | Output              | Promise actors can produce `output`, which is the resolved value of the promise.                           |
 
 ## Promise actor logic
 
@@ -23,7 +23,7 @@ import { fromPromise, createActor } from 'xstate';
 
 async function getUser(id: string) {
   // ...
-  return { id, /* other user data */ };
+  return { id /* other user data */ };
 }
 
 // highlight-start
@@ -36,7 +36,7 @@ const promiseLogic = fromPromise(async () => {
 
 const promiseActor = createActor(promiseLogic);
 
-promiseActor.subscribe(snapshot => {
+promiseActor.subscribe((snapshot) => {
   console.log(snapshot.status, snapshot.output);
 });
 
@@ -62,7 +62,7 @@ const promiseLogic = fromPromise(async ({ input }) => {
 
 const promiseActor = createActor(promiseLogic, {
   // highlight-next-line
-  input: { id: '123' }
+  input: { id: '123' },
 });
 ```
 
@@ -76,17 +76,21 @@ interface User {
   id: string;
 }
 
-const secondLogic = fromPromise(async ({ input }: { input: { id: string }}) => {
-  const user = await getUser(input.id); // User is inferred
+const secondLogic = fromPromise(
+  async ({ input }: { input: { id: string } }) => {
+    const user = await getUser(input.id); // User is inferred
 
-  return user;
-});
+    return user;
+  },
+);
 
-const firstLogic = fromPromise<User, { id: string }>(async ({ input, self, /* ... */ }) => {
-  const user = await getUser(input.id);
+const firstLogic = fromPromise<User, { id: string }>(
+  async ({ input, self /* ... */ }) => {
+    const user = await getUser(input.id);
 
-  return user;
-});
+    return user;
+  },
+);
 ```
 
 ## Promise actor output
@@ -104,7 +108,7 @@ const promiseLogic = fromPromise(async () => {
 
 const promiseActor = createActor(promiseLogic);
 
-promiseActor.subscribe(snapshot => {
+promiseActor.subscribe((snapshot) => {
   if (snapshot.status === 'done') {
     console.log(snapshot.output);
     // logs { id: '123', /* other user data */ }
@@ -146,8 +150,8 @@ promiseActor.subscribe({
   error: (error) => {
     console.error(error);
     // logs 'Error: Something went wrong'
-  }
-    // highlight-end
+  },
+  // highlight-end
 });
 
 promiseActor.start();
@@ -162,18 +166,20 @@ You can also **abort** a promise actor by passing the `signal` to it:
 ```ts
 import { fromPromise, createActor } from 'xstate';
 
-const promiseLogic = fromPromise(async ({
-  input,
-  // highlight-next-line
-  signal
-}) => {
-  // highlight-start
-  // Pass the signal to abort fetching if signaled
-  const data = await fetch('/some/url', { signal });
-  // highlight-end
+const promiseLogic = fromPromise(
+  async ({
+    input,
+    // highlight-next-line
+    signal,
+  }) => {
+    // highlight-start
+    // Pass the signal to abort fetching if signaled
+    const data = await fetch('/some/url', { signal });
+    // highlight-end
 
-  return data;
-});
+    return data;
+  },
+);
 
 const promiseActor = createActor(promiseLogic);
 promiseActor.start();
