@@ -18,9 +18,9 @@ const feedbackMachine = setup({
     input: {} as {
       userId: string;
       defaultRating: number;
-    }
+    },
     // highlight-end
-  }
+  },
 }).createMachine({
   // highlight-next-line
   context: ({ input }) => ({
@@ -104,9 +104,11 @@ const counterActor = createActor(counter, {
 import { createActor, fromObservable } from 'xstate';
 import { interval } from 'rxjs';
 
-const intervalLogic = fromObservable(({ input }: { input: { interval: number } }) => {
-  return interval(input.interval);
-});
+const intervalLogic = fromObservable(
+  ({ input }: { input: { interval: number } }) => {
+    return interval(input.interval);
+  },
+);
 
 const intervalActor = createActor(intervalLogic, {
   // highlight-start
@@ -114,7 +116,7 @@ const intervalActor = createActor(intervalLogic, {
     interval: 1000,
   },
   // highlight-end
-})
+});
 
 intervalActor.start();
 ```
@@ -158,7 +160,7 @@ const feedbackMachine = setup({
         res.json(),
       );
     }),
-  }
+  },
 }).createMachine({
   invoke: {
     src: 'liveFeedback',
@@ -213,7 +215,7 @@ const feedbackMachine = setup({
       feedback: string;
       rating: number;
       emailRef: AnyActorRef;
-    }
+    },
   },
   actors: {
     // highlight-start
@@ -318,7 +320,7 @@ const Component = (props) => {
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -397,6 +399,28 @@ const feedbackMachine = createMachine({
   invoke: {
     src: 'fetchUser',
     input: ({ context }) => ({ userId: context.userId }),
+  },
+});
+```
+
+### Cheatsheet: providing dynamic input from event properties to invoked actors
+
+```ts
+const feedbackMachine = createMachine({
+  types: {
+    events:
+      | { type: 'Do one thing', message: string }
+      | { type: 'Do another thing', count: number },
+  },
+  invoke: {
+    src: 'fetchUser',
+    input: ({ event }) => {
+      // highlight-next-line
+      assertEvent(event, 'Do one thing');
+      return {
+        message: event.message,
+      };
+    },
   },
 });
 ```
