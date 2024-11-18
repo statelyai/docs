@@ -409,14 +409,14 @@ const feedbackMachine = createMachine({
 const feedbackMachine = createMachine({
   types: {
     events:
-      | { type: 'Do one thing', message: string }
-      | { type: 'Do another thing', count: number },
+      | { type: 'messageSent', message: string }
+      | { type: 'incremented', count: number },
   },
   invoke: {
     src: 'fetchUser',
     input: ({ event }) => {
       // highlight-next-line
-      assertEvent(event, 'Do one thing');
+      assertEvent(event, 'messageSent');
       return {
         message: event.message,
       };
