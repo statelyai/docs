@@ -1,13 +1,7 @@
 ---
 title: Introducing XState Store
 description: A simple and small state management library inspired by XState
-tags:
-  [
-    xstate,
-    state,
-    store,
-    state management
-  ]
+tags: [xstate, state, store, state management]
 authors: [david]
 date: 2024-04-10
 slug: 2024-04-10-xstate-store
@@ -43,13 +37,16 @@ Create your store and use it anywhere:
 ```ts
 import { createStore } from '@xstate/store';
 
-const store = createStore({
-  count: 0
-}, {
-  inc: {
-    count: (context, event: { by: number }) => context.count + event.by
-  }
-});
+const store = createStore(
+  {
+    count: 0,
+  },
+  {
+    inc: {
+      count: (context, event: { by: number }) => context.count + event.by,
+    },
+  },
+);
 
 store.subscribe((snapshot) => {
   console.log(snapshot.context);
@@ -73,9 +70,9 @@ function Counter() {
   const count = useSelector(store, (state) => state.context.count);
 
   // highlight-next-line
-  return <button onClick={() => store.send({ type: 'inc', by: 1 })}>
-    {count}
-  </button>;
+  return (
+    <button onClick={() => store.send({ type: 'inc', by: 1 })}>{count}</button>
+  );
 }
 ```
 
@@ -92,15 +89,15 @@ Instead of directing developers to go outside of the XState ecosystem for simple
 
 In summary, if you just need a way to update data in a store and subscribe to changes in a store and share that data with other parts of your application, use `@xstate/store`. If you need more complex state management, including finite states, effects (actions, invoked/spawned actors), use XState.
 
-| Feature | `@xstate/store` | `xstate` |
-| --- | --- | --- |
-| Finite states | ❌ | ✅ |
-| Context | ✅ | ✅ |
-| Events | ✅ | ✅ |
-| Transitions | ✅ | ✅ |
-| Guards | ❌ | ✅ |
-| Effects | ❌ | ✅ |
-| Actor model | ❌ | ✅ |
+| Feature       | `@xstate/store` | `xstate` |
+| ------------- | --------------- | -------- |
+| Finite states | ❌              | ✅       |
+| Context       | ✅              | ✅       |
+| Events        | ✅              | ✅       |
+| Transitions   | ✅              | ✅       |
+| Guards        | ❌              | ✅       |
+| Effects       | ❌              | ✅       |
+| Actor model   | ❌              | ✅       |
 
 ## Super simple example
 
@@ -117,15 +114,15 @@ export const donutStore = createStore(
   // Transitions
   {
     addDonut: {
-      donuts: (context) => context.donuts + 1
+      donuts: (context) => context.donuts + 1,
     },
     changeFlavor: {
-      favoriteFlavor: (context, event: { flavor: string }) => event.flavor
+      favoriteFlavor: (context, event: { flavor: string }) => event.flavor,
     },
     eatAllDonuts: {
-      donuts: 0
-    }
-  }
+      donuts: 0,
+    },
+  },
 );
 
 console.log(store.getSnapshot());
@@ -148,7 +145,7 @@ store.send({ type: 'addDonut' });
 
 store.send({
   type: 'changeFlavor',
-  flavor: 'strawberry' // Strongly-typed!
+  flavor: 'strawberry', // Strongly-typed!
 });
 // logs { donuts; 1, favoriteFlavor: 'strawberry' }
 ```
@@ -175,17 +172,20 @@ First and foremost, you get **strong types** out of the box for both the state c
 ```ts
 import { createStore } from '@xstate/store';
 
-const store = createStore({
-  count: 0
-}, {
-  inc: {
-    count: (context, event: { by: number }) => context.count + event.by
-  }
-});
+const store = createStore(
+  {
+    count: 0,
+  },
+  {
+    inc: {
+      count: (context, event: { by: number }) => context.count + event.by,
+    },
+  },
+);
 
 store.send({
   type: 'inc', // Strongly-typed!
-  by: 1 // Also strongly-typed!
+  by: 1, // Also strongly-typed!
 });
 
 // @ts-expect-error
@@ -196,32 +196,41 @@ Secondly, there are convenient ways to update `context` in a transition, similar
 
 - Use an object to update specific `context` properties:
   ```ts
-  const store = createStore({
-    count: 0
-  }, {
-    inc: {
-      count: (context, event: { by: number }) => context.count + event.by
-    }
-  });
+  const store = createStore(
+    {
+      count: 0,
+    },
+    {
+      inc: {
+        count: (context, event: { by: number }) => context.count + event.by,
+      },
+    },
+  );
   ```
 - Use an object to update `context` properties to static values:
   ```ts
-  const store = createStore({
-    count: 0
-  }, {
-    reset: {
-      count: 0 // No function needed
-    }
-  });
+  const store = createStore(
+    {
+      count: 0,
+    },
+    {
+      reset: {
+        count: 0, // No function needed
+      },
+    },
+  );
   ```
 - Use a function to update the entire `context` (can be a partial or full update):
   ```ts
-  const store = createStore({
-    count: 0,
-    greeting: 'Hello'
-  }, {
-    adios: (context) => ({ greeting: 'Goodbye' }) // Merged with { count }
-  });
+  const store = createStore(
+    {
+      count: 0,
+      greeting: 'Hello',
+    },
+    {
+      adios: (context) => ({ greeting: 'Goodbye' }), // Merged with { count }
+    },
+  );
   ```
 
 But if you want to make complex `context` updates even easier, you can easily use [Immer](https://immerjs.github.io/immer/docs/introduction) by plugging in its `producer` function to `createStoreWithProducer(producer, …)`:
@@ -235,13 +244,15 @@ const store = createStoreWithProducer(
   // highlight-next-line
   produce,
   {
-    todos: []
-  }, {
+    todos: [],
+  },
+  {
     addTodo: (context, event: { todo: string }) => {
       // highlight-next-line
       context.todos.push(event.todo);
-    }
-  });
+    },
+  },
+);
 ```
 
 ## What's next

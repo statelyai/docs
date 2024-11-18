@@ -21,7 +21,7 @@ Watch our [“XState: exploring actors” deep dive video on YouTube](https://ww
 
 :::
 
-<YouTube id="Rj7lOvDwcYs"/>
+<YouTube id="Rj7lOvDwcYs" />
 
 ## Actor model
 
@@ -228,7 +228,7 @@ actor.subscribe({
   error: (err) => {
     // Handle the error here
     console.error(err);
-  }
+  },
   // highlight-end
 });
 
@@ -248,13 +248,13 @@ The types of actor logic you can create from XState are:
 
 ### Actor logic capabilities
 
-| | Receive events | Send events | Spawn actors | Input | Output |
-| --- | --- | --- | --- | --- | --- |
-| [State machine actors](state-machine-actors.mdx) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| [Promise actors](promise-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ✅ |
-| [Transition actors](transition-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
-| [Observable actors](observable-actors.mdx) | ❌ | ✅ | ❌ | ✅ | ❌ |
-| [Callback actors](callback-actors.mdx) | ✅ | ✅ | ❌ | ✅ | ❌ |
+|                                                  | Receive events | Send events | Spawn actors | Input | Output |
+| ------------------------------------------------ | -------------- | ----------- | ------------ | ----- | ------ |
+| [State machine actors](state-machine-actors.mdx) | ✅             | ✅          | ✅           | ✅    | ✅     |
+| [Promise actors](promise-actors.mdx)             | ❌             | ✅          | ❌           | ✅    | ✅     |
+| [Transition actors](transition-actors.mdx)       | ✅             | ✅          | ❌           | ✅    | ❌     |
+| [Observable actors](observable-actors.mdx)       | ❌             | ✅          | ❌           | ✅    | ❌     |
+| [Callback actors](callback-actors.mdx)           | ✅             | ✅          | ❌           | ✅    | ❌     |
 
 ### State machine logic (`createMachine(...)`) {#createmachine}
 
@@ -410,14 +410,14 @@ Sending events to event observable actors will have no effect.
 import { setup, fromEventObservable } from 'xstate';
 import { fromEvent } from 'rxjs';
 
-const mouseClickLogic = fromEventObservable(() =>
-  fromEvent(document.body, 'click') as Subscribable<EventObject>
+const mouseClickLogic = fromEventObservable(
+  () => fromEvent(document.body, 'click') as Subscribable<EventObject>,
 );
 
 const canvasMachine = setup({
   actors: {
-    mouseClickLogic
-  }
+    mouseClickLogic,
+  },
 }).createMachine({
   invoke: {
     // Will send mouse click events to the canvas actor
@@ -489,12 +489,12 @@ const someCallback = fromCallback(({ sendBack }) => {
   return () => {
     /* cleanup function */
   };
-})
+});
 
 const machine = setup({
   actors: {
-    someCallback
-  }
+    someCallback,
+  },
 }).createMachine({
   initial: 'running',
   states: {
@@ -527,11 +527,11 @@ const machine = createMachine({
   // ...
   states: {
     // ...
-    done: { type: 'final' }
+    done: { type: 'final' },
   },
   output: {
-    count: 42
-  }
+    count: 42,
+  },
 });
 
 const actor = createActor(machine);
@@ -588,7 +588,7 @@ Custom actor logic can be defined with an object that implements the `ActorLogic
 For example, here is a custom actor logic object with a `transition` function that operates as a simple reducer:
 
 ```ts
-import { createActor, EventObject, ActorLogic, Snapshot } from "xstate";
+import { createActor, EventObject, ActorLogic, Snapshot } from 'xstate';
 
 const countLogic: ActorLogic<
   Snapshot<undefined> & { context: number },
@@ -598,12 +598,12 @@ const countLogic: ActorLogic<
     if (event.type === 'INC') {
       return {
         ...state,
-        context: state.context + 1
+        context: state.context + 1,
       };
     } else if (event.type === 'DEC') {
       return {
         ...state,
-        context: state.context - 1
+        context: state.context - 1,
       };
     }
     return state;
@@ -612,18 +612,18 @@ const countLogic: ActorLogic<
     status: 'active',
     output: undefined,
     error: undefined,
-    context: 0
+    context: 0,
   }),
-  getPersistedSnapshot: (s) => s
+  getPersistedSnapshot: (s) => s,
 };
 
-const actor = createActor(countLogic)
-actor.subscribe(state => {
-  console.log(state.context)
-})
-actor.start() // => 0
-actor.send({ type: 'INC' }) // => 1
-actor.send({ type: 'INC' }) // => 2
+const actor = createActor(countLogic);
+actor.subscribe((state) => {
+  console.log(state.context);
+});
+actor.start(); // => 0
+actor.send({ type: 'INC' }); // => 1
+actor.send({ type: 'INC' }); // => 2
 ```
 
 For further examples, see implementations of `ActorLogic` in the source code, like the `fromTransition` actor logic creator, or the examples in the tests.
@@ -658,7 +658,7 @@ function Component(props: { actor?: AnyActorRef }) {
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -700,7 +700,7 @@ const machine = setup({
 });
 ```
 
-## Testing 
+## Testing
 
 The general strategy for testing actors is to send events and assert that the actor reaches an expected state, which can be observed either by:
 
@@ -709,12 +709,17 @@ The general strategy for testing actors is to send events and assert that the ac
 
 ```ts
 test('some actor', async () => {
-  const actor = createActor(fromTransition((state, event) => {
-    if (event.type === 'inc') {
-      return { count: state.count + 1 }
-    }
-    return state;
-  }, { count: 0 }));
+  const actor = createActor(
+    fromTransition(
+      (state, event) => {
+        if (event.type === 'inc') {
+          return { count: state.count + 1 };
+        }
+        return state;
+      },
+      { count: 0 },
+    ),
+  );
 
   // Start the actor
   actor.start();
@@ -796,7 +801,6 @@ promiseActor.subscribe((snapshot) => {
   console.log(snapshot);
 });
 promiseActor.start();
-
 ```
 
 ### Cheatsheet: transition function logic
@@ -864,14 +868,14 @@ secondActor.start();
 import { setup, fromEventObservable, createActor } from 'xstate';
 import { fromEvent } from 'rxjs';
 
-const mouseClickLogic = fromEventObservable(() =>
-  fromEvent(document.body, 'click') as Subscribable<EventObject>
+const mouseClickLogic = fromEventObservable(
+  () => fromEvent(document.body, 'click') as Subscribable<EventObject>,
 );
 
 const canvasMachine = setup({
   actors: {
-    mouseClickLogic
-  }
+    mouseClickLogic,
+  },
 }).createMachine({
   invoke: {
     // Will send mouse click events to the canvas actor

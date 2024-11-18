@@ -39,27 +39,28 @@ yarn add xstate
 ```ts
 import { setup, createActor, assign } from 'xstate';
 
-const machine = setup({/* ... */})
-  .createMachine({
-    id: 'toggle',
-    initial: 'active',
-    context: { count: 0 },
-    states: {
-      active: {
-        entry: assign({
-          count: ({ context }) => context.count + 1,
-        }),
-        on: {
-          toggle: { target: 'inactive' },
-        },
-      },
-      inactive: {
-        on: {
-          toggle: { target: 'active' },
-        },
+const machine = setup({
+  /* ... */
+}).createMachine({
+  id: 'toggle',
+  initial: 'active',
+  context: { count: 0 },
+  states: {
+    active: {
+      entry: assign({
+        count: ({ context }) => context.count + 1,
+      }),
+      on: {
+        toggle: { target: 'inactive' },
       },
     },
-  });
+    inactive: {
+      on: {
+        toggle: { target: 'active' },
+      },
+    },
+  },
+});
 
 const actor = createActor(machine);
 actor.subscribe((snapshot) => {
@@ -202,28 +203,29 @@ actor.send({ type: 'cancel' });
 ```ts
 import { setup, createActor } from 'xstate';
 
-const machine = setup({/* ... */})
-  .createMachine({
-    id: 'parent',
-    initial: 'active',
-    states: {
-      active: {
-        initial: 'one',
-        states: {
-          one: {
-            on: {
-              NEXT: { target: 'two' }
-            }
+const machine = setup({
+  /* ... */
+}).createMachine({
+  id: 'parent',
+  initial: 'active',
+  states: {
+    active: {
+      initial: 'one',
+      states: {
+        one: {
+          on: {
+            NEXT: { target: 'two' },
           },
-          two: {},
         },
-        on: {
-          NEXT: { target: 'inactive' }
-        }
+        two: {},
       },
-      inactive: {},
+      on: {
+        NEXT: { target: 'inactive' },
+      },
     },
-  });
+    inactive: {},
+  },
+});
 
 const actor = createActor(machine);
 
@@ -250,10 +252,16 @@ import { setup, createActor } from 'xstate';
 
 const machine = setup({
   actions: {
-    activate: () => {/* ... */},
-    deactivate: () => {/* ... */},
-    notify: (_, params: { message: string }) => {/* ... */},
-  }
+    activate: () => {
+      /* ... */
+    },
+    deactivate: () => {
+      /* ... */
+    },
+    notify: (_, params: { message: string }) => {
+      /* ... */
+    },
+  },
 }).createMachine({
   id: 'toggle',
   initial: 'active',
@@ -400,7 +408,7 @@ const loadUserLogic = fromPromise(async () => {
 
 const machine = setup({
   // highlight-next-line
-  actors: { loadUserLogic }
+  actors: { loadUserLogic },
 }).createMachine({
   id: 'toggle',
   initial: 'loading',
@@ -422,9 +430,9 @@ const machine = setup({
         onError: {
           target: 'failure',
           actions: ({ event }) => {
-            console.log(event.error)
-          }
-        }
+            console.log(event.error);
+          },
+        },
       },
       // highlight-end
     },
@@ -463,8 +471,8 @@ const loadUserLogic = fromPromise(async () => {
 
 const machine = setup({
   actors: {
-    loadUserLogic
-  }
+    loadUserLogic,
+  },
 }).createMachine({
   context: {
     userRef: undefined,
@@ -503,7 +511,7 @@ const greetMachine = setup({
   types: {
     context: {} as { message: string },
     input: {} as { name: string },
-  }
+  },
 }).createMachine({
   // highlight-start
   context: ({ input }) => ({
@@ -544,8 +552,8 @@ const loadUserLogic = fromPromise(async ({ input }) => {
 
 const machine = setup({
   actors: {
-    loadUserLogic
-  }
+    loadUserLogic,
+  },
 }).createMachine({
   initial: 'loading user',
   states: {
@@ -591,14 +599,14 @@ const machine = setup({
     context: {} as {
       count: number;
     };
-    events: {} as 
+    events: {} as
       | { type: 'inc'; }
       | { type: 'dec' }
       | { type: 'incBy'; amount: number };
-    actions: {} as 
+    actions: {} as
       | { type: 'notify'; params: { message: string } }
       | { type: 'handleChange' };
-    guards: {} as 
+    guards: {} as
       | { type: 'canBeToggled' }
       | { type: 'isAfterTime'; params: { time: string } };
     children: {} as {

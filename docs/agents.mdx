@@ -20,6 +20,7 @@ The [Stately Agent (`@statelyai/agent`)](https://github.com/statelyai/agent) pac
 ## Installation
 
 Install the following dependencies:
+
 - `@statelyai/agent@beta` – Stately.ai Agent, currently in beta
 - `@ai-sdk/openai` – The Vercel AI SDK for OpenAI, which provides access to the OpenAI API
 - `xstate` – Library for managing state machines and statecharts
@@ -29,7 +30,7 @@ Install the following dependencies:
 <TabItem value="npm" label="npm">
 
 ```bash
-npm install @statelyai/agent @ai-sdk/openai xstate zod 
+npm install @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
 </TabItem>
@@ -37,7 +38,7 @@ npm install @statelyai/agent @ai-sdk/openai xstate zod
 <TabItem value="pnpm" label="pnpm">
 
 ```bash
-pnpm install @statelyai/agent @ai-sdk/openai xstate zod 
+pnpm install @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
 </TabItem>
@@ -45,7 +46,7 @@ pnpm install @statelyai/agent @ai-sdk/openai xstate zod
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn add @statelyai/agent @ai-sdk/openai xstate zod 
+yarn add @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
 </TabItem>
@@ -68,7 +69,7 @@ import { createAgent } from '@statelyai/agent';
 const agent = createAgent({
   name: 'todo',
   model: openai('gpt-4-turbo'),
-  events: {}
+  events: {},
 });
 ```
 
@@ -100,7 +101,7 @@ const agent = createAgent({
       todoId: z.string().describe('The ID of the todo to toggle'),
       completed: z.boolean().describe('The new completed value').optional(),
     }),
-  }
+  },
   // highlight-end
 });
 ```
@@ -116,7 +117,7 @@ const todoMachine = setup({
   types: {
     // highlight-start
     // Add the event types that the agent understands
-    events: agent.types.events
+    events: agent.types.events,
     // highlight-end
   },
   // ...
@@ -149,11 +150,13 @@ const agent = createAgent({
   name: 'barista',
   model: openai('gpt-4-turbo'),
   events: {
-    'barista.makeDrink': z.object({
-      drink: z.enum(['espresso', 'latte', 'cappuccino']),
-    }).describe('Makes a drink'),
+    'barista.makeDrink': z
+      .object({
+        drink: z.enum(['espresso', 'latte', 'cappuccino']),
+      })
+      .describe('Makes a drink'),
     // ...
-  }
+  },
 });
 ```
 
@@ -183,7 +186,7 @@ export const baristaMachine = createMachine({
     makingDrink: {
       on: {
         'barista.drinkMade': 'idle',
-      }
+      },
     },
   },
 });
@@ -199,14 +202,16 @@ const agent = createAgent({
   name: 'barista',
   model: openai('gpt-4-turbo'),
   events: {
-    'barista.makeDrink': z.object({
-      drink: z.enum(['espresso', 'latte', 'cappuccino']),
-    }).describe('Makes a drink')
-  }
+    'barista.makeDrink': z
+      .object({
+        drink: z.enum(['espresso', 'latte', 'cappuccino']),
+      })
+      .describe('Makes a drink'),
+  },
 });
 
 async function handleOrder(order, state) {
-  const resolvedState = baristaMachine.resolveState(state)
+  const resolvedState = baristaMachine.resolveState(state);
   // highlight-start
   const plan = await agent.decide({
     state: resolvedState,
@@ -228,7 +233,7 @@ handleOrder('I want a latte please', { value: 'idle' });
 
 ## Agent memory
 
-Stately agents can have two types of memory: **short-term (local) memory** and **long-term memory**. 
+Stately agents can have two types of memory: **short-term (local) memory** and **long-term memory**.
 
 - **Short-term (local) memory** is memory that can be synchronously retrieved, but might not be persisted.
 - **Long-term memory** is memory that is asynchronously retrieved from persistent storage, such as a database.
@@ -237,7 +242,7 @@ Agents remember four kinds of things in their memory:
 
 - **Messages** between the user and the assistant
 - **Observations** of state transitions (previous state, event, current state) that occur in the environment that the agent is observing
-- **Feedback** 
+- **Feedback**
 - **Plans**
 
 ## Messages
@@ -286,8 +291,8 @@ const feedback = agent.addFeedback({
   goal: 'Make an iced coffee',
   attributes: {
     feedback: 'Water should not be boiled for an iced coffee',
-    score: -10
-  }
+    score: -10,
+  },
 });
 ```
 
@@ -306,11 +311,15 @@ TODO
 An agent can interact with existing state machine actors to determine what to do next. While the state machine actor is running, the agent will do the following cycle:
 
 1. The agent **observes state changes**
-  - The observation is remembered in the agent's state
+
+- The observation is remembered in the agent's state
+
 2. The agent **determines** if it needs to make a decision based on the current state
 3. If it does, the agent **makes a decision** in the form of an `AgentPlan`.
 4. If an `AgentPlan` is formed, the agent triggers the next event (`plan.nextEvent`) on the state machine actor.
-  - The plan is remembered in the agent's state.
+
+- The plan is remembered in the agent's state.
+
 4. The agent goes back to step 1, and the cycle continues.
 
 ```ts
@@ -330,7 +339,7 @@ const agent = createAgent({
       explanation: z.string(),
     }),
     // ...
-  }
+  },
 });
 
 const jokeActor = createActor(jokeMachine).start();
@@ -370,11 +379,11 @@ const agent = createAgent(/* ... */);
 const machine = setup({
   actors: {
     assistant: fromText(agent),
-  }
+  },
 }).createMachine({
   initial: 'greeting',
-  context: x => ({
-    time: x.input.time
+  context: (x) => ({
+    time: x.input.time,
   }),
   states: {
     greeting: {
@@ -382,26 +391,26 @@ const machine = setup({
         src: 'assistant',
         input: ({ context }) => ({
           context: {
-            time: context.time
+            time: context.time,
           },
-          goal: 'Produce a greeting depending on the time of day.'
+          goal: 'Produce a greeting depending on the time of day.',
         }),
         onDone: {
           target: 'greeted',
           actions: ({ event }) => {
             console.log(event.output.text);
-          }
+          },
         },
       },
     },
     greeted: {
-      type: 'final'
-    }
-  }
+      type: 'final',
+    },
+  },
 });
 
 const actor = createActor(machine, {
-  input: { time: Date.now() }
+  input: { time: Date.now() },
 });
 
 actor.start();

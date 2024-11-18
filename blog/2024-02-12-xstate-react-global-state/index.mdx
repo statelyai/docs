@@ -1,11 +1,7 @@
 ---
 title: Global state with XState and React
 description: How to use XState to manage global state in React
-tags:
-  [
-    xstate,
-    react
-  ]
+tags: [xstate, react]
 authors: [david]
 date: 2024-02-12
 slug: 2024-02-12-xstate-react-global-state
@@ -23,8 +19,8 @@ The `@xstate/react` package makes it simple to manage component-level state with
 1. **Create the global logic**. This can be as simple as a promise or function, or as complex as a state machine or statechart.
 1. **Create an actor** from that logic and export it.
 1. **Import that actor** from any component and:
-    - use the `useSelector(…)` hook to read the actor's snapshot
-    - call `actorRef.send(…)` to send events to it.
+   - use the `useSelector(…)` hook to read the actor's snapshot
+   - call `actorRef.send(…)` to send events to it.
 
 That's it!
 
@@ -51,11 +47,9 @@ export function App() {
   return (
     <div>
       <h1>Hello, {user.name}!</h1>
-      // highlight-start
-      // Send events to the actor
+      // highlight-start // Send events to the actor
       <button onClick={() => globalActor.send({ type: 'logout' })}>
-      // highlight-end
-        Logout
+        // highlight-end Logout
       </button>
     </div>
   );
@@ -77,9 +71,9 @@ const countMachine = createMachine({
   context: { count: 0 },
   on: {
     inc: {
-      actions: assign({ count: ({ context }) => context.count + 1 })
-    }
-  }
+      actions: assign({ count: ({ context }) => context.count + 1 }),
+    },
+  },
 });
 
 // highlight-start
@@ -98,8 +92,7 @@ export function App() {
     // highlight-start
     // Send events to the actor
     <button onClick={() => countActor.send({ type: 'inc' })}>
-    // highlight-end
-      Count: {count}
+      // highlight-end Count: {count}
     </button>
   );
 }
@@ -177,7 +170,7 @@ export function App() {
     // highlight-next-line
     <SomeActorContext.Provider value={someActor}>
       <Counter />
-    // highlight-next-line
+      // highlight-next-line
     </SomeActorContext.Provider>
   );
 }
@@ -216,16 +209,19 @@ State machines are very powerful and useful, but sometimes you don't need all th
 ```ts
 // highlight-next-line
 import { fromTransition, createActor } from 'xstate';
-import { useSelector } from '@xstate/react'
+import { useSelector } from '@xstate/react';
 
 // highlight-start
 // Actor logic
-const counterLogic = fromTransition((state, event) => {
-  if (event.type === 'inc') {
-    return { count: state.count + 1 };
-  }
-  return state;
-}, { count: 0 });
+const counterLogic = fromTransition(
+  (state, event) => {
+    if (event.type === 'inc') {
+      return { count: state.count + 1 };
+    }
+    return state;
+  },
+  { count: 0 },
+);
 // highlight-end
 
 const counterActor = createActor(counterLogic);

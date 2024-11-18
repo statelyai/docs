@@ -20,16 +20,16 @@ const machine = createMachine({
       initial: 'valid',
       states: {
         valid: {},
-        invalid: {}
+        invalid: {},
       },
       // highlight-start
       always: {
         guard: 'isValid',
         target: 'valid',
-      }
+      },
       // highlight-end
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -72,38 +72,41 @@ const machine = createMachine({
   states: {
     lukewarm: {
       on: {
-        boil: { target: 'heating' }
-      }
+        boil: { target: 'heating' },
+      },
     },
     heating: {
       always: {
         guard: ({ context }) => context.temperature > 100,
-        target: 'boiling'
-      }
+        target: 'boiling',
+      },
     },
     boiling: {
       entry: ['turnOffLight'],
       always: {
         guard: ({ context }) => context.temperature <= 100,
-        target: 'heating'
-      }
-    }
+        target: 'heating',
+      },
+    },
   },
   on: {
     'temp.update': {
       actions: ['updateTemperature'],
-    }
+    },
   },
 });
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=b2a299ef-efb8-4049-a242-2d197d27c931" title="Kettle with eventless transitions"/>
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=b2a299ef-efb8-4049-a242-2d197d27c931"
+  title="Kettle with eventless transitions"
+/>
 
 ## Eventless transitions and TypeScript
 
 :::typescript
 
-**XState v5 requires TypeScript version 5.0 or greater.** 
+**XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
@@ -114,9 +117,7 @@ Eventless transitions can potentially be enabled by any event, so the `event` ty
 ```ts
 const machine = createMachine({
   types: {} as {
-    events:
-      | { type: 'greet'; message: string }
-      | { type: 'submit' };
+    events: { type: 'greet'; message: string } | { type: 'submit' };
   },
   // ...
   always: {
@@ -159,7 +160,9 @@ const machine = createMachine({
         target: 'otherState',
       },
     },
-    otherState: {/* ... */}
-  }
+    otherState: {
+      /* ... */
+    },
+  },
 });
 ```

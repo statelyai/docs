@@ -74,8 +74,8 @@ const inspector = createBrowserInspector({
     }
     return true;
   },
-  iframe: document.getElementById('inspector-iframe')
-})
+  iframe: document.getElementById('inspector-iframe'),
+});
 ```
 
 ## Sending inspection events
@@ -104,7 +104,7 @@ inspector.actor('todos');
 
 // When a todo is created
 inspector.actor('todo-1', {
-  context: { status: 'active' }
+  context: { status: 'active' },
 });
 
 // When a user completes a todo
@@ -112,20 +112,22 @@ inspector.event('todo-1', { type: 'todo.complete' });
 
 // When a todo changes
 inspector.snapshot('todo-1', {
-  context: { status: 'completed' }
+  context: { status: 'completed' },
 });
 
 // When the todos actor (not the user) sends an event to a todo
-inspector.event('todo-1', { type: 'todo.update' }, {
-  source: 'todos'
-});
+inspector.event(
+  'todo-1',
+  { type: 'todo.update' },
+  {
+    source: 'todos',
+  },
+);
 
 // ... etc.
-
 ```
 
 The three types of inspection events contain everything that Stately Inspector needs to generate two kinds of real-time diagrams automatically:
 
 - **State machine diagrams** (if a state machine definition is provided)
 - **Sequence diagrams**
-

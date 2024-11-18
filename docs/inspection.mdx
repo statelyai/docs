@@ -21,11 +21,11 @@ The Inspect API lets you attach an “inspector,” an observer that observes in
 ```tsx
 const actor = createActor(machine, {
   inspect: (inspectionEvent) => {
-  // type: '@xstate.actor' or
-  // type: '@xstate.snapshot' or
-  // type: '@xstate.event'
-  console.log(inspectionEvent);
-  }
+    // type: '@xstate.actor' or
+    // type: '@xstate.snapshot' or
+    // type: '@xstate.event'
+    console.log(inspectionEvent);
+  },
 });
 ```
 

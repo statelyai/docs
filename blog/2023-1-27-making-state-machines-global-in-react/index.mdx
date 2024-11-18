@@ -59,7 +59,9 @@ function SomeComponent() {
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => actorRef.send({ type: 'INCREMENT' })}>Increment</button>
+      <button onClick={() => actorRef.send({ type: 'INCREMENT' })}>
+        Increment
+      </button>
     </div>
   );
 }

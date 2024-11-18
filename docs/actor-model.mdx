@@ -53,20 +53,22 @@ In [Stately Sky](https://stately.ai/docs/stately-sky-getting-started), a state m
 
 The actor model is especially useful for coordinating the many moving parts of a front-end web application.
 
-**Your front-end app is always a distributed system**, and managing distributed systems is where the actor model shines. This is because in a browser environment **you never really have a “global source of truth”**, you instead have **many independent sources of state and events**: 3rd-party components, local component state, local storage, query parameters, routers, network I/O, DOM events and their listeners, etc. 
+**Your front-end app is always a distributed system**, and managing distributed systems is where the actor model shines. This is because in a browser environment **you never really have a “global source of truth”**, you instead have **many independent sources of state and events**: 3rd-party components, local component state, local storage, query parameters, routers, network I/O, DOM events and their listeners, etc.
 
 > […] there is no such thing as a single source of truth in any non-trivial application. All applications, even front-end apps, are distributed at some level. – via: [Redux is Half of a Pattern (2/2)](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-2-2-4jo3)
 
-So even for simple web apps, with small app-specific state and a few known app-specific events, the actor model can be helpful. 
+So even for simple web apps, with small app-specific state and a few known app-specific events, the actor model can be helpful.
 
 ## XState
 
 Actors in XState can:
+
 - **Accept messages** as [events](/docs/transitions/#event-objects) passed to their own internal logic, or for state machines as received by [transitions](transitions.mdx).
 - **Create more actors** within a state machine using `spawn` in an [`assign`](/docs/actions/#assign-action), or using the `spawnChild` action creator. For details, see [Spawn](spawn.mdx).
 - **Send more messages** as events using `self.send` in their own logic, or [action creators](actions.mdx) like [`sendTo`](/docs/actions/#send-to-action) or [`raise`](/docs/actions/#raise-action) in a state machine.
 
 Actors in XState have their own [actor logic](/docs/actors/#actor-logic) which they use to:
+
 - **Make local decisions**
 - **Determine how to respond to the next message received**
 - **Modify their own private state** (but only affect each other via messaging)

@@ -19,25 +19,23 @@ import { setup, assign } from 'xstate';
 const machine = setup({
   types: {
     context: {} as { count: number },
-    events: {} as 
-      | { type: 'inc' }
-      | { type: 'dec' }
+    events: {} as { type: 'inc' } | { type: 'dec' },
   },
   actions: {
     increment: assign({
-      count: ({ context }) => context.count + 1
+      count: ({ context }) => context.count + 1,
     }),
     decrement: assign({
-      count: ({ context }) => context.count - 1
-    })
-  }
+      count: ({ context }) => context.count - 1,
+    }),
+  },
 }).createMachine({
   context: { count: 0 },
   on: {
     inc: { actions: 'increment' },
-    dec: { actions: 'decrement' }
-  }
-})
+    dec: { actions: 'decrement' },
+  },
+});
 ```
 
 :::warning
@@ -56,8 +54,6 @@ Machine types should be setup in the `types` property of `setup({ types })`. Thi
 - Types for `actions`, including action `params`
 - Types for `guards`, including guard `params`
 - Types for `actors`
-
-
 
 ## Migrating from `createMachine`
 
