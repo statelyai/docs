@@ -178,8 +178,8 @@ import { createMachine, assertEvent } from 'xstate';
 const machine = createMachine({
   types: {
     events: {} as
-      | { type: 'Do one thing'; message: string }
-      | { type: 'Do another thing'; count: number },
+      | { type: 'messageSent'; message: string }
+      | { type: 'incremented'; count: number },
   },
   actors: {
     someActor: fromPromise<void, { message: string }>(({ input }) => {
@@ -193,7 +193,7 @@ const machine = createMachine({
         src: 'someActor',
         input: ({ event }) => {
           // highlight-next-line
-          assertEvent(event, 'Do one thing');
+          assertEvent(event, 'messageSent');
 
           return { message: event.message };
         },
