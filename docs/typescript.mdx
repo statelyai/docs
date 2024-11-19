@@ -117,6 +117,8 @@ const feedbackMachine = setup({
 
 ## Asserting events
 
+### Actions and Guards
+
 :::info
 
 It is strongly recommended to use dynamic parameters instead of directly accessing the event object whenever possible for improved type safety and reusability.
@@ -160,6 +162,41 @@ const machine = createMachine({
         // Now we know the event is a `greet` or `log` event,
         // and we can access its `message` property.
         console.log(event.message.toUpperCase());
+      },
+    },
+  },
+});
+```
+
+### Invoked Actor Input
+
+Another case where it helpful to use `assertEvent` is when specifying `input` for an invoked actor. The `event` received could be any one of the events received by that actor. In order for TypeScript to recognize the event type and its properties, you can use `assertEvent` to narrow down the event type.
+
+```ts
+import { createMachine, assertEvent } from 'xstate';
+
+const machine = createMachine({
+  types: {
+    events: {} as
+      | { type: 'messageSent'; message: string }
+      | { type: 'incremented'; count: number },
+  },
+  actors: {
+    someActor: fromPromise<void, { message: string }>(({ input }) => {
+      // actor implementation
+    }),
+  }
+  // ...
+  states: {
+    someState: {
+      invoke: {
+        src: 'someActor',
+        input: ({ event }) => {
+          // highlight-next-line
+          assertEvent(event, 'messageSent');
+
+          return { message: event.message };
+        },
       },
     },
   },

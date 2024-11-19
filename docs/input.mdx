@@ -403,6 +403,28 @@ const feedbackMachine = createMachine({
 });
 ```
 
+### Cheatsheet: providing dynamic input from event properties to invoked actors
+
+```ts
+const feedbackMachine = createMachine({
+  types: {
+    events:
+      | { type: 'messageSent', message: string }
+      | { type: 'incremented', count: number },
+  },
+  invoke: {
+    src: 'fetchUser',
+    input: ({ event }) => {
+      // highlight-next-line
+      assertEvent(event, 'messageSent');
+      return {
+        message: event.message,
+      };
+    },
+  },
+});
+```
+
 ### Cheatsheet: providing input to spawned actors
 
 ```ts
