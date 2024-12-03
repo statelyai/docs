@@ -169,12 +169,14 @@ console.log(initialActions);
 // logs []
 
 // highlight-next-line
-const nextState = transition(machine, initialState, { type: 'start' });
+const [nextState, actions] = transition(machine, initialState, {
+  type: 'start',
+});
 
 console.log(nextState.value);
 // logs 'started'
 
-console.log(nextState.actions);
+console.log(actions);
 // logs [{ type: 'doSomething', … }]
 ```
 
