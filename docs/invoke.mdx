@@ -822,7 +822,7 @@ const authClientMachine = createMachine({
 });
 ```
 
-Note that by default `sendTo` will send events anonymously, in which case the reciever will not know the source of the event.
+Note that by default `sendTo` will send events anonymously, in which case the receiver will not know the source of the event.
 
 :::note
 In XState v4, the `respond(...)` action creator was used for this purpose. In XState v5, use `sendTo(...)` instead.
@@ -886,7 +886,7 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-You should the `setup({ ... })` API to properly infer types for invoked actor logic.
+You should use the `setup({ ... })` API to properly infer types for invoked actor logic.
 
 ```ts
 import { setup, fromPromise, assign } from 'xstate';
