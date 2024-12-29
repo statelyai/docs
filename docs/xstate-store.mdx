@@ -48,15 +48,15 @@ const store = createStore({
   context: { count: 0, name: 'David' },
   // Transitions
   on: {
-    inc: {
-      count: (context) => context.count + 1,
-    },
-    add: {
-      count: (context, event: { num: number }) => context.count + event.num,
-    },
-    changeName: {
-      name: (context, event: { newName: string }) => event.newName,
-    },
+    inc: (context) => ({
+      count: context.count + 1,
+    }),
+    add: (context, event: { num: number }) => ({
+      count: context.count + event.num,
+    }),
+    changeName: (context, event: { newName: string }) => ({
+      name: event.newName,
+    }),
   },
 });
 
