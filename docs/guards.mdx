@@ -321,7 +321,7 @@ const feedbackMachine = createMachine({
 ### Cheatsheet: Higher-level guards
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, and } from 'xstate';
 
 const loginMachine = createMachine({
   on: {
@@ -335,7 +335,7 @@ const loginMachine = createMachine({
 ### Cheatsheet: Combined higher-level guards
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, and, or } from 'xstate';
 
 const loginMachine = createMachine({
   on: {
