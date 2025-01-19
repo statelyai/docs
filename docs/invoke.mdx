@@ -90,7 +90,8 @@ const userMachine = setup({
 Actors can also be invoked on the _root_ of the machine, and they will be active for the lifetime of their parent machine actor:
 
 ```ts
-import { fromEventObservable, fromEvent } from 'rxjs';
+import { fromEvent } from 'rxjs';
+import { fromEventObservable } from 'xstate';
 const interactiveMachine = createMachine({
   // highlight-start
   invoke: {
