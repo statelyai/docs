@@ -273,9 +273,10 @@ import { useSelector } from '@xstate/store/react';
 const store = createStore({
   context: { count: 0, name: 'David' },
   on: {
-    inc: {
-      count: (context) => context.count + 1,
-    },
+    inc: (context) => ({
+      ...context,
+      count: context.count + 1,
+    }),
   },
 });
 
@@ -286,7 +287,7 @@ function Component(props) {
   // This component displays the count and has a button to increment it
   return (
     <div>
-      <button onClick={() => store.send({ type: 'inc' })}>Increment</button>
+      <button onClick={() => store.trigger.inc()}>Increment</button>
     </div>
   );
 }
@@ -359,13 +360,13 @@ Using `fromStore(…)` to create store actor logic also has the advantage of all
 ```ts
 import { fromStore } from '@xstate/store';
 
-// highlight-start
 const storeLogic = fromStore({
+  // highlight-start
   context: (initialCount: number) => ({
     count: initialCount,
   }),
+  // highlight-end
   on: {
-    // highlight-end
     // ...
   },
 });
@@ -505,9 +506,11 @@ const store = createStore({
   },
   on: {
     increment: (context, { qty }: { qty: number }) => ({
+      ...context,
       count: context.count + qty,
     }),
     decrement: (context, { qty }: { qty: number }) => ({
+      ...context,
       count: context.count - qty,
     }),
   },
@@ -515,8 +518,7 @@ const store = createStore({
 
 const Component = () => {
   const count = useSelector(store, (state) => state.context.count);
-  const increment = (qty) => store.send({ type: 'increment', qty });
-  const decrement = (qty) => store.send({ type: 'decrement', qty });
+  const { increment, decrement } = store.trigger;
   // ...
 };
 ```
