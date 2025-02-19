@@ -8,7 +8,7 @@ An **event** is a signal, trigger, or message that causes a transition. When an 
 
 :::studio
 
-You can visualize your state machines and easily add transitions in our drag-and-drop Stately editor. [Read more about transitions in Stately’s editor](/docs/editor-states-and-transitions/#transitions-and-events).
+You can visualize your state machines and easily add transitions in our drag-and-drop Stately editor. [Read more about transitions in Stately's editor](/docs/editor-states-and-transitions/#transitions-and-events).
 
 :::
 
@@ -17,7 +17,7 @@ You can visualize your state machines and easily add transitions in our drag-and
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7&mode=Simulate"
 />
 
-Transitions are “deterministic”; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
+Transitions are "deterministic"; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
 
 Transitions are represented by `on:` in a state:
 
@@ -129,7 +129,7 @@ const machine = createMachine({
 
 :::studio
 
-You can easily visualize self-transitions in Stately’s editor. [Read more about self-transitions in Stately’s editor](/docs/editor-states-and-transitions/#self-transitions).
+You can easily visualize self-transitions in Stately's editor. [Read more about self-transitions in Stately's editor](/docs/editor-states-and-transitions/#self-transitions).
 
 :::
 
@@ -335,7 +335,7 @@ const feedbackMachine = createMachine({
 Wildcard transitions are useful for:
 
 - handling events that are not handled by any other transition.
-- as a “catch-all” transition that handles any event in a state.
+- as a "catch-all" transition that handles any event in a state.
 
 A wildcard transition has the least priority; it will only be taken if no other transitions are enabled.
 
@@ -390,7 +390,7 @@ Coming soon… example.
 
 ## Other transitions
 
-- [**Eventless (always) transitions**](eventless-transitions.mdx) are transitions without events. These transitions are *always* taken after any transition in their state is enabled.
+- [**Eventless (always) transitions**](eventless-transitions.mdx) are transitions without events. These transitions are _always_ taken after any transition in their state is enabled.
 - [**Delayed (after) transitions**](delayed-transitions.mdx) are transitions that are enabled after a specified duration.
 
 ## Transition descriptions
@@ -563,4 +563,84 @@ const machine = createMachine({
     },
   },
 });
+```
+
+## Transitioning state
+
+_Since XState version 5.19.0_
+
+When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
+
+```ts
+import { initialTransition, transition } from 'xstate';
+
+const machine = createMachine({
+  initial: 'pending',
+  states: {
+    pending: {
+      on: {
+        start: { target: 'started' },
+      },
+    },
+    started: {
+      entry: 'doSomething',
+    },
+  },
+});
+
+const [initialState, initialActions] = initialTransition(machine);
+
+console.log(initialState.value);
+// logs 'pending'
+
+console.log(initialActions);
+// logs []
+
+const [nextState, actions] = transition(machine, initialState, {
+  type: 'start',
+});
+
+console.log(nextState.value);
+// logs 'started'
+
+console.log(actions);
+// logs [{ type: 'doSomething', … }]
+```
+
+## Determining the next state
+
+:::warning
+It is recommended to use the `initialTransition(…)` and `transition(…)` functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which will be deprecated.
+:::
+
+When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
+
+```ts
+import { getNextSnapshot } from 'xstate';
+import { feedbackMachine } from './feedbackMachine';
+
+const nextSnapshot = getNextSnapshot(
+  feedbackMachine,
+  feedbackMachine.resolveState({ value: 'question' }),
+  { type: 'feedback.good' },
+);
+
+console.log(nextSnapshot.value);
+// logs 'thanks'
+```
+
+You can also determine the initial state of a machine using the `getInitialSnapshot(…)` function:
+
+```ts
+import { getInitialSnapshot } from 'xstate';
+import { feedbackMachine } from './feedbackMachine';
+
+const initialSnapshot = getInitialSnapshot(
+  feedbackMachine,
+  // optional input
+  { defaultRating: 3 },
+);
+
+console.log(initialSnapshot.value);
+// logs 'question'
 ```
