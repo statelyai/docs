@@ -143,7 +143,7 @@ When you create a state machine actor, the next state is determined by the machi
 
 ```ts
 // highlight-next-line
-import { initialTransition, transition } from 'xstate';
+import { createMachine, initialTransition, transition } from 'xstate';
 
 const machine = createMachine({
   initial: 'pending',

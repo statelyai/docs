@@ -572,7 +572,7 @@ _Since XState version 5.19.0_
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
 
 ```ts
-import { initialTransition, transition } from 'xstate';
+import { createMachine, initialTransition, transition } from 'xstate';
 
 const machine = createMachine({
   initial: 'pending',
