@@ -339,7 +339,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const path = getPathFromEvents(feedbackMachine, [
+const path = getPathsFromEvents(feedbackMachine, [
   { type: 'CLICK_GOOD' },
   { type: 'SUBMIT' },
   { type: 'CLOSE' },
