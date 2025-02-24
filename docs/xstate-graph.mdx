@@ -306,7 +306,7 @@ Returns a path object with the following keys:
 
 ```js
 import { createMachine } from 'xstate';
-import { getSimplePaths } from '@xstate/graph';
+import { getPathsFromEvents } from '@xstate/graph';
 
 const feedbackMachine = createMachine({
   id: 'feedback',
@@ -339,7 +339,7 @@ const feedbackMachine = createMachine({
   },
 });
 
-const path = getPathFromEvents(feedbackMachine, [
+const path = getPathsFromEvents(feedbackMachine, [
   { type: 'CLICK_GOOD' },
   { type: 'SUBMIT' },
   { type: 'CLOSE' },
