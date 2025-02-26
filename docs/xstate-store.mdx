@@ -178,6 +178,72 @@ store.on('increased', (event) => {
 });
 ```
 
+## Selectors
+
+Store selectors provide an efficient way to select and subscribe to specific parts of your store's state. With store selectors, you can:
+
+- Get the current value of a specific part of state via `selector.get()`
+- Subscribe to changes of only that specific part via `selector.subscribe(observer)`
+- Optimize performance by only notifying subscribers when the selected value actually changes via `selector.subscribe(observer, equalityFn)`
+
+You can create a selector using `store.select(selector)`:
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore({
+  context: {
+    position: { x: 0, y: 0 },
+    name: 'John',
+    age: 30,
+  },
+  on: {
+    positionUpdated: (
+      context,
+      event: { position: { x: number; y: number } },
+    ) => ({
+      ...context,
+      position: event.position,
+    }),
+  },
+});
+
+// Create a selector for the position
+const position = store.select((state) => state.context.position);
+
+// Get current value
+console.log(position.get()); // { x: 0, y: 0 }
+
+// Subscribe to changes
+position.subscribe((position) => {
+  console.log('Position updated:', position);
+});
+
+// When position updates, only position subscribers are notified
+store.trigger.positionUpdated({ position: { x: 100, y: 200 } });
+// Logs: Position updated: { x: 100, y: 200 }
+```
+
+### Custom Equality Functions
+
+You can provide a custom equality function as the second argument to `store.select(selector, equalityFn)` to control when subscribers should be notified:
+
+```ts
+const position = store.select(
+  (state) => state.context.position,
+  // Only notify if x coordinate changes
+  (prev, next) => prev.x === next.x,
+);
+```
+
+XState Store also provides a `shallowEqual` function that can be used as a default equality function:
+
+```ts
+import { shallowEqual } from '@xstate/store';
+
+const position = store.select((state) => state.context.position, shallowEqual);
+```
+
 ## Inspection
 
 Just like with XState, you can use the [Inspect API](./inspection.mdx) to inspect events sent to the store and state transitions within the store by using the .inspect method:
@@ -294,6 +360,140 @@ function Component(props) {
 ```
 
 A store can be shared with multiple components, which will all receive the same snapshot from the store instance. Stores are useful for global state management.
+
+### Local Stores with `useStore()`
+
+The `useStore()` hook allows you to create local stores within React components, similar to `useReducer()`. This is useful when you want to manage component-specific state that doesn't need to be shared globally:
+
+```tsx
+import { useStore, useSelector } from '@xstate/store/react';
+
+function Counter({ initialCount = 0 }) {
+  const store = useStore({
+    context: {
+      count: initialCount,
+    },
+    emits: {
+      increased: (payload: { by: number }) => {},
+    },
+    on: {
+      increment: (context, event: { by: number }, enqueue) => {
+        enqueue.emit.increased({ by: event.by });
+        return { ...context, count: context.count + event.by };
+      },
+    },
+  });
+
+  const count = useSelector(store, (state) => state.context.count);
+
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <button onClick={() => store.trigger.increment({ by: 1 })}>
+        Increment by 1
+      </button>
+      <button onClick={() => store.trigger.increment({ by: 5 })}>
+        Increment by 5
+      </button>
+    </div>
+  );
+}
+```
+
+The store created by `useStore()` has all the same capabilities as a global store:
+
+- Send events using `store.trigger` or `store.send()`
+- Select state using `useSelector()`
+- Listen to emitted events
+- Use effects and side effects
+- Use selectors
+
+### Listening to Emitted Events
+
+You can listen to events emitted by the local store via `useEffect(…)`:
+
+```tsx
+function Counter({
+  initialCount = 0,
+  onIncreased,
+}: {
+  initialCount?: number;
+  onIncreased?: (by: number) => void;
+}) {
+  const store = useStore({
+    // ... store config
+  });
+
+  // Listen to emitted events
+  useEffect(() => {
+    const subscription = store.on('increased', ({ by }) => {
+      onIncreased?.(by);
+    });
+
+    return subscription.unsubscribe;
+  }, [store, onIncreased]);
+
+  // ... rest of component
+}
+```
+
+### Initializing with Props
+
+Local stores can be initialized using component props, making them more reusable:
+
+```tsx
+function Counter({ initialCount = 0, step = 1 }) {
+  const store = useStore({
+    context: {
+      count: initialCount,
+      step,
+    },
+    on: {
+      increment: (context) => ({
+        ...context,
+        count: context.count + context.step,
+      }),
+    },
+  });
+
+  // ... rest of component
+}
+```
+
+### Props and Store State
+
+Similar to `useState` and `useReducer`, changes to props after the initial render will not automatically update the store's state. The store's state can only be updated by sending events:
+
+```tsx
+function Counter({ currentCount = 0 }) {
+  const store = useStore({
+    context: {
+      // currentCount is only used once during initialization
+      count: currentCount,
+    },
+    on: {
+      countUpdated: (context, event: { value: number }) => ({
+        ...context,
+        count: event.value,
+      }),
+    },
+  });
+
+  // If you need to update the store when props change,
+  // you'll need to send an event explicitly:
+  useEffect(() => {
+    store.trigger.countUpdated({ value: currentCount });
+  }, [store, currentCount]);
+
+  // ... rest of component
+}
+```
+
+This behavior ensures that state updates are always explicit and traceable through events, maintaining a predictable data flow in your application.
+
+:::tip
+If you need to synchronize store state with prop changes, consider whether the value should be stored in the store at all. Sometimes it's simpler to use the prop directly in your component and compute derived values outside of the store.
+:::
 
 ## Usage with Solid
 
