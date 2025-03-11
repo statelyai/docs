@@ -302,12 +302,48 @@ store.inspect(inspector);
 
 ## Using Immer
 
-If you want to use [Immer](https://immerjs.github.io/immer/) to update the `context`, you can do so by passing in the `produce` function as the first argument to `createStoreWithProducer(producer, …)`.
+You can use the `produce(…)` function from [Immer](https://immerjs.github.io/immer/) to update the `context` in transitions:
 
 ```ts
-import { createStoreWithProducer } from '@xstate/store';
+import { createStore } from '@xstate/store';
 import { produce } from 'immer';
 
+const store = createStore({
+  context: { count: 0, todos: [] },
+  on: {
+    inc: (context, event: { by: number }) =>
+      produce(context, (draft) => {
+        draft.count += event.by;
+      }),
+    addTodo: (context, event: { todo: string }) =>
+      produce(context, (draft) => {
+        draft.todos.push(event.todo);
+      }),
+    // Not using a producer
+    resetCount: (context) => ({
+      ...context,
+      count: 0,
+    }),
+  },
+});
+```
+
+<details>
+<summary>Deprecated: <code>createStoreWithProducer(…)</code></summary>
+
+:::warning
+
+This API is deprecated. Use `produce` from [Immer](https://immerjs.github.io/immer/) or similar libraries directly with `createStore(…)` instead.
+
+:::
+
+In previous versions of `@xstate/store`, you could use the `createStoreWithProducer(…)` function to pass in a producer function to update the `context` for every transition. This will not be supported in future versions of `@xstate/store`. Instead, you can use the `produce(…)` function from [Immer](https://immerjs.github.io/immer/) or similar libraries directly with `createStore(…)`.
+
+```ts
+import { createStore } from '@xstate/store';
+import { produce } from 'immer';
+
+// Deprecated API
 const store = createStoreWithProducer(produce, {
   context: { count: 0, todos: [] },
   on: {
@@ -325,7 +361,7 @@ const store = createStoreWithProducer(produce, {
 // ...
 ```
 
-Note that you cannot use the object assigner syntax when using `createStoreFromProducer(…)`, nor is it even necessary.
+</details>
 
 ## Usage with React
 
