@@ -611,13 +611,14 @@ And here is the store as a state machine after conversion:
 ```ts
 import { createMachine } from 'xstate';
 
-// const store = createStore(
-//   { count: 0, name: 'David' },
-//   {
+// const store = createStore({
+//   context: { count: 0, name: 'David' },
+//   on: {
 //     inc: {
 //       count: (context, event: { by: number }) => context.count + event.by
 //     }
-//   });
+//   }
+// });
 
 // 1. Use `createMachine(…)` instead of `createStore(…)`
 const machine = createMachine({
