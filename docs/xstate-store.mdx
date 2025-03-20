@@ -178,6 +178,67 @@ store.on('increased', (event) => {
 });
 ```
 
+## Pure transitions
+
+You can use `store.transition(state, event)` to compute a tuple of the next state and any effects from a given state and event. This is useful for debugging and testing, or for having full control over the state transitions in your application.
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  emits: {
+    incremented: (payload: { by: number }) => {},
+  },
+  on: {
+    inc: (context, event: { by: number }, enqueue) => {
+      enqueue.emit.incremented({ by: event.by });
+
+      enqueue.effect(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        store.send({ type: 'increment' });
+      });
+
+      return {
+        ...context,
+        count: context.count + event.by,
+      };
+    },
+  },
+});
+
+const snapshot = store.getSnapshot();
+
+// highlight-start
+const [nextState, effects] = store.transition(snapshot, {
+  type: 'inc',
+  by: 1,
+});
+// highlight-end
+
+console.log(nextState.context);
+// => { count: 1 }
+
+console.log(effects);
+// => [
+//   { type: 'incremented', by: 1 },
+//   Function
+// ]
+
+// The store's state is unchanged
+console.log(store.getSnapshot().context);
+// => { count: 0 }
+```
+
+If you need to determine the next state from the store's initial state, you can get the initial snapshot using `store.getInitialSnapshot()`:
+
+```ts
+const initialSnapshot = store.getInitialSnapshot();
+
+const [nextState, effects] = store.transition(initialSnapshot, {
+  type: 'inc',
+  by: 1,
+});
+```
+
 ## Selectors
 
 Store selectors provide an efficient way to select and subscribe to specific parts of your store's state. With store selectors, you can:
@@ -243,6 +304,8 @@ import { shallowEqual } from '@xstate/store';
 
 const position = store.select((state) => state.context.position, shallowEqual);
 ```
+
+## Atoms
 
 ## Inspection
 
