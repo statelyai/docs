@@ -307,6 +307,124 @@ const position = store.select((state) => state.context.position, shallowEqual);
 
 ## Atoms
 
+An atom is a lightweight, reactive piece of state that can be read, written to, and subscribed to. Atoms can be used standalone or combined with other atoms and stores for more complex state management.
+
+You can:
+
+- Create an atom with `createAtom(initialValue)`
+- Read the atom's value with `atom.get()`
+- Subscribe to changes with `atom.subscribe(observer)`
+- Update the atom with `atom.set(value)`
+
+:::info
+Atoms are best used for:
+
+- Simple, independent pieces of state
+- Derived/computed values
+- Bridging between stores and external state
+- When you need direct value updates without constraints
+
+For state that needs to follow specific transition rules or complex update logic, consider using a store instead.
+:::
+
+### Creating Atoms
+
+Create an atom using `createAtom()` with an initial value:
+
+```ts
+import { createAtom } from '@xstate/store';
+
+// Create an atom with a primitive value
+const countAtom = createAtom(0);
+
+// Create an atom with an object
+const userAtom = createAtom({ name: 'David', age: 30 });
+```
+
+### Reading and Writing Atoms
+
+You can read an atom's value using `atom.get()` and update it using `atom.set()`:
+
+```ts
+const countAtom = createAtom(0);
+
+// Read the current value
+console.log(countAtom.get()); // 0
+
+// Set a new value directly
+countAtom.set(1); // 1
+
+// Update value using a function
+countAtom.set((prev) => prev + 1); // 2
+```
+
+### Subscribing to Changes
+
+Atoms support subscriptions to react to value changes:
+
+```ts
+const countAtom = createAtom(0);
+
+// Subscribe to changes
+const subscription = countAtom.subscribe((newValue) => {
+  console.log('Count changed:', newValue);
+});
+
+countAtom.set(1); // Logs: "Count changed: 1"
+
+// Unsubscribe when done
+subscription.unsubscribe();
+
+countAtom.set(2); // Does not log anything
+```
+
+### Combined Atoms
+
+You can create derived atoms that combine values from other atoms, stores, or selectors:
+
+```ts
+const nameAtom = createAtom('David');
+const ageAtom = createAtom(30);
+
+// Combine multiple atoms
+const userAtom = createAtom((read) => ({
+  name: read(nameAtom),
+  age: read(ageAtom),
+}));
+
+// Combined atoms are read-only and update automatically
+console.log(userAtom.get()); // { name: 'David', age: 30 }
+nameAtom.set('John');
+console.log(userAtom.get()); // { name: 'John', age: 30 }
+ageAtom.set(31);
+console.log(userAtom.get()); // { name: 'John', age: 31 }
+```
+
+### Working with Stores and Selectors
+
+Atoms can seamlessly integrate with XState stores and selectors:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    increment: (context) => ({ ...context, count: context.count + 1 }),
+  },
+});
+
+// Create an atom from a store selector
+const countSelector = store.select((state) => state.context.count);
+const doubleCountAtom = createAtom((read) => 2 * read(countSelector));
+
+console.log(doubleCountAtom.get()); // 0
+store.trigger.increment();
+console.log(doubleCountAtom.get()); // 2
+```
+
+:::tip
+Combined atoms are read-only by design. If you need to update multiple values atomically, consider using a store instead.
+:::
+
 ## Inspection
 
 Just like with XState, you can use the [Inspect API](./inspection.mdx) to inspect events sent to the store and state transitions within the store by using the .inspect method:
