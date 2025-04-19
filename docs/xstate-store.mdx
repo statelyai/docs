@@ -387,9 +387,9 @@ const nameAtom = createAtom('David');
 const ageAtom = createAtom(30);
 
 // Combine multiple atoms
-const userAtom = createAtom((read) => ({
-  name: read(nameAtom),
-  age: read(ageAtom),
+const userAtom = createAtom(() => ({
+  name: nameAtom.get(),
+  age: ageAtom.get(),
 }));
 
 // Combined atoms are read-only and update automatically
@@ -399,6 +399,19 @@ console.log(userAtom.get()); // { name: 'John', age: 30 }
 ageAtom.set(31);
 console.log(userAtom.get()); // { name: 'John', age: 31 }
 ```
+
+:::warning
+The `read(...)` function for combining atoms is deprecated since v3.5.0. Instead, use the direct `.get()` method on atoms when creating combined atoms:
+
+```ts
+// ❌ Deprecated
+const combinedAtom = createAtom((read) => read(atomA) + read(atomB));
+
+// ✅ New API
+const combinedAtom = createAtom(() => atomA.get() + atomB.get());
+```
+
+:::
 
 ### Working with Stores and Selectors
 
@@ -414,7 +427,7 @@ const store = createStore({
 
 // Create an atom from a store selector
 const countSelector = store.select((state) => state.context.count);
-const doubleCountAtom = createAtom((read) => 2 * read(countSelector));
+const doubleCountAtom = createAtom(() => 2 * countSelector.get());
 
 console.log(doubleCountAtom.get()); // 0
 store.trigger.increment();
