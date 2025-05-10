@@ -438,6 +438,30 @@ console.log(doubleCountAtom.get()); // 2
 Combined atoms are read-only by design. If you need to update multiple values atomically, consider using a store instead.
 :::
 
+### Using Atoms with React
+
+Atoms can be used with React using the `useSelector` hook:
+
+```tsx
+import { createAtom } from '@xstate/store';
+import { useSelector } from '@xstate/store/react';
+
+const countAtom = createAtom(0);
+
+function Counter() {
+  const currentCount = useSelector(countAtom, (s) => s);
+
+  return (
+    <div>
+      <button onClick={() => countAtom.set((count) => count + 1)}>
+        Increment
+      </button>
+      <div>Count: {currentCount}</div>
+    </div>
+  );
+}
+```
+
 ## Inspection
 
 Just like with XState, you can use the [Inspect API](./inspection.mdx) to inspect events sent to the store and state transitions within the store by using the .inspect method:
