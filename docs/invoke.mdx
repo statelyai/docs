@@ -40,7 +40,7 @@ const userMachine = setup({
     },
   },
   actors: {
-    fetchUser: fromPromise(async ({ input }) => {
+    fetchUser: fromPromise(async ({ input }: { input: { userId: string } }) => {
       const user = await fetchUser(input.userId);
 
       return user;
