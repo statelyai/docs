@@ -338,7 +338,7 @@ import { createAtom } from '@xstate/store';
 const countAtom = createAtom(0);
 
 // Create an atom with an object
-const userAtom = createAtom({ name: 'David', age: 30 });
+const userAtom = createAtom({ name: 'David', count: 100 });
 ```
 
 ### Reading and Writing Atoms
@@ -356,6 +356,19 @@ countAtom.set(1); // 1
 
 // Update value using a function
 countAtom.set((prev) => prev + 1); // 2
+
+const count = createAtom(0);
+count.get(); // 0
+count.set(1); // 1
+count.set((prev) => prev + 1); // 2
+
+// Recomputes when count changes
+const laugh = createAtom(() => {
+  return 'ha'.repeat(count.get());
+});
+laugh.subscribe((value) => {
+  console.log(value);
+});
 ```
 
 ### Subscribing to Changes
