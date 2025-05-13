@@ -413,6 +413,40 @@ const combinedAtom = createAtom(() => atomA.get() + atomB.get());
 
 :::
 
+### Async Atoms
+
+_Since v3.6.0_
+
+Async atoms are a special type of atom that handle asynchronous values. They are created using `createAsyncAtom(…)` and take an async function that returns a promise. The atom's value represents the loading state of the async operation.
+
+The value of an async atom will be an object with a `status` property that can be:
+
+- `'pending'` - while the promise is resolving
+- `'done'` with a `data` property containing the resolved value
+- `'error'` with an `error` property containing the error that was thrown
+
+```ts
+import { createAsyncAtom } from '@xstate/store';
+
+const userAtom = createAsyncAtom(async () => {
+  const response = await fetch('/api/user');
+  return response.json();
+});
+
+userAtom.subscribe((snapshot) => {
+  if (snapshot.status === 'pending') {
+    console.log(snapshot);
+    // { status: 'pending' }
+  } else if (snapshot.status === 'done') {
+    console.log(snapshot);
+    // { status: 'done', data: { name: 'David', ... } }
+  } else if (snapshot.status === 'error') {
+    console.log(snapshot);
+    // { status: 'error', error: Error('Failed to fetch') }
+  }
+});
+```
+
 ### Working with Stores and Selectors
 
 Atoms can seamlessly integrate with XState stores and selectors:
