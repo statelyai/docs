@@ -470,7 +470,6 @@ Callback actors are a bit different from other actors in that they do not do the
 - Do not work with `onDone`
 - Do not produce a snapshot using `.getSnapshot()`
 - Do not emit values when used with `.subscribe()`
-- Can not be stopped with `.stop()`
 
 You may choose to use `sendBack` to report caught errors to the parent actor. This is especially helpful for handling promise rejections within a callback function, which will not be caught by [`onError`](invoke.mdx#onerror).
 
