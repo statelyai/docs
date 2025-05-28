@@ -270,7 +270,7 @@ const store = createStore({
 });
 
 // Create a selector for the position
-const position = store.select((state) => state.position);
+const position = store.select((context) => context.position);
 
 // Get current value
 console.log(position.get()); // { x: 0, y: 0 }
