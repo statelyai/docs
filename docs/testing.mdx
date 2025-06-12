@@ -60,12 +60,150 @@ You can now [generate test paths from your state machines in Stately Studio](gen
 
 ## Testing actors
 
-_Coming soon_
+When testing actors, you typically want to verify that they transition to the correct state and update their context appropriately when receiving events.
+
+```ts
+import { setup, createActor } from 'xstate';
+import { test, expect } from 'vitest';
+
+test('actor transitions correctly', () => {
+  const toggleMachine = setup({}).createMachine({
+    initial: 'inactive',
+    context: { count: 0 },
+    states: {
+      inactive: {
+        on: { 
+          activate: { 
+            target: 'active',
+            actions: assign({ count: ({ context }) => context.count + 1 })
+          }
+        }
+      },
+      active: {
+        on: { 
+          deactivate: 'inactive' 
+        }
+      }
+    }
+  });
+
+  const actor = createActor(toggleMachine);
+  actor.start();
+
+  // Test initial state
+  expect(actor.getSnapshot().value).toBe('inactive');
+  expect(actor.getSnapshot().context.count).toBe(0);
+
+  // Send event and test transition
+  actor.send({ type: 'activate' });
+  
+  expect(actor.getSnapshot().value).toBe('active');
+  expect(actor.getSnapshot().context.count).toBe(1);
+
+  // Send another event
+  actor.send({ type: 'deactivate' });
+  
+  expect(actor.getSnapshot().value).toBe('inactive');
+  expect(actor.getSnapshot().context.count).toBe(1);
+});
+```
 
 ## Mocking effects
 
-_Coming soon_
+When testing state machines that have side effects (like API calls, logging, or other external interactions), you should mock these effects to make your tests deterministic and isolated.
+
+```ts
+import { setup, createActor } from 'xstate';
+import { test, expect, vi } from 'vitest';
+
+test('mocking actions', () => {
+  const mockLogger = vi.fn();
+  
+  const machine = setup({
+    actions: {
+      // Mock the logging action
+      logMessage: mockLogger
+    }
+  }).createMachine({
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          start: {
+            target: 'running',
+            actions: { 
+              type: 'logMessage', 
+              params: { message: 'Started!' } 
+            }
+          }
+        }
+      },
+      running: {}
+    }
+  });
+
+  const actor = createActor(machine);
+  actor.start();
+  
+  actor.send({ type: 'start' });
+  
+  expect(actor.getSnapshot().value).toBe('running');
+  expect(mockLogger).toHaveBeenCalledWith(
+    expect.anything(), // action meta
+    { message: 'Started!' } // params
+  );
+});
+```
+
+For promise-based actors, you can mock the promises:
+
+```ts
+test('mocking promise actors', async () => {
+  const mockFetch = vi.fn().mockResolvedValue({ data: 'test' });
+  
+  const machine = setup({
+    actors: {
+      fetchData: fromPromise(mockFetch)
+    }
+  }).createMachine({
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          fetch: 'loading'
+        }
+      },
+      loading: {
+        invoke: {
+          src: 'fetchData',
+          onDone: 'success',
+          onError: 'error'
+        }
+      },
+      success: {},
+      error: {}
+    }
+  });
+
+  const actor = createActor(machine);
+  actor.start();
+  
+  actor.send({ type: 'fetch' });
+  
+  // Wait for promise to resolve
+  await new Promise(resolve => setTimeout(resolve, 0));
+  
+  expect(actor.getSnapshot().value).toBe('success');
+  expect(mockFetch).toHaveBeenCalled();
+});
+```
 
 ## Using `@xstate/test`
 
-_Coming soon_
+:::warning
+
+The XState Test model-based testing utilities have moved into `xstate` itself and are now available under `xstate/graph`. The standalone `@xstate/test` package is deprecated in favor of the integrated testing utilities.
+
+:::
+
+The model-based testing utilities allow you to automatically generate test cases from your state machines, ensuring comprehensive coverage of all possible paths and edge cases.
