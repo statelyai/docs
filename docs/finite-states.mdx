@@ -2,15 +2,15 @@
 title: 'Finite states'
 ---
 
-A finite state is one of the possible states that a state machine can be in at any given time. It’s called “finite” because state machines have a known limited number of possible states. A state represents how a machine “behaves” when in that state; its status or mode.
+A finite state is one of the possible states that a state machine can be in at any given time. It's called "finite" because state machines have a known limited number of possible states. A state represents how a machine "behaves" when in that state; its status or mode.
 
-For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an “impossible state.”
+For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state."
 
 State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
 
 :::studio
 
-You can easily visualize and simulate intial and final states in Stately’s editor. [Read more about states in Stately’s editor](/docs/editor-states-and-transitions).
+You can easily visualize and simulate intial and final states in Stately's editor. [Read more about states in Stately's editor](/docs/editor-states-and-transitions).
 
 :::
 
@@ -97,7 +97,7 @@ const feedbackMachine = createMachine({
 
 ## State nodes
 
-In XState, a **state node** is a finite state “nodes” that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
+In XState, a **state node** is a finite state "nodes" that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
 
 ```ts
 // The machine is the root state node
@@ -129,7 +129,7 @@ const feedbackMachine = createMachine({
 
 ## Tags
 
-State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a “loading” tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
+State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a "loading" tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -166,7 +166,7 @@ Read more about [tags](tags.mdx).
 
 Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation.
 
-The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node’s ID as the key and the `.meta` data as the value:
+The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -248,7 +248,7 @@ Read more about [events and transitions](transitions.mdx).
 
 ## Targets
 
-A transition’s `target` property defines where the machine should go when the transition is taken. Normally, it targets a sibling state node:
+A transition's `target` property defines where the machine should go when the transition is taken. Normally, it targets a sibling state node:
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -338,7 +338,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-When the state node doesn’t change; i.e., the source and target state nodes are the same, the `target` property can be omitted:
+When the state node doesn't change; i.e., the source and target state nodes are the same, the `target` property can be omitted:
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -427,7 +427,7 @@ In statecharts, there are other types of states:
 
 ## Modeling states
 
-- Start simple and shallow. Don’t create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
+- Start simple and shallow. Don't create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
 - Can model choice pseudostates
 
 ## Finite states and TypeScript
@@ -440,8 +440,235 @@ For best results, use the latest TypeScript version. [Read more about XState and
 
 :::
 
-_Coming soon_
+You can strongly type the finite states of your machine using the `setup(...)` function, which provides excellent TypeScript inference and autocompletion:
+
+```ts
+import { setup, createActor } from 'xstate';
+
+const feedbackMachine = setup({
+  types: {
+    context: {} as { feedback: string; rating: number },
+    events: {} as
+      | { type: 'feedback.good' }
+      | { type: 'feedback.bad' }
+      | { type: 'feedback.submit' },
+  },
+}).createMachine({
+  id: 'feedback',
+  initial: 'prompt',
+  context: {
+    feedback: '',
+    rating: 0,
+  },
+  states: {
+    prompt: {
+      on: {
+        'feedback.good': { target: 'thanks' },
+        'feedback.bad': { target: 'form' },
+      },
+    },
+    form: {
+      on: {
+        'feedback.submit': { target: 'thanks' },
+      },
+    },
+    thanks: {
+      type: 'final',
+    },
+  },
+});
+
+const feedbackActor = createActor(feedbackMachine).start();
+
+// ✅ Type-safe and autocompletes
+const currentState = feedbackActor.getSnapshot();
+
+// ✅ `state.matches(...)` is type-safe with autocompletion
+if (currentState.matches('prompt')) {
+  // TypeScript knows we're in the 'prompt' state
+}
+
+// ✅ All state values have autocompletion
+const isFormState = currentState.matches('form');
+const isThanksState = currentState.matches('thanks');
+
+// ✅ `state.value` is also strongly typed
+const stateValue = currentState.value; // 'prompt' | 'form' | 'thanks'
+```
+
+When using `setup(...).createMachine(...)`, TypeScript provides:
+
+- **Type-safe state matching**: `state.matches(...)` with autocompletion for all possible state values
+- **Strongly-typed state values**: `state.value` is typed as a union of all possible state names
+- **Type-safe context**: Full type inference for `state.context`
+- **Type-safe events**: `actor.send(...)` only accepts defined event types
 
 ## Finite states cheatsheet
 
-_Coming soon_
+### Cheatsheet: create finite states
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  id: 'feedback',
+  initial: 'prompt',
+  states: {
+    prompt: {},
+    form: {},
+    thanks: {},
+    closed: {},
+  },
+});
+```
+
+### Cheatsheet: finite states with transitions
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      on: {
+        'feedback.good': { target: 'thanks' },
+        'feedback.bad': { target: 'form' },
+      },
+    },
+    form: {
+      on: {
+        'feedback.submit': { target: 'thanks' },
+      },
+    },
+    thanks: {},
+  },
+});
+```
+
+### Cheatsheet: read current state
+
+```ts
+const actor = createActor(machine).start();
+const state = actor.getSnapshot();
+
+// Read state value
+console.log(state.value); // e.g., 'prompt'
+
+// Check if in specific state
+const isPromptState = state.matches('prompt');
+
+// Check multiple states
+const isFormOrThanks = state.matches('form') || state.matches('thanks');
+```
+
+### Cheatsheet: states with tags
+
+```ts
+const machine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      tags: ['visible', 'interactive'],
+    },
+    form: {
+      tags: ['visible', 'interactive'],
+    },
+    thanks: {
+      tags: ['visible', 'success'],
+    },
+    closed: {
+      tags: ['hidden'],
+    },
+  },
+});
+
+// Check tags
+const state = actor.getSnapshot();
+const isVisible = state.hasTag('visible');
+const isInteractive = state.hasTag('interactive');
+```
+
+### Cheatsheet: states with meta data
+
+```ts
+const machine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      meta: {
+        title: 'How was your experience?',
+        component: 'PromptView',
+      },
+    },
+    form: {
+      meta: {
+        title: 'Tell us more',
+        component: 'FormView',
+      },
+    },
+  },
+});
+
+// Read meta data
+const state = actor.getSnapshot();
+console.log(state.getMeta());
+```
+
+### Cheatsheet: target states by ID
+
+```ts
+const machine = createMachine({
+  initial: 'start',
+  states: {
+    start: {
+      on: {
+        FINISH: { target: '#completed' },
+      },
+    },
+    process: {
+      states: {
+        step1: {},
+        step2: {},
+      },
+    },
+    done: {
+      id: 'completed',
+      type: 'final',
+    },
+  },
+});
+```
+
+### Cheatsheet: strongly-typed finite states
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {
+    context: {} as { count: number },
+    events: {} as { type: 'increment' } | { type: 'decrement' },
+  },
+}).createMachine({
+  initial: 'idle',
+  context: { count: 0 },
+  states: {
+    idle: {
+      on: {
+        increment: { target: 'active' },
+      },
+    },
+    active: {
+      on: {
+        decrement: { target: 'idle' },
+      },
+    },
+  },
+});
+
+// Type-safe state matching
+const state = actor.getSnapshot();
+const isIdle = state.matches('idle'); // ✅ Autocompletes
+const stateValue = state.value; // ✅ 'idle' | 'active'
+```
