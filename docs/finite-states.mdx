@@ -427,8 +427,178 @@ In statecharts, there are other types of states:
 
 ## Modeling states
 
-- Start simple and shallow. Don't create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
-- Can model choice pseudostates
+When designing finite states for your state machine, follow these guidelines to create maintainable and effective state machines:
+
+### Start simple and shallow
+
+- **Begin with minimal states**: Don't create multiple finite states until it becomes apparent that the behavior of your logic differs depending on some finite state it can be in.
+- **Avoid premature optimization**: Start with basic states and add complexity only when necessary.
+- **Prefer flat structures initially**: Deep nesting can be added later when patterns emerge.
+
+### Identify distinct behaviors
+
+- **Different behavior = different state**: Create separate states when the application behaves differently in response to the same event.
+- **Same behavior = same state**: If multiple "states" handle events identically, they should probably be a single state.
+- **Question impossible states**: Ask "can this combination of conditions exist?" If not, model them as separate states.
+
+### Name states clearly
+
+- **Use descriptive names**: State names should clearly describe what the machine is doing or what mode it's in.
+- **Avoid technical jargon**: Use domain-specific language that stakeholders understand.
+- **Be consistent**: Use consistent naming conventions across your state machines.
+
+```ts
+// ❌ Poor naming
+const machine = createMachine({
+  initial: 'state1',
+  states: {
+    state1: {}, // What does this represent?
+    state2: {}, // What does this represent?
+    error: {}, // Too generic
+  },
+});
+
+// ✅ Good naming
+const authMachine = createMachine({
+  initial: 'signedOut',
+  states: {
+    signedOut: {},
+    signingIn: {},
+    signedIn: {},
+    authenticationFailed: {}, // Specific error state
+  },
+});
+```
+
+### Model user workflows
+
+- **Follow the user journey**: States should reflect the natural progression of user actions.
+- **Consider all paths**: Include happy paths, error states, and edge cases.
+- **Account for loading states**: Async operations often need intermediate states.
+
+```ts
+const checkoutMachine = createMachine({
+  initial: 'cart',
+  states: {
+    cart: {
+      on: {
+        PROCEED: { target: 'shippingInfo' },
+      },
+    },
+    shippingInfo: {
+      on: {
+        CONTINUE: { target: 'paymentInfo' },
+        BACK: { target: 'cart' },
+      },
+    },
+    paymentInfo: {
+      on: {
+        SUBMIT: { target: 'processing' },
+        BACK: { target: 'shippingInfo' },
+      },
+    },
+    processing: {
+      on: {
+        SUCCESS: { target: 'confirmed' },
+        FAILURE: { target: 'paymentFailed' },
+      },
+    },
+    paymentFailed: {
+      on: {
+        RETRY: { target: 'paymentInfo' },
+      },
+    },
+    confirmed: {
+      type: 'final',
+    },
+  },
+});
+```
+
+### Consider temporal aspects
+
+- **Time-sensitive states**: Model states that exist for specific durations.
+- **Expiration handling**: Include states for handling timeouts and expirations.
+- **Scheduled transitions**: Use delayed transitions for time-based state changes.
+
+### Group related functionality
+
+- **Use tags for categorization**: Group states by common characteristics.
+- **Consider parent states**: When multiple states share common transitions, consider grouping them under a parent state.
+- **Separate concerns**: Keep different domains or features in separate states.
+
+```ts
+const appMachine = createMachine({
+  initial: 'loading',
+  states: {
+    loading: {
+      tags: ['busy'],
+      on: {
+        LOADED: { target: 'idle' },
+        ERROR: { target: 'error' },
+      },
+    },
+    idle: {
+      tags: ['interactive'],
+      on: {
+        START_WORK: { target: 'working' },
+      },
+    },
+    working: {
+      tags: ['busy', 'interactive'],
+      on: {
+        COMPLETE: { target: 'idle' },
+        CANCEL: { target: 'idle' },
+      },
+    },
+    error: {
+      tags: ['error'],
+      on: {
+        RETRY: { target: 'loading' },
+      },
+    },
+  },
+});
+```
+
+### Handle edge cases
+
+- **Invalid states**: Model states for handling invalid or unexpected conditions.
+- **Recovery states**: Provide ways to recover from error states.
+- **Fallback behavior**: Include default states for unhandled scenarios.
+
+### Validate state transitions
+
+- **Ensure all transitions make sense**: Every state transition should represent a valid business logic change.
+- **Avoid circular dependencies**: Be careful of states that can endlessly transition between each other without purpose.
+- **Consider guards**: Use guards to prevent invalid transitions even when events are received.
+
+### Document state purpose
+
+- **Use descriptions**: Add `.description` properties to explain complex states.
+- **Include meta data**: Store relevant information about what each state represents.
+- **Comment complex logic**: Explain why certain states exist and what they accomplish.
+
+```ts
+const feedbackMachine = createMachine({
+  initial: 'prompt',
+  states: {
+    prompt: {
+      description: 'Waiting for user to indicate their satisfaction level',
+      meta: {
+        analytics: 'feedback_prompt_shown',
+      },
+    },
+    collectingDetails: {
+      description:
+        'User provided negative feedback, collecting detailed information',
+      meta: {
+        analytics: 'detailed_feedback_form_shown',
+      },
+    },
+  },
+});
+```
 
 ## Finite states and TypeScript
 
