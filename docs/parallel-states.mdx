@@ -12,7 +12,7 @@ Parallel states have the following characteristics:
 
 :::studio
 
-You can easily visualize and simulate parallel states in Stately’s editor. [Read more about parallel states in Stately’s editor](/docs/editor-states-and-transitions/#parallel-states).
+You can easily visualize and simulate parallel states in Stately's editor. [Read more about parallel states in Stately's editor](/docs/editor-states-and-transitions/#parallel-states).
 
 :::
 
@@ -137,11 +137,38 @@ export const machine = createMachine({
 
 ## Modeling
 
-_Coming soon_
+When modeling with parallel states, there are several important considerations to keep in mind:
 
-- Avoid transitions between regions
-- Used for separation of concerns that _may_ affect each other (i.e. synchronization)
-- If completely separate, prefer `invoke` instead
+### Best Practices
+
+- **Avoid transitions between regions**: Each region in a parallel state should be independent and not directly transition to states in other regions. This maintains the separation of concerns and prevents complex interdependencies.
+
+- **Use for related concerns**: Parallel states are ideal for modeling aspects of a system that are related but operate independently. For example:
+
+  - A media player's playback state and volume control
+  - A form's validation state and submission state
+  - A game's player state and game state
+
+- **Consider synchronization**: While regions operate independently, they may need to coordinate. Use events that can be handled by multiple regions to achieve synchronization when needed.
+
+### When to Use Parallel States
+
+- When you have multiple independent aspects of your system that need to be tracked simultaneously
+- When these aspects may need to coordinate or affect each other
+- When the system needs to maintain multiple active states at once
+
+### When to Use Alternatives
+
+- **Use `invoke` instead** when the concerns are completely separate and don't need to coordinate
+- **Use nested states** when the states are hierarchical and only one should be active at a time
+- **Use a single state** with multiple properties when the aspects are tightly coupled
+
+### Example Use Cases
+
+- **User Interface**: Managing multiple independent UI states (e.g., sidebar, modal, and main content)
+- **Game Development**: Tracking player state, game state, and UI state simultaneously
+- **Form Handling**: Managing validation, submission, and error states in parallel
+- **Media Players**: Controlling playback, volume, and playlist states independently
 
 ## Parallel states cheatsheet
 

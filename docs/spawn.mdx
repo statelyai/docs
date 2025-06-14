@@ -78,7 +78,7 @@ const parentMachine = createMachine({
 });
 ```
 
-If you don’t need to keep track of a reference to the spawned actor (e.g.: for anonymous spawned actors), you can use the `spawnChild` action creator. It does _not_ return a reference, but indicates to the XState interpreter that a new actor should be spawned:
+If you don't need to keep track of a reference to the spawned actor (e.g.: for anonymous spawned actors), you can use the `spawnChild` action creator. It does _not_ return a reference, but indicates to the XState interpreter that a new actor should be spawned:
 
 ```ts
 createMachine({
@@ -183,4 +183,117 @@ _Coming soon_
 
 ## Spawn cheatsheet
 
-_Coming soon_
+### Basic Spawning
+
+```ts
+// Spawn a child machine
+createMachine({
+  entry: spawnChild(childMachine, {
+    id: 'child',
+  }),
+});
+
+// Spawn multiple children
+createMachine({
+  entry: [
+    spawnChild(childMachine, { id: 'child-1' }),
+    spawnChild(childMachine, { id: 'child-2' }),
+  ],
+});
+```
+
+### Spawning with Context
+
+```ts
+// Store actor reference in context
+createMachine({
+  entry: assign({
+    childRef: ({ spawn }) => spawn(childMachine, { id: 'child' }),
+  }),
+});
+
+// Spawn multiple actors in context
+createMachine({
+  entry: assign({
+    childRefs: ({ spawn }) => [spawn(childMachine), spawn(childMachine)],
+  }),
+});
+```
+
+### Spawning Different Actor Types
+
+```ts
+// Spawn from promise
+spawnChild(
+  fromPromise(() => Promise.resolve(42)),
+  {
+    id: 'promiseActor',
+  },
+);
+
+// Spawn from observable
+spawnChild(
+  fromObservable(() => interval(1000)),
+  {
+    id: 'observableActor',
+  },
+);
+
+// Spawn from named actor
+setup({
+  actors: {
+    fetchData: fromPromise(({ input }) => Promise.resolve(input)),
+  },
+}).createMachine({
+  entry: spawnChild('fetchData', {
+    id: 'fetchActor',
+    input: 42,
+  }),
+});
+```
+
+### Spawning Options
+
+```ts
+spawnChild(actor, {
+  id: 'actorId', // Required for referencing
+  input: { data: 42 }, // Optional input data
+  systemId: 'systemId', // Optional system-wide unique ID
+});
+```
+
+### Stopping Spawned Actors
+
+```ts
+// Stop by ID
+actions: stopChild('actorId');
+
+// Stop from context reference
+actions: stopChild(({ context }) => context.actorRef);
+
+// Stop and clean up context
+actions: [stopChild('actorId'), assign({ actorRef: undefined })];
+```
+
+### Dynamic Spawning
+
+```ts
+// Dynamic ID based on context
+spawnChild(childMachine, {
+  id: ({ context }) => context.childId,
+});
+
+// Spawn with dynamic input
+spawnChild(childMachine, {
+  id: 'child',
+  input: ({ context }) => context.inputData,
+});
+```
+
+### Best Practices
+
+1. Always provide an `id` when you need to reference the actor later
+2. Clean up actor references from context when stopping them
+3. Use `spawnChild` for one-off actors that don't need context references
+4. Use `spawn` with `assign` when you need to track actor references
+5. Consider using `systemId` for actors that need to be globally unique

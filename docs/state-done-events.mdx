@@ -4,7 +4,16 @@ title: State done events
 
 A **state done event** transitions from a parent state when one of its child states reaches its final state. State done events are labeled “onDone.”
 
-Coming soon… why you might use an onDone event.
+State done events are useful when you want to:
+
+- Model sequential flows where one process must complete before moving to the next
+- Coordinate between parent and child states in a hierarchical state machine
+- Handle cleanup or transition logic after a subprocess completes
+- Automatically transition to a new state when all child states are complete
+
+For example, in a coffee machine, you might use an `onDone` event to transition from the "preparation" state to "brewing" only after all preparation steps (grinding beans, heating water, etc.) are complete. This ensures proper sequencing of operations.
+
+State done events also help maintain separation of concerns by allowing child states to focus on their specific tasks while the parent state handles the overall flow coordination.
 
 :::tip
 

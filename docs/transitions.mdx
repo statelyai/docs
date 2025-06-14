@@ -386,7 +386,62 @@ Since parallel states have multiple regions that can be active at the same time,
 
 Multiple targets are specified as an array of strings:
 
-Coming soon… example.
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  type: 'parallel',
+  states: {
+    mode: {
+      initial: 'light',
+      states: {
+        light: {
+          on: {
+            toggle: { target: 'dark' },
+          },
+        },
+        dark: {
+          on: {
+            toggle: { target: 'light' },
+          },
+        },
+      },
+    },
+    theme: {
+      initial: 'default',
+      states: {
+        default: {
+          on: {
+            change: { target: 'custom' },
+          },
+        },
+        custom: {
+          on: {
+            change: { target: 'default' },
+          },
+        },
+      },
+    },
+  },
+  on: {
+    // This event will transition both regions to specific states
+    'set.dark.custom': {
+      // highlight-next-line
+      target: ['.mode.dark', '.theme.custom'],
+    },
+    // This event will transition one region while leaving the other unchanged
+    'set.light': {
+      target: '.mode.light',
+    },
+  },
+});
+```
+
+In this example:
+
+- The `set.dark.custom` event will transition both regions simultaneously: the `mode` region to `dark` and the `theme` region to `custom`
+- The `set.light` event will only transition the `mode` region to `light` while leaving the `theme` region in its current state
+- Each region can still be controlled independently through their own events (`toggle` and `change`)
 
 ## Other transitions
 
