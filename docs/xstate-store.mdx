@@ -487,7 +487,76 @@ Combined atoms are read-only by design. If you need to update multiple values at
 
 ### Using Atoms with React
 
-Atoms can be used with React using the `useSelector` hook:
+_Since v3.7.0_
+
+The `useAtom` hook is the simplest way to use atoms in React. You can use it with or without a selector. The `useAtom` hook only returns the (selected) value of the atom, since you can set the value of the atom directly using `atom.set(…)`.
+
+```tsx
+import { createAtom } from '@xstate/store';
+import { useAtom } from '@xstate/store/react';
+
+const countAtom = createAtom(0);
+
+function Counter() {
+  // Get the full atom value 
+  const count = useAtom(countAtom);
+
+  return (
+    <div>
+      <button onClick={() => countAtom.set((prevCount) => prevCount + 1)}>
+        Increment
+      </button>
+      <button onClick={() => countAtom.set(0)}>
+        Reset
+      </button>
+      <div>Count: {count}</div>
+    </div>
+  );
+}
+
+// With a selector
+const userAtom = createAtom({ name: 'test', age: 25 });
+
+function UserName() {
+  // Get just the name
+  const name = useAtom(userAtom, (state) => state.name);
+  
+  return <div>Name: {name}</div>;
+}
+```
+
+You can also provide a custom comparison function to control re-renders:
+
+```tsx
+const userAtom = createAtom({ name: 'David', /* ... */ });
+
+function UserProfile() {
+  const name = useAtom(
+    userAtom,
+    (state) => state.name,
+    // Custom compare function - case-insensitive comparison
+    (a, b) => a.toLowerCase() === b.toLowerCase()
+  );
+
+  return <>
+    <div>Name: {name}</div>
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => userAtom.set((prev) => ({ ...prev, name: e.target.value }))}
+    />
+  </>;
+}
+```
+
+<details>
+<summary>
+
+Using `useSelector`
+
+</summary>
+
+Alternatively, you can use the `useSelector` hook, which is similar to `useAtom` with a selector:
 
 ```tsx
 import { createAtom } from '@xstate/store';
@@ -496,18 +565,20 @@ import { useSelector } from '@xstate/store/react';
 const countAtom = createAtom(0);
 
 function Counter() {
-  const currentCount = useSelector(countAtom, (s) => s);
+  const count = useSelector(countAtom, (s) => s);
 
   return (
     <div>
-      <button onClick={() => countAtom.set((count) => count + 1)}>
+      <button onClick={() => countAtom.set((prev) => prev + 1)}>
         Increment
       </button>
-      <div>Count: {currentCount}</div>
+      <div>Count: {count}</div>
     </div>
   );
 }
 ```
+
+</details>
 
 ## Inspection
 
