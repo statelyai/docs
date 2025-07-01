@@ -281,23 +281,17 @@ loading: {
 
 :::
 
-The `onError` transition can be an object:
+The `onDone` transition can be an object:
 
 ```ts
 {
   invoke: {
     src: 'fetchItem',
+    // highlight-start
     onDone: {
       target: 'success',
       actions: ({ event }) => {
         console.log(event.output);
-      }
-    },
-    // highlight-start
-    onError: {
-      target: 'error',
-      actions: ({ event }) => {
-        console.error(event.error);
       }
     }
     // highlight-end
@@ -313,7 +307,6 @@ Or, for simplicity, target-only transitions can be strings:
     src: 'fetchItem',
     // highlight-start
     onDone: 'success',
-    onError: 'error'
     // highlight-end
   }
 }
@@ -323,6 +316,8 @@ Or, for simplicity, target-only transitions can be strings:
 
 - Transitions when invoked actor throws an error, or (for Promise-based actors) when the promise rejects
 - Event object `error` property is provided with actor’s error data
+
+The `onError` transition can be an object:
 
 ```ts
 invoke: {
