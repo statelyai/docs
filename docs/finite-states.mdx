@@ -164,7 +164,7 @@ Read more about [tags](tags.mdx).
 
 ## Meta
 
-Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation.
+Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation. You may access the state node's `meta` properties at runtime with the following: `yourActor.getSnapshot().getMeta()`. Note only "top level" `meta` and the current state's `meta` fields will be returned in `getMeta()`.
 
 The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
 
@@ -197,7 +197,7 @@ const feedbackMachine = createMachine({
 
 const feedbackActor = createActor(feedbackMachine).start();
 
-console.log(feedbackActor.getSnapshot().meta);
+console.log(feedbackActor.getSnapshot().getMeta());
 // logs the object:
 // {
 //   feedback: {
