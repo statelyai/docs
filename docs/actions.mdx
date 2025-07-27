@@ -236,7 +236,7 @@ XState provides a number of useful built-in actions that are a core part of the 
 
 :::warning
 
-Built-in actions, such as `assign(…)`, `sendTo(…)`, and `raise(…)`, are **not imperative**; they return a special [action object](#action-objects) (e.g. `{ type: 'xstate.assign', … }`) that are interpreted by the state machine. Do not call built-in action in custom action functions.
+Built-in actions, such as `assign(…)`, `sendTo(…)` (including calling `send` on an actor), and `raise(…)`, are **not imperative**; they return a special [action object](#action-objects) (e.g. `{ type: 'xstate.assign', … }`) that are interpreted by the state machine. Do not call built-in action in custom action functions.
 
 ```ts
 // ❌ This will have no effect
