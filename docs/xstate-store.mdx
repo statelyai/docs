@@ -498,7 +498,7 @@ import { useAtom } from '@xstate/store/react';
 const countAtom = createAtom(0);
 
 function Counter() {
-  // Get the full atom value 
+  // Get the full atom value
   const count = useAtom(countAtom);
 
   return (
@@ -506,9 +506,7 @@ function Counter() {
       <button onClick={() => countAtom.set((prevCount) => prevCount + 1)}>
         Increment
       </button>
-      <button onClick={() => countAtom.set(0)}>
-        Reset
-      </button>
+      <button onClick={() => countAtom.set(0)}>Reset</button>
       <div>Count: {count}</div>
     </div>
   );
@@ -520,7 +518,7 @@ const userAtom = createAtom({ name: 'test', age: 25 });
 function UserName() {
   // Get just the name
   const name = useAtom(userAtom, (state) => state.name);
-  
+
   return <div>Name: {name}</div>;
 }
 ```
@@ -528,24 +526,28 @@ function UserName() {
 You can also provide a custom comparison function to control re-renders:
 
 ```tsx
-const userAtom = createAtom({ name: 'David', /* ... */ });
+const userAtom = createAtom({ name: 'David' /* ... */ });
 
 function UserProfile() {
   const name = useAtom(
     userAtom,
     (state) => state.name,
     // Custom compare function - case-insensitive comparison
-    (a, b) => a.toLowerCase() === b.toLowerCase()
+    (a, b) => a.toLowerCase() === b.toLowerCase(),
   );
 
-  return <>
-    <div>Name: {name}</div>
-    <input
-      type="text"
-      value={name}
-      onChange={(e) => userAtom.set((prev) => ({ ...prev, name: e.target.value }))}
-    />
-  </>;
+  return (
+    <>
+      <div>Name: {name}</div>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) =>
+          userAtom.set((prev) => ({ ...prev, name: e.target.value }))
+        }
+      />
+    </>
+  );
 }
 ```
 
@@ -732,6 +734,81 @@ function Component(props) {
 ```
 
 A store can be shared with multiple components, which will all receive the same snapshot from the store instance. Stores are useful for global state management.
+
+### Custom store hooks with `createStoreHook()`
+
+_Since v3.9.0_
+
+The `createStoreHook()` function creates a custom React hook that combines the functionality of `useStore()` and `useSelector()` into a single, convenient hook. This is useful when you want to create reusable store logic that can be easily shared across components.
+
+```tsx
+import { createStoreHook } from '@xstate/store/react';
+
+const useCountStore = createStoreHook({
+  context: { count: 0 },
+  on: {
+    inc: (ctx, event: { by: number }) => ({
+      ...ctx,
+      count: ctx.count + event.by,
+    }),
+  },
+});
+
+// Usage with selector
+function Counter() {
+  const [count, store] = useCountStore((s) => s.context.count);
+
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <button onClick={() => store.trigger.inc({ by: 1 })}>
+        Increment by 1
+      </button>
+      <button onClick={() => store.trigger.inc({ by: 3 })}>
+        Increment by 3
+      </button>
+    </div>
+  );
+}
+
+// Usage without selector (get entire snapshot)
+function CounterWithFullState() {
+  const [snapshot, store] = useCountStore();
+
+  return (
+    <div>
+      <div>Count: {snapshot.context.count}</div>
+      <button onClick={() => store.trigger.inc({ by: 1 })}>Increment</button>
+    </div>
+  );
+}
+```
+
+The resulting hook from `createStoreHook()` returns a `[state, store]` tuple:
+
+- `state`: The selected state (when using a selector) or the entire snapshot (when no selector is provided)
+- `store`: The store instance with all its methods, including `store.trigger` for sending events
+
+You can also provide a custom comparator function as the third argument to optimize re-renders:
+
+```tsx
+function OptimizedCounter() {
+  const [count, store] = useCountStore(
+    (s) => s.context.count,
+    // highlight-start
+    // Custom comparator function
+    (prev, next) => prev === next, // Only re-render when count actually changes
+    // highlight-end
+  );
+
+  return (
+    <div>
+      <div>Count: {count}</div>
+      <button onClick={() => store.trigger.inc({ by: 1 })}>Increment</button>
+    </div>
+  );
+}
+```
 
 ### Local Stores with `useStore()`
 
