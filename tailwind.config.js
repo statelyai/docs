@@ -1,7 +1,6 @@
-const { scopedPreflightStyles } = require('tailwindcss-scoped-preflight');
+import { scopedPreflightStyles } from 'tailwindcss-scoped-preflight';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     screens: {
@@ -107,8 +106,8 @@ module.exports = {
   corePlugins: { preflight: false },
   plugins: [
     scopedPreflightStyles({
-      cssSelector: '.twp', // or .tailwind-preflight or even [data-twp=true] - any valid CSS selector of your choice
-      mode: 'matched only', // it's the default
+      cssSelector: '.twp',
+      mode: 'matched only',
     }),
   ],
 };
