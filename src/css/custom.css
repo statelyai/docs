@@ -912,25 +912,21 @@ html div[class*='announcementBar'] [class*='announcementBarContent'] {
 /* Allow layout to breathe (override Docusaurus defaults) */
 
 @media (min-width: 600px) {
-
   .container {
     max-width: 100%;
   }
 }
 @media (min-width: 728px) {
-
   .container {
     max-width: 100%;
   }
 }
 @media (min-width: 984px) {
-
   .container {
     max-width: 100%;
   }
 }
 @media (min-width: 1240px) {
-
   .container {
     max-width: 100%;
   }
@@ -945,6 +941,10 @@ html .navbar__inner > .navbar__items:first-of-type {
 
 html .navbar__items--right {
   flex: 1 1 auto;
+}
+
+html .navbar__items > :first-child {
+  margin-right: auto;
 }
 
 html .DocSearch-Modal {
