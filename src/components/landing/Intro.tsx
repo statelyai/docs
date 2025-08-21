@@ -4,7 +4,7 @@ export function Intro() {
   return (
     <section className="py-36 bgimage-gradient-blue">
       <div className="container m-auto max-w-7xl">
-        <h1 className="max-w-2xl m-auto text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
+        <h1 className="m-auto text-5xl font-semibold leading-tight tracking-tighter text-center md:text-6xl lg:text-6xl text-white/90 drop-shadow-sm">
           Turn ideas into diagrams and code in minutes.
         </h1>
 

@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.17",
     "@mdx-js/react": "^3.0.0",
     "@microsoft/api-extractor": "^7.38.3",
+    "@tailwindcss/postcss": "^4.1.12",
     "@xstate/inspect": "^0.8.0",
     "@xstate/machine-extractor": "^0.13.0",
     "@xstate/react": "^3.2.2",

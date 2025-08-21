@@ -155,7 +155,8 @@ const config = {
       return {
         name: 'docusaurus-tailwindcss',
         configurePostCss(postcssOptions) {
-          // Appends AutoPrefixer only - Tailwind v4 handles its own processing
+          // Add Tailwind CSS v4 PostCSS plugin
+          postcssOptions.plugins.unshift(require('@tailwindcss/postcss'));
           postcssOptions.plugins.push(require('autoprefixer'));
           return postcssOptions;
         },
