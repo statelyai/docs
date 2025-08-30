@@ -242,11 +242,61 @@ const feedbackMachine = setup({
 
 These types will be inferred throughout the machine config and in the created machine and actor so that methods such as `machine.transition(...)` and `actor.send(...)` will be type-safe.
 
-## Typegen
+## Modularizing states
 
-[Typegen](/docs/developer-tools#xstate-typegen-files) does not support XState v5. However, with the `setup(...)` function and/or the `.types` property explained above, you can provide strong typing for most (if not all) of your machine.
+_Since XState version 5.21.0_
 
-[Read more about setting up state machines](./setup.mdx).
+You can use `.createStateConfig(...)` from the setup API to create modular, reusable state configurations. This approach provides several benefits, including modularity, strong typing, and better organization.
+
+### Basic usage
+
+```ts
+import { setup } from 'xstate';
+
+const lightMachineSetup = setup({
+  // ...
+});
+
+// highlight-start
+// Create individual state configurations
+const green = lightMachineSetup.createStateConfig({
+  entry: { type: 'startTimer' },
+  on: {
+    TIMER: { target: 'yellow' },
+    PEDESTRIAN: { target: 'yellow' },
+    EMERGENCY: { target: 'red' },
+  },
+});
+
+const yellow = lightMachineSetup.createStateConfig({
+  entry: { type: 'startTimer' },
+  on: {
+    TIMER: { target: 'red' },
+    EMERGENCY: { target: 'red' },
+  },
+});
+
+const red = lightMachineSetup.createStateConfig({
+  entry: { type: 'startTimer' },
+  on: {
+    TIMER: { target: 'green' },
+    EMERGENCY: { target: 'green' },
+  },
+});
+// highlight-end
+
+// Compose the machine using the modular state configs
+const trafficLightMachine = lightMachineSetup.createMachine({
+  initial: 'green',
+  states: {
+    green,
+    yellow,
+    red,
+  },
+});
+```
+
+All state configurations created with `.createStateConfig(...)` have the full types specified in the setup config. The `.createStateConfig(...)` method is particularly useful for very large, complex state machines where you want to break down the logic into manageable pieces while maintaining strong typing throughout.
 
 ## Machines and TypeScript
 
