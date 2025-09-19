@@ -135,6 +135,148 @@ feedbackActor.start();
 // logs 'Doing something else!'
 ```
 
+## Type-bound action helpers
+
+_Since XState version 5.22.0_
+
+The `setup()` function provides type-bound action helpers that are fully typed to the setup's context, events, actors, guards, delays, and emitted types. These helpers create actions that are bound to the specific `setup()` they were created from and can be used directly in machines produced by that setup.
+
+### Creating custom actions
+
+Use `createAction(fn)` to create type-safe custom actions:
+
+```ts
+import { setup } from 'xstate';
+
+const machineSetup = setup({
+  types: {
+    context: {} as { count: number; name: string },
+    events: {} as { type: 'increment'; value: number } | { type: 'reset' },
+  },
+});
+
+// Create a custom action with full type safety
+// Can be defined in any file that imports the machineSetup
+// highlight-start
+const logCount = machineSetup.createAction(({ context, event }) => {
+  // context and event are fully typed
+  console.log(`Count: ${context.count}, Event: ${event.type}`);
+});
+// highlight-end
+
+const machine = machineSetup.createMachine({
+  context: { count: 0, name: 'Counter' },
+  initial: 'counting',
+  states: {
+    counting: {
+      entry: logCount, // Fully typed action
+      on: {
+        increment: {
+          actions: logCount,
+        },
+      },
+    },
+  },
+});
+```
+
+The setup provides type-bound versions of all main built-in actions:
+
+- `setup(…).assign(…)`
+- `setup(…).raise(…)`
+- `setup(…).emit(…)`
+- `setup(…).sendTo(…)`
+- `setup(…).log(…)`
+- `setup(…).cancel(…)`
+- `setup(…).spawnChild(…)`
+- `setup(…).stopChild(…)`
+- `setup(…).enqueueActions(…)`
+
+These helpers are fully typed to your setup's types and don't require wrapper objects:
+
+```ts
+import { setup } from 'xstate';
+
+const machineSetup = setup({
+  types: {
+    context: {} as { count: number; items: string[] },
+    events: {} as { type: 'increment' } | { type: 'addItem'; item: string },
+    emitted: {} as { type: 'COUNT_CHANGED'; count: number },
+    // ...
+  },
+});
+
+// highlight-start
+// Type-bound assign - context is fully typed
+const incrementCount = machineSetup.assign({
+  count: ({ context }) => context.count + 1,
+});
+
+const addItem = machineSetup.assign({
+  items: ({ context, event }) => [...context.items, event.item],
+});
+
+// Type-bound raise - events are fully typed
+const raiseIncrement = machineSetup.raise({ type: 'increment' });
+
+// Type-bound emit - emitted types are fully typed
+const emitCountChanged = machineSetup.emit(({ context }) => ({
+  type: 'COUNT_CHANGED',
+  count: context.count,
+}));
+
+// Type-bound sendTo - actors are fully typed
+const sendToLogger = machineSetup.sendTo('logger', ({ context }) => ({
+  type: 'LOG',
+  message: `Count is ${context.count}`,
+}));
+
+// Type-bound log - context and events are fully typed
+const logContext = machineSetup.log(
+  ({ context }) => `Context: ${JSON.stringify(context)}`,
+);
+
+// Type-bound cancel - actors are fully typed
+const cancelLogger = machineSetup.cancel('logger');
+
+// Type-bound stopChild - actors are fully typed
+const stopLogger = machineSetup.stopChild('logger');
+
+// Type-bound spawnChild - actors are fully typed
+const spawnLogger = machineSetup.spawnChild('logger', {
+  input: ({ context }) => ({ initialCount: context.count }),
+});
+
+// Type-bound enqueueActions - all helpers are available with full typing
+const batchActions = machineSetup.enqueueActions(({ enqueue, check }) => {
+  enqueue(incrementCount);
+  enqueue(logContext);
+
+  if (check(() => true)) {
+    enqueue(emitCountChanged);
+  }
+});
+// highlight-end
+
+const machine = machineSetup.createMachine({
+  context: { count: 0, items: [] },
+  initial: 'active',
+  states: {
+    active: {
+      entry: [incrementCount, logContext, emitCountChanged],
+      on: {
+        increment: {
+          actions: [incrementCount, batchActions],
+        },
+        addItem: {
+          actions: addItem,
+        },
+      },
+    },
+  },
+});
+```
+
 ## Transitioning state
 
 _Since XState version 5.19.0_
@@ -406,6 +548,42 @@ const machine = setup({
   },
 }).createMachine({
   // ... Rest of machine config
+});
+```
+
+### Cheatsheet: type-bound action helpers
+
+```ts
+import { setup } from 'xstate';
+
+const machineSetup = setup({
+  types: {
+    context: {} as { count: number },
+    events: {} as { type: 'increment' } | { type: 'reset' },
+    emitted: {} as { type: 'COUNT_CHANGED' },
+  },
+});
+
+// Custom action
+const customAction = machineSetup.createAction(({ context, event }) => {
+  console.log(context.count, event.type);
+});
+
+// Type-bound built-ins
+const increment = machineSetup.assign({
+  count: ({ context }) => context.count + 1,
+});
+const raiseReset = machineSetup.raise({ type: 'reset' });
+const emitEvent = machineSetup.emit({ type: 'COUNT_CHANGED' });
+const logCount = machineSetup.log(({ context }) => `Count: ${context.count}`);
+
+const machine = machineSetup.createMachine({
+  context: { count: 0 },
+  entry: [customAction, increment, emitEvent],
+  on: {
+    increment: { actions: increment },
+    reset: { actions: raiseReset },
+  },
 });
 ```
 
