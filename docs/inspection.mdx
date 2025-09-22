@@ -7,6 +7,7 @@ The Inspect API is a way to inspect the state transitions of your state machines
 - Actor lifecycle
 - Actor event communication
 - Actor snapshot updates
+- State transition microsteps
 
 :::new
 
@@ -23,7 +24,8 @@ const actor = createActor(machine, {
   inspect: (inspectionEvent) => {
     // type: '@xstate.actor' or
     // type: '@xstate.snapshot' or
-    // type: '@xstate.event'
+    // type: '@xstate.event' or
+    // type: '@xstate.microstep'
     console.log(inspectionEvent);
   },
 });
@@ -33,11 +35,12 @@ The inspector will receive inspection events for every actor in the system, givi
 
 ## Inspection events
 
-Inspection events are event objects that have a `type` property that indicates the type of inspection event. There are three types of inspection events:
+Inspection events are event objects that have a `type` property that indicates the type of inspection event. There are four types of inspection events:
 
 - `@xstate.actor` for [Actor inspection events](#actor-inspection-events)
 - `@xstate.event` for [Event inspection events](#event-inspection-events)
 - `@xstate.snapshot` for [Snapshot inspection events](#snapshot-inspection-events)
+- `@xstate.microstep` for [Microstep inspection events](#microstep-inspection-events)
 
 ## Actor inspection events
 
@@ -109,3 +112,106 @@ Example of a snapshot inspection event:
   }
 }
 ```
+
+## Microstep inspection events
+
+The microstep inspection event (`@xstate.microstep`) is emitted for each individual state transition, including intermediate "microsteps", that occurs during the processing of an event. This is particularly useful for observing eventless transitions (like `always` transitions) and understanding the step-by-step progression through multiple states.
+
+It contains the following properties:
+
+- `type: '@xstate.microstep'`
+- `value` - the current state value after this microstep
+- `event` - the event that triggered this microstep
+- `transitions` - an array of transition objects that occurred in this microstep
+
+Each transition object in the `transitions` array contains:
+
+- `eventType` - the event type that triggered the transition (empty string for eventless transitions)
+- `target` - an array of target state paths
+
+Example of a microstep inspection event:
+
+```json5
+{
+  type: '@xstate.microstep',
+  value: 'c',
+  event: {
+    type: 'EV',
+  },
+  transitions: [
+    {
+      eventType: 'EV',
+      target: ['(machine).b'],
+    },
+    {
+      eventType: '',
+      target: ['(machine).c'],
+    },
+  ],
+}
+```
+
+<details>
+<summary>Example of microstep events</summary>
+
+Here's an example of microstep events:
+
+```tsx
+const machine = createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      on: {
+        EV: 'b',
+      },
+    },
+    b: {
+      always: 'c', // This will trigger automatically after entering state 'b'
+    },
+    c: {},
+  },
+});
+
+const events = [];
+const actorRef = createActor(machine, {
+  inspect: (ev) => events.push(ev),
+}).start();
+
+actorRef.send({ type: 'EV' });
+```
+
+The microstep events will look like this:
+
+```json5
+// First microstep: EV transition to state 'b'
+{
+  type: '@xstate.microstep',
+  value: 'b',
+  event: {
+    type: 'EV'
+  },
+  transitions: [
+    {
+      eventType: 'EV',
+      target: ['(machine).b']
+    }
+  ]
+},
+
+// Second microstep: always transition to state 'c'
+{
+  type: '@xstate.microstep',
+  value: 'c',
+  event: {
+    type: 'EV'
+  },
+  transitions: [
+    {
+      eventType: '',  // Empty string indicates eventless transition
+      target: ['(machine).c']
+    }
+  ]
+}
+```
+
+</details>
