@@ -91,7 +91,7 @@ function SummaryList() {
 //   linkText?: string;
 // }) {
 //   return (
-//     <li className="h-fit m-6 w-96 rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8">
+//     <li className="h-fit m-6 w-96 rounded-3xl bg-linear-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8">
 //       <p className="text-white text-2xl font-semibold text-blue-300">{title}</p>
 //       <p className="text-lg leading-snug text-white/60 pt-2">{details}</p>
 //       {href && linkText && (
@@ -125,7 +125,7 @@ function SummaryListItem({
   const width = full ? 'w-full' : 'flex-1';
   const boxStyles =
     boxBg &&
-    'rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850';
+    'rounded-3xl bg-linear-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850';
   const otherStyles = 'm-6 py-8 px-12 flex gap-16 justify-center';
   const itemStyles = classNames(width, boxStyles, otherStyles);
   return (

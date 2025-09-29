@@ -44,7 +44,7 @@ export function ButtonLink({
     'w-fit shadow-md cursor-pointer touch-none select-none transform-gpu transition';
   const disabled = 'disabled:opacity-50 disabled:cursor-not-allowed';
   const hover =
-    'hover:before:opacity-50 hover:text-white hover:no-underline before:pointer-events-none before:bg-gradient-to-b before:from-white/[0.12] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity';
+    'hover:before:opacity-50 hover:text-white hover:no-underline before:pointer-events-none before:bg-linear-to-b before:from-white/12 before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity';
 
   const buttonLinkStyles = classNames(
     bg,

@@ -57,7 +57,7 @@ export default function Agent() {
         ></script>
       </Head>
 
-      <header className="bg-blue-950/20 border-b-white/[0.08] border-b fixed w-full z-10 backdrop-blur-md">
+      <header className="bg-blue-950/20 border-b-white/8 border-b fixed w-full z-10 backdrop-blur-md">
         <Navbar />
       </header>
 

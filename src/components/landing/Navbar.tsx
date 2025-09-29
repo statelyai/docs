@@ -38,7 +38,7 @@ export function Navbar() {
                 </Disclosure.Button>
               </div>
               <div className="flex items-center justify-center flex-1 md:items-center md:justify-start">
-                <div className="flex items-center flex-shrink-0 h-16">
+                <div className="flex items-center shrink-0 h-16">
                   <a href="/">
                     <img
                       className="block w-auto h-8"

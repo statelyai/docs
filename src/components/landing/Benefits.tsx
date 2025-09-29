@@ -273,7 +273,7 @@ function XStateSection() {
         <img
           alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the same state machine visualized using the XState VSCode extension."
           src="/assets/landing/vscode-split.png"
-          className="w-full h-auto aspect-[1208/637] mt-12"
+          className="w-full h-auto aspect-1208/637 mt-12"
           height="637"
           width="1208"
         />
@@ -327,7 +327,7 @@ function XStateSection() {
                 <img
                   alt="The room reading state machine visualized in the Stately editor alongside the React app code generated for that app logic. Over the top is a button that says Generate React app."
                   src="/assets/landing/generate-react.png"
-                  className="w-full h-auto aspect-[580/331] rounded-b-2xl md:rounded-bl-[0] md:rounded-tr-2xl"
+                  className="w-full h-auto aspect-580/331 rounded-b-2xl md:rounded-bl-none md:rounded-tr-2xl"
                   height="331"
                   width="580"
                 />
@@ -349,7 +349,7 @@ function XStateSection() {
                   src="/assets/landing/test-generation.png"
                   height="287"
                   width="1207"
-                  className="w-full h-auto aspect-[1207/287] rounded-br-2xl"
+                  className="w-full h-auto aspect-1207/287 rounded-br-2xl"
                 />
               </div>
             </Feature>
@@ -394,7 +394,7 @@ function XStateSection() {
             <img
               alt="The Stately Inspector view, showing a state machine and a sequence diagram for the pizza ordering process side-by-side."
               src="/assets/landing/inspector.png"
-              className="w-full h-auto aspect-[1207/385] rounded-b-2xl"
+              className="w-full h-auto aspect-1207/385 rounded-b-2xl"
               height="385"
               width="1207"
             />
@@ -519,7 +519,7 @@ function SkySection() {
           src="/assets/landing/deploy-to-sky.png"
           height="598"
           width="1024"
-          className="w-full h-auto aspect-[1024/598] max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
+          className="w-full h-auto aspect-1024/598 max-w-5xl mx-auto mt-32 rounded-2xl border-2 border-white/10"
         />
 
         <div className="flex flex-col max-w-5xl gap-4 m-auto mt-48">
@@ -660,7 +660,7 @@ function Feature({
   noPadding?: boolean;
 }) {
   const boxStyles = box
-    ? 'bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl'
+    ? 'bg-linear-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 rounded-2xl'
     : '';
 
   const paddingStyles = noPadding ? 0 : 'py-6 px-8';

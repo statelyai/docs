@@ -22,7 +22,7 @@ export function Intro() {
             src="/assets/landing/room-readings.png"
             width="1248"
             height="710"
-            className="w-full h-auto aspect-[1248/710] my-24 rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850"
+            className="w-full h-auto aspect-1248/710 my-24 rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850"
           />
         </div>
         <Companies />

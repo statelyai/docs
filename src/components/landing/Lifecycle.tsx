@@ -25,7 +25,7 @@ export function Lifecycle() {
 }
 
 const boxStyles =
-  'flex h-fit w-fit max-w-6xl rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12';
+  'flex h-fit w-fit max-w-6xl rounded-3xl bg-linear-to-b from-gray-800/50 to-gray-800/10 border border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12';
 
 const imgStyles =
   'max-w-2xl rounded-md border-[0.5px] shadow-2xl shadow-blue-900 border-blue-850 h-96 w-full';
@@ -240,22 +240,22 @@ function LifecycleStep({ num, title, color, children }) {
 
   // const headerColor =
   //   color === 'pink'
-  //     ? 'bg-gradient-to-b from-pink-900 to-blue-950 border-t border-t-pink-600/40'
+  //     ? 'bg-linear-to-b from-pink-900 to-blue-950 border-t border-t-pink-600/40'
   //     : color === 'green'
-  //     ? 'bg-gradient-to-b from-green-900 to-blue-950 border-t border-t-green-600/40 '
+  //     ? 'bg-linear-to-b from-green-900 to-blue-950 border-t border-t-green-600/40 '
   //     : color === 'purple'
-  //     ? 'bg-gradient-to-b from-purple-800 to-blue-950 border-t border-t-purple-600/40'
+  //     ? 'bg-linear-to-b from-purple-800 to-blue-950 border-t border-t-purple-600/40'
   //     : color === 'orange'
-  //     ? 'bg-gradient-to-b from-orange-800 to-blue-950 border-t border-t-orange-600/40'
+  //     ? 'bg-linear-to-b from-orange-800 to-blue-950 border-t border-t-orange-600/40'
   //     : color === 'teal'
-  //     ? 'bg-gradient-to-b from-teal-800 to-blue-950 border-t border-t-teal-600/40'
+  //     ? 'bg-linear-to-b from-teal-800 to-blue-950 border-t border-t-teal-600/40'
   //     : '';
 
   return (
     <>
       <div
         className={classNames(
-          'bg-gradient-to-b from-blue-600/10 to-blue-950 border-t border-t-blue-600/30',
+          'bg-linear-to-b from-blue-600/10 to-blue-950 border-t border-t-blue-600/30',
           'mt-36 pt-12',
         )}
       >
@@ -328,7 +328,7 @@ function FeatureText({ children, imgSrc = '/landing/DELETE-1.png' }) {
 
 function FeatureBox({ children, imgSrc = '/landing/DELETE-1.png' }) {
   return (
-    <div className="flex flex-1 rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
+    <div className="flex flex-1 rounded-3xl bg-linear-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
       <p className="text-white/60 text-2xl leading-normal">{children}</p>
     </div>
   );
