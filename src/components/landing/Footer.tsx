@@ -27,7 +27,9 @@ function AllLinks() {
             width="86"
           />
         </a>
-        <p className="text-white/60 mt-5 text-base">&copy; 2024 Stately</p>
+        <p className="text-white/60 mt-5 text-base">
+          &copy; {new Date().getFullYear()} Stately
+        </p>
       </div>
       <LinkList title="Product">
         <LinkItem href="#design">Features</LinkItem>
@@ -65,15 +67,22 @@ function LinkList({ children, title }) {
   return (
     <div className="mt-8">
       <h4 className="text-base font-bold text-white/60 mb-4 mt-0">{title}</h4>
-      <ul className="text-white/90 font-medium text-base">{children}</ul>
+      <ul className="text-white/90 font-medium text-base list-none m-0 p-0 space-y-2">
+        {children}
+      </ul>
     </div>
   );
 }
 
 function LinkItem({ href, children }) {
   return (
-    <li className="py-2">
-      <a href={href}>{children}</a>
+    <li>
+      <a
+        href={href}
+        className="no-underline hover:no-underline text-white/80 hover:text-white transition-colors"
+      >
+        {children}
+      </a>
     </li>
   );
 }
@@ -127,14 +136,14 @@ function DiscordCommunity() {
       <p className="text-white/60 font-medium">
         <a
           href="https://discord.gg/xstate"
-          className="text-blue-300 hover:text-white font-bold hover:no-underline"
+          className="text-blue-300 hover:text-white font-bold no-underline hover:no-underline"
         >
           Join our Discord
         </a>{' '}
         to give us feedback and get support. And participate in our{' '}
         <a
           href="https://www.youtube.com/@Statelyai/streams"
-          className="text-blue-300 hover:text-white font-bold hover:no-underline"
+          className="text-blue-300 hover:text-white font-bold no-underline hover:no-underline"
         >
           Office Hours
         </a>{' '}

@@ -25,9 +25,9 @@ export function Navbar() {
         <>
           <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
-              <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
+              <div className="absolute inset-y-0 left-0 flex items-center justify-center md:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center p-2 rounded-full text-white/60 hover:text-white focus:outline-none focus:ring-1 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="relative inline-flex items-center justify-center text-white focus:outline-none bg-transparent border-0">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -37,11 +37,11 @@ export function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex items-center justify-center flex-1 md:items-stretch md:justify-start">
-                <div className="flex items-center flex-shrink-0">
+              <div className="flex items-center justify-center flex-1 md:items-center md:justify-start">
+                <div className="flex items-center flex-shrink-0 h-16">
                   <a href="/">
                     <img
-                      className="w-auto h-8"
+                      className="block w-auto h-8"
                       src="/assets/landing/stately-logo.svg"
                       height="32"
                       width="115"
@@ -49,8 +49,8 @@ export function Navbar() {
                     />
                   </a>
                 </div>
-                <div className="hidden md:ml-4 lg:ml-6 md:block lg:flex">
-                  <div className="flex xl:space-x-1">
+                <div className="hidden md:ml-4 lg:ml-6 md:flex md:items-center">
+                  <div className="flex items-center xl:space-x-1">
                     <FeaturesMenu />
 
                     {navigation.map((item) => (
@@ -63,12 +63,12 @@ export function Navbar() {
                       </NavLink>
                     ))}
                   </div>
-                  <div className="hidden ml-4 lg:flex">
+                  <div className="hidden ml-4 lg:flex lg:items-center">
                     <a
                       href="https://discord.gg/xstate"
                       className={classNames(
                         linkStyles,
-                        'self-center opacity-60 hover:opacity-100 cursor-pointer',
+                        'self-center cursor-pointer',
                       )}
                       target="_blank"
                     >
@@ -82,7 +82,7 @@ export function Navbar() {
                       href="https://twitter.com/statelyai"
                       className={classNames(
                         linkStyles,
-                        'self-center opacity-60 hover:opacity-100 cursor-pointer',
+                        'self-center cursor-pointer',
                       )}
                       target="_blank"
                     >
@@ -96,7 +96,7 @@ export function Navbar() {
                       href="https://youtube.com/c/statelyai"
                       className={classNames(
                         linkStyles,
-                        'self-center opacity-60 hover:opacity-100 cursor-pointer',
+                        'self-center cursor-pointer',
                       )}
                       target="_blank"
                     >
@@ -110,7 +110,7 @@ export function Navbar() {
                       href="https://github.com/statelyai/xstate"
                       className={classNames(
                         linkStyles,
-                        'self-center opacity-60 hover:opacity-100 cursor-pointer',
+                        'self-center cursor-pointer',
                       )}
                       target="_blank"
                     >
@@ -148,7 +148,7 @@ export function Navbar() {
                     href={item.href}
                     className={classNames(
                       linkStyles,
-                      'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
+                      'block text-white hover:bg-white/10 rounded-md no-underline hover:no-underline',
                     )}
                     aria-current={item.current ? 'page' : undefined}
                   >
@@ -161,7 +161,7 @@ export function Navbar() {
                   href="/registry/login"
                   className={classNames(
                     linkStyles,
-                    'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
+                    'block text-white hover:bg-white/10 rounded-md no-underline hover:no-underline',
                   )}
                   aria-label="Log in"
                 >
@@ -173,7 +173,7 @@ export function Navbar() {
                   href="/registry/signup"
                   className={classNames(
                     linkStyles,
-                    'block text-white/60  hover:text-white hover:bg-white/10 rounded-md',
+                    'block text-white hover:bg-white/10 rounded-md no-underline hover:no-underline',
                   )}
                   aria-label="Sign up"
                 >
@@ -192,12 +192,7 @@ function FeaturesMenu() {
   return (
     <Menu as="div" className="relative">
       <div>
-        <Menu.Button
-          className={classNames(
-            'relative flex text-sm text-white/60 hover:text-white',
-            linkStyles,
-          )}
-        >
+        <Menu.Button className="relative flex text-sm text-white hover:text-white no-underline hover:no-underline font-semibold px-3 py-2 focus:outline-none bg-transparent hover:bg-white/10 border-0 cursor-pointer">
           Features
         </Menu.Button>
       </div>
@@ -225,7 +220,7 @@ function FeaturesMenu() {
 }
 
 const linkStyles =
-  'rounded-full px-3 py-2 text-sm font-medium hover:no-underline font-semibold focus:outline-none focus:ring-1 focus:ring-blue-300 focus:ring-offset-1 focus:ring-offset-gray-800';
+  'inline-flex items-center justify-center rounded-full px-3 py-2 text-sm font-medium no-underline hover:no-underline text-white font-semibold focus:outline-none focus:ring-1 focus:ring-blue-300 focus:ring-offset-1 focus:ring-offset-gray-800 cursor-pointer hover:bg-white/10';
 
 function NavLink({
   children,
@@ -241,12 +236,7 @@ function NavLink({
   return (
     <a
       href={href}
-      className={classNames(
-        isCurrent
-          ? 'bg-gray-900 text-white'
-          : 'text-white/60  hover:text-white',
-        linkStyles,
-      )}
+      className={classNames('text-white hover:text-white', linkStyles)}
       aria-current={isCurrent ? 'page' : undefined}
       target={target}
     >
@@ -262,8 +252,7 @@ function NavMenuItem({ children, href }) {
         <a
           href={href}
           className={classNames(
-            active ? 'bg-white/10 text-white' : '',
-            'block mx-1 px-4 py-2 rounded-md text-sm text-white/90 hover:text-white hover:no-underline font-semibold',
+            'block mx-1 px-4 py-2 rounded-md text-sm text-white hover:text-white hover:no-underline no-underline font-semibold cursor-pointer hover:bg-white/10',
           )}
         >
           {children}

@@ -37,7 +37,7 @@ export function ButtonLink({
       ? 'h-12 text-base px-4'
       : 'h-12 text-base px-4';
 
-  const text = `text-base font-semibold text-gray-50`;
+  const text = `text-base font-semibold text-gray-50 no-underline`;
   const layout =
     'inline-flex items-center justify-center rounded-full whitespace-nowrap';
   const various =
