@@ -1,7 +1,4 @@
-import { scopedPreflightStyles } from 'tailwindcss-scoped-preflight';
-
 export default {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     screens: {
       sm: '600px',
@@ -103,11 +100,4 @@ export default {
       },
     },
   },
-  corePlugins: { preflight: false },
-  plugins: [
-    scopedPreflightStyles({
-      cssSelector: '.twp',
-      mode: 'matched only',
-    }),
-  ],
 };

@@ -92,7 +92,7 @@ export function Testimonials() {
 
 function Testimonial({ imgSrc, name, company, children }) {
   return (
-    <li className="h-fit max-w-full bg-gradient-to-b from-gray-800/95 to-gray-800/80 border-[0.5px] shadow-md shadow-gray-900 border-gray-850 rounded-2xl px-8 py-6">
+    <li className="h-fit max-w-full bg-linear-to-b from-gray-800/95 to-gray-800/80 border-[0.5px] shadow-md shadow-gray-900 border-gray-850 rounded-2xl px-8 py-6">
       <div className="flex items-center">
         <picture>
           <img src={imgSrc} alt="" height="62" width="62" />

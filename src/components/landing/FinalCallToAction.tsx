@@ -2,7 +2,7 @@ import { ButtonLink, SectionTitle } from './SharedComponents';
 
 export function FinalCallToAction() {
   return (
-    <section className="container bg-gradient-to-b from-blue-950/50 to-blue-800 pt-96 pb-36 mt-[-12rem]">
+    <section className="container bg-linear-to-b from-blue-950/50 to-blue-800 pt-96 pb-36 -mt-48">
       <div className="container max-w-3xl pt-24 text-center">
         <SectionTitle>
           Intelligent logic to transition from design to deployment,{' '}

@@ -17,7 +17,7 @@
     "@headlessui/react": "^1.7.17",
     "@mdx-js/react": "^3.0.0",
     "@microsoft/api-extractor": "^7.38.3",
-    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/postcss": "^4.1.13",
     "@xstate/inspect": "^0.8.0",
     "@xstate/machine-extractor": "^0.13.0",
     "@xstate/react": "^3.2.2",
@@ -31,7 +31,7 @@
     "prism-react-renderer": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^4.1.13",
     "tailwindcss-scoped-preflight": "^3.4.12",
     "typecheck": "^0.1.2",
     "xstate": "^4.38.3"

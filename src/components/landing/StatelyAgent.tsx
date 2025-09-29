@@ -203,7 +203,7 @@ function H2({
 
 function FeatureBox({ children, imgSrc = '/landing/DELETE-1.png' }) {
   return (
-    <div className="flex flex-1 rounded-3xl bg-gradient-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
+    <div className="flex flex-1 rounded-3xl bg-linear-to-b from-gray-800/50 to-gray-800/10 border-[0.5px] shadow-md shadow-blue-900 border-blue-850 py-6 px-8 gap-12">
       {children}
     </div>
   );
