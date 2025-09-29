@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@config "../../tailwind.config.js";
+@source "../**/*.{js,jsx,ts,tsx,md,mdx}";
+@import 'tailwindcss/utilities';
 
 .animate-gradient {
   background-size: 300%;
