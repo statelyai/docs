@@ -126,9 +126,10 @@ const store = createStore({
   on: {
     // highlight-start
     incrementDelayed: (context, event, enqueue) => {
-      enqueue.effect(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        store.send({ type: 'increment' });
+      enqueue.effect(() => {
+        setTimeout(() => {
+          store.send({ type: 'increment' });
+        }, 1000);
       });
 
       return context;
@@ -192,9 +193,10 @@ const store = createStore({
     inc: (context, event: { by: number }, enqueue) => {
       enqueue.emit.incremented({ by: event.by });
 
-      enqueue.effect(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        store.send({ type: 'increment' });
+      enqueue.effect(() => {
+        setTimeout(() => {
+          store.send({ type: 'increment' });
+        }, 1000);
       });
 
       return {
