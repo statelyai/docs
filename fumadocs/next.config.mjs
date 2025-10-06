@@ -8,6 +8,7 @@ const config = {
   images: {
     domains: ['stately.ai'],
   },
+  serverExternalPackages: ['typescript', 'twoslash'],
 };
 
 export default withMDX(config);
