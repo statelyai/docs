@@ -2,9 +2,13 @@
 title: 'XState VS Code extension'
 ---
 
-# XState VS Code extension
-
 The [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) enhances the XState development experience by providing VS Code users with autocomplete, typegen, linting, and a visual editor inside VS Code.
+
+<Callout type="warning">
+
+XState VS Code extension is not fully supported in XState version 5.
+
+</Callout>
 
 <Callout>
 
@@ -53,9 +57,8 @@ If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-i
 createMachine({});
 ```
 
-<Callout>
+<Callout title="Machine layout persistence">
 
-## Machine layout persistence
 
 Upon opening an XState machine in VS Code, you may notice a long `@xstate-layout` comment inserted in the code just above the call to `createMachine()`.
 
