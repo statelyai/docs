@@ -59,8 +59,8 @@ Breaking change
 
 The `Machine(config)` function is now called `createMachine(config)`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -70,9 +70,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -83,7 +83,7 @@ const machine = Machine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `createActor()`, not `interpret()`
@@ -96,8 +96,8 @@ Breaking change
 
 The `interpret()` function has been renamed to `createActor()`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -110,8 +110,8 @@ const actor = createActor(machine, {
 });
 ```
 
-</TabItem>
-<TabItem value="v4" label="XState v4">
+</Tab>
+<Tab value="v4" label="XState v4">
 
 ```ts
 import { createMachine, interpret } from 'xstate';
@@ -124,7 +124,7 @@ const actor = interpret(machine, {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `machine.provide()`, not `machine.withConfig()`
@@ -137,8 +137,8 @@ Breaking change
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -156,9 +156,9 @@ const specificMachine = machine.provide({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -176,7 +176,7 @@ const specificMachine = machine.withConfig({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Set context with `input`, not `machine.withContext()`
@@ -189,8 +189,8 @@ Breaking change
 
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input.mdx) instead:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -207,9 +207,9 @@ const actor = createActor(machine, {
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -224,7 +224,7 @@ const moneyMachine = machine.withContext({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Actions ordered by default, `predictableActionArguments` no longer needed
@@ -237,8 +237,8 @@ Breaking change
 
 Actions are now in predictable order by default, so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -259,9 +259,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -283,7 +283,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### The `spawn()` function has been removed
@@ -295,8 +295,8 @@ Instead of using the imported `spawn()` function to create actors inside `assign
 
 Read the documentation on [spawning actors](./spawn.mdx) for more information.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -322,9 +322,9 @@ const machine2 = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌
@@ -339,15 +339,15 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `getNextSnapshot(…)` instead of `machine.transition(…)`
 
 The `machine.transition(…)` method now requires an "actor scope" for the 3rd argument, which is internally created by `createActor(…)`. Instead, use `getNextSnapshot(…)` to get the next snapshot from some actor logic based on the current snapshot and event:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -371,9 +371,9 @@ const nextState = getNextSnapshot(
 nextState.value; // yellow
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌
@@ -388,7 +388,7 @@ const nextState = machine.transition('green', { type: 'timer' });
 nextState.value; // yellow
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Send events explictly instead of using `autoForward`
@@ -397,8 +397,8 @@ The `autoForward` property on invoke configs has been removed. Instead, send eve
 
 In general, it's _not_ recommended to forward all events to an actor. Instead, only forward the specific events that the actor needs.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -417,9 +417,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌
@@ -434,7 +434,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## States
@@ -449,24 +449,24 @@ Breaking change
 
 The `state.meta` property has been renamed to `state.getMeta()`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
   
 ```ts
 // ✅
 state.getMeta();
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
 state.meta;
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### The `state.toStrings()` method has been removed
@@ -509,32 +509,32 @@ Breaking change
 
 The `state.configuration` property has been renamed to `state._nodes`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
   
 ```ts
 // ✅
 state._nodes;
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
 state.configuration;
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Read events from inspection API instead of `state.events`
 
 The `state.events` property has been removed, because events are not part of state, unless you explicitly add them to the state's `context`. Use the [inspection API](./inspection.mdx) to observe events instead, or add the event explicitly to the state's `context`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
   
 ```ts
 // ✅
@@ -552,9 +552,9 @@ console.log(inspEvent.event);
 
 ````
 
-</TabItem>
+</Tab>
 
-<TabItem value="v5-alt" label="XState v5 (context)">
+<Tab value="v5-alt" label="XState v5 (context)">
 
 ```ts
 // ✅
@@ -586,9 +586,9 @@ someActor.subscribe(snapshot => {
 });
 ````
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -602,7 +602,7 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Events and transitions
@@ -617,8 +617,8 @@ Breaking change
 
 Implementation functions now take in a single argument: an object with `context`, `event`, and other properties.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -629,9 +629,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -642,7 +642,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### `send()` is removed; use `raise()` or `sendTo()`
@@ -657,8 +657,8 @@ The `send(...)` action creator is removed. Use `raise(...)` for sending events t
 
 Read the documentation on the [`sendTo` action](actions.mdx#send-to-action) and [`raise` action](actions.mdx#raise-action) for more information.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -674,9 +674,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -692,7 +692,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to use `sendTo` or `raise` instead of `send`.
@@ -703,8 +703,8 @@ The `pure()` and `choose()` methods have been removed. Use `enqueueActions()` in
 
 For `pure()` actions:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -716,9 +716,9 @@ entry: [
 ];
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -729,13 +729,13 @@ entry: [
 ];
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 For `choose()` actions:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -749,9 +749,9 @@ entry: [
 ];
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -765,7 +765,7 @@ entry: [
 ];
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### `actor.send()` no longer accepts string types
@@ -778,24 +778,24 @@ Breaking change
 
 String event types can no longer be sent to, e.g., `actor.send(event)`; you must send an event object instead:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
 actor.send({ type: 'someEvent' });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
 actor.send('someEvent');
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to pass an object to `.send()`.
@@ -810,24 +810,24 @@ Breaking change
 
 String event types can no longer be sent to, e.g., `state.can(event)`; you must send an event object instead:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
 state.can({ type: 'someEvent' });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
 state.can('someEvent');
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Guarded transitions use `guard`, not `cond`
@@ -840,8 +840,8 @@ Breaking change
 
 The `cond` transition property for guarded transitions is now called `guard`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -855,9 +855,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -872,7 +872,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `params` to pass params to actions & guards
@@ -885,8 +885,8 @@ Breaking change
 
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`. These `params` are then passed to the 2nd argument of the action or guard implementation:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -916,9 +916,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -949,7 +949,7 @@ const machine = createMachine(
 );
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update action and guard objects on v4 projects to move properties (other than `type`) to a `params` object.
@@ -964,8 +964,8 @@ Breaking change
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -998,9 +998,9 @@ actor.start();
 actor.send({ type: 'unknownEvent' });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1018,7 +1018,7 @@ const service = interpret(machine);
 service.send({ type: 'unknownEvent' });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use explicit eventless (`always`) transitions
@@ -1031,8 +1031,8 @@ Breaking change
 
 Eventless (“always”) transitions must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1048,9 +1048,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1068,7 +1068,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to use `always` for _eventless_ transitions.
@@ -1085,8 +1085,8 @@ Breaking change
 
 External transitions previously specified with `internal: false` are now specified with `reenter: true`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1101,9 +1101,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1118,7 +1118,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Transitions are internal by default, not external
@@ -1131,8 +1131,8 @@ Breaking change
 
 All transitions are **internal by default**. This change is relevant for transitions defined on state nodes with `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). If you relied on the previous XState v4 behavior where transitions implicitly re-entered a state node, use `reenter: true`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1163,9 +1163,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1193,11 +1193,11 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1220,9 +1220,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1245,7 +1245,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Child state nodes are always re-entered
@@ -1258,8 +1258,8 @@ Breaking change
 
 Child state nodes are always re-entered when they are targeted by transitions (both external and internal) defined on compound state nodes. This change is relevant only if a child state node has `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). Add a `stateIn` guard to prevent undesirable re-entry of the child state:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1285,9 +1285,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1313,7 +1313,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
@@ -1327,8 +1327,8 @@ Breaking change
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1342,9 +1342,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1358,7 +1358,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `actor.subscribe()` instead of `state.history`
@@ -1371,8 +1371,8 @@ Breaking change
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1384,9 +1384,9 @@ actor.subscribe((snapshot) => {
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1395,7 +1395,7 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to track history using `actor.subscribe()`.
@@ -1410,8 +1410,8 @@ Breaking change
 
 The `escalate` action creator is removed. In XState v5 actions can throw errors, and they will propagate as expected. Errors can be handled using an `onError` transition.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1442,9 +1442,9 @@ const parentMachine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1456,7 +1456,7 @@ const childMachine = createMachine({
 /* ... */
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Actors
@@ -1480,8 +1480,8 @@ The available actor logic creators are:
 
 See [Actors](actors.mdx) for more information.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1505,9 +1505,9 @@ const machine = setup({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1525,11 +1525,11 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1547,9 +1547,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1565,11 +1565,11 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1585,9 +1585,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1601,7 +1601,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `invoke.input` instead of `invoke.data`
@@ -1614,8 +1614,8 @@ Breaking change
 
 The `invoke.data` property is removed. If you want to provide context to invoked actors, use `invoke.input`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1636,9 +1636,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1657,7 +1657,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `output` in final states instead of `data`
@@ -1670,8 +1670,8 @@ Breaking change
 
 To produce output data from a machine which reached its final state, use the top-level `output` property instead of `data`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1688,9 +1688,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1707,13 +1707,13 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 To provide a dynamically generated output, replace `invoke.data` with `invoke.output` and add a top-level `output` property:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1731,9 +1731,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1750,7 +1750,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Don't use property mappers in `input` or `output`
@@ -1763,8 +1763,8 @@ Breaking change
 
 If you want to provide dynamic context to invoked actors, or produce dynamic output from final states, use a function instead of an object with property mappers.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1798,9 +1798,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1828,7 +1828,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `actors` property on `options` object instead of `services`
@@ -1841,8 +1841,8 @@ Breaking change
 
 `services` have been renamed to `actors`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1860,9 +1860,9 @@ const specificMachine = machine.provide({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1880,7 +1880,7 @@ const specificMachine = machine.withConfig({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `subscribe()` for changes, not `onTransition()`
@@ -1893,8 +1893,8 @@ Breaking change
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1904,9 +1904,9 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1916,7 +1916,7 @@ actor.onTransition((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### `createActor()` (formerly `interpret()`) accepts a second argument to restore state
@@ -1931,8 +1931,8 @@ Breaking change
 
 To restore an actor at a specific state, you should now pass the state as the `snapshot` property of the `options` argument of `createActor(logic, options)`. The `actor.start()` property no longer takes in a `state` argument.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1940,9 +1940,9 @@ const actor = createActor(machine, { snapshot: someState });
 actor.start();
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1950,7 +1950,7 @@ const actor = interpret(machine);
 actor.start(someState);
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `actor.getSnapshot()` to get actor’s state
@@ -1963,8 +1963,8 @@ Breaking change
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -1979,9 +1979,9 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -1993,7 +1993,7 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Loop over events instead of using `actor.batch()`
@@ -2006,8 +2006,8 @@ Breaking change
 
 The `actor.batch([...])` method for batching events is removed.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -2016,16 +2016,16 @@ for (const event of events) {
 }
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
 actor.batch(events);
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 **Pre-migration tip:** Update v4 projects to loop over events to send them as a batch.
@@ -2042,7 +2042,7 @@ The `snapshot.done` property, which was previously in the snapshot object of sta
 
 <Tabs>
 
-<TabItem value="v5" label="XState v5">
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -2056,9 +2056,9 @@ actor.subscribe((snapshot) => {
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -2072,7 +2072,7 @@ actor.subscribe((state) => {
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### `state.nextEvents` has been removed
@@ -2108,8 +2108,8 @@ Breaking change
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -2125,9 +2125,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -2143,7 +2143,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### Use `types.typegen` instead of `tsTypes`
@@ -2162,8 +2162,8 @@ XState Typegen does not fully support XState v5 yet. However, strongly-typed mac
 
 The `machineConfig.tsTypes` property has been renamed and is now at `machineConfig.types.typegen`.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -2180,9 +2180,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -2199,7 +2199,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## `@xstate/react`
@@ -2214,8 +2214,8 @@ Breaking change
 
 The `useInterpret()` hook, which is used to return an `actorRef` ("service" in XState v4), is renamed to `useActorRef()`.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```ts
 // ✅
@@ -2224,9 +2224,9 @@ import { useActorRef } from '@xstate/react';
 const actorRef = useActorRef(machine); // or any other logic
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -2235,7 +2235,7 @@ import { useInterpret } from '@xstate/react';
 const service = useInterpret(machine);
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ### `useActor(logic)` now accepts actor logic, not an actor
@@ -2250,8 +2250,8 @@ The `useActor(logic)` hook now accepts _actor logic_ (such as `fromPromise(...)`
 
 To use an existing `ActorRef`, use `actor.send(...)` to send events and `useSelector(actor, ...)` to get the snapshot:
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```tsx
 // ✅
@@ -2264,9 +2264,9 @@ function Component({ someActorRef }) {
 }
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```tsx
 // ❌ DEPRECATED
@@ -2279,7 +2279,7 @@ function Component({ someActorRef }) {
 }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Use `machine.provide()` to provide implementations in hooks
@@ -2299,8 +2299,8 @@ Instead, `machine.provide(...)` should be passed directly to the 1st argument.
 
 The `@xstate/react` package considers machines with the same configuration to be the same machine, so it will minimize rerenders but still keep the provided implementations up-to-date.
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```tsx
 // ✅
@@ -2322,9 +2322,9 @@ function Component(props) {
 }
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4 arguments" label="XState v4">
+<Tab value="v4 arguments" label="XState v4">
 
 ```tsx
 // ❌ DEPRECATED
@@ -2344,9 +2344,9 @@ function Component(props) {
 }
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4 function" label="XState v4">
+<Tab value="v4 function" label="XState v4">
 
 ```tsx
 // ❌ DEPRECATED
@@ -2368,7 +2368,7 @@ function Component(props) {
 }
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## `@xstate/vue`
@@ -2386,8 +2386,8 @@ To keep consistent naming with the rest of XState and related libraries:
 - `state` is now `snapshot`
 - `service` is now `actor`
 
-<Tabs>
-<TabItem value="v5" label="XState v5">
+<Tabs items={['v5', 'v4']}>
+<Tab value="v5" label="XState v5">
 
 ```tsx
 // ✅
@@ -2404,9 +2404,9 @@ const {
 } = useMachine(someMachine);
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```tsx
 // ❌ DEPRECATED
@@ -2423,7 +2423,7 @@ const {
 } = useMachine(someMachine);
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## New features
