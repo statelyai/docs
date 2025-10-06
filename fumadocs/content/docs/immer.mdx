@@ -60,7 +60,7 @@ const machine = createMachine({
   // ...
   on: {
     'todo.complete': {
-      // highlight-start
+      // [!code highlight:8]
       // Using Immer to update a single context property
       actions: assign({
         todos: ({ context, event }) =>
@@ -69,10 +69,9 @@ const machine = createMachine({
             todo.completed = true;
           }),
       }),
-      // highlight-end
     },
     'todos.add': {
-      // highlight-start
+      // [!code highlight:14]
       // Using Immer to update multiple context properties
       actions: assign(({ context, event }) =>
         produce(context, (draftContext) => {
@@ -87,7 +86,6 @@ const machine = createMachine({
           }
         }),
       ),
-      // highlight-end
     },
   },
 });

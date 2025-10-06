@@ -283,7 +283,7 @@ const machine = setup({
       on: {
         toggle: {
           target: 'active',
-          // highlight-start
+          // [!code highlight:9]
           actions: [
             // action with params
             {
@@ -293,7 +293,6 @@ const machine = setup({
               },
             },
           ],
-          // highlight-end
         },
       },
     },
@@ -336,7 +335,7 @@ actor.send({ type: 'toggle' });
 import { setup, createActor } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:9]
   guards: {
     canBeToggled: ({ context }) => context.canActivate,
     isAfterTime: (_, params) => {
@@ -346,7 +345,6 @@ const machine = setup({
       return now.getHours() > hour && now.getMinutes() > minute;
     },
   },
-  // highlight-end
   actions: {
     notifyNotAllowed: () => {
       console.log('Cannot be toggled');
@@ -417,7 +415,7 @@ const machine = setup({
   },
   states: {
     loading: {
-      // highlight-start
+      // [!code highlight:16]
       invoke: {
         id: 'loadUser',
         src: 'loadUserLogic',
@@ -434,7 +432,6 @@ const machine = setup({
           },
         },
       },
-      // highlight-end
     },
     doSomethingWithUser: {
       // ...
@@ -480,9 +477,8 @@ const machine = setup({
   on: {
     loadUser: {
       actions: assign({
-        // highlight-start
+        // [!code highlight:1]
         userRef: ({ spawn }) => spawn('loadUserLogic'),
-        // highlight-end
       }),
     },
   },
@@ -513,22 +509,20 @@ const greetMachine = setup({
     input: {} as { name: string },
   },
 }).createMachine({
-  // highlight-start
+  // [!code highlight:3]
   context: ({ input }) => ({
     message: `Hello, ${input.name}`,
   }),
-  // highlight-end
   entry: ({ context }) => {
     console.log(context.message);
   },
 });
 
 const actor = createActor(greetMachine, {
-  // highlight-start
+  // [!code highlight:3]
   input: {
     name: 'David',
   },
-  // highlight-end
 });
 
 actor.start();
@@ -561,11 +555,10 @@ const machine = setup({
       invoke: {
         id: 'loadUser',
         src: 'loadUserLogic',
-        // highlight-start
+        // [!code highlight:3]
         input: {
           id: 3,
         },
-        // highlight-end
         onDone: {
           actions: ({ event }) => {
             console.log(event.output);

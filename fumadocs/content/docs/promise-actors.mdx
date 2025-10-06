@@ -26,13 +26,12 @@ async function getUser(id: string) {
   return { id /* other user data */ };
 }
 
-// highlight-start
+// [!code highlight:5]
 const promiseLogic = fromPromise(async () => {
   const user = await getUser('123');
 
   return user;
 });
-// highlight-end
 
 const promiseActor = createActor(promiseLogic);
 
@@ -146,12 +145,11 @@ const promiseLogic = fromPromise(async () => {
 
 const promiseActor = createActor(promiseLogic);
 promiseActor.subscribe({
-  // highlight-start
+  // [!code highlight:4]
   error: (error) => {
     console.error(error);
     // logs 'Error: Something went wrong'
   },
-  // highlight-end
 });
 
 promiseActor.start();
@@ -172,10 +170,9 @@ const promiseLogic = fromPromise(
     [!code highlight:1]
     signal,
   }) => {
-    // highlight-start
+    // [!code highlight:2]
     // Pass the signal to abort fetching if signaled
     const data = await fetch('/some/url', { signal });
-    // highlight-end
 
     return data;
   },
@@ -186,8 +183,7 @@ promiseActor.start();
 
 // ...
 
-// highlight-start
+// [!code highlight:2]
 // Abort the promise actor
 promiseActor.stop();
-// highlight-end
 ```

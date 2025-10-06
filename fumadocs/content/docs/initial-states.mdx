@@ -10,10 +10,9 @@ In XState, the initial state is defined by the `initial` property on the machine
 const feedbackMachine = createMachine({
   id: 'feedback',
 
-  // highlight-start
+  // [!code highlight:2]
   // Initial state
   initial: 'prompt',
-  // highlight-end
 
   // Finite states
   states: {

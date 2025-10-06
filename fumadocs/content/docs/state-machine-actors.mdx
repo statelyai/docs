@@ -84,11 +84,10 @@ const feedbackMachine = setup({
 });
 
 const feedbackActor = createActor(feedbackMachine, {
-  // highlight-start
+  // [!code highlight:3]
   input: {
     defaultRating: 3,
   },
-  // highlight-end
 });
 
 feedbackActor.subscribe((snapshot) => {

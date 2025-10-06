@@ -92,11 +92,10 @@ You can persist and rehydrate state with `useMachine(...)` via `options.snapshot
 
 ```js
 // Get the persisted state config object from somewhere, e.g. localStorage
-// highlight-start
+// [!code highlight:3]
 const persistedState = JSON.parse(
   localStorage.getItem('some-persisted-state-key'),
 );
-// highlight-end
 
 const { snapshot, send } = useMachine(someMachine, {
   [!code highlight:1]

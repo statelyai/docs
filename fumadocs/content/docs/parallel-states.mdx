@@ -122,11 +122,10 @@ export const machine = createMachine({
         },
       },
       type: 'parallel',
-      // highlight-start
+      // [!code highlight:3]
       onDone: {
         target: 'makingCoffee',
       },
-      // highlight-end
     },
     makingCoffee: {},
   },

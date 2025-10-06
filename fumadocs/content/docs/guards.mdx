@@ -34,13 +34,12 @@ const feedbackMachine = createMachine(
     },
   },
   {
-    // highlight-start
+    // [!code highlight:5]
     guards: {
       isValid: ({ context }) => {
         return context.feedback.length > 0;
       },
     },
-    // highlight-end
   },
 );
 ```
@@ -61,7 +60,7 @@ const feedbackMachine = createMachine({
   // ...
   prompt: {
     on: {
-      // highlight-start
+      // [!code highlight:15]
       'feedback.provide': [
         // Taken if 'sentimentGood' guard evaluates to `true`
         {
@@ -77,7 +76,6 @@ const feedbackMachine = createMachine({
         // Default transition
         { target: 'form' },
       ],
-      // highlight-end
     },
   },
 });
@@ -119,7 +117,7 @@ const feedbackMachine = createMachine(
     },
   },
   {
-    // highlight-start
+    // [!code highlight:8]
     guards: {
       isValid: ({ context }, params) => {
         return (
@@ -128,7 +126,6 @@ const feedbackMachine = createMachine(
         );
       },
     },
-    // highlight-end
   },
 );
 ```
@@ -137,7 +134,7 @@ Guards can later be provided or overridden by providing custom guard implementat
 
 ```ts
 const feedbackActor = createActor(
-  // highlight-start
+  // [!code highlight:11]
   feedbackMachine.provide({
     guards: {
       isValid: ({ context }, params) => {
@@ -149,7 +146,6 @@ const feedbackActor = createActor(
       },
     },
   }),
-  // highlight-end
 ).start();
 ```
 
@@ -227,13 +223,12 @@ You can strongly type the `guards` of your machine by setting up their implement
 import { setup } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:5]
   guards: {
     isGreaterThan: (_, params: { count: number; min: number }) => {
       return params.count > params.min;
     },
   },
-  // highlight-end
 }).createMachine({
   // ...
   on: {
@@ -276,13 +271,12 @@ const feedbackMachine = createMachine(
     },
   },
   {
-    // highlight-start
+    // [!code highlight:5]
     guards: {
       isValid: ({ context }) => {
         return context.feedback.length > 0;
       },
     },
-    // highlight-end
   },
 );
 ```
@@ -296,7 +290,7 @@ const feedbackMachine = createMachine({
   // ...
   prompt: {
     on: {
-      // highlight-start
+      // [!code highlight:15]
       'feedback.provide': [
         // Taken if 'sentimentGood' guard evaluates to `true`
         {
@@ -312,7 +306,6 @@ const feedbackMachine = createMachine({
         // Default transition
         { target: 'form' },
       ],
-      // highlight-end
     },
   },
 });

@@ -72,13 +72,12 @@ import { fromTransition, createActor } from 'xstate';
 const countLogic = fromTransition(
   (state, event) => {
     // ...
-    // highlight-start
+    // [!code highlight:5]
   },
   ({ input }: { input: number }) => ({
     count: input, // Initial state
   }),
 );
-// highlight-end
 
 const countActor = createActor(countLogic, {
   [!code highlight:1]

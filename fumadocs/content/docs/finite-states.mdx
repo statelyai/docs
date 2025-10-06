@@ -77,10 +77,9 @@ The initial state is the state that the machine starts in. It is defined by the 
 const feedbackMachine = createMachine({
   id: 'feedback',
 
-  // highlight-start
+  // [!code highlight:2]
   // Initial state
   initial: 'prompt',
-  // highlight-end
 
   // Finite states
   states: {
@@ -259,10 +258,9 @@ const feedbackMachine = createMachine({
     prompt: {
       on: {
         'feedback.good': {
-          // highlight-start
+          // [!code highlight:2]
           // Targets the sibling `thanks` state node
           target: 'thanks',
-          // highlight-end
         },
       },
     },
@@ -285,10 +283,9 @@ const feedbackMachine = createMachine({
     prompt: {
       on: {
         'feedback.good': {
-          // highlight-start
+          // [!code highlight:2]
           // Targets the sibling `thanks.happy` state node
           target: 'thanks.happy',
-          // highlight-end
         },
       },
     },
@@ -323,16 +320,14 @@ const feedbackMachine = createMachine({
   },
   on: {
     'feedback.close': {
-      // highlight-start
+      // [!code highlight:2]
       // Targets the descendant `closed` state node
       target: '.closed',
-      // highlight-end
     },
     'key.escape': {
-      // highlight-start
+      // [!code highlight:2]
       // Targets the descendant `closed.keypress` state node
       target: '.closed.keypress',
-      // highlight-end
     },
   },
 });
@@ -349,10 +344,9 @@ const feedbackMachine = createMachine({
     form: {
       on: {
         'feedback.update': {
-          // highlight-start
+          // [!code highlight:2]
           // No target defined – stay on the `form` state node
           // Equivalent to `target: '.form'` or `target: undefined`
-          // highlight-end
           actions: 'updateForm',
         },
       },
@@ -369,11 +363,10 @@ import { createMachine, createActor } from 'xstate';
 const feedbackMachine = createMachine({
   initial: 'prompt',
   states: {
-    // highlight-start
+    // [!code highlight:3]
     closed: {
       id: 'finished',
     },
-    // highlight-end
     // ...
   },
   on: {
@@ -405,10 +398,9 @@ const feedbackMachine = createMachine({
   },
   on: {
     'feedback.close': {
-      // highlight-start
+      // [!code highlight:2]
       // Target the `.closed` state by its ID
       target: '#finished',
-      // highlight-end
     },
   },
 });

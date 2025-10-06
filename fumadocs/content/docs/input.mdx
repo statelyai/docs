@@ -14,12 +14,11 @@ const feedbackMachine = setup({
       feedback: string;
       rating: number;
     },
-    // highlight-start
+    // [!code highlight:4]
     input: {} as {
       userId: string;
       defaultRating: number;
     },
-    // highlight-end
   },
 }).createMachine({
   [!code highlight:1]
@@ -34,12 +33,11 @@ const feedbackMachine = setup({
 });
 
 const feedbackActor = createActor(feedbackMachine, {
-  // highlight-start
+  // [!code highlight:4]
   input: {
     userId: '123',
     defaultRating: 5,
   },
-  // highlight-end
 });
 ```
 
@@ -63,11 +61,10 @@ const userFetcher = fromPromise(({ input }: { input: { userId: string } }) => {
 });
 
 const userFetcherActor = createActor(userFetcher, {
-  // highlight-start
+  // [!code highlight:3]
   input: {
     userId: '123',
   },
-  // highlight-end
 }).start();
 
 userFetcherActor.onDone((data) => {
@@ -91,7 +88,7 @@ const counter = fromTransition((state, event)) => {
 });
 
 const counterActor = createActor(counter, {
-  // highlight-start
+  // [!code highlight:23]
   input: {
     startingCount: 10,
   }
@@ -115,7 +112,6 @@ const intervalActor = createActor(intervalLogic, {
   input: {
     interval: 1000,
   },
-  // highlight-end
 });
 
 intervalActor.start();
@@ -129,12 +125,11 @@ When an actor is started, it will automatically send a special event named `xsta
 import { createActor, createMachine } from 'xstate';
 
 const feedbackMachine = createMachine({
-  // highlight-start
+  // [!code highlight:4]
   entry: ({ event }) => {
     console.log(event.input);
     // logs { userId: '123', defaultRating: 5 }
   },
-  // highlight-end
   // ...
 });
 
@@ -164,11 +159,10 @@ const feedbackMachine = setup({
 }).createMachine({
   invoke: {
     src: 'liveFeedback',
-    // highlight-start
+    // [!code highlight:3]
     input: {
       domain: 'stately.ai',
     },
-    // highlight-end
   },
 });
 ```
@@ -180,11 +174,10 @@ import { createActor, setup } from 'xstate';
 
 const feedbackMachine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:3]
     fetchUser: fromPromise(({ input }) => {
       return fetch(`/users/${input.userId}`).then((res) => res.json());
     }),
-    // highlight-end
   },
 }).createMachine({
   context: {
@@ -218,14 +211,13 @@ const feedbackMachine = setup({
     },
   },
   actors: {
-    // highlight-start
+    // [!code highlight:6]
     emailUser: fromPromise(({ input }: { input: { userId: string } }) => {
       return fetch(`/users/${input.userId}`, {
         method: 'POST',
         // ...
       });
     }),
-    // highlight-end
   },
 }).createMachine({
   context: {
@@ -333,12 +325,11 @@ import { createActor, setup } from 'xstate';
 
 const machine = setup({
   types: {
-    // highlight-start
+    // [!code highlight:4]
     input: {} as {
       userId: string;
       defaultRating: number;
     };
-    // highlight-end
     context: {} as {
       userId: string;
       feedback: string;

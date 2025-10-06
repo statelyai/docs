@@ -67,11 +67,10 @@ const parentMachine = createMachine({
   entry: [
     assign({
       childMachineRefs: ({ spawn }) => [
-        // highlight-start
+        // [!code highlight:3]
         spawn(childMachine),
         spawn(childMachine),
         spawn(childMachine),
-        // highlight-end
       ],
     }),
   ],

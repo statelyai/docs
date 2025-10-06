@@ -85,11 +85,10 @@ const feedbackMachine = setup({
       feedback: string;
       rating: number;
     },
-    // highlight-start
+    // [!code highlight:3]
     input: {} as {
       defaultRating: number;
     },
-    // highlight-end
   },
 }).createMachine({
   // [!code highlight:1]
@@ -101,11 +100,10 @@ const feedbackMachine = setup({
 });
 
 const feedbackActor = createActor(feedbackMachine, {
-  // highlight-start
+  // [!code highlight:3]
   input: {
     defaultRating: 5,
   },
-  // highlight-end
 }).start();
 
 console.log(feedbackActor.getSnapshot().context.rating);
@@ -169,12 +167,11 @@ import { setup } from 'xstate';
 
 const machine = setup({
   types: {} as {
-    // highlight-start
+    // [!code highlight:4]
     context: {
       feedback: string;
       rating: number;
     };
-    // highlight-end
   },
 }).createMachine({
   // Initial context
@@ -242,11 +239,10 @@ const feedbackMachine = setup({
       feedback: string;
       rating: number;
     },
-    // highlight-start
+    // [!code highlight:3]
     input: {} as {
       defaultRating: number;
     },
-    // highlight-end
   },
 }).createMachine({
   // [!code highlight:1]
@@ -258,10 +254,9 @@ const feedbackMachine = setup({
 });
 
 const feedbackActor = createActor(feedbackMachine, {
-  // highlight-start
+  // [!code highlight:3]
   input: {
     defaultRating: 5,
   },
-  // highlight-end
 }).start();
 ```

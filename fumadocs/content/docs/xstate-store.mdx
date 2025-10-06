@@ -104,12 +104,11 @@ import { createStore } from '@xstate/store';
 const store = createStore({
   context: { count: 0, name: 'David' },
   on: {
-    // highlight-start
+    // [!code highlight:4]
     inc: (context) => ({
       ...context, // Preserve other context properties
       count: context.count + 1,
     }),
-    // highlight-end
   },
 });
 ```
@@ -124,7 +123,7 @@ import { createStore } from '@xstate/store';
 const store = createStore({
   context: { count: 0 },
   on: {
-    // highlight-start
+    // [!code highlight:9]
     incrementDelayed: (context, event, enqueue) => {
       enqueue.effect(() => {
         setTimeout(() => {
@@ -134,7 +133,6 @@ const store = createStore({
 
       return context;
     },
-    // highlight-end
     increment: (context) => ({
       ...context,
       count: context.count + 1,
@@ -152,18 +150,16 @@ import { createStore } from '@xstate/store';
 
 const store = createStore({
   context: { count: 0 },
-  // highlight-start
+  // [!code highlight:5]
   emits: {
     increased: (payload: { by: number }) => {
       // Optional side effects can go here
     },
   },
-  // highlight-end
   on: {
     inc: (context, event: { by: number }, enqueue) => {
-      // highlight-start
+      // [!code highlight:1]
       enqueue.emit.increased({ by: event.by });
-      // highlight-end
 
       return {
         ...context,
@@ -209,12 +205,11 @@ const store = createStore({
 
 const snapshot = store.getSnapshot();
 
-// highlight-start
+// [!code highlight:4]
 const [nextState, effects] = store.transition(snapshot, {
   type: 'inc',
   by: 1,
 });
-// highlight-end
 
 console.log(nextState.context);
 // => { count: 1 }
@@ -595,13 +590,12 @@ const store = createStore({
   // ...
 });
 
-// highlight-start
+// [!code highlight:5]
 store.inspect((inspectionEvent) => {
   // type: '@xstate.snapshot' or
   // type: '@xstate.event'
   console.log(inspectionEvent);
 });
-// highlight-end
 ```
 
 <Callout>
@@ -797,10 +791,9 @@ You can also provide a custom comparator function as the third argument to optim
 function OptimizedCounter() {
   const [count, store] = useCountStore(
     (s) => s.context.count,
-    // highlight-start
+    // [!code highlight:2]
     // Custom comparator function
     (prev, next) => prev === next, // Only re-render when count actually changes
-    // highlight-end
   );
 
   return (
@@ -965,13 +958,12 @@ import { createActor } from 'xstate';
 const storeLogic = fromStore({
   context: { count: 0, incremented: false /* ... */ },
   on: {
-    // highlight-start
+    // [!code highlight:5]
     inc: {
       count: (context, event) => context.count + 1,
       // Static values do not need to be wrapped in a function
       incremented: true,
     },
-    // highlight-end
   },
 });
 
@@ -1012,11 +1004,10 @@ Using `fromStore(…)` to create store actor logic also has the advantage of all
 import { fromStore } from '@xstate/store';
 
 const storeLogic = fromStore({
-  // highlight-start
+  // [!code highlight:3]
   context: (initialCount: number) => ({
     count: initialCount,
   }),
-  // highlight-end
   on: {
     // ...
   },
@@ -1095,12 +1086,11 @@ For stronger typing, use the [`setup(…)` function](./setup.mdx) to strongly ty
 import { setup } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:4]
   types: {
     context: {} as { count: number; name: string },
     events: {} as { type: 'inc'; by: number },
   },
-  // highlight-end
 }).createMachine({
   // Same as the previous example
 });

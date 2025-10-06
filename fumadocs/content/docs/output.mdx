@@ -50,11 +50,10 @@ The `output` property can be typed in the `.types` property of the machine setup
 import { setup, createActor } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:3]
   types: {
     output: {} as { total: number },
   },
-  // highlight-end
 }).createMachine({
   // ...
   output: ({ context }) => ({

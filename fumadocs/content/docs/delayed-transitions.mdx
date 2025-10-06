@@ -19,14 +19,13 @@ const pushTheButtonGame = createMachine({
   initial: 'waitingForButtonPush',
   states: {
     waitingForButtonPush: {
-      // highlight-start
+      // [!code highlight:6]
       after: {
         5000: {
           target: 'timedOut',
           actions: 'logThatYouGotTimedOut',
         },
       },
-      // highlight-end
       on: {
         PUSH_BUTTON: {
           actions: 'logSuccess',
@@ -85,11 +84,10 @@ For example:
 import { setup } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:3]
   delays: {
     timeout: 1000,
   },
-  // highlight-end
 }).createMachine({
   initial: 'idle',
   states: {
@@ -117,24 +115,22 @@ const machine = setup({
       attempts: number;
     },
   },
-  // highlight-start
+  // [!code highlight:5]
   delays: {
     timeout: ({ context }) => {
       return context.attempts * 1000;
     },
   },
-  // highlight-end
 }).createMachine({
   initial: 'attempting',
   states: {
     attempting: {
       after: {
-        // highlight-start
+        // [!code highlight:4]
         timeout: {
           actions: assign({ attempts: ({ context }) => context.attempts + 1 }),
           target: 'attempting',
         },
-        // highlight-end
       },
     },
     // ...
@@ -166,13 +162,12 @@ You can strongly type the `delays` of your machine by setting up the the delays 
 import { setup } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:5]
   delays: {
     shortTimeout: 1000,
     longTimeout: 5000,
     eventually: 10_000,
   },
-  // highlight-end
 }).createMachine({
   after: {
     shortTimeout: {

@@ -157,12 +157,11 @@ const machineSetup = setup({
 
 // Create a custom action with full type safety
 // Can be defined in any file that imports the machineSetup
-// highlight-start
+// [!code highlight:4]
 const logCount = machineSetup.createAction(({ context, event }) => {
   // context and event are fully typed
   console.log(`Count: ${context.count}, Event: ${event.type}`);
 });
-// highlight-end
 
 const machine = machineSetup.createMachine({
   context: { count: 0, name: 'Counter' },
@@ -206,7 +205,7 @@ const machineSetup = setup({
   },
 });
 
-// highlight-start
+// [!code highlight:49]
 // Type-bound assign - context is fully typed
 const incrementCount = machineSetup.assign({
   count: ({ context }) => context.count + 1,
@@ -256,7 +255,6 @@ const batchActions = machineSetup.enqueueActions(({ enqueue, check }) => {
     enqueue(emitCountChanged);
   }
 });
-// highlight-end
 
 const machine = machineSetup.createMachine({
   context: { count: 0, items: [] },
@@ -399,7 +397,7 @@ const lightMachineSetup = setup({
   // ...
 });
 
-// highlight-start
+// [!code highlight:25]
 // Create individual state configurations
 const green = lightMachineSetup.createStateConfig({
   entry: { type: 'startTimer' },
@@ -425,7 +423,6 @@ const red = lightMachineSetup.createStateConfig({
     EMERGENCY: { target: 'green' },
   },
 });
-// highlight-end
 
 // Compose the machine using the modular state configs
 const trafficLightMachine = lightMachineSetup.createMachine({

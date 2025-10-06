@@ -22,12 +22,11 @@ const machine = createMachine({
         valid: {},
         invalid: {},
       },
-      // highlight-start
+      // [!code highlight:4]
       always: {
         guard: 'isValid',
         target: 'valid',
       },
-      // highlight-end
     },
   },
 });

@@ -306,11 +306,10 @@ import { spawnChild, assign } from 'xstate';
 // Spawning a direct child:
 const machine1 = createMachine({
   // ...
-  // highlight-start
+  // [!code highlight:3]
   entry: spawnChild('someChildLogic', {
     id: 'someChild',
   }),
-  // highlight-end
 });
 
 // Spawning a child with the actor ref in `context`:
@@ -362,13 +361,12 @@ const machine = createMachine({
   // ...
 });
 
-// highlight-start
+// [!code highlight:5]
 const nextState = getNextSnapshot(
   machine,
   machine.resolveState({ value: 'green' }),
   { type: 'timer' },
 );
-// highlight-end
 
 nextState.value; // yellow
 ```
@@ -410,13 +408,12 @@ const machine = createMachine({
     src: 'someSource',
     id: 'someId',
   },
-  // highlight-start
+  // [!code highlight:5]
   always: {
     // Forward events to the invoked actor
     // This will not cause an infinite loop in XState v5
     actions: sendTo('someId', ({ event }) => event),
   },
-  // highlight-end
 });
 ```
 
@@ -545,13 +542,12 @@ import { createActor } from 'xstate';
 import { someMachine } from './someMachine';
 
 const actor = createActor(someMachine, {
-// highlight-start
+// [!code highlight:5]
 inspect: (inspEvent) => {
 if (inspEvent.type === '@xstate.event') {
 console.log(inspEvent.event);
 }
 }
-// highlight-end
 });
 
 ````
@@ -567,11 +563,10 @@ import { setup, createActor } from 'xstate';
 const someMachine = setup({
   // ...
   actions: {
-    // highlight-start
+    // [!code highlight:3]
     recordEvent: assign({
       event: ({ event }) => event
     })
-    // highlight-end
   }
 }).createMachine({
   context: { event: undefined },
@@ -979,25 +974,23 @@ const machine = createMachine({
     knownEvent: {
       // ...
     },
-    // highlight-start
+    // [!code highlight:6]
     '*': {
       // unknown event
       actions: ({ event }) => {
         throw new Error(`Unknown event: ${event.type}`);
       },
     },
-    // highlight-end
   },
 });
 
 const actor = createActor(machine);
 
 actor.subscribe({
-  // highlight-start
+  // [!code highlight:3]
   error: (err) => {
     console.error(err);
   },
-  // highlight-end
 });
 
 actor.start();
@@ -1149,7 +1142,7 @@ const machine = createMachine({
     compoundState: {
       entry: 'someAction',
       on: {
-        // highlight-start
+        // [!code highlight:10]
         someEvent: {
           target: 'compoundState.childState',
           // Reenters the `compoundState` state,
@@ -1160,7 +1153,6 @@ const machine = createMachine({
           target: 'childState',
           reenter: true,
         },
-        // highlight-end
       },
       initial: 'childState',
       states: {
@@ -1183,7 +1175,7 @@ const machine = createMachine({
     compoundState: {
       entry: 'someAction',
       on: {
-        // highlight-start
+        // [!code highlight:7]
         someEvent: {
           // implicitly external
           target: 'compoundState.childState', // non-relative target
@@ -1191,7 +1183,6 @@ const machine = createMachine({
         selfEvent: {
           target: 'compoundState',
         },
-        // highlight-end
       },
       initial: 'childState',
       states: {
@@ -1426,17 +1417,16 @@ The `escalate` action creator is removed. In XState v5 actions can throw errors,
 // ✅
 const childMachine = createMachine({
   // This will be sent to the parent machine that invokes this child
-  // highlight-start
+  // [!code highlight:3]
   entry: () => {
     throw new Error('This is some error');
   },
-  // highlight-end
 });
 
 const parentMachine = createMachine({
   invoke: {
     src: childMachine,
-    // highlight-start
+    // [!code highlight:11]
     onError: {
       actions: ({ context, event }) => {
         console.log(event.error);
@@ -1448,7 +1438,6 @@ const parentMachine = createMachine({
         //  }
       },
     },
-    // highlight-end
   },
 });
 ```
@@ -1460,9 +1449,8 @@ const parentMachine = createMachine({
 ```ts
 // ❌ DEPRECATED
 const childMachine = createMachine({
-  // highlight-start
+  // [!code highlight:1]
   entry: escalate('This is some error'),
-  // highlight-end
 });
 
 /* ... */

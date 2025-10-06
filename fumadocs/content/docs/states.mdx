@@ -266,10 +266,9 @@ You can add `.description` to states to describe their purpose and share related
 ```ts
 states: {
   "Loading Move Destinations": {
-    // highlight-start
+    // [!code highlight:2]
     description:
       "Load data from the server based on the entity's id and type (project or machine). Result includes the entity's current location, and the list or tree of valid destination options to which the user may move that entity.",
-    // highlight-end
     invoke: {
       src: "loadMoveData",
       id: "loadMoveData",

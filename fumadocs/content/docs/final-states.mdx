@@ -16,11 +16,10 @@ const feedbackMachine = createMachine({
     thanks: {
       /* ... */
     },
-    // highlight-start
+    // [!code highlight:3]
     closed: {
       type: 'final',
     },
-    // highlight-end
     // ...
   },
   on: {
@@ -74,19 +73,17 @@ const coffeeMachine = createMachine({
             ground: 'ready',
           },
         },
-        // highlight-start
+        // [!code highlight:4]
         ready: {
           // Child final state of parent state 'preparation'
           type: 'final',
         },
-        // highlight-end
       },
-      // highlight-start
+      // [!code highlight:4]
       // Transition will be taken when child final state is reached
       onDone: {
         target: 'brewing',
       },
-      // highlight-end
     },
     brewing: {
       // ...
@@ -118,11 +115,10 @@ const coffeeMachine = createMachine({
                 grindingComplete: 'ground',
               },
             },
-            // highlight-start
+            // [!code highlight:3]
             ground: {
               type: 'final',
             },
-            // highlight-end
           },
         },
         water: {
@@ -134,11 +130,10 @@ const coffeeMachine = createMachine({
                 target: 'heated',
               },
             },
-            // highlight-start
+            // [!code highlight:3]
             heated: {
               type: 'final',
             },
-            // highlight-end
           },
         },
       },
@@ -172,12 +167,11 @@ const currencyMachine = createMachine({
       type: 'final',
     },
   },
-  // highlight-start
+  // [!code highlight:4]
   output: ({ context }) => ({
     amount: context.amount,
     currency: context.currency,
   }),
-  // highlight-end
 });
 
 const currencyActor = createActor(currencyMachine, {
@@ -223,11 +217,10 @@ const feedbackMachine = createMachine({
     thanks: {
       /* ... */
     },
-    // highlight-start
+    // [!code highlight:3]
     closed: {
       type: 'final',
     },
-    // highlight-end
     // ...
   },
   on: {
@@ -257,11 +250,10 @@ const coffeeMachine = createMachine({
                 grindingComplete: 'ground',
               },
             },
-            // highlight-start
+            // [!code highlight:3]
             ground: {
               type: 'final',
             },
-            // highlight-end
           },
         },
         water: {
@@ -273,11 +265,10 @@ const coffeeMachine = createMachine({
                 target: 'heated',
               },
             },
-            // highlight-start
+            // [!code highlight:3]
             heated: {
               type: 'final',
             },
-            // highlight-end
           },
         },
       },

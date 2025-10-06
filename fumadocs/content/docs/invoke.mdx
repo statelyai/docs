@@ -61,7 +61,7 @@ const userMachine = setup({
       },
     },
     loading: {
-      // highlight-start
+      // [!code highlight:13]
       invoke: {
         id: 'getUser',
         src: 'fetchUser',
@@ -75,7 +75,6 @@ const userMachine = setup({
           actions: assign({ error: ({ event }) => event.error }),
         },
       },
-      // highlight-end
     },
     success: {},
     failure: {
@@ -93,13 +92,12 @@ Actors can also be invoked on the _root_ of the machine, and they will be active
 import { fromEvent } from 'rxjs';
 import { fromEventObservable } from 'xstate';
 const interactiveMachine = createMachine({
-  // highlight-start
+  // [!code highlight:5]
   invoke: {
     src: fromEventObservable(
       () => fromEvent(document.body, 'click') as Subscribable<EventObject>,
     ),
   },
-  // highlight-end
   on: {
     click: {
       actions: ({ event }) => console.log(event),
@@ -114,14 +112,13 @@ And `invoke` can be an array, to invoke [multiple actors](#multiple-actors):
 const vitalsWorkflow = createMachine({
   states: {
     CheckVitals: {
-      // highlight-start
+      // [!code highlight:6]
       invoke: [
         { src: 'checkTirePressure' },
         { src: 'checkOilPressure' },
         { src: 'checkCoolantLevel' },
         { src: 'checkBattery' },
       ],
-      // highlight-end
     },
   },
 });
@@ -144,12 +141,11 @@ Unlike actions, errors thrown by invoked actors can be handled directly:
 ```ts
 invoke: {
   src: 'fetchUser',
-  // highlight-start
+  // [!code highlight:4]
   onError: {
     target: 'failure',
     actions: assign({ error: ({ event }) => event.error })
   }
-  // highlight-end
 }
 ```
 
@@ -287,14 +283,13 @@ The `onDone` transition can be an object:
 {
   invoke: {
     src: 'fetchItem',
-    // highlight-start
+    // [!code highlight:6]
     onDone: {
       target: 'success',
       actions: ({ event }) => {
         console.log(event.output);
       }
     }
-    // highlight-end
   }
 }
 ```
@@ -305,9 +300,8 @@ Or, for simplicity, target-only transitions can be strings:
 {
   invoke: {
     src: 'fetchItem',
-    // highlight-start
+    // [!code highlight:1]
     onDone: 'success',
-    // highlight-end
   }
 }
 ```
@@ -322,14 +316,13 @@ The `onError` transition can be an object:
 ```ts
 invoke: {
   src: 'getUser',
-  // highlight-start
+  // [!code highlight:6]
   onError: {
     target: 'failure',
     actions: ({ event }) => {
       console.error(event.error);
     }
   }
-  // highlight-end
 }
 ```
 
@@ -339,9 +332,8 @@ Or, for simplicity, target-only transitions can be strings:
 {
   invoke: {
     src: 'getUser',
-    // highlight-start
+    // [!code highlight:1]
     onError: 'failure'
-    // highlight-end
   }
 }
 ```
@@ -355,11 +347,10 @@ Or, for simplicity, target-only transitions can be strings:
 ```ts
 invoke: {
   src: 'getUser',
-  // highlight-start
+  // [!code highlight:3]
   onSnapshot: {
     actions: ({ event }) => console.log(event.snapshot)
   }
-  // highlight-end
 }
 ```
 
@@ -381,11 +372,10 @@ Behind the scenes, input is conveyed to the actor by an event:
 ```ts
 invoke: {
   src: 'liveFeedback',
-  // highlight-start
+  // [!code highlight:3]
   input: {
     domain: 'stately.ai'
   }
-  // highlight-end
 }
 ```
 
@@ -396,12 +386,11 @@ invoke: {
   src: fromPromise(({ input: { endpoint, userId } }) => {
     return fetch(`${endpoint}/${userId}`).then((res) => res.json());
   }),
-  // highlight-start
+  // [!code highlight:4]
   input: ({ context, event }) => ({
     endpoint: context.endpoint,
     userId: event.userId
   })
-  // highlight-end
 }
 ```
 
@@ -450,7 +439,7 @@ const userMachine = setup({
       },
     },
     loading: {
-      // highlight-start
+      // [!code highlight:13]
       invoke: {
         id: 'getUser',
         src: fromPromise(({ input }) => fetchUser(input.userId)),
@@ -464,7 +453,6 @@ const userMachine = setup({
           actions: assign({ error: ({ event }) => event.error }),
         },
       },
-      // highlight-end
     },
     success: {},
     failure: {
@@ -528,7 +516,7 @@ const searchMachine = setup({
       },
     },
     searching: {
-      // highlight-start
+      // [!code highlight:19]
       invoke: {
         id: 'search',
         src: fromPromise(({ input: { query } }) => search(query)),
@@ -548,7 +536,6 @@ const searchMachine = setup({
           actions: assign({ results: ({ event }) => event.output }),
         },
       },
-      // highlight-end
     },
     success: {},
     failure: {},
@@ -576,22 +563,20 @@ import { setup, fromCallback } from 'xstate';
 
 const machine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:3]
     someCallback: fromCallback(({ input, sendBack, receive }) => {
       // ...
     }),
-    // highlight-end
   },
 }).createMachine({
   // ...
-  // highlight-start
+  // [!code highlight:6]
   invoke: {
     src: 'someCallback',
     input: {
       /* ... */
     },
   },
-  // highlight-end
 });
 ```
 
@@ -610,15 +595,14 @@ import { interval } from 'rxjs';
 
 const machine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:3]
     someObservable: fromObservable(({ input }: { input: number }) => {
       return interval(input.ms);
     }),
-    // highlight-end
   },
 }).createMachine({
   // ...
-  // highlight-start
+  // [!code highlight:9]
   invoke: {
     src: 'someObservable',
     input: { ms: 1000 },
@@ -628,7 +612,6 @@ const machine = setup({
       },
     },
   },
-  // highlight-end
 });
 ```
 
@@ -675,16 +658,15 @@ import { setup, fromTransition } from 'xstate';
 
 const machine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:4]
     someTransition: fromTransition((state, event, { input }) => {
       // ...
       return state;
     }),
-    // highlight-end
   },
 }).createMachine({
   // ...
-  // highlight-start
+  // [!code highlight:11]
   invoke: {
     src: 'someTransition',
     input: {
@@ -696,7 +678,6 @@ const machine = setup({
       },
     },
   },
-  // highlight-end
 });
 ```
 
@@ -723,20 +704,18 @@ const childMachine = setup({
 
 const machine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:1]
     someMachine: childMachine,
-    // highlight-end
   },
 }).createMachine({
   // ...
-  // highlight-start
+  // [!code highlight:6]
   invoke: {
     src: 'someMachine',
     input: {
       /* ... */
     },
   },
-  // highlight-end
 });
 ```
 
@@ -774,13 +753,12 @@ const authServerMachine = createMachine({
     waitingForCode: {
       on: {
         CODE: {
-          // highlight-start
+          // [!code highlight:5]
           actions: sendTo(
             ({ event }) => event.sender,
             { type: 'TOKEN' },
             { delay: 1000 },
           ),
-          // highlight-end
         },
       },
     },
@@ -801,12 +779,11 @@ const authClientMachine = createMachine({
         id: 'auth-server',
         src: authServerMachine,
       },
-      // highlight-start
+      // [!code highlight:4]
       entry: sendTo('auth-server', ({ self }) => ({
         type: 'CODE',
         sender: self,
       })),
-      // highlight-end
       on: {
         TOKEN: { target: 'authorized' },
       },
@@ -894,13 +871,12 @@ interface User {
 
 const machine = setup({
   actors: {
-    // highlight-start
+    // [!code highlight:5]
     fetchUser: fromPromise<User, { userId: string }>(async ({ input }) => {
       const response = await fetch(`https://example.com/${input.userId}`);
 
       return response.json();
     }),
-    // highlight-end
   },
 }).createMachine({
   // ...
@@ -917,7 +893,7 @@ const machine = setup({
     },
     loadingUser: {
       invoke: {
-        // highlight-start
+        // [!code highlight:9]
         src: 'fetchUser',
         input: ({ context }) => ({
           userId: context.userId, // Type enforced to be string
@@ -927,7 +903,6 @@ const machine = setup({
             user: ({ event }) => event.output, // Strongly typed as User
           }),
         },
-        // highlight-end
       },
     },
   },
@@ -963,7 +938,7 @@ const userMachine = setup({
       },
     },
     loading: {
-      // highlight-start
+      // [!code highlight:13]
       invoke: {
         id: 'getUser',
         src: 'getUser',
@@ -977,7 +952,6 @@ const userMachine = setup({
           actions: assign({ error: ({ event }) => event.error }),
         },
       },
-      // highlight-end
     },
     success: {},
     failure: {
@@ -996,13 +970,12 @@ import { createMachine } from 'xstate';
 import { fromEventObservable, fromEvent } from 'rxjs';
 
 const interactiveMachine = createMachine({
-  // highlight-start
+  // [!code highlight:5]
   invoke: {
     src: fromEventObservable(
       () => fromEvent(document.body, 'click') as Subscribable<EventObject>,
     ),
   },
-  // highlight-end
   on: {
     click: {
       actions: ({ event }) => console.log(event),
@@ -1019,14 +992,13 @@ import { createMachine } from 'xstate';
 const vitalsWorkflow = createMachine({
   states: {
     CheckVitals: {
-      // highlight-start
+      // [!code highlight:6]
       invoke: [
         { src: 'checkTirePressure' /* ... */ },
         { src: 'checkOilPressure' /* ... */ },
         { src: 'checkCoolantLevel' /* ... */ },
         { src: 'checkBattery' /* ... */ },
       ],
-      // highlight-end
     },
   },
 });

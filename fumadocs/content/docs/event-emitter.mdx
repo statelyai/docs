@@ -28,11 +28,10 @@ const machine = setup({
 
 const actor = createActor(machine);
 
-// highlight-start
+// [!code highlight:3]
 actor.on('notification', (event) => {
   console.log('Notification received!', event);
 });
-// highlight-end
 
 actor.start();
 
@@ -54,12 +53,11 @@ import { fromPromise } from 'xstate';
 [!code highlight:1]
 const logic = fromPromise(async ({ emit }) => {
   // ...
-  // highlight-start
+  // [!code highlight:4]
   emit({
     type: 'emitted',
     msg: 'hello',
   });
-  // highlight-end
   // ...
 });
 ```
@@ -72,12 +70,11 @@ import { fromTransition } from 'xstate';
 [!code highlight:1]
 const logic = fromTransition((state, event, { emit }) => {
   // ...
-  // highlight-start
+  // [!code highlight:4]
   emit({
     type: 'emitted',
     msg: 'hello',
   });
-  // highlight-end
   // ...
   return state;
 }, {});
@@ -91,12 +88,11 @@ import { fromObservable } from 'xstate';
 [!code highlight:1]
 const logic = fromObservable(({ emit }) => {
   // ...
-  // highlight-start
+  // [!code highlight:4]
   emit({
     type: 'emitted',
     msg: 'hello',
   });
-  // highlight-end
   // ...
 });
 ```
@@ -109,12 +105,11 @@ import { fromCallback } from 'xstate';
 [!code highlight:1]
 const logic = fromCallback(({ emit }) => {
   // ...
-  // highlight-start
+  // [!code highlight:4]
   emit({
     type: 'emitted',
     msg: 'hello',
   });
-  // highlight-end
   // ...
 });
 ```
@@ -128,21 +123,19 @@ import { setup, emit } from 'xstate';
 
 const machine = setup({
   actions: {
-    // highlight-start
+    // [!code highlight:5]
     // Emitting a statically-defined event
     emitStaticEvent: emit({
       type: 'someStaticEvent',
       data: 42,
     }),
-    // highlight-end
 
-    // highlight-start
+    // [!code highlight:5]
     // Emitting a dynamically-defined event based on context
     emitDynamicEvent: emit(({ context }) => ({
       type: 'someDynamicEvent',
       data: context.someData,
     })),
-    // highlight-end
   },
 }).createMachine({
   // ...
@@ -161,12 +154,11 @@ You can attach event handlers to the actor to listen for emitted events by using
 ```ts
 const someActor = createActor(someMachine);
 
-// highlight-start
+// [!code highlight:4]
 someActor.on('someEvent', (emittedEvent) => {
   // Handle the emitted event
   console.log(emittedEvent);
 });
-// highlight-end
 
 someActor.start();
 ```
@@ -176,21 +168,19 @@ The `actor.on(…)` method returns a subscription object. You can call `.unsubsc
 ```ts
 const someActor = createActor(someMachine);
 
-// highlight-start
+// [!code highlight:4]
 const subscription = someActor.on('someEvent', (emittedEvent) => {
   // Handle the emitted event
   console.log(emittedEvent);
 });
-// highlight-end
 
 someActor.start();
 
 // ...
 
-// highlight-start
+// [!code highlight:2]
 // Stop listening for events
 subscription.unsubscribe();
-// highlight-end
 ```
 
 ## Wildcard event handlers
@@ -216,11 +206,10 @@ import { setup, emit, createActor } from 'xstate';
 
 const machine = setup({
   types: {
-    // highlight-start
+    // [!code highlight:3]
     emitted: {} as
       | { type: 'notification'; message: string }
       | { type: 'error'; error: Error },
-    // highlight-end
     // ...
   },
 }).createMachine({
@@ -228,10 +217,9 @@ const machine = setup({
   on: {
     someEvent: {
       actions: [
-        // highlight-start
+        // [!code highlight:2]
         // Strongly typed emitted event
         emit({ type: 'notification', message: 'Hello' }),
-        // highlight-end
       ],
     },
   },
@@ -239,10 +227,9 @@ const machine = setup({
 
 const actor = createActor(machine);
 
-// highlight-start
+// [!code highlight:4]
 // Strongly typed event handler
 actor.on('notification', (event) => {
   console.log(event.message); // string
 });
-// highlight-end
 ```

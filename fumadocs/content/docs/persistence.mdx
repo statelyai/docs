@@ -115,12 +115,11 @@ import { someMachine } from './someMachine';
 const restoredStateValue = localStorage.getItem('someState');
 // Assume that this is "pending"
 
-// highlight-start
+// [!code highlight:4]
 const resolvedState = someMachine.resolveState({
   value: restoredStateValue,
   // context: { ... }
 });
-// highlight-end
 
 // Restore the actor
 const restoredActor = createActor(someMachine, {
@@ -167,12 +166,11 @@ someActor.start();
 const restoredActor = createActor(someMachine);
 restoredActor.start();
 
-// highlight-start
+// [!code highlight:4]
 for (const event of events) {
   // Replay events
   restoredActor.send(event);
 }
-// highlight-end
 ```
 
 ## Caveats

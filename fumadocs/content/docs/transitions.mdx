@@ -76,7 +76,7 @@ import { createMachine, assign } from 'xstate';
 
 const machine = createMachine({
   context: { count: 0 },
-  // highlight-start
+  // [!code highlight:8]
   on: {
     someEvent: {
       // No target
@@ -85,7 +85,6 @@ const machine = createMachine({
       }),
     },
   },
-  // highlight-end
 });
 ```
 
@@ -107,7 +106,7 @@ const machine = createMachine({
       on: { activate: { target: 'active' } },
     },
     active: {
-      // highlight-start
+      // [!code highlight:8]
       on: {
         someEvent: {
           // No target
@@ -116,7 +115,6 @@ const machine = createMachine({
           }),
         },
       },
-      // highlight-end
     },
   },
 });
@@ -144,10 +142,9 @@ const feedbackMachine = createMachine({
     form: {
       on: {
         submit: {
-          // highlight-start
+          // [!code highlight:2]
           // Target is the key of the sibling state
           target: 'submitting',
-          // highlight-end
         },
       },
     },
@@ -321,10 +318,9 @@ const feedbackMachine = createMachine({
   states: {
     asleep: {
       on: {
-        // highlight-start
+        // [!code highlight:2]
         // This transition will match any event
         '*': { target: 'awake' },
-        // highlight-end
       },
     },
     awake: {},
@@ -351,12 +347,11 @@ const feedbackMachine = createMachine({
   states: {
     prompt: {
       on: {
-        // highlight-start
+        // [!code highlight:4]
         // This will match the 'feedback' event as well as
         // any event that starts with 'feedback.', e.g.:
         // 'feedback.good', 'feedback.bad', etc.
         'feedback.*': { target: 'form' },
-        // highlight-end
       },
     },
     form: {},
@@ -479,11 +474,10 @@ const feedbackMachine = createMachine({
   states: {
     prompt: {
       on: {
-        // highlight-start
+        // [!code highlight:3]
         // This is shorthand for:
         // 'feedback': { target: 'form' }
         'feedback.good': 'thanks',
-        // highlight-end
       },
     },
     thanks: {},
@@ -511,9 +505,8 @@ import { setup } from 'xstate';
 
 const machine = setup({
   types: {
-    // highlight-start
+    // [!code highlight:1]
     events: {} as { type: 'greet'; message: string } | { type: 'submit' },
-    // highlight-end
   },
 }).createMachine({
   // ...
@@ -544,10 +537,9 @@ import { someMachine } from './someMachine';
 const actor = createActor(someMachine, {
   inspect: (inspectionEvent) => {
     if (inspectionEvent.type === '@xstate.event') {
-      // highlight-start
+      // [!code highlight:2]
       // The event object sent from one actor to another
       console.log(inspectionEvent.event);
-      // highlight-end
     }
   },
 });

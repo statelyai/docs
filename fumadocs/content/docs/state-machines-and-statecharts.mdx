@@ -81,7 +81,7 @@ import { createMachine } from 'xstate';
 const dogMachine = createMachine({
   id: 'dog',
   initial: 'asleep',
-  // highlight-start
+  // [!code highlight:9]
   states: {
     asleep: {
       // ...
@@ -91,7 +91,6 @@ const dogMachine = createMachine({
     },
     //...
   },
-  // highlight-end
 });
 ```
 
@@ -140,18 +139,16 @@ const dogMachine = createMachine({
   initial: 'asleep',
   states: {
     asleep: {
-      // highlight-start
+      // [!code highlight:3]
       on: {
         'wakes up': 'awake',
       },
-      // highlight-end
     },
     awake: {
-      // highlight-start
+      // [!code highlight:3]
       on: {
         'falls asleep': 'asleep',
       },
-      // highlight-end
     },
     //...
   },

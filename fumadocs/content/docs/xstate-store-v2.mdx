@@ -103,13 +103,12 @@ import { createStore } from '@xstate/store';
 const store = createStore({
   context: { count: 0, incremented: false /* ... */ },
   on: {
-    // highlight-start
+    // [!code highlight:5]
     inc: {
       count: (context, event: { by: number }) => context.count + event.by,
       // Static values do not need to be wrapped in a function
       incremented: true,
     },
-    // highlight-end
   },
 });
 ```
@@ -122,7 +121,7 @@ import { createStore } from '@xstate/store';
 const store = createStore({
   context: { count: 0, incremented: false /* ... */ },
   on: {
-    // highlight-start
+    // [!code highlight:8]
     inc: (context, event: { by: number }) => {
       // ...
 
@@ -131,7 +130,6 @@ const store = createStore({
         incremented: true,
       };
     },
-    // highlight-end
   },
 });
 ```
@@ -145,13 +143,12 @@ const store = createStore({
   context: { count: 0, incremented: false /* ... */ },
   on: {
     reset: (context, event) => {
-      // highlight-start
+      // [!code highlight:5]
       // You can use `...context` to preserve other properties
       return {
         ...context,
         count: 0,
       };
-      // highlight-end
     },
   },
 });
@@ -204,7 +201,7 @@ import { createStore } from '@xstate/store';
 const store = createStore({
   context: { name: 'David', count: 0 },
   on: {
-    // highlight-start
+    // [!code highlight:10]
     updateName: (context, event: { name: string }) => {
       return {
         name: event.name,
@@ -215,7 +212,6 @@ const store = createStore({
         return context.count + event.by;
       },
     },
-    // highlight-end
   },
 });
 
@@ -258,12 +254,11 @@ const store = createStore({
   },
 });
 
-// highlight-start
+// [!code highlight:4]
 const sub = store.on('incremented', (event) => {
   console.log(`Emitted by ${event.by}`);
   // => logs "Emitted by 10"
 });
-// highlight-end
 
 store.send({ type: 'inc', by: 10 });
 
@@ -285,13 +280,12 @@ const store = createStore({
   // ...
 });
 
-// highlight-start
+// [!code highlight:5]
 store.inspect((inspectionEvent) => {
   // type: '@xstate.snapshot' or
   // type: '@xstate.event'
   console.log(inspectionEvent);
 });
-// highlight-end
 ```
 
 <Callout>
@@ -322,11 +316,10 @@ const store = createStore({
   // ...
 });
 
-// highlight-start
+// [!code highlight:3]
 const inspector = createBrowserInspector({
   // ...
 });
-// highlight-end
 
 [!code highlight:1]
 store.inspect(inspector);
@@ -342,24 +335,21 @@ import { createStoreWithProducer } from '@xstate/store';
 import { produce } from 'immer';
 
 const store = createStoreWithProducer(
-  // highlight-start
+  // [!code highlight:2]
   // Producer
   produce,
-  // highlight-end
   {
     context: { count: 0, todos: [] },
     on: {
       inc: (context, event: { by: number }) => {
-        // highlight-start
+        // [!code highlight:2]
         // No return; handled by Immer
         context.count += event.by;
-        // highlight-end
       },
       addTodo: (context, event: { todo: string }) => {
-        // highlight-start
+        // [!code highlight:2]
         // No return; handled by Immer
         context.todos.push(event.todo);
-        // highlight-end
       },
     },
   },
@@ -397,9 +387,8 @@ function Component(props) {
   // This component displays the count and has a button to increment it
   return (
     <div>
-      // highlight-start Count: {count}
+      // [!code highlight:1]
       <button onClick={() => store.send({ type: 'inc' })}>Increment</button>
-      // highlight-end
     </div>
   );
 }
@@ -418,23 +407,21 @@ You may notice that stores are very similar to [actors in XState](./actors.mdx).
 However, if you have existing XState code, and you enjoy the simplicity of creating store logic with `@xstate/store`, you can use the `fromStore(context, transitions)` actor logic creator to create XState-compatible store logic that can be passed to the `createActor(storeLogic)` function:
 
 ```ts
-// highlight-start
+// [!code highlight:2]
 import { fromStore } from '@xstate/store';
 import { createActor } from 'xstate';
-// highlight-end
 
 // Instead of:
 // const store = createStore( ... };
 const storeLogic = fromStore({
   context: { count: 0, incremented: false /* ... */ },
   on: {
-    // highlight-start
+    // [!code highlight:5]
     inc: {
       count: (context, event) => context.count + 1,
       // Static values do not need to be wrapped in a function
       incremented: true,
     },
-    // highlight-end
   },
 });
 
@@ -472,13 +459,12 @@ Using `fromStore(…)` to create store actor logic also has the advantage of all
 ```ts
 import { fromStore } from '@xstate/store';
 
-// highlight-start
+// [!code highlight:5]
 const storeLogic = fromStore({
   context: (initialCount: number) => ({
     count: initialCount,
   }),
   on: {
-    // highlight-end
     // ...
   },
 });
@@ -556,12 +542,11 @@ For stronger typing, use the [`setup(…)` function](./setup.mdx) to strongly ty
 import { setup } from 'xstate';
 
 const machine = setup({
-  // highlight-start
+  // [!code highlight:4]
   types: {
     context: {} as { count: number; name: string },
     events: {} as { type: 'inc'; by: number },
   },
-  // highlight-end
 }).createMachine({
   // Same as the previous example
 });
