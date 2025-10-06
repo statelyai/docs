@@ -1,5 +1,6 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import * as TabsComponents from 'fumadocs-ui/components/tabs';
+import { EmbedMachine } from './content/components/EmbedMachine';
 
 import type { MDXComponents } from 'mdx/types';
 
@@ -9,5 +10,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...defaultMdxComponents,
     ...TabsComponents,
     ...components,
+    EmbedMachine,
   };
 }
