@@ -95,7 +95,7 @@ const machine = setup({
   states: {
     idle: {
       after: {
-        [!code highlight:1]
+        // [!code highlight:1]
         timeout: { target: 'nextState' },
       },
     },

@@ -137,11 +137,11 @@ const machine = setup({
   // ...
   on: {
     'thing.stop': {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: stopChild('thing'),
     },
     'thing.stopFromContext': {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: stopChild(({ context }) => context.something),
     },
   },

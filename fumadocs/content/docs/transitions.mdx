@@ -148,7 +148,7 @@ const feedbackMachine = createMachine({
         },
       },
     },
-    [!code highlight:1]
+    // [!code highlight:1]
     submitting: {
       // ...
     },
@@ -186,7 +186,7 @@ const machine = createMachine({
   },
   on: {
     'mode.reset': {
-      [!code highlight:1]
+      // [!code highlight:1]
       target: '.system',
     },
   },
@@ -421,7 +421,7 @@ const machine = createMachine({
   on: {
     // This event will transition both regions to specific states
     'set.dark.custom': {
-      [!code highlight:1]
+      // [!code highlight:1]
       target: ['.mode.dark', '.theme.custom'],
     },
     // This event will transition one region while leaving the other unchanged
@@ -454,7 +454,7 @@ const feedbackMachine = createMachine({
   // ...
   on: {
     exit: {
-      [!code highlight:1]
+      // [!code highlight:1]
       description: 'Closes the feedback form',
       target: '.closed',
     },

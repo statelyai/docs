@@ -83,7 +83,7 @@ const feedbackMachine = createMachine({
 
   // Finite states
   states: {
-    [!code highlight:1]
+    // [!code highlight:1]
     prompt: {
       /* ... */
     },
@@ -293,7 +293,7 @@ const feedbackMachine = createMachine({
       initial: 'normal',
       states: {
         normal: {},
-        [!code highlight:1]
+        // [!code highlight:1]
         happy: {},
       },
     },
@@ -371,7 +371,7 @@ const feedbackMachine = createMachine({
   },
   on: {
     'feedback.close': {
-      [!code highlight:1]
+      // [!code highlight:1]
       target: '#finished',
     },
   },
@@ -390,7 +390,7 @@ const feedbackMachine = createMachine({
   states: {
     // ...
     closed: {
-      [!code highlight:1]
+      // [!code highlight:1]
       id: 'finished',
       type: 'final',
     },

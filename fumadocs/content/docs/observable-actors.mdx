@@ -53,7 +53,7 @@ import { interval } from 'rxjs';
 const intervalLogic = fromObservable(({ input }) => interval(input.interval));
 
 const intervalActor = createActor(intervalLogic, {
-  [!code highlight:1]
+  // [!code highlight:1]
   input: { interval: 10_000 },
 });
 intervalActor.subscribe((snapshot) => {

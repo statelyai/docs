@@ -25,7 +25,7 @@ const checkoutMachine = createMachine({
       states: {
         card: {},
         paypal: {},
-        [!code highlight:1]
+        // [!code highlight:1]
         hist: { type: 'history' },
       },
     },

@@ -259,7 +259,7 @@ loading: {
   invoke: {
     src: someSrc,
     // refers to `someSrc` being done
-    [!code highlight:1]
+    // [!code highlight:1]
     onDone: {/* ... */}
   },
   initial: 'loadFoo',
@@ -269,7 +269,7 @@ loading: {
     loadingComplete: { type: 'final' }
   },
   // refers to 'loading.loadingComplete' being reached
-  [!code highlight:1]
+  // [!code highlight:1]
   onDone: { target: 'loaded' }
 }
 // ...
@@ -729,13 +729,13 @@ An invoked actor (or [spawned actor](./spawn.mdx)) can _respond_ to another acto
 // Parent
 actions: sendTo('childActor', ({ self }) => ({
   type: 'ping',
-  [!code highlight:1]
+  // [!code highlight:1]
   sender: self,
 }));
 
 // Child
 actions: sendTo(
-  [!code highlight:1]
+  // [!code highlight:1]
   ({ event }) => event.sender,
   { type: 'pong' },
 );

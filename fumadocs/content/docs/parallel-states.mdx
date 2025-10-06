@@ -23,7 +23,7 @@ import { createMachine, assign } from 'xstate';
 
 const playerMachine = createMachine({
   id: 'player',
-  [!code highlight:1]
+  // [!code highlight:1]
   type: 'parallel',
   states: {
     track: {
@@ -99,7 +99,7 @@ export const machine = createMachine({
               },
             },
             beansGround: {
-              [!code highlight:1]
+              // [!code highlight:1]
               type: 'final',
             },
           },
@@ -115,7 +115,7 @@ export const machine = createMachine({
               },
             },
             waterBoiled: {
-              [!code highlight:1]
+              // [!code highlight:1]
               type: 'final',
             },
           },

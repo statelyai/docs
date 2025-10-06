@@ -89,7 +89,7 @@ const promiseLogic = fromPromise(async () => {
 });
 
 function Component() {
-  [!code highlight:1]
+  // [!code highlight:1]
   const [state, send] = useActor(promiseLogic);
 
   if (state.status === 'done') {

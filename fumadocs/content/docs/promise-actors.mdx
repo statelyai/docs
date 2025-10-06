@@ -60,7 +60,7 @@ const promiseLogic = fromPromise(async ({ input }) => {
 });
 
 const promiseActor = createActor(promiseLogic, {
-  [!code highlight:1]
+  // [!code highlight:1]
   input: { id: '123' },
 });
 ```
@@ -167,7 +167,7 @@ import { fromPromise, createActor } from 'xstate';
 const promiseLogic = fromPromise(
   async ({
     input,
-    [!code highlight:1]
+    // [!code highlight:1]
     signal,
   }) => {
     // [!code highlight:2]

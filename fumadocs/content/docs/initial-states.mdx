@@ -16,7 +16,7 @@ const feedbackMachine = createMachine({
 
   // Finite states
   states: {
-    [!code highlight:1]
+    // [!code highlight:1]
     prompt: {
       /* ... */
     },
@@ -50,7 +50,7 @@ When the machine reaches the `'red'` parent state, it will also be in the `'red.
 import { createMachine } from 'xstate';
 
 const trafficLightMachine = createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   initial: 'green',
   states: {
     green: {
@@ -60,7 +60,7 @@ const trafficLightMachine = createMachine({
       /* ... */
     },
     red: {
-      [!code highlight:1]
+      // [!code highlight:1]
       initial: 'walk',
       states: {
         walk: {

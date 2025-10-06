@@ -21,12 +21,12 @@ const feedbackMachine = setup({
     },
   },
 }).createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   context: ({ input }) => ({
-    [!code highlight:1]
+    // [!code highlight:1]
     userId: input.userId,
     feedback: '',
-    [!code highlight:1]
+    // [!code highlight:1]
     rating: input.defaultRating,
   }),
   // ...
@@ -187,7 +187,7 @@ const feedbackMachine = setup({
   },
   invoke: {
     src: 'fetchUser',
-    [!code highlight:1]
+    // [!code highlight:1]
     input: ({ context }) => ({ userId: context.userId }),
   },
   // ...
@@ -232,7 +232,7 @@ const feedbackMachine = setup({
       actions: assign({
         emailRef: ({ context, spawn }) => {
           return spawn('emailUser', {
-            [!code highlight:1]
+            // [!code highlight:1]
             input: { userId: context.userId },
           });
         },
@@ -406,7 +406,7 @@ const feedbackMachine = createMachine({
   invoke: {
     src: 'fetchUser',
     input: ({ event }) => {
-      [!code highlight:1]
+      // [!code highlight:1]
       assertEvent(event, 'messageSent');
       return {
         message: event.message,

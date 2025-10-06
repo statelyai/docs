@@ -22,7 +22,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           'feedback.submit': {
-            [!code highlight:1]
+            // [!code highlight:1]
             guard: 'isValid',
             target: 'submitting',
           },
@@ -107,7 +107,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           submit: {
-            [!code highlight:1]
+            // [!code highlight:1]
             guard: { type: 'isValid', params: { maxLength: 50 } },
             target: 'submitting',
           },
@@ -201,7 +201,7 @@ on: {
   someEvent: {
     // Equivalent to:
     // guard: { type: 'someGuard' }
-    [!code highlight:1]
+    // [!code highlight:1]
     guard: 'someGuard';
   }
 }
@@ -259,7 +259,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           'feedback.submit': {
-            [!code highlight:1]
+            // [!code highlight:1]
             guard: 'isValid',
             target: 'submitting',
           },

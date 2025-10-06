@@ -10,7 +10,7 @@ In XState, a system is implicitly created from the root actor, which is the acto
 import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   entry: ({ system }) => {
     // ...
   },
@@ -54,7 +54,7 @@ const formMachine = createMachine({
   // ...
   on: {
     submit: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: sendTo(({ system }) => system.get('notifier'), {
         type: 'notify',
         message: 'Form submitted!',
@@ -65,7 +65,7 @@ const formMachine = createMachine({
 
 const feedbackMachine = createMachine({
   invoke: {
-    [!code highlight:1]
+    // [!code highlight:1]
     systemId: 'formMachine',
     src: formMachine,
   },
@@ -97,7 +97,7 @@ const todosMachine = createMachine({
       actions: assign({
         todos: ({ context, spawn }) => {
           const newTodo = spawn(todoMachine, {
-            [!code highlight:1]
+            // [!code highlight:1]
             systemId: `todo-${context.todos.length}`,
           });
 
@@ -142,7 +142,7 @@ For best results, use the latest TypeScript version. [Read more about XState and
 import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   entry: ({ system }) => {
     // ...
   },
@@ -159,7 +159,7 @@ actor.system;
 import { createActor } from 'xstate';
 
 const actor = createActor(machine, {
-  [!code highlight:1]
+  // [!code highlight:1]
   systemId: 'root-id',
 });
 
@@ -175,7 +175,7 @@ const formMachine = createMachine({
   // ...
   on: {
     submit: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: sendTo(({ system }) => system.get('notifier'), {
         type: 'notify',
         message: 'Form submitted!',
@@ -186,7 +186,7 @@ const formMachine = createMachine({
 
 const feedbackMachine = createMachine({
   invoke: {
-    [!code highlight:1]
+    // [!code highlight:1]
     systemId: 'formMachine',
     src: formMachine,
   },
@@ -218,7 +218,7 @@ const todosMachine = createMachine({
       actions: assign({
         todos: ({ context, spawn }) => {
           const newTodo = spawn(todoMachine, {
-            [!code highlight:1]
+            // [!code highlight:1]
             systemId: `todo-${context.todos.length}`,
           });
 

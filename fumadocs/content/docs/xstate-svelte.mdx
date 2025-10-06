@@ -98,7 +98,7 @@ const persistedState = JSON.parse(
 );
 
 const { snapshot, send } = useMachine(someMachine, {
-  [!code highlight:1]
+  // [!code highlight:1]
   snapshot: persistedState,
 });
 

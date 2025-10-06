@@ -37,7 +37,7 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
   {
     compilerOptions: {
       // ...
-      [!code highlight:1]
+      // [!code highlight:1]
       strictNullChecks: true,
       // or set `strict` to true, which includes `strictNullChecks`
       // "strict": true
@@ -316,7 +316,7 @@ const machine1 = createMachine({
 const machine2 = createMachine({
   // ...
   entry: assign({
-    [!code highlight:1]
+    // [!code highlight:1]
     child: ({ spawn }) => spawn('someChildLogic'),
   }),
 });
@@ -333,7 +333,7 @@ import { assign, spawn } from 'xstate';
 const machine = createMachine({
   // ...
   entry: assign({
-    [!code highlight:1]
+    // [!code highlight:1]
     child: () => spawn('someChildLogic'),
   }),
 });
@@ -353,7 +353,7 @@ The `machine.transition(…)` method now requires an "actor scope" for the 3rd a
 // ✅
 import {
   createMachine,
-  [!code highlight:1]
+  // [!code highlight:1]
   getNextSnapshot,
 } from 'xstate';
 
@@ -428,7 +428,7 @@ const machine = createMachine({
   invoke: {
     src: 'someSource',
     id: 'someId'
-    [!code highlight:1]
+    // [!code highlight:1]
     autoForward: true // deprecated
   }
 });
@@ -573,7 +573,7 @@ const someMachine = setup({
   on: {
     someEvent: {
       // ...
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: ['recordEvent']
     }
   }
@@ -581,7 +581,7 @@ const someMachine = setup({
 
 const someActor = createActor(someMachine);
 someActor.subscribe(snapshot => {
-  [!code highlight:1]
+  // [!code highlight:1]
   console.log(snapshot.context.event);
 });
 ````
@@ -597,7 +597,7 @@ import { someMachine } from './someMachine';
 
 const actor = interpret(someMachine);
 actor.subscribe((state) => {
-  [!code highlight:1]
+  // [!code highlight:1]
   console.log(state.event); // Removed
 });
 ```
@@ -2396,10 +2396,10 @@ import { useMachine } from '@xstate/vue';
 // ...
 
 const {
-  [!code highlight:1]
+  // [!code highlight:1]
   snapshot, // Renamed from `state`
   send,
-  [!code highlight:1]
+  // [!code highlight:1]
   actor, // Renamed from `service`
 } = useMachine(someMachine);
 ```
@@ -2415,10 +2415,10 @@ import { useMachine } from '@xstate/vue';
 // ...
 
 const {
-  [!code highlight:1]
+  // [!code highlight:1]
   state, // Renamed to `snapshot` in @xstate/vue 3.0.0
   send,
-  [!code highlight:1]
+  // [!code highlight:1]
   service, // Renamed to `actor` in @xstate/vue 3.0.0
 } = useMachine(someMachine);
 ```

@@ -32,12 +32,12 @@ Use the latest version of TypeScript; version 5.0 or greater is required.
 {
   compilerOptions: {
     // ...
-    [!code highlight:1]
+    // [!code highlight:1]
     strictNullChecks: true,
     // or set `strict` to true, which includes `strictNullChecks`
     // "strict": true,
 
-    [!code highlight:1]
+    // [!code highlight:1]
     skipLibCheck: true,
   },
 }
@@ -146,7 +146,7 @@ const machine = createMachine({
 
         // Calling `assertEvent` will throw if
         // the event is not the expected type.
-        [!code highlight:1]
+        // [!code highlight:1]
         assertEvent(event, 'greet');
 
         // Now we know the event is a `greet` event,
@@ -156,7 +156,7 @@ const machine = createMachine({
       // ...
       exit: ({ event }) => {
         // You can also assert multiple possible event types.
-        [!code highlight:1]
+        // [!code highlight:1]
         assertEvent(event, ['greet', 'log']);
 
         // Now we know the event is a `greet` or `log` event,
@@ -192,7 +192,7 @@ const machine = createMachine({
       invoke: {
         src: 'someActor',
         input: ({ event }) => {
-          [!code highlight:1]
+          // [!code highlight:1]
           assertEvent(event, 'messageSent');
 
           return { message: event.message };

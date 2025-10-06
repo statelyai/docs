@@ -13,14 +13,14 @@ import { setup, emit } from 'xstate';
 
 const machine = setup({
   actions: {
-    [!code highlight:1]
+    // [!code highlight:1]
     emitEvent: emit({ type: 'notification' }),
   },
 }).createMachine({
   // ...
   on: {
     someEvent: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: { type: 'emitEvent' },
     },
   },

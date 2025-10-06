@@ -50,7 +50,7 @@ import { setup } from 'xstate';
 
 const machine = setup({
   types: {
-    [!code highlight:1]
+    // [!code highlight:1]
     tags: {} as 'pending' | 'success' | 'error',
   },
 }).createMachine({
