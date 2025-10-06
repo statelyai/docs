@@ -1,0 +1,16 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "about",
+    "get-started",
+    "core-concepts", 
+    "studio",
+    "actors",
+    "state-machines",
+    "agents",
+    "guides",
+    "packages",
+    "developer-tools",
+    "glossary"
+  ]
+}

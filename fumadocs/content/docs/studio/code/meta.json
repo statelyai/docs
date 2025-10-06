@@ -1,0 +1,10 @@
+{
+  "title": "Code",
+  "pages": [
+    "import-from-code",
+    "import-from-github",
+    "generate-test-paths",
+    "sources",
+    "export-as-code"
+  ]
+}

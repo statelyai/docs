@@ -1,0 +1,25 @@
+{
+  "title": "State machines",
+  "pages": [
+    "machines",
+    "setup",
+    "states",
+    "context",
+    "input",
+    "output",
+    "transitions",
+    "eventless-transitions",
+    "delayed-transitions",
+    "actions",
+    "guards",
+    "initial-states",
+    "finite-states",
+    "parent-states",
+    "parallel-states",
+    "final-states",
+    "history-states",
+    "persistence",
+    "tags",
+    "event-emitter"
+  ]
+}
