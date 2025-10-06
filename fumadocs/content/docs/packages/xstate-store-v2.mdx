@@ -263,7 +263,7 @@ const sub = store.on('incremented', (event) => {
 store.send({ type: 'inc', by: 10 });
 
 // Stop listening for emitted events
-[!code highlight:1]
+// [!code highlight:1]
 sub.unsubscribe();
 ```
 
@@ -308,7 +308,7 @@ sub.unsubscribe();
 You can use the [Stately Inspector](./inspector.mdx) to inspect and visualize the state of the store.
 
 ```ts
-[!code highlight:1]
+// [!code highlight:1]
 import { createBrowserInspector } from '@statelyai/inspect';
 import { createStore } from '@xstate/store';
 
@@ -321,7 +321,7 @@ const inspector = createBrowserInspector({
   // ...
 });
 
-[!code highlight:1]
+// [!code highlight:1]
 store.inspect(inspector);
 ```
 
@@ -331,7 +331,7 @@ If you want to use [Immer](https://immerjs.github.io/immer/) to update the `cont
 
 ```ts
 import { createStoreWithProducer } from '@xstate/store';
-[!code highlight:1]
+// [!code highlight:1]
 import { produce } from 'immer';
 
 const store = createStoreWithProducer(
@@ -366,7 +366,7 @@ If you are using React, you can use the `useSelector(store, selector)` hook to s
 
 ```tsx
 import { createStore } from '@xstate/store';
-[!code highlight:1]
+// [!code highlight:1]
 import { useSelector } from '@xstate/store/react';
 
 // Create a store

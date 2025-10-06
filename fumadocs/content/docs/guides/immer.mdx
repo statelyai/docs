@@ -48,7 +48,7 @@ XState already allows you to immutably update `context` partially or completely 
 
 ```ts
 import { createMachine, assign } from 'xstate';
-[!code highlight:1]
+// [!code highlight:1]
 import { produce } from 'immer';
 
 const machine = createMachine({

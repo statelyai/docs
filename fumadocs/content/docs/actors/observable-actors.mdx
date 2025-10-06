@@ -28,7 +28,7 @@ You can define observable actor logic using the `fromObservable(...)` actor logi
 import { fromObservable, createActor } from 'xstate';
 import { interval } from 'rxjs';
 
-[!code highlight:1]
+// [!code highlight:1]
 const intervalLogic = fromObservable(() => interval(1000));
 
 const intervalActor = createActor(intervalLogic);
@@ -49,7 +49,7 @@ You can pass in `input` to an observable actor by passing it to the `createActor
 import { fromObservable, createActor } from 'xstate';
 import { interval } from 'rxjs';
 
-[!code highlight:1]
+// [!code highlight:1]
 const intervalLogic = fromObservable(({ input }) => interval(input.interval));
 
 const intervalActor = createActor(intervalLogic, {

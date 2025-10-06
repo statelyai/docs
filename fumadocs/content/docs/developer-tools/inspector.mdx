@@ -24,11 +24,11 @@ Then import the relevant inspector creator into your app. The creator is used to
 
 ```ts
 import { createActor } from 'xstate';
-[!code highlight:1]
+// [!code highlight:1]
 import { createBrowserInspector } from '@statelyai/inspect';
 import { machine } from './machine';
 
-[!code highlight:1]
+// [!code highlight:1]
 const { inspect } = createBrowserInspector();
 
 // ...

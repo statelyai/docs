@@ -50,7 +50,7 @@ For promise actors, transition actors, observable actors, and callback actors, y
 ```ts
 import { fromPromise } from 'xstate';
 
-[!code highlight:1]
+// [!code highlight:1]
 const logic = fromPromise(async ({ emit }) => {
   // ...
   // [!code highlight:4]
@@ -67,7 +67,7 @@ const logic = fromPromise(async ({ emit }) => {
 ```ts
 import { fromTransition } from 'xstate';
 
-[!code highlight:1]
+// [!code highlight:1]
 const logic = fromTransition((state, event, { emit }) => {
   // ...
   // [!code highlight:4]
@@ -85,7 +85,7 @@ const logic = fromTransition((state, event, { emit }) => {
 ```ts
 import { fromObservable } from 'xstate';
 
-[!code highlight:1]
+// [!code highlight:1]
 const logic = fromObservable(({ emit }) => {
   // ...
   // [!code highlight:4]
@@ -102,7 +102,7 @@ const logic = fromObservable(({ emit }) => {
 ```ts
 import { fromCallback } from 'xstate';
 
-[!code highlight:1]
+// [!code highlight:1]
 const logic = fromCallback(({ emit }) => {
   // ...
   // [!code highlight:4]

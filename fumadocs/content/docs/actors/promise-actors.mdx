@@ -124,7 +124,7 @@ import { somePromiseLogic } from './somePromiseLogic';
 const promiseActor = createActor(somePromiseLogic);
 promiseActor.start();
 
-[!code highlight:1]
+// [!code highlight:1]
 const output = await toPromise(promiseActor);
 
 console.log(output);

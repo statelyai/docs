@@ -282,7 +282,7 @@ _Since XState version 5.19.0_
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
 
 ```ts
-[!code highlight:1]
+// [!code highlight:1]
 import { createMachine, initialTransition, transition } from 'xstate';
 
 const machine = createMachine({
@@ -299,7 +299,7 @@ const machine = createMachine({
   },
 });
 
-[!code highlight:1]
+// [!code highlight:1]
 const [initialState, initialActions] = initialTransition(machine);
 
 console.log(initialState.value);
@@ -308,7 +308,7 @@ console.log(initialState.value);
 console.log(initialActions);
 // logs []
 
-[!code highlight:1]
+// [!code highlight:1]
 const [nextState, actions] = transition(machine, initialState, {
   type: 'start',
 });
@@ -323,7 +323,9 @@ console.log(actions);
 ## Determining the next state
 
 <Callout type="warning">
-It is recommended to use the `initialTransition(…)` and `transition(…)` functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which will be deprecated.
+  It is recommended to use the `initialTransition(…)` and `transition(…)`
+  functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which
+  will be deprecated.
 </Callout>
 
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
