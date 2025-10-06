@@ -92,10 +92,10 @@ const feedbackMachine = setup({
     // highlight-end
   },
 }).createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   context: ({ input }) => ({
     feedback: '',
-    [!code highlight:1]
+    // [!code highlight:1]
     rating: input.defaultRating,
   }),
 });
@@ -249,10 +249,10 @@ const feedbackMachine = setup({
     // highlight-end
   },
 }).createMachine({
-  [!code highlight:1]
+  // [!code highlight:1]
   context: ({ input }) => ({
     feedback: '',
-    [!code highlight:1]
+    // [!code highlight:1]
     rating: input.defaultRating,
   }),
 });

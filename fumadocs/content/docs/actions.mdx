@@ -367,7 +367,7 @@ import { createMachine, raise } from 'xstate';
 
 const machine = createMachine({
   // ...
-  [!code highlight:1]
+  // [!code highlight:1]
   entry: raise({ type: 'someEvent', data: 'someData' });
 });
 ```
@@ -399,7 +399,7 @@ const machine = createMachine({
   // ...
   entry: raise(
     { type: 'someEvent' },
-    [!code highlight:1]
+    // [!code highlight:1]
     { delay: 1000 }
   );
 });
@@ -742,14 +742,14 @@ const machine = createMachine({
         'someActor',
         { type: 'someEvent' },
         {
-          [!code highlight:1]
+          // [!code highlight:1]
           id: 'someId',
           delay: 1000,
         },
       ),
     },
     cancelEvent: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: cancel('someId'),
     },
   },
@@ -769,11 +769,11 @@ const machine = createMachine({
   }),
   on: {
     stopById: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: stopChild('spawnedId'),
     },
     stopByRef: {
-      [!code highlight:1]
+      // [!code highlight:1]
       actions: stopChild(({ context }) => context.spawnedRef),
     },
   },

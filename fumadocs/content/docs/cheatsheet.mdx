@@ -6,30 +6,30 @@ Use this cheatsheet to quickly look up the syntax for XState v5.
 
 ## Installing XState
 
-<Tabs>
-<TabItem value="npm" label="npm">
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+<Tab value="npm" label="npm">
 
 ```bash
 npm install xstate
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="pnpm" label="pnpm">
+<Tab value="pnpm" label="pnpm">
 
 ```bash
 pnpm install xstate
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="yarn" label="yarn">
+<Tab value="yarn" label="yarn">
 
 ```bash
 yarn add xstate
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 [Read more on installing XState](installation.mdx).
@@ -267,14 +267,14 @@ const machine = setup({
   initial: 'active',
   states: {
     active: {
-      [!code highlight:1]
+      // [!code highlight:1]
       entry: { type: 'activate' },
-      [!code highlight:1]
+      // [!code highlight:1]
       exit: { type: 'deactivate' },
       on: {
         toggle: {
           target: 'inactive',
-          [!code highlight:1]
+          // [!code highlight:1]
           actions: [{ type: 'notify' }],
         },
       },
@@ -364,7 +364,7 @@ const machine = setup({
         toggle: [
           {
             target: 'active',
-            [!code highlight:1]
+            // [!code highlight:1]
             guard: 'canBeToggled',
           },
           {
@@ -377,7 +377,7 @@ const machine = setup({
       on: {
         toggle: {
           // Guard with params
-          [!code highlight:1]
+          // [!code highlight:1]
           guard: { type: 'isAfterTime', params: { time: '16:00' } },
           target: 'inactive',
         },
@@ -407,7 +407,7 @@ const loadUserLogic = fromPromise(async () => {
 });
 
 const machine = setup({
-  [!code highlight:1]
+  // [!code highlight:1]
   actors: { loadUserLogic },
 }).createMachine({
   id: 'toggle',
