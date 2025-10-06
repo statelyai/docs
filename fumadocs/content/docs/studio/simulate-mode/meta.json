@@ -1,7 +1,4 @@
 {
   "title": "Simulate mode",
-  "pages": [
-    "simulate-mode",
-    "live-simulation"
-  ]
+  "pages": ["simulate-mode", "live-simulation"]
 }

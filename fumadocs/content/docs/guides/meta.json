@@ -1,8 +1,4 @@
 {
   "title": "Guides",
-  "pages": [
-    "testing",
-    "immer",
-    "typegen"
-  ]
+  "pages": ["testing", "immer", "typegen"]
 }

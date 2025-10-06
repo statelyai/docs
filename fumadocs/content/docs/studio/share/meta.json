@@ -1,8 +1,4 @@
 {
   "title": "Share",
-  "pages": [
-    "embed",
-    "image",
-    "url"
-  ]
+  "pages": ["embed", "image", "url"]
 }

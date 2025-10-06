@@ -1,7 +1,4 @@
 {
   "title": "Accounts",
-  "pages": [
-    "sign-up",
-    "upgrade"
-  ]
+  "pages": ["sign-up", "upgrade"]
 }
