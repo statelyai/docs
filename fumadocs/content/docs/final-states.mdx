@@ -142,7 +142,7 @@ const coffeeMachine = createMachine({
           },
         },
       },
-      // highlight-next-line
+      [!code highlight:1]
       onDone: 'brewing',
     },
     brewing: {},
@@ -281,7 +281,7 @@ const coffeeMachine = createMachine({
           },
         },
       },
-      // highlight-next-line
+      [!code highlight:1]
       onDone: 'brewing',
     },
     brewing: {},

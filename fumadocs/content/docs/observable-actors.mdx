@@ -4,11 +4,11 @@ title: Observable Actors
 
 Observable actors are actors that represent an observable stream of values. This makes it easy to interop with observable libraries like RxJS.
 
-:::tip
+<Callout>
 
 All XState actors are observable.
 
-:::
+</Callout>
 
 ## Observable actor capabilities
 
@@ -28,7 +28,7 @@ You can define observable actor logic using the `fromObservable(...)` actor logi
 import { fromObservable, createActor } from 'xstate';
 import { interval } from 'rxjs';
 
-// highlight-next-line
+[!code highlight:1]
 const intervalLogic = fromObservable(() => interval(1000));
 
 const intervalActor = createActor(intervalLogic);
@@ -49,11 +49,11 @@ You can pass in `input` to an observable actor by passing it to the `createActor
 import { fromObservable, createActor } from 'xstate';
 import { interval } from 'rxjs';
 
-// highlight-next-line
+[!code highlight:1]
 const intervalLogic = fromObservable(({ input }) => interval(input.interval));
 
 const intervalActor = createActor(intervalLogic, {
-  // highlight-next-line
+  [!code highlight:1]
   input: { interval: 10_000 },
 });
 intervalActor.subscribe((snapshot) => {

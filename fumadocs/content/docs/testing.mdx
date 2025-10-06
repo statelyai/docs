@@ -52,11 +52,11 @@ test('some actor', async () => {
 });
 ```
 
-:::studio
+<Callout>
 
 You can now [generate test paths from your state machines in Stately Studio](generate-test-paths.mdx). You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade your existing plan](https://stately.ai/registry/billing).
 
-:::
+</Callout>
 
 ## Testing actors
 
@@ -200,10 +200,10 @@ test('mocking promise actors', async () => {
 
 ## Using `@xstate/test`
 
-:::warning
+<Callout type="warning">
 
 The XState Test model-based testing utilities have moved into `xstate` itself and are now available under `xstate/graph`. The standalone `@xstate/test` package is deprecated in favor of the integrated testing utilities.
 
-:::
+</Callout>
 
 The model-based testing utilities allow you to automatically generate test cases from your state machines, ensuring comprehensive coverage of all possible paths and edge cases.

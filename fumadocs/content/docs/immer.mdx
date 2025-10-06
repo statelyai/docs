@@ -4,11 +4,11 @@ title: 'Usage with Immer'
 
 [Immer](https://immerjs.github.io/immer/) is a library that makes it more convenient to work with updating data immutably. It can be used with XState to immutably update `context` in assignments.
 
-:::note
+<Callout>
 
 It is recommended to use Immer directly with XState instead of the `@xstate/immer` package, which is deprecated.
 
-:::
+</Callout>
 
 ## Installation
 
@@ -48,7 +48,7 @@ XState already allows you to immutably update `context` partially or completely 
 
 ```ts
 import { createMachine, assign } from 'xstate';
-// highlight-next-line
+[!code highlight:1]
 import { produce } from 'immer';
 
 const machine = createMachine({

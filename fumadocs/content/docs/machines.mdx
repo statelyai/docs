@@ -4,11 +4,11 @@ title: 'State machines'
 
 A [state machine](state-machines-and-statecharts.mdx) is a model that describes the behavior of something, for example an [actor](actors.mdx). [Finite state](finite-states.mdx) machines describe how the state of an actor transitions to another state when an [event](transitions.mdx) occurs.
 
-:::tip
+<Callout>
 
 Read our [introduction to state machines and statecharts](state-machines-and-statecharts.mdx) if you haven’t already!
 
-:::
+</Callout>
 
 ## Benefits of state machines
 
@@ -284,7 +284,7 @@ _Since XState version 5.19.0_
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
 
 ```ts
-// highlight-next-line
+[!code highlight:1]
 import { createMachine, initialTransition, transition } from 'xstate';
 
 const machine = createMachine({
@@ -301,7 +301,7 @@ const machine = createMachine({
   },
 });
 
-// highlight-next-line
+[!code highlight:1]
 const [initialState, initialActions] = initialTransition(machine);
 
 console.log(initialState.value);
@@ -310,7 +310,7 @@ console.log(initialState.value);
 console.log(initialActions);
 // logs []
 
-// highlight-next-line
+[!code highlight:1]
 const [nextState, actions] = transition(machine, initialState, {
   type: 'start',
 });
@@ -324,9 +324,9 @@ console.log(actions);
 
 ## Determining the next state
 
-:::warning
+<Callout type="warning">
 It is recommended to use the `initialTransition(…)` and `transition(…)` functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which will be deprecated.
-:::
+</Callout>
 
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
 
@@ -442,13 +442,13 @@ All state configurations created with `.createStateConfig(...)` have the full ty
 
 ## Machines and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 The best way to provide strong typing for your machine is to use the `setup(...)` function and/or the `.types` property.
 

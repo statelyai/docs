@@ -2,6 +2,9 @@
 title: Notes
 ---
 
+import { EmbedMachine } from '../components/EmbedMachine';
+import { PlusSquare } from 'lucide-react';
+
 You can use notes to annotate your machine, positioned anywhere inside your machine. Notes are useful for information or comments you want to add to your machine that are only visible inside Stately Studio and not included when you export as code.
 
 <EmbedMachine
@@ -11,11 +14,11 @@ You can use notes to annotate your machine, positioned anywhere inside your mach
 
 Notes are formatted with Markdown so you can add links, images, and other formatting to your annotations.
 
-:::tip
+<Callout>
 
 Unlike [**descriptions**](descriptions.mdx), notes don’t need to be connected to a state or transition and can be added or positioned anywhere inside your machine.
 
-:::
+</Callout>
 
 ## Add notes to your machine
 
@@ -23,7 +26,7 @@ You can add notes anywhere on your machine from **Design** and **Simulate** mode
 
 Notes are unrelated to a state or transition. Still, their layout position is connected to the closest root or parent state when you create them, which helps give your notes enough space in the auto layout.
 
-- Use the <PlusSquare size={18}/> plus icon button in the canvas tools and choose **Note**.
+- Use the <PlusSquare size={18} /> plus icon button in the canvas tools and choose **Note**.
 - Right-click anywhere on the canvas and choose **Add note**.
 
 ### Edit and delete notes

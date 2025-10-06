@@ -267,14 +267,14 @@ const machine = setup({
   initial: 'active',
   states: {
     active: {
-      // highlight-next-line
+      [!code highlight:1]
       entry: { type: 'activate' },
-      // highlight-next-line
+      [!code highlight:1]
       exit: { type: 'deactivate' },
       on: {
         toggle: {
           target: 'inactive',
-          // highlight-next-line
+          [!code highlight:1]
           actions: [{ type: 'notify' }],
         },
       },
@@ -364,7 +364,7 @@ const machine = setup({
         toggle: [
           {
             target: 'active',
-            // highlight-next-line
+            [!code highlight:1]
             guard: 'canBeToggled',
           },
           {
@@ -377,7 +377,7 @@ const machine = setup({
       on: {
         toggle: {
           // Guard with params
-          // highlight-next-line
+          [!code highlight:1]
           guard: { type: 'isAfterTime', params: { time: '16:00' } },
           target: 'inactive',
         },
@@ -407,7 +407,7 @@ const loadUserLogic = fromPromise(async () => {
 });
 
 const machine = setup({
-  // highlight-next-line
+  [!code highlight:1]
   actors: { loadUserLogic },
 }).createMachine({
   id: 'toggle',

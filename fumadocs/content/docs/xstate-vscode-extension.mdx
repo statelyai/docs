@@ -6,11 +6,11 @@ title: 'XState VS Code extension'
 
 The [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) enhances the XState development experience by providing VS Code users with autocomplete, typegen, linting, and a visual editor inside VS Code.
 
-:::tip
+<Callout>
 
 If you don’t use VS Code but use an open source code editor that supports VS Code extensions, you can [download the XState VS Code extension from the OpenVSX registry](https://open-vsx.org/extension/statelyai/stately-vscode).
 
-:::
+</Callout>
 
 ## Installation
 
@@ -53,7 +53,7 @@ If you’d like to ignore linting/autocomplete on a machine, add an `// xstate-i
 createMachine({});
 ```
 
-:::tip
+<Callout>
 
 ## Machine layout persistence
 
@@ -67,10 +67,10 @@ createMachine({...});
 
 This layout string is for persisting manual changes you make to the machine’s layout and is automatically updated by the XState Extension whenever layout changes occur. It is not intended to be human-readable nor manually edited. When updates to this string are made by the extension, the file is not saved until a manual save is performed. The layout algorithm is able to interpret this string and automatically format the machine's layout whenever it is re-opened in Stately Studio’s editor.
 
-:::
+</Callout>
 
-:::warning
+<Callout type="warning">
 
 **Caution**: if you use tab based-indentation in VS Code the extension might not work. [Setup VS Code to insert spaces](https://code.visualstudio.com/docs/editor/codebasics#_indentation) automatically.
 
-:::
+</Callout>

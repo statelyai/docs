@@ -6,11 +6,11 @@ A **transition** is a change from one finite state to another, triggered by an e
 
 An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
 
-:::studio
+<Callout>
 
 You can visualize your state machines and easily add transitions in our drag-and-drop Stately editor. [Read more about transitions in Stately's editor](/docs/editor-states-and-transitions/#transitions-and-events).
 
-:::
+</Callout>
 
 <EmbedMachine
   name="Video player"
@@ -127,11 +127,11 @@ const machine = createMachine({
   title="Self-transition on state"
 />
 
-:::studio
+<Callout>
 
 You can easily visualize self-transitions in Stately's editor. [Read more about self-transitions in Stately's editor](/docs/editor-states-and-transitions/#self-transitions).
 
-:::
+</Callout>
 
 ## Transitions between states
 
@@ -151,7 +151,7 @@ const feedbackMachine = createMachine({
         },
       },
     },
-    // highlight-next-line
+    [!code highlight:1]
     submitting: {
       // ...
     },
@@ -189,7 +189,7 @@ const machine = createMachine({
   },
   on: {
     'mode.reset': {
-      // highlight-next-line
+      [!code highlight:1]
       target: '.system',
     },
   },
@@ -202,11 +202,11 @@ By default, when a state machine transitions from some state to the same state o
 
 This can be changed with the transition `reenter` property: if you want the parent state to be re-entered, you can set `reenter: true`. This will cause the state to re-enter when transitioning to itself or descendent states, executing the `exit` and `entry` actions of the state. It will stop existing invoked actors, and start new invoked actors.
 
-:::tip
+<Callout>
 
 In XState v4, re-entering transitions were known as **external transitions**, and the default transitions were known as **internal transitions**.
 
-:::
+</Callout>
 
 **Self-transitions with `reenter: true`:**
 
@@ -426,7 +426,7 @@ const machine = createMachine({
   on: {
     // This event will transition both regions to specific states
     'set.dark.custom': {
-      // highlight-next-line
+      [!code highlight:1]
       target: ['.mode.dark', '.theme.custom'],
     },
     // This event will transition one region while leaving the other unchanged
@@ -459,7 +459,7 @@ const feedbackMachine = createMachine({
   // ...
   on: {
     exit: {
-      // highlight-next-line
+      [!code highlight:1]
       description: 'Closes the feedback form',
       target: '.closed',
     },
@@ -496,13 +496,13 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 ## TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 Transitions mainly use the event type that they are enabled by.
 
@@ -664,9 +664,9 @@ console.log(actions);
 
 ## Determining the next state
 
-:::warning
+<Callout type="warning">
 It is recommended to use the `initialTransition(…)` and `transition(…)` functions instead of `getNextSnapshot(…)` and `getInitialSnapshot(…)`, which will be deprecated.
-:::
+</Callout>
 
 When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. If you want to determine the next state outside of the actor, you can use the `getNextSnapshot(…)` function:
 

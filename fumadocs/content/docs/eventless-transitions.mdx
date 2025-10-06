@@ -6,11 +6,11 @@ title: Eventless (always) transitions
 
 Eventless transitions are specified on the `always` state property and often referred to as “always” transitions.
 
-:::studio
+<Callout>
 
 You can easily visualize and simulated eventless transitions in Stately’s editor. [Read more about eventless transitions in Stately’s editor](/docs/editor-states-and-transitions/#eventless-always-transitions).
 
-:::
+</Callout>
 
 ```ts
 import { createMachine } from 'xstate';
@@ -39,11 +39,11 @@ Eventless transitions are taken immediately after normal transitions are taken. 
 
 ## Avoid infinite loops
 
-:::warningxstate
+<Callout>
 
 Since unguarded “always” transitions always run, you should be careful not to create an infinite loop. XState will help guard against most infinite loop scenarios.
 
-:::
+</Callout>
 
 Eventless transitions with no `target` nor `guard` will cause an infinite loop. Transitions using `guard` and `actions` may run into an infinite loop if its `guard` keeps returning true.
 
@@ -104,13 +104,13 @@ const machine = createMachine({
 
 ## Eventless transitions and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 Eventless transitions can potentially be enabled by any event, so the `event` type is the union of all possible events.
 

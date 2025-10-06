@@ -2,6 +2,10 @@
 title: 'Actors'
 ---
 
+import { EmbedMachine } from '../components/EmbedMachine';
+import { VideoIcon } from 'lucide-react';
+import { YouTube } from '../components/YouTube';
+
 When you run a state machine, it becomes an actor: a running process that can receive events, send events and change its behavior based on the events it receives, which can cause effects outside of the actor.
 
 In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the actor’s lifecycle is controlled.
@@ -9,17 +13,19 @@ In state machines, actors can be **invoked** or **spawned**. These are essential
 - An **invoked actor** is started when its parent machine enters the [state](states.mdx) it is invoked in, and stopped when that state is exited.
 - A **spawned actor** is started in a [transition](transitions.mdx) and stopped either with a [`stop(...)` action](/docs/actions/#stop-action) or when its parent machine is stopped.
 
-:::studio
+<Callout>
 
-You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor. [Read more about actors in Stately’s editor](editor-actions-and-actors.mdx).
+You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor.
 
-:::
+[Read more about actors in Stately’s editor](editor-actions-and-actors.mdx).
 
-:::video
+</Callout>
+
+<Callout icon={<VideoIcon size={18} />}>
 
 Watch our [“XState: exploring actors” deep dive video on YouTube](https://www.youtube.com/watch?v=Rj7lOvDwcYs).
 
-:::
+</Callout>
 
 <YouTube id="Rj7lOvDwcYs" />
 
@@ -166,9 +172,8 @@ You can initialize actor logic at a specific persisted snapshot (state) by passi
 const persistedState = JSON.parse(localStorage.getItem('some-persisted-state'));
 
 const actor = createActor(someLogic, {
-  // highlight-start
+  // [!code highlight:1]
   snapshot: persistedState,
-  // highlight-end
 });
 
 actor.subscribe(() => {
@@ -224,12 +229,11 @@ actor.subscribe({
   next: (snapshot) => {
     // ...
   },
-  // highlight-start
+  // [!code highlight:4]
   error: (err) => {
     // Handle the error here
     console.error(err);
   },
-  // highlight-end
 });
 
 actor.start();
@@ -479,11 +483,10 @@ Callback functions cannot be `async` functions. But it is possible to execute a 
 import { setup, fromCallback } from 'xstate';
 
 const someCallback = fromCallback(({ sendBack }) => {
-  // highlight-start
+  // [!code highlight:3]
   somePromise()
     .then((data) => sendBack({ type: 'done', data }))
     .catch((error) => sendBack({ type: 'error', data: error }));
-  // highlight-end
 
   return () => {
     /* cleanup function */
@@ -501,13 +504,12 @@ const machine = setup({
       invoke: {
         src: 'someCallback',
       },
-      // highlight-start
+      // [!code highlight:4]
       on: {
         error: {
           actions: ({ event }) => console.error(event.data),
         },
       },
-      // highlight-end
     },
   },
 });
@@ -536,11 +538,10 @@ const machine = createMachine({
 const actor = createActor(machine);
 actor.start();
 
-// highlight-start
+// [!code highlight:3]
 // Creates a promise that resolves with the actor's output
 // or rejects with the actor's error
 const output = await toPromise(actor);
-// highlight-end
 
 console.log(output);
 // => { count: 42 }
@@ -563,7 +564,7 @@ const toggleLogic = fromTransition((state, event) => {
   return state;
 }, 'paused');
 
-// highlight-start
+// [!code highlight:13]
 function withLogging<T extends AnyActorLogic>(actorLogic: T) {
   const enhancedLogic = {
     ...actorLogic,
@@ -577,7 +578,6 @@ function withLogging<T extends AnyActorLogic>(actorLogic: T) {
 }
 
 const loggingToggleLogic = withLogging(toggleLogic);
-// highlight-end
 ```
 
 ## Custom actor logic
@@ -655,13 +655,13 @@ function Component(props: { actor?: AnyActorRef }) {
 
 ## Actors and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You can strongly type the `actors` of your machine in the `types.actors` property of the machine config.
 
@@ -681,11 +681,11 @@ const machine = setup({
       fetch2: 'fetcher';
     }
   }
-  // highlight-next-line
+  // [!code highlight:1]
   actors: { fetcher }
 }).createMachine({
   invoke: {
-    // highlight-start
+    // [!code highlight:8]
     src: 'fetchData', // strongly typed
     id: 'fetch2', // strongly typed
     onDone: {
@@ -694,7 +694,6 @@ const machine = setup({
       },
     },
     input: { userId: '42' }, // strongly typed
-    // highlight-end
   },
 });
 ```

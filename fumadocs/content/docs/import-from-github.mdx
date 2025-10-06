@@ -5,17 +5,17 @@ description: 'Sync your machines from GitHub with Stately Studio.'
 
 You can connect a GitHub repo to a new project in Stately Studio, keeping updates between GitHub and Stately Studio in sync. Connecting a GitHub repo allows you to import your existing machines from GitHub and push changes to your machines back to your repo as pull requests.
 
-:::studio
+<Callout>
 
 Connect GitHub repo is a premium feature of Stately Studio. You can try Stately Studio’s premium plans with a free trial. [Check out the features on our Pro plan](studio-pro-plan.mdx), [Team plan](studio-team-plan.mdx), [Enterprise plan](studio-enterprise-plan.mdx) or [upgrade your existing plan](https://stately.ai/registry/billing).
 
-:::
+</Callout>
 
-:::info
+<Callout>
 While this feature is in beta, it works best when connecting less than
 100 files. For larger repos, we recommend creating single-file PRs.
 Read about that feature [here](/blog/2024-02-16-changelog#make-github-pull-requests-for-single-files-from-inside-stately-studio).
-:::
+</Callout>
 
 ## Connect GitHub repo
 
@@ -25,11 +25,11 @@ Use the **Connect GitHub repo** button found in the Projects dashboard to start 
 2. Select the branch. You can choose any branch in your repo.
 3. Choose the files you want to sync. You can sync any JavaScript or TypeScript files, but only XState machines will be imported.
 
-:::tip
+<Callout>
 
 Choose the XState version for your synced machines from the dropdown menu in the <Code size={18}/> **Code** panel.
 
-:::
+</Callout>
 
 ### Auto-sync
 
@@ -127,8 +127,8 @@ When your machine is hosted at GitHub:
 `https://github.com/username/repo/blob/main/apps/superMachine.ts`, update the URL to
 `https://github.stately.ai/username/repo/blob/main/apps/superMachine.ts` and Stately Studio will start the import.
 
-:::info
+<Callout>
 
 Read more in [our blog post about importing a machine from a GitHub URL](https://stately.ai/blog/2023-02-06-github-import-machines).
 
-:::
+</Callout>

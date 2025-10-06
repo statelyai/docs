@@ -11,17 +11,17 @@ These states are “finite”; the machine can only move through the states you�
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=741f69fd-7f01-4932-9407-6871e225bb6d"
 />
 
-:::studio
+<Callout>
 
 You can visualize your state machines and easily add states in our drag-and-drop Stately editor. [Read more about states in Stately’s editor](editor-states-and-transitions.mdx).
 
-:::
+</Callout>
 
-:::tip
+<Callout>
 
 Watch our [“What are states?” video on YouTube](https://www.youtube.com/watch?v=z-6yhmSWUcc&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=2) (53s).
 
-:::
+</Callout>
 
 ## State object
 
@@ -173,9 +173,9 @@ console.log(currentState.can({ type: 'feedback.submit' }));
 
 A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
 
-:::warningxstate
+<Callout>
 The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
-:::
+</Callout>
 
 ## `state.hasTag(tag)`
 
@@ -291,13 +291,13 @@ states: {
 
 ## States and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 _Coming soon_
 

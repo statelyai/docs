@@ -5,11 +5,11 @@ description: 'You can add source code for actors, actions, and guards from the S
 
 You can add source code for [actors](actors.mdx), [actions](actions.mdx), and [guards](guards.mdx) from the <Code size={18} /> **Sources** panel. Your source code will be included in your [live actors](stately-sky-getting-started.mdx), [synced projects](import-from-github.mdx), and [exported code](export-as-code.mdx) found in the <Code size={18} /> **Code** panel.
 
-:::info
+<Callout>
 
 Sources for [delayed (after) transitions](delayed-transitions.mdx) are not yet supported. You can still use delayed transitions in your machines, but the delay implementation will need to be handled in your exported code rather than defined in the Sources panel.
 
-:::
+</Callout>
 
 ## Adding sources
 
@@ -41,11 +41,11 @@ Would be given a default name of `inline:(machine).a.b#entry[0]`. These default 
 
 You can only delete unused sources that any actors, actions, or guards do not reference. This prevents you from accidentally deleting a currently used source in your machine.
 
-:::tip
+<Callout>
 
 You can **delete all unused sources** from the **...** menu in the top right corner of the **Sources** panel.
 
-:::
+</Callout>
 
 ## Source templates
 

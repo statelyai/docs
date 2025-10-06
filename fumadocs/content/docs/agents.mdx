@@ -2,6 +2,12 @@
 title: 'AI Agents'
 ---
 
+<Callout type="warning">
+
+Stately Agent is still under development.
+
+</Callout>
+
 An AI agent is an autonomous entity that observes an environment, decides what to do (based on its internal policy), and performs actions towards achieving its goals. In terms of the actor model, an agent can be considered an actor that can:
 
 - **Receive events**, such as an instruction on what to do next, which goal to accomplish, or an observation of the environment
@@ -26,30 +32,30 @@ Install the following dependencies:
 - `xstate` – Library for managing state machines and statecharts
 - `zod` – Library for type-safe schema validation
 
-<Tabs>
-<TabItem value="npm" label="npm">
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+<Tab value="npm" label="npm">
 
 ```bash
 npm install @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="pnpm" label="pnpm">
+<Tab value="pnpm" label="pnpm">
 
 ```bash
 pnpm install @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="yarn" label="yarn">
+<Tab value="yarn" label="yarn">
 
 ```bash
 yarn add @statelyai/agent @ai-sdk/openai xstate zod
 ```
 
-</TabItem>
+</Tab>
 </Tabs>
 
 ## Quick start
@@ -83,7 +89,7 @@ import { z } from 'zod';
 const agent = createAgent({
   model: openai('gpt-4-turbo'),
   name: 'todo',
-  // highlight-start
+  // [!code highlight:18]
   events: {
     'todo.add': z.object({
       todo: z
@@ -102,7 +108,6 @@ const agent = createAgent({
       completed: z.boolean().describe('The new completed value').optional(),
     }),
   },
-  // highlight-end
 });
 ```
 
@@ -110,15 +115,14 @@ const agent = createAgent({
 
 ```ts
 import { setup, createActor } from 'xstate';
-// highlight-next-line
+// [!code highlight:1]
 import { agent } from './agent';
 
 const todoMachine = setup({
   types: {
-    // highlight-start
+    // [!code highlight:2]
     // Add the event types that the agent understands
     events: agent.types.events,
-    // highlight-end
   },
   // ...
 }).createMachine({
@@ -127,7 +131,7 @@ const todoMachine = setup({
 
 const todoActor = createActor(todoMachine);
 
-// highlight-next-line
+// [!code highlight:1]
 agent.interact(todoMachine);
 
 todoActor.start();
@@ -212,13 +216,12 @@ const agent = createAgent({
 
 async function handleOrder(order, state) {
   const resolvedState = baristaMachine.resolveState(state);
-  // highlight-start
+  // [!code highlight:5]
   const plan = await agent.decide({
     state: resolvedState,
     machine: baristaMachine,
     goal: `A customer made this order: ${order}`,
   });
-  // highlight-end
 
   return plan;
 }

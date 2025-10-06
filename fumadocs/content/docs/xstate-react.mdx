@@ -49,11 +49,11 @@ bun add xstate @xstate/react
 </TabItem>
 </Tabs>
 
-:::studio
+<Callout>
 
 Want to get started with React extra fast? Try the [generate React app feature in Stately Studio](generate-react.mdx).
 
-:::
+</Callout>
 
 ## Examples
 
@@ -89,7 +89,7 @@ const promiseLogic = fromPromise(async () => {
 });
 
 function Component() {
-  // highlight-next-line
+  [!code highlight:1]
   const [state, send] = useActor(promiseLogic);
 
   if (state.status === 'done') {
@@ -108,11 +108,11 @@ function Component() {
 
 A [React hook](https://reactjs.org/hooks) that creates an actor from the given `machine` and starts an actor that runs for the lifetime of the component.
 
-:::info
+<Callout>
 
 The `useMachine(...)` hook is an alias for the `useActor(...)` hook.
 
-:::
+</Callout>
 
 #### Arguments
 

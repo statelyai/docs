@@ -6,11 +6,11 @@ title: Inspector
 
 Stately Inspector is a tool that allows you to inspect your application’s state visually. It primarily works with frontend applications using XState but can also work with backend code and code that uses any state management solution.
 
-:::new
+<Callout>
 
 [Read about our recent release of Stately Inspector on our blog](/blog/2024-01-15-stately-inspector/).
 
-:::
+</Callout>
 
 ## Install Stately Inspector
 
@@ -24,17 +24,17 @@ Then import the relevant inspector creator into your app. The creator is used to
 
 ```ts
 import { createActor } from 'xstate';
-// highlight-next-line
+[!code highlight:1]
 import { createBrowserInspector } from '@statelyai/inspect';
 import { machine } from './machine';
 
-// highlight-next-line
+[!code highlight:1]
 const { inspect } = createBrowserInspector();
 
 // ...
 
 const actor = createActor(machine, {
-  // highlight-next-line
+  [!code highlight:1]
   inspect,
   // ... other actor options
 });
@@ -44,11 +44,11 @@ actor.start();
 
 When you run your app, a new tab or popup window will open with the Inspector.
 
-:::tip
+<Callout>
 
 When using the browser inspector, ensure that the popup window is not blocked by your browser’s popup blocker.
 
-:::
+</Callout>
 
 ## Inspector options
 

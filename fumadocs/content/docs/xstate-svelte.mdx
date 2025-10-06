@@ -99,7 +99,7 @@ const persistedState = JSON.parse(
 // highlight-end
 
 const { snapshot, send } = useMachine(someMachine, {
-  // highlight-next-line
+  [!code highlight:1]
   snapshot: persistedState,
 });
 

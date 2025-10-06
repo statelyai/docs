@@ -6,11 +6,11 @@ title: '@xstate/store'
 
 XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate.mdx) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
 
-:::info
+<Callout>
 
 The `@xstate/store` library requires TypeScript version 5.4 or above.
 
-:::
+</Callout>
 
 ## Installation
 
@@ -239,15 +239,15 @@ import { createStore } from '@xstate/store';
 
 const store = createStore({
   types: {
-    // highlight-next-line
+    [!code highlight:1]
     emitted: {} as { type: 'incremented'; by: number },
   },
   context: { count: 0 },
   on: {
-    // highlight-next-line
+    [!code highlight:1]
     inc: (context, event: { by: number }, { emit }) => {
       if (event.by > 0) {
-        // highlight-next-line
+        [!code highlight:1]
         emit({ type: 'incremented', by: event.by });
       }
 
@@ -268,7 +268,7 @@ const sub = store.on('incremented', (event) => {
 store.send({ type: 'inc', by: 10 });
 
 // Stop listening for emitted events
-// highlight-next-line
+[!code highlight:1]
 sub.unsubscribe();
 ```
 
@@ -294,11 +294,11 @@ store.inspect((inspectionEvent) => {
 // highlight-end
 ```
 
-:::info
+<Callout>
 
 Since the store is automatically started, inspectors will immediately receive the initial state snapshot.
 
-:::
+</Callout>
 
 The `.inspect(…)` method returns a subscription object:
 
@@ -314,7 +314,7 @@ sub.unsubscribe();
 You can use the [Stately Inspector](./inspector.mdx) to inspect and visualize the state of the store.
 
 ```ts
-// highlight-next-line
+[!code highlight:1]
 import { createBrowserInspector } from '@statelyai/inspect';
 import { createStore } from '@xstate/store';
 
@@ -328,7 +328,7 @@ const inspector = createBrowserInspector({
 });
 // highlight-end
 
-// highlight-next-line
+[!code highlight:1]
 store.inspect(inspector);
 ```
 
@@ -338,7 +338,7 @@ If you want to use [Immer](https://immerjs.github.io/immer/) to update the `cont
 
 ```ts
 import { createStoreWithProducer } from '@xstate/store';
-// highlight-next-line
+[!code highlight:1]
 import { produce } from 'immer';
 
 const store = createStoreWithProducer(
@@ -376,7 +376,7 @@ If you are using React, you can use the `useSelector(store, selector)` hook to s
 
 ```tsx
 import { createStore } from '@xstate/store';
-// highlight-next-line
+[!code highlight:1]
 import { useSelector } from '@xstate/store/react';
 
 // Create a store
@@ -391,7 +391,7 @@ const store = createStore({
 
 // Use the `useSelector` hook to subscribe to the store
 function Component(props) {
-  // highlight-next-line
+  [!code highlight:1]
   const count = useSelector(store, (state) => state.context.count);
 
   // This component displays the count and has a button to increment it
@@ -484,7 +484,7 @@ const storeLogic = fromStore({
 });
 
 const actor = createActor(storeLogic, {
-  // highlight-next-line
+  [!code highlight:1]
   input: 42,
 });
 ```

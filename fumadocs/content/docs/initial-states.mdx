@@ -17,7 +17,7 @@ const feedbackMachine = createMachine({
 
   // Finite states
   states: {
-    // highlight-next-line
+    [!code highlight:1]
     prompt: {
       /* ... */
     },
@@ -28,11 +28,11 @@ const feedbackMachine = createMachine({
 
 In our video player, paused is the initial state because the video player is paused by default and requires user interaction to start playing.
 
-:::video
+<Callout>
 
 Watch our [“What are initial states?” video on YouTube](https://www.youtube.com/watch?v=goCpmgyrjL0&list=PLvWgkXBB3dd4I_l-djWVU2UGPyBgKfnTQ&index=3) (1m17s).
 
-:::
+</Callout>
 
 <EmbedMachine
   name="Video player"
@@ -51,7 +51,7 @@ When the machine reaches the `'red'` parent state, it will also be in the `'red.
 import { createMachine } from 'xstate';
 
 const trafficLightMachine = createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   initial: 'green',
   states: {
     green: {
@@ -61,7 +61,7 @@ const trafficLightMachine = createMachine({
       /* ... */
     },
     red: {
-      // highlight-next-line
+      [!code highlight:1]
       initial: 'walk',
       states: {
         walk: {

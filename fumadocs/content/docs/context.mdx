@@ -46,11 +46,11 @@ const feedbackMachine = createMachine({
 
 The object you pass to `context` will be the initial `context` value for any actor created from this machine.
 
-:::warningxstate
+<Callout>
 
 Do not mutate the `context` object. Instead, you should use the `assign(...)` action to update `context` immutably. If you mutate the `context` object, you may get unexpected behavior, such as mutating the `context` of other actors.
 
-:::
+</Callout>
 
 ### Lazy initial context
 
@@ -92,10 +92,10 @@ const feedbackMachine = setup({
     // highlight-end
   },
 }).createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   context: ({ input }) => ({
     feedback: '',
-    // highlight-next-line
+    [!code highlight:1]
     rating: input.defaultRating,
   }),
 });
@@ -154,13 +154,13 @@ feedbackActor.send({
 
 ## Context and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You can strongly type the `context` of your machine in the `types.context` property of the actor setup..
 
@@ -249,10 +249,10 @@ const feedbackMachine = setup({
     // highlight-end
   },
 }).createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   context: ({ input }) => ({
     feedback: '',
-    // highlight-next-line
+    [!code highlight:1]
     rating: input.defaultRating,
   }),
 });

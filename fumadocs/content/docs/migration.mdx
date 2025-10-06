@@ -4,19 +4,19 @@ title: 'Migrating from XState v4 to v5'
 
 The guide below explains how to migrate from XState version 4 to version 5. Migrating from XState v4 to v5 should be a straightforward process. If you get stuck or have any questions, please reach out to the Stately team on [our Discord](https://discord.gg/xstate).
 
-:::new
+<Callout>
 
 Read [David’s blog post on the launch of XState v5](/blog/2023-12-01-xstate-v5).
 
-:::
+</Callout>
 
 This guide is for developers who want to update their codebase from v4 to v5 and should also be valuable for any developers wanting to know the differences between v4 and v5.
 
-:::video
+<Callout>
 
 Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/live/TRVjeil-y74).
 
-:::
+</Callout>
 
 ## XState v5 and TypeScript
 
@@ -37,7 +37,7 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
   {
     compilerOptions: {
       // ...
-      // highlight-next-line
+      [!code highlight:1]
       strictNullChecks: true,
       // or set `strict` to true, which includes `strictNullChecks`
       // "strict": true
@@ -51,11 +51,11 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
 
 ### Use `createMachine()`, not `Machine()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `Machine(config)` function is now called `createMachine(config)`:
 
@@ -88,11 +88,11 @@ const machine = Machine({
 
 ### Use `createActor()`, not `interpret()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `interpret()` function has been renamed to `createActor()`:
 
@@ -129,11 +129,11 @@ const actor = interpret(machine, {
 
 ### Use `machine.provide()`, not `machine.withConfig()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `machine.withConfig()` method has been renamed to `machine.provide()`:
 
@@ -181,11 +181,11 @@ const specificMachine = machine.withConfig({
 
 ### Set context with `input`, not `machine.withContext()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input.mdx) instead:
 
@@ -229,11 +229,11 @@ const moneyMachine = machine.withContext({
 
 ### Actions ordered by default, `predictableActionArguments` no longer needed
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Actions are now in predictable order by default, so the `predictableActionArguments` flag is no longer required. Assign actions will always run in the order they are defined.
 
@@ -300,7 +300,7 @@ Read the documentation on [spawning actors](./spawn.mdx) for more information.
 
 ```ts
 // ✅
-// highlight-next-line
+[!code highlight:1]
 import { spawnChild, assign } from 'xstate';
 
 // Spawning a direct child:
@@ -317,7 +317,7 @@ const machine1 = createMachine({
 const machine2 = createMachine({
   // ...
   entry: assign({
-    // highlight-next-line
+    [!code highlight:1]
     child: ({ spawn }) => spawn('someChildLogic'),
   }),
 });
@@ -334,7 +334,7 @@ import { assign, spawn } from 'xstate';
 const machine = createMachine({
   // ...
   entry: assign({
-    // highlight-next-line
+    [!code highlight:1]
     child: () => spawn('someChildLogic'),
   }),
 });
@@ -354,7 +354,7 @@ The `machine.transition(…)` method now requires an "actor scope" for the 3rd a
 // ✅
 import {
   createMachine,
-  // highlight-next-line
+  [!code highlight:1]
   getNextSnapshot,
 } from 'xstate';
 
@@ -431,7 +431,7 @@ const machine = createMachine({
   invoke: {
     src: 'someSource',
     id: 'someId'
-    // highlight-next-line
+    [!code highlight:1]
     autoForward: true // deprecated
   }
 });
@@ -444,11 +444,11 @@ const machine = createMachine({
 
 ### Use `state.getMeta()` instead of `state.meta`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `state.meta` property has been renamed to `state.getMeta()`:
 
@@ -474,11 +474,11 @@ state.meta;
 
 ### The `state.toStrings()` method has been removed
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 ```ts
 import { type StateValue } from 'xstate';
@@ -504,11 +504,11 @@ const stateValueStrings = getStateValueStrings(stateValue);
 
 ### Use `state._nodes` instead of `state.configuration`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `state.configuration` property has been renamed to `state._nodes`:
 
@@ -578,7 +578,7 @@ const someMachine = setup({
   on: {
     someEvent: {
       // ...
-      // highlight-next-line
+      [!code highlight:1]
       actions: ['recordEvent']
     }
   }
@@ -586,7 +586,7 @@ const someMachine = setup({
 
 const someActor = createActor(someMachine);
 someActor.subscribe(snapshot => {
-  // highlight-next-line
+  [!code highlight:1]
   console.log(snapshot.context.event);
 });
 ````
@@ -602,7 +602,7 @@ import { someMachine } from './someMachine';
 
 const actor = interpret(someMachine);
 actor.subscribe((state) => {
-  // highlight-next-line
+  [!code highlight:1]
   console.log(state.event); // Removed
 });
 ```
@@ -614,11 +614,11 @@ actor.subscribe((state) => {
 
 ### Implementation functions receive a single argument
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Implementation functions now take in a single argument: an object with `context`, `event`, and other properties.
 
@@ -652,11 +652,11 @@ const machine = createMachine({
 
 ### `send()` is removed; use `raise()` or `sendTo()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `send(...)` action creator is removed. Use `raise(...)` for sending events to self or `sendTo(...)` for sending events to other actors instead.
 
@@ -775,11 +775,11 @@ entry: [
 
 ### `actor.send()` no longer accepts string types
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 String event types can no longer be sent to, e.g., `actor.send(event)`; you must send an event object instead:
 
@@ -807,11 +807,11 @@ actor.send('someEvent');
 
 ### `state.can()` no longer accepts string types
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 String event types can no longer be sent to, e.g., `state.can(event)`; you must send an event object instead:
 
@@ -837,11 +837,11 @@ state.can('someEvent');
 
 ### Guarded transitions use `guard`, not `cond`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `cond` transition property for guarded transitions is now called `guard`:
 
@@ -882,11 +882,11 @@ const machine = createMachine({
 
 ### Use `params` to pass params to actions & guards
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Properties other than `type` on action objects and guard objects should be nested under a `params` property; `{ type: 'someType', message: 'hello' }` becomes `{ type: 'someType', params: { message: 'hello' }}`. These `params` are then passed to the 2nd argument of the action or guard implementation:
 
@@ -961,11 +961,11 @@ const machine = createMachine(
 
 ### Use wildcard `*` transitions, not strict mode
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Strict mode is removed. If you want to throw on unhandled events, you should use a wildcard transition:
 
@@ -1030,11 +1030,11 @@ service.send({ type: 'unknownEvent' });
 
 ### Use explicit eventless (`always`) transitions
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Eventless (“always”) transitions must now be defined through the `always: { ... }` property of a state node; they can no longer be defined via an empty string:
 
@@ -1082,11 +1082,11 @@ const machine = createMachine({
 
 ### Use `reenter: true`, not `internal: false`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 `internal: false` is now `reenter: true`
 
@@ -1130,11 +1130,11 @@ const machine = createMachine({
 
 ### Transitions are internal by default, not external
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 All transitions are **internal by default**. This change is relevant for transitions defined on state nodes with `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). If you relied on the previous XState v4 behavior where transitions implicitly re-entered a state node, use `reenter: true`:
 
@@ -1259,11 +1259,11 @@ const machine = createMachine({
 
 ### Child state nodes are always re-entered
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Child state nodes are always re-entered when they are targeted by transitions (both external and internal) defined on compound state nodes. This change is relevant only if a child state node has `entry` or `exit` actions, invoked actors, or delayed transitions (`after`). Add a `stateIn` guard to prevent undesirable re-entry of the child state:
 
@@ -1328,11 +1328,11 @@ const machine = createMachine({
 
 ### Use `stateIn()` to validate state transitions, not `in`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `in: 'someState'` transition property is removed. Use `guard: stateIn(...)` instead:
 
@@ -1372,11 +1372,11 @@ const machine = createMachine({
 
 ### Use `actor.subscribe()` instead of `state.history`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `state.history` property is removed. If you want the previous snapshot, you should maintain that via `actor.subscribe(...)` instead.
 
@@ -1411,11 +1411,11 @@ actor.subscribe((state) => {
 
 ### Actions can throw errors without `escalate`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `escalate` action creator is removed. In XState v5 actions can throw errors, and they will propagate as expected. Errors can be handled using an `onError` transition.
 
@@ -1475,11 +1475,11 @@ const childMachine = createMachine({
 
 ### Use actor logic creators for `invoke.src` instead of functions
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The available actor logic creators are:
 
@@ -1618,11 +1618,11 @@ const machine = createMachine({
 
 ### Use `invoke.input` instead of `invoke.data`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `invoke.data` property is removed. If you want to provide context to invoked actors, use `invoke.input`:
 
@@ -1674,11 +1674,11 @@ const machine = createMachine({
 
 ### Use `output` in final states instead of `data`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 To produce output data from a machine which reached its final state, use the top-level `output` property instead of `data`:
 
@@ -1767,11 +1767,11 @@ const machine = createMachine({
 
 ### Don't use property mappers in `input` or `output`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 If you want to provide dynamic context to invoked actors, or produce dynamic output from final states, use a function instead of an object with property mappers.
 
@@ -1845,11 +1845,11 @@ const machine = createMachine({
 
 ### Use `actors` property on `options` object instead of `services`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 `services` have been renamed to `actors`:
 
@@ -1897,11 +1897,11 @@ const specificMachine = machine.withConfig({
 
 ### Use `subscribe()` for changes, not `onTransition()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `actor.onTransition(...)` method is removed. Use `actor.subscribe(...)` instead.
 
@@ -1933,11 +1933,11 @@ actor.onTransition((state) => {
 
 ### `createActor()` (formerly `interpret()`) accepts a second argument to restore state
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 `interpret(machine).start(state)` is now `createActor(machine, { snapshot }).start()`
 
@@ -1967,11 +1967,11 @@ actor.start(someState);
 
 ### Use `actor.getSnapshot()` to get actor’s state
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 Subscribing to an actor (`actor.subscribe(...)`) after the actor has started will no longer emit the current snapshot immediately. Instead, read the current snapshot from `actor.getSnapshot()`:
 
@@ -2010,11 +2010,11 @@ actor.subscribe((state) => {
 
 ### Loop over events instead of using `actor.batch()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `actor.batch([...])` method for batching events is removed.
 
@@ -2044,11 +2044,11 @@ actor.batch(events);
 
 ### Use `snapshot.status === 'done'` instead of `snapshot.done`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `snapshot.done` property, which was previously in the snapshot object of state machine actors, is removed. Use `snapshot.status === 'done'` instead, which is available to all actors:
 
@@ -2089,11 +2089,11 @@ actor.subscribe((state) => {
 
 ### `state.nextEvents` has been removed
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `state.nextEvents` property is removed, since it is not a completely safe/reliable way of determining the next events that can be sent to the actor. If you want to get the next events according to the previous behavior, you can use this helper function:
 
@@ -2112,11 +2112,11 @@ const nextEvents = getNextEvents(state);
 
 ### Use `types` instead of `schema`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `machineConfig.schema` property is renamed to `machineConfig.types`:
 
@@ -2160,17 +2160,17 @@ const machine = createMachine({
 
 ### Use `types.typegen` instead of `tsTypes`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
-:::warningxstate
+<Callout>
 
 XState Typegen does not fully support XState v5 yet. However, strongly-typed machines can still be achieved without Typegen.
 
-:::
+</Callout>
 
 The `machineConfig.tsTypes` property has been renamed and is now at `machineConfig.types.typegen`.
 
@@ -2218,11 +2218,11 @@ const machine = createMachine({
 
 ### `useInterpret()` is now `useActorRef()`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `useInterpret()` hook, which is used to return an `actorRef` ("service" in XState v4), is renamed to `useActorRef()`.
 
@@ -2252,11 +2252,11 @@ const service = useInterpret(machine);
 
 ### `useActor(logic)` now accepts actor logic, not an actor
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 The `useActor(logic)` hook now accepts _actor logic_ (such as `fromPromise(...)`, `createMachine(...)`, etc.) instead of an existing `ActorRef`.
 
@@ -2296,11 +2296,11 @@ function Component({ someActorRef }) {
 
 ## Use `machine.provide()` to provide implementations in hooks
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 For dynamically creating machines with provided implementations, the `useMachine(...)`, `useActor(...)`, and `useActorRef(...)` hooks no longer accept:
 
@@ -2387,11 +2387,11 @@ function Component(props) {
 
 ### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
 
-:::breakingchange
+<Callout type="warn">
 
 Breaking change
 
-:::
+</Callout>
 
 To keep consistent naming with the rest of XState and related libraries:
 
@@ -2408,10 +2408,10 @@ import { useMachine } from '@xstate/vue';
 // ...
 
 const {
-  // highlight-next-line
+  [!code highlight:1]
   snapshot, // Renamed from `state`
   send,
-  // highlight-next-line
+  [!code highlight:1]
   actor, // Renamed from `service`
 } = useMachine(someMachine);
 ```
@@ -2427,10 +2427,10 @@ import { useMachine } from '@xstate/vue';
 // ...
 
 const {
-  // highlight-next-line
+  [!code highlight:1]
   state, // Renamed to `snapshot` in @xstate/vue 3.0.0
   send,
-  // highlight-next-line
+  [!code highlight:1]
   service, // Renamed to `actor` in @xstate/vue 3.0.0
 } = useMachine(someMachine);
 ```

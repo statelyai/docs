@@ -6,11 +6,11 @@ title: '@xstate/store'
 
 XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate.mdx) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
 
-:::info
+<Callout>
 
 The `@xstate/store` library requires TypeScript version 5.4 or above.
 
-:::
+</Callout>
 
 ## Installation
 
@@ -318,7 +318,7 @@ You can:
 - Subscribe to changes with `atom.subscribe(observer)`
 - Update the atom with `atom.set(value)`
 
-:::info
+<Callout>
 Atoms are best used for:
 
 - Simple, independent pieces of state
@@ -327,7 +327,7 @@ Atoms are best used for:
 - When you need direct value updates without constraints
 
 For state that needs to follow specific transition rules or complex update logic, consider using a store instead.
-:::
+</Callout>
 
 ### Creating Atoms
 
@@ -415,7 +415,7 @@ ageAtom.set(31);
 console.log(userAtom.get()); // { name: 'John', age: 31 }
 ```
 
-:::warning
+<Callout type="warning">
 The `read(...)` function for combining atoms is deprecated since v3.5.0. Instead, use the direct `.get()` method on atoms when creating combined atoms:
 
 ```ts
@@ -426,7 +426,7 @@ const combinedAtom = createAtom((read) => read(atomA) + read(atomB));
 const combinedAtom = createAtom(() => atomA.get() + atomB.get());
 ```
 
-:::
+</Callout>
 
 ### Async Atoms
 
@@ -483,9 +483,9 @@ store.trigger.increment();
 console.log(doubleCountAtom.get()); // 2
 ```
 
-:::tip
+<Callout>
 Combined atoms are read-only by design. If you need to update multiple values atomically, consider using a store instead.
-:::
+</Callout>
 
 ### Using Atoms with React
 
@@ -604,11 +604,11 @@ store.inspect((inspectionEvent) => {
 // highlight-end
 ```
 
-:::info
+<Callout>
 
 Since the store is automatically started, inspectors will immediately receive the initial state snapshot.
 
-:::
+</Callout>
 
 The `.inspect(…)` method returns a subscription object:
 
@@ -671,11 +671,11 @@ const store = createStore({
 <details>
 <summary>Deprecated: <code>createStoreWithProducer(…)</code></summary>
 
-:::warning
+<Callout type="warning">
 
 This API is deprecated. Use `produce` from [Immer](https://immerjs.github.io/immer/) or similar libraries directly with `createStore(…)` instead.
 
-:::
+</Callout>
 
 In previous versions of `@xstate/store`, you could use the `createStoreWithProducer(…)` function to pass in a producer function to update the `context` for every transition. This will not be supported in future versions of `@xstate/store`. Instead, you can use the `produce(…)` function from [Immer](https://immerjs.github.io/immer/) or similar libraries directly with `createStore(…)`.
 
@@ -942,9 +942,9 @@ function Counter({ currentCount = 0 }) {
 
 This behavior ensures that state updates are always explicit and traceable through events, maintaining a predictable data flow in your application.
 
-:::tip
+<Callout>
 If you need to synchronize store state with prop changes, consider whether the value should be stored in the store at all. Sometimes it's simpler to use the prop directly in your component and compute derived values outside of the store.
-:::
+</Callout>
 
 ## Usage with Solid
 
@@ -1023,7 +1023,7 @@ const storeLogic = fromStore({
 });
 
 const actor = createActor(storeLogic, {
-  // highlight-next-line
+  [!code highlight:1]
   input: 42,
 });
 ```

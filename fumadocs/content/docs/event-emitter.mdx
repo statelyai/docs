@@ -13,14 +13,14 @@ import { setup, emit } from 'xstate';
 
 const machine = setup({
   actions: {
-    // highlight-next-line
+    [!code highlight:1]
     emitEvent: emit({ type: 'notification' }),
   },
 }).createMachine({
   // ...
   on: {
     someEvent: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: { type: 'emitEvent' },
     },
   },
@@ -51,7 +51,7 @@ For promise actors, transition actors, observable actors, and callback actors, y
 ```ts
 import { fromPromise } from 'xstate';
 
-// highlight-next-line
+[!code highlight:1]
 const logic = fromPromise(async ({ emit }) => {
   // ...
   // highlight-start
@@ -69,7 +69,7 @@ const logic = fromPromise(async ({ emit }) => {
 ```ts
 import { fromTransition } from 'xstate';
 
-// highlight-next-line
+[!code highlight:1]
 const logic = fromTransition((state, event, { emit }) => {
   // ...
   // highlight-start
@@ -88,7 +88,7 @@ const logic = fromTransition((state, event, { emit }) => {
 ```ts
 import { fromObservable } from 'xstate';
 
-// highlight-next-line
+[!code highlight:1]
 const logic = fromObservable(({ emit }) => {
   // ...
   // highlight-start
@@ -106,7 +106,7 @@ const logic = fromObservable(({ emit }) => {
 ```ts
 import { fromCallback } from 'xstate';
 
-// highlight-next-line
+[!code highlight:1]
 const logic = fromCallback(({ emit }) => {
   // ...
   // highlight-start

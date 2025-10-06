@@ -8,11 +8,11 @@ For example in a feedback form, you can be in a state where you are filling out 
 
 State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
 
-:::studio
+<Callout>
 
 You can easily visualize and simulate intial and final states in Stately's editor. [Read more about states in Stately's editor](/docs/editor-states-and-transitions).
 
-:::
+</Callout>
 
 ```ts
 const feedbackMachine = createMachine({
@@ -84,7 +84,7 @@ const feedbackMachine = createMachine({
 
   // Finite states
   states: {
-    // highlight-next-line
+    [!code highlight:1]
     prompt: {
       /* ... */
     },
@@ -296,7 +296,7 @@ const feedbackMachine = createMachine({
       initial: 'normal',
       states: {
         normal: {},
-        // highlight-next-line
+        [!code highlight:1]
         happy: {},
       },
     },
@@ -378,7 +378,7 @@ const feedbackMachine = createMachine({
   },
   on: {
     'feedback.close': {
-      // highlight-next-line
+      [!code highlight:1]
       target: '#finished',
     },
   },
@@ -397,7 +397,7 @@ const feedbackMachine = createMachine({
   states: {
     // ...
     closed: {
-      // highlight-next-line
+      [!code highlight:1]
       id: 'finished',
       type: 'final',
     },
@@ -602,13 +602,13 @@ const feedbackMachine = createMachine({
 
 ## Finite states and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You can strongly type the finite states of your machine using the `setup(...)` function, which provides excellent TypeScript inference and autocompletion:
 

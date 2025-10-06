@@ -4,13 +4,13 @@ title: TypeScript
 
 XState v5 and its related libraries are written in [TypeScript](https://www.typescriptlang.org), and utilize complex types to provide the best type safety and inference possible for you.
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the **latest TypeScript version**.
 
-:::
+</Callout>
 
 Follow these guidelines to ensure that your TypeScript project is ready to use XState v5:
 
@@ -32,12 +32,12 @@ Use the latest version of TypeScript; version 5.0 or greater is required.
 {
   compilerOptions: {
     // ...
-    // highlight-next-line
+    [!code highlight:1]
     strictNullChecks: true,
     // or set `strict` to true, which includes `strictNullChecks`
     // "strict": true,
 
-    // highlight-next-line
+    [!code highlight:1]
     skipLibCheck: true,
   },
 }
@@ -119,11 +119,11 @@ const feedbackMachine = setup({
 
 ### Actions and Guards
 
-:::info
+<Callout>
 
 It is strongly recommended to use dynamic parameters instead of directly accessing the event object whenever possible for improved type safety and reusability.
 
-:::
+</Callout>
 
 If using dynamic parameters is infeasible and you must use the event in an action or guard implementation, you can assert the event type using the `assertEvent(...)` helper function:
 
@@ -146,7 +146,7 @@ const machine = createMachine({
 
         // Calling `assertEvent` will throw if
         // the event is not the expected type.
-        // highlight-next-line
+        [!code highlight:1]
         assertEvent(event, 'greet');
 
         // Now we know the event is a `greet` event,
@@ -156,7 +156,7 @@ const machine = createMachine({
       // ...
       exit: ({ event }) => {
         // You can also assert multiple possible event types.
-        // highlight-next-line
+        [!code highlight:1]
         assertEvent(event, ['greet', 'log']);
 
         // Now we know the event is a `greet` or `log` event,
@@ -192,7 +192,7 @@ const machine = createMachine({
       invoke: {
         src: 'someActor',
         input: ({ event }) => {
-          // highlight-next-line
+          [!code highlight:1]
           assertEvent(event, 'messageSent');
 
           return { message: event.message };

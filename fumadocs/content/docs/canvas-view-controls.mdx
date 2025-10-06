@@ -2,6 +2,9 @@
 title: Canvas controls
 ---
 
+import { Sparkles, MousePointer2, Hand, PlusSquare, Undo, Redo, Scan, Check, ListTree } from 'lucide-react';
+import { ThemedImage } from '../components/ThemedImage';
+
 We’ve recently added a canvas tools panel to help you with common tasks while designing and simulating state machines.
 
 - <Sparkles size={18} /> [Generate with AI](generate-flow.mdx).
@@ -11,15 +14,17 @@ We’ve recently added a canvas tools panel to help you with common tasks while 
 - <PlusSquare size={18} /> Quick add menu, for adding a [state](editor-states-and-transitions.mdx)
   or a [note](annotations.mdx).
 
-<p style={{ maxWidth: '300px' }}>
+{/* <p style={{ maxWidth: '300px' }}>
   <ThemedImage
     alt="Canvas tools in Stately Studio, including a sparkles AI icon, pointer icon, hand icon, and plus icon which is focused and has an open menu for adding a state or a note."
     sources={{
-      light: '/canvas-view-controls/canvas-tools.png',
-      dark: '/canvas-view-controls/canvas-tools-dm.png',
+      light: './assets/canvas-view-controls/canvas-tools.png',
+      dark: './assets/canvas-view-controls/canvas-tools-dm.png',
     }}
   />
-</p>
+</p> */}
+
+![Canvas tools in Stately Studio, including a sparkles AI icon, pointer icon, hand icon, and plus icon which is focused and has an open menu for adding a state or a note.](./assets/canvas-view-controls/canvas-tools.png)
 
 ## View controls
 
@@ -34,15 +39,15 @@ You can show and hide most of the editor’s user interface to help you focus on
 
 You can also use the <kbd>Command</kbd>/<kbd>Ctrl</kbd> + <kbd>.</kbd> keyboard shortcut to show and hide the UI.
 
-:::tip
+<Callout>
 
 We’ve got [keyboard shortcuts](keyboard-shortcuts.mdx) for many of the view controls.
 
-:::
+</Callout>
 
 Below is a preview of a machine _with_ the UI hidden.
 
-<p>
+{/* <p>
   <ThemedImage
     alt="Starter machine in Stately Studio. The only panel visible is the top left corner with the Stately logo and the machine name."
     sources={{
@@ -50,11 +55,13 @@ Below is a preview of a machine _with_ the UI hidden.
       dark: '/canvas-view-controls/hide-ui-dm.png',
     }}
   />
-</p>
+</p> */}
+
+![Starter machine in Stately Studio. The only panel visible is the top left corner with the Stately logo and the machine name.](./assets/canvas-view-controls/hide-ui.png)
 
 Below is a preview of a machine _without_ the UI hidden.
 
-<p>
+{/* <p>
   <ThemedImage
     alt="Starter machine in Stately Studio. All the panels are visible, including the top bar, view options, left sidebar, and right tool menu."
     sources={{
@@ -62,7 +69,10 @@ Below is a preview of a machine _without_ the UI hidden.
       dark: '/canvas-view-controls/show-ui-dm.png',
     }}
   />
-</p>
+</p> */}
+
+![Starter machine in Stately Studio. All the panels are visible, including the top bar, view options, left sidebar, and right tool menu.](./assets/canvas-view-controls/show-ui.png)
+
 
 ## View controls
 
@@ -72,11 +82,11 @@ Below is a preview of a machine _without_ the UI hidden.
   in view.
 - Zoom in %: Current zoom level. Press to open the zoom menu.
 
-:::studio
+<Callout>
 
 [Find out more about light mode, dark mode, and translucency in user preferences](user-preferences.mdx).
 
-:::
+</Callout>
 
 ## Zoom to selection
 

@@ -5,11 +5,11 @@ import { EmbedMachine } from '../components/EmbedMachine';
 
 Actions are fire-and-forget effects. When a state machine transitions, it may execute actions. Actions occur in response to events, and are typically defined on transitions in the `actions: [...]` property. Actions can also be defined for any transition that enters a state in the state's `entry: [...]` property, or for any transition that exits a state in the state's `exit: [...]` property.
 
-:::studio
+<Callout>
 
 You can visualize your state machines and easily add actions in our drag-and-drop Stately editor. [Read more about actions in Stately’s editor](editor-actions-and-actors.mdx).
 
-:::
+</Callout>
 
 Actions can also be on a state’s `entry` or `exit`, also as a single action or an array.
 
@@ -235,7 +235,7 @@ const feedbackActor = createActor(
 
 XState provides a number of useful built-in actions that are a core part of the logic of your state machines, and not merely side-effects.
 
-:::warning
+<Callout type="warning">
 
 Built-in actions, such as `assign(…)`, `sendTo(…)`, and `raise(…)`, are **not imperative**; they return a special [action object](#action-objects) (e.g. `{ type: 'xstate.assign', … }`) that are interpreted by the state machine. Do not call built-in action in custom action functions.
 
@@ -275,7 +275,7 @@ const machine = createMachine({
 });
 ```
 
-:::
+</Callout>
 
 ## Assign action
 
@@ -346,17 +346,17 @@ const countMachine = setup({
 });
 ```
 
-:::warningxstate
+<Callout type="warning">
 
 Do not mutate the `context` object. Instead, you should use the `assign(...)` action to update `context` immutably. If you mutate the `context` object, you may get unexpected behavior, such as mutating the `context` of other actors.
 
-:::
+</Callout>
 
-:::studio
+<Callout>
 
 You can create state machines with the `assign(...)` action in our drag-and-drop Stately editor. [Read more about built-in assign action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
-:::
+</Callout>
 
 ## Raise action
 
@@ -367,7 +367,7 @@ import { createMachine, raise } from 'xstate';
 
 const machine = createMachine({
   // ...
-  // highlight-next-line
+  [!code highlight:1]
   entry: raise({ type: 'someEvent', data: 'someData' });
 });
 ```
@@ -399,17 +399,17 @@ const machine = createMachine({
   // ...
   entry: raise(
     { type: 'someEvent' },
-    // highlight-next-line
+    [!code highlight:1]
     { delay: 1000 }
   );
 });
 ```
 
-:::studio
+<Callout>
 
 You can create state machines with the `raise(...)` action in our drag-and-drop Stately editor. [Read more about the built-in raise action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
-:::
+</Callout>
 
 ## Send-to action
 
@@ -485,17 +485,17 @@ const machine = createMachine({
 
 Delayed actions can be cancelled by their `id`. See [`cancel(...)`](https://stately.ai/docs/actions#cancel-action).
 
-:::studio
+<Callout>
 
 You can create state machines with the `sendTo(...)` action in our drag-and-drop Stately editor. [Read more about the built-in sendTo action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
-:::
+</Callout>
 
 ## Send-parent action
 
 The `sendParent(...)` action is a special action that sends an event to the parent actor, if it exists.
 
-:::tip
+<Callout>
 
 It is recommended to use `sendTo(...)` by to pass actor refs (e.g. the parent actor ref) to other actors via [input](./input.ts) or events and storing those actor refs in `context` rather than using `sendParent(...)`. This avoids tight coupling between actors and can be more type-safe.
 
@@ -603,7 +603,7 @@ createActor(parent).start();
 
 </details>
 
-:::
+</Callout>
 
 ## Enqueue actions
 
@@ -722,11 +722,11 @@ const machine = createMachine({
 });
 ```
 
-:::studio
+<Callout>
 
 You can create state machines with the `log(...)` action in our drag-and-drop Stately editor. [Read more about the built-in log action in Stately’s editor](/docs/editor-actions-and-actors/#xstate-built-in-actions).
 
-:::
+</Callout>
 
 ## Cancel action
 
@@ -742,14 +742,14 @@ const machine = createMachine({
         'someActor',
         { type: 'someEvent' },
         {
-          // highlight-next-line
+          [!code highlight:1]
           id: 'someId',
           delay: 1000,
         },
       ),
     },
     cancelEvent: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: cancel('someId'),
     },
   },
@@ -769,11 +769,11 @@ const machine = createMachine({
   }),
   on: {
     stopById: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: stopChild('spawnedId'),
     },
     stopByRef: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: stopChild(({ context }) => context.spawnedRef),
     },
   },
@@ -834,13 +834,13 @@ const feedbackMachine = createMachine({
 
 ## Actions and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 To strongly setup action types, use the `setup({ ... })` function and place the action implementations in the `actions: { ... }` object. The key is the action type and the value is the action function implementation.
 

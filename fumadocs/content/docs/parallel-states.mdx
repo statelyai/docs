@@ -10,11 +10,11 @@ Parallel states have the following characteristics:
 - Exiting a parallel state will also simultaneously exit all of its regions.
 - An event received in a parallel state is simultaneously received & handled by all of its regions.
 
-:::studio
+<Callout>
 
 You can easily visualize and simulate parallel states in Stately's editor. [Read more about parallel states in Stately's editor](/docs/editor-states-and-transitions/#parallel-states).
 
-:::
+</Callout>
 
 Here is a music player example with a parallel state consisting of two regions, one for handling playing the track and one for handling the volume:
 
@@ -23,7 +23,7 @@ import { createMachine, assign } from 'xstate';
 
 const playerMachine = createMachine({
   id: 'player',
-  // highlight-next-line
+  [!code highlight:1]
   type: 'parallel',
   states: {
     track: {
@@ -99,7 +99,7 @@ export const machine = createMachine({
               },
             },
             beansGround: {
-              // highlight-next-line
+              [!code highlight:1]
               type: 'final',
             },
           },
@@ -115,7 +115,7 @@ export const machine = createMachine({
               },
             },
             waterBoiled: {
-              // highlight-next-line
+              [!code highlight:1]
               type: 'final',
             },
           },

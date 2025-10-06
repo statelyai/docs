@@ -1,6 +1,4 @@
 // import { useColorMode } from '@docusaurus/theme-common';
-import styles from './styles.module.css';
-
 type Embed = {
   name: string;
   embedURL: string;

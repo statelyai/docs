@@ -22,12 +22,12 @@ const feedbackMachine = setup({
     // highlight-end
   },
 }).createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   context: ({ input }) => ({
-    // highlight-next-line
+    [!code highlight:1]
     userId: input.userId,
     feedback: '',
-    // highlight-next-line
+    [!code highlight:1]
     rating: input.defaultRating,
   }),
   // ...
@@ -43,11 +43,11 @@ const feedbackActor = createActor(feedbackMachine, {
 });
 ```
 
-:::studio
+<Callout>
 
 Input is coming to Stately Studio’s editor soon.
 
-:::
+</Callout>
 
 ## Creating actors with input
 
@@ -194,7 +194,7 @@ const feedbackMachine = setup({
   },
   invoke: {
     src: 'fetchUser',
-    // highlight-next-line
+    [!code highlight:1]
     input: ({ context }) => ({ userId: context.userId }),
   },
   // ...
@@ -240,7 +240,7 @@ const feedbackMachine = setup({
       actions: assign({
         emailRef: ({ context, spawn }) => {
           return spawn('emailUser', {
-            // highlight-next-line
+            [!code highlight:1]
             input: { userId: context.userId },
           });
         },
@@ -318,13 +318,13 @@ const Component = (props) => {
 
 ## Input and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You can strongly type the `input` of your machine in the `types.input` property of the machine setup.
 
@@ -415,7 +415,7 @@ const feedbackMachine = createMachine({
   invoke: {
     src: 'fetchUser',
     input: ({ event }) => {
-      // highlight-next-line
+      [!code highlight:1]
       assertEvent(event, 'messageSent');
       return {
         message: event.message,

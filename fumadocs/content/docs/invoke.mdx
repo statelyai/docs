@@ -6,22 +6,22 @@ title: 'Invoke'
 
 Invoking an actor is useful for managing synchronous or asynchronous work that the state machine needs to orchestrate and communicate with at a high level, but doesn't need to know about in detail.
 
-:::tip
+<Callout>
 
 [Read about the difference between invoking and spawning actors](actors.mdx#invoking-and-spawning-actors).
 
-:::
+</Callout>
 
 <EmbedMachine
   embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21&mode=design"
   title="User"
 />
 
-:::studio
+<Callout>
 
 You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor. [Read more about actors in Stately’s editor](editor-actions-and-actors.mdx).
 
-:::
+</Callout>
 
 Actors can be invoked within any state _except_ for the [top-level final state](final-states.mdx). In the following example, the `loading` state invokes a Promise-based actor:
 
@@ -251,7 +251,7 @@ const actor = createActor(
 - Event object `output` property is provided with actor's output data
 - Not available for callback actors
 
-:::warning
+<Callout type="warning">
 Don't get the `onDone` property on a state confused with `invoke.onDone` - they are similar transitions, but refer to different things.
 
 - The `onDone` property on a [state](states.mdx) node refers to the compound state node reaching a [final state](final-states.mdx).
@@ -263,7 +263,7 @@ loading: {
   invoke: {
     src: someSrc,
     // refers to `someSrc` being done
-    // highlight-next-line
+    [!code highlight:1]
     onDone: {/* ... */}
   },
   initial: 'loadFoo',
@@ -273,13 +273,13 @@ loading: {
     loadingComplete: { type: 'final' }
   },
   // refers to 'loading.loadingComplete' being reached
-  // highlight-next-line
+  [!code highlight:1]
   onDone: { target: 'loaded' }
 }
 // ...
 ```
 
-:::
+</Callout>
 
 The `onDone` transition can be an object:
 
@@ -371,10 +371,10 @@ To define input to an invoked actor, use `input`.
 
 The `input` property can be a static input value, or a function that returns the input value. The function will be passed an object that contains the current `context` and `event`.
 
-:::tip
+<Callout>
 Behind the scenes, input is conveyed to the actor by an event:  
 `{ type: 'xstate.init', input: ... }`.
-:::
+</Callout>
 
 #### Input from a static value
 
@@ -750,13 +750,13 @@ An invoked actor (or [spawned actor](./spawn.mdx)) can _respond_ to another acto
 // Parent
 actions: sendTo('childActor', ({ self }) => ({
   type: 'ping',
-  // highlight-next-line
+  [!code highlight:1]
   sender: self,
 }));
 
 // Child
 actions: sendTo(
-  // highlight-next-line
+  [!code highlight:1]
   ({ event }) => event.sender,
   { type: 'pong' },
 );
@@ -820,9 +820,9 @@ const authClientMachine = createMachine({
 
 Note that by default `sendTo` will send events anonymously, in which case the receiver will not know the source of the event.
 
-:::note
+<Callout>
 In XState v4, the `respond(...)` action creator was used for this purpose. In XState v5, use `sendTo(...)` instead.
-:::
+</Callout>
 
 ## Multiple Actors
 
@@ -874,13 +874,13 @@ actor.subscribe({
 
 ## Invoke and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You should use the `setup({ ... })` API to properly infer types for invoked actor logic.
 

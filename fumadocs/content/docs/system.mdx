@@ -10,14 +10,14 @@ In XState, a system is implicitly created from the root actor, which is the acto
 import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   entry: ({ system }) => {
     // ...
   },
 });
 
 const actor = createActor(machine).start();
-// highlight-next-line
+[!code highlight:1]
 actor.system;
 ```
 
@@ -35,11 +35,11 @@ actor.start();
 
 This is useful for actors in the system to be able send events to the root actor.
 
-:::studio
+<Callout>
 
 Coming soon… systems in Stately Studio’s editor 🤫
 
-:::
+</Callout>
 
 ## Actor registration
 
@@ -54,7 +54,7 @@ const formMachine = createMachine({
   // ...
   on: {
     submit: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: sendTo(({ system }) => system.get('notifier'), {
         type: 'notify',
         message: 'Form submitted!',
@@ -65,7 +65,7 @@ const formMachine = createMachine({
 
 const feedbackMachine = createMachine({
   invoke: {
-    // highlight-next-line
+    [!code highlight:1]
     systemId: 'formMachine',
     src: formMachine,
   },
@@ -97,7 +97,7 @@ const todosMachine = createMachine({
       actions: assign({
         todos: ({ context, spawn }) => {
           const newTodo = spawn(todoMachine, {
-            // highlight-next-line
+            [!code highlight:1]
             systemId: `todo-${context.todos.length}`,
           });
 
@@ -121,13 +121,13 @@ You can also reference a specific actor from the system using `system.get('actor
 
 ## Systems and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 - `invoke.systemId`
 - `spawn(thing, { systemId })`
@@ -142,14 +142,14 @@ For best results, use the latest TypeScript version. [Read more about XState and
 import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
-  // highlight-next-line
+  [!code highlight:1]
   entry: ({ system }) => {
     // ...
   },
 });
 
 const actor = createActor(machine).start();
-// highlight-next-line
+[!code highlight:1]
 actor.system;
 ```
 
@@ -159,7 +159,7 @@ actor.system;
 import { createActor } from 'xstate';
 
 const actor = createActor(machine, {
-  // highlight-next-line
+  [!code highlight:1]
   systemId: 'root-id',
 });
 
@@ -175,7 +175,7 @@ const formMachine = createMachine({
   // ...
   on: {
     submit: {
-      // highlight-next-line
+      [!code highlight:1]
       actions: sendTo(({ system }) => system.get('notifier'), {
         type: 'notify',
         message: 'Form submitted!',
@@ -186,7 +186,7 @@ const formMachine = createMachine({
 
 const feedbackMachine = createMachine({
   invoke: {
-    // highlight-next-line
+    [!code highlight:1]
     systemId: 'formMachine',
     src: formMachine,
   },
@@ -218,7 +218,7 @@ const todosMachine = createMachine({
       actions: assign({
         todos: ({ context, spawn }) => {
           const newTodo = spawn(todoMachine, {
-            // highlight-next-line
+            [!code highlight:1]
             systemId: `todo-${context.todos.length}`,
           });
 

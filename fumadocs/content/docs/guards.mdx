@@ -6,11 +6,11 @@ A **guard** is a condition function that the machine checks when it goes throu
 
 A **guarded transition** is a transition that is enabled only if its `guard` evaluates to `true`. The guard determines whether or not the transition can be enabled. Any transition can be a guarded transition.
 
-:::studio
+<Callout>
 
 You can easily visualize and simulate guarded transitions in Stately’s editor. [Read more about guards in Stately’s editor](/docs/editor-states-and-transitions/#add-guards).
 
-:::
+</Callout>
 
 Guards should be pure, synchronous functions that return either `true` or `false`.
 
@@ -22,7 +22,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           'feedback.submit': {
-            // highlight-next-line
+            [!code highlight:1]
             guard: 'isValid',
             target: 'submitting',
           },
@@ -109,7 +109,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           submit: {
-            // highlight-next-line
+            [!code highlight:1]
             guard: { type: 'isValid', params: { maxLength: 50 } },
             target: 'submitting',
           },
@@ -205,7 +205,7 @@ on: {
   someEvent: {
     // Equivalent to:
     // guard: { type: 'someGuard' }
-    // highlight-next-line
+    [!code highlight:1]
     guard: 'someGuard';
   }
 }
@@ -213,13 +213,13 @@ on: {
 
 ## Guards and TypeScript
 
-:::typescript
+<Callout>
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
 For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
 
-:::
+</Callout>
 
 You can strongly type the `guards` of your machine by setting up their implementations in `setup({ guards: { … } })`. You can provide the `params` type in the 2nd argument of the guard function:
 
@@ -264,7 +264,7 @@ const feedbackMachine = createMachine(
       form: {
         on: {
           'feedback.submit': {
-            // highlight-next-line
+            [!code highlight:1]
             guard: 'isValid',
             target: 'submitting',
           },
