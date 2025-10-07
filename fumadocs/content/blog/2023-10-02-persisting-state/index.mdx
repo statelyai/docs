@@ -1,0 +1,155 @@
+---
+title: 'Persisting and restoring state in XState'
+description: 'Learn how to persist and restore your state machine state in XState'
+tags:
+  [
+    state machine,
+    statechart,
+    state,
+    persist,
+    restore,
+    business logic,
+    workflow,
+    xstate,
+  ]
+authors: [david]
+date: 2023-10-02
+slug: 2023-10-02-persisting-state
+image: /blog/2023-10-02-persisting-state.png
+---
+
+State machines are great for modeling state in applications. However, we often need to persist and restore state across sessions - for example, when a user closes and reopens their browser. In this article, we’ll explore how to persist and restore state in XState so your frontend applications or backend workflows can pick up where it left off.
+
+{/* truncate */}
+
+:::info
+The code in this article applies to [XState v5 beta](/docs/migration).
+:::
+
+## Quick reference
+
+If you’re already familiar with XState, here’s a quick reference for persisting and restoring state:
+
+```ts
+import { createActor } from 'xstate';
+import { someMachine } from './someMachine';
+
+// Get the state from localStorage (if it exists)
+const stateString = localStorage.getItem('some-state');
+
+// Create the state from the string (if it exists)
+const restoredState = stateString ? JSON.parse(stateString) : undefined;
+
+const actor = createActor(someMachine, {
+  // Restore the state (if it exists)
+  snapshot: restoredState,
+});
+
+actor.subscribe(() => {
+  // Persist the state to localStorage
+  const persistedState = actor.getPersistedSnapshot();
+  localStorage.setItem('some-state', JSON.stringify(persistedState));
+});
+
+actor.start();
+```
+
+## Persisting and restoring state
+
+Let’s say we have a state machine that represents a user’s shopping cart:
+
+```ts
+import { createMachine, createActor, assign } from 'xstate';
+
+const checkoutMachine = createMachine({
+  id: 'checkout',
+  initial: 'shopping',
+  context: {
+    items: [],
+  },
+  states: {
+    shopping: {
+      on: {
+        'item.add': {
+          actions: assign({
+            items: ({ context, event }) => {
+              return [...context.items, event.item];
+            },
+          }),
+        },
+        checkout: 'checkingOut',
+      },
+    },
+    checkingOut: {
+      // ...
+    },
+  },
+});
+
+const checkoutActor = createActor(machine, {
+  // ...
+});
+```
+
+<EmbedMachine
+  embedURL="https://stately.ai/registry/editor/embed/092bf401-2d65-48ae-969c-99b4a7eeb87f?machineId=6777d80d-82d8-41dc-9cd3-c6951495ff0f"
+  name="checkout"
+/>
+
+You may want to persist the state of this machine so that when the user comes back to the site, the items in their cart are still there, and the step in the checkout process is still the same. To do this, we need to remember to do two things:
+
+- **Persist the state** to some storage (e.g., localStorage, a database, etc.)
+- **Restore the state** from the storage when creating the actor
+
+First, you should determine your [persistence strategy](#persistence-strategies). For this example, we’ll use [the `localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+
+Actors created with `createActor` have a `.getPersistedSnapshot()` method that returns the state that can be persisted. This state is a plain object that can be serialized to JSON using `JSON.stringify(persistedState)`. Since the persisted state is a plain object, you can persist it to any storage that you want, as long as it can be restored as an object.
+
+```ts
+// Read the state to persist from the actor (sync)
+const persistedState = actor.getPersistedSnapshot();
+
+// Persist the state to localStorage
+localStorage.setItem('some-state-key', JSON.stringify(persistedState));
+```
+
+Retrieve the persisted state from storage and restore it as an object when creating the actor:
+
+```ts
+// Read the persisted state from localStorage
+const restoredState = localStorage.getItem('some-state-key');
+
+const actor = createActor(machine, {
+  // Restore the state (if it exists)
+  snapshot: restoredState,
+});
+
+actor.start();
+```
+
+The actor will start at the `restoredState`, if it exists. If `restoredState` is `undefined`, the actor will start at the initial state of the actor logic provided to `createActor(logic)`.
+
+## Persistence strategies
+
+For the browser, you can:
+
+- Use [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- Use a client-side database like [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+- Use [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+- Use [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+- Store the state in runtime memory (e.g., a global variable or some other persistent store)
+
+For the server, you can:
+
+- Use a database (e.g., [MongoDB](https://www.mongodb.com/), [PostgreSQL](https://www.postgresql.org/), etc.)
+- Use a cache (e.g., [Redis](https://redis.io/))
+- Use cookies or session storage
+
+## Examples
+
+There are [examples of persisting state that can be found in the XState git repository](https://github.com/statelyai/xstate/tree/main/examples):
+
+- [Persisting state to a writable `.json` file](https://github.com/statelyai/xstate/tree/main/examples/persisted-donut-maker)
+- [Persisting state to MongoDB](https://github.com/statelyai/xstate/tree/main/examples/mongodb-persisted-state)
+
+Feel free to [suggest other examples at on our examples request board](https://feedback.stately.ai/examples), or [contribute your own examples](https://github.com/statelyai/xstate/tree/main/examples)!

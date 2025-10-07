@@ -1,0 +1,82 @@
+---
+title: 'What’s new in August 2022?'
+description: Get up and running faster with our XState VS Code extension and enjoy all the design details in the Stately studio experience.
+tags: [stately, xstate, announcement, vscode extension, studio, survey]
+authors: [laura]
+image: /blog/2022-08-03-whats-new-august-2022.png
+slug: 2022-08-03-whats-new-august-2022
+date: 2022-08-05
+---
+
+## Updates to our VS Code extension
+
+Our [XState VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-vscode) has now been installed 10k times! Install the extension yourself from inside VS Code or find the [XState extension on the Open VSX Registry](https://stately.ai/blog/2022/03/11/xstate-vscode-extension-now-available-on-the-open-vsx-registry) to enjoy the following new features.
+
+{/* truncate */}
+
+### `xsm` snippet
+
+We want to make it fast and easy to use XState and the visual editor in your code. By adding the `xsm` snippet to our VS Code extension, we’ve made it possible to go from nothing to a full-blown machine you can open in the visual editor in a few keystrokes.
+
+Use our new `xsm` snippet ([Anders says “think **X** **S**tate **M**achine”](https://youtu.be/EkhWpJfVLDo?t=155)) with the latest version of the extension to insert a state machine template into your code, with the cursor ready for you to type the name of the machine.
+
+```js
+import { createMachine } from 'xstate';
+const nameOfMachine = createMachine({
+  id: 'nameOf',
+  initial: 'initialState',
+  states: {
+    initialState: {},
+  },
+});
+```
+
+Just give your machine a name, hit “Open visual editor,” and you’ll be able to continue creating your machine with the visual editor.
+
+![Statechart showing a no nodes selected state then an event of using cmd/ctrl + A transitioning to an all node selected state.](xsm-snippet.gif)
+
+### The editor now syncs with your VS Code theme
+
+You can now set your light mode or dark mode preference for the visual editor inside the VS Code extension:
+
+- Auto: syncs to your VS Code preference
+- Light: always uses light mode
+- Dark: always uses dark mode
+
+![The XState: theme setting in VSCode is set to light and the visual editor is in light mode.](vscode-lightmode.png)
+
+![The XState: theme setting in VSCode is set to dark and the visual editor is in dark mode.](vscode-darkmode.png)
+
+If the editor is open when you change the setting, you’ll need to close and re-open the editor tab to view the change.
+
+### Initial support for non-VS Code editors
+
+If you don’t use VS Code, we haven’t forgotten about you! We intend to support more code editors in the future and have recently taken the first step of making it easier to edit machine code using other code editors. Watch [Anders’ demo using Webstorm](https://www.youtube.com/watch?v=EkhWpJfVLDo&t=252s) during last week’s office hours to find out more.
+
+## Updates to Stately editor
+
+If you haven’t used the [Stately editor](https://stately.ai/editor) in a while, you’re in for a treat!
+
+### Canvas refinements
+
+We’ve made some small changes that have significantly changed how machines look and behave. Icons are now only used to distinguish the history states and final states, reducing the noise and increasing the readability of your machines.
+
+![State machine for editor improvements, starting in a July state, transitioning through an event of “Canvas improvements go live” with a description saying “We've made many small improvements to the canvas in the last month.” Ending in a parent state of August with a child state of “My machines are so easy to read!”.](august-22-editor-improvements.png)
+
+The transition line drawing algorithm has been improved further for straighter, more reasonable lines with fewer bends. The lines are now highlighted on hover, making them easier to select. We’ll continue to improve the algorithm so that it’s more intelligent about drawing even better lines.
+
+We’ve also removed the terminal squares at the end of the transition lines and put a little space between the transition lines and nodes. These subtle changes make the machines look less crowded, helping you focus more on your modeling.
+
+### Select all with the keyboard shortcut
+
+You can now use the <kbd>cmd</kbd>/<kbd>ctrl</kbd> **+** <kbd>a</kbd> keyboard shortcut to select all nodes and transitions in the editor. This shortcut is so common that you’ve probably tried to use it already… now the shortcut will work!
+
+![Statechart showing a no nodes selected state then an event of using cmd/ctrl + A transitioning to an all node selected state.](select-all-keyboard-shortcut.gif)
+
+## New privacy options
+
+We now have a modal asking for your consent the next time you log into the Stately Studio. We are sending some non-personal activity data to Mixpanel to help us understand how you use our features, but we need your permission to connect this data to a hash of your user ID. Many tech companies won’t ask for your explicit consent for similar activities. Still, at Stately, we want to use best practices regarding your privacy and be transparent about the minimal data we collect, how we use that data, and how we design for privacy by default. You can update your choices at any time in the studio settings.
+
+## Please give us feedback in our yearly survey
+
+Soon we’ll be closing [the Stately 2022 survey](https://stately.ai/survey). Do you know someone who isn’t using our tools but should be? Please get them to respond to our survey! We’d love to understand what features folks need to start using Stately tools. And if you’ve not responded yet, get your response in soon! All the questions are optional, and it will take just five minutes of your time.

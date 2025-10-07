@@ -1,0 +1,106 @@
+---
+title: How do you convince your teammates to use XState?
+description: Last week our question of the week was how do you convince your teammates to use XState? Here are some suggestions
+tags: [blog, team]
+authors: [laura]
+category: entry
+image: /blog/2021-10-11-convince-teammates.png
+slug: 2021-10-11-convince-teammates
+date: 2021-10-11
+---
+
+Last week our question of the week was “_how do you convince your teammates to use XState?_”
+
+One of our most frequent requests for the documentation is more advice on how to convince others to use XState. Many people [read an article](https://dev.to/mpocock1/how-to-manage-global-state-with-xstate-and-react-3if5), [watch a talk](https://www.youtube.com/watch?v=9k1ZHHJWt7k) or [participate in a workshop](https://frontendmasters.com/courses/xstate/) about XState and are sold on using XState themselves. But when it comes to getting their team on board, they often need more.
+
+{/* truncate */}
+
+Thanks to all the wonderful folks who answered our question [posted to Twitter](https://twitter.com/statelyai/status/1446035499777462274) and in our #office-hours [Discord](https://discord.gg/xstate) channel, we’ve got some fantastic suggestions.
+
+## Present using the Visualizer
+
+Many people immediately understand the benefits of statecharts as they’re familiar with diagrams using “boxes and arrows.” The Visualizer gives you an instant, recognisable overview of your application logic, which is often enough to get them on board.
+
+<Tweet id="1446237663535714304" />
+
+<Tweet id="1446087845073113092" />
+
+## Give examples using their own work
+
+Nick Hehr takes it step-by-step, utilizing the Visualizer.
+
+<Tweet id="1446092594338017280" />
+
+<Tweet id="1446062078264020994" />
+
+And Farzad successfully convinced his team. We discussed his success in [our office hours last week](https://www.youtube.com/watch?v=GCWZ-froHKo).
+
+## Give them side-by-side examples
+
+Amy Pellegrini recommended many complementary approaches, starting with comparing XState to other types of state management.
+
+<Tweet id="1446419479483793411" />
+
+This might be an intensive approach, but it’s the ultimate way to show the benefits of XState.
+
+## Show existing projects that are using XState
+
+We’re all more convinced by a technology when we know it’s already being used by projects or organisations whose work we admire. Amy Pellegrini suggests taking advantage of that:
+
+<Tweet id="1446420841219215372" />
+
+## Dictate the use as team lead
+
+A few people are fortunate enough to be leading their teams, and of course adoption is much easier when you can just tell your team to use XState from the top.
+
+[Cédric](https://discord.com/channels/795785288994652170/895591583586598943/895730595378913390):
+
+> I have said: "We will use XState" 😂
+
+<Tweet id="1446084841259274240" />
+
+## Become the expert so you can answer their questions and help them progress
+
+But not everyone can be the boss. Amy Pellegrini recommends becoming the XState subject matter expert, so you’re better prepared to support the rest of your team.
+
+<Tweet id="1446421516334387203" />
+
+And Josh Ferrell suggests collaborating with your product team, showing them how to model with the Visualizer, enabling them to do the modeling themselves in the future.
+
+<Tweet id="1446152427187572738" />
+
+## Tell them that the Stately team is fast and responsive
+
+Knowing a technology is under frequent development, and the developers are likely to respond to your feedback, is important to most of us when we’re embedding a new tool into a key part of our workflow. [Cédric on our Discord](https://discord.com/channels/795785288994652170/895591583586598943/895738949635551273) uses this as a way to convince his team to work with XState.
+
+> Xstate team improve the project really quickly, office hours give a good idea of the roadmap and features, when something is propose there are a real discussion and project improvement from only “an idea” on discord
+
+Thanks Cédric!
+
+## Promoting the collaboration benefits
+
+At Stately, we’re excited about the potential for collaboration with our Visualizer and Editor. We want to shrink the space between planning, design and development, helping the whole team work together on their application logic. [Cédric agrees with those benefits](https://discord.com/channels/795785288994652170/895591583586598943/895738949635551273).
+
+> The Viz is a real support to share business logic between product and tech team, this could be add[ed] into a specifications and of course with the futur[e] way to create machine by a simple drag and drop this offer[s] the possibility for the product team to create themselves a real machine useful [for] the tech team
+
+## Timing it right with a good use case for the team
+
+On our Discord, [Jan has a carefully planned approach](https://discord.com/channels/795785288994652170/895591583586598943/895754626689814578):
+
+> I received the task to build some pretty complicated UI components, and I opted to build them with simple state machines, implemented as good ol' `switch`-based reducers. Since we're using Redux, this approach didn't alienate my team entirely, and so the seed had been planted.
+>
+> Fast-forward a bit, and we're currently rewriting some of the core of our application as a state machine (or something of a Frankenstein statechart), after receiving new requirements would make it completely unmaintainable if we had continued in the same tracks. We're still doing it with `switch` (with nested states, even!), which isn't optimal, but it's way better than where we came from.
+>
+> For now it does the job, but my plan is to note any pains which could easily be solved with XState, and propose a rewrite if/when the time is right. I figure it will be a much easier sell if my team is already somewhat familiar with the concepts of state machines, and we have a really good use-case on our hands.
+
+Finding the right timing for your team is key for introducing any new technology.
+
+## Make them less intimidated by the terminology
+
+And sometimes a team is rightfully cautious of trying a technology that comes across as new. It’s all about how you frame it…
+
+<Tweet id="1446153971219853314" />
+
+😂
+
+In the future we hope to provide more documentation and advice to help you convince your team to use XState. If you have any suggestions or requests, please [let us know on our Discord](https://discord.gg/xstate). We want to make our tools work for you.

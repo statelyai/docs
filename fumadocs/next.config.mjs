@@ -6,7 +6,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ['stately.ai'],
+    domains: ['stately.ai', 'cloudinary.com', 'amazonaws.com'],
   },
   serverExternalPackages: ['typescript', 'twoslash'],
   async rewrites() {

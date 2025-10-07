@@ -1,0 +1,156 @@
+---
+title: State Machines - What’s in a name?
+description: An overview of naming conventions for state machines, including tips and guidlines for naming
+tags:
+  [
+    stately,
+    studio,
+    coding conventions,
+    naming,
+    semantics,
+    style,
+    statecharts,
+    state machines,
+    xstate,
+  ]
+authors: [kevin]
+date: 2024-01-23
+slug: 2024-01-23-state-machines-whats-in-a-name
+image: /blog/2024-01-23-state-machines-whats-in-a-name.png
+---
+
+State machines and visual diagrams are such a powerful way to organize, and convey information. All of those lovely “boxes and arrows” convey meaningful relationships, indicate sequential order, and direct flows in a way that’s easier to understand since it's visual. Add to that the ability to [attach assets to your diagrams](https://stately.ai/docs/assets) and you’re well on your way towards creating truly expressive, executable software diagrams. But there’s still one thing that state machines have that should make them easy to understand. Text.
+
+{/* truncate */}
+
+When I say text, I’m largely referring to **names**. States, events, actors, actions, and guards all have names. These are important since they’re included in the executable code or other [formats that are exported from Studio](https://stately.ai/docs/export-as-code), so they can't be arbitrary or merely decorative. Users often ask us for guidance on naming conventions in [XState](https://stately.ai/docs/xstate) and how to name the parts of their state machines.
+
+We can break down some of these questions into two categories:
+
+1. [What or how should I name this thing](#what-or-how-should-i-name-this-thing)?
+2. [What style should that name be in](#what-style-should-that-name-be-in)?
+
+<EmbedMachine
+  name="A state machine demonstrating a particular naming convention with states using Title Case, events using dot.case, actions and actors using camelCase and guards using lower case."
+  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=db0e655e-f16f-4a30-97a7-a0081b73d532"
+/>
+
+## What or how should I name this thing?
+
+This question is largely about semantics and in this case that means how do the names used in a state machine convey the purpose and meaning of the elements and their role in a state machine? Should a state be named **`Load`**, **`Loader`**, **`Loading`**, or **`Loaded`**? Should an event be named **`Submit`**, **`Submit form`**, **`Form submitted`**, **`On submit`**, or **`Form submission`**? There are indeed many options to choose from and there's no one right answer. But there are some guidelines that can help you make the best choice.
+
+**Mapping parts of speech to state machines**
+
+One useful way to think about naming in state machines is to roughly map its elements to various parts of speech. This is what that might look like:
+
+1. **States**: typically nouns or adjectives
+   - States represent different conditions or modes of being. Therefore, they are often named with nouns or adjectives that describe the status or quality of the system. For example, **`idle`**, **`loading`**, **`authenticated`**, or **`error`**.
+2. **Events/transitions**: Usually verbs
+   - Events are triggers that cause state transitions. They are actions or occurrences, so they are best named with verbs. Examples include **`submit`**, **`cancel`**, **`fail`**, **`load`**, **`sign in`**, or **`clear form data`**.
+3. **Actions**: verbs or verb phrases
+   - Actions are operations executed in response to events or state transitions. They should be verbs or verb phrases that describe what action is being taken. For instance, **`sendRequest`**, **`displayError`**, **`updateData`**.
+4. **Guards**: Often adjectives or past participles
+   - Guards are conditional checks that determine if a transition should occur. They can be named with adjectives or past participles that describe the condition being met. Examples include **`isLoggedIn`**, **`hasValidData`**, **`isExpired`**. You’ll notice these are similar to how you might name boolean variables in code.
+5. **Parent states**: Compound Nouns
+   - For nested states, these can also be nouns like regular states or they could be adjectives indicating a subordinate level of the parent state which is a noun. An example might be a state called **`Viewing Shopping Cart`** with child states **`Empty`** and **`Populated`**.
+6. **Invoked Actors**: nouns or gerunds
+   - When a state machine invokes a service (like an API call), these are often named with nouns or gerunds (nouns derived from verbs and ending in -ing) that describe the service's function. Examples are **`fetchingData`**, **`userAuthentication`**.
+
+By aligning the names in state machines with these parts of speech, the structure and functionality of the state machine becomes more intuitive and easier to understand, facilitating better communication and documentation.
+
+### Be brief yet specific
+
+Just like with naming anything in code, it’s helpful to pick names that are brief, not generic, yet contain just enough information to be unambiguous. Make names “minimally meaningful”.
+
+State name examples:
+
+- **`Idle`** instead of **`State1`**
+- **`Door Closed`** instead of **`Closed`**
+- **`Payment Processing`** instead of **`State_Awaiting_Payment`**
+
+Event name examples:
+
+- **`Submit`** or **`submit`** instead of **`Event1`**
+- **`Receive payment`** instead of **`Event_Payment_Received`**
+
+## What style should that name be in?
+
+When statecharts were first introduced in [“Statecharts: A visual formalism for complex systems” (Harel, 1987)](https://www.inf.ed.ac.uk/teaching/courses/seoc/2005_2006/resources/statecharts.pdf), there was relatively little discussion of naming conventions and many of the diagrams used letters and numbers to represent states and events. The innovations that statecharts introduced were focused on visually representing relationships needed to support real world software use cases such as hierarchy, parallelism, history states, etc.
+
+![An example of parallel states taken from Statecharts: A visual formalism for complex systems by David Harel.](../../docs/assets/blog/2024-01-23-state-machines-whats-in-a-name/orthogonality.png)
+
+Some of the examples later in the paper did demonstrate the use of state and event labels but these were usually single words or short phrases without attention paid to style. Interestingly enough, this example makes use of a **`dot.case`** style for event names which you can [jump ahead and read about here](#xstate-v5-and-dotcase).
+
+![An example of states and events from a statechart depicting the alarm on a Citizen Quartz watch.](../../docs/assets/blog/2024-01-23-state-machines-whats-in-a-name/watch-batteries.png)
+
+By the time the book, "Constructing the User Interface with Statecharts" (Horrocks, 1999) was published, more descriptive state and event labels were present in elaborate examples of statecharts used to model hardware and software systems. This example of a CD player (remember those?) is rather detailed and also quite clear in its use of names and text annotations on the statechart. You can [view this state machine inspired by this example](https://stately.ai/registry/editor/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=5b186011-088e-4c1c-be95-9a489a126b13) or [see the full example](https://stately.ai/registry/editor/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=24adba0d-a6ac-4e79-836c-e0d91bb7ab85) borrowed from the book.
+
+![Part of a statechart for a physical CD player including states for when the CD is playing, stopped, paused, and events transitioning the machine from state to state.](../../docs/assets/blog/2024-01-23-state-machines-whats-in-a-name/horrocks-cd.png)
+
+Over the decades since those early writings on statecharts, the emergence of nearly all of the major programming languages in use today have popularized a number of naming conventions for code. Here are some of the most common styles you can choose from when naming states, events, actions, and guards in XState:
+
+- **`Title Case`**
+- **`Sentence case`**
+- **`lower case`**
+- **`UPPER CASE`**
+- **`PascalCase`**
+- **`camelCase`**
+- **`snake_case`**
+- **`kebab-case`**
+
+When XState was released in 2016, many of the early examples demonstrated use of **`UPPER_CASE`** for event names (also in fashion for Redux action types) and **`camelCase`** for nearly everything else like states, actions, guards, etc. But [XState](https://stately.ai/docs/xstate) doesn't enforce any particular convention and it's up to you to decide what works best for you and your team. Space-separated styles like **`Title Case`**, **`Sentence case`**, and **`lower case`** are valid options you can wrap them in quotes to use as JavaScript or TypeScript XState object keys. [Stately Studio will export code](https://stately.ai/docs/export-as-code) with your names in quotes as well.
+
+### XState v5 and `dot.case`
+
+Fast forward to 2024, with the [recent release of XState v5](https://stately.ai/blog/2023-12-01-xstate-v5), one particular style convention for event names is strongly encouraged and that's **`dot.case`**. If you recall in the image of the Quartz watch, above, there were events similar to **`battery.inserted`**, **`battery.removed`**, and **`weak battery.dies`**. This style allows for a [new feature in XState v5 called wildcard transitions](https://stately.ai/docs/transitions#wildcard-transitions). For example, if you had an action called `logBatteryStatus` you could register that action with any number of events matching **`battery.*`**, a wildcard transition:
+
+```typescript
+states: {
+  Running: {
+    on: {
+      'battery.*': {
+        actions: 'logBatteryStatus',
+      },
+    },
+  }
+}
+```
+
+I personally like this convention for events because it visually distinguishes them from other name in the state machine and its lack of heavy capitalization make it look more **`streamlined.for.action`**, like events should be!
+
+:::warning
+
+Unlike for event names, it is currently not possible to include a `.` when naming states or machines. Please do not do this.
+
+:::
+
+## Other tips
+
+Here are some additional considerations to think about when choosing a naming style for use with XState to make your state machines more readable and easier to understand.
+
+### Improved readability
+
+One of my favorite tips for state machine naming is to use contrasting styles. Contrast is a key ingredient for many things we love from food to color, art, and music. The readability of state machines can also benefit from contrast. If you use **`SHOUTY_UPPERCASE`** event names then please don’t also use that case for state names or… anything else in the same machine really. At the same time, don’t just name every state, event, and action in **`plain old lower case`** unless you want your state machine to be read like the equivalent of a bored teen with “vocal fry”. Differentiation can help readers distinguish certain elements of the state machine from others and this applies to readability on the editor canvas as well as in code.
+
+### Know your audience
+
+The fact that Statey Studio can turn these executable diagrams into code is certainly powerful but what if much of your intended audience is less technical and will be viewing your state machines in the Studio? Some viewers may be more accustomed to reading some of the naming styles more than others, for example, **`Sentence case`** as opposed to **`snake_case`**. Users on the [Studio Pro Plan](https://stately.ai/docs/studio-pro-plan) can make use of [Version History](https://stately.ai/docs/versions) to create differently styled version of the same state machines and share them with different audiences either by [sharing the URL to a specific machine version](https://stately.ai/docs/url#copy-the-url-from-the-browser-address-bar) or by [exporting to markdown, Stories, tests, etc](https://stately.ai/docs/export-as-code).
+
+### Consistency is Key
+
+Choose whatever you want but try to be consistent. Readers will hopefully understand your chosen naming convention and will come to rely on it. If you name states **`Waiting`**, **`Downloading`**, **`Synchronizing`** then when they see another word ending in **`ing`** they’ll probably assume it’s also a state as opposed to an event. Similarly, if you name actions using **`camelCase`**, you might consider naming all actions in that way, whether they’re entry/exit actions on states or actions on transitions. So remember, consistency is key here.
+
+### Conventions and maintenance
+
+From consistency, conventions often emerge. These could be conventions adhered to across a state machine, an entire project or across all of the projects of a particular user or team. This makes the work easier to understand and easier to maintain, thereby facilitating collaboration.
+
+### Summary
+
+Naming conventions and namings styles are a matter of taste but also an opportunity for customization and personalization at the individual or team level. The most important thing is readability, consistency and using naming to convey meaning.
+
+<EmbedMachine
+  name="A state machine for part of the CD player example showing states for when the CD is loaded and the CD is stopped, playing, and paused."
+  embedURL="https://stately.ai/studio/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?mode=design&machineId=5b186011-088e-4c1c-be95-9a489a126b13"
+/>
+
+Sometimes putting attention into the little details goes a long way towards ensuring that machines not only look good but are as understandable as possible. And remember, when your state machines look good, you look good too!

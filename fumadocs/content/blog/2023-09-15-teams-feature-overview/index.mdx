@@ -1,0 +1,109 @@
+---
+title: Make the dream work! An overview of Stately Studio’s teams feature
+description: Getting the most out of Stately Studio’s teams feature
+tags: [stately studio, xstate, teams, machine versions, machine locking]
+authors: [gavin]
+slug: using-teams-in-stately-studio
+image: /blog/2023-09-15-stately-teams-overview.png
+date: 2023-09-19
+---
+
+Our team knew early on that users needed the ability to share machines in the Studio and build on each other’s work.
+We also needed the Studio to be an effective tool for teams to work together and share context.
+But how do we do that safely, making sure the right eyes were on the right machines?
+And how do we protect against accidental mishaps that have plagued devs since the dawn of the computer?
+Being a distributed dev team ourselves, we’ve shared these same pain points and decided to build a solution directly in the Studio.
+Enter [Stately teams](https://stately.ai/docs/teams), our way to provide privacy and safety while allowing effortless collaboration.
+
+{/* truncate */}
+
+## Why would I need a team?
+
+Great question, and we’re glad you asked!
+While we have the [Discover](https://stately.ai/registry/discover) page, which showcases over 20 thousand(!) community-created machines, we know that statecharts can contain critical details about core algorithms or processes that give businesses a competitive edge.
+Many users expressed interest in keeping these types of machines private, and we listened.
+
+### Sharing machine visualizations with teammates
+
+Developing software is collaborative by nature. To get any product launched, bug fixed, or feature shipped, teams need to work together under the same shared context.
+As projects grow in scope and complexity, it gets easier for team members to lose track of the bigger picture.
+Team members may get lost in the weeds of their own work while the rest of the project changes around them, or they may not have the full context of the project and make decisions that don’t align with the team’s goals.
+This is where the Studio’s teams feature comes in.
+Visualizing app logic as statecharts allows teams to see the entire project at a glance, and the ability to share these visualizations empowers each member to make well-informed decisions, regardless of discipline.
+Every teammate may not be a dev, but we’re confident that every teammate can benefit from a well-thought-out flowchart!
+
+## Teams 101
+
+Teams is an exclusive feature for [**Pro** and **Enterprise** users](https://stately.ai/pricing) that allows them to collaborate on different projects without needing to make them publicly visible. Team owners can assign roles that map closely with their team members’ intended set of responsibilities.
+
+![The Stately Studio Next team members tab. Under Owners/Admin, Kevin is labeled as Owner. David is an admin. Laura, Farzad and Gavin are listed under Editors. Anders, cirephe, and Mateusz are listed under Viewers.](./teamVNext.png)
+
+### Access control
+
+There are many times when a dev team needs to share their work context with others without granting them full rights to the projects.
+For example, Lenny in accounting probably shouldn't have access to the company repo, but he could benefit from visually understanding the steps involved in processes and workflows.
+Having different teams with different roles lets us keep parties informed without added risk.
+Don't trust your PM's trigger finger? Make them a [viewer](https://stately.ai/docs/teams#viewer-role); we promise not to tell.
+Taking a vacation before new members can be onboarded?
+Make another teammate an [admin](https://stately.ai/docs/teams#admin-role).
+[Check out all our roles and permissions in our docs](https://stately.ai/docs/teams#team-roles).
+
+### Sharing conveniently and safely
+
+There are ways to share machine visualizations in the Studio without teams, but they’re not ideal for many users.
+Users can make their projects and machines public, but that is a no-go for most businesses.
+Alternatively, Pro users could keep their projects private and only share with people they trust by exporting and re-importing. However, that invites potentially different sources of truth, adds potential confusion, and lacks a truly shared context.
+Inviting users to collaborate on the same private team allows them to share without the exporting and copy/paste gymnastics.
+
+### A source of what, now?
+
+Simply put, a “source of truth” is a single place where all the information about a project is stored.
+In our case, we wanted to make sure that teams have a single place to view and collaborate on machine visualizations, and that place is a team project in the Studio.
+This prevents confusion and allows for a shared context between all team members. With a proper source of truth configured, we can avoid situations like this:
+
+![Four files with the filenames: onboardMachine.json, onboardMachine-final.json, onboardMachine-final-final.json, onboardMachine-actual-final-for-real-this-time.json.](../../docs/assets/blog/2023-09-15-file-confusion.png)
+
+### But what about source control? Shouldn’t that be the source of truth?
+
+Ideally, yes, the team’s repository is the single source of truth for all application logic, but not every team member is a developer, nor should they all have access to source code.
+That said, we know teams need to ensure their machines in the Studio are always in lockstep with the rest of their source, so we added the ability to [import machines directly from GitHub](https://stately.ai/docs/import-from-github).
+We’re also working on a fully-fledged GitHub Sync feature, allowing users to save machines as commits back to their source repos! [Check out Anders’ demo previewing GitHub Sync in our recent office hours live stream](https://www.youtube.com/watch?v=WelBycMg2eA&t=1293s).
+
+### Superpower Pro features
+
+Having teams allows other features to shine. For example, we all know the value of collaboration, but more users naturally add more potential for mistakes to happen, even with proper roles assigned. To protect against mistakes, we’ve added the ability to [lock machines](https://stately.ai/docs/lock-machines), preventing teammates from accidentally overwriting or deleting machines.
+
+![A machine with locked status in Stately. Hovering over the status shows the information that the machine was Locked by cirephe on September 8, 2023 at 07:48PM.](./lockedScreenshot.png)
+
+Team members often need to manage and track variants of the same machine, so we added the ability to create [machine versions](https://stately.ai/docs/versions). Members can edit and save specific checkpoints of their machines and can even see the last person to and save a specific version. Team roles come into play here again by allowing only owners and admins to actually delete versions.
+
+![Machine versions panel in Stately. The current version is named Gavin’s ultimate joke machine. The previous version is a generated flow for a “A flow showing someone how to be funny.”](./versionScreenshot.png)
+
+## FAQs
+
+### Who can join my team?
+
+Anyone with an email address can be invited to a team!
+If they are not already members, they will have to [sign up for a Stately account](https://stately.ai/registry/login?).
+
+### How many users can be on a team?
+
+A team can have as many members as there are seats in your Pro or Enterprise plan, except for viewers.
+Viewers are free to add.
+
+### Does inviting a user take up a seat on the team?
+
+The seat is only taken once a user accepts the invite and claims the seat.
+If the invite was not accepted, the seat remains free.
+
+### Can I swap member roles and reclaim seats?
+
+Yes, but only owners and admins have the ability to reassign roles.
+Any role except the owner may choose to leave the team, however.
+The owner can instead delete the team.
+
+Yes, but only owners and admins can reassign roles.
+Any role except the owner may choose to leave the team, however.
+The owner can instead delete the team.
+
+For more detailed information, visit our [Stately teams page in the docs](https://stately.ai/docs/teams#teams-members-and-pro-plan-seats)!

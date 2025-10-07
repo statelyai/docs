@@ -1,0 +1,181 @@
+---
+title: 'Stately Studio 2.0'
+description: We’re so excited to release Stately Studio 2.0, which aims to meet developers where they are, no matter which libraries, frameworks, or even languages they use.
+authors: [david]
+tags: [new, Stately, AI, Sky, XState, Redux, Zustand, generate, React]
+date: 2023-11-20
+slug: 2023-11-20-stately-studio-2-0
+image: /blog/2023-11-20-stately-studio-2-0.png
+---
+
+It’s been about a year since we’ve released [Stately Studio 1.0](https://stately.ai/blog/2022-10-18-introducing-stately-studio-1-0), and a lot has happened. [Stately Studio](https://stately.ai/editor) is essentially a visual software modeling tool that strives to make it easy to create, manage, and use state machines, no matter how complex they may get. Primarily, it served as a powerful set of devtools for [XState](https://github.com/statelyai/xstate) (an open-source library for creating state machines, statecharts and actors in JavaScript and TypeScript). You could import XState code to a state diagram, modify it visually in an intuitive drag-and-drop canvas, and export to XState. Eventually, we added more export options: JSON, Markdown, Mermaid diagrams, and stories.
+
+But Stately Studio has bigger ambitions than just being a suite of devtools for XState. We’ve frequently heard that these state diagrams are an important **source of truth** for critical app logic, serving as documentation for the entire team that stays up-to-date with your code. But a reliable source of truth for app logic is a need for **all** apps, not just those that use state machines directly.
+
+That’s why we’re so excited to release Stately Studio 2.0, which aims to **meet developers where they are**, no matter which libraries, frameworks, or even languages they use. There are many benefits to modeling app logic with state diagrams and the actor model, and we want to enable developers to take advantage of those benefits to build more robust, feature-rich, and maintainable app logic faster.
+
+{/* truncate */}
+
+<p>
+  <ThemedImage
+    alt="A state machine, called 'Source of truth', helps manage the different stages of a project. It starts in the 'Create' state, where you can import existing code, generate new code using AI, design with a drag-and-drop interface, or convert from other state management libraries. Once you're done creating, you transition to the 'Use' state. Here, you can export your code and documentation, deploy live workflows, generate tests, React apps, and schemas, and simulate your project to preview and share."
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/source.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/source-dm.png',
+    }}
+  />
+</p>
+
+Stately Studio 2.0 is an intelligent software modeling platform for working with app logic at all stages of the software development lifecycle. With its specialized graph algorithms for analyzing state machines, version 1 of the Studio was already well-equipped to handle the deterministic tasks. Now, Studio 2.0 comes paired with AI LLMs (large language models) and more to handle the not-so-deterministic tasks, such as generation & modification from natural language, [Stately Studio](https://stately.ai/) is an essential tool for any development team working on complex app logic.
+
+Let’s go over some of the entry actions to our ambitious transition.
+
+## Import from XState, Redux, Zustand, and more
+
+In the front end, there are many popular state machine libraries, all with different focuses and tradeoffs. We’ve frequently said that developers are always writing state machines, whether they know it (explicit) or not (implicit). So, we want to make it easy to visualize app logic from any code as a state machine, starting with commonly used front-end state management libraries.
+
+Here’s how it works:
+
+1. Choose **Import from code** when creating a new machine, or use the **Import** option in the **Code** panel.
+2. Copy and paste your XState, Zustand, Redux, or Redux Toolkit code into the code area.
+3. Hit **Convert and import**.
+4. Stately AI will create a state diagram that matches your provided code.
+
+Our Import and convert feature brings the benefits of state machines to existing non-state-machine code:
+
+- Generate up-to-date diagrams & customizable documentation for your logic.
+- Easily detect logical errors in your app logic.
+- Quickly generate test cases.
+
+This feature is still experimental, but we’re excited for you to try it out. The conversion is made possible with a mixture of AST (Abstract syntax tree) analysis and complex, state-machine-powered LLM logic. And this is just the start; we have many plans for features coming soon:
+
+- **Import _and_ export** to and from Redux, Zustand, and more libraries in the future. Of course, this has limitations; statecharts have many features beyond simple state management!
+- **Bidirectional** editing of your code: edit the diagram, see the code update; edit the code, see the diagram update.
+- Go further than libraries: import and **export custom workflow [DSL](https://en.wikipedia.org/wiki/Domain-specific_language)s** and even other languages.
+
+We also want to hear your ideas! [Request features and upvote suggestions](https://feedback.stately.ai) on our feedback board.
+
+:::info
+
+You can now get limited free generations for our features using Stately AI. [Try them out today and upgrade to a Pro account](https://stately.ai/pricing) to get many more generations a month.
+
+:::
+
+## Generate UI prototypes
+
+Modeling flows as state machines for apps is useful, and bringing those state machines to life can make those flows more understandable. With Studio 2.0, you can now generate React user interfaces from the state diagrams you create (or generate) in Stately Studio.
+
+Here’s how it works:
+
+1. Open the **Code** panel.
+2. Hit **Generate React app**.
+3. Stately will near-instantly generate a React app from your state machine (there’s zero AI used here!)
+
+<p>
+  <ThemedImage
+    alt="Split view with state machine for a sensor reading app on the left, and a generated UI for the sensor readings on the right. The generated UI has a title, the current sensor readings, and buttons to log new readings. On top of the split view is a Generate React app button."
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/generate.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/generate-dm.png',
+    }}
+  />
+</p>
+
+You can open the React app in CodeSandbox to view the working React app built on top of your state machine. Whether you’re making a working prototype or creating a baseline for a functioning app, we want to make it easy to generate UI code from your state machines. We’ll also support StackBlitz in the future.
+
+Of course, if you want to make the React prototype a little more lively, you can use our new **Enhance UI** button, which will use Stately AI to fill in more UI details. Enhance UI is an experimental feature, so it may not give perfect results, but it should provide a great starting point you can easily use for prototyping or even building out full apps.
+
+## Drag-and-drop state assets
+
+A source of truth doesn’t really tell the whole truth if it’s just text, especially for applications with user interfaces. For a long time, our states have had descriptions that support markdown, including images from URLs, but we wanted to make that easier. If you're a Stately Pro user, you can now drag and drop images directly onto states, and they will be uploaded and displayed in the state. You can adjust the image size and even upload multiple assets to a single state, arranging which asset is shown on the canvas from the state details panel.
+
+<p>
+  <ThemedImage
+    alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/drag-assets.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/drag-assets-dm.png',
+    }}
+  />
+</p>
+
+When it comes to documenting your app logic, states and transitions aren’t the whole story. You often want to include use cases, features, workflows, and more. One of our most frequent requests is from teams who want to tie their logic to real-life user interfaces. Assets provide a way to connect user interface design to logic in a way your whole team can understand.
+
+In the future, you’ll have the option to incorporate your assets into the generated UI code. Stately AI will help summarize and improve your state machines based on the contextual information in the assets you’ve provided.
+
+Are you an enterprise team looking to store your assets on your own cloud or servers? [Contact us](mailto:support@stately.ai) for more information about Stately Enterprise.
+
+## Stately Sky
+
+At [Stately.ai](http://stately.ai/), we want to help you and your team use state machines to improve every aspect of your software development process, from design to development to testing to deployment to monitoring. Last week, we launched **Stately Sky** for our Pro users; if you use state machines for workflows, you can now use Stately Sky to deploy your state machines to the cloud and get all the benefits of serverless computing.
+
+<p>
+  <ThemedImage
+    alt="State machine for a color picker where an image of an expanded color picker is being dragged into the open state."
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/sky.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/sky-dm.png',
+    }}
+  />
+</p>
+
+With Stately AI and Stately Sky together, you can go from an idea to a deployed workflow in minutes. The Stately editor helps you create much more flexible workflows than other workflow tools—you can use these workflows on the front end, back end, or both. Perfect for onboarding flows, collaborative apps, games, AI agents, and more. Stately Sky is also backed by Cloudflare Workers so that you can run your state machines in 200+ locations worldwide, with low latency and high availability.
+
+You can [read more about Stately Sky in Gavin’s blog post](https://stately.ai/blog/2023-11-13-introducing-stately-sky) and [how PartyKit orchestrates Stately’s machines in the Sky on the PartyKit blog](https://blog.partykit.io/posts/partykit-orchestrates-stately).
+
+## Enhanced Stately editor
+
+Among all these huge new features, we have updated the Stately editor’s UI. We want [Stately.ai](http://stately.ai/) to feel as natural as a white-boarding or diagramming tool, while giving you the power to create robust state machines at any level of complexity.
+
+These updates significantly improve the editor’s performance, especially when working with large machines. We’ve also streamlined the editor with reorganized panels and a redesigned header and footer. The new design makes accessing the tools you need faster while also providing information about your machine, including its locked status, project visibility, and current version. We also added new quick-access canvas buttons so you can quickly generate flows, add states or notes, and switch between selecting and panning across the canvas.
+
+### Targetless transitions
+
+As a part of our improved support for XState in the Stately editor, the editor now supports targetless transitions. Targetless transitions are useful when you want to trigger an action without a change of state. For example, if you want a transition on your root state but don’t want to keep resetting your machine to the initial state. They also open up the possibility for multiple target state support in the future, which is handy if you want to transition to simultaneous parallel states.
+
+### Zoom to selection
+
+You can now **zoom to selected** to re-center the canvas from the zoom menu or the right-click menu. This zoom is particularly helpful when working with large machines and demoing your machines to others, enabling you to jump to a different canvas area swiftly.
+
+### Generate summary
+
+As part of our Stately AI toolset for our Pro users, we now have an experimental **Get summary** option in the machine details panel. You can use this to create a summary of your state machine to make it even more understandable to non-technical stakeholders. We’ve also found it helpful in generating alternative text for images of our state machines. This feature could explain and summarize specific paths throughout the machine in the future, representing different use cases or edge cases.
+
+<p>
+  <ThemedImage
+    alt="Our room readings state machine with the machine details panel open. Below a Get Summary button is the summary text for this machine that reads 'This state machine is called Accumulate room readings. Its purpose is to collect temperature and humidity readings from loT sensors and generate a report every hour. The state machine starts in the ConsumeReadings state, where it initializes the temperature and humidity values as null. It then waits for temperature and humidity events to be logged. Whenever a temperature or humidity event is received, the state machine updates the respective value. After one hour (3600000 milliseconds), the state machine transitions to the GenerateReport state. In this state, it invokes a separate machine called produceReport to generate the report/ Once the report is generated, it…'"
+    sources={{
+      light: '/blog/2023-11-20-stately-studio-2-0/summary.png',
+      dark: '/blog/2023-11-20-stately-studio-2-0/summary-dm.png',
+    }}
+  />
+</p>
+
+## Pricing updates
+
+We’re also simplifying our pricing model. Individual developers can get a Stately Pro subscription for $39/month or $399/year. Teams can get a Stately Team subscription for $199/month or $1999/year for up to 10 users, which includes the full Stately Pro features as well as collaborative features for everyone on the team. We also have an Enterprise plan for larger teams and organizations. You can [read more about our pricing plans here](https://stately.ai/pricing).
+
+## What’s coming next
+
+And soon, there will be even more! We have designed many updates to the Stately editor to support even more capabilities that are on the way. Including:
+
+- Multiplayer editing
+- GitHub Sync
+- Inspection capabilities
+- Bidirectional editing
+- System views and sequence diagrams for actors
+- Stately Sky analytics
+- XState version 5
+- Updated VS Code extension
+
+## Intelligent software modeling is the future
+
+Software modeling is an extremely important yet neglected part of the software development process. When going from ideas to code, having a visual model of how the software should work greatly reduces the cost of maintenance.
+
+Right now, everyone is talking about how AI can help us work faster and smarter. LLMs can significantly accelerate state machine creation, modification, optimization, and explanation. Likewise, state machines can serve as essential guardrails for LLMs, helping them to avoid making mistakes by setting predetermined paths (state transitions) for them to follow. We even have open-source tooling that enables these guardrails for all developers, and we’ll release it soon.
+
+We’re also using LLMs to help power the AI in [Stately Studio](http://stately.ai/), but our core technology and the end result are still good old-fashioned state machines, statecharts, and the actor model.
+
+If you have any ideas for features that would benefit your team, [share your feature request on our feedback board](https://feedback.stately.ai). We want to make it as easy as possible for your application logic to always stay up-to-date and be understood by the entire team.
+
+We’re excited for you to try all our new features, so take advantage of our [free trial for Stately Pro features](https://stately.ai/pricing). And we’d love to hear your feedback on Stately Studio 2.0; you can talk to the team on [Discord](https://discord.stately.ai), [Twitter/X](https://twitter.com/statelyai), [LinkedIn](https://www.linkedin.com/company/statelyai/), [Mastodon](https://social.stately.ai/@stately), and [Instagram](https://instagram.com/statelyai).

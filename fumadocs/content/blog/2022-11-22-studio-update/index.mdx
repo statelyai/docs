@@ -1,0 +1,47 @@
+---
+title: 'New: Safari support, new login providers, and more!'
+description: It’s been just over a month since we released Stately Studio 1.0, and the team has barely slowed down! We’ve got more features live in the Studio today and even more planned before the end of the year.
+tags: [editor, studio, safari, login, performance]
+authors: [laura]
+image: /blog/2022-11-22-studio-update.png
+slug: 2022-11-22-studio-update
+date: 2022-11-22
+---
+
+It’s been just over a month since [we released Stately Studio 1.0](../../docs/assets/blog/2022-10-18-stately-studio-1-0/index.mdx), and the team has barely slowed down! We’ve got more features live in the Studio today and even more planned before the end of the year.
+
+[Watch a demo of these features in our release video](https://www.youtube.com/watch?v=N9QtPcknqDw).
+
+{/* truncate */}
+
+## Safari support
+
+We’re happy to tell you [the Stately Studio](https://stately.ai/studio) now works in Safari. It took a significant code refactor, which doesn’t just mean that you can now edit your statecharts using Safari; the new code structure should also give us bonuses for accessibility and future integrations. If you’re curious about what David refactored, you can watch him talk about the Safari support during [our office hours from last week](https://youtu.be/JBckQTgeD9g?t=2153).
+
+Safari support is still in beta, you’ll get a message warning you when you open the Studio in Safari for the first time. Your machines are not in danger; you might encounter a few bugs when using the Safari browser. If you do come across any bugs, please let us know in the #studio-feedback channel in [our Discord](https://discord.gg/xstate), and we’ll try to get them fixed as quickly as possible.
+
+## Sign up and log in with Twitter, Google, and email
+
+You can now log into the Stately Studio with Twitter or Google, or set up an account with your email address and password. We’ve had GitHub login support since we first launched the Studio, and alternative login providers have been a popular request from our community.
+
+![The Stately Studio sign up page with login options for GitHub, Google, Twitter, as well as email address and password fields for sign up.](2022-11-22-studio-update-login-providers.png)
+
+Are there any login providers we should add? Please let us know as a [feature request on our Studio board](https://feedback.stately.ai/studio). Many options are available to us, and we aim to support the community’s most popular providers.
+
+## More editor improvements
+
+We’ve continued making usability improvements to the editor. You might notice that transition lines now run underneath the nodes, resulting in tidier, more readable machines by default. We also now highlight the selected event and its target and source states, fading out other nodes. Changes like this should help you focus and understand the machine, especially inside vast and complex machines.
+
+![Section of a machine in the Stately Studio showing the event selected, its transitions, and source and target states all at 100% opacity, and all other nodes and transition lines at a faded out transparency.](2022-11-22-studio-update-highlighted-selected-event.png)
+
+## Better overall performance
+
+The team has also migrated the Studio to tRPC v10 on the back end and TanStack Query on the front end. The migration isn’t a change you can see, but it has enormously improved the performance of the Studio, making everything feel speedier and smoother.
+
+## Want to know what’s coming up?
+
+If you want to keep up with the team’s latest work-in-progress, [subscribe to our YouTube channel](https://youtube.com/statelyai). We share our work, upcoming features, and answer your questions in our regular office hours live streams. [Check out last week’s office hours live stream](https://www.youtube.com/watch?v=JBckQTgeD9g) for a peek into features we’re looking to release very soon.
+
+## Request the features you want
+
+If you’ve watched [our office hours](https://www.youtube.com/watch?v=JBckQTgeD9g&list=PLvWgkXBB3dd6PXbSoctwDXjWX-AQrxhds), you know the team listens to every feature request and loves to make our community happy. You can request features, upvote other people’s suggestions, and check out what’s in progress on [our Canny roadmap](https://feedback.stately.ai).

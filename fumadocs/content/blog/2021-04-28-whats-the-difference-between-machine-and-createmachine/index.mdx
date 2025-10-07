@@ -1,0 +1,77 @@
+---
+title: What’s the difference between Machine and createMachine?
+description: >-
+  XState offers two options for declaring machine definitions. This can be
+  confusing for beginners. Why are there two very similar-looking methods?
+  What’s the difference?
+tags: [typescript, state machine]
+authors: [matt]
+image: /blog/2021-04-28-whats-the-difference-between-machine-and-createmachine.png
+slug: 2021-04-28-whats-the-difference-between-machine-and-createmachine
+date: 2021-04-28
+---
+
+<head>
+  <link
+    rel="canonical"
+    href="https://dev.to/mpocock1/xstate-what-s-the-difference-between-machine-and-createmachine-15h1"
+  />
+</head>
+
+XState offers two options for declaring machine definitions:
+
+```ts
+import { Machine } from 'xstate';
+
+const machine = Machine({ ...config });
+```
+
+…or…
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({ ...config });
+```
+
+This can be confusing for beginners. Why are there two very similar-looking methods? What’s the difference?
+
+{/* truncate */}
+
+## The Difference
+
+In Javascript, there is no difference between the two. You can use them completely interchangeably.
+
+In Typescript, there is only a small difference between them - it’s to do with the ordering of the generics you can pass to the machine. `Machine` allows you to pass a generic called ['Typestates'](https://xstate.js.org/docs/guides/typescript.html#typestates) in the middle of the `Context` and `Event` generics.
+
+```ts
+import { Machine } from 'xstate';
+
+interface Context {}
+
+type Event = { type: 'EVENT_NAME' };
+
+type States = {};
+
+const machine = Machine<Context, States, Event>({ ...config });
+```
+
+Whereas `createMachine` asks you to insert it at the end:
+
+```ts
+import { createMachine } from 'xstate';
+
+interface Context {}
+
+type Event = { type: 'EVENT_NAME' };
+
+type States = {};
+
+const machine = createMachine<Context, Event, States>({ ...config });
+```
+
+Whichever you choose, there is _no functional difference in the created machine_. The two functions reference the same code, and create the machine in the same way.
+
+## What should I choose?
+
+Going forward, you should use `createMachine`. That’s the syntax that will be preferred when v5 releases. But if you're happy with Machine, you can keep using it.

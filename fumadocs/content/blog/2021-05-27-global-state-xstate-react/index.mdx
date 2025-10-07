@@ -1,0 +1,131 @@
+---
+title: How to manage global state with XState and React
+description: 'Everything you need to know to manage global state with XState and React.'
+authors: [matt]
+date: 2021-05-27
+tags: [xstate, react, redux, webdev]
+category: entry
+image: /blog/2021-05-27-global-state-xstate-react.png
+slug: 2021-05-27-global-state-xstate-react
+---
+
+Many React applications follow the Flux architecture popularised by [Redux](https://redux.js.org/). This setup can be characterised by a few key ideas:
+
+1. It uses a single object at the top of your app which stores all application state, often called the **store**.
+2. It provides a single `dispatch` function which can be used to send messages up to the store. Redux calls these `action`s, but I'll be calling them `events` - as they're known in XState.
+3. How the store responds to these messages from the app are expressed in pure functions - most often in **reducers**.
+
+This article won't go into depth on whether the Flux architecture is a good idea. David Khourshid's article [Redux is half a pattern](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7) goes into great detail here. For the purposes of this article, we're going to assume that you like having a global store, and you want to replicate it in XState.
+
+{/* truncate */}
+
+There are many reasons for wanting to do so. XState is second-to-none when it comes to managing complex asynchronous behaviour and modelling difficult problems. Managing this in Redux apps usually involves middleware: either [redux-thunk](https://github.com/reduxjs/redux-thunk), [redux-loop](https://github.com/redux-loop/redux-loop) or [redux-saga](https://github.com/redux-saga/redux-saga). Choosing XState gives you a first-class way to manage complexity.
+
+## A globally available store
+
+To mimic Redux's globally-available store, we're going to use React context. React context can be a tricky tool to work with - if you pass in values which change too often, in can result in re-renders all the way down the tree. That means we need to pass in values which change as little as possible.
+
+Luckily, XState gives us a first-class way to do that.
+
+```ts
+import React, { createContext } from 'react';
+import { useInterpret } from '@xstate/react';
+import { authMachine } from './authMachine';
+import { ActorRefFrom } from 'xstate';
+
+interface GlobalStateContextType {
+  authService: ActorRefFrom<typeof authMachine>;
+}
+
+export const GlobalStateContext = createContext(
+  // Typed this way to avoid TS errors,
+  // looks odd I know
+  {} as GlobalStateContextType,
+);
+
+export const GlobalStateProvider = (props) => {
+  const authService = useInterpret(authMachine);
+
+  return (
+    <GlobalStateContext.Provider value={{ authService }}>
+      {props.children}
+    </GlobalStateContext.Provider>
+  );
+};
+```
+
+Using `useInterpret` returns a `service`, which is a static reference to the running machine which can be subscribed to. This value never changes, so we don't need to worry about wasted re-renders.
+
+## Utilising context
+
+Further down the tree, you can subscribe to the service like this:
+
+```ts
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
+import { useActor } from '@xstate/react';
+
+export const SomeComponent = (props) => {
+  const globalServices = useContext(GlobalStateContext);
+  const [state] = useActor(globalServices.authService);
+
+  return state.matches('loggedIn') ? 'Logged In' : 'Logged Out';
+};
+```
+
+The `useActor` hook listens for whenever the service changes, and updates the `state` value.
+
+## Improving Performance
+
+There's an issue with the implementation above - this will update the component for any change to the service. Redux offers tools for deriving state using selectors - functions which restrict which parts of the state can result in components re-rendering.
+
+Luckily, XState provides that too.
+
+```ts
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
+import { useSelector } from '@xstate/react';
+
+const selector = (state) => {
+  return state.matches('loggedIn');
+};
+
+export const SomeComponent = (props) => {
+  const globalServices = useContext(GlobalStateContext);
+  const isLoggedIn = useSelector(globalServices.authService, selector);
+
+  return isLoggedIn ? 'Logged In' : 'Logged Out';
+};
+```
+
+Now, this component will only re-render when `state.matches('loggedIn')` returns a different value. This is my recommended approach over `useActor` for when you want to optimise performance.
+Dispatching events
+
+For dispatching events to the global store, you can call a service's send function directly.
+
+```ts
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './globalState';
+
+export const SomeComponent = (props) => {
+  const globalServices = useContext(GlobalStateContext);
+
+  return (
+    <button onClick={() => globalServices.authService.send('LOG_OUT')}>
+      Log Out
+    </button>
+  );
+};
+```
+
+Note that you don't need to call useActor for this, it's available right on the context.
+
+## Deviations from Flux
+
+Keen-eyed readers may spot that this implementation is slightly different from Flux. For instance - instead of a single global store, one might have several running machines at once: `authService`, `dataCacheService`, and `globalTimeoutService`. Each of them have their own `send` attributes, too - so you're not calling a global dispatch.
+
+These changes can be worked around. One could create a synthetic send inside the global store which called all the services' `send` function manually. But personally, I prefer knowing exactly which services my messages are being passed to, and it avoids having to keep events globally namespaced.
+
+## Summary
+
+XState can work beautifully as a global store for a React application. It keeps application logic co-located, treats side effects as first-class citizens, and offers good performance with `useSelector`. You should choose this approach if you're keen on the Flux architecture but feel your app's logic is getting out of hand.
