@@ -143,6 +143,42 @@ const store = createStore({
 });
 ```
 
+:::warning
+
+**Important:** Both `enqueue.effect()` and `enqueue.emit()` must be called **synchronously** within the transition function. Calling them outside the function's synchronous execution (e.g., inside an async callback or Promise) will have no effect, since the transition function must complete synchronously.
+
+For asynchronous operations, send an event back to the store:
+
+```ts
+const store = createStore({
+  context: { data: null },
+  emits: {
+    loaded: (payload: { data: string }) => {},
+  },
+  on: {
+    fetchData: (context, event, enqueue) => {
+      // ✅ This works - called synchronously
+      enqueue.effect(async () => {
+        const result = await fetch('/api/data');
+        const data = await result.json();
+        // Send event back to store for async operations
+        store.trigger.dataLoaded({ data });
+      });
+      return context;
+    },
+    dataLoaded: (context, event: { data: string }, enqueue) => {
+      // ✅ Now you can emit synchronously
+      enqueue.emit.loaded({ data: event.data });
+      return { ...context, data: event.data };
+    },
+  },
+});
+```
+
+This ensures **determinism**: all state changes, effects, and emitted events must be the direct result of an event being sent to the store. Async callbacks cannot enqueue effects or emit events because they happen at unpredictable times, breaking the deterministic event-driven model.
+
+:::
+
 ## Emitting Events
 
 You can emit events from transitions by defining them in the `emits` property and using `enqueue.emit`:

@@ -30,3 +30,6 @@ yarn-error.log*
 # JetBrains IDE's
 .idea
 .fleet
+
+# Fumadocs build (TEMPORARY)
+fumadocs
