@@ -271,8 +271,16 @@ const toggleMachine = createMachine({
   id: 'toggle',
   initial: 'inactive',
   states: {
-    inactive: {},
-    active: {},
+    inactive: {
+      on: {
+        toggle: 'inactive'
+      },
+    },
+    active: {
+      on: {
+        toggle: 'active'
+      }
+    },
   },
 });
 
