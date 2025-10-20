@@ -193,36 +193,6 @@ console.log(actions);
 // ]
 ```
 
-### Built-in Actions (Side Note)
-
-Some built-in actions require special handling:
-
-- **`assign`** and **immediate `raise`**: Already reflected in the returned state
-- **Delayed `raise`**: Returns action with delay information
-- **`cancel`**, **`sendTo`**, **`emit`**, **`log`**: Return action objects for manual handling
-- **`spawn`**: Returns spawn action for creating child actors
-
-```ts
-// Example with delayed raise
-const machine = createMachine({
-  initial: 'waiting',
-  states: {
-    waiting: {
-      after: {
-        5000: 'timeout',
-      },
-    },
-    timeout: {},
-  },
-});
-
-const [state, actions] = initialTransition(machine);
-console.log(actions);
-// [{ type: 'xstate.raise', params: { delay: 5000, event: { type: 'xstate.after.5000...' } } }]
-```
-
-{/* TODO: Add example with Express */}
-
 ## Resolving Persisted State
 
 When working with persisted state, use `machine.resolveState()` to restore snapshots:
