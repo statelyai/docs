@@ -363,6 +363,7 @@ const sidebars = {
         'input',
         'output',
         'transitions',
+        'pure-transitions',
         'eventless-transitions',
         'delayed-transitions',
         'actions',

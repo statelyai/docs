@@ -620,11 +620,24 @@ const machine = createMachine({
 });
 ```
 
-## Transitioning state
+## Pure transition functions
 
 _Since XState version 5.19.0_
 
-When you create a state machine actor, the next state is determined by the machine's current state and the event that is sent to the actor. However, you can also determine the next **state** and **actions** from the current state and event by using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions:
+You can compute the next state and actions of a state machine without creating a live actor using the pure `transition(machine, state, event)` and `initialTransition(machine)` functions. These functions return `[nextState, actions]` tuples that represent what would happen during a transition, but without executing any side effects.
+
+This is useful for:
+
+- Server-side applications and API endpoints
+- Testing state machine logic
+- State previews and debugging
+- Scenarios where you need deterministic behavior
+
+:::tip
+
+For comprehensive documentation on pure transition functions, see the [Pure transition functions](/docs/pure-transitions) guide.
+
+:::
 
 ```ts
 import { createMachine, initialTransition, transition } from 'xstate';
@@ -644,22 +657,12 @@ const machine = createMachine({
 });
 
 const [initialState, initialActions] = initialTransition(machine);
-
-console.log(initialState.value);
-// logs 'pending'
-
-console.log(initialActions);
-// logs []
-
 const [nextState, actions] = transition(machine, initialState, {
   type: 'start',
 });
 
-console.log(nextState.value);
-// logs 'started'
-
-console.log(actions);
-// logs [{ type: 'doSomething', … }]
+console.log(nextState.value); // 'started'
+console.log(actions); // [{ type: 'doSomething', … }]
 ```
 
 ## Determining the next state
