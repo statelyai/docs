@@ -1,4 +1,0 @@
-{
-  "title": "Core concepts",
-  "pages": ["state-machines-and-statecharts", "actor-model", "xstate"]
-}
