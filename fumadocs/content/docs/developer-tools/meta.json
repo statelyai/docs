@@ -1,0 +1,9 @@
+{
+  "title": "Developer tools",
+  "pages": [
+    "xstate-vscode-extension",
+    "visualizer",
+    "inspector",
+    "developer-tools"
+  ]
+}

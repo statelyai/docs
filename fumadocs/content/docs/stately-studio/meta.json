@@ -1,0 +1,27 @@
+{
+  "title": "Stately Studio",
+  "pages": [
+    "studio",
+    "studio-pro-plan",
+    "studio-team-plan",
+    "studio-enterprise-plan",
+    "studio-community-plan",
+    "editor-states-and-transitions",
+    "editor-actions-and-actors",
+    "design-mode",
+    "simulate-mode",
+    "code",
+    "projects",
+    "stately-sky",
+    "teams",
+    "discover",
+    "share",
+    "accounts",
+    "versions",
+    "lock-machines",
+    "keyboard-shortcuts",
+    "canvas-view-controls",
+    "user-preferences",
+    "studio-api"
+  ]
+}
