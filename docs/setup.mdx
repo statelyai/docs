@@ -79,3 +79,159 @@ const machine =
     // types: { ... }
   }, /* { actions, guards, ... } */);
 ```
+
+## Extending setups
+
+_ Since XState version 5.24.0_
+
+The `.extend()` method allows you to progressively build up your setup by extending actions, guards, and delays. This enables patterns that weren't possible before with full type safety.
+
+### Why use `.extend()`?
+
+Before `.extend()`, all actions, guards, and delays had to be defined in a single `setup()` call. With `.extend()`, you can:
+
+- **Compose setups from multiple sources**: Create base setups that can be extended for different domains or modules
+- **Reference base sources in extended sources**: Use base actions, guards, and delays within extended ones with full type safety
+- **Chain extensions**: Build up complex setups incrementally while maintaining type safety throughout
+
+### Basic usage
+
+You can extend any setup by calling `.extend()` with additional actions, guards, or delays:
+
+```ts
+import { setup, enqueueActions } from 'xstate';
+
+const baseSetup = setup({
+  actions: {
+    doSomething: () => {
+      console.log('Doing something');
+    },
+  },
+  guards: {
+    truthy: () => true,
+  },
+});
+
+// highlight-start
+const extendedSetup = baseSetup.extend({
+  actions: {
+    doSomethingElse: () => {
+      console.log('Doing something else');
+    },
+  },
+  guards: {
+    falsy: () => false,
+  },
+});
+// highlight-end
+
+const machine = extendedSetup.createMachine({
+  entry: [{ type: 'doSomething' }, { type: 'doSomethingElse' }], // ✅ Both actions are available
+  on: {
+    EV: {
+      guard: { type: 'truthy' }, // ✅ Base guard is available
+      actions: { type: 'doSomethingElse' },
+    },
+  },
+});
+```
+
+### Referencing base sources in extended sources
+
+One of the powerful features of `.extend()` is the ability to reference base actions, guards, and delays within extended ones, with full type safety:
+
+```ts
+import { setup, enqueueActions, not, and, or, assign } from 'xstate';
+
+const baseSetup = setup({
+  types: {
+    context: {} as { count: number },
+  },
+  actions: {
+    increment: assign({
+      count: ({ context }) => context.count + 1,
+    }),
+  },
+  guards: {
+    truthy: () => true,
+    isPositive: ({ context }) => context.count > 0,
+  },
+});
+
+const extendedSetup = baseSetup.extend({
+  guards: {
+    // ✅ Can reference base guard with not()
+    falsy: not('truthy'),
+    
+    // ✅ Can combine base guards with and()
+    isPositiveAndTruthy: and(['isPositive', 'truthy']),
+    
+    // ❌ TypeScript error: 'nonexistent' doesn't exist
+    // nonexistent: not('nonexistent'),
+  },
+  actions: {
+    // ✅ Can reference base actions in enqueueActions
+    incrementAndLog: enqueueActions(({ enqueue, check }) => {
+      enqueue('increment'); // ✅ Base action is available
+      
+      if (check('isPositive')) {
+        // ✅ Extended guard is available
+        enqueue.raise({ type: 'POSITIVE' });
+      }
+      
+      // ❌ TypeScript error: 'nonexistent' doesn't exist
+      // enqueue('nonexistent');
+    }),
+  },
+});
+
+const machine = extendedSetup.createMachine({
+  on: {
+    EV: {
+      guard: 'isPositiveAndTruthy', // ✅ Extended guard is available
+      actions: 'incrementAndLog',
+    },
+  },
+});
+```
+
+Delays can also be extended and referenced in actions:
+
+```ts
+import { setup, raise } from 'xstate';
+
+const baseSetup = setup({
+  delays: {
+    short: 10,
+  },
+});
+
+const extendedSetup = baseSetup.extend({
+  delays: {
+    medium: 100,
+  },
+});
+
+const machine = extendedSetup.createMachine({
+  initial: 'a',
+  states: {
+    a: {
+      entry: [
+        raise({ type: 'GO' }, { delay: 'short' }), // ✅ Base delay
+        raise({ type: 'GO' }, { delay: 'medium' }), // ✅ Extended delay
+        // ❌ TypeScript error: 'long' doesn't exist
+        // raise({ type: 'GO' }, { delay: 'long' }),
+      ],
+      on: {
+        GO: 'b',
+      },
+    },
+    b: {
+      after: {
+        medium: 'c', // ✅ Extended delay available in after
+      },
+    },
+    c: {},
+  },
+});
+```
