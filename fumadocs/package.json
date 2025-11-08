@@ -10,14 +10,14 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^1.0.19",
-    "@ai-sdk/react": "^2.0.60",
+    "@ai-sdk/openai-compatible": "^1.0.26",
+    "@ai-sdk/react": "^2.0.89",
     "@radix-ui/react-presence": "^1.1.5",
-    "ai": "^5.0.60",
+    "ai": "^5.0.89",
     "class-variance-authority": "^0.7.1",
     "fumadocs-core": "16.0.5",
     "fumadocs-mdx": "13.0.2",
-    "fumadocs-twoslash": "^3.1.9",
+    "fumadocs-twoslash": "^3.1.10",
     "fumadocs-ui": "16.0.5",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^0.544.0",
@@ -33,20 +33,21 @@
     "tailwind-merge": "^3.3.1",
     "twoslash": "^0.3.4",
     "unist-util-visit": "^5.0.0",
-    "xstate": "^5.22.1",
-    "zod": "^4.1.11"
+    "xstate": "^5.24.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.14",
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.17",
     "@types/mdx": "^2.0.13",
     "@types/node": "24.6.2",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "eslint": "^9",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.39.1",
     "eslint-config-next": "15.5.4",
+    "next-validate-link": "^1.6.3",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.14",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   }
 }
