@@ -11,7 +11,7 @@ State machines help us model how a process goes from state to state when an even
 
 <Callout>
 
-Want to learn more about the concepts of state machines? [Check out our introduction to state machines and statecharts](state-machines-and-statecharts.mdx).
+Want to learn more about the concepts of state machines? [Check out our introduction to state machines and statecharts](state-machines-and-statecharts).
 
 </Callout>
 
@@ -31,9 +31,9 @@ In Stately’s editor, the rounded rectangle boxes are states. There are a few d
   title="Demoing states"
 />
 
-You can invoke other state machines or actors on a state, or trigger an action when a state is entered or exited. [Read more about actions and actors in Stately’s editor](editor-actions-and-actors.mdx).
+You can invoke other state machines or actors on a state, or trigger an action when a state is entered or exited. [Read more about actions and actors in Stately’s editor](editor-actions-and-actors).
 
-In Stately’s editor, you can also add [descriptions](descriptions.mdx), [colors](colors.mdx), and [tags](tags.mdx) to states.
+In Stately’s editor, you can also add [descriptions](descriptions), [colors](colors), and [tags](tags) to states.
 
 ### Create a state
 
@@ -47,7 +47,7 @@ In Stately’s editor, you can also add [descriptions](descriptions.mdx), [color
 
 ### Parent and child states
 
-States can contain more states, also known as child states. These child states are only active when the parent state is active. [Read more about parent and child states](parent-states.mdx).
+States can contain more states, also known as child states. These child states are only active when the parent state is active. [Read more about parent and child states](parent-states).
 
 To add a child state:
 
@@ -60,7 +60,7 @@ To add a child state:
 
 When a state machine starts, it enters the **initial state** first. In Stately’s editor, the filled circle with an arrow icon represents the initial state.
 
-Machines can only have one top-level initial state. Each parent state has its own initial state. If you have unreachable states, it might be because there is no initial state. [Read more about initial states](initial-states.mdx).
+Machines can only have one top-level initial state. Each parent state has its own initial state. If you have unreachable states, it might be because there is no initial state. [Read more about initial states](initial-states).
 
 To set a state as the initial state:
 
@@ -80,7 +80,7 @@ If you want your machine to transition from a parent state when its final child 
 
 ### Parallel states
 
-In statecharts, a parallel state is a state that has multiple child states (also known as **regions**) that are all active at the same time. [Read more about parallel states](parallel-states.mdx). A dashed line borders each region.
+In statecharts, a parallel state is a state that has multiple child states (also known as **regions**) that are all active at the same time. [Read more about parallel states](parallel-states). A dashed line borders each region.
 
 To turn a parent state into a parallel state:
 
@@ -89,7 +89,7 @@ To turn a parent state into a parallel state:
 
 ### History states
 
-A history state remembers the last child state that was active before its parent state was exited. When a transition from outside the parent state targets a history state, the remembered child state is entered. [Read more about history states](history-states.mdx).
+A history state remembers the last child state that was active before its parent state was exited. When a transition from outside the parent state targets a history state, the remembered child state is entered. [Read more about history states](history-states).
 
 - Use the <MoreHorizontal size={18} /> triple dot menu or _right-click_ a state, and from **State type**, choose **History state**.
 - Select the parent state, open the state <Info size={18} /> **Details** panel, and choose the **History** state option.
@@ -136,7 +136,7 @@ Deleting a state will also delete any transitions with that state as a source.
 
 ### Delayed (after) transitions
 
-**Delayed transitions** are transitions that only happen after a set amount of time. If another event occurs before the end of the timer, the transition doesn’t complete. [Read more about delayed transitions](delayed-transitions.mdx).
+**Delayed transitions** are transitions that only happen after a set amount of time. If another event occurs before the end of the timer, the transition doesn’t complete. [Read more about delayed transitions](delayed-transitions).
 
 In Stately’s editor, delayed transitions are labeled “after.” Delayed transitions have a default time interval of 500ms (0.5 seconds).
 
@@ -156,7 +156,7 @@ To make a delayed transition into a regular transition, use the <MoreHorizontal 
 
 ### Eventless (always) transitions
 
-**Eventless transitions** are transitions that are *always* taken when the transition is enabled. In Stately’s editor, eventless transitions are labeled “always.” [Read more about eventless transitions](eventless-transitions.mdx).
+**Eventless transitions** are transitions that are *always* taken when the transition is enabled. In Stately’s editor, eventless transitions are labeled “always.” [Read more about eventless transitions](eventless-transitions).
 
 To make a transition into an eventless transition:
 
@@ -167,7 +167,7 @@ To make an eventless transition into a regular transition, use the <MoreHorizont
 
 ### State done event
 
-Use a state done event to transition from a parent state when its final child state is reached. [Read more about state done events](state-done-events.mdx).
+Use a state done event to transition from a parent state when its final child state is reached. [Read more about state done events](state-done-events).
 
 To turn an event into a state done event:
 
@@ -186,7 +186,7 @@ To create a self-transition:
 
 ## Add guards
 
-A **guarded transition** is a transition that is only enabled if its condition is evaluated to be `true`. [Read more about guarded transitions](guards.mdx).
+A **guarded transition** is a transition that is only enabled if its condition is evaluated to be `true`. [Read more about guarded transitions](guards).
 
 In Stately’s editor, guards are numbered in the order they are checked and labeled with “if” or “else if” along with their condition. Multiple guards on the same events are connected with a dotted line.
 
@@ -202,4 +202,4 @@ To reorder guards:
 
 To delete a guard, remove its condition from the text input.
 
-You can add implementation code to your guards from the <Code size={18}/> **[Sources](sources.mdx)** panel.
+You can add implementation code to your guards from the <Code size={18}/> **[Sources](sources)** panel.

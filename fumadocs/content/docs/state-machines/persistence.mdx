@@ -2,7 +2,7 @@
 title: 'Persistence'
 ---
 
-[Actors](actors.mdx) can persist their internal state and restore it later. **Persistence** refers to storing the state of an actor in persistent storage, such as localStorage or a database. **Restoration** refers to restoring the state of an actor from persistent storage.
+[Actors](actors) can persist their internal state and restore it later. **Persistence** refers to storing the state of an actor in persistent storage, such as localStorage or a database. **Restoration** refers to restoring the state of an actor from persistent storage.
 
 In frontend applications, persistence is useful for maintaining state across browser reloads. In backend applications, persistence allows workflows to span multiple requests, survive service restarts, be fault-tolerant, represent long-running processes, and be auditable and traceable.
 
@@ -72,7 +72,7 @@ Actions from machine actors will _not_ be re-executed, because they are assumed 
 
 ## Deep persistence
 
-Persisting & restoring state from machine actors is deep; all [invoked](invoke.mdx) & [spawned actors](spawn.mdx) will be persisted and restored recursively.
+Persisting & restoring state from machine actors is deep; all [invoked](invoke) & [spawned actors](spawn) will be persisted and restored recursively.
 
 ```ts
 const feedbackMachine = createMachine({
@@ -132,7 +132,7 @@ restoredActor.start();
 
 ## Event sourcing
 
-An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the [events](transitions.mdx) that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
+An alternative to persisting state is **event sourcing**, which is a way of restoring the state of an actor by replaying the [events](transitions) that led to that state. Event sourcing can be more reliable than persisting state, because it is less prone to [incompatible state](#caveats) and it also allows you to replay actions.
 
 One way to implement event sourcing is to persist the events as they happen using the [inspection API](/docs/inspection), and then replay them to restore the state of the actor:
 

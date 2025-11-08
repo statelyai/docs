@@ -29,7 +29,7 @@ const paths = getSimplePaths(machine);
 #### Arguments
 
 - `machine` - the [`Machine`](https://xstate.js.org/docs/guides/machines.html) to traverse
-- `options` (optional) - [options](/#options) that customize how the algorithm will traverse the machine
+- `options` (optional) - [options](#options) that customize how the algorithm will traverse the machine
 
 Returns the [shortest paths (Dijkstra's algorithm)](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) of a [machine](https://xstate.js.org/docs/guides/machines.html) from the initial state to every other state as a mapped object, where the:
 
@@ -153,7 +153,7 @@ console.log(shortestPaths);
 Arguments:
 
 - `machine` - the [`Machine`](https://xstate.js.org/docs/guides/machines.html) to traverse
-- `options` (optional) - [options](/#options) that customize how the algorithm will traverse the machine
+- `options` (optional) - [options](#options) that customize how the algorithm will traverse the machine
 
 Returns the [simple paths](<https://en.wikipedia.org/wiki/Path_(graph_theory)#Definitions>) of a [machine](https://xstate.js.org/docs/guides/machines.html) as a mapped object, where the:
 

@@ -2,12 +2,12 @@
 title: History states
 ---
 
-A history state is a special type of state (a _pseudostate_) that remembers the last [child state](parent-states.mdx) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
+A history state is a special type of state (a _pseudostate_) that remembers the last [child state](parent-states) that was active before its parent state is exited. When a transition from outside the parent state targets a history state, the remembered child state is entered.
 
 This allows machines to "remember" where they left off when exiting and reentering a parent state.
 
 - If no child state remembered, history goes to `.target` state, if it is specified
-- Otherwise, go to [initial state](initial-states.mdx)
+- Otherwise, go to [initial state](initial-states)
 
 A history state returns the parent state to its most recently active child state. The box with an **H** inside represents the history state.
 

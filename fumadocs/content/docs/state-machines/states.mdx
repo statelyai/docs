@@ -13,7 +13,7 @@ These states are “finite”; the machine can only move through the states you�
 
 <Callout>
 
-You can visualize your state machines and easily add states in our drag-and-drop Stately editor. [Read more about states in Stately’s editor](editor-states-and-transitions.mdx).
+You can visualize your state machines and easily add states in our drag-and-drop Stately editor. [Read more about states in Stately’s editor](editor-states-and-transitions).
 
 </Callout>
 
@@ -25,12 +25,12 @@ Watch our [“What are states?” video on YouTube](https://www.youtube.com/watc
 
 ## State object
 
-The state object represents the current state of a running machine ([actor](actor-model.mdx)) and contains the following properties:
+The state object represents the current state of a running machine ([actor](actor-model)) and contains the following properties:
 
 - **`value`**: the current state value, which is either:
   - a string representing a simple state like `'playing'`, or:
   - an object representing nested states like `{ paused: 'buffering' }`.
-- **`context`**: the current [context](context.mdx) (extended state.)
+- **`context`**: the current [context](context) (extended state.)
 - **`meta`**: an object containing state node meta data.
 
 ```ts
@@ -105,7 +105,7 @@ Coming soon… a visual example.
 
 - `state.value === { form: 'invalid' }` - this represents a state machine with an active child node with key `form` that has an active child node with key `invalid`
 
-For state machines with [parallel state nodes](parallel-states.mdx), the state value contains object(s) with multiple keys for each state node region:
+For state machines with [parallel state nodes](parallel-states), the state value contains object(s) with multiple keys for each state node region:
 
 ```ts
 state.value ===
@@ -119,7 +119,7 @@ State machines may also have no state nodes other than the root state node. For 
 
 ## State context
 
-State machines can have [context](context.mdx), which is an object that represents the extended state of the machine. The context is immutable, and can only be updated by [assigning](actions.mdx#assign-action) to it in an action. You can read the `state.context` property to get the current context.
+State machines can have [context](context), which is an object that represents the extended state of the machine. The context is immutable, and can only be updated by [assigning](actions.mdx#assign-action) to it in an action. You can read the `state.context` property to get the current context.
 
 ```ts
 const currentState = feedbackActor.getSnapshot();
@@ -261,7 +261,7 @@ console.log(currentState.getMeta());
 
 ## State descriptions
 
-You can add `.description` to states to describe their purpose and share related notes with your team. In Stately Studio’s editor, these descriptions are rendered in the machine and support markdown including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions.mdx).
+You can add `.description` to states to describe their purpose and share related notes with your team. In Stately Studio’s editor, these descriptions are rendered in the machine and support markdown including links, images, and lists. [Read more about descriptions in Stately Studio](descriptions).
 
 ```ts
 states: {
@@ -294,7 +294,7 @@ states: {
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 
@@ -338,4 +338,4 @@ console.log(state.getMeta());
 
 ## Further resources
 
-[Persisting state](persistence.mdx)
+[Persisting state](persistence)

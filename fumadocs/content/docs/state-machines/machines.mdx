@@ -2,11 +2,11 @@
 title: 'State machines'
 ---
 
-A [state machine](state-machines-and-statecharts.mdx) is a model that describes the behavior of something, for example an [actor](actors.mdx). [Finite state](finite-states.mdx) machines describe how the state of an actor transitions to another state when an [event](transitions.mdx) occurs.
+A [state machine](state-machines-and-statecharts) is a model that describes the behavior of something, for example an [actor](actors). [Finite state](finite-states) machines describe how the state of an actor transitions to another state when an [event](transitions) occurs.
 
 <Callout>
 
-Read our [introduction to state machines and statecharts](state-machines-and-statecharts.mdx) if you haven’t already!
+Read our [introduction to state machines and statecharts](state-machines-and-statecharts) if you haven’t already!
 
 </Callout>
 
@@ -16,7 +16,7 @@ State machines help build reliable and robust software. [Read more about the ben
 
 ## Creating a state machine
 
-In [XState](xstate.mdx), a state machine (referred to as a “machine”) is created using the `createMachine(config)` function:
+In [XState](xstate), a state machine (referred to as a “machine”) is created using the `createMachine(config)` function:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -58,7 +58,7 @@ feedbackActor.send({ type: 'feedback.good' });
 
 ## Creating actors from machines
 
-A machine contains the logic of an actor. An [actor](actors.mdx) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine. Multiple actors can be created from the same machine, and each of those actors will exhibit the same behavior (reaction to received events), but they will be independent of each other and have their own states.
+A machine contains the logic of an actor. An [actor](actors) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine. Multiple actors can be created from the same machine, and each of those actors will exhibit the same behavior (reaction to received events), but they will be independent of each other and have their own states.
 
 To create an actor, use the `createActor(machine)` function:
 
@@ -81,10 +81,10 @@ You can also create an actor [from other types of logic](/docs/actors/#actor-log
 
 Machine implementations are the language-specific code that is executed but is not directly related to the state machine’s logic (states and transitions). This includes:
 
-- [Actions](actions.mdx), which are fire-and-forget side-effects.
-- [Actors](actors.mdx), which are entities that can communicate with the machine actor.
-- [Guards](guards.mdx), which are conditions that determine whether a transition should be taken.
-- [Delays](delayed-transitions.mdx), which specify the time before a delayed transition is taken or a delayed event is sent.
+- [Actions](actions), which are fire-and-forget side-effects.
+- [Actors](actors), which are entities that can communicate with the machine actor.
+- [Guards](guards), which are conditions that determine whether a transition should be taken.
+- [Delays](delayed-transitions), which specify the time before a delayed transition is taken or a delayed event is sent.
 
 The default implementations can be provided in a `setup({...})` function when creating a machine, and then you can reference those implementations using JSON-serializable strings and/or objects, such as `{ type: 'doSomething' }`.
 
@@ -445,7 +445,7 @@ All state configurations created with `.createStateConfig(...)` have the full ty
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 

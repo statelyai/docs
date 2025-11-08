@@ -40,9 +40,9 @@ Watch our [“What are initial states?” video on YouTube](https://www.youtube.
 
 ## Specifying an initial state
 
-Typically, a state machine will have multiple [finite states](finite-states.mdx) that it can be in. The `initial` property on the machine config specifies the initial state that the machine should start in.
+Typically, a state machine will have multiple [finite states](finite-states) that it can be in. The `initial` property on the machine config specifies the initial state that the machine should start in.
 
-[Parent states](parent-states.mdx) also must specify an initial state in their `initial` property. The following `trafficLightMachine` will start in the `'green'` state, as it is specified in the `initial` property of the machine config.
+[Parent states](parent-states) also must specify an initial state in their `initial` property. The following `trafficLightMachine` will start in the `'green'` state, as it is specified in the `initial` property of the machine config.
 
 When the machine reaches the `'red'` parent state, it will also be in the `'red.walk'` state, as it is specified in the `initial` property of the `'red'` state.
 

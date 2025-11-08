@@ -3,7 +3,7 @@ title: 'Spawn'
 description: 'You can use spawn to run actors. Actors created with spawn are spawning actors, and actors created with invoke are invoking actors.'
 ---
 
-Sometimes invoking [actors](actors.mdx) may not be flexible enough for your needs. For example, you might want to:
+Sometimes invoking [actors](actors) may not be flexible enough for your needs. For example, you might want to:
 
 - Invoke child machines that last across _several_ states
 - Invoke a _dynamic number_ of actors
@@ -148,7 +148,7 @@ const machine = setup({
 });
 ```
 
-Stopping a child actor does _not_ remove it from `context`. To remove it from context, use the [`assign(...)` action creator](./context.mdx):
+Stopping a child actor does _not_ remove it from `context`. To remove it from context, use the [`assign(...)` action creator](./context):
 
 ```ts
 import { setup, stopChild } from 'xstate';
@@ -174,7 +174,7 @@ const machine = setup({
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 

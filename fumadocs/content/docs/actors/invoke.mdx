@@ -2,7 +2,7 @@
 title: 'Invoke'
 ---
 
-[State machines](machines.mdx) can “invoke” one or many [actors](actors.mdx) within a given state. The invoked actor will start when the state is entered, and stop when the state is exited. Any XState actor can be invoked, including simple Promise-based actors, or even complex machine-based actors.
+[State machines](machines) can “invoke” one or many [actors](actors) within a given state. The invoked actor will start when the state is entered, and stop when the state is exited. Any XState actor can be invoked, including simple Promise-based actors, or even complex machine-based actors.
 
 Invoking an actor is useful for managing synchronous or asynchronous work that the state machine needs to orchestrate and communicate with at a high level, but doesn't need to know about in detail.
 
@@ -19,11 +19,11 @@ Invoking an actor is useful for managing synchronous or asynchronous work that t
 
 <Callout>
 
-You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor. [Read more about actors in Stately’s editor](editor-actions-and-actors.mdx).
+You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor. [Read more about actors in Stately’s editor](editor-actions-and-actors).
 
 </Callout>
 
-Actors can be invoked within any state _except_ for the [top-level final state](final-states.mdx). In the following example, the `loading` state invokes a Promise-based actor:
+Actors can be invoked within any state _except_ for the [top-level final state](final-states). In the following example, the `loading` state invokes a Promise-based actor:
 
 ```ts
 import { setup, createActor, fromPromise, assign } from 'xstate';
@@ -250,7 +250,7 @@ const actor = createActor(
 <Callout type="warning">
 Don't get the `onDone` property on a state confused with `invoke.onDone` - they are similar transitions, but refer to different things.
 
-- The `onDone` property on a [state](states.mdx) node refers to the compound state node reaching a [final state](final-states.mdx).
+- The `onDone` property on a [state](states) node refers to the compound state node reaching a [final state](final-states).
 - The `invoke.onDone` property refers to the invocation (`invoke.src`) being done.
 
 ```js
@@ -394,7 +394,7 @@ invoke: {
 }
 ```
 
-See [Input](input.mdx) for more.
+See [Input](input) for more.
 
 ## Invoking Promises
 
@@ -553,7 +553,7 @@ actor.subscribe({
 
 ## Invoking Callbacks
 
-You can invoke [callback actor logic](./callback-actors.mdx) by:
+You can invoke [callback actor logic](./callback-actors) by:
 
 1. Setting up the callback actor logic in the `actors` object of the `setup({ actors: { ... } })` call
 2. Invoking the callback actor logic by its source name (`src`) in the `invoke` property of a state
@@ -580,11 +580,11 @@ const machine = setup({
 });
 ```
 
-Read [callback actor logic](./callback-actors.mdx) for more information on callback actors.
+Read [callback actor logic](./callback-actors) for more information on callback actors.
 
 ## Invoking Observables
 
-You can invoke [observable logic](./observable-actors.mdx) by:
+You can invoke [observable logic](./observable-actors) by:
 
 1. Setting up the observable logic in the `actors` object of the `setup({ actors: { ... } })` call
 2. Invoking the observable logic by its source name (`src`) in the `invoke` property of a state
@@ -615,7 +615,7 @@ const machine = setup({
 });
 ```
 
-Read [observable actor logic](./observable-actors.mdx) for more information on observable actors.
+Read [observable actor logic](./observable-actors) for more information on observable actors.
 
 ## Invoking Event Observables
 
@@ -648,7 +648,7 @@ const machine = setup({
 
 ## Invoking Transitions
 
-You can invoke [transition actor logic](./transition-actors.mdx) by:
+You can invoke [transition actor logic](./transition-actors) by:
 
 1. Setting up the transition actor logic in the `actors` object of the `setup({ actors: { ... } })` call
 2. Invoking the transition actor logic by its source name (`src`) in the `invoke` property of a state
@@ -681,11 +681,11 @@ const machine = setup({
 });
 ```
 
-Read [transition actor logic](./transition-actors.mdx) for more information on transition actors.
+Read [transition actor logic](./transition-actors) for more information on transition actors.
 
 ## Invoking Machines
 
-You can invoke [state machine actor logic](./state-machine-actors.mdx) by:
+You can invoke [state machine actor logic](./state-machine-actors) by:
 
 1. Setting up the state machine actor logic in the `actors` object of the `setup({ actors: { ... } })` call
 2. Invoking the state machine actor logic by its source name (`src`) in the `invoke` property of a state
@@ -719,11 +719,11 @@ const machine = setup({
 });
 ```
 
-Read [state machine actor logic](./state-machine-actors.mdx) for more information on state machine actors.
+Read [state machine actor logic](./state-machine-actors) for more information on state machine actors.
 
 ## Sending Responses
 
-An invoked actor (or [spawned actor](./spawn.mdx)) can _respond_ to another actor; i.e., it can send an event _in response to_ an event sent by another actor. To do so, provide a reference to the sending actor as a custom property on the event object being sent. In the following example, we use `event.sender`, but any name works.
+An invoked actor (or [spawned actor](./spawn)) can _respond_ to another actor; i.e., it can send an event _in response to_ an event sent by another actor. To do so, provide a reference to the sending actor as a custom property on the event object being sent. In the following example, we use `event.sender`, but any name works.
 
 ```js
 // Parent
@@ -855,7 +855,7 @@ actor.subscribe({
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 
@@ -909,7 +909,7 @@ const machine = setup({
 });
 ```
 
-Read the documentation on [setting up state machines](./setup.mdx) for more information.
+Read the documentation on [setting up state machines](./setup) for more information.
 
 ## Invoke cheatsheet
 

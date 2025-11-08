@@ -187,7 +187,7 @@ Breaking change
 
 </Callout>
 
-The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input.mdx) instead:
+The `machine.withContext(...)` method can no longer be used, as `context` can no longer be overridden directly. Use [input](input) instead:
 
 <Tabs items={['v5', 'v4']}>
 <Tab value="v5" label="XState v5">
@@ -293,7 +293,7 @@ Instead of using the imported `spawn()` function to create actors inside `assign
 - Use the `spawnChild(...)` action creator (preferred)
 - Or use the `spawn(...)` method from the first argument passed to the assigner function inside of `assign(...)` actions (useful if you need the actor ref in `context`)
 
-Read the documentation on [spawning actors](./spawn.mdx) for more information.
+Read the documentation on [spawning actors](./spawn) for more information.
 
 <Tabs items={['v5', 'v4']}>
 <Tab value="v5" label="XState v5">
@@ -531,7 +531,7 @@ state.configuration;
 
 ### Read events from inspection API instead of `state.events`
 
-The `state.events` property has been removed, because events are not part of state, unless you explicitly add them to the state's `context`. Use the [inspection API](./inspection.mdx) to observe events instead, or add the event explicitly to the state's `context`:
+The `state.events` property has been removed, because events are not part of state, unless you explicitly add them to the state's `context`. Use the [inspection API](./inspection) to observe events instead, or add the event explicitly to the state's `context`:
 
 <Tabs items={['v5', 'v4']}>
 <Tab value="v5" label="XState v5">
@@ -1478,7 +1478,7 @@ The available actor logic creators are:
 - `fromTransition`
 - `fromCallback`
 
-See [Actors](actors.mdx) for more information.
+See [Actors](actors) for more information.
 
 <Tabs items={['v5', 'v4']}>
 <Tab value="v5" label="XState v5">
@@ -2428,28 +2428,28 @@ const {
 
 ## New features
 
-- [Create actor systems](system.mdx)
+- [Create actor systems](system)
 - [New actor logic creators](/docs/actors#actor-logic-creators)
-- [Deep persistence for invoked and spawned actors](persistence.mdx)
-- [Provide input data to state machines and actors](input.mdx)
-- [Specify output “done data” for actors](output.mdx)
+- [Deep persistence for invoked and spawned actors](persistence)
+- [Provide input data to state machines and actors](input)
+- [Specify output “done data” for actors](output)
 - [Partial event descriptors (partial wildcards)](/docs/transitions#partial-wildcard-transitions)
 - [Enqueue actions](/docs/actions#enqueue-actions)
 - [Higher-level guards](/docs/guards#higher-level-guards)
 - [Setup API for specifying types and strongly-typed state values](/docs/machines#providing-implementations)
-- [Inspect API](inspection.mdx)
+- [Inspect API](inspection)
 
 ## Frequently asked questions
 
 ### When will Stately Studio be compatible with XState v5?
 
-We are currently working on [Stately Studio](studio.mdx) compatibility with XState v5. Exporting to XState v5 (JavaScript or TypeScript) is already available. We are working on support for new XState v5 features, such as higher-order guards, partial event wildcards, and machine input/output.
+We are currently working on [Stately Studio](studio) compatibility with XState v5. Exporting to XState v5 (JavaScript or TypeScript) is already available. We are working on support for new XState v5 features, such as higher-order guards, partial event wildcards, and machine input/output.
 
 Upvote or comment on [Stately Studio + XState v5 compatibility in our roadmap](https://feedback.stately.ai/editor/p/stately-studio-xstate-v5-compatibility) to stay updated on our progress.
 
 ### When will the XState VS Code extension be compatible with XState v5?
 
-The [XState VS Code extension](xstate-vscode-extension.mdx) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway.
+The [XState VS Code extension](xstate-vscode-extension) is not yet compatible with XState v5. The extension is a priority for us, and work is already underway.
 
 Upvote or comment on [XState v5 compatibility for VS Code extension in our roadmap](https://feedback.stately.ai/devtools/p/xstate-v5-compatibility-for-vs-code-extension) to stay updated on our progress.
 

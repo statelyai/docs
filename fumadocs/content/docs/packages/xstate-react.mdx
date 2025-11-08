@@ -51,7 +51,7 @@ bun add xstate @xstate/react
 
 <Callout>
 
-Want to get started with React extra fast? Try the [generate React app feature in Stately Studio](generate-react.mdx).
+Want to get started with React extra fast? Try the [generate React app feature in Stately Studio](generate-react).
 
 </Callout>
 
@@ -116,7 +116,7 @@ The `useMachine(...)` hook is an alias for the `useActor(...)` hook.
 
 #### Arguments
 
-- `machine` - An [XState machine](machines.mdx)
+- `machine` - An [XState machine](machines)
 - `options?` (optional) - Actor options.
 
 **Returns** a tuple of `[snapshot, send, actorRef]`:
@@ -237,12 +237,12 @@ Returns a [React Context object](https://beta.reactjs.org/learn/passing-data-dee
 
 #### Arguments
 
-- `logic` - Actor logic, like an [XState machine](machines.mdx)
+- `logic` - Actor logic, like an [XState machine](machines)
 
 Returns a React Context object that contains the following properties:
 
 - `Provider` - a React Context Provider component with the following props:
-  - `logic` - Actor logic, such as an [XState machine](machines.mdx) ,that must be of the same type as the actor logic passed to `createActorContext(...)`
+  - `logic` - Actor logic, such as an [XState machine](machines) ,that must be of the same type as the actor logic passed to `createActorContext(...)`
 - `useSelector(selector, compare?)` - a React hook that takes in a `selector` function and optional `compare` function and returns the selected value from the actor snapshot
 - `useActorRef()` - a React hook that returns the actor ref of the actor created from the actor `logic`
 
@@ -434,7 +434,7 @@ You can provide input to actors
 
 ## Matching states
 
-When using [hierarchical](parent-states.mdx) and [parallel](parallel-states.mdx) machines, the state values will be objects, not strings. In this case, it is best to use [`state.matches(...)`](states.mdx#statematchesstatevalue).
+When using [hierarchical](parent-states) and [parallel](parallel-states) machines, the state values will be objects, not strings. In this case, it is best to use [`state.matches(...)`](states.mdx#statematchesstatevalue).
 
 We can do this with `if/else if/else` blocks:
 

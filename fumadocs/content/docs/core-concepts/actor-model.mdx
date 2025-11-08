@@ -12,7 +12,7 @@ When you run a state machine in XState, it becomes an actor.
 
 ### What defines an “actor”?
 
-Actors are independent “live” objects that can communicate with each other via asynchronous message passing. In XState, we refer to these messages as [_events_](transitions.mdx).
+Actors are independent “live” objects that can communicate with each other via asynchronous message passing. In XState, we refer to these messages as [_events_](transitions).
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
@@ -28,19 +28,19 @@ You’ll find strong similarities to the actor model in software you may already
 
 An actor has its own internal, encapsulated state that only the actor itself can update. An actor may update its internal state in response to a message it receives, but it cannot be updated by any other entity. Actors do not share state. The only way for an actor to share data is by sending events.
 
-[Read more about XState actors and state](actors.mdx).
+[Read more about XState actors and state](actors).
 
 ## Communication with events
 
 Actors communicate with other actors by sending and receiving events asynchronously. Actors use an internal “mailbox” that acts like an event queue, processing events one at a time.
 
-[Read more about XState events and transitions](transitions.mdx).
+[Read more about XState events and transitions](transitions).
 
 ## Spawning
 
 Actors can spawn new actors, which is useful in situations where an actor needs to delegate work to another actor. Spawning allows for a flexible and dynamic system where actors can be created and destroyed as needed to handle the workload efficiently.
 
-- [Read more about spawning actors in XState](spawn.mdx).
+- [Read more about spawning actors in XState](spawn).
 - [Read about the difference between invoking and spawning actors in XState](actors.mdx#invoking-and-spawning-actors).
 
 ## The actor model in backend development
@@ -63,9 +63,9 @@ So even for simple web apps, with small app-specific state and a few known app-s
 
 Actors in XState can:
 
-- **Accept messages** as [events](/docs/transitions/#event-objects) passed to their own internal logic, or for state machines as received by [transitions](transitions.mdx).
-- **Create more actors** within a state machine using `spawn` in an [`assign`](/docs/actions/#assign-action), or using the `spawnChild` action creator. For details, see [Spawn](spawn.mdx).
-- **Send more messages** as events using `self.send` in their own logic, or [action creators](actions.mdx) like [`sendTo`](/docs/actions/#send-to-action) or [`raise`](/docs/actions/#raise-action) in a state machine.
+- **Accept messages** as [events](/docs/transitions/#event-objects) passed to their own internal logic, or for state machines as received by [transitions](transitions).
+- **Create more actors** within a state machine using `spawn` in an [`assign`](/docs/actions/#assign-action), or using the `spawnChild` action creator. For details, see [Spawn](spawn).
+- **Send more messages** as events using `self.send` in their own logic, or [action creators](actions) like [`sendTo`](/docs/actions/#send-to-action) or [`raise`](/docs/actions/#raise-action) in a state machine.
 
 Actors in XState have their own [actor logic](/docs/actors/#actor-logic) which they use to:
 
@@ -73,7 +73,7 @@ Actors in XState have their own [actor logic](/docs/actors/#actor-logic) which t
 - **Determine how to respond to the next message received**
 - **Modify their own private state** (but only affect each other via messaging)
 
-Actors in XState exist in [systems](system.mdx) and can communicate with each other within and across those systems.
+Actors in XState exist in [systems](system) and can communicate with each other within and across those systems.
 
 ## Reference
 

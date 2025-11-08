@@ -2,9 +2,9 @@
 title: '@xstate/store'
 ---
 
-**Version 3.x** ([Version 2.x docs](./xstate-store-v2.mdx))
+**Version 3.x** ([Version 2.x docs](./xstate-store-v2))
 
-XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate.mdx) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
+XState Store is a small library for simple state management in JavaScript/TypeScript applications. It is meant for updating store data using **events** for vanilla JavaScript/TypeScript apps, React apps, and more. It is comparable to libraries like Zustand, Redux, and Pinia. For more complex state management, you should use [XState](./xstate) instead, or you can [use XState Store with XState](#using-xstate-store-with-xstate).
 
 <Callout>
 
@@ -581,7 +581,7 @@ function Counter() {
 
 ## Inspection
 
-Just like with XState, you can use the [Inspect API](./inspection.mdx) to inspect events sent to the store and state transitions within the store by using the .inspect method:
+Just like with XState, you can use the [Inspect API](./inspection) to inspect events sent to the store and state transitions within the store by using the .inspect method:
 
 ```ts
 import { createStore } from '@xstate/store';
@@ -617,7 +617,7 @@ const sub = store.inspect((inspectionEvent) => {
 sub.unsubscribe();
 ```
 
-You can use the [Stately Inspector](./inspector.mdx) to inspect and visualize the state of the store.
+You can use the [Stately Inspector](./inspector) to inspect and visualize the state of the store.
 
 ```ts
 import { createBrowserInspector } from '@statelyai/inspect';
@@ -945,7 +945,7 @@ _Documentation coming soon!_
 
 ## Using XState Store with XState
 
-You may notice that stores are very similar to [actors in XState](./actors.mdx). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
+You may notice that stores are very similar to [actors in XState](./actors). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
 
 However, if you have existing XState code, and you enjoy the simplicity of creating store logic with `@xstate/store`, you can use the `fromStore(context, transitions)` actor logic creator to create XState-compatible store logic that can be passed to the `createActor(storeLogic)` function:
 
@@ -1080,7 +1080,7 @@ const machine = createMachine({
 });
 ```
 
-For stronger typing, use the [`setup(…)` function](./setup.mdx) to strongly type the `context` and `events`:
+For stronger typing, use the [`setup(…)` function](./setup) to strongly type the `context` and `events`:
 
 ```ts
 import { setup } from 'xstate';

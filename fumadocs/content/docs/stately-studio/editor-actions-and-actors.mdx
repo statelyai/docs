@@ -9,7 +9,7 @@ import { Code, Info, Plus, Zap, Edit, Trash, Backspace, MoreHorizontal, PlayCirc
 
 While the state machine is running, it can execute effects called actions. Actions are executed when a transition is triggered. Actions are “fire-and-forget effects”; once the machine has fired the action, it continues processing the transition and forgets the action. You can also fire actions when a state is entered or exited. [Read more about actions](/docs/actions).
 
-State machines can invoke actors as longer-running processes that can receive events, send events, and change their behavior based on the events they receive. You can invoke actors on entry to a state and stop on exit. [Read more about actors](actors.mdx).
+State machines can invoke actors as longer-running processes that can receive events, send events, and change their behavior based on the events they receive. You can invoke actors on entry to a state and stop on exit. [Read more about actors](actors).
 
 <EmbedMachine
   embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?code=834448b4-3b8b-4de9-8b2e-353fd2b342de&mode=design&machineId=000b2694-2267-413c-8477-988cc750d581"
@@ -32,7 +32,7 @@ You can add action parameters by selecting the action and using add <Plus size={
 
 ## Add invoked actors
 
-You can invoke multiple actors on a single state. Top-level final states cannot have invoked actors. [Read more about invoking actors](invoke.mdx).
+You can invoke multiple actors on a single state. Top-level final states cannot have invoked actors. [Read more about invoking actors](invoke).
 
 <EmbedMachine
   embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=66f77051-089e-4b0a-9fa9-42e1f7598135"
@@ -63,7 +63,7 @@ To change an invoke done or invoke error event back into a regular transition, U
 
 ### XState built-in actions
 
-You can use the following built-in XState actions from the logic templates in the <Code size={18}/> **[Sources](sources.mdx)** panel, which will be formatted in your [exported code](export-as-code.mdx). The options are:
+You can use the following built-in XState actions from the logic templates in the <Code size={18}/> **[Sources](sources)** panel, which will be formatted in your [exported code](export-as-code). The options are:
 
 - [assign](/docs/actions/#assign-action): assigns data to the state context.
 - [raise](/docs/actions/#raise-action): raises an event that is received by the same machine.
@@ -71,8 +71,8 @@ You can use the following built-in XState actions from the logic templates in th
 - [sendTo](/docs/actions/#send-to-action): sends an event to a specific actor.
 - [stop](/docs/actions/#stop-action): stops a child actor.
 
-- [Read more about actions in XState](actions.mdx).
-- [Read more about actors in XState](actors.mdx).
+- [Read more about actions in XState](actions).
+- [Read more about actors in XState](actors).
 
 ### Spawning actors in Stately’s editor
 

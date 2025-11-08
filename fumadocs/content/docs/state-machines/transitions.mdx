@@ -195,7 +195,7 @@ const machine = createMachine({
 
 ## Re-entering
 
-By default, when a state machine transitions from some state to the same state or from a parent state to a descendent (child, grandchild, etc.) of that parent state, it will not re-enter the state; that is, it will not execute the [`exit` and `entry` actions](actions.mdx) of the parent state. It will not stop existing invoked actors or start new invoked actors.
+By default, when a state machine transitions from some state to the same state or from a parent state to a descendent (child, grandchild, etc.) of that parent state, it will not re-enter the state; that is, it will not execute the [`exit` and `entry` actions](actions) of the parent state. It will not stop existing invoked actors or start new invoked actors.
 
 This can be changed with the transition `reenter` property: if you want the parent state to be re-entered, you can set `reenter: true`. This will cause the state to re-enter when transitioning to itself or descendent states, executing the `exit` and `entry` actions of the state. It will stop existing invoked actors, and start new invoked actors.
 
@@ -440,8 +440,8 @@ In this example:
 
 ## Other transitions
 
-- [**Eventless (always) transitions**](eventless-transitions.mdx) are transitions without events. These transitions are _always_ taken after any transition in their state is enabled.
-- [**Delayed (after) transitions**](delayed-transitions.mdx) are transitions that are enabled after a specified duration.
+- [**Eventless (always) transitions**](eventless-transitions) are transitions without events. These transitions are _always_ taken after any transition in their state is enabled.
+- [**Delayed (after) transitions**](delayed-transitions) are transitions that are enabled after a specified duration.
 
 ## Transition descriptions
 
@@ -494,7 +494,7 @@ Using the string target shorthand is useful for quickly prototyping state machin
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 
@@ -528,7 +528,7 @@ const machine = setup({
 How can I listen for events sent to actors?
 </summary>
 
-You can use the [inspection API](./inspection.mdx) to listen for all inspection events in an actor system. The `@xstate.event` inspection event contains information about events sent from one actor to another (or itself):
+You can use the [inspection API](./inspection) to listen for all inspection events in an actor system. The `@xstate.event` inspection event contains information about events sent from one actor to another (or itself):
 
 ```ts
 import { createActor } from 'xstate';

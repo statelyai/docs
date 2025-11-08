@@ -8,14 +8,14 @@ When you run a state machine, it becomes an actor: a running process that can re
 
 In state machines, actors can be **invoked** or **spawned**. These are essentially the same, with the only difference being how the actor’s lifecycle is controlled.
 
-- An **invoked actor** is started when its parent machine enters the [state](states.mdx) it is invoked in, and stopped when that state is exited.
-- A **spawned actor** is started in a [transition](transitions.mdx) and stopped either with a [`stop(...)` action](/docs/actions/#stop-action) or when its parent machine is stopped.
+- An **invoked actor** is started when its parent machine enters the [state](states) it is invoked in, and stopped when that state is exited.
+- A **spawned actor** is started in a [transition](transitions) and stopped either with a [`stop(...)` action](/docs/actions/#stop-action) or when its parent machine is stopped.
 
 <Callout>
 
 You can visualize your state machines and easily invoke actors in our drag-and-drop Stately editor.
 
-[Read more about actors in Stately’s editor](editor-actions-and-actors.mdx).
+[Read more about actors in Stately’s editor](editor-actions-and-actors).
 
 </Callout>
 
@@ -29,7 +29,7 @@ Watch our [“XState: exploring actors” deep dive video on YouTube](https://ww
 
 ## Actor model
 
-In the actor model, actors are objects that can communicate with each other. They are independent “live” entities that communicate via asynchronous message passing. In XState, these messages are referred to as _[events](transitions.mdx)_.
+In the actor model, actors are objects that can communicate with each other. They are independent “live” entities that communicate via asynchronous message passing. In XState, these messages are referred to as _[events](transitions)_.
 
 - An actor has its own internal, encapsulated state that can only be updated by the actor itself. An actor may choose to update its internal state in response to a message it receives, but it cannot be updated by any other entity.
 - Actors communicate with other actors by sending and receiving events asynchronously.
@@ -39,7 +39,7 @@ In the actor model, actors are objects that can communicate with each other. The
   - Or emitting snapshots, which can be considered implicit events sent to subscribers.
 - Actors can create (spawn/invoke) new actors.
 
-[Read more about the Actor model](actor-model.mdx)
+[Read more about the Actor model](actor-model)
 
 ## Actor logic
 
@@ -54,7 +54,7 @@ You can create an actor, which is a “live” instance of some actor logic, via
 - `actorLogic`: the [actor logic](actors.mdx#actor-logic) to create an actor from
 - `options` (optional): actor options
 
-When you create an actor from actor logic via `createActor(actorLogic)`, you implicitly create an [actor system](system.mdx) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
+When you create an actor from actor logic via `createActor(actorLogic)`, you implicitly create an [actor system](system) where the created actor is the root actor. Any actors spawned from this root actor and its descendants are part of that actor system. The actor must be started by calling `actor.start()`, which will also start the actor system:
 
 ```ts
 import { createActor } from 'xstate';
@@ -87,8 +87,8 @@ A spawned actor represents multiple entities that can be started at any time and
 
 An example of the difference between invoking and spawning actors could occur in a todo app. When loading todos, a `loadTodos` actor would be an invoked actor; it represents a single state-based task. In comparison, each of the todos can themselves be spawned actors, and there can be a dynamic number of these actors.
 
-- [Read more about invoking actors](invoke.mdx)
-- [Read more about spawning actors](spawn.mdx)
+- [Read more about invoking actors](invoke)
+- [Read more about spawning actors](spawn)
 
 ## Actor snapshots
 
@@ -185,7 +185,7 @@ actor.subscribe(() => {
 actor.start();
 ```
 
-See [persistence](persistence.mdx) for more details.
+See [persistence](persistence) for more details.
 
 ## `waitFor`
 
@@ -252,15 +252,15 @@ The types of actor logic you can create from XState are:
 
 |                                                  | Receive events | Send events | Spawn actors | Input | Output |
 | ------------------------------------------------ | -------------- | ----------- | ------------ | ----- | ------ |
-| [State machine actors](state-machine-actors.mdx) | ✅             | ✅          | ✅           | ✅    | ✅     |
-| [Promise actors](promise-actors.mdx)             | ❌             | ✅          | ❌           | ✅    | ✅     |
-| [Transition actors](transition-actors.mdx)       | ✅             | ✅          | ❌           | ✅    | ❌     |
-| [Observable actors](observable-actors.mdx)       | ❌             | ✅          | ❌           | ✅    | ❌     |
-| [Callback actors](callback-actors.mdx)           | ✅             | ✅          | ❌           | ✅    | ❌     |
+| [State machine actors](state-machine-actors) | ✅             | ✅          | ✅           | ✅    | ✅     |
+| [Promise actors](promise-actors)             | ❌             | ✅          | ❌           | ✅    | ✅     |
+| [Transition actors](transition-actors)       | ✅             | ✅          | ❌           | ✅    | ❌     |
+| [Observable actors](observable-actors)       | ❌             | ✅          | ❌           | ✅    | ❌     |
+| [Callback actors](callback-actors)           | ✅             | ✅          | ❌           | ✅    | ❌     |
 
 ### State machine logic (`createMachine(...)`) [#createmachine]
 
-You can describe actor logic as a [state machine](machines.mdx). Actors created from state machine actor logic can:
+You can describe actor logic as a [state machine](machines). Actors created from state machine actor logic can:
 
 - Receive events
 - Send events to other actors
@@ -291,7 +291,7 @@ toggleActor.send({ type: 'toggle' });
 // Logs 'active'
 ```
 
-Learn more about [state machine actors.](state-machine-actors.mdx)
+Learn more about [state machine actors.](state-machine-actors)
 
 ### Promise logic (`fromPromise(...)`) [#frompromise]
 
@@ -326,7 +326,7 @@ promiseActor.start();
 // }
 ```
 
-Learn more about [promise actors.](promise-actors.mdx)
+Learn more about [promise actors.](promise-actors)
 
 ### Transition function logic (`fromTransition(...)`) [#fromtransition]
 
@@ -368,7 +368,7 @@ transitionActor.send({ type: 'increment' });
 // }
 ```
 
-Learn more about [transition actors.](transition-actors.mdx)
+Learn more about [transition actors.](transition-actors)
 
 ### Observable logic (`fromObservable(...)`) [#fromobservable]
 
@@ -397,7 +397,7 @@ secondActor.start();
 // ...
 ```
 
-Learn more about [observable actors.](observable-actors.mdx)
+Learn more about [observable actors.](observable-actors)
 
 ### Event observable logic (`fromEventObservable(...)`) [#fromeventobservable]
 
@@ -431,7 +431,7 @@ const canvasActor = createActor(canvasMachine);
 canvasActor.start();
 ```
 
-Learn more about [observable actors.](observable-actors.mdx)
+Learn more about [observable actors.](observable-actors)
 
 ### Callback logic (`fromCallback(...)`) [#fromcallback]
 
@@ -513,7 +513,7 @@ const machine = setup({
 });
 ```
 
-Learn more about [callback actors.](callback-actors.mdx)
+Learn more about [callback actors.](callback-actors)
 
 ## Actors as promises
 
@@ -657,7 +657,7 @@ function Component(props: { actor?: AnyActorRef }) {
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 

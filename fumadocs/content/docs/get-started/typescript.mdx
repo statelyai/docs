@@ -65,7 +65,7 @@ const feedbackMachine = setup({
 });
 ```
 
-You can also specify TypeScript types inside the [machine config](machines.mdx) using the `.types` property:
+You can also specify TypeScript types inside the [machine config](machines) using the `.types` property:
 
 ```ts
 import { createMachine } from 'xstate';
@@ -83,7 +83,7 @@ These types will be inferred throughout the machine config and in the created ma
 
 ## Dynamic parameters
 
-It is recommended to use dynamic parameters in [actions](./actions.mdx) and [guards](./guards.mdx) as they allow you to make reusable functions that are not closely tied to the machine, and are strongly-typed.
+It is recommended to use dynamic parameters in [actions](./actions) and [guards](./guards) as they allow you to make reusable functions that are not closely tied to the machine, and are strongly-typed.
 
 ```ts
 import { setup } from 'xstate';

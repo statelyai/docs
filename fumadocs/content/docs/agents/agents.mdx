@@ -111,7 +111,7 @@ const agent = createAgent({
 });
 ```
 
-3. Interact with a [state machine actor](./state-machine-actors.mdx) that accepts those events.
+3. Interact with a [state machine actor](./state-machine-actors) that accepts those events.
 
 ```ts
 import { setup, createActor } from 'xstate';
@@ -359,7 +359,7 @@ agent.interact(jokeActor, (observed) => {
 
 ## State machine agents
 
-You can invoke Stately agents as part of a state machine, ensuring that it will follow the state machine's transitions as specified and trigger the appropriate events. This is done by using any of the following [actor logic creators](./actors.mdx):
+You can invoke Stately agents as part of a state machine, ensuring that it will follow the state machine's transitions as specified and trigger the appropriate events. This is done by using any of the following [actor logic creators](./actors):
 
 ### `fromDecision(agent)`
 

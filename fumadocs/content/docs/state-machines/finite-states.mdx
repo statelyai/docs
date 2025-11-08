@@ -6,7 +6,7 @@ A finite state is one of the possible states that a state machine can be in at a
 
 For example in a feedback form, you can be in a state where you are filling out the form, or a state where the form is being submitted. You cannot be filling out the form and submitting it at the same time; this is an "impossible state."
 
-State machines always start at an [initial state](initial-states.mdx), and may end at a [final state](final-states.mdx). The state machine is always in a finite state.
+State machines always start at an [initial state](initial-states), and may end at a [final state](final-states). The state machine is always in a finite state.
 
 <Callout>
 
@@ -39,7 +39,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-You can combine finite states with [context](context.mdx), which make up the overall state of a machine:
+You can combine finite states with [context](context), which make up the overall state of a machine:
 
 ```ts
 const feedbackMachine = createMachine({
@@ -92,7 +92,7 @@ const feedbackMachine = createMachine({
 });
 ```
 
-[Read more about initial states](initial-states.mdx).
+[Read more about initial states](initial-states).
 
 ## State nodes
 
@@ -159,7 +159,7 @@ console.log(feedbackActor.getSnapshot().hasTag('visible'));
 // logs true
 ```
 
-Read more about [tags](tags.mdx).
+Read more about [tags](tags).
 
 ## Meta
 
@@ -243,7 +243,7 @@ console.log(feedbackActor.getSnapshot().value);
 // logs 'thanks'
 ```
 
-Read more about [events and transitions](transitions.mdx).
+Read more about [events and transitions](transitions).
 
 ## Targets
 
@@ -412,10 +412,10 @@ State IDs do not affect the `state.value`. In the above example, the `state.valu
 
 In statecharts, there are other types of states:
 
-- [Parent states (also known as compound states)](parent-states.mdx)
-- [Parallel states](parallel-states.mdx)
-- [History states](history-states.mdx)
-- [Final states](final-states.mdx)
+- [Parent states (also known as compound states)](parent-states)
+- [Parallel states](parallel-states)
+- [History states](history-states)
+- [Final states](final-states)
 
 ## Modeling states
 
@@ -598,7 +598,7 @@ const feedbackMachine = createMachine({
 
 **XState v5 requires TypeScript version 5.0 or greater.**
 
-For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript.mdx)
+For best results, use the latest TypeScript version. [Read more about XState and TypeScript](typescript)
 
 </Callout>
 
