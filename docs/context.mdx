@@ -28,6 +28,12 @@ feedbackActor.start();
 // logs 'Some feedback'
 ```
 
+:::warning
+
+The `context` must be an object.  If you need to store a list of items, wrap it in an object, e.g., `context: { items: [] }`.
+
+:::
+
 ## Initial context
 
 Set the initial context of a machine in the `context` property of the machine config:
