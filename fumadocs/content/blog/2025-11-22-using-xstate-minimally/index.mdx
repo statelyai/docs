@@ -1,0 +1,48 @@
+---
+title: Using XState minimally
+description: How to make XState useful for complex logic in the most minimal way possible
+tags: [xstate, state machines]
+authors: [david]
+date: 2025-11-22
+slug: 2025-11-22-using-xstate-minimally
+---
+
+intro - acknowledgement that xstate has a learning curve but that for many apps, most of the stuff isn't needed
+
+what is xstate?
+
+if you're not familiar, it is 2 things that work together:
+- state machine and statechart implementation
+- actor model implementation
+
+state machine as a pure function
+
+mathematical definition of transition function: given current state, returns next state (and optionally effects/output)
+
+show transition(…) and initialTransition(…) and link to relevant docs
+
+you can do the equivalent with a switch statement, but xstate handles nested states & more (statechart features) and provides a data structure for the state machine that can be traversed
+
+## visualization
+
+at its core, state machines form a directed graph: nodes are states, edges are transitions
+
+branching achieved with guards
+
+xstate provides a data model
+
+## context & effects
+
+xstate has the notion of assigning to context & executing actions; this can be handled in the state machine or they can be handled externally
+
+xstate then becomes just the "blueprint"/oracle that answers "given current state and event, what is the next state?" and leaves the data & effect impl details up to the developer
+
+this is the simplest way to use XState
+
+# example: useReducer
+
+# example: serverless
+
+# when to use more of xstate
+
+when essential logic gets complex
