@@ -431,7 +431,7 @@ countAtom.set(2); // Does not log anything
 
 ### Combined Atoms
 
-You can create derived atoms that combine values from other atoms, stores, or selectors:
+You can create derived/computed atoms that combine values from other atoms, stores, or selectors:
 
 ```ts
 const nameAtom = createAtom('David');
@@ -451,6 +451,30 @@ ageAtom.set(31);
 console.log(userAtom.get()); // { name: 'John', age: 31 }
 ```
 
+#### Accessing Previous Value in Computed Atoms
+
+_Since v3.12.0_
+
+Computed atoms can access their previous computed value through the second parameter. This is useful for any derived state that depends on its own previous value:
+
+```ts
+const countAtom = createAtom(0);
+
+// Running total that aggregates all count changes
+// Note: Specify the type parameter for proper inference of prev
+const totalAtom = createAtom<number>((_, prev) => countAtom.get() + (prev ?? 0));
+
+console.log(totalAtom.get()); // 0
+countAtom.set(5);
+console.log(totalAtom.get()); // 5 (0 + 5)
+countAtom.set(3);
+console.log(totalAtom.get()); // 8 (5 + 3)
+countAtom.set(2);
+console.log(totalAtom.get()); // 10 (8 + 2)
+```
+
+The previous value is `undefined` on the first computation. Since TypeScript cannot infer the type of `prev`, you should provide a type parameter to `createAtom<T>()` for type safety.
+
 :::warning
 The `read(...)` function for combining atoms is deprecated since v3.5.0. Instead, use the direct `.get()` method on atoms when creating combined atoms:
 
@@ -461,7 +485,6 @@ const combinedAtom = createAtom((read) => read(atomA) + read(atomB));
 // ✅ New API
 const combinedAtom = createAtom(() => atomA.get() + atomB.get());
 ```
-
 :::
 
 ### Async Atoms
