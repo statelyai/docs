@@ -143,6 +143,42 @@ const store = createStore({
 });
 ```
 
+:::warning
+
+**Important:** Both `enqueue.effect()` and `enqueue.emit()` must be called **synchronously** within the transition function. Calling them outside the function's synchronous execution (e.g., inside an async callback or Promise) will have no effect, since the transition function must complete synchronously.
+
+For asynchronous operations, send an event back to the store:
+
+```ts
+const store = createStore({
+  context: { data: null },
+  emits: {
+    loaded: (payload: { data: string }) => {},
+  },
+  on: {
+    fetchData: (context, event, enqueue) => {
+      // ✅ This works - called synchronously
+      enqueue.effect(async () => {
+        const result = await fetch('/api/data');
+        const data = await result.json();
+        // Send event back to store for async operations
+        store.trigger.dataLoaded({ data });
+      });
+      return context;
+    },
+    dataLoaded: (context, event: { data: string }, enqueue) => {
+      // ✅ Now you can emit synchronously
+      enqueue.emit.loaded({ data: event.data });
+      return { ...context, data: event.data };
+    },
+  },
+});
+```
+
+This ensures **determinism**: all state changes, effects, and emitted events must be the direct result of an event being sent to the store. Async callbacks cannot enqueue effects or emit events because they happen at unpredictable times, breaking the deterministic event-driven model.
+
+:::
+
 ## Emitting Events
 
 You can emit events from transitions by defining them in the `emits` property and using `enqueue.emit`:
@@ -395,7 +431,7 @@ countAtom.set(2); // Does not log anything
 
 ### Combined Atoms
 
-You can create derived atoms that combine values from other atoms, stores, or selectors:
+You can create derived/computed atoms that combine values from other atoms, stores, or selectors:
 
 ```ts
 const nameAtom = createAtom('David');
@@ -415,6 +451,30 @@ ageAtom.set(31);
 console.log(userAtom.get()); // { name: 'John', age: 31 }
 ```
 
+#### Accessing Previous Value in Computed Atoms
+
+_Since v3.12.0_
+
+Computed atoms can access their previous computed value through the second parameter. This is useful for any derived state that depends on its own previous value:
+
+```ts
+const countAtom = createAtom(0);
+
+// Running total that aggregates all count changes
+// Note: Specify the type parameter for proper inference of prev
+const totalAtom = createAtom<number>((_, prev) => countAtom.get() + (prev ?? 0));
+
+console.log(totalAtom.get()); // 0
+countAtom.set(5);
+console.log(totalAtom.get()); // 5 (0 + 5)
+countAtom.set(3);
+console.log(totalAtom.get()); // 8 (5 + 3)
+countAtom.set(2);
+console.log(totalAtom.get()); // 10 (8 + 2)
+```
+
+The previous value is `undefined` on the first computation. Since TypeScript cannot infer the type of `prev`, you should provide a type parameter to `createAtom<T>()` for type safety.
+
 :::warning
 The `read(...)` function for combining atoms is deprecated since v3.5.0. Instead, use the direct `.get()` method on atoms when creating combined atoms:
 
@@ -425,7 +485,6 @@ const combinedAtom = createAtom((read) => read(atomA) + read(atomB));
 // ✅ New API
 const combinedAtom = createAtom(() => atomA.get() + atomB.get());
 ```
-
 :::
 
 ### Async Atoms
@@ -949,6 +1008,183 @@ If you need to synchronize store state with prop changes, consider whether the v
 ## Usage with Solid
 
 _Documentation coming soon!_
+
+## Undo/Redo
+
+XState Store provides built-in undo/redo functionality through the `undoRedo` wrapper. This feature uses an _event-sourced approach_ rather than snapshot-based history, which is memory efficient (only stores events, not full state snapshots) and provides precise control over transaction grouping and event skipping while properly replaying side effects during undo/redo operations.
+
+### Basic Usage
+
+Import `undoRedo` from `@xstate/store/undo` and wrap your store configuration:
+
+```ts
+import { createStore } from '@xstate/store';
+import { undoRedo } from '@xstate/store/undo';
+
+const store = createStore(
+  undoRedo({
+    context: { donuts: 0 },
+    on: {
+      addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
+      eatDonut: (context) => ({ ...context, donuts: context.donuts - 1 }),
+    },
+  }),
+);
+
+// Use the store normally
+store.trigger.addDonut(); // donuts = 1
+store.trigger.addDonut(); // donuts = 2
+
+// Undo the last event
+store.trigger.undo(); // donuts = 1
+
+// Redo the undone event
+store.trigger.redo(); // donuts = 2
+```
+
+### Transactions
+
+You can group multiple events into transactions so they are undone/redone together:
+
+```ts
+const store = createStore(
+  undoRedo(
+    {
+      context: { donuts: 0 },
+      on: {
+        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
+        eatDonut: (context) => ({ ...context, donuts: context.donuts - 1 }),
+      },
+    },
+    {
+      // Group events by their type
+      getTransactionId: (event) => event.type,
+    },
+  ),
+);
+
+// First transaction: adding donuts
+store.send({ type: 'addDonut' });
+store.send({ type: 'addDonut' });
+// donuts = 2
+
+// Second transaction: eating donuts
+store.send({ type: 'eatDonut' });
+store.send({ type: 'eatDonut' });
+// donuts = 0
+
+// Undo second transaction (both eaten)
+store.trigger.undo();
+// donuts = 2
+
+// Undo first transaction (both added)
+store.trigger.undo();
+// donuts = 0
+```
+
+### Skipping Events
+
+You can configure certain events to be skipped from the undo/redo history:
+
+```ts
+const store = createStore(
+  undoRedo(
+    {
+      context: { donuts: 0, flavors: [] as string[] },
+      on: {
+        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
+        logFlavor: (context, event: { flavor: string }, enq) => {
+          // ... log the flavor
+        },
+      },
+    },
+    {
+      // Skip flavor logging from undo/redo history
+      skipEvent: (event, snapshot) => event.type === 'logFlavor',
+    },
+  ),
+);
+
+store.trigger.addDonut(); // donuts = 1
+store.send({ type: 'logFlavor', flavor: 'chocolate' });
+store.trigger.addDonut(); // donuts = 2
+store.send({ type: 'logFlavor', flavor: 'glazed' });
+
+// Undo skips flavor logs, only undoes addDonut events
+store.trigger.undo(); // donuts = 1, flavors = [] (flavors lost because not replayed)
+```
+
+### Effects and Emitted Events
+
+Emitted events are properly replayed during undo/redo operations:
+
+```ts
+const store = createStore(
+  undoRedo({
+    context: { donuts: 0 },
+    emits: {
+      donutChanged: (payload: { total: number }) => {},
+    },
+    on: {
+      addDonut: (context, event, enqueue) => {
+        enqueue.emit.donutChanged({ total: context.donuts + 1 });
+        return { ...context, donuts: context.donuts + 1 };
+      },
+    },
+  }),
+);
+
+store.on('donutChanged', (event) => {
+  console.log('Donuts changed:', event.total);
+});
+
+store.trigger.addDonut(); // emits donutChanged(1)
+store.trigger.undo(); // emits donutChanged(0)
+store.trigger.redo(); // emits donutChanged(1)
+
+// Logs:
+// Donuts changed: 1
+// Donuts changed: 0
+// Donuts changed: 1
+```
+
+### Configuration
+
+The `undoRedo` wrapper accepts a second configuration object with these options:
+
+- `getTransactionId(event, snapshot)`: Function to determine transaction grouping
+- `skipEvent(event, snapshot)`: Function to determine if an event should be skipped
+
+```ts
+const store = createStore(
+  undoRedo(
+    {
+      context: { donuts: 0, batchId: null as string | null },
+      on: {
+        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
+        setBatchId: (context, event: { id: string }) => ({
+          ...context,
+          batchId: event.id,
+        }),
+      },
+    },
+    {
+      // Use context state to determine transaction grouping
+      getTransactionId: (event, snapshot) => snapshot.context.batchId,
+
+      // Skip events based on current state
+      skipEvent: (event, snapshot) => snapshot.context.donuts >= 3,
+    },
+  ),
+);
+```
+
+### Notes
+
+- **New events clear redo stack**: When you send a new event after undoing, the redo stack is cleared
+- **Empty operations**: Undo/redo operations do nothing when there's no history to undo/redo
+- **Type safety**: The undo/redo wrapper preserves all TypeScript types from your original store
+- **Event-sourced**: History is maintained as events, not snapshots, making it memory efficient
 
 ## Using XState Store with XState
 

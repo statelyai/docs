@@ -71,6 +71,18 @@ Entry and exit actions are defined using the `entry: [...]` and `exit: [...]` at
   title="Feedback form"
 />
 
+:::info
+
+The order of action execution for a transition is:
+
+1. Exit actions - all the exit actions of the exited state node(s), from the atomic state node up
+2. Transition actions - all actions defined on the chosen transition
+3. Entry actions - all the entry actions of the entered state node(s), from the parent state down
+
+This follows the [SCXML algorithm](https://www.w3.org/TR/scxml/#microstepProcedure) for microstep execution.
+
+:::
+
 ## Action objects
 
 Action objects have an action `type` and an optional `params` object:
