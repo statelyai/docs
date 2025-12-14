@@ -18,7 +18,7 @@
     "fumadocs-core": "^16.2.4",
     "fumadocs-mdx": "^13.0.8",
     "fumadocs-twoslash": "^3.1.10",
-    "fumadocs-ui": "^16.2.4",
+    "fumadocs-ui": "^16.2.5",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^0.544.0",
     "mdx-embed": "^1.1.2",

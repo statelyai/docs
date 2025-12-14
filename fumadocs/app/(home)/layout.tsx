@@ -1,6 +1,7 @@
 import { baseOptions } from '@/lib/layout.shared';
 import type { ReactNode } from 'react';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { TelescopeIcon } from 'lucide-react';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -31,6 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           text: 'Discover',
           url: 'https://stately.ai/registry/discover',
           external: true,
+          icon: <TelescopeIcon size={18} />,
         },
         {
           text: 'Blog',
@@ -42,7 +44,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           text: 'Visit XState GitHub repository',
           icon: (
             <svg
-              alt="XState GitHub repository"
               width="24"
               height="24"
               viewBox="0 0 24 24"
