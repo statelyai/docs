@@ -1011,180 +1011,609 @@ _Documentation coming soon!_
 
 ## Undo/Redo
 
-XState Store provides built-in undo/redo functionality through the `undoRedo` wrapper. This feature uses an _event-sourced approach_ rather than snapshot-based history, which is memory efficient (only stores events, not full state snapshots) and provides precise control over transaction grouping and event skipping while properly replaying side effects during undo/redo operations.
+_Since v3.14.0_
+
+XState Store provides built-in undo/redo functionality through the `undoRedo` store extension. You can choose between two strategies:
+
+- **Event-sourced** (default): Stores events in history and replays them during undo/redo. Memory efficient and provides precise control over transaction grouping and event skipping while properly replaying side effects.
+- **Snapshot**: Stores full state snapshots in history. Useful when you need to preserve state that might be lost during event replay, or when you want to limit history size.
 
 ### Basic Usage
 
-Import `undoRedo` from `@xstate/store/undo` and wrap your store configuration:
+Import `undoRedo` from `@xstate/store/undo` and use it with the `.with()` method. The store will have `undo()` and `redo()` methods available on `store.trigger`:
 
 ```ts
 import { createStore } from '@xstate/store';
 import { undoRedo } from '@xstate/store/undo';
 
-const store = createStore(
-  undoRedo({
-    context: { donuts: 0 },
-    on: {
-      addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
-      eatDonut: (context) => ({ ...context, donuts: context.donuts - 1 }),
-    },
-  }),
-);
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo());
+```
+
+You can undo and redo multiple events in sequence. Each `undo()` call moves back one event in history, and each `redo()` call moves forward one event.
+
+<details>
+<summary>Example: Basic undo/redo</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo());
 
 // Use the store normally
-store.trigger.addDonut(); // donuts = 1
-store.trigger.addDonut(); // donuts = 2
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
 
 // Undo the last event
-store.trigger.undo(); // donuts = 1
+store.trigger.undo(); // count = 1
 
 // Redo the undone event
-store.trigger.redo(); // donuts = 2
+store.trigger.redo(); // count = 2
 ```
+
+</details>
+
+<details>
+<summary>Example: Multiple undo/redo operations</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo());
+
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+store.trigger.inc(); // count = 3
+
+store.trigger.undo(); // count = 2
+store.trigger.undo(); // count = 1
+store.trigger.redo(); // count = 2
+store.trigger.redo(); // count = 3
+```
+
+</details>
 
 ### Transactions
 
-You can group multiple events into transactions so they are undone/redone together:
+You can group multiple events into transactions so they are undone/redone together using `getTransactionId`. Events with the same transaction ID are grouped together and undone/redone as a single unit:
 
 ```ts
-const store = createStore(
-  undoRedo(
-    {
-      context: { donuts: 0 },
-      on: {
-        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
-        eatDonut: (context) => ({ ...context, donuts: context.donuts - 1 }),
-      },
-    },
-    {
-      // Group events by their type
-      getTransactionId: (event) => event.type,
-    },
-  ),
-);
-
-// First transaction: adding donuts
-store.send({ type: 'addDonut' });
-store.send({ type: 'addDonut' });
-// donuts = 2
-
-// Second transaction: eating donuts
-store.send({ type: 'eatDonut' });
-store.send({ type: 'eatDonut' });
-// donuts = 0
-
-// Undo second transaction (both eaten)
-store.trigger.undo();
-// donuts = 2
-
-// Undo first transaction (both added)
-store.trigger.undo();
-// donuts = 0
+const store = createStore({
+  // ...
+}).with(undoRedo({
+  getTransactionId: (event, snapshot) => {
+    // Return a transaction ID to group events
+    // Events with the same ID are grouped together
+  },
+}));
 ```
+
+<details>
+<summary>Example: Group events by type</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+    dec: (context) => ({ count: context.count - 1 }),
+  },
+}).with(undoRedo({
+  // Group events by their type
+  getTransactionId: (event) => event.type,
+}));
+
+// First transaction: increments
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+
+// Second transaction: decrements
+store.trigger.dec(); // count = 1
+store.trigger.dec(); // count = 0
+
+// Undo second transaction (both decrements)
+store.trigger.undo(); // count = 2
+
+// Undo first transaction (both increments)
+store.trigger.undo(); // count = 0
+```
+
+</details>
+
+<details>
+<summary>Example: Group events by context state</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0, transactionId: null as string | null },
+  on: {
+    inc: (context) => ({ ...context, count: context.count + 1 }),
+    setTransactionId: (context, event: { id: string }) => ({
+      ...context,
+      transactionId: event.id,
+    }),
+  },
+}).with(undoRedo({
+  // Use context state to determine transaction grouping
+  getTransactionId: (event, snapshot) => snapshot.context.transactionId,
+}));
+
+store.trigger.inc(); // count = 1
+store.trigger.setTransactionId({ id: 'batch-1' });
+store.trigger.inc(); // count = 2
+store.trigger.inc(); // count = 3
+store.trigger.inc(); // count = 4
+
+store.trigger.setTransactionId({ id: 'batch-2' });
+store.trigger.inc(); // count = 5
+store.trigger.inc(); // count = 6
+
+// Undo second transaction (all events with batch-2)
+store.trigger.undo(); // count = 4
+
+// Undo first transaction (all events with batch-1)
+store.trigger.undo(); // count = 1
+```
+
+</details>
 
 ### Skipping Events
 
-You can configure certain events to be skipped from the undo/redo history:
+You can configure certain events to be skipped from the undo/redo history using `skipEvent`. Skipped events are not stored in history and are not replayed during undo/redo operations:
 
 ```ts
-const store = createStore(
-  undoRedo(
-    {
-      context: { donuts: 0, flavors: [] as string[] },
-      on: {
-        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
-        logFlavor: (context, event: { flavor: string }, enq) => {
-          // ... log the flavor
-        },
-      },
-    },
-    {
-      // Skip flavor logging from undo/redo history
-      skipEvent: (event, snapshot) => event.type === 'logFlavor',
-    },
-  ),
-);
-
-store.trigger.addDonut(); // donuts = 1
-store.send({ type: 'logFlavor', flavor: 'chocolate' });
-store.trigger.addDonut(); // donuts = 2
-store.send({ type: 'logFlavor', flavor: 'glazed' });
-
-// Undo skips flavor logs, only undoes addDonut events
-store.trigger.undo(); // donuts = 1, flavors = [] (flavors lost because not replayed)
+const store = createStore({
+  // ...
+}).with(undoRedo({
+  skipEvent: (event, snapshot) => {
+    // Return true to skip this event from history
+    // Return false to include it in history
+  },
+}));
 ```
+
+<details>
+<summary>Example: Skip specific event types</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+    log: (context) => context, // No state change, just logging
+  },
+}).with(undoRedo({
+  // Skip log events from undo/redo history
+  skipEvent: (event) => event.type === 'log',
+}));
+
+store.trigger.inc(); // count = 1
+store.trigger.log(); // count = 1 (logged but not undoable)
+store.trigger.inc(); // count = 2
+
+// Undo skips log event, only undoes inc events
+store.trigger.undo(); // count = 1
+```
+
+</details>
+
+<details>
+<summary>Example: Skip events based on state</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo({
+  // Skip events when count is 3 or more
+  skipEvent: (event, snapshot) => snapshot.context.count >= 3,
+}));
+
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+store.trigger.inc(); // count = 3
+store.trigger.inc(); // count = 4 (skipped from history)
+
+store.trigger.undo(); // count = 2 (skips the last inc)
+```
+
+</details>
 
 ### Effects and Emitted Events
 
-Emitted events are properly replayed during undo/redo operations:
+Emitted events are properly replayed during undo/redo operations. When you undo or redo an event, any events that were emitted during the original transition are re-emitted:
 
 ```ts
-const store = createStore(
-  undoRedo({
-    context: { donuts: 0 },
-    emits: {
-      donutChanged: (payload: { total: number }) => {},
-    },
-    on: {
-      addDonut: (context, event, enqueue) => {
-        enqueue.emit.donutChanged({ total: context.donuts + 1 });
-        return { ...context, donuts: context.donuts + 1 };
-      },
-    },
-  }),
-);
-
-store.on('donutChanged', (event) => {
-  console.log('Donuts changed:', event.total);
-});
-
-store.trigger.addDonut(); // emits donutChanged(1)
-store.trigger.undo(); // emits donutChanged(0)
-store.trigger.redo(); // emits donutChanged(1)
-
-// Logs:
-// Donuts changed: 1
-// Donuts changed: 0
-// Donuts changed: 1
+const store = createStore({
+  // ...
+  emits: {
+    // ...
+  },
+  on: {
+    // ...
+  },
+}).with(undoRedo());
 ```
 
-### Configuration
+Skipped events do not have their emitted events replayed during undo/redo operations.
 
-The `undoRedo` wrapper accepts a second configuration object with these options:
-
-- `getTransactionId(event, snapshot)`: Function to determine transaction grouping
-- `skipEvent(event, snapshot)`: Function to determine if an event should be skipped
+<details>
+<summary>Example: Emitted events are replayed</summary>
 
 ```ts
-const store = createStore(
-  undoRedo(
-    {
-      context: { donuts: 0, batchId: null as string | null },
-      on: {
-        addDonut: (context) => ({ ...context, donuts: context.donuts + 1 }),
-        setBatchId: (context, event: { id: string }) => ({
-          ...context,
-          batchId: event.id,
-        }),
-      },
+const store = createStore({
+  context: { count: 0 },
+  emits: {
+    changed: (payload: { value: number }) => {},
+  },
+  on: {
+    inc: (context, event, enqueue) => {
+      enqueue.emit.changed({ value: context.count + 1 });
+      return { count: context.count + 1 };
     },
-    {
-      // Use context state to determine transaction grouping
-      getTransactionId: (event, snapshot) => snapshot.context.batchId,
+  },
+}).with(undoRedo());
 
-      // Skip events based on current state
-      skipEvent: (event, snapshot) => snapshot.context.donuts >= 3,
+const emittedEvents: Array<{ type: string; value: number }> = [];
+store.on('changed', (event) => {
+  emittedEvents.push(event);
+});
+
+store.trigger.inc(); // emits changed(1)
+store.trigger.undo(); // emits changed(0)
+store.trigger.redo(); // emits changed(1)
+
+// emittedEvents = [
+//   { type: 'changed', value: 1 },
+//   { type: 'changed', value: 0 },
+//   { type: 'changed', value: 1 }
+// ]
+```
+
+</details>
+
+<details>
+<summary>Example: Skipped events don't replay emitted events</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  emits: {
+    changed: (payload: { value: number }) => {},
+    logged: (payload: { message: string }) => {},
+  },
+  on: {
+    inc: (context, event, enqueue) => {
+      enqueue.emit.changed({ value: context.count + 1 });
+      return { count: context.count + 1 };
     },
-  ),
-);
+    log: (context, event: { message: string }, enqueue) => {
+      enqueue.emit.logged({ message: event.message });
+      return context; // No state change
+    },
+  },
+}).with(undoRedo({
+  skipEvent: (event) => event.type === 'log',
+}));
+
+const emittedEvents: any[] = [];
+store.on('changed', (event) => emittedEvents.push(event));
+store.on('logged', (event) => emittedEvents.push(event));
+
+store.trigger.inc(); // emits changed(1)
+store.trigger.log({ message: 'test' }); // emits logged('test') but not stored in history
+store.trigger.inc(); // emits changed(2)
+
+emittedEvents.length = 0;
+store.trigger.undo(); // emits changed(1)
+store.trigger.undo(); // emits changed(0)
+store.trigger.redo(); // emits changed(1)
+store.trigger.redo(); // emits changed(2)
+
+// Only inc events are emitted during undo/redo, log events are skipped
+// emittedEvents = [
+//   { type: 'changed', value: 1 },
+//   { type: 'changed', value: 0 },
+//   { type: 'changed', value: 1 },
+//   { type: 'changed', value: 2 }
+// ]
+```
+
+</details>
+
+### Interleaving Undo/Redo with New Events
+
+When you send a new event after undoing, the redo stack is cleared. This ensures that the history remains consistent and prevents unexpected behavior when mixing undo/redo with new events.
+
+<details>
+<summary>Example: New events clear redo stack</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+    dec: (context) => ({ count: context.count - 1 }),
+  },
+}).with(undoRedo());
+
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+store.trigger.undo(); // count = 1
+store.trigger.dec(); // count = 0 (clears redo stack)
+
+// Redo should not work as we added a new event after undo
+store.trigger.redo(); // count = 0 (no change)
+```
+
+</details>
+
+### Empty Operations
+
+Undo/redo operations do nothing when there's no history to undo/redo. Calling `undo()` when there's no history, or `redo()` when there's nothing to redo, will have no effect on the store state.
+
+<details>
+<summary>Example: Empty operations</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo());
+
+const initialSnapshot = store.getSnapshot();
+
+// Undo with empty history does nothing
+store.trigger.undo();
+expect(store.getSnapshot()).toEqual(initialSnapshot);
+
+// Redo with empty redo stack does nothing
+store.trigger.redo();
+expect(store.getSnapshot()).toEqual(initialSnapshot);
+```
+
+</details>
+
+### Snapshot Strategy
+
+By default, `undoRedo` uses the event-sourced strategy. You can switch to the snapshot strategy by setting `strategy: 'snapshot'`. The snapshot strategy stores full state snapshots in history, which can be useful when:
+
+- You need to preserve state that might be lost during event replay
+- You want to limit history size with `historyLimit`
+- You want to skip duplicate snapshots with a `compare` function
+
+```ts
+const store = createStore({
+  // ...
+}).with(undoRedo({ strategy: 'snapshot' }));
+```
+
+<details>
+<summary>Example: Using snapshot strategy</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo({ strategy: 'snapshot' }));
+
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+store.trigger.undo(); // count = 1
+store.trigger.redo(); // count = 2
+```
+
+</details>
+
+#### History Limit
+
+With the snapshot strategy, you can limit the number of snapshots stored in history using `historyLimit`. When the limit is reached, older snapshots are removed from history:
+
+```ts
+const store = createStore({
+  // ...
+}).with(undoRedo({
+  strategy: 'snapshot',
+  historyLimit: 2,
+}));
+```
+
+<details>
+<summary>Example: History limit</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo({
+  strategy: 'snapshot',
+  historyLimit: 2,
+}));
+
+store.trigger.inc(); // count = 1
+store.trigger.inc(); // count = 2
+store.trigger.inc(); // count = 3
+store.trigger.inc(); // count = 4
+
+// Can only undo 2 times because of history limit
+store.trigger.undo(); // count = 3
+store.trigger.undo(); // count = 2
+store.trigger.undo(); // count = 2 (limit reached, no change)
+```
+
+</details>
+
+#### Compare Function
+
+With the snapshot strategy, you can provide a `compare` function to skip duplicate snapshots. If the compare function returns `true` for two consecutive snapshots, the second snapshot is not saved in history:
+
+```ts
+const store = createStore({
+  // ...
+}).with(undoRedo({
+  strategy: 'snapshot',
+  compare: (past, current) => {
+    // Return true to skip saving this snapshot (duplicate)
+    // Return false to save this snapshot
+  },
+}));
+```
+
+<details>
+<summary>Example: Skip duplicate snapshots</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+    noop: (context) => context, // No state change
+  },
+}).with(undoRedo({
+  strategy: 'snapshot',
+  // Skip snapshots where count hasn't changed
+  compare: (past, current) => past.context.count === current.context.count,
+}));
+
+store.trigger.inc(); // count = 1 (saved)
+store.trigger.noop(); // count = 1 (duplicate, not saved)
+store.trigger.noop(); // count = 1 (duplicate, not saved)
+store.trigger.inc(); // count = 2 (saved)
+
+// Should only have 2 snapshots in history (0 and 1), not 4
+store.trigger.undo(); // count = 1
+store.trigger.undo(); // count = 0
+store.trigger.undo(); // count = 0 (no change)
+```
+
+</details>
+
+<details>
+<summary>Example: All snapshots saved without compare function</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+    noop: (context) => context,
+  },
+}).with(undoRedo({ strategy: 'snapshot' }));
+
+store.trigger.inc(); // count = 1 (saved)
+store.trigger.noop(); // count = 1 (saved even though duplicate)
+store.trigger.noop(); // count = 1 (saved even though duplicate)
+store.trigger.inc(); // count = 2 (saved)
+
+// Should have 4 snapshots in history (0, 1, 1, 1)
+store.trigger.undo(); // count = 1
+store.trigger.undo(); // count = 1
+store.trigger.undo(); // count = 1
+store.trigger.undo(); // count = 0
+```
+
+</details>
+
+#### Preserving State with Skipped Events
+
+With the snapshot strategy, skipped events preserve their state in snapshots. This is because snapshots capture the full state at a point in time, including changes made by skipped events:
+
+```ts
+const store = createStore({
+  // ...
+}).with(undoRedo({
+  strategy: 'snapshot',
+  skipEvent: (event) => {
+    // ...
+  },
+}));
+```
+
+<details>
+<summary>Example: Preserving state with skipped events</summary>
+
+```ts
+const store = createStore({
+  context: { count: 0, logs: [] as string[] },
+  on: {
+    inc: (context) => ({ count: context.count + 1, logs: context.logs }),
+    log: (context, event: { type: 'log'; message: string }) => ({
+      logs: [...context.logs, event.message],
+      count: context.count,
+    }),
+  },
+}).with(undoRedo({
+  strategy: 'snapshot',
+  skipEvent: (event) => event.type === 'log',
+}));
+
+store.trigger.inc(); // count = 1, logs = []
+store.trigger.log({ message: 'first log' }); // count = 1, logs = ['first log'] (not tracked)
+store.trigger.inc(); // count = 2, logs = ['first log']
+
+// Undo should restore snapshot before second inc, which includes the log
+store.trigger.undo(); // count = 1, logs = ['first log']
+```
+
+</details>
+
+### Configuration Options
+
+The `undoRedo` function accepts a configuration object with these options:
+
+- `strategy`: `'event-sourced'` (default) or `'snapshot'` - The strategy to use for history
+- `getTransactionId(event, snapshot)`: Function to determine transaction grouping
+- `skipEvent(event, snapshot)`: Function to determine if an event should be skipped
+- `historyLimit` (snapshot strategy only): Maximum number of snapshots to store in history
+- `compare` (snapshot strategy only): Function to compare snapshots and skip duplicates
+
+### Type Safety
+
+The undo/redo extension preserves all TypeScript types from your original store:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (context) => ({ count: context.count + 1 }),
+  },
+}).with(undoRedo());
+
+// Type safety is preserved
+store.getSnapshot().context satisfies { count: number };
+
+// @ts-expect-error
+store.getSnapshot().context.foo;
+
+// @ts-expect-error
+store.trigger.dec();
 ```
 
 ### Notes
 
+- **Event-sourced by default**: The default strategy stores events, not snapshots, making it memory efficient
 - **New events clear redo stack**: When you send a new event after undoing, the redo stack is cleared
 - **Empty operations**: Undo/redo operations do nothing when there's no history to undo/redo
-- **Type safety**: The undo/redo wrapper preserves all TypeScript types from your original store
-- **Event-sourced**: History is maintained as events, not snapshots, making it memory efficient
+- **Type safety**: The undo/redo extension preserves all TypeScript types from your original store
+- **Emitted events**: Events emitted during transitions are replayed during undo/redo operations
 
 ## Using XState Store with XState
 
