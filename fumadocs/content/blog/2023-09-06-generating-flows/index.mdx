@@ -1,0 +1,97 @@
+---
+title: 'New experimental feature: generating flows'
+description: Learn how to generate and modify flows from plain text using Stately's new intelligent features
+tags: [pro, generate flows, modeling]
+authors: [david]
+date: 2023-09-06
+slug: 2023-09-06-generating-flows
+image: /blog/2023-09-06-generating-flows.png
+---
+
+As software architecture grows increasingly complex, developers and project managers often grapple with the challenge of visualizing and organizing application logic. This is where state machines and flows come into play. State machines are a powerful tool for modeling application logic, and flows are a great way to visualize and organize state machines. At Stately, we’re committed to making state machines and flows more accessible and easier to use.
+
+But state machines, though powerful, have a learning curve that can be a bit intimidating. And then there’s the blank slate problem: where do you even start when modeling a flow? Furthermore, when flows get large, how can you apply broad changes in a more natural way while keeping the flow intact and logically correct? These are some of the challenges we set out to solve with our new experimental generative features.
+
+## New generative features
+
+In response to these challenges, we are thrilled to introduce two experimental beta features:
+
+- The ability to **generate a flow** from plain text
+- The ability to **modify an existing flow** from plain text
+
+{/* truncate */}
+
+### Generating a flow
+
+To utilize this feature:
+
+1. Click on the **Generate flow** button located in the top bar.
+2. Write a prompt for a flow you would like to generate; for instance, “A simple checkout process.”
+3. Be descriptive; the more information you provide, the more detailed the resulting state machine flow will be.
+4. Click the **Generate flow** button, wait a few seconds, and voilà!
+
+![Generate flow dialog: Experimental feature. With the flow description of “A simple checkout process”, with the submit button “Generating flow” in progress.](../../docs/assets/blog/2023-08-31-generating-flows/generate-flow.png)
+
+Stately leverages LLMs to craft a flow that matches your prompt. The result is a flow that is both understandable and consistent with your specifications, and can be further refined to suit your needs.
+
+_The following machine is the result of generating the flow described by “A checkout flow where you can edit basket, update basket, add shipping details, add billing details, calculate shipping costs, and take payment. Payment can succeed or fail. Succeed is the final state. On fail, payment can be tried again after update billing details.”_
+
+<EmbedMachine
+  name="checkoutFlow"
+  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
+/>
+
+### Modifying a flow
+
+The process to modify an existing flow is similar:
+
+1. Click on the **Generate flow** button located in the top bar.
+2. Write instructions for the modifications you would like to make to the flow; for instance, “Add a new state to the flow that handles a user cancelling their order.”
+3. As before, the more information you provide, the more detailed the resulting state machine flow will be.
+4. Toggle the **Modify current flow** switch.
+5. Click the **Modify current flow** button, wait a few seconds, and voilà!
+
+Stately will use the existing flow as context to generate a new flow that incorporates your modifications. Keep in mind that this will send your flow to OpenAI, so only use this feature if you are comfortable with that.
+
+_The following machine is the result of modifying the previous flow with the description “Viewing basket is the initial state.”_
+
+<EmbedMachine
+  name="checkoutFlow, modified"
+  embedURL="https://stately.ai/registry/editor/embed/8f7e6dc9-0ec0-425d-a20c-fef3849ee264?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
+/>
+
+## Be creative
+
+The potential is vast. Think about generating flows for domains like customer support, inventory management, or online voting systems. Imagine refining a flow to incorporate customer feedback, include multilingual support, or even a state to address system downtimes. The horizon is truly limitless.
+
+All applications have state machine flows in them, whether they’re implicitly or explicitly defined, in the frontend or backend. There’s many possibilities for flows to generate and modify. Here’s some examples:
+
+- A flow for a simple checkout process
+- A newsletter signup flow
+- A marketing automation flow
+- An authentication flow
+- Logic for a customer support chatbot
+- Game logic for complex multiplayer games
+
+## Privacy
+
+At Stately, we take privacy seriously. We are committed to protecting your data and ensuring that your creations remain yours. Rest assured that:
+
+- No user-created flows are contributed to our training dataset.
+- Flows are provided as context to OpenAI only when you opt for modifying an existing flow with the experimental generative features.
+- We will never use your flows as training data without your explicit permission.
+
+## Our generative transition
+
+Our vision goes beyond mere generation. Upcoming features include:
+
+- Autogenerated detailed descriptions for states and transitions.
+- Code implementations for actions, invocations, guards, and more.
+- Intelligent suggestions for expanding, simplifying, and improving your flows, like [GitHub Copilot](https://github.com/features/copilot/) for application logic.
+- Narratives and summaries of flows in natural language.
+
+## And much, much more
+
+We want Stately to be the source of truth for your application logic, not just as a collection of flows, but as an intelligent tool for helping you and your team build better software.
+
+Stately’s experimental generative features are available exclusively to our [Pro users](/docs/studio-pro-plan) in beta. We’re offering a [one-month free trial](/pricing), so you can try it out and see for yourself. We’d love to hear your feedback and ideas, so please try out the new features and let us know what you think!

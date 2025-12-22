@@ -1,0 +1,11 @@
+{
+  "title": "Packages",
+  "pages": [
+    "xstate-store",
+    "xstate-react",
+    "xstate-vue",
+    "xstate-svelte",
+    "xstate-graph",
+    "xstate-test"
+  ]
+}

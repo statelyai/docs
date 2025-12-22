@@ -1,0 +1,266 @@
+---
+title: Introducing XState Store
+description: A simple and small state management library inspired by XState
+tags: [xstate, state, store, state management]
+authors: [david]
+date: 2024-04-10
+slug: 2024-04-10-xstate-store
+---
+
+Does the world need another state management library? Probably not, but if you've been interested in XState, you're going to want to check this one out.
+
+XState Store is a simple & tiny state management library largely inspired by XState. If you just need a way to update data in a store and subscribe to changes in the store, XState Store is for you. It is:
+
+- **Extremely simple**. Provide initial context and transition functions to the `createStore(…)` function, and you're good to go.
+- **Extremely small**. Less than 1kb minified and gzipped.
+- **XState compatible**. Shares actor APIs with XState, making integration/migration easy if (when) you need to handle more complexity.
+- **Extra type-safe**. Written in TypeScript, it provides strong event and snapshot types, _automatically_ inferred from your context and transitions.
+- **Event-based**. Works just like XState; send events to trigger transitions.
+- **Immer ready**. Easily add [Immer](https://github.com/immerjs/immer) for "mutable" context updates with `createStoreWithProducer(producer, …)`.
+
+{/* truncate */}
+
+:::info
+
+Read the [`@xstate/store` documentation](/docs/xstate-store) for more information.
+
+:::
+
+Install via [npm](https://www.npmjs.com/package/@xstate/store):
+
+```bash
+npm install @xstate/store
+```
+
+Create your store and use it anywhere:
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  {
+    count: 0,
+  },
+  {
+    inc: {
+      count: (context, event: { by: number }) => context.count + event.by,
+    },
+  },
+);
+
+store.subscribe((snapshot) => {
+  console.log(snapshot.context);
+});
+
+store.send({ type: 'inc', by: 1 });
+// logs { count: 1 }
+store.send({ type: 'inc', by: 2 });
+// logs { count: 3 }
+```
+
+Even in React:
+
+```tsx
+// highlight-next-line
+import { useSelector } from '@xstate/store/react';
+import { store } from './store';
+
+function Counter() {
+  // highlight-next-line
+  const count = useSelector(store, (state) => state.context.count);
+
+  // highlight-next-line
+  return (
+    <button onClick={() => store.send({ type: 'inc', by: 1 })}>{count}</button>
+  );
+}
+```
+
+## Motivation
+
+There are many state management libraries out there, such as XState, Redux, MobX, Zustand, Pinia, and more. They generally fall under two categories: **direct** and **indirect** state manipulation.
+
+- Direct state manipulation is easiest, since you can directly update the state anywhere in your application, at any time. However, this can lead to bugs and unpredictable behavior, since logic is _not_ centralized, and a lot of defensive programming is required.
+- Indirect state manipulation is simplest, since you can centralize all state manipulation in one place. This can be a little more verbose since you are sending/dispatching events (or "actions" in Redux lingo) to a centralized location, but it means that you have a single source of truth for your app logic. This central source makes testing, inspecting, debugging, and reusability much easier.
+
+[XState](https://stately.ai/docs/xstate) has taken the road less traveled, and has strongly pushed for indirect state manipulation, as it can scale better for more complex application logic. However, XState has a pretty big learning curve, since it also implements state machines, statecharts, and the actor model – all of which are new (and important!) concepts for many developers. Additionally, we have seen teams use XState not only for complex state management, but also for simple data updates, where using full state machines may be overkill.
+
+Instead of directing developers to go outside of the XState ecosystem for simple state management, we've created `@xstate/store`, which shares the same principles as XState, has identical APIs, but is much simpler and easier to use. If you need to scale up to more complex state management, you can easily migrate to XState.
+
+In summary, if you just need a way to update data in a store and subscribe to changes in a store and share that data with other parts of your application, use `@xstate/store`. If you need more complex state management, including finite states, effects (actions, invoked/spawned actors), use XState.
+
+| Feature       | `@xstate/store` | `xstate` |
+| ------------- | --------------- | -------- |
+| Finite states | ❌              | ✅       |
+| Context       | ✅              | ✅       |
+| Events        | ✅              | ✅       |
+| Transitions   | ✅              | ✅       |
+| Guards        | ❌              | ✅       |
+| Effects       | ❌              | ✅       |
+| Actor model   | ❌              | ✅       |
+
+## Super simple example
+
+This is a contrived example to demonstrate the API.
+
+```ts
+import { createStore } from '@xstate/store';
+
+// 1. Create a store
+export const donutStore = createStore(
+  // Initial context data
+  { donuts: 0, favoriteFlavor: 'chocolate' },
+
+  // Transitions
+  {
+    addDonut: {
+      donuts: (context) => context.donuts + 1,
+    },
+    changeFlavor: {
+      favoriteFlavor: (context, event: { flavor: string }) => event.flavor,
+    },
+    eatAllDonuts: {
+      donuts: 0,
+    },
+  },
+);
+
+console.log(store.getSnapshot());
+// {
+//   status: 'active',
+//   context: {
+//     donuts: 0,
+//     favoriteFlavor: 'chocolate'
+//   }
+// }
+
+// 2. Subscribe to the store
+store.subscribe((snapshot) => {
+  console.log(snapshot.context);
+});
+
+// 3. Send events
+store.send({ type: 'addDonut' });
+// logs { donuts: 1, favoriteFlavor: 'chocolate' }
+
+store.send({
+  type: 'changeFlavor',
+  flavor: 'strawberry', // Strongly-typed!
+});
+// logs { donuts; 1, favoriteFlavor: 'strawberry' }
+```
+
+Overall, the API is:
+
+1. Create a store using `createStore(initialContext, transitions)`.
+2. Subscribe to updates from that store using `store.subscribe(callback)`.
+3. Send events to trigger transitions using `store.send(event)`.
+4. (Optional) Use `store.getSnapshot()` to get the current snapshot of the store.
+
+:::info
+
+Read the [`@xstate/store` documentation](/docs/xstate-store) for more information.
+
+:::
+
+## Superpowers
+
+We've packed a few nice features into `@xstate/store` to make state management as smooth sailing as possible. ⛵️
+
+First and foremost, you get **strong types** out of the box for both the state context _and_ events, without having to write any awkward generic type parameters. Of course, intellisense works well for events in `store.send({ … })`. Note that to make this magic work, TypeScript version 5.4 or higher is required.
+
+```ts
+import { createStore } from '@xstate/store';
+
+const store = createStore(
+  {
+    count: 0,
+  },
+  {
+    inc: {
+      count: (context, event: { by: number }) => context.count + event.by,
+    },
+  },
+);
+
+store.send({
+  type: 'inc', // Strongly-typed!
+  by: 1, // Also strongly-typed!
+});
+
+// @ts-expect-error
+store.send({ type: 'unknownEvent' });
+```
+
+Secondly, there are convenient ways to update `context` in a transition, similar to how you would do it with `assign(…)` in XState. You can:
+
+- Use an object to update specific `context` properties:
+  ```ts
+  const store = createStore(
+    {
+      count: 0,
+    },
+    {
+      inc: {
+        count: (context, event: { by: number }) => context.count + event.by,
+      },
+    },
+  );
+  ```
+- Use an object to update `context` properties to static values:
+  ```ts
+  const store = createStore(
+    {
+      count: 0,
+    },
+    {
+      reset: {
+        count: 0, // No function needed
+      },
+    },
+  );
+  ```
+- Use a function to update the entire `context` (can be a partial or full update):
+  ```ts
+  const store = createStore(
+    {
+      count: 0,
+      greeting: 'Hello',
+    },
+    {
+      adios: (context) => ({ greeting: 'Goodbye' }), // Merged with { count }
+    },
+  );
+  ```
+
+But if you want to make complex `context` updates even easier, you can easily use [Immer](https://immerjs.github.io/immer/docs/introduction) by plugging in its `producer` function to `createStoreWithProducer(producer, …)`:
+
+```ts
+import { createStoreWithProducer } from '@xstate/store';
+// highlight-next-line
+import { produce } from 'immer';
+
+const store = createStoreWithProducer(
+  // highlight-next-line
+  produce,
+  {
+    todos: [],
+  },
+  {
+    addTodo: (context, event: { todo: string }) => {
+      // highlight-next-line
+      context.todos.push(event.todo);
+    },
+  },
+);
+```
+
+## What's next
+
+New features are _not_ planned for `@xstate/store` since it aims to remain small, simple, and focused. However, we would like to add integrations with other frameworks (such as Vue, Angular, Svelte, Solid, etc.) and would greatly appreciate community contributions for those. And we can't forget about examples; keep an eye out for those in the `/examples` directory of the XState repo, such as [this small React counter example](https://github.com/statelyai/xstate/tree/main/examples/store-counter-react).
+
+Other than that, the next thing for you to do is to try it out! If you've used Zustand, Redux, Pinia, or XState, you'll find `@xstate/store` very familiar. Please keep in mind that you should choose the state management library that best suits your requirements and your team's preferences. However, it is straightforward to migrate to (and from) `@xstate/store` to Redux, Zustand, Pinia, XState, or other state management libraries if needed.
+
+Our goal with `@xstate/store` is to provide a simple yet powerful _event-based_ state management solution that is type-safe. We believe that indirect (event-based) state management leads to better organization of application logic, especially as it grows in complexity, and `@xstate/store` is a great starting point for that approach.
+
+Give it a try, and feel free to ask any questions in [our Discord](https://discord.gg/xstate) or report bugs in [the XState GitHub repo](https://github.com/statelyai/xstate/issues). We're always looking for feedback on how we can improve the experience!

@@ -1,0 +1,758 @@
+---
+title: Migrating machines to XState v5
+description: A walkthrough of migrating an existing XState v4 machine to XState v5
+tags:
+  [
+    stately,
+    studio,
+    breaking changes,
+    migration,
+    XState v5,
+    state machines,
+    xstate,
+  ]
+authors: [kevin]
+date: 2024-02-02
+slug: 2024-02-02-migrating-machines-to-xstate-v5
+image: /blog/2024-02-02-migrating-machines-to-xstate-v5.png
+---
+
+We recently [announced the release of XState v5](../../docs/assets/blog/2023-12-01-xstate-v5)! During its beta phase, we created a [migration guide](/docs/migration), specifically to call out breaking changes and to give developers onging updates regarding API changes. This post is a walkthrough of migrating existing XState machines from v4 to v5 and is intended to be more of a step-by-step companion to the migration guide. It also focuses on migrating [XState machines that are using TypeScript](/docs/typescript).
+
+{/* truncate */}
+
+:::info
+
+Read [David’s blog post on the launch of XState v5](../../docs/assets/blog/2023-12-01-xstate-v5).
+
+Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/live/TRVjeil-y74):
+
+<YouTube id="TRVjeil-y74" />
+
+:::
+
+We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. I’ve learned a lot about the migration process, especially after consulting my expert teammate, Mateusz, and I wanted to share some tips from my experience to make yours even smoother.
+
+The following is a sequence of steps you can follow to migrate an existing XState v4 machine to XState v5. The order is merely a recommendation, not a requirement.
+
+1. [Install XState v5 and dependencies](#1-install-xstate-v5-and-dependencies)
+2. [Move types to `setup()` and remove typegen](#2-move-types-to-setup-and-remove-typegen)
+3. [Convert action and guard strings to parameterized objects](#3-convert-action-and-guard-strings-to-parameterized-objects)
+4. [Include implementations or stubs in `setup()`](#4-include-implementations-or-stubs-in-setup)
+5. [Provide concrete implementations](#5-provide-concrete-implementations)
+
+:::tip
+
+For steps 2-5, you may find it easier to tackle a small bit of your existing machine, for example, one single event or action, and migrate it fully from step 2-5 in order to isolate the causing and fixing of TypeScript errors along the way.
+
+:::
+
+## 1. Install XState v5 and dependencies
+
+The first step will be to [install XState v5](/docs/xstate#installation). If you’re using a framework or library, you can also install one of the integration packages:
+
+- [React](/docs/xstate-react)
+- [Vue](/docs/xstate-vue)
+- [Svelte](/docs/xstate-svelte)
+
+### Installing both XState v4 and v5 simultaneously
+
+If you have many state machines and would like to incrementally migrate those to v5, you can install both v4 and v5 side-by-side by [following the migration steps listed here](/docs/migration#how-can-i-use-both-xstate-v4-and-v5). Once you’ve completed those steps, you’ll end up with both dependencies in your `package.json`.
+
+In order to install the integration packages, you’ll need to [run a script](/docs/migration#how-can-i-use-both-xstate-v4-and-v5).
+
+Here’s an example with libraries pegged to the latest version at the time of this writing but you can also use `npm:xstate@latest` if you prefer.
+
+```json5
+// package.json after completing the steps in the migration guide
+{
+  dependencies: {
+    xstate: '4.38.2',
+    xstate5: 'npm:xstate@5.6.0',
+    '@xstate/react': '3.2.2',
+    '@xstate/react5': 'npm:@xstate/react@4.0.3',
+  },
+}
+```
+
+:::tip
+
+Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
+
+:::
+
+### Importing from versioned packages
+
+If using a dual installation (v4 and v5 simultaneously), or even if only using v5, you will need to make sure you import the XState functions from the v5 packages in your code. At the top of your file, import functions like `setup`, `assign`, and other action creators from a `xstatev5` package.
+
+:::warning
+
+Avoid mismatching! Calling `createMachine({})` from XState v5 but then calling an XState function like `assign`, imported from v4, could result in type errors.
+
+:::
+
+```ts
+// In a v5 machines...
+const machine = setup().createMachine({
+  context: {
+    prop: 'defaultValue',
+  },
+  on: {
+    next: {
+      // Make sure to import assign from the v5 package
+      // and not from v4!
+      actions: assign({ prop: 'value' }),
+    },
+  },
+});
+```
+
+## 2. Move types to `setup()` and remove typegen
+
+One of the first migration steps, based on a breaking change, is to remove any TypeScript types from the `schema` property of the machine config from v4. These types should now be [included under a new `types` property](/docs/typescript#specifying-types) in the object passed to the new `setup({})` function.
+
+Passing types to `createMachine({ schema: {} })` is still supported in v5, however, passing them to `setup({})` is preferred since it automates implementations for actions (and more) to types.
+
+<Tabs>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  ...
+  tsTypes: {} as import('./myMachine.typegen').Typegen0,
+  schema: {
+    context: {} as {
+      prop1: string;
+      prop2: number;
+    },
+    events: {} as
+    | {
+        type: 'next';
+        value: number;
+    } | {
+        type: 'back';
+        value: number;
+      };
+    },
+    services: {} as {
+      fetchUserDetails: {
+        data: { email: string, name: string };
+      };
+    },
+  }
+});
+```
+
+</TabItem>
+
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {} as {
+    context: {
+      prop1: string;
+      prop2: number;
+    };
+    events:
+      | {
+          type: 'next';
+          value: number;
+        }
+      | {
+          type: 'back';
+          value: number;
+        };
+  },
+  /* implementations */
+  actions: {},
+  guards: {},
+  // Actor input and output types will be included here
+  actors: {},
+}).createMachine({
+  /* machine config */
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+When defining types, you may have noticed in past examples that an empty object is often cast as the types you want for each property like `events` and `actions`.
+
+```ts
+const machine = setup({
+  types: {
+    context: {} as {
+      prop1: string;
+      prop2: number;
+    };
+    events: {} as { type: 'next' } | { type: 'next' };
+  },
+})
+```
+
+That still works but but it’s even easier to just cast the whole types object all at once with `types: {} as {}`.
+
+```ts
+const machine = setup({
+  types: {} as {
+    context: {
+      prop1: string;
+      prop2: number;
+    };
+    events: { type: 'next' } | { type: 'next' };
+  },
+});
+```
+
+:::warning
+
+When chaining `setup({ types: {} }).createMachine({})` in v5, we can only define types on the object passed to `setup` and not on the config object passed to `createMachine`
+
+:::
+
+### Remove typegen
+
+Typegen is no longer supported in XState v5 so you can remove `tsTypes` from your machine config. Without typegen, typing events in actions and guards must be done manually using type narrowing in implementation functions. However, the following sections will show you how to type a new `params` argument passed to those implementations and skip manual type narrowing.
+
+## 3. Convert action and guard strings to parameterized objects
+
+We can convert action and guard strings in the machine config to parameterized objects. This is particularly helpful for actions and guards on transitions if they require use of `event` props. This allows you to explicitly map `event` properties to a `params` object for your implementation functions so that they're automatically typed and there's no need for additional [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+
+On the other hand, you can continue to use reference string named `entry` and `exit` actions or guards if they only make use of `context` values (already typed). Even inline functions can be used for these in the config.
+
+For example, these events are still perfectly fine in XState v5 as they were in v4:
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {} as {
+    context: {
+      prop1: string;
+    };
+  }
+} })
+.createMachine({
+  states: {
+    first: {
+      entry: 'track',
+      exit: ({ context }) => {
+        console.log(context.prop1, 'is already typed');
+      },
+    },
+  },
+});
+```
+
+For transition events and guards, we can [convert named action or guard strings to action objects](/docs/migration#use-params-to-pass-params-to-actions--guards) which allows us to define an explicit `params` object that will be received at runtime by our implementation functions. There are two ways to do this:
+
+1. We can define `params` as a [static value](/docs/actions#action-objects)
+2. Use [dynamic action parameters](/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
+
+<Tabs>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    next: {
+      actions: ['track'],
+    },
+    back: {
+      actions: ['track'],
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  on: {
+    next: {
+      actions: [
+        {
+          type: 'track',
+          // Statically defined params
+          params: { response: 'good' },
+        },
+      ],
+    },
+    back: {
+      actions: [
+        {
+          type: 'track',
+          // Dynamically defined params
+          params: ({ event }) => ({
+            rating: event.rating,
+          }),
+        },
+      ],
+    },
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+This may appear a bit more verbose in v5 but it will allow us to skip manual type narrowing in our implementation functions. The `params` object will be automatically typed based on the `event` properties we map to it.
+
+:::tip
+
+When mapping `event` props, the action or guard `params` you define can technically be any value, not just an object. But it is encouraged to use an object for consistency and to make it clear what the implementation functions will receive.
+
+:::
+
+Here is a more complete example of converting action strings to parameterized actions:
+
+```ts
+import { setup } from 'xstate';
+
+const machine = setup({
+  types: {} as {
+    events: {
+      type: 'next';
+      prop1: string;
+      prop2: number;
+      prop3: boolean;
+    };
+  },
+  /* more setup */
+}).createMachine({
+  on: {
+    next: {
+      target: 'first',
+      actions: [
+        {
+          guard: {
+            type: 'is this ready',
+            params: ({ event }) => ({ ready: event.ready }),
+          },
+          type: 'doThis',
+          // Later, the action implementation function will be
+          // passed this string value in the 2nd arg, params.
+          params: ({ event }) => ({ prop1: event.prop1 }),
+        },
+        {
+          type: 'doThat',
+          // Later, the action implementation function will be
+          // passed this number value in the 2nd arg, params.
+          params: ({ event }) => ({ prop2: event.prop2 }),
+        },
+      ],
+    },
+  },
+  states: {
+    first: {
+      entry: {
+        type: 'whenEntering',
+        // Later, the action implementation function will be
+        // passed only these 2 values as the 2nd arg, params.
+        params: ({ event }) => ({
+          prop1: event.prop1,
+          prop2: event.prop2,
+        }),
+      },
+      exit: {
+        type: 'whenExiting',
+        // Later, the action implementation function will be
+        // passed only these 2 values as the 2nd arg, params.
+        params: ({ event }) => ({
+          prop2: event.prop2,
+          prop3: event.prop3,
+        }),
+      },
+    },
+  },
+});
+```
+
+## 4. Include implementations or stubs in `setup()`
+
+We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to reference dependencies from the outside world, then these serve as stubs to be overridden later. Passing a combination of stubs and concrete implementations to `setup()` is perfectly fine.
+
+:::warning
+
+The method signatures of implementation functions has changed in XState v5. The first argument is now an object that contains `context` and `event` properties. The second argument is the `params` object.
+
+```ts
+({ context, event }, params: YourParamsType) => {
+  // implementation
+};
+```
+
+When using TypeScript, it is necessary to type the 2nd `params` argument passed to each implementation function.
+
+:::
+
+### Stubbing actions
+
+```ts
+setup({
+  actions: {
+    doThis: (_, params: { prop: string }) => {
+      // You can include a concrete implementation here
+      console.log(params.prop);
+    },
+    // Stubbed implementation
+    doThat: (_, params: { prop: number }) => {},
+    whenEntering: (_, params: { prop1: string; prop2: number }) => {
+      // You can include a concrete implementation here
+      console.log(prop1, prop2);
+    },
+    // Stubbed implementation
+    whenExiting: (_, params: { prop2: number; prop3: boolean }) => {},
+  },
+});
+```
+
+:::tip
+
+Stubbed actions should be defined with an empty function body `() => {}` or they can be defined with a thrown error to enforce that they will be overridden later.
+
+```
+actionName: (_, params: { prop: string }) => {
+  throw new Error('Not implemented');
+},
+```
+
+:::
+
+Any `assign` actions, passed to `setup()`, shouldn’t require anything external to the machine config since they set values based on context or typed `params`.
+
+### Stubbing guards
+
+```ts
+setup({
+  guards: {
+    'is this ready': (_, params: { ready: boolean }) => {
+      // Concrete implementation here
+      return ready;
+    },
+    // Stubbed implementation
+    'are we there yet': (_, params: { distance: number }) => false,
+  },
+});
+```
+
+:::info
+
+Stubbed guards must return a boolean value, either `true` or `false`.
+
+:::
+
+### Stubbing actors
+
+Invoked actors can be stubbed with the actual actor creator helper function that will be used in the real implementation. The main purpose here is to type the `input` and `output` of the actor. There are two ways to do this:
+
+This first way is more transferrable across other types of logic creators.
+
+```ts
+setup({
+  actors: {
+    doSomethingAsync: fromPromise(
+      async (_: {
+        input: {
+          inputProp1: string;
+          inputProp2: number;
+        };
+      }): Promise<Item[]> => {
+        throw new Error('Not implemented');
+      },
+    ),
+  },
+});
+```
+
+:::warning
+
+Stubbed actors must throw an error as a way of enforcing that they will be overridden later.
+
+:::
+
+The second way is a bit shorter and more specific to `fromPromise`.
+
+```ts
+setup({
+  actors: {
+    doSomethingAsync: fromPromise<
+      // Promise-wrapped output
+      Item[],
+      // input
+      {
+        inputProp1: string;
+        inputProp2: number;
+      }
+    >(async () => {
+      throw new Error('Not implemented');
+    }),
+  },
+});
+```
+
+### Reducing external dependencies
+
+Even dependencies that are external to the machine can be made available to the machine using one of the following methods:
+
+#### Injecting external dependencies with `input`
+
+If dependencies are not expected to change throughout the lifetime of the machine, then you can pass them as `input` to `setup()` and they will become available from within the machine.
+
+```ts
+setup({
+  input: {
+    externalDependency1: someRef,
+    externalDependency2: anotherRef,
+  },
+});
+```
+
+#### Injecting external dependencies by sending an event
+
+If dependencies are expected to change over time, then you can send these updates as events to the machine. For example, an event containing a ref to a dependency can be stored in `context` for use by the machine.
+
+```ts
+send({
+  type: 'refs.inject',
+  externalDependency,
+});
+```
+
+However, in some cases it’s just not feasible or convenient to inject dependencies. There may be too many dependencies or you might wish to avoid tightly coupling them to the machine. The next section describes how to provide concrete implementations to override the stubbed implementations, on a per-use basis throughout your application.
+
+## 5. Provide concrete implementations
+
+Stately Studio is a NextJS application so we are using the [@xstate/react](/docs/xstate-react) package in our React components. We can provide concrete implementations to our stubs by using the `useActorRef()` hook. This hook allows us to pass in a machine and receive an actor ref that we can use to send events to that machine. We can provide dependencies to the machine such as our concrete implementations.
+
+```ts
+import { useActorRef } from '@xstate/react';
+
+const actorRef = useActorRef(
+  machine.provide({
+    actions: {
+      doThat: (_, prop2) => {
+        // Concrete implementation here
+        console.log(prop2);
+      },
+      whenExiting: (_, params) => {
+        // Concrete implementation here
+        console.log(params.prop2, params.prop3);
+      },
+    },
+  }),
+);
+```
+
+:::info
+
+Calling `machine.provide()` returns the same `machine` but with the provided implementations. This is useful if you want to provide different implementations to different instances of the same machine in multiple places in your application.
+
+:::
+
+In other components we may be using a context provider to give access to an `actorRef` at various levels in the component tree. A machine context provider can be created using a machine:
+
+```ts
+import { createMachine } from './machine';
+import { createActorContext } from '@xstate/react';
+
+const machine = setup({
+  /* setup config */
+}).createMachine({
+  /* machine config */
+});
+
+export const MachineContext = createActorContext(machine);
+```
+
+It can then be imported and used in a component tree:
+
+```tsx
+import { MachineContext } from './machine';
+
+function App() {
+  return (
+    <MachineContext.Provider
+      logic={machine.provide({
+        actions: {
+          doThat: (_, prop2) => {
+            // Concrete implementation here
+            console.log(prop2);
+          },
+          whenExiting: (_, params) => {
+            // Concrete implementation here
+            console.log(params.prop2, params.prop3);
+          },
+        },
+      })}
+    >
+      {children}
+    </MachineContext.Provider>
+  );
+}
+```
+
+In this case, the [provider is passed a `logic` prop](/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](/docs/xstate-react#useactorrefmachine-options) to access the `actorRef` and send events to the machine.
+
+:::info
+
+These implementation functions do not need to be explicitly typed again here because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-include-implementations-or-stubs-in-setup).
+
+:::
+
+### Providing actor implementations
+
+The following 3 things must be defined:
+
+1. Provide either a [concrete implementation or a stub for the actor creator function in `setup()`](#stubbing-actors)
+2. Register the `invoke` within a state in the main machine config.
+3. Provide a concrete implementation for the actor if not already passing it to `setup()`.
+
+#### Registering the `invoke` in a state in the main machine config
+
+This is similar to how invoked actors were registered in v4. The main difference is we also define the `input` here where we map event values to input values. The actions registered with `onDone` and `onError` are also defined as objects with `params` just like [we saw before with transition actions and entry/exit actions](#3-convert-action-and-guard-strings-to-parameterized-objects).
+
+```ts
+import { createMachine } from 'xstate';
+
+createMachine({
+  /* machine config */
+  states: {
+    /* other states */
+    someState: {
+      invoke: {
+        src: 'doSomethingAsync', // required
+        id: 'doSomethingAsync', // optional
+        input: ({ event }) => ({
+          inputProp1: event.prop1,
+          inputProp2: event.prop2,
+        }),
+        onDone: {
+          target: 'Idle',
+          actions: [
+            {
+              type: 'showSuccessToast',
+            },
+            {
+              type: 'handleOutputOnSuccess',
+              params: ({ event }) => event.output,
+            },
+          ],
+        },
+        onError: {
+          target: 'Idle',
+          actions: [{ type: 'showErrorToast' }],
+        },
+      },
+    },
+  },
+});
+```
+
+#### Providing a concrete implementation for the actor if not already passing it to `setup()`
+
+If we only defined a stub for the actor creator function in `setup()` then we must provide a concrete implementation for the actor with our other concrete implementations.
+
+```ts
+import { useActorRef } from '@xstate/react';
+
+const actorRef = useActorRef(
+  machine.provide({
+    actors: {
+      doSomethingAsync: fromPromise(
+        ({
+          input,
+        }: {
+          input: {
+            inputProp1: string;
+            inputProp2: number;
+          };
+        }) => {
+          return trpcProxyClient.stuff.asyncstuff.mutate(input);
+        },
+      ),
+    },
+  }),
+);
+```
+
+## Housekeeping and troubleshooting
+
+### Remove `preserveActionOrder` and `predictableActionArguments`
+
+You can now remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
+
+<Tabs>
+
+<TabItem value="v4" label="XState v4">
+
+```ts
+// ❌ DEPRECATED
+import { createMachine } from 'xstate';
+
+const machine = createMachine({
+  preserveActionOrder: true,
+  predictableActionArguments: true,
+  ...
+});
+```
+
+</TabItem>
+
+<TabItem value="v5" label="XState v5">
+
+```ts
+import { setup } from 'xstate';
+
+// preserveActionOrder and
+// predictableActionArguments have been removed
+const machine = setup({
+  ...
+}).createMachine({
+  ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+### Troubleshooting TypeScript errors
+
+You may likely see many TypeScript errors along the way so don’t get discouraged. For example, in order to fully migrate any one `action` in your machine, you’ll likely need to convert it to a parameterized object in the machine config and provide a typed implementation to `setup()` in order to fix TypeScript errors.
+
+Furthermore, TypeScript could continue complaining about the `actions` implementations passed to `setup()` until the very last action has been included there and typed properly. This is because TypeScript is checking the entire machine config and all of its implementations at once.
+
+:::info
+
+If you see a TypeScript error underlying one of your state names in the machine config, it is most likely because there is a type error with an `action` or `guard` within that state.
+
+:::
+
+TypeScript may have trouble pinpointing the exact location of the error in the machine config so it will often highlight the state name instead.
+
+![Misleading typescript error highlighting a state when its internal action type is the problem](../../docs/assets/blog/2024-02-02-migrating-machines-to-xstate-v5/misleading-typescript-error.png)
+
+In the example, above, the real source of the error is that the `trackUpgradeModalLearnMoreClick` action has not yet been converted to an action object. Fix that and the error under the "Click to learn more" state name goes away.
+
+## Summary
+
+By following the sequence of steps above, you should be able to migrate your existing XState v4 machines to XState v5 and get all of the types working with little to no need for type narrowing via assertions or type guards.
+
+I hope this walkthrough has been helpful in migrating your existing XState v4 machines to XState v5. If you have any questions or feedback, please [reach out to us on our Discord](https://discord.gg/xstate).

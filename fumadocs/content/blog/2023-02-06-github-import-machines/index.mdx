@@ -1,0 +1,52 @@
+---
+title: 'Import machines from GitHub'
+description: Learn about a new pro feature in the Stately Studio; importing machines from GitHub.
+tags: [stately, studio, integration, github]
+authors: [anders]
+image: /blog/2023-02-06-github-import-machines.png
+slug: 2023-02-06-github-import-machines
+date: 2023-02-06
+---
+
+Today we’re happy to introduce another pro feature for our Stately Studio subscribers; **import machines from GitHub**. With this feature, you can quickly visually machines in any of your GitHub repositories. You can even import the machines to the Studio and keep working on them here 🎉
+
+{/* truncate */}
+
+## How to
+
+Importing a machine is easy. You open a file containing one or more machines on GitHub. Next, you modify the URL, replace `.com` with `.stately.ai`, and the import will start.
+
+![Updating the URL on GitHub imports a machine into the Stately Studio.](github-import-machine.gif)
+
+### Example
+
+If you have a machine hosted at GitHub: `https://github.com/username/repo/blob/main/apps/superMachine.ts`, you update the URL to `https://github.stately.ai/username/repo/blob/main/apps/superMachine.ts` and the import will start 🚀
+
+### Saving the machine
+
+You can easily save imported machines into a Studio project. After the import, you click the save button and choose a project for the machine.
+
+![Saving a machine into a new project after a machine is imported into Stately Studio.](github-save-machine.gif)
+
+## Get started
+
+This feature requires the following prerequisites:
+
+- A **professional or enterprise** subscription to the Stately Studio.
+- You must install the GitHub integration app.
+
+When importing a machine, we help you with both of those tasks.
+
+Your GitHub token is stored on your own devices by design; we don’t save it in our database. This is to keep your data as safe as possible with the tradeoff being that you must accept the integration on the initial import for each device you use.
+
+See this example where the GitHub integration gets installed during the initial import.
+
+![The user is asked to install our GitHub integration during the initial import of a machine.](github-save-machine.gif)
+
+## Future work
+
+We have much more planned for integrating with GitHub; this is just the start. Let us know what you think about the machine import and what GitHub integration features you would like to see in the Stately Studio.
+
+### Bookmarklet bonus
+
+You can create a [bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) if you want to make it extra easy to import machines from GitHub. You do this by adding a new bookmark and setting the web address to `javascript:(function(){ location.href = 'https://github.stately.ai/' + window.location.pathname;})();`. Now you can click the bookmarklet whenever you want to import a machine. The bookmarklet will work on any GitHub file containing one or more machines.

@@ -1,0 +1,258 @@
+---
+title: 'XState: version 4.7 and the future'
+description: >-
+  XState version 4.7 has just been released. This is a minor version bump, but a
+  major reworking of the internal algorithms, a lot of new capabilites, bug
+  fixes and a better TypeScript experience.
+tags: [update, state machine, statechart, xstate, state]
+authors: [david]
+image: /blog/2019-12-09-xstate-version-47-and-the-future.png
+slug: 2019-12-09-xstate-version-47-and-the-future
+date: 2019-12-09
+---
+
+<head>
+  <link
+    rel="canonical"
+    href="https://dev.to/davidkpiano/xstate-version-4-7-and-the-future-2ehk"
+  />
+</head>
+
+[XState](https://github.com/davidkpiano/xstate) version 4.7 [has just been released](https://github.com/davidkpiano/xstate/releases/tag/v4.7.0). This is a minor version bump, but a major reworking of the internal algorithms, a lot of new capabilities, bug fixes, and a better TypeScript experience. It also paves the road for even more utilities, like `@xstate/test` and `@xstate/react`, as well as compatibility with other 3rd-party tools across the ecosystem, and even across languages.
+
+{/* truncate */}
+
+## What is XState?
+
+XState is a JavaScript (and TypeScript) library for creating state machines and statecharts, and interpreting them. State machines enforce a specific set of ”rules“ on logic structure such that:
+
+- There are a finite number of **states** (such as `"loading"` or `"success"`), which is different than _context_ (related data with potentially infinite possibilities, such as `email` or `age`)
+- There are a finite number of **events** (such as `{ type: 'FETCH', query: "..." }` that can trigger a transition between states.
+- Each state has **transitions**, which say, ”Given some **event**, go to this next state and/or do these actions”.
+
+You don’t need a state machine library to do this, as you can use `switch` statements instead:
+
+```ts
+    switch (state.status) {
+      case 'idle': // finite state
+        switch (event.type) {
+          case 'FETCH':
+            return {
+              ...state,
+              status: 'loading',
+              query: event.query
+            };
+          // ...
+        // ...
+      // ...
+    }
+```
+
+But let’s be honest, writing it like this is arguably a bit cleaner:
+
+```ts
+const machine = Machine({
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        FETCH: {
+          target: 'loading',
+          actions: assign({ query: (_, event) => event.query }),
+        },
+      },
+    },
+    // ...
+  },
+});
+```
+
+And it also makes it possible to directly copy-paste this machine code into a visualizer, like [XState Viz](https://xstate.js.org/viz), and visualize it, like was done at the end of the [No, disabling a button is not app logic](https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i) article:
+
+![State machine visualization on XState Viz](https://thepracticaldev.s3.amazonaws.com/i/218tb91ltxrnv988owz0.png)
+[View this viz on XState Viz](https://xstate.js.org/viz/?gist=414c0e4c40dab1dc80c9218f85605a24)
+
+Then there are **statecharts**, which are an extension of finite state machines created by [David Harel in 1989 (read the paper 📑)](http://www.inf.ed.ac.uk/teaching/courses/seoc/2005_2006/resources/statecharts.pdf). Statecharts offer many improvements and mitigate many issues of using flat finite state machines, such as:
+
+- Nested states (hierarchy)
+- Parallel states (orthogonality)
+- History states
+- Entry, exit, and transition actions
+- Transient states
+- Activities (ongoing actions)
+- Communication with many machines (invoked services)
+- Delayed transitions
+- And much more
+
+These are things that you _definitely_ do not want to implement yourself, which is why libraries like XState exist. And this brings us to…
+
+## What is new in XState 4.7?
+
+This minor release has been worked on for months, with a huge amount of help from [Mateusz Burzyński (also known as AndaristRake)](https://twitter.com/AndaristRake) 👏. The reason it took so long was because we are internally reworking the algorithms to be simpler, fit the [SCXML spec](https://www.w3.org/TR/scxml/#InternalStructureofEvents), and be compatible with a growing number of tools in the ecosystem. This refactoring also makes adding new capabilities much easier, and will hopefully encourage more contributors to help with this project. As a nice side-effect, it also eliminates a few edge-case bugs that had workarounds, but might have caused a suboptimal developer experience in previous versions.
+
+## Refactored internal algorithms
+
+How difficult can it be to create a statechart library? A lot more difficult than it seems, especially if you want to conform to the long, but well-established [SCXML spec](https://www.w3.org/TR/scxml). There’s even libraries for integrating SCXML code directly with JavaScript, such as Jacob Beard’s excellent [SCION tools](http://scion.scxml.io/), which I highly recommend you check out. It was a huge inspiration for XState, and XState is tested against much of the same code.
+
+SCXML specifies an [algorithm for SCXML interpretation](https://www.w3.org/TR/scxml/#AlgorithmforSCXMLInterpretation), which is written in pseudocode, but directly transferable to many popular languages. This algorithm was followed more closely in the refactor, which simplified a lot of the code base and removed the need for ad-hoc data structures such as `StateTree`, which was used to keep track of which state nodes were "active" for a given transition (now it’s just a set).
+
+As a result, the core code base is a little smaller, the algorithms are a little bit faster (determining the next state is basically an O(1) lookup, O(n) worst-case), and the code base is a lot nicer to work with and contribute to. We will continue to improve the algorithms used as we move towards 5.0.
+
+## Typestates
+
+[Typestates](https://en.wikipedia.org/wiki/Typestate_analysis) are really useful for developers. They’re popular in Rust, and this article on [The Typestate Pattern in Rust](http://cliffle.com/blog/rust-typestate/) describes them elegantly:
+
+> Typestates are a technique for moving **properties of state** (the dynamic information a program is processing) **into the type level** (the static world that the compiler can check ahead-of-time).
+
+Without learning Rust or diving into the Wikipedia article, let’s present a classic example: loading data. You might represent the state’s context in this way:
+
+```ts
+interface User {
+  name: string;
+}
+
+interface UserContext {
+  user?: User;
+  error?: string;
+}
+```
+
+This type-safe declaration allows you to defensively program effectively, but it can be a bit annoying when you are 100% sure that `user` is defined:
+
+```ts
+if (state.matches('success')) {
+  if (!state.context.user) {
+    // this should be impossible!
+    // the user definitely exists!
+    throw new Error('Something weird happened');
+  }
+
+  return state.context.user.name;
+}
+```
+
+In 4.7, XState allows you to [represent your states with Typestates](https://xstate.js.org/docs/guides/typescript.html#typestates) so that you can tell the compiler that you know how the `context` should be in any given state:
+
+![GIF showing that the optional user object will be defined in the success state](https://thepracticaldev.s3.amazonaws.com/i/64d42j77op89yta9gbi8.gif)
+
+This is very useful and improves the developer experience, but should be used as a strong guide, and not as a guarantee. It works by using [discriminated unions in TypeScript](https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html) to define your states, but the way it is implemented requires TypeScript version 3.7 and higher. There’s still some quirks to work out, as we’re basically trying to trick TypeScript into knowing some extra information about our state machines that is otherwise difficult/impossible to infer in a statically typed language. (Maybe one day JavaScript will have a dependently-typed flavor.)
+
+## Better service experience
+
+XState makes invoking external ”services” a first-class citizen. If this is a foreign concept, for now, just understand that it answers the question “how can many state machines communicate with each other?”, and the answer is by using events as the main communication mechanism. In 4.7, the developer experience for this is improved:
+
+- Invoked services can now be referenced on the `state.children` object by their ID. So if a state invokes some service with `id: 'fetchUser'`, then that invocation will be present on `state.children.fetchUser`.
+- The new `forwardTo()` action creator allows you to forward events to invoked services, which cuts down a lot of boilerplate:
+
+```ts
+on: {
+  SOME_EVENT: {
+    actions: forwardTo('someService');
+  }
+}
+```
+
+- SCXML has this notion of a `sessionid`, which is a unique identifier for each invoked service. XState 4.7 becomes more SCXML-compatible by keeping a reference of this in `state._sessionid`, which corresponds to the SCXML `_sessionid` variable.
+- XState can use that `_sessionid` to determine which service sent an event, so it can respond with an event back, using the new `respond()` action creator:
+
+```ts
+const authServerMachine = Machine({
+  initial: 'waitingForCode',
+  states: {
+    waitingForCode: {
+      on: {
+        CODE: {
+          actions: respond('TOKEN', { delay: 10 }),
+        },
+      },
+    },
+  },
+});
+
+const authClientMachine = Machine({
+  initial: 'idle',
+  states: {
+    idle: {
+      on: { AUTH: 'authorizing' },
+    },
+    authorizing: {
+      invoke: {
+        id: 'auth-server',
+        src: authServerMachine,
+      },
+      entry: send('CODE', { to: 'auth-server' }),
+      on: {
+        TOKEN: 'authorized',
+      },
+    },
+    authorized: {
+      type: 'final',
+    },
+  },
+});
+```
+
+You can make your own custom action creators too, and implement patterns that you might be familiar with already if you’ve worked with microservices.
+
+## Wildcard descriptors
+
+If you’ve ever wanted to transition from a state if _any_ (unspecified) event is received? Well, you’re in luck, because XState now supports [wildcard descriptors](https://xstate.js.org/docs/guides/transitions.html#wildcard-descriptors), which are a type of [event descriptor (SCXML)](https://www.w3.org/TR/scxml/#EventDescriptors) that describes a transition for any event in a given state:
+
+```ts
+const quietMachine = Machine({
+  id: 'quiet',
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        WHISPER: undefined,
+        // On any event besides a WHISPER, transition to the 'disturbed' state
+        '*': 'disturbed',
+      },
+    },
+    disturbed: {},
+  },
+});
+
+quietMachine.transition(quietMachine.initialState, 'WHISPER');
+// => State { value: 'idle' }
+
+quietMachine.transition(quietMachine.initialState, 'SOME_EVENT');
+// => State { value: 'disturbed' }
+```
+
+## Much, much more
+
+See [https://github.com/davidkpiano/xstate/releases/tag/v4.7.0](https://github.com/davidkpiano/xstate/releases/tag/v4.7.0) for an overview of the latest updates in this minor version.
+
+## The future of XState
+
+All this leads to the big question: what are the future plans/goals for XState? The first important thing to realize is that XState is _not just another state management library_, and state management was never its only goal. XState strives to bring two things to the JavaScript ecosystem:
+
+- **State machines/statecharts**, for modeling the logic of any individual component
+- **Actor model**, for modeling how components communicate with each other and behave in a system
+
+All of these are very old, very useful, and battle-tested concepts. The benefits they provide cannot be understated, and highlight the future plans for XState and related tooling:
+
+- Better visualization tools, including an updated visualizer, dev tools for Firefox and Chrome (work in progress!), dev tools for VS Code, and integration with other graphical viz tools such as [PlantUML](https://plantuml.com/) and [GraphViz](https://www.graphviz.org/)
+- Full [SCXML](https://www.w3.org/TR/scxml/) compatibility, which will allow statecharts authored in XState to be reusable in other languages that have SCXML tooling, as it is a truly language-agnostic spec
+- A catalog of examples, to demonstrate common patterns and best practices for many use-cases
+- Analytics, testing, and simulation tools
+
+As well as some initial ideas for XState version 5.0:
+
+- Better type safety and a more seamless TypeScript experience
+- Static analysis tools for compile-time hints/warnings and run-time optimizations
+- A more ”functional”, and completely optional, syntax for defining states and transitions more naturally (developer experience)
+- Higher-level state types such as `"task"` and `"choice"` to make it easier to define workflows and remove some boilerplate
+
+We’re also listening to ideas that you present to us in the [XState Wish List](https://spectrum.chat/statecharts/general/xstate-wish-list~6f025b10-fcbc-4ab5-ae59-5201112f06f2) thread, so post what you would like to see!
+
+## More information
+
+If you’re curious about XState or statecharts in general, there are many fantastic resources, including:
+
+- [The World of Statecharts](https://statecharts.github.io/) by Erik Mogensen
+- [Statecharts community](https://spectrum.chat/statecharts) on Spectrum
+- [XState docs](https://xstate.js.org/docs)
+- [Other tutorials](https://xstate.js.org/docs/about/tutorials.html) made by many excellent developers in the community

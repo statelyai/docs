@@ -1,0 +1,327 @@
+---
+title: 'useState vs useReducer vs XState - Part 1: Modals'
+description: >-
+  Managing state at different levels of complexity is hard. This series of
+  articles should help you make the right choices off the bat. Today we’re
+  starting with modals.
+tags: [modal, react, useState, useReducer, xstate]
+authors: [matt]
+image: /blog/2021-07-28-usestate-vs-usereducer-vs-xstate-part-1-modals.png
+slug: 2021-07-28-usestate-vs-usereducer-vs-xstate-part-1-modals
+date: 2021-07-28
+---
+
+Managing state at different levels of complexity is hard. Different tools make different trade-offs between readability, complexity and speed of development. The worst part is that as apps get more complex, it’s easy to regret choices that were made early on.
+
+This series of articles should help you make the right choice off the bat. The plan is to cover a bunch of state use cases, starting with the simple and graduating to more complexity as we go. We’ll see how easy they are to write, and also how they survive changing requirements.
+
+Today, we’re starting with [modals](https://material-ui.com/components/modal/).
+
+{/* truncate */}
+
+## useState
+
+For modals, the key piece of state is whether or not the modal is open. `useState` lets us capture that single piece of state pretty succinctly.
+
+```ts
+const [isOpen, setIsOpen] = useState(false);
+
+const open = () => {
+  setIsOpen(true);
+};
+
+const close = () => {
+  setIsOpen(false);
+};
+
+const toggle = () => {
+  setIsOpen(!isOpen);
+};
+```
+
+Highly readable, simple enough, fast to write, bug-proof. For a simple toggle like this, `useState` is great.
+
+## useReducer
+
+```ts
+const reducer = (state = { isOpen: false }, action) => {
+  switch (action.type) {
+    case 'OPEN':
+      return {
+        isOpen: true,
+      };
+    case 'CLOSE':
+      return {
+        isOpen: false,
+      };
+    case 'TOGGLE':
+      return {
+        isOpen: !state.isOpen,
+      };
+    default:
+      return state;
+  }
+};
+
+const [state, dispatch] = useReducer(reducer, { isOpen: false });
+
+const open = () => {
+  dispatch({ type: 'OPEN' });
+};
+
+const close = () => {
+  dispatch({ type: 'CLOSE' });
+};
+
+const toggle = () => {
+  dispatch({ type: 'TOGGLE' });
+};
+```
+
+`useReducer` gives us a reducer, a powerful centralized spot in our code where we can visualise the changes happening. However, it took us quite a few more lines of code to reach the same result as `useState`. For now, I’d say `useState` has the edge.
+
+## useMachine
+
+`useMachine` is a hook from XState, which allows us to use the power of state machines in our code. Let’s see how it looks.
+
+```ts
+const machine = Machine({
+  id: 'modalMachine',
+  initial: 'closed',
+  states: {
+    closed: {
+      on: {
+        OPEN: {
+          target: 'open',
+        },
+        TOGGLE: 'open',
+      },
+    },
+    open: {
+      on: {
+        TOGGLE: 'closed',
+        CLOSE: 'closed',
+      },
+    },
+  },
+});
+
+const [state, send] = useMachine(machine);
+
+const open = () => {
+  send({ type: 'OPEN' });
+};
+
+const close = () => {
+  send({ type: 'CLOSE' });
+};
+
+const toggle = () => {
+  send({ type: 'TOGGLE' });
+};
+```
+
+_You can see the state machine on the [XState visualiser here](https://xstate.js.org/viz/?gist=cf1578f5baa04cf9408ef6e48695f04c)._
+
+It’s remarkably similar in structure to the reducer above. Similar amount of lines, nearly the same event handlers. The state machine takes the edge over the reducer because of being able to easily visualise its logic - that’s something the reducer can’t match.
+
+However, the `useState` implementation still has the edge for me. The simplicity of execution, the elegance. It’s hard to see how it could be beaten...
+
+## Alert: requirements changing
+
+Oh no. Requirements have changed. Now, instead of immediately closing, the modal needs to animate out. This means we need to insert a third state, `closing`, which we automatically leave after 500ms. Let’s see how our implementations hold up.
+
+### useState
+
+**Refactor 1**: Our initial `isOpen` boolean won't handle all the states we need it to any more. Let’s change it to an enum: `closed`, `closing` and `open`.
+
+**Refactor 2**: `isOpen` is no longer a descriptive variable name, so we need to rename it to `modalState` and `setModalState`.
+
+**Refactor 3**: `useState` doesn’t handle async changes by itself, so we need to bring in `useEffect` to run a timeout when the state is in the `closing` state. We also need to clear the timeout if the state is no longer `closing`.
+
+**Refactor 4**: We need to change the toggle event handler to add logic to ensure it only triggers on the `closed` and `open` states. Toggles work great for booleans, but become much harder to manage with enums.
+
+```ts
+// Refactor 1, 2
+const [modalState, setModalState] = useState('closed');
+
+// Refactor 3
+useEffect(() => {
+  if (modalState === 'closing') {
+    const timeout = setTimeout(() => {
+      setModalState('closed');
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }
+}, [modalState]);
+
+// Refactor 1, 2
+const open = () => {
+  setModalState('open');
+};
+
+// Refactor 1, 2
+const close = () => {
+  setModalState('closing');
+};
+
+// Refactor 1, 2, 4
+const toggle = () => {
+  if (modalState === 'closed') {
+    setModalState('open');
+  } else if (modalState === 'open') {
+    setModalState('closing');
+  }
+};
+```
+
+Yuck. That was an enormous amount of refactoring to do just to add a simple, single requirement. On code that might be subject to changing requirements, think twice before using `useState`.
+
+### useReducer
+
+**Refactor 1**: Same as above - we turn the `isOpen` boolean to the same enum.
+
+**Refactor 2**: Same as above, `isOpen` is now improperly named, so we need to change it to `status`. This is changed in fewer places than `useState`, but there are still some changes to make.
+
+**Refactor 3**: The same as above, we use `useEffect` to manage the timeout. An additional wrinkle is that we need a new action type in the reducer, `REPORT_ANIMATION_FINISHED`, to cover this.
+
+**Refactor 4**: The same as above, but instead of the logic being in the event handler, we can actually change the logic inside the reducer. This is a cleaner change, but is still similar in the amount of lines it produces.
+
+```ts
+// Refactor 1, 2
+const reducer = (state = { status: 'closed' }, action) => {
+  switch (action.type) {
+    // Refactor 2
+    case 'OPEN':
+      return {
+        status: 'open',
+      };
+    // Refactor 2
+    case 'CLOSE':
+      return {
+        status: 'closing',
+      };
+    // Refactor 3
+    case 'REPORT_ANIMATION_FINISHED':
+      return {
+        status: 'closed',
+      };
+    // Refactor 4
+    case 'TOGGLE':
+      switch (state.status) {
+        case 'closed':
+          return {
+            status: 'open',
+          };
+        case 'open':
+          return {
+            status: 'closing',
+          };
+      }
+      break;
+    default:
+      return state;
+  }
+};
+
+// Refactor 1
+const [state, dispatch] = useReducer(reducer, { status: 'closed' });
+
+// Refactor 3
+useEffect(() => {
+  if (state.status === 'closing') {
+    const timeout = setTimeout(() => {
+      dispatch({ type: 'REPORT_ANIMATION_FINISHED' });
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }
+}, [state.status]);
+
+const open = () => {
+  dispatch({ type: 'OPEN' });
+};
+
+const close = () => {
+  dispatch({ type: 'CLOSE' });
+};
+
+const toggle = () => {
+  dispatch({ type: 'TOGGLE' });
+};
+```
+
+This file required the same number of refactors as the `useState` implementation. One crucial advantage is that these refactors were mostly located together: most changes occurred inside the reducer, and the event handlers went largely untouched. For me, this gives `useReducer` the edge over `useState`.
+
+### useMachine
+
+**Refactor 1**: Add a new closing state, which after 500 milliseconds goes to the closed state.
+
+**Refactor 2**: Changed the targets of the `TOGGLE` and `CLOSE` actions to point at `closing` instead of `closed`.
+
+```ts
+export const machine = Machine({
+  id: 'modalMachine',
+  initial: 'closed',
+  states: {
+    closed: {
+      on: {
+        OPEN: {
+          target: 'open',
+        },
+        TOGGLE: 'open',
+      },
+    },
+    // Refactor 1
+    closing: {
+      after: {
+        500: 'closed',
+      },
+    },
+    open: {
+      on: {
+        // Refactor 2
+        TOGGLE: 'closing',
+        CLOSE: 'closing',
+      },
+    },
+  },
+});
+
+const [state, send] = useMachine(machine);
+
+const open = () => {
+  send({ type: 'OPEN' });
+};
+
+const close = () => {
+  send({ type: 'CLOSE' });
+};
+
+const toggle = () => {
+  send({ type: 'TOGGLE' });
+};
+```
+
+> [See the changed machine here](https://xstate.js.org/viz/?gist=61bbac74d69894c9472571e44c98f765).
+
+The difference here is stark. A minimal number of refactors, all within the state machine itself. The amount of lines has hardly changed. None of the event handlers changed. AND we have a working visualisation of the new implementation.
+
+## Conclusion
+
+Before the requirements changed, `useState` was the champion. It’s faster, easier to implement, and fairly clear. `useReducer` and `useMachine` were too verbose, but `useMachine` took the edge by being easier to visualise.
+
+But after the requirements changed, `useState` hit the floor. It quickly became the _worst_ implementation. It was the hardest to refactor, and its refactors were in the most diverse places. `useReducer` was equally hard to refactor, with the same set of changes. `useMachine` emerged as the champion, with a minimal diff required to build in new, complex functionality.
+
+So if you’re looking to build a modal fast, use `useState`. If you want to build it right, use `useMachine`.
+
+I’m excited to work on this set of articles - I’m looking forward to tackling the toughest state models out there. What would you like to see covered in the next one? Some ideas:
+
+- Data fetching
+- Form state
+- Multi-step sequences (checkout flows, signup flows)
+
+Let me know in the comments below, and follow me for the next article!

@@ -1,0 +1,12 @@
+{
+  "title": "Get started",
+  "pages": [
+    "quick-start",
+    "installation",
+    "migration",
+    "examples",
+    "templates",
+    "cheatsheet",
+    "typescript"
+  ]
+}
