@@ -51,7 +51,7 @@ Follow these guidelines to ensure that your TypeScript project is ready to use X
 
 ### Use `createMachine()`, not `Machine()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -88,7 +88,7 @@ const machine = Machine({
 
 ### Use `createActor()`, not `interpret()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -129,7 +129,7 @@ const actor = interpret(machine, {
 
 ### Use `machine.provide()`, not `machine.withConfig()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -181,7 +181,7 @@ const specificMachine = machine.withConfig({
 
 ### Set context with `input`, not `machine.withContext()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -229,7 +229,7 @@ const moneyMachine = machine.withContext({
 
 ### Actions ordered by default, `predictableActionArguments` no longer needed
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -441,7 +441,7 @@ const machine = createMachine({
 
 ### Use `state.getMeta()` instead of `state.meta`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -471,7 +471,7 @@ state.meta;
 
 ### The `state.toStrings()` method has been removed
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -501,7 +501,7 @@ const stateValueStrings = getStateValueStrings(stateValue);
 
 ### Use `state._nodes` instead of `state.configuration`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -609,7 +609,7 @@ actor.subscribe((state) => {
 
 ### Implementation functions receive a single argument
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -647,7 +647,7 @@ const machine = createMachine({
 
 ### `send()` is removed; use `raise()` or `sendTo()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -770,7 +770,7 @@ entry: [
 
 ### `actor.send()` no longer accepts string types
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -802,7 +802,7 @@ actor.send('someEvent');
 
 ### `state.can()` no longer accepts string types
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -832,7 +832,7 @@ state.can('someEvent');
 
 ### Guarded transitions use `guard`, not `cond`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -877,7 +877,7 @@ const machine = createMachine({
 
 ### Use `params` to pass params to actions & guards
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -956,7 +956,7 @@ const machine = createMachine(
 
 ### Use wildcard `*` transitions, not strict mode
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1023,7 +1023,7 @@ service.send({ type: 'unknownEvent' });
 
 ### Use explicit eventless (`always`) transitions
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1075,7 +1075,7 @@ const machine = createMachine({
 
 ### Use `reenter: true`, not `internal: false`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1123,7 +1123,7 @@ const machine = createMachine({
 
 ### Transitions are internal by default, not external
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1250,7 +1250,7 @@ const machine = createMachine({
 
 ### Child state nodes are always re-entered
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1319,7 +1319,7 @@ const machine = createMachine({
 
 ### Use `stateIn()` to validate state transitions, not `in`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1363,7 +1363,7 @@ const machine = createMachine({
 
 ### Use `actor.subscribe()` instead of `state.history`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1402,7 +1402,7 @@ actor.subscribe((state) => {
 
 ### Actions can throw errors without `escalate`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1463,7 +1463,7 @@ const childMachine = createMachine({
 
 ### Use actor logic creators for `invoke.src` instead of functions
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1606,7 +1606,7 @@ const machine = createMachine({
 
 ### Use `invoke.input` instead of `invoke.data`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1662,7 +1662,7 @@ const machine = createMachine({
 
 ### Use `output` in final states instead of `data`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1755,7 +1755,7 @@ const machine = createMachine({
 
 ### Don't use property mappers in `input` or `output`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1833,7 +1833,7 @@ const machine = createMachine({
 
 ### Use `actors` property on `options` object instead of `services`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1885,7 +1885,7 @@ const specificMachine = machine.withConfig({
 
 ### Use `subscribe()` for changes, not `onTransition()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1921,7 +1921,7 @@ actor.onTransition((state) => {
 
 ### `createActor()` (formerly `interpret()`) accepts a second argument to restore state
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1955,7 +1955,7 @@ actor.start(someState);
 
 ### Use `actor.getSnapshot()` to get actor’s state
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -1998,7 +1998,7 @@ actor.subscribe((state) => {
 
 ### Loop over events instead of using `actor.batch()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2032,7 +2032,7 @@ actor.batch(events);
 
 ### Use `snapshot.status === 'done'` instead of `snapshot.done`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2077,7 +2077,7 @@ actor.subscribe((state) => {
 
 ### `state.nextEvents` has been removed
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2100,7 +2100,7 @@ const nextEvents = getNextEvents(state);
 
 ### Use `types` instead of `schema`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2148,7 +2148,7 @@ const machine = createMachine({
 
 ### Use `types.typegen` instead of `tsTypes`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2206,7 +2206,7 @@ const machine = createMachine({
 
 ### `useInterpret()` is now `useActorRef()`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2240,7 +2240,7 @@ const service = useInterpret(machine);
 
 ### `useActor(logic)` now accepts actor logic, not an actor
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2284,7 +2284,7 @@ function Component({ someActorRef }) {
 
 ## Use `machine.provide()` to provide implementations in hooks
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 
@@ -2375,7 +2375,7 @@ function Component(props) {
 
 ### `useMachine()` now returns `snapshot` instead of `state`, and `actor` instead of `service`
 
-<Callout type="warn">
+<Callout type="warning">
 
 Breaking change
 

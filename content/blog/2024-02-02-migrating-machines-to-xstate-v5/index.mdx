@@ -21,7 +21,7 @@ We recently [announced the release of XState v5](../../docs/assets/blog/2023-12-
 
 {/* truncate */}
 
-:::info
+<Callout>
 
 Read [David’s blog post on the launch of XState v5](../../docs/assets/blog/2023-12-01-xstate-v5).
 
@@ -29,7 +29,7 @@ Prefer video? [Watch our XState v5 webinar on YouTube](https://www.youtube.com/l
 
 <YouTube id="TRVjeil-y74" />
 
-:::
+</Callout>
 
 We at Stately have dozens of XState machines in our own [Stately Studio](https://stately.ai/studio) code base and have been migrating those to XState v5 as well. I’ve learned a lot about the migration process, especially after consulting my expert teammate, Mateusz, and I wanted to share some tips from my experience to make yours even smoother.
 
@@ -41,11 +41,11 @@ The following is a sequence of steps you can follow to migrate an existing XStat
 4. [Include implementations or stubs in `setup()`](#4-include-implementations-or-stubs-in-setup)
 5. [Provide concrete implementations](#5-provide-concrete-implementations)
 
-:::tip
+<Callout>
 
 For steps 2-5, you may find it easier to tackle a small bit of your existing machine, for example, one single event or action, and migrate it fully from step 2-5 in order to isolate the causing and fixing of TypeScript errors along the way.
 
-:::
+</Callout>
 
 ## 1. Install XState v5 and dependencies
 
@@ -75,21 +75,21 @@ Here’s an example with libraries pegged to the latest version at the time of t
 }
 ```
 
-:::tip
+<Callout>
 
 Alternatively, you can also default `xstate` to v5 and use `xstate4` for v4.
 
-:::
+</Callout>
 
 ### Importing from versioned packages
 
 If using a dual installation (v4 and v5 simultaneously), or even if only using v5, you will need to make sure you import the XState functions from the v5 packages in your code. At the top of your file, import functions like `setup`, `assign`, and other action creators from a `xstatev5` package.
 
-:::warning
+<Callout type="warning">
 
 Avoid mismatching! Calling `createMachine({})` from XState v5 but then calling an XState function like `assign`, imported from v4, could result in type errors.
 
-:::
+</Callout>
 
 ```ts
 // In a v5 machines...
@@ -211,11 +211,11 @@ const machine = setup({
 });
 ```
 
-:::warning
+<Callout type="warning">
 
 When chaining `setup({ types: {} }).createMachine({})` in v5, we can only define types on the object passed to `setup` and not on the config object passed to `createMachine`
 
-:::
+</Callout>
 
 ### Remove typegen
 
@@ -314,11 +314,11 @@ const machine = createMachine({
 
 This may appear a bit more verbose in v5 but it will allow us to skip manual type narrowing in our implementation functions. The `params` object will be automatically typed based on the `event` properties we map to it.
 
-:::tip
+<Callout>
 
 When mapping `event` props, the action or guard `params` you define can technically be any value, not just an object. But it is encouraged to use an object for consistency and to make it clear what the implementation functions will receive.
 
-:::
+</Callout>
 
 Here is a more complete example of converting action strings to parameterized actions:
 
@@ -388,7 +388,7 @@ const machine = setup({
 
 We must [provide implementations for actions, guards, and actors](/docs/machines#providing-implementations) in the object passed to `setup()`. If the machine has everything it needs to carry out these implementations on its own then these will be the actual implementations. However, if the machine needs to reference dependencies from the outside world, then these serve as stubs to be overridden later. Passing a combination of stubs and concrete implementations to `setup()` is perfectly fine.
 
-:::warning
+<Callout type="warning">
 
 The method signatures of implementation functions has changed in XState v5. The first argument is now an object that contains `context` and `event` properties. The second argument is the `params` object.
 
@@ -400,7 +400,7 @@ The method signatures of implementation functions has changed in XState v5. The 
 
 When using TypeScript, it is necessary to type the 2nd `params` argument passed to each implementation function.
 
-:::
+</Callout>
 
 ### Stubbing actions
 
@@ -423,7 +423,7 @@ setup({
 });
 ```
 
-:::tip
+<Callout>
 
 Stubbed actions should be defined with an empty function body `() => {}` or they can be defined with a thrown error to enforce that they will be overridden later.
 
@@ -433,7 +433,7 @@ actionName: (_, params: { prop: string }) => {
 },
 ```
 
-:::
+</Callout>
 
 Any `assign` actions, passed to `setup()`, shouldn’t require anything external to the machine config since they set values based on context or typed `params`.
 
@@ -452,11 +452,11 @@ setup({
 });
 ```
 
-:::info
+<Callout>
 
 Stubbed guards must return a boolean value, either `true` or `false`.
 
-:::
+</Callout>
 
 ### Stubbing actors
 
@@ -481,11 +481,11 @@ setup({
 });
 ```
 
-:::warning
+<Callout type="warning">
 
 Stubbed actors must throw an error as a way of enforcing that they will be overridden later.
 
-:::
+</Callout>
 
 The second way is a bit shorter and more specific to `fromPromise`.
 
@@ -560,11 +560,11 @@ const actorRef = useActorRef(
 );
 ```
 
-:::info
+<Callout>
 
 Calling `machine.provide()` returns the same `machine` but with the provided implementations. This is useful if you want to provide different implementations to different instances of the same machine in multiple places in your application.
 
-:::
+</Callout>
 
 In other components we may be using a context provider to give access to an `actorRef` at various levels in the component tree. A machine context provider can be created using a machine:
 
@@ -610,11 +610,11 @@ function App() {
 
 In this case, the [provider is passed a `logic` prop](/docs/xstate-react#createactorcontextlogic) whose value is the machine with the provided implementations. All the way down the component tree, we can use the [`useActorRef()` hook](/docs/xstate-react#useactorrefmachine-options) to access the `actorRef` and send events to the machine.
 
-:::info
+<Callout>
 
 These implementation functions do not need to be explicitly typed again here because the `params` argument passed to them has already been typed by [implementations passed into the `setup()` function in the previous step](#4-include-implementations-or-stubs-in-setup).
 
-:::
+</Callout>
 
 ### Providing actor implementations
 
@@ -739,11 +739,11 @@ You may likely see many TypeScript errors along the way so don’t get discourag
 
 Furthermore, TypeScript could continue complaining about the `actions` implementations passed to `setup()` until the very last action has been included there and typed properly. This is because TypeScript is checking the entire machine config and all of its implementations at once.
 
-:::info
+<Callout>
 
 If you see a TypeScript error underlying one of your state names in the machine config, it is most likely because there is a type error with an `action` or `guard` within that state.
 
-:::
+</Callout>
 
 TypeScript may have trouble pinpointing the exact location of the error in the machine config so it will often highlight the state name instead.
 

@@ -121,11 +121,11 @@ export function Counter() {
 
 Actors are not limited to being state stores. They can also be used to manage side effects, like HTTP requests, or to trigger side effects from within the actor. Because of this, you may not want actors to start immediately. You can use the `.start()` method to start the actor at an appropriate time, such as when the app mounts.
 
-:::tip
+<Callout>
 
 If an actor is already started, calling `.start()` again will not do anything. This makes it safe to call in `useEffect()`, which [executes twice in strict mode for the dev environment](https://react.dev/reference/react/useEffect#my-effect-runs-twice-when-the-component-mounts).
 
-:::
+</Callout>
 
 ```ts
 import { effectfulActor } from './effectfulActor';
@@ -142,11 +142,11 @@ export function App() {
 
 Likewise, you can also control when the actor stops by calling `actor.stop()`.
 
-:::info
+<Callout>
 
 Actors used globally must be explicitly started (`actor.start()`). When using `@xstate/react` hooks such as `useMachine(…)`, `useSelector(…)`, etc., the actor is started and stopped automatically.
 
-:::
+</Callout>
 
 ## Global state with React Context
 
@@ -196,11 +196,11 @@ export function Counter() {
 }
 ```
 
-:::tip
+<Callout>
 
 The `@xstate/react` package also provides a `createActorContext(…)` function for convenience. Read the blog post about [making state machines global in React](../../docs/assets/blog/2023-1-27-making-state-machines-global-in-react) and see the [documentation on `createActorContext(…)`](/docs/xstate-react#createactorcontextlogic).
 
-:::
+</Callout>
 
 ## More than just state machines
 
