@@ -9,6 +9,8 @@ slug: 2024-01-09-introducing-sources
 image: /blog/2024-01-09-introducing-sources.png
 ---
 
+import { Code, Plus } from 'lucide-react';
+
 We’re excited to share a feature that unlocks a whole new level of power and flexibility in Stately’s editor: sources. With sources, you can now provide implementation source code for your actions, actors, and guards, making syncing between the editor and your codebase a breeze.
 
 {/* truncate */}
@@ -31,7 +33,7 @@ You can add custom source code from the **Sources** panel to suit your needs or 
 
 You can also choose from logic templates when editing the sources for your actions, actors, or guards. Use the template buttons to quickly add the implementation code for XState’s [logic creators](/docs/actors#actor-logic-creators), [higher-level guards](/docs/guards#higher-level-guards), and [built-in actions](/docs/actions), and the correct XState imports will be added to your code for sync or export.
 
-![The sources panel open for a pizzaRecieced entry action. In the source code, the sendTo action is being used to send an event of pizzaRecieved to the reviewApp actor.](/blog/2024-01-09-introducing-sources/sources.png)
+![The sources panel open for a pizzaRecieced entry action. In the source code, the sendTo action is being used to send an event of pizzaRecieved to the reviewApp actor.](../../docs/assets/blog/2024-01-09-introducing-sources/sources.png)
 
 And yes, this means that we can now import your existing source code from your state machines, visualize them on the canvas, show them as sources in the studio, and keep your original code intact when exporting or syncing back to your codebase. **In short, if you’re going back and forth between your codebase and Stately’s editor, you don’t have to worry about the implementation code getting lost or overwritten**.
 
@@ -65,7 +67,7 @@ Would be given a default name of `inline:(machine).a.b#entry[0]`. These default 
 
 You can now add [parameters](/docs/actions#dynamic-action-parameters) to your actions! When adding or editing an action on the canvas, you can use the button to Add <Plus size={18}/> **parameter**. From here, you can add key-value pairs as parameters for dynamic input that can be used in your source code. Parameters don’t just open the possibility for more reusable actions; in the future, [Simulation mode](/docs/simulation-mode) and live actors will be able to use these parameters to execute actions based on different inputs when simulating your machine.
 
-![The confirm_order event with a setOrderStatus transition action that's open showing the options to add parameters, with a parameter added using the key of status and the value of confirmed.](/blog/2024-01-09-introducing-sources/action-params.png)
+![The confirm_order event with a setOrderStatus transition action that's open showing the options to add parameters, with a parameter added using the key of status and the value of confirmed.](../../docs/assets/blog/2024-01-09-introducing-sources/action-params.png)
 
 Actor inputs are also coming soon… enabling you to provide dynamic input to the actor when it executes. Actor inputs will be a game-changing combination with sources for deployed workflows in Stately Sky!
 

@@ -113,9 +113,9 @@ One of the first migration steps, based on a breaking change, is to remove any T
 
 Passing types to `createMachine({ schema: {} })` is still supported in v5, however, passing them to `setup({})` is preferred since it automates implementations for actions (and more) to types.
 
-<Tabs>
+<Tabs items={['v4', 'v5']}>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -146,9 +146,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v5" label="XState v5">
+<Tab value="v5" label="XState v5">
 
 ```ts
 import { setup } from 'xstate';
@@ -179,7 +179,7 @@ const machine = setup({
 });
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
@@ -256,9 +256,9 @@ For transition events and guards, we can [convert named action or guard strings 
 1. We can define `params` as a [static value](/docs/actions#action-objects)
 2. Use [dynamic action parameters](/docs/actions#dynamic-action-parameters), a function that receives `context` and/or `event`, allowing you to map those values to the `params` object.
 
-<Tabs>
+<Tabs items={['v4', 'v5']}>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -275,9 +275,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v5" label="XState v5">
+<Tab value="v5" label="XState v5">
 
 ```ts
 import { createMachine } from 'xstate';
@@ -308,7 +308,7 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
@@ -698,9 +698,9 @@ const actorRef = useActorRef(
 
 You can now remove [`preserveActionOrder` and `predictableActionArguments`](/docs/migration#actions-ordered-by-default-predictableactionarguments-no-longer-needed) from your machine config as they are no longer needed in XState v5. Actions are now in predictable order by default and [`assign` actions](/docs/actions#assign-action) will always run in the order they are defined.
 
-<Tabs>
+<Tabs items={['v4', 'v5']}>
 
-<TabItem value="v4" label="XState v4">
+<Tab value="v4" label="XState v4">
 
 ```ts
 // ❌ DEPRECATED
@@ -713,9 +713,9 @@ const machine = createMachine({
 });
 ```
 
-</TabItem>
+</Tab>
 
-<TabItem value="v5" label="XState v5">
+<Tab value="v5" label="XState v5">
 
 ```ts
 import { setup } from 'xstate';
@@ -729,7 +729,7 @@ const machine = setup({
 });
 ```
 
-</TabItem>
+</Tab>
 
 </Tabs>
 
