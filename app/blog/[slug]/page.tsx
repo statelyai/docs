@@ -33,13 +33,11 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
         <span>•</span>
         <span>
           {new Date(
-            page.data.date ??
-              path.basename(page.path, path.extname(page.path)),
+            page.data.date ?? path.basename(page.path, path.extname(page.path)),
           ).toDateString()}
         </span>
       </div>
       <DocsBody>
-        {/* @ts-expect-error - MDX component type mismatch */}
         <Mdx components={getMDXComponents()} />
       </DocsBody>
     </DocsPage>
