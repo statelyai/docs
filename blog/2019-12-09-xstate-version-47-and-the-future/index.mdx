@@ -69,7 +69,7 @@ const machine = Machine({
 
 And it also makes it possible to directly copy-paste this machine code into a visualizer, like [XState Viz](https://xstate.js.org/viz), and visualize it, like was done at the end of the [No, disabling a button is not app logic](https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i) article:
 
-![State machine visualization on XState Viz](https://thepracticaldev.s3.amazonaws.com/i/218tb91ltxrnv988owz0.png)
+![State machine visualization on XState Viz](https://res.cloudinary.com/practicaldev/image/fetch/s--o5PbZ3py--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/218tb91ltxrnv988owz0.png)
 [View this viz on XState Viz](https://xstate.js.org/viz/?gist=414c0e4c40dab1dc80c9218f85605a24)
 
 Then there are **statecharts**, which are an extension of finite state machines created by [David Harel in 1989 (read the paper 📑)](http://www.inf.ed.ac.uk/teaching/courses/seoc/2005_2006/resources/statecharts.pdf). Statecharts offer many improvements and mitigate many issues of using flat finite state machines, such as:
@@ -133,7 +133,7 @@ if (state.matches('success')) {
 
 In 4.7, XState allows you to [represent your states with Typestates](https://xstate.js.org/docs/guides/typescript.html#typestates) so that you can tell the compiler that you know how the `context` should be in any given state:
 
-![GIF showing that the optional user object will be defined in the success state](https://thepracticaldev.s3.amazonaws.com/i/64d42j77op89yta9gbi8.gif)
+![GIF showing that the optional user object will be defined in the success state](https://res.cloudinary.com/practicaldev/image/fetch/s--GakogjRY--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/64d42j77op89yta9gbi8.gif)
 
 This is very useful and improves the developer experience, but should be used as a strong guide, and not as a guarantee. It works by using [discriminated unions in TypeScript](https://basarat.gitbooks.io/typescript/docs/types/discriminated-unions.html) to define your states, but the way it is implemented requires TypeScript version 3.7 and higher. There’s still some quirks to work out, as we’re basically trying to trick TypeScript into knowing some extra information about our state machines that is otherwise difficult/impossible to infer in a statically typed language. (Maybe one day JavaScript will have a dependently-typed flavor.)
 
