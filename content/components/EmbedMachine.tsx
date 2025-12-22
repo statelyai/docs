@@ -28,7 +28,7 @@ function manageURL(
 ): string {
   const url = new URL(embedURL);
   for (const opt in options) {
-    url.searchParams.set(opt, options[opt]);
+    url.searchParams.set(opt, options[opt as keyof typeof options]);
   }
   return url.toString();
 }

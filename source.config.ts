@@ -6,7 +6,10 @@ import {
   metaSchema,
 } from 'fumadocs-mdx/config';
 import { transformerTwoslash } from 'fumadocs-twoslash';
-import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
+import {
+  rehypeCodeDefaultOptions,
+  remarkImage,
+} from 'fumadocs-core/mdx-plugins';
 import z from 'zod';
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
@@ -45,5 +48,13 @@ export default defineConfig({
         transformerTwoslash(),
       ],
     },
+    remarkPlugins: [
+      [
+        remarkImage,
+        {
+          external: false,
+        },
+      ],
+    ],
   },
 });

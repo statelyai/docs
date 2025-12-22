@@ -6,7 +6,20 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ['stately.ai', 'cloudinary.com', 'amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'stately.ai',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.amazonaws.com',
+      },
+    ],
   },
   serverExternalPackages: ['typescript', 'twoslash'],
   async redirects() {

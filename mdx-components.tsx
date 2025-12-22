@@ -2,6 +2,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import * as TabsComponents from 'fumadocs-ui/components/tabs';
 import { EmbedMachine } from './content/components/EmbedMachine';
 import { YouTube } from './content/components/YouTube';
+import { Tweet } from './content/components/Tweet';
 import * as Twoslash from 'fumadocs-twoslash/ui';
 
 import type { MDXComponents } from 'mdx/types';
@@ -14,6 +15,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...components,
     EmbedMachine,
     YouTube,
+    Tweet,
     ...Twoslash,
   };
 }

@@ -12,16 +12,7 @@ The team at Stately is proud to release an exciting new feature to kick off 2024
 
 {/* truncate */}
 
-<p>
-  <ThemedImage
-    alt="Connect a project to a GitHub repository by clicking the Connect GitHub button."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/connect-github-button.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/connect-github-button-dm.png',
-    }}
-  />
-</p>
+![Connect a project to a GitHub repository by clicking the Connect GitHub button.](/blog/2024-01-09-introducing-bidirectional-github-sync/connect-github-button.png)
 
 ### Manual syncing is so 2023
 
@@ -46,31 +37,13 @@ Depending on the type of software being developed or depending on team size, XSt
 
 Importing from a GitHub Repo is now easier and more robust. Users can automatically [authorize Stately Studio](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github) with a single click or they can choose to use a customized GitHub access token with fine grained repository access and permissions. Access allows users to then choose one of their GitHub repositories, including a specific branch, and then select which files and folders to include for import and even [specify a path](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github) for [new machines created in the Studio](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github). The Studio will identify all of the XState machines in the repo files, extract them, and create a connected project. Connected projects work just like other Studio projects but with additional GitHub-related features.
 
-<p>
-  <ThemedImage
-    alt="Importing allows users to choose a repository, a branch, and to select individual files or entire folders to sync with Stately Studio."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/github-select-files.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/github-select-files-dm.png',
-    }}
-  />
-</p>
+![Importing allows users to choose a repository, a branch, and to select individual files or entire folders to sync with Stately Studio.](/blog/2024-01-09-introducing-bidirectional-github-sync/github-select-files.png)
 
 ### Editing power of Stately Studio
 
 Once a connected project has been created, its machines can be edited just like with other projects and machines. Use the visual editor to add or modify states and transitions. Effects can be added and a machine’s layout can be automatically or manually adjusted. Flows can be created or modified with AI generation. With a [Stately Studio Pro plan](https://stately.ai/docs/studio-pro-plan), [machine versions can be saved](https://stately.ai/docs/versions#save-a-version) and machines can even be run via [Stately Sky](https://stately.ai/docs/stately-sky-getting-started).
 
-<p>
-  <ThemedImage
-    alt="Stately Studio has offers powerful free and premium features for working with your state machines after importing them from a GitHub repository, like using Version History."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/premium-feature-version-history.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/premium-feature-version-history-dm.png',
-    }}
-  />
-</p>
+![Stately Studio has offers powerful free and premium features for working with your state machines after importing them from a GitHub repository, like using Version History.](/blog/2024-01-09-introducing-bidirectional-github-sync/premium-feature-version-history.png)
 
 The Studio also provides a number of other features like test generation and export options to code, markdown, or to external editors. But this work can all be in coordination with the underlying GitHub repo.
 
@@ -78,16 +51,7 @@ The Studio also provides a number of other features like test generation and exp
 
 By default, connected projects will [automatically be synchronized with the GitHub repo](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github) every time the project loads. New files added to selected folders in the repository will appear in the Studio. We’ll also warn of any deleted files that might cause machines to be deleted in the Studio. It’s possible to opt out of this and to perform syncs manually but we recommend that this still be done fairly often to prevent potential conflicts.
 
-<p>
-  <ThemedImage
-    alt="By default, connected repos are auto-synced with the GitHub repo but this can be disabled if you want to manually sync instead."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/github-auto-sync.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/github-auto-sync-dm.png',
-    }}
-  />
-</p>
+![By default, connected repos are auto-synced with the GitHub repo but this can be disabled if you want to manually sync instead.](/blog/2024-01-09-introducing-bidirectional-github-sync/github-auto-sync.png)
 
 A connected project starts out [in sync with the branch](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github) that was specified during the import process via the project’s [auto-sync setting](https://stately.ai/docs/import-from-github#auto-sync). However, it is also possible to [connect to additional repo branches](https://stately.ai/docs/import-from-github#sync-changes-to-machines-from-github). Under the hood, these branch connections are considered a different version of the connected project and it’s easy to switch between them, add new branches, or delete branch connections.
 
@@ -97,29 +61,11 @@ At any time, new machines can be added directly to a connected project or existi
 
 The key feature required to complete a bidirectional workflow between GitHub and Stately Studio is the ability to [create pull requests](https://stately.ai/docs/import-from-github#create-pull-request) back to the original repository and that’s now easy to do directly from the Studio. Connected projects have a GitHub Settings panel where you can manage the GitHub connection to your project, including creating a pull request which can target any other branch in the repository.
 
-<p>
-  <ThemedImage
-    alt="Connected projects have a GitHub Settings panel where users can create new pull requests targeting any branch in the connected repository."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/github-settings.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/github-settings-dm.png',
-    }}
-  />
-</p>
+![Connected projects have a GitHub Settings panel where users can create new pull requests targeting any branch in the connected repository.](/blog/2024-01-09-introducing-bidirectional-github-sync/github-settings.png)
 
 Once a pull request is made, the process becomes the same as it is for any other GitHub pull request where it can be reviewed, modified, approved, and merged. Subsequent changes can be added to existing pull requests with the [Update pull request feature](https://stately.ai/docs/import-from-github#update-pull-request). This allows for greater productivity in the Studio while knowing that changes will make their way back into the GitHub repo.
 
-<p>
-  <ThemedImage
-    alt="Pull requests appear on GitHub just as they normally would and can be reviewed, modified, approved, and merged."
-    sources={{
-      light:
-        '/blog/2024-01-09-introducing-bidirectional-github-sync/github-pull-request.png',
-      dark: '/blog/2024-01-09-introducing-bidirectional-github-sync/github-pull-request-dm.png',
-    }}
-  />
-</p>
+![Pull requests appear on GitHub just as they normally would and can be reviewed, modified, approved, and merged.](/blog/2024-01-09-introducing-bidirectional-github-sync/github-pull-request.png)
 
 ## What’s next?
 

@@ -10,13 +10,6 @@ slug: 2021-01-20-you-dont-need-a-library-for-state-machines
 date: 2021-01-20
 ---
 
-<head>
-  <link
-    rel="canonical"
-    href="https://dev.to/davidkpiano/you-don-t-need-a-library-for-state-machines-k7h"
-  />
-</head>
-
 The finite state machine is one of the oldest models of computation in computer science. It’s older than the web, older than any programming language you can think of, and probably older than you. Just ask [Mealy (1955)](https://en.wikipedia.org/wiki/Mealy_machine) or [Moore (1956)](https://en.wikipedia.org/wiki/Moore_machine). Finite state machines (FSMs) can be implemented in any modern language using control-flow statements, yet there’s most likely a state machine library (if not many) in all of those languages.
 
 {/* truncate */}
@@ -33,7 +26,7 @@ If you’re unfamiliar with [finite state machines (FSMs)](https://en.wikipedia.
 - **Events**, which represent something that happened that can change state
 - **Transitions**, which represent how the state can change and what actions are executed when an event is received
 
-![States, events, and transitions](https://dev-to-uploads.s3.amazonaws.com/i/7ri5sbbrufj26cq3u026.png)
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/7ri5sbbrufj26cq3u026.png" alt="States, events, and transitions" />
 
 Anything that can be described as changes in state over time due to events, from component-specific logic to application flows and even the orchestration of multiple services can be described with state machines, to some extent.
 

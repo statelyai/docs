@@ -7,7 +7,10 @@ import {
   metaSchema
 } from "fumadocs-mdx/config";
 import { transformerTwoslash } from "fumadocs-twoslash";
-import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
+import {
+  rehypeCodeDefaultOptions,
+  remarkImage
+} from "fumadocs-core/mdx-plugins";
 import z from "zod";
 var docs = defineDocs({
   docs: {
@@ -40,7 +43,15 @@ var source_config_default = defineConfig({
         ...rehypeCodeDefaultOptions.transformers ?? [],
         transformerTwoslash()
       ]
-    }
+    },
+    remarkPlugins: [
+      [
+        remarkImage,
+        {
+          external: false
+        }
+      ]
+    ]
   }
 });
 export {
