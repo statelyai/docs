@@ -1,7 +1,0 @@
-.tabList + * {
-  margin-top: var(--ifm-leading);
-}
-
-.tabItem {
-  margin-top: 0 !important;
-}

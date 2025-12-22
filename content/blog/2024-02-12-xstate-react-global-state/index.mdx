@@ -1,0 +1,240 @@
+---
+title: Global state with XState and React
+description: How to use XState to manage global state in React
+tags: [xstate, react]
+authors: [david]
+date: 2024-02-12
+slug: 2024-02-12-xstate-react-global-state
+image: /blog/2024-02-12-xstate-react-global-state.png
+---
+
+XState is a versatile state management & orchestration library that works with any framework, including React with the [`@xstate/react`](/docs/xstate-react) package. For many apps, managing global state is a requirement, and there are many options for sharing global state in React, like using [React Context](https://react.dev/learn/passing-data-deeply-with-context) or libraries like [Redux](https://redux.js.org/), [MobX](https://mobx.js.org/), and [Zustand](https://github.com/pmndrs/zustand).
+
+The `@xstate/react` package makes it simple to manage component-level state with hooks like `useMachine()` and `useActor()`, but it works equally well for managing global state 🌎
+
+{/* truncate */}
+
+## Quick start
+
+1. **Create the global logic**. This can be as simple as a promise or function, or as complex as a state machine or statechart.
+1. **Create an actor** from that logic and export it.
+1. **Import that actor** from any component and:
+   - use the `useSelector(…)` hook to read the actor's snapshot
+   - call `actorRef.send(…)` to send events to it.
+
+That's it!
+
+```tsx
+import { setup, createActor } from 'xstate';
+import { useSelector } from '@xstate/react';
+
+// Your global app logic
+import { globalLogic } from './globalLogic';
+
+// highlight-start
+// Create the actor
+export const globalActor = createActor(globalLogic);
+// Start the actor
+globalActor.start();
+// highlight-end
+
+export function App() {
+  // highlight-start
+  // Read the actor's snapshot
+  const user = useSelector(globalActor, (snapshot) => snapshot.context.user);
+  // highlight-end
+
+  return (
+    <div>
+      <h1>Hello, {user.name}!</h1>
+      // highlight-start // Send events to the actor
+      <button onClick={() => globalActor.send({ type: 'logout' })}>
+        // highlight-end Logout
+      </button>
+    </div>
+  );
+}
+```
+
+## Global state
+
+The simplest way to manage global state is to share an [actor](/docs/actors) instance between components. Think of an actor as a "store" – you can subscribe to its state updates ("snapshots") and send events to it.
+
+You can use that actor in any component either by passing it as a prop or referencing it directly from module scope.
+
+```tsx
+import { setup, createActor } from 'xstate';
+import { useSelector } from '@xstate/react';
+
+// Global app logic
+const countMachine = createMachine({
+  context: { count: 0 },
+  on: {
+    inc: {
+      actions: assign({ count: ({ context }) => context.count + 1 }),
+    },
+  },
+});
+
+// highlight-start
+// Global actor - an instance of the app logic
+export const countActor = createActor(countMachine);
+countActor.start(); // Starts the actor immediately
+// highlight-end
+
+export function App() {
+  // highlight-start
+  // Read the actor's snapshot
+  const count = useSelector(countActor, (state) => state.context.count);
+  // highlight-end
+
+  return (
+    // highlight-start
+    // Send events to the actor
+    <button onClick={() => countActor.send({ type: 'inc' })}>
+      // highlight-end Count: {count}
+    </button>
+  );
+}
+```
+
+You can read this global actor ("store") and send events to it from any component:
+
+```tsx
+// highlight-next-line
+import { countActor } from './countActor';
+
+export function Counter() {
+  // highlight-next-line
+  const count = useSelector(countActor, (state) => state.context.count);
+
+  return (
+    // highlight-next-line
+    <button onClick={() => countActor.send({ type: 'inc' })}>
+      Current count: {count}
+    </button>
+  );
+}
+```
+
+## Effects and lifecycles
+
+Actors are not limited to being state stores. They can also be used to manage side effects, like HTTP requests, or to trigger side effects from within the actor. Because of this, you may not want actors to start immediately. You can use the `.start()` method to start the actor at an appropriate time, such as when the app mounts.
+
+<Callout>
+
+If an actor is already started, calling `.start()` again will not do anything. This makes it safe to call in `useEffect()`, which [executes twice in strict mode for the dev environment](https://react.dev/reference/react/useEffect#my-effect-runs-twice-when-the-component-mounts).
+
+</Callout>
+
+```ts
+import { effectfulActor } from './effectfulActor';
+
+export function App() {
+  useEffect(() => {
+    // highlight-next-line
+    effectfulActor.start();
+  }, [effectfulActor]);
+
+  // ...
+}
+```
+
+Likewise, you can also control when the actor stops by calling `actor.stop()`.
+
+<Callout>
+
+Actors used globally must be explicitly started (`actor.start()`). When using `@xstate/react` hooks such as `useMachine(…)`, `useSelector(…)`, etc., the actor is started and stopped automatically.
+
+</Callout>
+
+## Global state with React Context
+
+If you prefer to use [React Context](https://react.dev/learn/passing-data-deeply-with-context) to share global state, you can adapt the above pattern to use a React Context provider and consumer.
+
+```tsx
+import { createContext } from 'react';
+
+const someMachine = createMachine(/* ... */);
+const someActor = createActor(someMachine);
+
+// Don't forget to start the actor!
+someActor.start();
+
+// `someActor` is passed to `createContext` mostly for type safety
+// highlight-next-line
+export const SomeActorContext = createContext(someActor);
+
+export function App() {
+  return (
+    // highlight-next-line
+    <SomeActorContext.Provider value={someActor}>
+      <Counter />
+      // highlight-next-line
+    </SomeActorContext.Provider>
+  );
+}
+```
+
+```tsx
+import { useContext } from 'react';
+import { useSelector } from '@xstate/react';
+// highlight-next-line
+import { SomeActorContext } from './SomeActorContext';
+
+export function Counter() {
+  // highlight-next-line
+  const someActor = useContext(SomeActorContext);
+  const count = useSelector(someActor, (state) => state.context.count);
+
+  return (
+    // highlight-next-line
+    <button onClick={() => someActor.send({ type: 'inc' })}>
+      Current count: {count}
+    </button>
+  );
+}
+```
+
+<Callout>
+
+The `@xstate/react` package also provides a `createActorContext(…)` function for convenience. Read the blog post about [making state machines global in React](../../docs/assets/blog/2023-1-27-making-state-machines-global-in-react) and see the [documentation on `createActorContext(…)`](/docs/xstate-react#createactorcontextlogic).
+
+</Callout>
+
+## More than just state machines
+
+State machines are very powerful and useful, but sometimes you don't need all that power. XState v5 enables you to make [different kinds of actor logic](/docs/category/actors) to fit your use-cases, such as actor logic from promises, observables, transition functions, callbacks, and more.
+
+```ts
+// highlight-next-line
+import { fromTransition, createActor } from 'xstate';
+import { useSelector } from '@xstate/react';
+
+// highlight-start
+// Actor logic
+const counterLogic = fromTransition(
+  (state, event) => {
+    if (event.type === 'inc') {
+      return { count: state.count + 1 };
+    }
+    return state;
+  },
+  { count: 0 },
+);
+// highlight-end
+
+const counterActor = createActor(counterLogic);
+counterActor.start();
+
+// Same API
+export function Counter() {
+  const count = useSelector(counterActor, (state) => state.context.count);
+
+  return (
+    <button onClick={() => counterActor.send({ type: 'inc' })}>
+      Current count: {count}
+    </button>
+  );
+}
+```

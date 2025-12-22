@@ -1,0 +1,282 @@
+---
+title: Redux is half of a pattern (2/2)
+description: Learn how Redux, and all other state management libraries, have one thing in common - they are all partial implementations of state machines - and how we can improve the way we model app state and logic.
+tags: [redux, actor, react, state]
+date: 2020-05-22
+authors: [david]
+image: /blog/2020-05-22-redux-is-half-a-pattern-2-2.png
+slug: 2020-05-22-redux-is-half-a-pattern-2-2
+---
+
+I wrote a form library once.
+
+_Once._
+
+It was called [React Redux Form](https://github.com/davidkpiano/react-redux-form), and using Redux for forms was a good idea, at the time (don't use it). In fact, my library was written as a response to [Redux Form](https://github.com/redux-form/redux-form), and both libraries soon discovered that the idea of using a _single global store_ to store all of your application state is a really, really bad idea.
+
+When all of your forms live in one single store, state is easy to manage at first. And then, every single keypress starts to lag. It's a terrible user experience.
+
+{/* truncate */}
+
+So what do you do?
+
+- Blur inputs
+- Add debounced updates
+- Memoize _everything_
+- Optimize selectors everywhere
+- Make controlled components uncontrolled
+- Use `React.memo()` on components
+- Use `PureComponent` for good measure
+- Use Suspense (??)
+- etc. etc.
+
+In short, you go into panic mode and try to contain the spread of the global updates affecting every single connected component, even if those components don't need to rerender.
+
+Some of you have gotten really good at solving this, and have become expert "selector, caching, and memoization" developers. That's fantastic.
+
+But let's examine if those tactics should even be necessary. What if all state _wasn't_ global?
+
+<Tweet id="1241756566048694272" />
+
+## Local vs. global state
+
+The first of [Redux's three principles](https://redux.js.org/introduction/three-principles) is that there is essentially a _single source of truth_ for your whole application state:
+
+> The state of your whole application is stored in an object tree within a single store.
+>
+> _Source: [Redux's three principles: single source of truth](https://redux.js.org/introduction/three-principles#single-source-of-truth)_
+
+The primary reason for this is that it makes many things _easier_, such as sharing data, rehydrating state, "time-travel debugging", etc. But it suffers from a fundamental disconnect: _there is no such thing as a single source of truth_ in any non-trivial application. All applications, even front-end apps, are distributed at some level:
+
+<Tweet id="1116019772238454784" />
+
+And, in a contradictory way, even the Redux Style Guide advises against putting the entire state of your application in a single store:
+
+> [...] Instead, there should be a single place to find all values that you consider to be global and app-wide. Values that are "local" should generally be kept in the nearest UI component instead.
+>
+> _Source: [Redux Style Guide](https://redux.js.org/style-guide/style-guide/#evaluate-where-each-piece-of-state-should-live)_
+
+Whenever something is done for the sole purpose of making something easy, it almost always makes some other use-case more difficult. Redux and its single-source-of-truth is no exception, as there are many problems that arise from fighting against the nature of front-end apps being "distributed" instead of an idealistic atomic, global unit:
+
+- Multiple orthogonal concerns that need to be represented in the state somehow.
+
+This is "solved" by using [`combineReducers`](https://redux.js.org/recipes/structuring-reducers/using-combinereducers).
+
+- Multiple separate concerns that need to share data, communicate with each other, or are otherwise tangentially related.
+
+This is "solved" by [more complex, custom reducers](https://redux.js.org/recipes/structuring-reducers/beyond-combinereducers) that orchestrate events through these otherwise separate reducers.
+
+- Irrelevant state updates: when separate concerns are combined (using `combineReducers` or similar) into a single store, whenever any part of the state updates, the _entire_ state is updated, and every "connected" component (every subscriber to the Redux store) is notified.
+
+This is "solved" by using [selectors](https://redux.js.org/introduction/learning-resources#selectors), and perhaps by using another library like [`reselect`](https://blog.isquaredsoftware.com/2017/12/idiomatic-redux-using-reselect-selectors/) for memoized selectors.
+
+I put "solved" in quotes because these are all solutions that are all but necessary due to problems that are caused solely by using a global, atomic store. In short, having a single global store is unrealistic, even for apps that are already using global stores. Whenever you use a 3rd-party component, or local state, or local storage, or query parameters, or a router, etc., you have already shattered the illusion of a single global store. App data is always distributed at some level, so the natural solution should be to embrace the distribution (by using local state) rather than fighting against it just for the sake of making some use-cases easier to develop in the short run.
+
+## Acting differently
+
+So how can we address this global state problem? To answer that, we need to go back in time a little bit and take some inspiration from another old, well-established model: [the actor model](https://en.wikipedia.org/wiki/Actor_model).
+
+The actor model is a surprisingly simple model that can be extended slightly beyond its original purpose (concurrent computation). In short, an actor is an entity that can do three things:
+
+- It can receive messages (events)
+- It can change its state/behavior as a reaction to a received message, including spawning other actors
+- It can send messages to other actors
+
+If you thought "hmm... so a Redux store is sort of an actor", congratulations, you already have a basic grasp of the model! A Redux store, which is based on some single combined-reducer thing:
+
+- ✅ Can receive events
+- ✅ Changes its state (and thus its behavior, [if you're doing it right](https://dev.to/davidkpiano/redux-is-half-of-a-pattern-1-2-1hd7)) as a reaction to those events
+- ❌ Can't send messages to other stores (there's only one store) or between reducers (dispatching only happens outside-in).
+
+It also can't really spawn other "actors", which makes the [Reddit example in the official Redux advanced tutorial](https://redux.js.org/advanced/async-actions) more awkward than it needs to be:
+
+```js
+function postsBySubreddit(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.subreddit]: posts(state[action.subreddit], action),
+      });
+    default:
+      return state;
+  }
+}
+```
+
+_Source: https://redux.js.org/advanced/async-actions#reducersjs_
+
+Let's dissect what is happening here:
+
+1. We're taking only the relevant slice of state we need (`state[action.subreddit]`), which should ideally be its own entity
+2. We are determining what the next state of only this slice should be, via `posts(state[action.subreddit], action)`
+3. We are surgically replacing that slice with the updated slice, via `Object.assign(...)`.
+
+In other words, there is no way we can dispatch or forward an event directly to a specific "entity" (or _actor_); we only have a single actor and have to manually update only the relevant part of it. Also, every other reducer in `combineReducers(...)` will get the entity-specific event, and even if they don't update, every single one of them will still be called for every single event. There's no easy way to optimize that. A function that isn't called is still much more optimal than a function that is called and ultimately does nothing (i.e., returns the same state), which happens most of the time in Redux.
+
+## Reducers and actors
+
+So how do reducers and actors fit together? Simply put, a reducer describes the behavior of an individual actor:
+
+- Events are sent to a reducer
+- A reducer's state/behavior can change due to a received event
+- A reducer can spawn actors and/or send messages to other actors (via executed declarative actions)
+
+This isn't a cutting-edge, groundbreaking model; in fact, you've probably been using the actor model (to some extent) without even knowing it! Consider a simple input component:
+
+```jsx
+const MyInput = ({ onChange, disabled }) => {
+  const [value, setValue] = useState('');
+
+  return (
+    <input
+      disabled={disabled}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onBlur={() => onChange(value)}
+    />
+  );
+};
+```
+
+This component, in an implicit way, is sort of like an actor!
+
+- It "receives events" using React's slightly awkward parent-to-child communication mechanism - prop updates
+- It changes state/behavior when an event is "received", such as when the `disabled` prop changes to `true` (which you can interpret as some event)
+- It can send events to other "actors", such as sending a "change" event to the parent by calling the `onChange` callback (again, using React's slightly awkward child-to-parent communication mechanism)
+- In theory, it can "spawn" other "actors" by rendering different components, each with their own local state.
+
+Reducers make the behavior and business logic more explicit, especially when "implicit events" become concrete, dispatched events:
+
+```jsx
+const inputReducer = (state, event) => {
+  /* ... */
+};
+
+const MyInput = ({ onChange, disabled }) => {
+  const [state, dispatch] = useReducer(inputReducer, {
+    value: '',
+    effects: [],
+  });
+
+  // Transform prop changes into events
+  useEffect(() => {
+    dispatch({ type: 'DISABLED', value: disabled });
+  }, [disabled]);
+
+  // Execute declarative effects
+  useEffect(() => {
+    state.effects.forEach((effect) => {
+      if (effect.type === 'notifyChange') {
+        // "Send" a message back up to the parent "actor"
+        onChange(state.value);
+      }
+    });
+  }, [state.effects]);
+
+  return (
+    <input
+      disabled={disabled}
+      value={state.value}
+      onChange={(e) =>
+        dispatch({
+          type: 'CHANGE',
+          value: e.target.value,
+        })
+      }
+      onBlur={() => dispatch({ type: 'BLUR' })}
+    />
+  );
+};
+```
+
+## Multi-Redux?
+
+Again, one of Redux's three main principles is that Redux exists in a single, global, atomic source of truth. All of the events are routed through that store, and the single huge state object is updated and permeates through all connected components, which use their selectors and memoization and other tricks to ensure that they are only updated when they need to be, especially when dealing with excessive, irrelevant state updates.
+
+And using a single global store has worked pretty well when using Redux, right? Well... not exactly, to the point that there are entire libraries dedicated to providing the ability to use Redux on a more distributed level, e.g., for [component state and encapsulation](https://redux.js.org/introduction/ecosystem#component-state-and-encapsulation). It is possible to use Redux at a local component level, but that was not its main purpose, and the official `react-redux` integration does not naturally provide that ability.
+
+## No Redux?
+
+There are other libraries that embrace the idea of "state locality", such as [MobX](https://mobx.js.org/README.html) and [XState](https://xstate.js.org/docs/). For React specifically, there is [Recoil](http://recoiljs.org/) for "distributed" state and the built-in [`useReducer` hook](https://reactjs.org/docs/hooks-reference.html#usereducer) that feels a lot like a local Redux, specifically for your component. For declarative effects, I created [`useEffectReducer`](https://github.com/davidkpiano/useeffectreducer) which looks and feels just like `useReducer`, but also gives you a way to manage effects.
+
+For state that needs to be shared (not globally), you can use a pattern that is very similar to what React-Redux already uses, by making an object that can be subscribed to (i.e., "listened" to) and passed down through [context](https://reactjs.org/docs/hooks-reference.html#usecontext):
+
+<Tweet id="1228700861024604160" />
+
+That will give you the best performance, as that "subscribable" object will seldom/never change. If that feels a bit boilerplatey for you and performance is not a huge concern, you can combine `useContext` and `useReducer` with not too much effort:
+
+```jsx
+const CartContext = createContext();
+
+const cartReducer = (state, event) => {
+  // reducer logic
+  // try using a state machine here! they're pretty neat
+
+  return state;
+};
+
+const initialCartState = {
+  // ...
+};
+
+const CartContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(cartReducer, initialCartState);
+
+  return (
+    <CartContext.Provider value={[state, dispatch]}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export const useCartContext = () => {
+  return useContext(CartContext);
+};
+```
+
+And then use it in your components:
+
+```jsx
+const CartView = () => {
+  const [state, dispatch] = useCartContext();
+
+  // ...
+};
+```
+
+Not too bad, right? In general, this is not a problem that can be solved in Redux without going against-the-grain, since Redux is fundamentally a single, atomic global store.
+
+## What do others think?
+
+I ran a non-scientific poll on Twitter to see where most app state lives, and how developers feel about it:
+
+<Tweet id="1227615817640087553" />
+
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/lioo56gpviopcy2ccwqf.png" alt="Global vs. Local State poll" />
+
+From this, I gather two things:
+
+- Whether you distribute state locally, or contain all state in a single store, you will be able to accomplish app state requirements successfully.
+- However, more developers are discontent with the majority of app state being global instead of local, which also might hint to why the majority of developers are happy using local state instead.
+
+What do you think? Share your thoughts in the comments!
+
+## Conclusion
+
+Thinking in terms of "actors", in which your application is organized by lots of smaller actors that all talk to each other by passing messages/events to each other, can encourage separation of concerns and make you think differently about how state should be localized (distributed) and connected. My goal for this post is to help you realize that not _all_ state needs to be global, and that other patterns (such as the Actor Model) exist for modeling distributed state and communication flow.
+
+The Actor Model is not a panacea, though. If you're not careful, you can end up having a spaghetti-like state management problem, where you have completely lost track of which actor is talking to another actor. Anti-patterns are present in any solution that you choose, so it helps to research best practices and actually model your app before you start coding.
+
+If you want to learn more about the Actor Model, check out [The Actor Model in 10 Minutes](https://www.brianstorti.com/the-actor-model/) by [Brian Storti](https://twitter.com/brianstorti), or any of these videos:
+
+<YouTube id="ELwEdb_pD0k?" />
+
+<YouTube id="Vg60lf92EkM?" />
+
+Please keep in mind that this is post reflects my opinions based on what I've researched, and is in no way meant to be authoritative on the way you should do things. I want to make you _think_, and I hope that this post accomplished that goal. Thanks for reading!
+
+If you enjoyed this post (or even if you didn't and just want to hear more of my state management ramblings), [subscribe to the Stately Newsletter](https://www.stately.dev/) for more content, thoughts, and discussion 📬
+
+<Tweet id="1237091703087079425" />

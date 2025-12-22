@@ -1,0 +1,57 @@
+---
+title: 'Introducing: The XState CLI'
+description: 'Get ready to run XState’s typegen commands outside of VSCode in our all-new CLI.'
+tags: [cli, xstate, announcement, typescript]
+authors: [matt]
+image: /blog/2022-03-03-introducing-the-xstate-cli.png
+slug: 2022-03-03-introducing-the-xstate-cli
+date: 2022-03-03
+---
+
+Around a month ago, we released [TypeScript Typegen](../../docs/assets/blog/2022-01-27-introducing-typegen/index) - an enormous upgrade to the TypeScript experience for XState.
+
+We’ve had a great response to it so far, but it’s only been available for VSCode users.
+
+Until now. With our new XState CLI, **you can get Typegen from the command line**.
+
+{/* truncate */}
+
+- Read the full documentation on the [`@xstate/cli` docs](https://xstate.js.org/docs/packages/xstate-cli).
+- Check out [our updated TypeScript Typegen guide](https://xstate.js.org/docs/guides/typescript.html#typegen).
+- Find the code on the [@xstate/cli GitHub repo](https://github.com/statelyai/xstate-tools/tree/main/apps/cli).
+
+## Installation
+
+```bash
+npm install @xstate/cli
+```
+
+OR
+
+```bash
+yarn add @xstate/cli
+```
+
+## Commands
+
+### `xstate typegen <files>`
+
+```bash
+xstate typegen "src/**/*.tsx?"
+```
+
+Run the typegen against a glob of files. This will scan every targeted file and generate a typegen file accompanying it. It will also import the typegen into your file, as described in [our typegen documentation](https://xstate.js.org/docs/guides/typescript.html#typegen).
+
+Ensure you wrap your glob in quotes so that it executes correctly. Otherwise, you’ll get unexpected results.
+
+#### Options
+
+```bash
+xstate typegen "src/**/*.tsx?" --watch
+```
+
+Runs the task on a watch, monitoring for changed files and running the typegen script against them.
+
+## The Future
+
+We’re really excited about the CLI, and all the cool things it’ll enable. The typegen really is just the surface. If you’ve got ideas for what we could do with it, don’t hesitate to add a feature request to the [`xstate-tools` repo](https://github.com/statelyai/xstate-tools/issues).

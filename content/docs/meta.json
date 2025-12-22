@@ -1,0 +1,16 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "get-started",
+    "core-concepts",
+    "stately-studio",
+    "actors",
+    "state-machines",
+    "agents",
+    "guides",
+    "packages",
+    "developer-tools",
+    "glossary"
+  ]
+}

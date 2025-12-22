@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+@import 'fumadocs-twoslash/twoslash.css';
+
+@theme {
+  /* Light mode - matching original custom.css colors */
+  --color-fd-background: white;
+  --color-fd-foreground: hsl(240, 4.3%, 17.6%); /* #2d2e34 - st-gray-800 */
+  --color-fd-muted: hsl(240, 5.9%, 94.1%); /* #efeff1 - st-gray-50 */
+  --color-fd-muted-foreground: hsl(
+    240,
+    3.8%,
+    40.4%
+  ); /* #5d5f6a - st-gray-600 */
+  --color-fd-popover: white;
+  --color-fd-popover-foreground: hsl(
+    240,
+    4.3%,
+    17.6%
+  ); /* #2d2e34 - st-gray-800 */
+  --color-fd-card: hsl(240, 5.9%, 94.1%); /* #efeff1 - st-gray-50 */
+  --color-fd-card-foreground: hsl(240, 4.3%, 17.6%); /* #2d2e34 - st-gray-800 */
+  --color-fd-border: hsl(240, 5.9%, 88.2%); /* #e1e2e5 - st-gray-100 */
+  --color-fd-primary: hsl(240, 5.1%, 8.2%); /* #15151d - st-gray-900 */
+  --color-fd-primary-foreground: white;
+  --color-fd-secondary: hsl(240, 5.9%, 94.1%); /* #efeff1 - st-gray-50 */
+  --color-fd-secondary-foreground: hsl(
+    240,
+    4.3%,
+    17.6%
+  ); /* #2d2e34 - st-gray-800 */
+  --color-fd-accent: hsl(240, 5.9%, 88.2%); /* #e1e2e5 - st-gray-100 */
+  --color-fd-accent-foreground: hsl(
+    240,
+    4.3%,
+    17.6%
+  ); /* #2d2e34 - st-gray-800 */
+  --color-fd-ring: hsl(240, 3.7%, 46.1%); /* #757785 - st-gray-500 */
+}
+.dark {
+  /* Dark mode - matching original custom.css colors */
+  --color-fd-background: #15151d; /* #15151d - st-gray-900 */
+  --color-fd-foreground: hsl(240, 4.9%, 78.8%); /* #c6c7cd - st-gray-200 */
+  --color-fd-muted: hsl(240, 4.3%, 17.6%); /* #2d2e34 - st-gray-800 */
+  --color-fd-muted-foreground: hsl(
+    240,
+    3.7%,
+    58.2%
+  ); /* #8f919d - st-gray-400 */
+  --color-fd-popover: hsl(240, 4.3%, 17.6%); /* #2d2e34 - st-gray-800 */
+  --color-fd-popover-foreground: hsl(
+    240,
+    4.9%,
+    78.8%
+  ); /* #c6c7cd - st-gray-200 */
+  --color-fd-card: #15151d; /* #2d2e34 - st-gray-800 */
+  --color-fd-card-foreground: hsl(240, 5.9%, 96.1%); /* #efeff1 - st-gray-50 */
+  --color-fd-border: hsl(240, 3.4%, 28.6%); /* #45464f - st-gray-700 */
+  --color-fd-primary: hsl(240, 5.9%, 96.1%); /* #efeff1 - st-gray-50 */
+  --color-fd-primary-foreground: hsl(
+    240,
+    5.1%,
+    8.2%
+  ); /* #15151d - st-gray-900 */
+  --color-fd-secondary: hsl(240, 4.3%, 17.6%); /* #2d2e34 - st-gray-800 */
+  --color-fd-secondary-foreground: hsl(
+    240,
+    4.9%,
+    78.8%
+  ); /* #c6c7cd - st-gray-200 */
+  --color-fd-accent: hsl(240, 3.4%, 28.6%); /* #45464f - st-gray-700 */
+  --color-fd-accent-foreground: hsl(
+    240,
+    5.9%,
+    96.1%
+  ); /* #efeff1 - st-gray-50 */
+  --color-fd-ring: hsl(240, 3.7%, 46.1%); /* #757785 - st-gray-500 */
+}
+
+.prose {
+  svg {
+    display: inline-block;
+  }
+}

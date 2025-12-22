@@ -1,4 +1,0 @@
-@config "../../tailwind.config.js";
-@source "../**/*.{js,jsx,ts,tsx,md,mdx}";
-@import 'tailwindcss/theme';
-@import 'tailwindcss/utilities';

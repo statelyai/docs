@@ -1,44 +1,45 @@
-# Welcome to the Stately docs
+# fumadocs
 
-This repo contains the Stately landing page, including our blog and docs for Stately Studio and XState.
+This is a Next.js application generated with
+[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
 
-The site is built using [Docusaurus 2](https://docusaurus.io/).
+Run development server:
 
-We welcome any contributions to the documentation and code base.
-
-- ✨ [Contribution guide](https://github.com/statelyai/xstate/blob/main/CONTRIBUTING.md)
-- 🖊️ [The Stately Guide to Writing Docs](https://github.com/statelyai/docs/wiki)
-- 🙋 [Code of conduct](https://github.com/statelyai/docs/blob/main/CODE_OF_CONDUCT.md)
-
-## Installation
-
-```
-$ yarn
+```bash
+npm run dev
+# or
+pnpm dev
+# or
+yarn dev
 ```
 
-## Local development
+Open http://localhost:3000 with your browser to see the result.
 
-```
-$ yarn dev
-```
+## Explore
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+In the project, you can see:
 
-### Note on the index page
+- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
+- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
 
-Currently we serve the root landing page from a static file.
+| Route                     | Description                                            |
+| ------------------------- | ------------------------------------------------------ |
+| `app/(home)`              | The route group for your landing page and other pages. |
+| `app/docs`                | The documentation layout and pages.                    |
+| `app/api/search/route.ts` | The Route Handler for search.                          |
 
-- During server side rendering (SSR) we use [`/static/index.html`](./static/index.html)
-- During client side rendering (CSR) we use [`/static/landing-page/index.html`](./static/landing-page/index.html)
+### Fumadocs MDX
 
-## Build
+A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
 
-```
-$ yarn build
-```
+Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
 
-This command generates static content into the `build` directory.
+## Learn More
 
-## Deployment
+To learn more about Next.js and Fumadocs, take a look at the following
+resources:
 
-The docs are built and deployed when merged into `main`.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
+  features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs

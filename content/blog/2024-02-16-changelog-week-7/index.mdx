@@ -1,0 +1,40 @@
+---
+title: Changelog Week 7 2024
+description: In the last few weeks, we’ve released single-file GitHub pull requests, machine sorting, and many other improvements and bug fixes.
+authors: [laura]
+tags: [changelog, new, github, pr, import, improvements]
+date: 2024-02-16
+slug: 2024-02-16-changelog
+image: /blog/2024-02-16-changelog.png
+---
+
+In the last few weeks, we’ve released single-file GitHub pull requests, machine sorting, and many other improvements and bug fixes.{/* truncate */}
+
+## Make GitHub pull requests for single files from inside Stately Studio
+
+Last week, we released our single file pull request update to our GitHub integration. You can now quickly visualize a state machine from its GitHub file using [our handy bookmarklet](/docs/import-from-github/#bookmarklet) and then quickly make a pull request for any changes you make back to GitHub. All without leaving the browser. [Read more about this feature in our recent blog post](../../docs/assets/blog/2024-02-07-single-file-prs).
+
+![Using a bookmarklet to import a state machine from GitHub to Stately Studio](single-file-import.gif)
+
+## Sort your machines
+
+You can now sort your machines in the machines list by name and last updated date. Sorting your machines makes it easier to find the machine you’re looking for, especially if you have a lot of machines in your project.
+
+![The machines list panel showing a list of machines ordered alphabetically, the sort button is pressed and a menu is showing the options for Name A-Z, Name Z-A, Last updated and first updated. The Name A-Z option is selected.](../../docs/assets/blog/2024-02-16-changelog/sort.png)
+
+## Improvements
+
+- Community plan users can now get a preview of our premium features when they click on them. So you can find out what you’re missing out on and how to upgrade!
+- You can now choose which kind of machine to create when you create a new project. Choose from the Blank template, the Starter machine, importing code or generating a machine with AI.
+- We added more helpful messages when a user hits the GitHub rate limits.
+- We simplified the search in the Discover area.
+
+## Bug fixes
+
+- We fixed a bug where the Code panel would not close when you deleted the last machine in a project.
+- We fixed a bug where renaming a machine to a name, including a `.` (period), caused it to lose all its transitions.
+- We fixed a bug where the Projects panel was always open on refresh.
+
+## We love your feedback!
+
+Do you have a feature request you want to share with us? [Submit and upvote feature requests on our dedicated GitHub feedback repo](https://github.com/statelyai/feedback). Or [join our Discord server](https://discord.stately.ai).
