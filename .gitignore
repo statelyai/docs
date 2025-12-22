@@ -31,5 +31,5 @@ yarn-error.log*
 .idea
 .fleet
 
-# Fumadocs build (TEMPORARY)
-# fumadocs
+# Next.js
+.next
