@@ -87,8 +87,16 @@ function Companies() {
     { name: 'AWS', src: '/landing-page/assets/aws.svg', width: 65 },
     { name: 'Netflix', src: '/landing-page/assets/netflix.svg', width: 122 },
     { name: 'Lyft', src: '/landing-page/assets/lyft.svg', width: 58 },
-    { name: 'Microsoft', src: '/landing-page/assets/microsoft.svg', width: 154 },
-    { name: 'Epic Games', src: '/landing-page/assets/epic-games.svg', width: 45 },
+    {
+      name: 'Microsoft',
+      src: '/landing-page/assets/microsoft.svg',
+      width: 154,
+    },
+    {
+      name: 'Epic Games',
+      src: '/landing-page/assets/epic-games.svg',
+      width: 45,
+    },
     { name: 'Cisco', src: '/landing-page/assets/cisco.svg', width: 74 },
   ];
 
@@ -102,7 +110,7 @@ function Companies() {
               src={company.src}
               alt={company.name}
               width={company.width}
-              className="h-16 w-auto opacity-50 hover:opacity-70 transition-opacity"
+              className="h-16 w-auto opacity-50 hover:opacity-70 transition-opacity invert-100 dark:invert-0"
             />
           ))}
         </div>
@@ -193,7 +201,9 @@ function BuildSection() {
     <section className="py-24 bg-fd-muted/30">
       <div className="container mx-auto max-w-6xl px-6">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-fd-foreground leading-tight">
-          <span className="text-orange-500">Build with executable diagrams</span>{' '}
+          <span className="text-orange-500">
+            Build with executable diagrams
+          </span>{' '}
           and get the best of text-based and visual tools.
         </h2>
 
@@ -303,9 +313,9 @@ function BuildSection() {
                 <strong className="text-fd-foreground">
                   Generate React apps from diagrams
                 </strong>{' '}
-                to jumpstart product development. Keep iterating visually with the
-                help of AI, or dive straight into the code to rapidly extend the
-                scaffolding with your vision.
+                to jumpstart product development. Keep iterating visually with
+                the help of AI, or dive straight into the code to rapidly extend
+                the scaffolding with your vision.
               </p>
             </div>
             <img
@@ -505,7 +515,11 @@ function Testimonials() {
     },
   ];
 
-  const TestimonialCard = ({ testimonial }: { testimonial: typeof column1[0] }) => (
+  const TestimonialCard = ({
+    testimonial,
+  }: {
+    testimonial: (typeof column1)[0];
+  }) => (
     <div className="p-6 rounded-2xl border border-fd-border bg-fd-card">
       <div className="flex items-center gap-4 mb-4">
         <img
@@ -514,17 +528,13 @@ function Testimonials() {
           className="w-14 h-14 rounded-full"
         />
         <div>
-          <p className="font-semibold text-fd-foreground">
-            {testimonial.name}
-          </p>
+          <p className="font-semibold text-fd-foreground">{testimonial.name}</p>
           <p className="text-sm text-fd-muted-foreground">
             @ {testimonial.company}
           </p>
         </div>
       </div>
-      <p className="text-fd-foreground leading-relaxed">
-        {testimonial.quote}
-      </p>
+      <p className="text-fd-foreground leading-relaxed">{testimonial.quote}</p>
     </div>
   );
 
@@ -676,35 +686,110 @@ function Footer() {
           <div>
             <h4 className="text-base font-bold text-white/60 mb-4">Product</h4>
             <ul className="text-white/90 font-medium text-base space-y-2">
-              <li><a href="/docs" className="text-white/80 hover:text-white">Documentation</a></li>
-              <li><a href="https://github.com/statelyai/xstate" className="text-white/80 hover:text-white">XState</a></li>
-              <li><a href="https://stately.ai/pricing" className="text-white/80 hover:text-white">Pricing</a></li>
+              <li>
+                <a href="/docs" className="text-white/80 hover:text-white">
+                  Documentation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/statelyai/xstate"
+                  className="text-white/80 hover:text-white"
+                >
+                  XState
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://stately.ai/pricing"
+                  className="text-white/80 hover:text-white"
+                >
+                  Pricing
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-base font-bold text-white/60 mb-4">Company</h4>
             <ul className="text-white/90 font-medium text-base space-y-2">
-              <li><a href="/blog" className="text-white/80 hover:text-white">Blog</a></li>
-              <li><a href="mailto:support@stately.ai" className="text-white/80 hover:text-white">Contact</a></li>
+              <li>
+                <a href="/blog" className="text-white/80 hover:text-white">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:support@stately.ai"
+                  className="text-white/80 hover:text-white"
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-base font-bold text-white/60 mb-4">Resources</h4>
+            <h4 className="text-base font-bold text-white/60 mb-4">
+              Resources
+            </h4>
             <ul className="text-white/90 font-medium text-base space-y-2">
-              <li><a href="https://stately.ai/privacy" className="text-white/80 hover:text-white">Privacy policy</a></li>
-              <li><a href="https://stately.ai/code-of-conduct" className="text-white/80 hover:text-white">Code of conduct</a></li>
+              <li>
+                <a
+                  href="https://stately.ai/privacy"
+                  className="text-white/80 hover:text-white"
+                >
+                  Privacy policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://stately.ai/code-of-conduct"
+                  className="text-white/80 hover:text-white"
+                >
+                  Code of conduct
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-base font-bold text-white/60 mb-4">Community</h4>
+            <h4 className="text-base font-bold text-white/60 mb-4">
+              Community
+            </h4>
             <ul className="text-white/90 font-medium text-base space-y-2">
-              <li><a href="https://discord.gg/xstate" className="text-white/80 hover:text-white">Discord</a></li>
-              <li><a href="https://twitter.com/statelyai" className="text-white/80 hover:text-white">Twitter</a></li>
-              <li><a href="https://youtube.com/c/statelyai" className="text-white/80 hover:text-white">YouTube</a></li>
-              <li><a href="https://www.linkedin.com/company/statelyai" className="text-white/80 hover:text-white">LinkedIn</a></li>
+              <li>
+                <a
+                  href="https://discord.gg/xstate"
+                  className="text-white/80 hover:text-white"
+                >
+                  Discord
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com/statelyai"
+                  className="text-white/80 hover:text-white"
+                >
+                  Twitter
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/c/statelyai"
+                  className="text-white/80 hover:text-white"
+                >
+                  YouTube
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/company/statelyai"
+                  className="text-white/80 hover:text-white"
+                >
+                  LinkedIn
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
