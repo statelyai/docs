@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       links={[
         {
           text: 'Pricing',
-          url: 'https://stately.ai/pricing',
+          url: '/pricing',
           external: true,
         },
         {
