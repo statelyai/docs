@@ -14,13 +14,13 @@ As we start 2024, we wanted to look back at what the Stately team accomplished i
 
 ## 2023 highlights
 
-2023 was a huge year for Stately. Among the many features we released to Stately Studio, we checked **42 requested features** (big and small) off our [feature requests to-do list](https://github.com/orgs/statelyai/projects/2), and we cut **229 releases** (that’s a release every 1.6 days!) We also did **39 [live streams](https://www.youtube.com/@Statelyai/streams)**, shared **54 [blog posts](../docs/assets/blog)**, and released the massive [XState V5](https://stately.ai/blog/2023-12-01-xstate-v5).
+2023 was a huge year for Stately. Among the many features we released to Stately Studio, we checked **42 requested features** (big and small) off our [feature requests to-do list](https://github.com/orgs/statelyai/projects/2), and we cut **229 releases** (that’s a release every 1.6 days!) We also did **39 [live streams](https://www.youtube.com/@Statelyai/streams)**, shared **54 [blog posts](../../blog)**, and released the massive [XState V5](https://stately.ai/blog/2023-12-01-xstate-v5).
 
 Some of our favorite features include:
 
 ### Deploying to the cloud with Stately Sky
 
-Our [launch of Stately Sky last year](../../docs/assets/blog/2023-11-13-introducing-stately-sky) brought executable machines to the Studio. With Stately Sky, you can run your machines in the cloud, automate onboarding flows with state machines, execute and monitor backend workflows, persist frontend state between refreshes, and create and manage multi-user sessions.
+Our [launch of Stately Sky last year](2023-11-13-introducing-stately-sky) brought executable machines to the Studio. With Stately Sky, you can run your machines in the cloud, automate onboarding flows with state machines, execute and monitor backend workflows, persist frontend state between refreshes, and create and manage multi-user sessions.
 
 Check out our docs for [a comprehensive guide to starting with Stately Sky](/docs/stately-sky-getting-started), and [watch my talk from NodeConf EU](https://www.youtube.com/watch?v=FamZ0grhyK8), where I demoed using Stately Sky for a collaborative soundscape.
 
@@ -37,7 +37,7 @@ For example, I generated the following machine with the text prompt “_A bookin
   title="Pet grooming booking system"
 />
 
-You can also use Stately AI to [generate a summary](../../docs/assets/blog/2023-11-20-stately-studio-2-0#generate-summary) of your machine, which is really useful for documentation. I used this feature to generate the following summary of the machine above:
+You can also use Stately AI to [generate a summary](2023-11-20-stately-studio-2-0#generate-summary) of your machine, which is really useful for documentation. I used this feature to generate the following summary of the machine above:
 
 > This state machine represents a pet grooming booking system. It helps pet owners book, reschedule, and cancel appointments for their pets. The system has different states that represent different stages of the booking process. The initial state is "Idle", which means the system is waiting for a pet owner to start the booking process. When a pet owner wants to book an appointment, they trigger the "book" event. This transitions the system to the "Appointment Booked" state, indicating that an appointment has been successfully booked. From the "Appointment Booked" state, the pet owner can choose to reschedule or cancel the appointment. If they choose to reschedule, the system transitions to the "Appointment Rescheduled" state, indicating that the appointment has been rescheduled to a new time. If they choose to cancel, the system transitions to the "Appointment Canceled" state, indicating that the appointment has been canceled. Additionally, the system can send a reminder to the pet owner 24 hours before the appointment from the "Appointment Booked" or "Appointment Rescheduled" states. This transitions the system to the "Reminder Sent" state. From the "Reminder Sent" state, if the pet owner wants to book a new appointment, they can trigger the "book" event, which transitions the system back to the "Appointment Booked" state. Each state has associated actions that are performed when transitioning to that state. These actions include notifying the pet owner about the booking, rescheduling, cancellation, or sending a reminder. Overall, this state machine helps manage the pet grooming booking process, ensuring that appointments are booked, rescheduled, or canceled smoothly, and reminders are sent to pet owners.
 
@@ -77,7 +77,7 @@ Another massive change you’ll notice in the editor is that autolayout is bette
 
 ### XState version 5
 
-And, of course, after five years of hard work, we also [released XState version 5](../../docs/assets/blog/2023-12-01-xstate-v5). You can already import and export XState V5 machines in Stately Studio, and we’re working on full support and more advanced features for the Studio to improve the developer experience even more in 2024, so you can visualize your app logic, whether it’s written in XState or not.
+And, of course, after five years of hard work, we also [released XState version 5](2023-12-01-xstate-v5). You can already import and export XState V5 machines in Stately Studio, and we’re working on full support and more advanced features for the Studio to improve the developer experience even more in 2024, so you can visualize your app logic, whether it’s written in XState or not.
 
 ## 2024 roadmap
 

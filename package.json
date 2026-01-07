@@ -32,6 +32,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-remove-scroll": "^2.7.2",
+    "react-tweet": "^3.3.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-rehype": "^11.1.2",

@@ -48,7 +48,7 @@ State machines always start at an **[initial state](/docs/state-machines-and-sta
 
 Events are occurrences; they’re a record that something happened. Using the previous example, an event like _item shipped_ might transition an order’s state from _Pending_ to _Shipped_.
 
-![There is an initial Pending state. The machine transitions from Pending to the Shipped state with the item shipped event.(../docs/assets/blog/2023-10-02-what-is-a-state-machine/order-event-light.png)
+![There is an initial Pending state. The machine transitions from Pending to the Shipped state with the item shipped event.](../../docs/assets/blog/2023-10-02-what-is-a-state-machine/order-event-light.png)
 
 ### Transitions
 
@@ -56,7 +56,7 @@ A state [transition](/docs/transitions) describes how a system “moves” from 
 
 In state machines, transitions always happen immediately. For example, an order can be _Pending_ for some time (almost frustratingly so), but when the _item shipped_ event occurs, it immediately transitions to the _Shipped_ state.
 
-![State machine for an order: the states are pending, shipped, delivered, and returned.(../docs/assets/blog/2023-10-02-what-is-a-state-machine/order-transitions-light.png)
+![State machine for an order: the states are pending, shipped, delivered, and returned.](../../docs/assets/blog/2023-10-02-what-is-a-state-machine/order-transitions-light.png)
 
 [View this state machine in Stately](https://stately.ai/registry/editor/092bf401-2d65-48ae-969c-99b4a7eeb87f?machineId=942c00ac-7922-4a5a-bf92-d2438847c62f&mode=design).
 
@@ -105,7 +105,7 @@ These state machines serve as a **source of truth** for your app logic since you
 
 ## Benefits of using state machines
 
-Understanding and managing anything that can happen in your applications is crucial for [efficient collaboration and innovation](../../docs/assets/blog/using-teams-in-stately-studio) – you want to ensure that your team can understand and iterate on app logic and features quickly, no matter how complex they get. State machines are a powerful visual approach for accomplishing that, and they’re much more than just a diagramming tool.
+Understanding and managing anything that can happen in your applications is crucial for [efficient collaboration and innovation](using-teams-in-stately-studio) – you want to ensure that your team can understand and iterate on app logic and features quickly, no matter how complex they get. State machines are a powerful visual approach for accomplishing that, and they’re much more than just a diagramming tool.
 
 There are many key advantages of using state machines:
 
@@ -113,7 +113,7 @@ There are many key advantages of using state machines:
 
 With state machine diagrams, you can visually represent the states of a process, making it easier to grasp and communicate complex logic. These diagrams bridge the communication gap between technical and non-technical team members. They also provide a clear way to document and share app logic, which you could use for onboarding new team members. After all, following boxes and arrows (just like a flowchart) is much easier than parsing code, especially for someone unfamiliar with the codebase.
 
-![A mermaid diagram of our order state machine.(../docs/assets/blog/2023-10-02-what-is-a-state-machine/mermaid-order-machine-light.png)
+![A mermaid diagram of our order state machine.](../../docs/assets/blog/2023-10-02-what-is-a-state-machine/mermaid-order-machine-light.png)
 
 _Our [export to Mermaid feature](/docs/export-as-code#export-formats) enables you to embed your state machines in GitHub and GitLab pull requests and comments._
 
