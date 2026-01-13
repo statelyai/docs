@@ -209,6 +209,8 @@ const feedbackMachine = setup({
 You can also provide action implementations to override existing actions in the `machine.provide(...)` method, which creates a new machine with the same config but with the provided implementations:
 
 ```ts
+import { createActor } from 'xstate';
+
 const feedbackActor = createActor(
   // [!code highlight:9]
   feedbackMachine.provide({
@@ -232,6 +234,8 @@ XState provides a number of useful built-in actions that are a core part of the 
 Built-in actions, such as `assign(…)`, `sendTo(…)`, and `raise(…)`, are **not imperative**; they return a special [action object](#action-objects) (e.g. `{ type: 'xstate.assign', … }`) that are interpreted by the state machine. Do not call built-in action in custom action functions.
 
 ```ts
+import { createMachine, assign, enqueueActions } from 'xstate';
+
 // ❌ This will have no effect
 const machine = createMachine({
   context: { count: 0 },
@@ -402,6 +406,8 @@ You can create state machines with the `raise(...)` action in our drag-and-drop 
 The `sendTo(...)` action is a special action that sends an event to a specific actor.
 
 ```ts
+import { createMachine, sendTo } from 'xstate';
+
 const machine = createMachine({
   on: {
     transmit: {
@@ -415,6 +421,8 @@ const machine = createMachine({
 The event can be dynamic:
 
 ```ts
+import { createMachine, sendTo } from 'xstate';
+
 const machine = createMachine({
   on: {
     transmit: {
@@ -430,6 +438,8 @@ const machine = createMachine({
 The destination actor can be the actor ID or the actor reference itself:
 
 ```ts
+import { createMachine, sendTo, fromPromise } from 'xstate';
+
 const machine = createMachine({
   context: ({ spawn }) => ({
     someActorRef: spawn(fromPromise(/* ... */)),
@@ -448,6 +458,8 @@ const machine = createMachine({
 Other options, such as `delay` and `id`, can be passed as the 3rd argument:
 
 ```ts
+import { createMachine, sendTo } from 'xstate';
+
 const machine = createMachine({
   on: {
     transmit: {
@@ -620,6 +632,8 @@ The `enqueueActions(...)` action creator is a higher-level action that enqueues 
 Enqueued actions can be called conditionally, but they cannot be enqueued asynchronously.
 
 ```ts
+import { createMachine, enqueueActions } from 'xstate';
+
 const machine = createMachine({
   // ...
   entry: enqueueActions(({ context, event, enqueue, check }) => {
@@ -843,6 +857,8 @@ const machine = setup({
 If you are not using `setup({ ... })` (strongly recommended), you can strongly type the `actions` of your machine in the `types.actions` property of the machine config.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   types: {} as {
     // [!code highlight:8]
@@ -974,7 +990,7 @@ const modifiedMachine = machine.provide({
 #### With property assigners
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, assign } from 'xstate';
 
 const countMachine = createMachine({
   context: {
@@ -996,7 +1012,7 @@ const countMachine = createMachine({
 #### With function assigners
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, assign } from 'xstate';
 
 const countMachine = createMachine({
   context: {
@@ -1033,6 +1049,8 @@ const machine = createMachine({
 ### Cheatsheet: send-to action
 
 ```ts
+import { createMachine, sendTo } from 'xstate';
+
 const machine = createMachine({
   on: {
     transmit: {

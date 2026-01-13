@@ -193,6 +193,8 @@ Use our XState context cheatsheet below to get started quickly.
 ### Cheatsheet: initial context
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   context: {
     feedback: '',
@@ -203,6 +205,8 @@ const machine = createMachine({
 ### Cheatsheet: lazy initial context
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   context: () => ({
     feedback: '',
@@ -214,6 +218,8 @@ const machine = createMachine({
 ### Cheatsheet: updating context with `assign(...)`
 
 ```ts
+import { createMachine, assign } from 'xstate';
+
 const machine = createMachine({
   context: {
     feedback: '',

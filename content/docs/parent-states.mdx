@@ -34,7 +34,7 @@ It's normal to have a state machine that has no other states. This is useful for
 Here is an example of a simple counting machine with `increment`, `decrement`, and `reset` events, and no states, other than the implicit top-level root state:
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, assign } from 'xstate';
 
 const countingMachine = createMachine({
   id: 'counting',
@@ -170,6 +170,8 @@ When designing state machines with parent states, follow these best practices:
 ### Example: Form Validation
 
 ```ts
+import { createMachine } from 'xstate';
+
 const formMachine = createMachine({
   initial: 'idle',
   states: {
@@ -212,6 +214,8 @@ In this example, the `validating` parent state groups related states that handle
 ### Cheatsheet: creating parent states
 
 ```ts
+import { createMachine } from 'xstate';
+
 // The machine is the root-level parent state
 const machine = createMachine({
   // Initial child state of the machine

@@ -25,6 +25,40 @@ import { Cards, Card } from 'fumadocs-ui/components/card';
   </div>
 </div>
 
+## Quick start
+
+Install XState:
+
+```bash
+npm install xstate
+```
+
+Create a state machine:
+
+```ts
+import { createMachine, createActor } from 'xstate';
+
+const toggleMachine = createMachine({
+  id: 'toggle',
+  initial: 'inactive',
+  states: {
+    inactive: { on: { toggle: 'active' } },
+    active: { on: { toggle: 'inactive' } },
+  },
+});
+
+const toggleActor = createActor(toggleMachine);
+toggleActor.start();
+
+toggleActor.send({ type: 'toggle' });
+console.log(toggleActor.getSnapshot().value); // 'active'
+
+toggleActor.send({ type: 'toggle' });
+console.log(toggleActor.getSnapshot().value); // 'inactive'
+```
+
+[Read the full quick start guide](/docs/quick-start) to learn more.
+
 <Cards>
   <Card
     href="/docs/states"

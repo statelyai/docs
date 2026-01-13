@@ -60,6 +60,8 @@ You can define delays in a few ways: [inlined](#inlined-delays), [referenced](#r
 You can define an inlined delay by specifying the delay time (in milliseconds) directly:
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'idle',
   states: {
@@ -108,7 +110,7 @@ const machine = setup({
 Delays can also be dynamically defined as a function that returns the delay time in milliseconds:
 
 ```ts
-import { setup } from 'xstate';
+import { setup, assign } from 'xstate';
 
 const machine = setup({
   types: {
@@ -183,6 +185,8 @@ const machine = setup({
 Use our XState delayed transitions cheatsheet below to get started quickly.
 
 ```ts
+import { createMachine } from 'xstate';
+
 createMachine({
   after: {
     DELAY: {

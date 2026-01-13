@@ -34,6 +34,8 @@ The state object represents the current state of a running machine ([actor](acto
 - **`meta`**: an object containing state node meta data.
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
   initial: 'question',
@@ -72,6 +74,10 @@ console.log(actor.getSnapshot());
 You can access an actor’s emitted state (or _snapshot_) by subscribing to or reading from the actor’s `.getSnapshot()` method.
 
 ```ts
+import { createActor } from 'xstate';
+
+// ...
+
 const actor = createActor(feedbackMachine);
 
 actor.subscribe((snapshot) => {
@@ -144,6 +150,8 @@ The `state.children` property represents all currently spawned/invoked actors in
 The `state.can(event)` method determines whether an `event` object will cause a state change if sent to the machine actor. The method will return `true` if the state will change due to the `event` being sent; otherwise the method will return `false`:
 
 ```js
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   // ...
   states: {
@@ -171,7 +179,7 @@ console.log(currentState.can({ type: 'feedback.submit' }));
 // - the 'isValid' guard evaluates to `true`
 ```
 
-A state is considered “changed” if a transition is enabled for the given `state` and `event` object.
+A state is considered "changed" if a transition is enabled for the given `state` and `event` object.
 
 <Callout>
 The `state.can(...)` method will also check transition guards by executing them. Transition guards should be pure functions.
@@ -182,6 +190,8 @@ The `state.can(...)` method will also check transition guards by executing them.
 The `state.hasTag(tag)` method determines whether any state nodes in the current state value have the given `tag`. This is useful for determining whether a state is a particular state, or whether a state is a member of a particular state group.
 
 ```js
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   // ...
   states: {
@@ -239,6 +249,8 @@ if (state.status === 'done') {
 The `state.getMeta()` method represents the metadata of all the state nodes in the `state`. It is an object with keys that represent the state node IDs, and values that are the metadata of that state node.
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
   // ...

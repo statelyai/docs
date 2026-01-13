@@ -15,6 +15,8 @@ You can easily visualize and simulate guarded transitions in Stately’s editor.
 Guards should be pure, synchronous functions that return either `true` or `false`.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine(
   {
     // ...
@@ -56,6 +58,8 @@ If you want to have a single event transition to different states in certain sit
 You can specify a default transition to be taken as the last transition in the array. If none of the guards evaluate to `true`, the default transition will be taken.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   // ...
   prompt: {
@@ -99,6 +103,8 @@ on: {
 A guard can be defined as an object with a `type`, which is the type of guard that references the provided guard implementation, and optional `params`, which can be read by the implemented guard:
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine(
   {
     // ...
@@ -133,6 +139,8 @@ const feedbackMachine = createMachine(
 Guards can later be provided or overridden by providing custom guard implementations in the `.provide()` method:
 
 ```ts
+import { createActor } from 'xstate';
+
 const feedbackActor = createActor(
   // [!code highlight:11]
   feedbackMachine.provide({
@@ -158,6 +166,10 @@ XState provides higher-level guards, which are guards that compose other guards.
 - `not(...)` - evaluates to `true` if the guard in `not(guard)` evaluates to `false`
 
 ```ts
+import { and } from 'xstate';
+
+// ...
+
 on: {
   event: {
     guard: and(['isValid', 'isAuthorized']);
@@ -168,6 +180,10 @@ on: {
 Higher-level guards can be combined:
 
 ```ts
+import { and, or } from 'xstate';
+
+// ...
+
 on: {
   event: {
     guard: and(['isValid', or(['isAuthorized', 'isGuest'])]);
@@ -180,6 +196,10 @@ on: {
 You can use the `stateIn(stateValue)` guard to check if the current state matches the provided `stateValue`. This is most useful for [parallel states](parallel-states).
 
 ```ts
+import { stateIn } from 'xstate';
+
+// ...
+
 on: {
   event: {
     guard: stateIn('#state1');

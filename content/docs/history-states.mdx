@@ -17,6 +17,8 @@ The history state can be deep or shallow:
 - A deep history state remembers the deepest active state or states inside its child states.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const checkoutMachine = createMachine({
   // ...
   states: {
@@ -56,6 +58,8 @@ const checkoutMachine = createMachine({
 ### Cheatsheet: create a history state (shallow by default)
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   // ...
   states: {
@@ -70,6 +74,8 @@ const machine = createMachine({
 ### Cheatsheet: create a deep history state
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   // ...
   states: {
@@ -87,6 +93,8 @@ const machine = createMachine({
 ### Cheatsheet: create a history state with a target
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   // ...
   initialState: 'firstState',

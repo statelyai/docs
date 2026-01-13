@@ -15,6 +15,8 @@ You can easily visualize and simulate intial and final states in Stately's edito
 </Callout>
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
 
@@ -42,6 +44,8 @@ const feedbackMachine = createMachine({
 You can combine finite states with [context](context), which make up the overall state of a machine:
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
   context: {
@@ -74,6 +78,8 @@ console.log(feedbackActor.getSnapshot().context);
 The initial state is the state that the machine starts in. It is defined by the `initial` property on the machine config:
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
 
@@ -99,6 +105,8 @@ const feedbackMachine = createMachine({
 In XState, a **state node** is a finite state "nodes" that comprise the entire statechart tree. State nodes are defined on the `states` property of other state nodes, including the root machine config (which itself is a state node):
 
 ```ts
+import { createMachine } from 'xstate';
+
 // The machine is the root state node
 const feedbackMachine = createMachine({
   id: 'feedback',
@@ -131,6 +139,8 @@ const feedbackMachine = createMachine({
 State nodes can have **tags**, which are string terms that help group or categorize the state node. For example, you can signify which state nodes represent states in which data is being loaded by using a "loading" tag, and determine if a state contains those tagged state nodes with `state.hasTag(tag)`:
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
   initial: 'prompt',
@@ -168,6 +178,8 @@ Meta data is static data that describes relevant properties of a state node. You
 The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const feedbackMachine = createMachine({
   id: 'feedback',
   initial: 'prompt',
@@ -440,6 +452,8 @@ When designing finite states for your state machine, follow these guidelines to 
 - **Be consistent**: Use consistent naming conventions across your state machines.
 
 ```ts
+import { createMachine } from 'xstate';
+
 // ❌ Poor naming
 const machine = createMachine({
   initial: 'state1',
@@ -469,6 +483,8 @@ const authMachine = createMachine({
 - **Account for loading states**: Async operations often need intermediate states.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const checkoutMachine = createMachine({
   initial: 'cart',
   states: {
@@ -520,6 +536,8 @@ const checkoutMachine = createMachine({
 - **Separate concerns**: Keep different domains or features in separate states.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const appMachine = createMachine({
   initial: 'loading',
   states: {
@@ -572,6 +590,8 @@ const appMachine = createMachine({
 - **Comment complex logic**: Explain why certain states exist and what they accomplish.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   initial: 'prompt',
   states: {
@@ -711,6 +731,8 @@ const machine = createMachine({
 ### Cheatsheet: read current state
 
 ```ts
+import { createActor } from 'xstate';
+
 const actor = createActor(machine).start();
 const state = actor.getSnapshot();
 
@@ -727,6 +749,8 @@ const isFormOrThanks = state.matches('form') || state.matches('thanks');
 ### Cheatsheet: states with tags
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'prompt',
   states: {
@@ -754,6 +778,8 @@ const isInteractive = state.hasTag('interactive');
 ### Cheatsheet: states with meta data
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'prompt',
   states: {
@@ -780,6 +806,8 @@ console.log(state.getMeta());
 ### Cheatsheet: target states by ID
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'start',
   states: {

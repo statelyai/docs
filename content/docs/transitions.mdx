@@ -136,6 +136,8 @@ You can easily visualize self-transitions in Stately's editor. [Read more about 
 Usually, transitions are between two sibling states. These transitions are defined by setting the `target` as the sibling state key.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const feedbackMachine = createMachine({
   // ...
   states: {
@@ -208,7 +210,7 @@ In XState v4, re-entering transitions were known as **external transitions**, an
 **Self-transitions with `reenter: true`:**
 
 ```ts
-import { createMachine } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const machine = createMachine({
   initial: 'someState',
@@ -244,6 +246,8 @@ actor.send({ type: 'event.thatReenters' });
 **Parent-child (or descendent) transitions with `reenter: true`:**
 
 ```ts
+import { createMachine, createActor } from 'xstate';
+
 const machine = createMachine({
   initial: 'parentState',
   states: {
@@ -566,6 +570,8 @@ feedbackActor.send({
 ### Cheatsheet: transition targets
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'a',
   states: {

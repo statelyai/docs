@@ -114,6 +114,8 @@ For best results, use the latest TypeScript version. [Read more about XState and
 Eventless transitions can potentially be enabled by any event, so the `event` type is the union of all possible events.
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   types: {} as {
     events: { type: 'greet'; message: string } | { type: 'submit' };
@@ -150,6 +152,8 @@ const machine = createMachine({
 ### Cheatsheet: state eventless (always) transition
 
 ```ts
+import { createMachine } from 'xstate';
+
 const machine = createMachine({
   initial: 'start',
   states: {
