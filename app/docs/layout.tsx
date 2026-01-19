@@ -262,9 +262,50 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
             type: 'folder',
             children: [
               {
-                type: 'page',
                 name: 'XState Store',
-                url: '/docs/xstate-store',
+                type: 'folder',
+                index: {
+                  type: 'page',
+                  name: 'Overview',
+                  url: '/docs/xstate-store',
+                },
+                children: [
+                  {
+                    type: 'page',
+                    name: 'Vanilla',
+                    url: '/docs/xstate-store',
+                  },
+                  {
+                    type: 'page',
+                    name: 'React',
+                    url: '/docs/xstate-store/react',
+                  },
+                  {
+                    type: 'page',
+                    name: 'Vue',
+                    url: '/docs/xstate-store/vue',
+                  },
+                  {
+                    type: 'page',
+                    name: 'Svelte',
+                    url: '/docs/xstate-store/svelte',
+                  },
+                  {
+                    type: 'page',
+                    name: 'Solid',
+                    url: '/docs/xstate-store/solid',
+                  },
+                  {
+                    type: 'page',
+                    name: 'Angular',
+                    url: '/docs/xstate-store/angular',
+                  },
+                  {
+                    type: 'page',
+                    name: 'Preact',
+                    url: '/docs/xstate-store/preact',
+                  },
+                ],
               },
               {
                 type: 'page',

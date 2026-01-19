@@ -1,0 +1,4 @@
+{
+  "title": "@xstate/store",
+  "pages": ["react", "vue", "svelte", "solid", "angular", "preact"]
+}
