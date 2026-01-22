@@ -7,7 +7,7 @@ import {
   DocsPage,
   DocsTitle,
 } from 'fumadocs-ui/page';
-import { blog } from '@/lib/source';
+import { blog, getBlogImage } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
 import path from 'node:path';
 
@@ -56,6 +56,9 @@ export async function generateMetadata(
     title: page.data.title,
     description:
       page.data.description ?? 'The library for building documentation sites',
+    openGraph: {
+      images: getBlogImage(page).url,
+    },
   };
 }
 

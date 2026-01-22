@@ -1,7 +1,7 @@
 import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { generate as DefaultImage } from 'fumadocs-ui/og';
+import { OGImage } from '@/app/og/_components/og-image';
 
 export const revalidate = false;
 
@@ -15,10 +15,10 @@ export async function GET(
 
   return new ImageResponse(
     (
-      <DefaultImage
+      <OGImage
         title={page.data.title}
         description={page.data.description}
-        site="Stately.ai"
+        type="docs"
       />
     ),
     {
