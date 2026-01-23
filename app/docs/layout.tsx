@@ -247,6 +247,11 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
             children: [
               {
                 type: 'page',
+                name: 'Graph utilities',
+                url: '/docs/graph',
+              },
+              {
+                type: 'page',
                 name: 'Testing',
                 url: '/docs/testing',
               },
@@ -255,6 +260,7 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
                 name: 'Immer',
                 url: '/docs/immer',
               },
+
             ],
           },
           {

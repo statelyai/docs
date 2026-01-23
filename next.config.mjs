@@ -23,7 +23,13 @@ const config = {
   },
   serverExternalPackages: ['typescript', 'twoslash'],
   async redirects() {
-    return [];
+    return [
+      {
+        source: '/docs/xstate-graph',
+        destination: '/docs/graph',
+        permanent: true,
+      },
+    ];
   },
   async rewrites() {
     return [
