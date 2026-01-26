@@ -360,6 +360,63 @@ console.log(initialSnapshot.value);
 // logs 'question'
 ```
 
+## Next transitions
+
+_Since XState version 5.26.0_
+
+You can get all potential next transitions from a given state using the `getNextTransitions(state)` function. This is useful for introspecting what events a state machine actor can respond to in its current state.
+
+```ts
+import { createMachine, createActor, getNextTransitions } from 'xstate';
+
+const machine = createMachine({
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        start: { target: 'running' },
+        reset: { target: 'idle' },
+      },
+    },
+    running: {
+      on: {
+        stop: { target: 'idle' },
+        pause: { target: 'paused' },
+      },
+    },
+    paused: {
+      on: {
+        resume: { target: 'running' },
+        stop: { target: 'idle' },
+      },
+    },
+  },
+});
+
+const actor = createActor(machine).start();
+
+const transitions = getNextTransitions(actor.getSnapshot());
+
+console.log(transitions.map((t) => t.eventType));
+// logs ['start', 'reset']
+```
+
+The function returns an array of transition definitions, each of which is an object with the following properties:
+
+- `eventType` - The event type of the transition
+- `target` - The state node that the transition targets
+- `source` - The state node where the transition originates from
+- `actions` - The actions that will be executed during the transition
+- `reenter` - Whether the transition is reentrant
+- `guard` - The guard that will be evaluated to determine if the transition is enabled
+
+This is particularly useful for:
+
+- Building UIs that show available actions
+- Debugging which transitions are possible
+- Testing state machine behavior
+- Generating documentation
+
 ## Specifying types
 
 You can specify TypeScript types inside the machine setup using the `.types` property:
