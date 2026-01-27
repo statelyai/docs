@@ -46,22 +46,10 @@ In Stately Studio, we refer to both state machines and statecharts as **state ma
 
 A state describes the machine’s status or mode, which could be as simple as *Asleep* and *Awake*. A state machine can only be in one state at a time.
 
-{/* no alt because the image is already described in the surrounding text */}
-
-{/* <p>
-  <ThemedImage
-    alt="Dog state machine with asleep and awake states. There’s a warning on the awake state because there’s no transitions which means the awake state cannot be reached."
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.light.png',
-      dark: 'https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog state machine with asleep and awake states. There’s a warning on the awake state because there’s no transitions which means the awake state cannot be reached.](https://stately.ai/registry/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.light.png)
-
-[View the dog states machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87).
+<EmbedMachine
+  name="Dog states"
+  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87"
+/>
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
@@ -110,22 +98,10 @@ How the dog goes between **asleep** and **awake** is through **transitions**. E
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
 
-{/* no alt because the image is already described in the surrounding text */}
-
-{/* <p>
-  <ThemedImage
-    alt=""
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.light.png',
-      dark: 'https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog states machine with events and transitions.](https://stately.ai/registry/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.light.png)
-
-[View the dog states machine with events and transitions in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9).
+<EmbedMachine
+  name="Dog states with transitions"
+  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9"
+/>
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
@@ -173,20 +149,10 @@ Most processes with states will have a _final state_, the last state when the pr
 
 In the dog walking statechart, the final state would be **walk complete**.
 
-{/* <p>
-  <ThemedImage
-    alt="Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete."
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.light.png',
-      dark: 'https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog walking statechart showing waiting state transitioning through the leave home event to the on a walk state, then transitioning through the arrive home event to the final state of walk complete.](https://stately.ai/registry/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.light.png)
-
-[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481).
+<EmbedMachine
+  name="Dog walking"
+  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481"
+/>
 
 [Read more about final states](final-states)
 
@@ -196,22 +162,10 @@ A parent state is a state that can contain more states, also known as child stat
 
 A parent state is symbolised by a labelled rectangle box that acts as a container for its child states. Parent states are sometimes known as _compound states_.
 
-{/* no alt because the image is already described in the surrounding text */}
-
-{/* <p>
-  <ThemedImage
-    alt=""
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.light.png',
-      dark: 'https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog walk machine with parent state.](https://stately.ai/registry/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.light.png)
-
-[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066).
+<EmbedMachine
+  name="Dog walk with parent state"
+  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066"
+/>
 
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
 
@@ -229,22 +183,10 @@ A parallel state is a state where all of its child states, also known as regions
 
 Inside the **on a walk** parallel state, there could be two regions. One region contains the dog’s activity child states of **walking** and **running**, and the other region containing the dog’s tail states of **wagging** and **not wagging**. The dog can walk and wag its tail or run and wag its tail, it can also do both of these activities without wagging its tail.
 
-{/* no alt because the image is already described in the surrounding text */}
-
-{/* <p>
-  <ThemedImage
-    alt=""
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.light.png',
-      dark: 'https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog walk machine with parallel state.](https://stately.ai/registry/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.light.png)
-
-[View the dog walk machine in Stately Studio](https://stately.ai/registry/editor/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23).
+<EmbedMachine
+  name="Dog walk with parallel state"
+  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23"
+/>
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
 
@@ -258,22 +200,10 @@ A helpful way to describe a self-transition is “doing something, not going som
 
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
-{/* no alt because the image is already described in the surrounding text */}
-
-{/* <p style={{ 'max-width': '500px' }}>
-  <ThemedImage
-    alt=""
-    sources={{
-      light:
-        'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png',
-      dark: 'https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.dark.png',
-    }}
-  />
-</p> */}
-
-![Dog begging machine.](https://stately.ai/registry/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.light.png)
-
-[View the dog begging machine in Stately Studio](https://stately.ai/registry/editor/17986605-400c-4c00-8b33-47e3ecca478b?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5).
+<EmbedMachine
+  name="Dog begging"
+  embedURL="https://stately.ai/registry/editor/embed/17986605-400c-4c00-8b33-47e3ecca478b?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5"
+/>
 
 [Read more about self transitions](/docs/transitions/#self-transitions)
 
