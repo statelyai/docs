@@ -115,6 +115,11 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
               },
               {
                 type: 'page',
+                name: 'Routes',
+                url: '/docs/routes',
+              },
+              {
+                type: 'page',
                 name: 'Pure transition functions',
                 url: '/docs/pure-transitions',
               },
