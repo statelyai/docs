@@ -32,13 +32,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           children: (
             <div className="flex items-center gap-2 ml-4">
               <Link
-                href="https://stately.ai/registry/login"
+                href="/registry/login"
                 className="text-sm text-fd-foreground hover:text-fd-accent-foreground transition-colors border border-fd-border rounded-md px-4 py-2"
               >
                 Log in
               </Link>
               <Link
-                href="https://stately.ai/registry/signup"
+                href="/registry/signup"
                 className="text-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
               >
                 Sign up

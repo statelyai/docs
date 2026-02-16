@@ -8,7 +8,7 @@ export function Footer() {
             Get updates by email
           </h3>
           <form
-            action="https://stately.ai/registry/api/newsletter/signup"
+            action="/registry/api/newsletter/signup"
             method="post"
             target="_blank"
           >
@@ -64,7 +64,7 @@ export function Footer() {
       <footer className="container mx-auto border-t border-t-white/10 px-6">
         <nav className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-center pt-8 pb-16 max-w-5xl mx-auto gap-8">
           <div>
-            <a href="https://stately.ai">
+            <a href="/">
               <img
                 className="h-6 w-auto"
                 src="/assets/landing/stately-logo.svg"
@@ -127,16 +127,13 @@ export function Footer() {
             </h4>
             <ul className="text-white/90 font-medium text-base space-y-2">
               <li>
-                <a
-                  href="https://stately.ai/privacy"
-                  className="text-white/80 hover:text-white"
-                >
+                <a href="/privacy" className="text-white/80 hover:text-white">
                   Privacy policy
                 </a>
               </li>
               <li>
                 <a
-                  href="https://stately.ai/code-of-conduct"
+                  href="/code-of-conduct"
                   className="text-white/80 hover:text-white"
                 >
                   Code of conduct

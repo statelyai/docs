@@ -36,19 +36,19 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         text: 'Studio',
-        url: 'https://stately.ai/registry/projects',
+        url: '/registry/projects',
         external: true,
         icon: <CircuitBoardIcon size={18} />,
       },
       {
         text: 'Editor',
-        url: 'https://stately.ai/editor',
+        url: '/editor',
         external: true,
         icon: <PanelsTopLeftIcon size={18} />,
       },
       {
         text: 'Discover',
-        url: 'https://stately.ai/registry/discover',
+        url: '/registry/discover',
         external: true,
         icon: <TelescopeIcon size={18} />,
       },

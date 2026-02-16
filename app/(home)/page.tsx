@@ -52,7 +52,7 @@ function Hero() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="https://stately.ai/editor?source=landing-page"
+              href="/editor?source=landing-page"
               className="inline-flex items-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-full transition-colors"
             >
               Try the visual editor
@@ -583,7 +583,7 @@ function CTA() {
             </h2>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
               <Link
-                href="https://stately.ai/registry/signup"
+                href="/registry/signup"
                 target="_blank"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-blue-500 hover:bg-blue-400 text-white font-semibold rounded-full transition-colors"
               >
@@ -603,4 +603,3 @@ function CTA() {
     </section>
   );
 }
-

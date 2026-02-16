@@ -29,24 +29,24 @@ export default function PricingPage() {
                 name="Community"
                 price="FREE"
                 cta="Get started"
-                ctaHref="https://stately.ai/registry/billing"
+                ctaHref="/registry/billing"
                 features={[
                   {
                     text: 'Public projects and state machines',
-                    href: 'https://stately.ai/docs/projects#change-a-projects-visibility',
+                    href: '/docs/projects#change-a-projects-visibility',
                   },
                   {
                     text: 'Export to JavaScript and TypeScript',
-                    href: 'https://stately.ai/docs/export-as-code',
+                    href: '/docs/export-as-code',
                   },
                   {
                     text: 'State machine simulation',
-                    href: 'https://stately.ai/docs/simulate-mode',
+                    href: '/docs/simulate-mode',
                   },
                   {
                     text: 'Generate and modify state machines using AI ✨',
                     subtext: '3 generations / month',
-                    href: 'https://stately.ai/docs/generate-flow',
+                    href: '/docs/generate-flow',
                   },
                   { text: 'Community support' },
                 ]}
@@ -64,46 +64,46 @@ export default function PricingPage() {
                 priceDetails="per month for an annual plan."
                 priceSubtext="$39 per month for a monthly plan."
                 cta="Start a free trial"
-                ctaHref="https://stately.ai/registry/billing"
+                ctaHref="/registry/billing"
                 highlighted
                 features={[
                   {
                     text: 'Everything from Community',
-                    href: 'https://stately.ai/docs/studio-community-plan',
+                    href: '/docs/studio-community-plan',
                     strong: true,
                   },
                   {
                     text: 'Private and unlisted projects',
-                    href: 'https://stately.ai/docs/projects#change-a-projects-visibility',
+                    href: '/docs/projects#change-a-projects-visibility',
                   },
                   {
                     text: 'Generate and modify state machines using AI ✨',
                     subtext: '1,000 generations / month',
-                    href: 'https://stately.ai/docs/generate-flow',
+                    href: '/docs/generate-flow',
                   },
                   {
                     text: 'Generate React UIs',
-                    href: 'https://stately.ai/docs/generate-react',
+                    href: '/docs/generate-react',
                   },
                   {
                     text: 'Version history',
-                    href: 'https://stately.ai/docs/versions',
+                    href: '/docs/versions',
                   },
                   {
                     text: 'Live simulation mode',
-                    href: 'https://stately.ai/docs/live-simulation',
+                    href: '/docs/live-simulation',
                   },
                   {
                     text: 'Embed Figma designs',
-                    href: 'https://stately.ai/docs/figma',
+                    href: '/docs/figma',
                   },
                   {
                     text: 'Color states and transitions',
-                    href: 'https://stately.ai/docs/colors',
+                    href: '/docs/colors',
                   },
                   {
                     text: 'GitHub Sync',
-                    href: 'https://stately.ai/docs/import-from-github',
+                    href: '/docs/import-from-github',
                   },
                   { text: 'Priority support' },
                 ]}
@@ -121,29 +121,29 @@ export default function PricingPage() {
                 priceDetails="per month for an annual plan."
                 priceSubtext="$199 per month for a monthly plan."
                 cta="Start a free trial"
-                ctaHref="https://stately.ai/registry/billing"
+                ctaHref="/registry/billing"
                 features={[
                   {
                     text: 'Everything from Pro',
                     subtext: 'For all team members!',
-                    href: 'https://stately.ai/docs/studio-pro-plan',
+                    href: '/docs/studio-pro-plan',
                     strong: true,
                   },
                   {
                     text: 'Add up to 10 team members',
-                    href: 'https://stately.ai/docs/teams',
+                    href: '/docs/teams',
                   },
                   {
                     text: 'Shared team projects',
-                    href: 'https://stately.ai/docs/teams',
+                    href: '/docs/teams',
                   },
                   {
                     text: 'Team admins and editors',
-                    href: 'https://stately.ai/docs/teams',
+                    href: '/docs/teams',
                   },
                   {
                     text: 'Unlimited view-only access for non-team members',
-                    href: 'https://stately.ai/docs/teams',
+                    href: '/docs/teams',
                   },
                   { text: 'Priority support' },
                 ]}
@@ -162,11 +162,11 @@ export default function PricingPage() {
               features={[
                 {
                   text: 'Everything from the Community, Pro, and Team plans',
-                  href: 'https://stately.ai/docs/studio-pro-plan',
+                  href: '/docs/studio-pro-plan',
                 },
                 {
                   text: 'Unlimited generated flows',
-                  href: 'https://stately.ai/docs/generate-flow',
+                  href: '/docs/generate-flow',
                 },
                 { text: 'Flexible hosting' },
                 { text: 'Dedicated priority support' },
