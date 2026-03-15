@@ -23,6 +23,9 @@
       "@/.source": [
         "./.source/index.ts"
       ],
+      "collections/*": [
+        "./.source/*"
+      ],
       "@/*": [
         "./*"
       ]

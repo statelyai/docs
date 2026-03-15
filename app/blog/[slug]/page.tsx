@@ -16,7 +16,8 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
   const page = blog.getPage([params.slug]);
 
   if (!page) notFound();
-  const { body: Mdx, toc } = page.data;
+  const data = page.data as any;
+  const { body: Mdx, toc } = data;
 
   return (
     <DocsPage toc={toc}>
@@ -26,14 +27,14 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
       >
         ← Back to Blog
       </Link>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
+      <DocsTitle>{data.title}</DocsTitle>
+      <DocsDescription>{data.description}</DocsDescription>
       <div className="flex items-center gap-4 text-sm text-fd-muted-foreground border-b pb-4 mb-6">
-        <span>{page.data.authors.join(', ')}</span>
+        <span>{data.authors?.join(', ')}</span>
         <span>•</span>
         <span>
           {new Date(
-            page.data.date ?? path.basename(page.path, path.extname(page.path)),
+            data.date ?? path.basename(page.path, path.extname(page.path)),
           ).toDateString()}
         </span>
       </div>

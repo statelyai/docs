@@ -14,8 +14,9 @@ export async function GET(
   const page = blog.getPage(slug.slice(0, -1));
   if (!page) notFound();
 
-  const date = page.data.date
-    ? new Date(page.data.date).toLocaleDateString('en-US', {
+  const data = page.data as any;
+  const date = data.date
+    ? new Date(data.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -25,10 +26,10 @@ export async function GET(
   return new ImageResponse(
     (
       <OGImage
-        title={page.data.title}
-        description={page.data.description}
+        title={data.title}
+        description={data.description}
         type="blog"
-        author={page.data.authors?.join(', ')}
+        author={data.authors?.join(', ')}
         date={date}
       />
     ),

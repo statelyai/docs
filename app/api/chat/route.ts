@@ -1,30 +1,93 @@
-import { ProvideLinksToolSchema } from '../../../lib/inkeep-qa-schema';
-import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { convertToModelMessages, streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
+import { z } from 'zod';
+import { source } from '@/lib/source';
+import { Document, type DocumentData } from 'flexsearch';
 
-export const runtime = 'edge';
+interface CustomDocument extends DocumentData {
+  url: string;
+  title: string;
+  description: string;
+  content: string;
+}
 
-const openai = createOpenAICompatible({
-  name: 'inkeep',
-  apiKey: process.env.INKEEP_API_KEY,
-  baseURL: 'https://api.inkeep.com/v1',
-});
+const searchServer = createSearchServer();
+
+async function createSearchServer() {
+  const search = new Document<CustomDocument>({
+    document: {
+      id: 'url',
+      index: ['title', 'description', 'content'],
+      store: true,
+    },
+  });
+
+  const docs = await chunkedAll(
+    source.getPages().map(async (page) => {
+      if (!('getText' in page.data)) return null;
+
+      return {
+        title: page.data.title,
+        description: page.data.description,
+        url: page.url,
+        content: await page.data.getText('raw'),
+      } as CustomDocument;
+    }),
+  );
+
+  for (const doc of docs) {
+    if (doc) search.add(doc);
+  }
+
+  return search;
+}
+
+async function chunkedAll<O>(promises: Promise<O>[]): Promise<O[]> {
+  const SIZE = 50;
+  const out: O[] = [];
+  for (let i = 0; i < promises.length; i += SIZE) {
+    out.push(...(await Promise.all(promises.slice(i, i + SIZE))));
+  }
+  return out;
+}
+
+const systemPrompt = [
+  'You are an AI assistant for the XState documentation site (stately.ai/docs).',
+  'XState is a JavaScript/TypeScript library for creating state machines, statecharts, and actors.',
+  'Use the `search` tool to retrieve relevant docs context before answering when needed.',
+  'The `search` tool returns raw JSON results from documentation. Use those results to ground your answer and cite sources as markdown links using the document `url` field when available.',
+  'If you cannot find the answer in search results, say you do not know and suggest a better search query.',
+].join('\n');
 
 export async function POST(req: Request) {
-  const reqJson = await req.json();
+  const reqJson: { messages?: UIMessage[] } = await req.json();
 
   const result = streamText({
-    model: openai('inkeep-qa-sonnet-4'),
+    model: openai('gpt-4o'),
+    stopWhen: stepCountIs(5),
     tools: {
-      provideLinks: {
-        inputSchema: ProvideLinksToolSchema,
-      },
+      search: searchTool,
     },
-    messages: convertToModelMessages(reqJson.messages, {
-      ignoreIncompleteToolCalls: true,
-    }),
+    messages: [
+      { role: 'system', content: systemPrompt },
+      ...(await convertToModelMessages(reqJson.messages ?? [])),
+    ],
     toolChoice: 'auto',
   });
 
   return result.toUIMessageStreamResponse();
 }
+
+const searchTool = tool({
+  description: 'Search the docs content and return raw JSON results.',
+  inputSchema: z.object({
+    query: z.string(),
+    limit: z.number().int().min(1).max(100).default(10),
+  }),
+  async execute({ query, limit }) {
+    const search = await searchServer;
+    return await search.searchAsync(query, { limit, merge: true, enrich: true });
+  },
+});
+
+export type SearchTool = typeof searchTool;

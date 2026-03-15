@@ -32,9 +32,10 @@ export function EmbedMachine({ name, embedURL }: Embed) {
   const colorMode = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
-    <div ref={containerRef} className="relative my-4">
+    <div ref={containerRef} className="relative my-4" suppressHydrationWarning>
       <iframe
         loading="lazy"
+        suppressHydrationWarning
         src={manageURL(embedURL, {
           colorMode,
         })}

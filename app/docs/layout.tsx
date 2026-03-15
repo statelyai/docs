@@ -1,5 +1,6 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
+import { AISearchPanel } from '@/components/ai/search';
 
 export default function Layout({ children }: LayoutProps<'/docs'>) {
   return (
@@ -623,6 +624,7 @@ export default function Layout({ children }: LayoutProps<'/docs'>) {
       {...baseOptions()}
     >
       {children}
+      <AISearchPanel />
     </DocsLayout>
   );
 }
