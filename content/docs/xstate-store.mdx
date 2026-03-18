@@ -1423,6 +1423,309 @@ store.trigger.dec();
 - **Type safety**: The undo/redo extension preserves all TypeScript types from your original store
 - **Emitted events**: Events emitted during transitions are replayed during undo/redo operations
 
+## Persist
+
+_Since v3.17.0_
+
+The `persist` extension persists store context to storage (such as `localStorage`, `sessionStorage`, or async adapters like React Native's `AsyncStorage`). It automatically saves state after events and restores it when the store is created.
+
+### Basic Usage
+
+Import `persist` from `@xstate/store/persist` and use it with the `.with()` method:
+
+```ts
+import { createStore } from '@xstate/store';
+import { persist } from '@xstate/store/persist';
+
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (ctx) => ({ count: ctx.count + 1 }),
+  },
+}).with(
+  persist({
+    name: 'my-store', // storage key
+  })
+);
+```
+
+The store context will be saved to `localStorage` (default) on every event and automatically restored when the store is created.
+
+### Storage Adapters
+
+By default, `persist` uses `localStorage`. You can provide a custom storage adapter that implements `getItem`, `setItem`, and `removeItem`:
+
+```ts
+// Use sessionStorage
+const store = createStore({
+  context: { count: 0 },
+  on: { inc: (ctx) => ({ count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    storage: sessionStorage,
+  })
+);
+```
+
+For SSR environments, use `createJSONStorage()` which provides a safe fallback when storage is unavailable:
+
+```ts
+import { persist, createJSONStorage } from '@xstate/store/persist';
+
+const store = createStore({
+  context: { count: 0 },
+  on: { inc: (ctx) => ({ count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    storage: createJSONStorage(() => sessionStorage),
+  })
+);
+```
+
+### Selective Persistence
+
+Use `pick` to only persist specific fields from the context:
+
+```ts
+const store = createStore({
+  context: { count: 0, tempData: 'not persisted' },
+  on: { inc: (ctx) => ({ ...ctx, count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    pick: (ctx) => ({ count: ctx.count }),
+  })
+);
+```
+
+### Event Filtering
+
+Use `filter` to prevent certain events from triggering persistence:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (ctx) => ({ count: ctx.count + 1 }),
+    tempChange: (ctx) => ({ count: ctx.count }),
+  },
+}).with(
+  persist({
+    name: 'my-store',
+    filter: (event) => event.type !== 'tempChange',
+  })
+);
+```
+
+### Versioning and Migration
+
+Use `version` and `migrate` for schema management when your context shape changes:
+
+```ts
+const store = createStore({
+  context: { count: 0, label: 'default' },
+  on: { inc: (ctx) => ({ ...ctx, count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    version: 2,
+    migrate: (persisted, version) => {
+      if (version === 1) {
+        return { ...persisted, label: 'migrated' };
+      }
+      return persisted;
+    },
+  })
+);
+```
+
+### Throttled Writes
+
+Use `throttle` to limit how frequently data is written to storage:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: { inc: (ctx) => ({ count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    throttle: 1000, // write at most once per second
+  })
+);
+```
+
+Use `flushStorage(store)` to force an immediate write of any pending throttled data:
+
+```ts
+import { flushStorage } from '@xstate/store/persist';
+
+// Force write pending changes
+flushStorage(store);
+```
+
+### Custom Serialization
+
+Use `serialize` and `deserialize` for custom encoding/decoding:
+
+```ts
+const store = createStore({
+  context: { date: new Date() },
+  on: {
+    setDate: (ctx, e: { date: Date }) => ({ date: e.date }),
+  },
+}).with(
+  persist({
+    name: 'my-store',
+    serialize: (ctx) => JSON.stringify({
+      date: ctx.date.toISOString(),
+    }),
+    deserialize: (str) => {
+      const parsed = JSON.parse(str);
+      return { date: new Date(parsed.date) };
+    },
+  })
+);
+```
+
+### Manual Hydration
+
+By default, the store is hydrated automatically on creation. To control when hydration happens, use `skipHydration` and `rehydrateStore()`:
+
+```ts
+import { persist, rehydrateStore, isHydrated } from '@xstate/store/persist';
+
+const store = createStore({
+  context: { count: 0 },
+  on: { inc: (ctx) => ({ count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    skipHydration: true,
+  })
+);
+
+isHydrated(store); // false
+
+// Manually rehydrate later (async)
+await rehydrateStore(store);
+
+isHydrated(store); // true
+```
+
+### Event Strategy
+
+By default, `persist` uses the `'snapshot'` strategy which saves the context directly. You can use the `'event'` strategy to persist the event log instead and replay events on rehydration:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: {
+    inc: (ctx) => ({ count: ctx.count + 1 }),
+  },
+}).with(
+  persist({
+    name: 'my-store',
+    strategy: 'event',
+    maxEvents: 100, // checkpoint after 100 events
+  })
+);
+```
+
+With the event strategy:
+- Events are persisted instead of context snapshots
+- On rehydration, events are replayed to reconstruct state
+- `maxEvents` creates automatic checkpoints to limit replay time and storage size
+
+### Clearing Persisted Data
+
+Use `clearStorage()` to remove persisted data:
+
+```ts
+import { clearStorage } from '@xstate/store/persist';
+
+clearStorage(store);
+```
+
+### Callbacks
+
+Use `onDone` and `onError` to handle persistence success and failure:
+
+```ts
+const store = createStore({
+  context: { count: 0 },
+  on: { inc: (ctx) => ({ count: ctx.count + 1 }) },
+}).with(
+  persist({
+    name: 'my-store',
+    onDone: () => console.log('Persisted successfully'),
+    onError: (err) => console.error('Persist failed', err),
+  })
+);
+```
+
+## Reset
+
+_Since v3.17.0_
+
+The `reset` extension allows you to reset the store context back to its initial state. This is useful for clearing form data, resetting user sessions, or returning to a known state.
+
+### Basic Usage
+
+Import `reset` from `@xstate/store/reset` and use it with the `.with()` method. The store will have a `reset()` method available on `store.trigger`:
+
+```ts
+import { createStore } from '@xstate/store';
+import { reset } from '@xstate/store/reset';
+
+const store = createStore({
+  context: { count: 0, name: 'Ada' },
+  on: {
+    inc: (ctx) => ({ ...ctx, count: ctx.count + 1 }),
+    setName: (ctx, e: { name: string }) => ({ ...ctx, name: e.name }),
+  },
+}).with(reset());
+
+store.trigger.inc();
+store.trigger.setName({ name: 'Bob' });
+store.getSnapshot().context;
+// => { count: 1, name: 'Bob' }
+
+store.trigger.reset();
+store.getSnapshot().context;
+// => { count: 0, name: 'Ada' }
+```
+
+### Partial Reset
+
+You can customize what the store resets to using the `to` option. This function receives the initial `context` and current `context`, letting you preserve specific fields:
+
+```ts
+const store = createStore({
+  context: { count: 0, user: null as string | null },
+  on: {
+    inc: (ctx) => ({ ...ctx, count: ctx.count + 1 }),
+    login: (ctx, e: { user: string }) => ({ ...ctx, user: e.user }),
+  },
+}).with(
+  reset({
+    to: (initial, current) => ({ ...initial, user: current.user }),
+  })
+);
+
+store.trigger.inc();
+store.trigger.inc();
+store.trigger.login({ user: 'Alice' });
+store.getSnapshot().context;
+// => { count: 2, user: 'Alice' }
+
+store.trigger.reset();
+store.getSnapshot().context;
+// => { count: 0, user: 'Alice' } — count reset, user preserved
+```
+
 ## Using XState Store with XState
 
 You may notice that stores are very similar to [actors in XState](./actors). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
