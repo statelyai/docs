@@ -139,13 +139,13 @@ const subscription = actor.subscribe((snapshot) => {
 ```ts
 // Observer as an object
 const subscription = actor.subscribe({
-  next(snapshot) {
+  next: (snapshot) => {
     console.log(snapshot);
   },
-  error(err) {
+  error: (err) => {
     // ...
   },
-  complete() {
+  complete: () => {
     // ...
   },
 });
