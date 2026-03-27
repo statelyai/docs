@@ -33,3 +33,11 @@ yarn-error.log*
 
 # Next.js
 .next
+
+# outputs
+.turbo
+.next
+dist
+.contentlayer
+.eslintcache
+.source
