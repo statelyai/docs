@@ -10,8 +10,13 @@ type Embed = {
 
 export function EmbedMachine({ name, embedURL }: Embed) {
   const [isActive, setIsActive] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isActive) return;
@@ -32,20 +37,23 @@ export function EmbedMachine({ name, embedURL }: Embed) {
   const colorMode = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
-    <div ref={containerRef} className="relative my-4" suppressHydrationWarning>
-      <iframe
-        loading="lazy"
-        suppressHydrationWarning
-        src={manageURL(embedURL, {
-          colorMode,
-        })}
-        className="block w-full aspect-video"
-      >
-        <a href={embedURL}>
-          View the <em>{name}</em> machine in Stately Studio
-        </a>
-        .
-      </iframe>
+    <div ref={containerRef} className="relative my-4">
+      {mounted ? (
+        <iframe
+          loading="lazy"
+          src={manageURL(embedURL, {
+            colorMode,
+          })}
+          className="block w-full aspect-video"
+        >
+          <a href={embedURL}>
+            View the <em>{name}</em> machine in Stately Studio
+          </a>
+          .
+        </iframe>
+      ) : (
+        <div className="block w-full aspect-video" />
+      )}
       {!isActive && (
         <div
           className="absolute inset-0 cursor-pointer bg-transparent hover:bg-black/5 flex items-center justify-center group"
