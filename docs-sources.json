@@ -1,1 +1,7 @@
-["graph"]
+[
+  {
+    "name": "Graph",
+    "package": "graph",
+    "source": "graph"
+  }
+]

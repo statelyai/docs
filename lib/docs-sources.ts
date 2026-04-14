@@ -1,6 +1,12 @@
 import docsSourcesJson from '../docs-sources.json';
 
-const docsSources = docsSourcesJson as string[];
+export type DocsSourceConfig = {
+  name: string;
+  package: string;
+  source: string;
+};
+
+const docsSources = docsSourcesJson as DocsSourceConfig[];
 
 function parseEnabledSourceOverride(value: string | undefined): Set<string> | 'all' {
   if (!value) return new Set();
@@ -11,6 +17,18 @@ function parseEnabledSourceOverride(value: string | undefined): Set<string> | 'a
     .filter(Boolean);
 
   return ids.includes('*') ? 'all' : new Set(ids);
+}
+
+function normalizeSourcePath(source: string): string {
+  return source.replace(/^\/+|\/+$/g, '');
+}
+
+export function getDocsSourceRepo(source: string): string {
+  return normalizeSourcePath(source).split('/')[0] ?? source;
+}
+
+export function getDocsSourceSubpath(source: string): string {
+  return normalizeSourcePath(source).split('/').slice(1).join('/');
 }
 
 const enabledSourceOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
@@ -24,8 +42,8 @@ export function isDocsSourceEnabled(sourceId: string): boolean {
   return true;
 }
 
-export function getProjectRepo(project: string): string {
-  return `statelyai/${project}`;
+export function getProjectRepo(repo: string): string {
+  return `statelyai/${repo}`;
 }
 
 export function getProjectBranch(): string {
@@ -36,28 +54,24 @@ export function getProjectDocsDir(): string {
   return 'docs';
 }
 
-export function getProjectEditUrlBase(project: string): string {
-  return `https://github.com/${getProjectRepo(project)}/blob/${getProjectBranch()}/${getProjectDocsDir()}`;
-}
-
 export function normalizeRoute(route: string | string[]): string {
   if (Array.isArray(route)) return route.join('/');
   return route.replace(/^\/+|\/+$/g, '');
 }
 
-export function getProjectRoutePrefix(project: string): string {
-  return `packages/${project}`;
+export function getProjectRoutePrefix(packageName: string): string {
+  return `packages/${packageName}`;
 }
 
-export function prefixRoute(project: string, route: string): string {
+export function prefixRoute(packageName: string, route: string): string {
   const normalized = normalizeRoute(route);
-  const prefix = getProjectRoutePrefix(project);
+  const prefix = getProjectRoutePrefix(packageName);
   return normalized ? `${prefix}/${normalized}` : prefix;
 }
 
-export function stripProjectPrefix(project: string, pagePath: string): string {
+export function stripProjectPrefix(packageName: string, pagePath: string): string {
   const normalized = pagePath.replace(/^\/+/, '');
-  const prefix = getProjectRoutePrefix(project);
+  const prefix = getProjectRoutePrefix(packageName);
 
   if (normalized === prefix) return 'index.md';
 
@@ -70,9 +84,13 @@ export function stripProjectPrefix(project: string, pagePath: string): string {
 }
 
 export const docsSourceConfigs = docsSources;
-export const enabledExternalDocsSources = docsSourceConfigs.filter((sourceId) =>
-  isDocsSourceEnabled(sourceId),
+export const enabledExternalDocsSources = docsSourceConfigs.filter((sourceConfig) =>
+  isDocsSourceEnabled(sourceConfig.package),
 );
+
+export function getDocsSourceByPackage(packageName: string): DocsSourceConfig | undefined {
+  return docsSourceConfigs.find((sourceConfig) => sourceConfig.package === packageName);
+}
 
 export function getDocsPageGitHubUrl(sourceId: string, pagePath: string): string {
   const normalizedPath = pagePath.replace(/^\/+/, '');
@@ -81,7 +99,12 @@ export function getDocsPageGitHubUrl(sourceId: string, pagePath: string): string
     return `https://github.com/statelyai/docs/blob/main/content/docs/${normalizedPath}`;
   }
 
-  return `${getProjectEditUrlBase(sourceId)}/${stripProjectPrefix(
+  const sourceConfig = getDocsSourceByPackage(sourceId);
+  if (!sourceConfig) {
+    return `https://github.com/statelyai/docs/blob/main/content/docs/${normalizedPath}`;
+  }
+
+  return `https://github.com/${getProjectRepo(getDocsSourceRepo(sourceConfig.source))}/blob/${getProjectBranch()}/${stripProjectPrefix(
     sourceId,
     normalizedPath,
   )}`;

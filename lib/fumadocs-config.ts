@@ -16,7 +16,11 @@ import z from 'zod';
 
 const sharedDocsCollectionOptions = {
   docs: {
-    schema: frontmatterSchema,
+    schema: frontmatterSchema.extend({
+      slug: z.string().optional(),
+      sourcePath: z.string().optional(),
+      sourceUrl: z.string().url().optional(),
+    }),
     postprocess: {
       includeProcessedMarkdown: true,
     },

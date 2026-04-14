@@ -1,7 +1,8 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { AISearchPanel } from '@/components/ai/search';
-import { enabledExternalDocsSources } from '@/lib/docs-sources';
+import { enabledExternalDocsSources, getProjectRoutePrefix } from '@/lib/docs-sources';
 import { baseOptions } from '@/lib/layout.shared';
+import { source } from '@/lib/source';
 
 function formatProjectName(project: string) {
   return project
@@ -11,11 +12,41 @@ function formatProjectName(project: string) {
     .join(' ');
 }
 
-const externalProjectPages = enabledExternalDocsSources.map((project) => ({
-  type: 'page' as const,
-  name: formatProjectName(project),
-  url: `/docs/packages/${project}`,
-}));
+const externalProjectPages = enabledExternalDocsSources.map((sourceConfig) => {
+  const routePrefix = `/docs/${getProjectRoutePrefix(sourceConfig.package)}`;
+  const pages = source
+    .getPages()
+    .filter((page) => page.url === routePrefix || page.url.startsWith(`${routePrefix}/`))
+    .sort((a, b) => a.url.localeCompare(b.url));
+
+  const indexPage = pages.find((page) => page.url === routePrefix);
+  const childPages = pages
+    .filter((page) => page.url !== routePrefix)
+    .map((page) => ({
+      type: 'page' as const,
+      name: page.data.title,
+      url: page.url,
+    }));
+
+  if (childPages.length === 0) {
+    return {
+      type: 'page' as const,
+      name: sourceConfig.name ?? indexPage?.data.title ?? formatProjectName(sourceConfig.package),
+      url: routePrefix,
+    };
+  }
+
+  return {
+    name: sourceConfig.name ?? formatProjectName(sourceConfig.package),
+    type: 'folder' as const,
+    index: {
+      type: 'page' as const,
+      name: indexPage?.data.title ?? 'Overview',
+      url: routePrefix,
+    },
+    children: childPages,
+  };
+});
 
 const tree = {
   name: 'docs',

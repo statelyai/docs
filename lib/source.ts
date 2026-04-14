@@ -65,14 +65,14 @@ function validateDocsSourceOwnership(source: Source) {
 
     if (sourceId === 'docs') {
       const conflictingExternalSource = enabledExternalDocsSources.find(
-        (project) =>
-          route === getProjectRoutePrefix(project) ||
-          route.startsWith(`${getProjectRoutePrefix(project)}/`),
+        (sourceConfig) =>
+          route === getProjectRoutePrefix(sourceConfig.package) ||
+          route.startsWith(`${getProjectRoutePrefix(sourceConfig.package)}/`),
       );
 
       if (conflictingExternalSource) {
         throw new Error(
-          `Local docs page "${route || '/docs'}" conflicts with the reserved "/docs/${getProjectRoutePrefix(conflictingExternalSource)}" namespace.`,
+          `Local docs page "${route || '/docs'}" conflicts with the reserved "/docs/${getProjectRoutePrefix(conflictingExternalSource.package)}" namespace.`,
         );
       }
 
@@ -126,6 +126,10 @@ export function getBlogImage(page: InferPageType<typeof blog>) {
 }
 
 export function getPageGitHubUrl(page: InferPageType<typeof source>) {
+  if (page.data.sourceUrl) {
+    return page.data.sourceUrl;
+  }
+
   return getDocsPageGitHubUrl(page.data.type, page.path);
 }
 

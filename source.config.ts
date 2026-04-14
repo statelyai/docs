@@ -15,10 +15,10 @@ export const blogPosts = createBlogCollection('content/blog');
 
 export default createGlobalConfig({
   workspaces: Object.fromEntries(
-    enabledExternalDocsSources.map((project) => [
-      project,
+    enabledExternalDocsSources.map((sourceConfig) => [
+      sourceConfig.package,
       {
-        dir: getProjectCheckoutDir(project),
+        dir: getProjectCheckoutDir(sourceConfig.package),
         config: createDocsWorkspaceModule(getProjectDocsDir()),
       },
     ]),

@@ -81,7 +81,7 @@ function queueGenerate(reason) {
 function isProjectFileRelevant(relativePath) {
   const normalized = relativePath.replace(/\\/g, '/');
   return (
-    /^readme\.(md|mdx)$/i.test(normalized) ||
+    /(^|\/)readme\.(md|mdx)$/i.test(normalized) ||
     normalized === 'docs' ||
     normalized.startsWith('docs/')
   );
@@ -89,6 +89,10 @@ function isProjectFileRelevant(relativePath) {
 
 async function readProjects() {
   return JSON.parse(await readFile(manifestPath, 'utf8'));
+}
+
+function getSourceRepo(source) {
+  return String(source).replace(/^\/+|\/+$/g, '').split('/')[0];
 }
 
 function closeWatchers() {
@@ -116,9 +120,16 @@ async function reloadWatchers() {
   });
 
   const projects = await readProjects();
+  const repos = new Map();
 
   for (const project of projects) {
-    const projectDir = path.resolve(rootDir, '..', project);
+    const repo = getSourceRepo(project.source);
+    if (!repo || repos.has(repo)) continue;
+    repos.set(repo, project);
+  }
+
+  for (const [repo] of repos) {
+    const projectDir = path.resolve(rootDir, '..', repo);
     if (!(await exists(projectDir))) continue;
 
     addWatcher(
@@ -127,13 +138,13 @@ async function reloadWatchers() {
       (_, filename) => {
         if (!filename) return;
         if (!isProjectFileRelevant(filename)) return;
-        queueGenerate(`${project}/${filename}`);
+        queueGenerate(`${repo}/${filename}`);
       },
     );
   }
 
   console.log(
-    `[docs-watch] watching ${projects.length} project${projects.length === 1 ? '' : 's'}`,
+    `[docs-watch] watching ${repos.size} project${repos.size === 1 ? '' : 's'}`,
   );
 }
 
