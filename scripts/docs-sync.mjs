@@ -78,6 +78,16 @@ function getProjectDocsDir() {
   return 'docs';
 }
 
+function getProjectSparseCheckoutEntries() {
+  return [
+    `/${getProjectDocsDir()}/`,
+    '/README.md',
+    '/README.mdx',
+    '/readme.md',
+    '/readme.mdx',
+  ];
+}
+
 function getProjectRoutePrefix(project) {
   return path.join('packages', project);
 }
@@ -199,17 +209,13 @@ async function syncProject(project) {
     run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
   }
 
-  run('git', ['sparse-checkout', 'init', '--cone'], checkoutDir);
+  run('git', ['sparse-checkout', 'init', '--no-cone'], checkoutDir);
   run(
     'git',
     [
       'sparse-checkout',
       'set',
-      getProjectDocsDir(),
-      'README.md',
-      'README.mdx',
-      'readme.md',
-      'readme.mdx',
+      ...getProjectSparseCheckoutEntries(),
     ],
     checkoutDir,
   );
