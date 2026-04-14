@@ -1,60 +1,26 @@
 import {
-  defineCollections,
-  defineConfig,
-  defineDocs,
-  frontmatterSchema,
-  metaSchema,
-} from 'fumadocs-mdx/config';
-import { transformerTwoslash } from 'fumadocs-twoslash';
+  createBlogCollection,
+  createDocsCollection,
+  createDocsWorkspaceModule,
+  createGlobalConfig,
+} from './lib/fumadocs-config';
 import {
-  rehypeCodeDefaultOptions,
-  remarkImage,
-} from 'fumadocs-core/mdx-plugins';
-import z from 'zod';
+  enabledExternalDocsSources,
+  getProjectDocsDir,
+} from './lib/docs-sources';
+import { getProjectCheckoutDir } from './lib/docs-workspaces';
 
-// You can customise Zod schemas for frontmatter and `meta.json` here
-// see https://fumadocs.dev/docs/mdx/collections
-export const docs = defineDocs({
-  docs: {
-    schema: frontmatterSchema,
-    postprocess: {
-      includeProcessedMarkdown: true,
-    },
-  },
-  meta: {
-    schema: metaSchema,
-  },
-});
+export const docs = createDocsCollection('content/docs');
+export const blogPosts = createBlogCollection('content/blog');
 
-export const blogPosts = defineCollections({
-  type: 'doc',
-  dir: 'content/blog',
-  schema: frontmatterSchema.extend({
-    authors: z.array(z.string()),
-    date: z.iso.date().or(z.date()),
-  }),
-});
-
-export default defineConfig({
-  mdxOptions: {
-    // MDX options
-    rehypeCodeOptions: {
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark',
+export default createGlobalConfig({
+  workspaces: Object.fromEntries(
+    enabledExternalDocsSources.map((project) => [
+      project,
+      {
+        dir: getProjectCheckoutDir(project),
+        config: createDocsWorkspaceModule(getProjectDocsDir()),
       },
-      transformers: [
-        ...(rehypeCodeDefaultOptions.transformers ?? []),
-        transformerTwoslash(),
-      ],
-    },
-    remarkPlugins: [
-      [
-        remarkImage,
-        {
-          external: false,
-        },
-      ],
-    ],
-  },
+    ]),
+  ),
 });

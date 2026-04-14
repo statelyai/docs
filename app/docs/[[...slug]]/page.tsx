@@ -1,4 +1,4 @@
-import { getPageImage, source } from '@/lib/source';
+import { getPageGitHubUrl, getPageImage, source } from '@/lib/source';
 import {
   DocsBody,
   DocsDescription,
@@ -27,7 +27,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
           <ViewOptions
             markdownUrl={`${page.url}.mdx`}
-            githubUrl={`https://github.com/statelyai/docs/blob/main/content/docs/${page.path}`}
+            githubUrl={getPageGitHubUrl(page)}
           />
         </div>
         <MDX

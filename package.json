@@ -6,11 +6,14 @@
     "node": "24.x"
   },
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbo",
+    "build": "node scripts/docs-sync.mjs && next build",
+    "dev": "node scripts/docs-sync.mjs && next dev --turbo",
+    "docs:generate": "node scripts/docs-sync.mjs && fumadocs-mdx",
+    "docs:sync": "node scripts/docs-sync.mjs",
+    "docs:watch": "node scripts/docs-watch.mjs",
     "start": "next start",
-    "postinstall": "fumadocs-mdx",
-    "lint": "eslint"
+    "postinstall": "node scripts/docs-sync.mjs && fumadocs-mdx",
+    "lint": "node scripts/docs-sync.mjs && eslint"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.41",
