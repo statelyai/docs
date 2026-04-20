@@ -1,47 +1,34 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { AISearchPanel } from '@/components/ai/search';
-import { enabledExternalDocsSources, getProjectRoutePrefix } from '@/lib/docs-sources';
+import { AISearchPanel } from '@/components/ai/search-panel';
+import { getProjectRoutePrefix } from '@/lib/docs-sources';
+import { externalDocsNav } from '@/lib/external-docs-nav.generated';
 import { baseOptions } from '@/lib/layout.shared';
-import { source } from '@/lib/source';
 
-function formatProjectName(project: string) {
-  return project
-    .split(/[-_/]+/)
-    .filter(Boolean)
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(' ');
-}
-
-const externalProjectPages = enabledExternalDocsSources.map((sourceConfig) => {
+const externalProjectPages = externalDocsNav.map((sourceConfig) => {
   const routePrefix = `/docs/${getProjectRoutePrefix(sourceConfig.package)}`;
-  const pages = source
-    .getPages()
-    .filter((page) => page.url === routePrefix || page.url.startsWith(`${routePrefix}/`))
-    .sort((a, b) => a.url.localeCompare(b.url));
-
-  const indexPage = pages.find((page) => page.url === routePrefix);
-  const childPages = pages
+  const indexPage = sourceConfig.pages.find((page) => page.url === routePrefix);
+  const childPages = sourceConfig.pages
     .filter((page) => page.url !== routePrefix)
     .map((page) => ({
       type: 'page' as const,
-      name: page.data.title,
+      name: page.title,
       url: page.url,
     }));
 
   if (childPages.length === 0) {
     return {
       type: 'page' as const,
-      name: sourceConfig.name ?? indexPage?.data.title ?? formatProjectName(sourceConfig.package),
+      name: sourceConfig.name,
       url: routePrefix,
     };
   }
 
   return {
-    name: sourceConfig.name ?? formatProjectName(sourceConfig.package),
+    name: sourceConfig.name,
     type: 'folder' as const,
     index: {
       type: 'page' as const,
-      name: indexPage?.data.title ?? 'Overview',
+      name: indexPage?.title ?? 'Overview',
       url: routePrefix,
     },
     children: childPages,

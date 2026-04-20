@@ -18,7 +18,7 @@ export default createGlobalConfig({
     enabledExternalDocsSources.map((sourceConfig) => [
       sourceConfig.package,
       {
-        dir: getProjectCheckoutDir(sourceConfig.package),
+        dir: getProjectCheckoutDir(sourceConfig.package, sourceConfig.mode),
         config: createDocsWorkspaceModule(getProjectDocsDir()),
       },
     ]),

@@ -3,8 +3,10 @@
  * Do not edit manually.
  */
 import { docs as docsSource0 } from 'collections/graph/server';
+import { docs as docsSource1 } from 'collections/sdk/server';
 
 
 export const externalDocsCollections = {
   "graph": docsSource0,
+  "sdk": docsSource1,
 } as const;

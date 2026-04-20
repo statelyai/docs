@@ -4,6 +4,7 @@ export type DocsSourceConfig = {
   name: string;
   package: string;
   source: string;
+  mode?: 'snapshot';
 };
 
 const docsSources = docsSourcesJson as DocsSourceConfig[];

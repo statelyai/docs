@@ -16,7 +16,9 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
   const page = blog.getPage([params.slug]);
 
   if (!page) notFound();
-  const data = page.data as any;
+  const data = (
+    'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data
+  ) as any;
   const { body: Mdx, toc } = data;
 
   return (
@@ -64,6 +66,10 @@ export async function generateMetadata(
 }
 
 export function generateStaticParams(): { slug: string }[] {
+  if (process.env.NODE_ENV === 'development') {
+    return [];
+  }
+
   return blog.getPages().map((page) => ({
     slug: page.slugs[0],
   }));

@@ -1,23 +1,46 @@
-import { getPageGitHubUrl, getPageImage, source } from '@/lib/source';
+import type { Metadata } from 'next';
+import type React from 'react';
+import { notFound } from 'next/navigation';
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import {
+  getExternalPackageStaticParams,
+  getPageGitHubUrl,
+  getPageImage,
+} from '@/lib/external-package-source';
+import { source } from '@/lib/source';
+import { getMDXComponents } from '@/mdx-components';
 import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
-import { isExternalDocsSlug } from '@/lib/external-package-source';
 
-export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
+type RenderableDocsData = {
+  body: React.ComponentType<{
+    components?: ReturnType<typeof getMDXComponents>;
+  }>;
+  description?: string;
+  full?: boolean;
+  title: string;
+  toc: React.ComponentProps<typeof DocsPage>['toc'];
+};
+
+function getPackagePage(packageName: string, slugs: string[] = []) {
+  return source.getPage(['packages', packageName, ...slugs]);
+}
+
+export default async function Page(
+  props: PageProps<'/docs/packages/[package]/[[...slug]]'>,
+) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = getPackagePage(params.package, params.slug);
   if (!page) notFound();
 
-  const data = 'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
+  const data = (
+    'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data
+  ) as unknown as RenderableDocsData;
   const MDX = data.body;
 
   return (
@@ -34,7 +57,6 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         </div>
         <MDX
           components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
             a: createRelativeLink(source as any, page),
           })}
         />
@@ -43,21 +65,19 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   );
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   if (process.env.NODE_ENV === 'development') {
     return [];
   }
 
-  return source
-    .generateParams()
-    .filter((params) => !isExternalDocsSlug(params.slug));
+  return getExternalPackageStaticParams();
 }
 
 export async function generateMetadata(
-  props: PageProps<'/docs/[[...slug]]'>,
+  props: PageProps<'/docs/packages/[package]/[[...slug]]'>,
 ): Promise<Metadata> {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = getPackagePage(params.package, params.slug);
   if (!page) notFound();
 
   return {

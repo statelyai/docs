@@ -18,6 +18,11 @@ const generatedModulePath = path.join(
   'lib',
   'external-docs.generated.ts',
 );
+const generatedNavPath = path.join(
+  rootDir,
+  'lib',
+  'external-docs-nav.generated.ts',
+);
 
 const markdownExtensions = new Set(['.md', '.mdx']);
 const ignoredDirectoryNames = new Set([
@@ -102,6 +107,7 @@ function getSourceSubpath(source) {
 function normalizeDocsSourceConfig(config) {
   return {
     ...config,
+    mode: config.mode,
     package: String(config.package),
     repo: getSourceRepo(config.source),
     source: normalizeSourcePath(config.source),
@@ -119,6 +125,18 @@ function getRemoteProjectDir(repo) {
 
 function getGeneratedProjectDir(packageName) {
   return path.resolve(rootDir, '.cache', 'docs-workspaces', packageName);
+}
+
+function getSnapshotProjectDir(packageName) {
+  return path.resolve(rootDir, 'external-docs', packageName);
+}
+
+function getOutputProjectDir(project) {
+  if (project.mode === 'snapshot') {
+    return getSnapshotProjectDir(project.package);
+  }
+
+  return getGeneratedProjectDir(project.package);
 }
 
 function getProjectRepo(repo) {
@@ -148,6 +166,10 @@ function getProjectDocsUrl(packageName, slug) {
 
 function getSourceUrl(repo, sourcePath) {
   return `https://github.com/${getProjectRepo(repo)}/blob/${getProjectBranch()}/${sourcePath}`;
+}
+
+function getSnapshotSourceUrl(packageName, outputPath) {
+  return `https://github.com/statelyai/docs/blob/main/external-docs/${packageName}/${outputPath}`;
 }
 
 function isMarkdownPath(filePath) {
@@ -333,6 +355,7 @@ function deriveSlug(sourcePath, slugOverride) {
 
 function deriveDescription(body) {
   const normalized = body
+    .replace(/<!--[\s\S]*?-->/gu, '')
     .replace(/```[\s\S]*?```/gu, '')
     .replace(/!\[([^\]]*)\]\([^)]+\)/gu, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/gu, '$1')
@@ -590,6 +613,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
   const generatedAssetPaths = new Map();
   const generatedFiles = [];
+  const navPages = [];
 
   for (const entry of entries) {
     const fileName = `${entry.slug}${entry.extension}`;
@@ -597,6 +621,14 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       entry.slug === 'index'
         ? `index${entry.extension}`
         : fileName;
+    const outputPath = normalizePath(path.join(getProjectDocsDir(), filePath));
+    const outputEntry = {
+      ...entry,
+      sourceUrl:
+        project.mode === 'snapshot'
+          ? getSnapshotSourceUrl(project.package, outputPath)
+          : entry.sourceUrl,
+    };
     const finalBody = await rewriteEntryBody(
       entry,
       docsEntriesBySourcePath,
@@ -608,12 +640,17 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
     await writeFile(
       path.join(generatedDocsDir, filePath),
-      `${buildEntryFrontmatter(entry)}${finalBody}`,
+      `${buildEntryFrontmatter(outputEntry)}${finalBody}`,
     );
 
     generatedFiles.push({
-      outputPath: normalizePath(path.join(getProjectDocsDir(), filePath)),
+      outputPath,
       sourcePath: entry.sourcePath,
+    });
+
+    navPages.push({
+      title: entry.title,
+      url: getProjectDocsUrl(project.package, entry.slug),
     });
   }
 
@@ -630,7 +667,41 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
     });
   }
 
-  return generatedFiles.sort((a, b) => a.outputPath.localeCompare(b.outputPath));
+  return {
+    files: generatedFiles.sort((a, b) => a.outputPath.localeCompare(b.outputPath)),
+    navPages: navPages.sort((a, b) => {
+      if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
+      if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+      return a.url.localeCompare(b.url);
+    }),
+  };
+}
+
+async function collectSnapshotNavPages(project, generatedDocsDir) {
+  const files = await listProjectFiles(generatedDocsDir);
+  const navPages = [];
+
+  for (const file of files) {
+    if (file.startsWith('_assets/')) continue;
+    if (!isMarkdownPath(file)) continue;
+
+    const content = await readFile(path.join(generatedDocsDir, file), 'utf8');
+    const { raw } = parseFrontmatter(content);
+    const title = parseFrontmatterValue(raw, 'title');
+    if (!title) continue;
+
+    const slug = file.replace(/\.(md|mdx)$/iu, '');
+    navPages.push({
+      title,
+      url: getProjectDocsUrl(project.package, slug === 'index' ? 'index' : slug),
+    });
+  }
+
+  return navPages.sort((a, b) => {
+    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    return a.url.localeCompare(b.url);
+  });
 }
 
 function getExcludedSourcePrefixes(docsSource, allSources) {
@@ -672,6 +743,12 @@ function validateDocsSources(docsSources) {
     if (!docsSource.repo) {
       throw new Error(
         `Docs source "${docsSource.package}" must define a valid "source" field.`,
+      );
+    }
+
+    if (docsSource.mode && docsSource.mode !== 'snapshot') {
+      throw new Error(
+        `Unsupported docs source mode "${docsSource.mode}" for package "${docsSource.package}".`,
       );
     }
 
@@ -727,10 +804,14 @@ async function syncProject(project) {
   const localProjectDir = getLocalProjectDir(project.repo);
   let sourceRootDir;
   let sourceKind;
+  let useExistingSnapshot = false;
 
   if (await exists(localProjectDir)) {
     sourceRootDir = localProjectDir;
     sourceKind = 'local';
+  } else if (project.mode === 'snapshot') {
+    useExistingSnapshot = true;
+    sourceKind = 'snapshot';
   } else {
     const checkoutDir = getRemoteProjectDir(project.repo);
     const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
@@ -751,6 +832,25 @@ async function syncProject(project) {
     sourceKind = 'remote-cache';
   }
 
+  const generatedRootDir = getOutputProjectDir(project);
+  const generatedDocsDir = path.join(generatedRootDir, getProjectDocsDir());
+
+  if (useExistingSnapshot) {
+    if (!(await exists(generatedDocsDir))) {
+      throw new Error(
+        `Docs source "${project.package}" is snapshot mode, but no local source repo or committed snapshot exists at ${path.relative(rootDir, generatedDocsDir)}.`,
+      );
+    }
+
+    return {
+      docsDir: generatedDocsDir,
+      files: [],
+      navPages: await collectSnapshotNavPages(project, generatedDocsDir),
+      project: project.package,
+      source: sourceKind,
+    };
+  }
+
   const sourceBaseDir = project.sourceSubpath
     ? path.join(sourceRootDir, project.sourceSubpath)
     : sourceRootDir;
@@ -761,13 +861,10 @@ async function syncProject(project) {
     );
   }
 
-  const generatedRootDir = getGeneratedProjectDir(project.package);
-  const generatedDocsDir = path.join(generatedRootDir, getProjectDocsDir());
-
   await rm(generatedRootDir, { recursive: true, force: true });
   await mkdir(generatedDocsDir, { recursive: true });
 
-  const files = await writeFlattenedDocs(
+  const { files, navPages } = await writeFlattenedDocs(
     {
       ...project,
       sourceBaseDir,
@@ -779,6 +876,7 @@ async function syncProject(project) {
   return {
     docsDir: generatedDocsDir,
     files,
+    navPages,
     project: project.package,
     source: sourceKind,
   };
@@ -828,6 +926,27 @@ ${entries.join('\n')}
   await writeFile(generatedModulePath, content);
 }
 
+async function writeGeneratedNav(results, enabledProjects) {
+  const navByPackage = new Map(
+    results.map((result) => [result.project, result.navPages ?? []]),
+  );
+
+  const entries = enabledProjects.map((project) => ({
+    name: project.name,
+    package: project.package,
+    pages: navByPackage.get(project.package) ?? [],
+  }));
+
+  const content = `/**
+ * Generated by \`scripts/docs-sync.mjs\`.
+ * Do not edit manually.
+ */
+export const externalDocsNav = ${JSON.stringify(entries, null, 2)} as const;
+`;
+
+  await writeFile(generatedNavPath, content);
+}
+
 async function main() {
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   const enabledOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
@@ -856,6 +975,7 @@ async function main() {
 
   printSyncSummary(results);
   await writeGeneratedModule(enabledProjects);
+  await writeGeneratedNav(results, enabledProjects);
 }
 
 main().catch((error) => {

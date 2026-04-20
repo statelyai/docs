@@ -55,7 +55,14 @@ The external docs manifest lives in `docs-sources.json`:
 
 ```json
 [
-  { "name": "Graph", "package": "graph", "source": "graph" }
+  { "name": "Graph", "package": "graph", "source": "graph" },
+  {
+    "name": "SDK",
+    "package": "sdk",
+    "source": "viz/packages/sdk",
+    "mode": "snapshot"
+  },
+  { "name": "Viz", "package": "viz", "source": "viz", "mode": "snapshot" }
 ]
 ```
 
@@ -64,6 +71,8 @@ Each entry means:
 - `name`: display name in the docs sidebar
 - `package`: public route segment under `/docs/packages/<package>`
 - `source`: repo root or repo subpath to scan for docs content
+- `mode`: optional; use `"snapshot"` to commit generated docs for private
+  sources instead of fetching the repo during deployment
 
 ### How Sync Works
 
@@ -83,6 +92,10 @@ For each manifest entry, it:
 
 The generated workspace is what `source.config.ts` points Fumadocs at. The app
 never copies external docs into `content/docs`.
+
+Snapshot sources are different: they write to `external-docs/<package>` so the
+generated docs can be committed. In CI, if the private local source repo is not
+available, the sync step uses the committed snapshot instead of cloning GitHub.
 
 ### Flattening Rules
 

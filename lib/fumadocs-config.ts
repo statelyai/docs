@@ -16,6 +16,7 @@ import z from 'zod';
 
 const sharedDocsCollectionOptions = {
   docs: {
+    async: true,
     schema: frontmatterSchema.extend({
       slug: z.string().optional(),
       sourcePath: z.string().optional(),
@@ -62,6 +63,7 @@ export function createBlogCollection(dir = 'content/blog') {
   return defineCollections({
     type: 'doc',
     dir,
+    async: true,
     schema: frontmatterSchema.extend({
       authors: z.array(z.string()),
       date: z.iso.date().or(z.date()),

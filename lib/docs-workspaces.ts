@@ -16,6 +16,17 @@ export function getGeneratedProjectCheckoutDir(project: string): string {
   return path.resolve(getRepoRoot(), '.cache', 'docs-workspaces', project);
 }
 
-export function getProjectCheckoutDir(project: string): string {
+export function getSnapshotProjectCheckoutDir(project: string): string {
+  return path.resolve(getRepoRoot(), 'external-docs', project);
+}
+
+export function getProjectCheckoutDir(
+  project: string,
+  mode?: 'snapshot',
+): string {
+  if (mode === 'snapshot') {
+    return getSnapshotProjectCheckoutDir(project);
+  }
+
   return getGeneratedProjectCheckoutDir(project);
 }

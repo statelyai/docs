@@ -8,16 +8,23 @@ import type { InferPageType } from 'fumadocs-core/source';
 import { source } from '@/lib/source';
 
 async function checkLinks() {
+  const docsPages = await Promise.all(
+    source.getPages().map(async (page) => ({
+      page,
+      headings: await getHeadings(page),
+    })),
+  );
+
   const scanned = await scanURLs({
     // pick a preset for your React framework
     preset: 'next',
     populate: {
-      'docs/[[...slug]]': source.getPages().map((page) => {
+      'docs/[[...slug]]': docsPages.map(({ page, headings }) => {
         return {
           value: {
             slug: page.slugs,
           },
-          hashes: getHeadings(page),
+          hashes: headings,
         };
       }),
     },
@@ -39,8 +46,12 @@ async function checkLinks() {
   );
 }
 
-function getHeadings({ data }: InferPageType<typeof source>): string[] {
-  return data.toc?.map((item) => item.url.slice(1));
+async function getHeadings({
+  data,
+}: InferPageType<typeof source>): Promise<string[]> {
+  const loaded = 'load' in data ? { ...data, ...(await data.load()) } : data;
+
+  return loaded.toc?.map((item) => item.url.slice(1)) ?? [];
 }
 
 function getFiles() {

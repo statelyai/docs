@@ -25,24 +25,34 @@ export async function OPTIONS(request: NextRequest) {
   return NextResponse.json({}, { headers: getCorsHeaders(origin) });
 }
 
-const allPages = [
-  ...source.getPages().map((page) => ({
-    title: page.data.title ?? '',
-    description: page.data.description ?? '',
-    url: page.url,
-    id: page.url,
-    structuredData: page.data.structuredData,
-    tag: 'docs' as const,
-  })),
-  ...blog.getPages().map((page) => ({
-    title: page.data.title ?? '',
-    description: page.data.description ?? '',
-    url: page.url,
-    id: page.url,
-    structuredData: (page.data as any).structuredData,
-    tag: 'blog' as const,
-  })),
-];
+const allPages = await Promise.all([
+  ...source.getPages().map(async (page) => {
+    const data =
+      'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
+
+    return {
+      title: page.data.title ?? '',
+      description: page.data.description ?? '',
+      url: page.url,
+      id: page.url,
+      structuredData: data.structuredData,
+      tag: 'docs' as const,
+    };
+  }),
+  ...blog.getPages().map(async (page) => {
+    const data =
+      'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
+
+    return {
+      title: page.data.title ?? '',
+      description: page.data.description ?? '',
+      url: page.url,
+      id: page.url,
+      structuredData: data.structuredData,
+      tag: 'blog' as const,
+    };
+  }),
+]);
 
 const titleByUrl = new Map(allPages.map((p) => [p.url, p.title.toLowerCase()]));
 

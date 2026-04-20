@@ -3,5 +3,11 @@
     "name": "Graph",
     "package": "graph",
     "source": "graph"
+  },
+  {
+    "name": "SDK",
+    "package": "sdk",
+    "source": "viz/packages/sdk",
+    "mode": "snapshot"
   }
 ]
