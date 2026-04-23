@@ -25,7 +25,7 @@ npm install @statelyai/sdk
 - `createStatelyInspector()` for inspecting live actor systems over WebSockets
 - `createStatelyClient()` for Stately Studio API access
 - graph conversion and codegen helpers such as `fromStudioMachine()`, `toStudioMachine()`, `graphToMachineConfig()`, and `graphToXStateTS()`
-- sync helpers under `@statelyai/sdk/sync` and a `stately` CLI binary
+- sync helpers under `@statelyai/sdk/sync` and a `statelyai` CLI binary
 
 ## Authentication
 
@@ -74,6 +74,7 @@ The common environment variables are:
 | Variable | Purpose |
 | --- | --- |
 | `AUTH_PROVIDER` | Auth strategy used by the editor host |
+| `EDITOR_SYNC_AUTH_REQUIRED` | Set to `false` to disable API-key checks for editor-sync endpoints only |
 | `STATELY_API_KEY` | Server-side API key for Stately data fetching |
 | `STATELY_API_URL` | Stately API base URL override |
 | `NEXT_PUBLIC_BASE_URL` | Public-facing editor URL |
@@ -243,11 +244,13 @@ Key methods:
 
 Creates an embed instance.
 
+<!-- public options of StatelyEmbedOptions from src/embed.ts -->
+
 | Option | Type | Description |
 | --- | --- | --- |
 | `baseUrl` | `string` | **Required.** Base URL of the Stately app |
 | `apiKey` | `string` | API key for hosted Stately deployments |
-| `origin` | `string` | Custom target origin for `postMessage` |
+| `origin` | `string` | Optional strict target origin for `postMessage`; defaults to permissive wildcard messaging for local/self-hosted testing |
 | `assets` | `AssetConfig` | Asset upload configuration |
 | `onReady` | `() => void` | Called when the embed is ready |
 | `onLoaded` | `(graph) => void` | Called when a machine is loaded |
@@ -486,27 +489,35 @@ Supported locators:
 - Stately machine IDs
 - full Stately machine URLs
 
-Installing the package also exposes a `stately` binary:
+Installing the package also exposes a `statelyai` binary:
 
 ```bash
-stately plan ./checkout.machine.ts machine-id
-stately diff ./checkout.machine.ts machine-id --fail-on-changes
-stately pull machine-id ./checkout.machine.ts
+npx statelyai open ./checkout.machine.ts
+
+statelyai plan ./checkout.machine.ts machine-id
+statelyai diff ./checkout.machine.ts machine-id --fail-on-changes
+statelyai pull machine-id ./checkout.machine.ts
+statelyai open ./checkout.machine.ts
 ```
+
+For one-off use, `npx statelyai ...` installs the small `statelyai` CLI package, which delegates to this SDK CLI.
 
 Available commands:
 
 | Command | Description |
 | --- | --- |
-| `stately plan <source> <target>` | Print a semantic sync summary |
-| `stately diff <source> <target>` | Diff two locators and optionally fail on changes |
-| `stately pull <source> <target>` | Materialize a source into a local target file |
+| `statelyai plan <source> <target>` | Print a semantic sync summary |
+| `statelyai diff <source> <target>` | Diff two locators and optionally fail on changes |
+| `statelyai pull <source> <target>` | Materialize a source into a local target file |
+| `statelyai open <file>` | Open a local file in a browser-backed visual editor session |
 
 Common flags:
 
-- `--api-key` for remote machine resolution
+- `--api-key` for remote machine resolution or editor servers that require auth
 - `--base-url` for self-hosted or non-default Stately deployments
 - `--fail-on-changes` to return a nonzero exit code when a diff is detected
+
+`statelyai open` also supports `--api-key`, `--editor-url`, `--host`, `--port`, `--no-open`, and `--debug`. It watches the local file on disk and sends source snapshots to `/api/editor-sync/*` endpoints, which return the text replacements to apply locally. Pass `--api-key` or set `STATELY_API_KEY` when the editor server requires auth. Self-hosted servers can disable editor-sync API-key checks with `EDITOR_SYNC_AUTH_REQUIRED=false`. The private source reconciliation engine is not bundled into the published CLI.
 
 ## Transport Helpers
 

@@ -25,6 +25,11 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/docs/privacy',
+        destination: '/privacy',
+        permanent: true,
+      },
+      {
         source: '/docs/xstate-graph',
         destination: '/docs/graph',
         permanent: true,
