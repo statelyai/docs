@@ -4,7 +4,7 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: 'Privacy',
   description:
-    "The Stately privacy policy outlines how we collect, use, and protect your personal data when you use our platform.",
+    'The Stately privacy policy outlines how we collect, use, and protect your personal data when you use our platform.',
 };
 
 export default function PrivacyPage() {
@@ -14,13 +14,40 @@ export default function PrivacyPage() {
         <div className="container mx-auto max-w-4xl px-6 prose prose-invert prose-fd">
           <h1>Privacy policy</h1>
 
-          <p>Last updated February 2024:</p>
+          <p>Last updated April 2026:</p>
           <ul>
             <li>
               Added information about{' '}
-              <a href="#inspector">Stately Inspector</a>
+              <a href="#data-ownership">data ownership</a>
+            </li>
+            <li>
+              Added information about <a href="#inspector">Stately Inspector</a>
             </li>
           </ul>
+
+          <h2 id="data-ownership">Data ownership</h2>
+          <p>
+            You retain full ownership of any content you create or upload to
+            Stately, including state machines, projects, and any proprietary
+            business logic they contain. We do not claim ownership of your
+            content.
+          </p>
+          <p>
+            We do not sell your content, and we do not use the contents of your
+            machines to train machine learning or AI models. We only access your
+            content to operate and improve the Stately platform (for example, to
+            render your machines in the editor, sync with your connected
+            services, or provide support when you request it).
+          </p>
+          <p>
+            Private projects on paid plans, including the Team plan, are only
+            visible to you and the teammates you explicitly share them with.
+          </p>
+          <p>
+            If you need a Data Processing Agreement (DPA) or custom contractual
+            terms for your organization, please contact{' '}
+            <a href="mailto:support@stately.ai">support@stately.ai</a>.
+          </p>
 
           <h2 id="analytics">Analytics</h2>
           <p>
@@ -127,8 +154,8 @@ export default function PrivacyPage() {
             <a href="https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens">
               Figma tokens
             </a>{' '}
-            to sync your Figma frames when you embed Figma assets. We do not
-            use Figma to collect any information about you.
+            to sync your Figma frames when you embed Figma assets. We do not use
+            Figma to collect any information about you.
           </p>
           <p>
             <a href="https://www.figma.com/legal/privacy/">
@@ -226,9 +253,7 @@ export default function PrivacyPage() {
               search keywords.
             </li>
           </ul>
-          <p>
-            We do not use Algolia to collect any information about you.
-          </p>
+          <p>We do not use Algolia to collect any information about you.</p>
           <p>
             <a href="https://www.algolia.com/policies/privacy/">
               Algolia&apos;s privacy policy, relevant section: 9
