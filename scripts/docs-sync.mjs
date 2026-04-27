@@ -354,8 +354,7 @@ function deriveSlug(sourcePath, slugOverride) {
 }
 
 function deriveDescription(body) {
-  const normalized = body
-    .replace(/<!--[\s\S]*?-->/gu, '')
+  const normalized = stripHtmlComments(body)
     .replace(/```[\s\S]*?```/gu, '')
     .replace(/!\[([^\]]*)\]\([^)]+\)/gu, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/gu, '$1')
@@ -373,6 +372,10 @@ function deriveDescription(body) {
   if (!description) return undefined;
 
   return description.slice(0, 220);
+}
+
+function stripHtmlComments(content) {
+  return content.replace(/<!--[\s\S]*?-->/gu, '');
 }
 
 function replaceMarkdownLinks(content, replacer) {
@@ -487,7 +490,9 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
       );
       const original = await readFile(absolutePath, 'utf8');
       const { raw, body } = parseFrontmatter(original);
-      const { heading, body: bodyWithoutHeading } = extractLeadingH1(body);
+      const bodyWithoutComments = stripHtmlComments(body);
+      const { heading, body: bodyWithoutHeading } =
+        extractLeadingH1(bodyWithoutComments);
       const title =
         parseFrontmatterValue(raw, 'title') ??
         deriveTitle(docsSource.name, sourcePath, heading);

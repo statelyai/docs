@@ -5,13 +5,11 @@ sourcePath: "packages/sdk/README.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/sdk/docs/index.md"
 ---
 
-<!-- package.json#name and #description — top-level summary -->
-
 Embed the [Stately editor](https://stately.ai), inspect running actor systems over WebSockets, talk to the Stately Studio API, and convert between Studio graph data and code. Fully typed.
 
 ## Install
 
-<!-- install command derived from package.json#name -->
+
 
 ```bash
 npm install @statelyai/sdk
@@ -19,7 +17,7 @@ npm install @statelyai/sdk
 
 ## What It Includes
 
-<!-- top-level runtime exports from src/index.ts and CLI bin from package.json#bin -->
+
 
 - `createStatelyEmbed()` for browser embeds backed by `postMessage`
 - `createStatelyInspector()` for inspecting live actor systems over WebSockets
@@ -142,7 +140,7 @@ embed.init({
 
 ## Module Layout
 
-<!-- subpath imports derived from package.json#exports -->
+
 
 The SDK ships root exports for the most common entry points and helpers:
 
@@ -165,9 +163,11 @@ import { createStatelyClient } from '@statelyai/sdk/studio';
 import { createStatelyInspector } from '@statelyai/sdk/inspect';
 import { createStatelyEmbed } from '@statelyai/sdk/embed';
 import { fromStudioMachine, toStudioMachine } from '@statelyai/sdk/graph';
-import { planSync, pullSync } from '@statelyai/sdk/sync';
+import { planSync, pullSync, pushSync } from '@statelyai/sdk/sync';
 import type { GraphPatch } from '@statelyai/sdk/patchTypes';
 ```
+
+The root package also exports `getStatelyPragma()`, `findStatelyPragmaAttachments()`, and `upsertStatelyPragma()` for working with canonical source annotations such as `// @statelyai id=machine-123`.
 
 ## Studio API Client
 
@@ -178,25 +178,65 @@ const studio = createStatelyClient({
   apiKey: process.env.STATELY_API_KEY,
 });
 
+const createdProject = await studio.projects.create({
+  name: 'My project',
+  visibility: 'Private',
+});
 const project = await studio.projects.get('project-id');
+const projects = await studio.projects.list();
+const createdMachine = await studio.machines.create({
+  projectVersionId: createdProject.projectVersionId!,
+  definition: digraphDefinition,
+  xstateVersion: 5,
+});
 const machine = await studio.machines.get('machine-id', { version: '42' });
 const extracted = await studio.code.extractMachines(sourceCode);
 ```
 
-<!-- public methods of StudioClient from src/studio.ts -->
+`studio.projects.list(...)`, `studio.projects.create(...)`, and `studio.machines.create(...)` use the documented Studio REST API. `studio.projects.ensure(...)` is a client-side helper that uses the documented list/create endpoints to reuse an existing connected project when the repo metadata matches.
+
+
 
 Available client methods:
 
 | Method | Description |
 | --- | --- |
 | `studio.auth.verify(apiKey?)` | Verify an API key against the registry API |
+| `studio.projects.list()` | List accessible projects, including connected repo metadata when present |
+| `studio.projects.create({ name, visibility, description?, keywords? })` | Create a new project through the published REST API |
+| `studio.projects.ensure({ name, visibility, repo?, ... })` | Reuse an existing connected project or create one through the REST API |
 | `studio.projects.get(projectId)` | Fetch a project and its machines |
+| `studio.machines.create({ projectVersionId, ... })` | Create a machine through the published REST API |
+| `studio.machines.createMany({ projectVersionId, ... })` | Compatibility wrapper around `create()` that returns a one-item array |
 | `studio.machines.get(machineId, { version? })` | Fetch a machine, optionally pinned to a version |
 | `studio.code.extractMachines(code, { apiKey? })` | Extract machine configs from source text |
 
+## Sync Helpers
+
+`pushSync()` complements `planSync()` and `pullSync()` for local-to-Studio flows. It resolves a local source file, ensures there is a target project, creates the remote machine, and writes `// @statelyai id=...` back into XState source files.
+
+```ts
+import { pushSync } from '@statelyai/sdk/sync';
+
+const result = await pushSync({
+  source: './src/machines/toggle.ts',
+  apiKey: process.env.STATELY_API_KEY,
+  project: {
+    visibility: 'Private',
+    repo: {
+      url: 'https://github.com/statelyai/viz',
+      owner: 'statelyai',
+      repo: 'viz',
+      branch: 'main',
+      treeSha: 'abc123',
+    },
+  },
+});
+```
+
 ## Inspector
 
-<!-- public API of createStatelyInspector from src/inspect.ts -->
+
 
 `createStatelyInspector()` streams actor-system state to the Stately inspector over WebSockets. It supports both automatic XState actor adoption and manual actor registration.
 
@@ -244,7 +284,7 @@ Key methods:
 
 Creates an embed instance.
 
-<!-- public options of StatelyEmbedOptions from src/embed.ts -->
+
 
 | Option | Type | Description |
 | --- | --- | --- |
@@ -336,6 +376,8 @@ embed.setSettings({
 
 Available core settings:
 
+
+
 | Path | Type | Default |
 | --- | --- | --- |
 | `appearance.colorMode` | `'light' \| 'dark' \| 'system'` | `'dark'` |
@@ -344,7 +386,7 @@ Available core settings:
 | `canvas.enableSnapLines` | `boolean` | `true` |
 | `canvas.dimUnselected` | `boolean` | `true` |
 | `validation.showValidations` | `boolean` | `true` |
-| `autolayout.autoEnabled` | `boolean` | `false` |
+| `layout.autolayout` | `boolean` | `false` |
 | `developer.devMode` | `boolean` | `false` |
 
 #### `embed.export(format, options?)`
@@ -358,13 +400,13 @@ const rtk = await embed.export('rtk');
 const aslYaml = await embed.export('asl-yaml');
 ```
 
-<!-- supported export formats from ExportFormatMap in src/protocol.ts -->
 
-Supported formats: `xstate`, `json`, `digraph`, `mermaid`, `rtk`, `zustand`, `asl-json`, `asl-yaml`, `scxml`
+
+Supported formats: `xstate`, `json`, `xgraph`, `digraph`, `mermaid`, `rtk`, `zustand`, `asl-json`, `asl-yaml`, `scxml`
 
 #### `embed.on(event, handler)` / `embed.off(event, handler)`
 
-<!-- keys of EmbedEventMap in src/protocol.ts -->
+
 
 Event names are `ready`, `loaded`, `change`, `save`, `error`, and `snapshot`.
 
@@ -425,7 +467,7 @@ If `onUploadRequest` throws or rejects, the editor shows an error toast. If no `
 
 ## Graph And Codegen Helpers
 
-<!-- root helper exports from src/index.ts -->
+
 
 Use the conversion helpers to move between Studio digraph data, generic Stately graphs, machine config objects, and XState TypeScript source.
 
@@ -457,7 +499,7 @@ Other exported helpers:
 
 ## Sync Helpers And CLI
 
-<!-- sync helpers from src/sync.ts and CLI commands from src/cli.ts#COMMANDS -->
+
 
 The sync helpers compare or materialize machines across local files, Stately machine IDs, and Stately URLs.
 
@@ -494,6 +536,8 @@ Installing the package also exposes a `statelyai` binary:
 ```bash
 npx statelyai open ./checkout.machine.ts
 
+statelyai login
+statelyai auth status
 statelyai plan ./checkout.machine.ts machine-id
 statelyai diff ./checkout.machine.ts machine-id --fail-on-changes
 statelyai pull machine-id ./checkout.machine.ts
@@ -506,6 +550,9 @@ Available commands:
 
 | Command | Description |
 | --- | --- |
+| `statelyai login` | Store an API key for future CLI use |
+| `statelyai logout` | Remove a stored API key |
+| `statelyai auth status` | Show whether the CLI would use an environment variable or stored credential |
 | `statelyai plan <source> <target>` | Print a semantic sync summary |
 | `statelyai diff <source> <target>` | Diff two locators and optionally fail on changes |
 | `statelyai pull <source> <target>` | Materialize a source into a local target file |
@@ -517,11 +564,13 @@ Common flags:
 - `--base-url` for self-hosted or non-default Stately deployments
 - `--fail-on-changes` to return a nonzero exit code when a diff is detected
 
-`statelyai open` also supports `--api-key`, `--editor-url`, `--host`, `--port`, `--no-open`, and `--debug`. It watches the local file on disk and sends source snapshots to `/api/editor-sync/*` endpoints, which return the text replacements to apply locally. Pass `--api-key` or set `STATELY_API_KEY` when the editor server requires auth. Self-hosted servers can disable editor-sync API-key checks with `EDITOR_SYNC_AUTH_REQUIRED=false`. The private source reconciliation engine is not bundled into the published CLI.
+The CLI resolves credentials in this order: `--api-key`, then `STATELY_API_KEY`/`NEXT_PUBLIC_STATELY_API_KEY`, then the key stored by `statelyai login`. `login` stores the key in the OS credential store when available, with a private file fallback.
+
+`statelyai open` also supports `--api-key`, `--editor-url`, `--host`, `--port`, `--no-open`, and `--debug`. It watches the local file on disk and sends source snapshots to `/api/editor-sync/*` endpoints, which return the text replacements to apply locally. When the source file contains `// @statelyai id=...` and an API key is available, the editor session also reuses the referenced remote machine layout while continuing to treat the local source as the semantic source of truth. Pass `--api-key`, set `STATELY_API_KEY`, or run `statelyai login` when the editor server requires auth. Self-hosted servers can disable editor-sync API-key checks with `EDITOR_SYNC_AUTH_REQUIRED=false`. The private source reconciliation engine is not bundled into the published CLI.
 
 ## Transport Helpers
 
-<!-- transport helpers exported from src/index.ts -->
+
 
 For advanced integrations, the root package also exports:
 
