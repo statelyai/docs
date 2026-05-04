@@ -9,5 +9,11 @@
     "package": "sdk",
     "source": "viz/packages/sdk",
     "mode": "snapshot"
+  },
+  {
+    "name": "CLI",
+    "package": "cli",
+    "source": "viz/packages/cli",
+    "mode": "snapshot"
   }
 ]

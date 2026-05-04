@@ -78,5 +78,15 @@ export const externalDocsNav = [
         "url": "/docs/packages/sdk"
       }
     ]
+  },
+  {
+    "name": "CLI",
+    "package": "cli",
+    "pages": [
+      {
+        "title": "statelyai",
+        "url": "/docs/packages/cli"
+      }
+    ]
   }
 ] as const;

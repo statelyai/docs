@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stately.ai/schemas/xstate.json",
+  "title": "XState JSON machine config",
+  "description": "Strict JSON subset of an XState machine config that can be passed to createMachine(config). Shorthand string forms are normalized to object and array forms.",
+  "$ref": "#/$defs/machineConfig",
+  "$defs": {
+    "jsonValue": {
+      "description": "Any JSON value.",
+      "oneOf": [
+        { "type": "null" },
+        { "type": "boolean" },
+        { "type": "number" },
+        { "type": "string" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/jsonValue" }
+        },
+        {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+        }
+      ]
+    },
+    "jsonObject": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+    },
+    "parameterizedObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "params": { "$ref": "#/$defs/jsonValue" }
+      }
+    },
+    "actionObject": {
+      "$ref": "#/$defs/parameterizedObject"
+    },
+    "guardObject": {
+      "$ref": "#/$defs/parameterizedObject"
+    },
+    "transitionObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "guard": { "$ref": "#/$defs/guardObject" },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionObject" }
+        },
+        "reenter": { "type": "boolean" },
+        "meta": { "$ref": "#/$defs/jsonObject" },
+        "description": { "type": "string" }
+      }
+    },
+    "transitionArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/transitionObject" }
+    },
+    "transitionsByEvent": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/transitionArray" }
+    },
+    "invokeObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["src"],
+      "properties": {
+        "id": { "type": "string" },
+        "systemId": { "type": "string" },
+        "src": { "type": "string", "minLength": 1 },
+        "input": { "$ref": "#/$defs/jsonValue" },
+        "onDone": { "$ref": "#/$defs/transitionArray" },
+        "onError": { "$ref": "#/$defs/transitionArray" },
+        "onSnapshot": { "$ref": "#/$defs/transitionArray" }
+      }
+    },
+    "stateNodeConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "enum": ["atomic", "compound", "parallel", "final", "history"]
+        },
+        "history": {
+          "anyOf": [
+            { "enum": ["shallow", "deep"] },
+            { "type": "boolean" }
+          ]
+        },
+        "states": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/stateNodeConfig" }
+        },
+        "invoke": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/invokeObject" }
+        },
+        "on": { "$ref": "#/$defs/transitionsByEvent" },
+        "entry": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionObject" }
+        },
+        "exit": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionObject" }
+        },
+        "onDone": { "$ref": "#/$defs/transitionArray" },
+        "after": { "$ref": "#/$defs/transitionsByEvent" },
+        "always": { "$ref": "#/$defs/transitionArray" },
+        "meta": { "$ref": "#/$defs/jsonObject" },
+        "output": { "$ref": "#/$defs/jsonValue" },
+        "order": { "type": "number" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "description": { "type": "string" },
+        "target": { "type": "string" },
+        "initial": { "type": "string" }
+      }
+    },
+    "machineConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "enum": ["atomic", "compound", "parallel", "final", "history"]
+        },
+        "history": {
+          "anyOf": [
+            { "enum": ["shallow", "deep"] },
+            { "type": "boolean" }
+          ]
+        },
+        "states": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/stateNodeConfig" }
+        },
+        "invoke": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/invokeObject" }
+        },
+        "on": { "$ref": "#/$defs/transitionsByEvent" },
+        "entry": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionObject" }
+        },
+        "exit": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/actionObject" }
+        },
+        "onDone": { "$ref": "#/$defs/transitionArray" },
+        "after": { "$ref": "#/$defs/transitionsByEvent" },
+        "always": { "$ref": "#/$defs/transitionArray" },
+        "meta": { "$ref": "#/$defs/jsonObject" },
+        "output": { "$ref": "#/$defs/jsonValue" },
+        "order": { "type": "number" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "description": { "type": "string" },
+        "target": { "type": "string" },
+        "initial": { "type": "string" },
+        "schemas": { "$ref": "#/$defs/jsonValue" },
+        "version": { "type": "string" },
+        "context": { "$ref": "#/$defs/jsonObject" },
+        "options": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "maxIterations": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "trafficLight",
+      "initial": "green",
+      "states": {
+        "green": {
+          "tags": ["go"],
+          "on": {
+            "TIMER": [
+              {
+                "target": ["yellow"],
+                "actions": [{ "type": "trackChange" }]
+              }
+            ]
+          }
+        },
+        "yellow": {
+          "on": {
+            "TIMER": [{ "target": ["red"] }]
+          }
+        },
+        "red": {
+          "type": "final"
+        }
+      }
+    }
+  ]
+}

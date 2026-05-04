@@ -4,9 +4,11 @@
  */
 import { docs as docsSource0 } from 'collections/graph/server';
 import { docs as docsSource1 } from 'collections/sdk/server';
+import { docs as docsSource2 } from 'collections/cli/server';
 
 
 export const externalDocsCollections = {
   "graph": docsSource0,
   "sdk": docsSource1,
+  "cli": docsSource2,
 } as const;

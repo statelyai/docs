@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stately.ai/schemas/statelyai.json",
+  "title": "Stately CLI project configuration",
+  "description": "Configuration for mapping local machine files to a Stately Studio project.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "include"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri-reference",
+      "description": "Optional self-reference to this schema."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$",
+      "description": "Schema version for statelyai.json, expressed as a semantic version string."
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable Stately Studio project identifier."
+    },
+    "studioUrl": {
+      "type": "string",
+      "format": "uri",
+      "default": "https://stately.ai",
+      "description": "Base URL of the Studio instance that owns the project."
+    },
+    "defaultXStateVersion": {
+      "type": "integer",
+      "minimum": 5,
+      "default": 5,
+      "description": "Default XState major version for sources that do not override it. Only XState 5+ is supported."
+    },
+    "include": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/globPattern"
+      },
+      "description": "Glob patterns for local files to scan."
+    },
+    "exclude": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/globPattern"
+      }
+    }
+  },
+  "$defs": {
+    "globPattern": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A glob pattern evaluated relative to the statelyai.json location."
+    }
+  },
+  "examples": [
+    {
+      "$schema": "https://stately.ai/schemas/statelyai.json",
+      "version": "1.0.0",
+      "projectId": "project_123",
+      "studioUrl": "https://stately.ai",
+      "defaultXStateVersion": 5,
+      "include": ["src/**/*.ts", "src/**/*.tsx"],
+      "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+    }
+  ]
+}
