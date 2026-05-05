@@ -46,6 +46,11 @@
       "items": {
         "$ref": "#/$defs/globPattern"
       }
+    },
+    "newMachineDir": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Directory, relative to statelyai.json, where statelyai pull should create new local files for remote-only project machines."
     }
   },
   "$defs": {
@@ -63,7 +68,8 @@
       "studioUrl": "https://stately.ai",
       "defaultXStateVersion": 5,
       "include": ["src/**/*.ts", "src/**/*.tsx"],
-      "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+      "exclude": ["**/*.test.ts", "**/*.spec.ts"],
+      "newMachineDir": "src/machines"
     }
   ]
 }
