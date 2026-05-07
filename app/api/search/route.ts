@@ -55,6 +55,7 @@ const allPages = await Promise.all([
 ]);
 
 const titleByUrl = new Map(allPages.map((p) => [p.url, p.title.toLowerCase()]));
+const tagByUrl = new Map(allPages.map((p) => [p.url, p.tag]));
 
 const searchServer = initAdvancedSearch({
   language: 'english',
@@ -96,7 +97,9 @@ function rerankResults(
     const titleB = titleByUrl.get(b[0].url) ?? '';
     const scoreA = titleMatchScore(queryLower, titleA);
     const scoreB = titleMatchScore(queryLower, titleB);
-    return scoreB - scoreA;
+    const tagA = tagByUrl.get(a[0].url) === 'docs' ? 1 : 0;
+    const tagB = tagByUrl.get(b[0].url) === 'docs' ? 1 : 0;
+    return scoreB - scoreA || tagB - tagA;
   });
 
   return groups.flat();

@@ -31,6 +31,8 @@ statelyai init
 statelyai init --scan
 ```
 
+If you have an older `statelyai.json` that still uses the legacy `sources` shape, the CLI will rewrite simple single-source configs automatically when it reads them.
+
 That writes a `statelyai.json` like:
 
 ```json
@@ -41,7 +43,8 @@ That writes a `statelyai.json` like:
   "studioUrl": "https://stately.ai",
   "defaultXStateVersion": 5,
   "include": ["src/**/*.ts"],
-  "exclude": ["**/*.test.*", "**/*.spec.*"]
+  "exclude": ["**/*.test.*", "**/*.spec.*"],
+  "newMachinesDir": "src"
 }
 ```
 
@@ -59,13 +62,13 @@ statelyai push --dry-run
 
 If a saved `// @statelyai id=...` points to a deleted or inaccessible remote machine, `push` will prompt to relink the file as a new remote machine and replace the local id.
 
-6. Pull remote changes back into linked local files:
+6. Pull remote changes back into linked local files and create new local files for remote-only project machines when `newMachinesDir` is configured:
 
 ```bash
 statelyai pull
 ```
 
-`pull` skips locally modified files unless you pass `--force`.
+`pull` skips locally modified linked files unless you pass `--force`. New remote-only machines are written as `<machine-name>.machine.ts` inside `newMachinesDir`.
 
 Run it without installing it globally:
 
