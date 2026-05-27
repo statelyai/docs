@@ -1,6 +1,33 @@
-import { source, blog } from '@/lib/source';
-import { initAdvancedSearch } from 'fumadocs-core/search/server';
+import { flexsearch } from 'fumadocs-core/search/flexsearch';
 import { NextRequest, NextResponse } from 'next/server';
+import type { StructuredData } from 'fumadocs-core/mdx-plugins';
+import searchIndex from '@/lib/search-index.json';
+
+/**
+ * Why this is the way it is:
+ * - The page list (title/description/structuredData per page) is precomputed at
+ *   build time by `scripts/build-search-index.mjs` and shipped as a JSON import,
+ *   so cold starts don't have to dynamic-import + parse every MDX file. Was
+ *   measured at multi-second cold starts; now ~tens of ms.
+ * - Responses are cached at the CDN edge so repeated queries (every keystroke
+ *   typing the same prefix) deduplicate globally. CORS-sensitive: `Vary: Origin`.
+ */
+
+type IndexEntry = {
+  title: string;
+  description: string;
+  url: string;
+  id: string;
+  structuredData: StructuredData;
+  tag: 'docs' | 'blog';
+};
+
+const allPages = searchIndex as IndexEntry[];
+
+const titleByUrl = new Map(allPages.map((p) => [p.url, p.title.toLowerCase()]));
+const tagByUrl = new Map(allPages.map((p) => [p.url, p.tag]));
+
+const searchServer = flexsearch({ indexes: allPages });
 
 const allowedOrigins = [
   'https://stately.ai',
@@ -17,50 +44,22 @@ function getCorsHeaders(origin: string | null) {
     'Access-Control-Allow-Origin': isAllowed ? origin : allowedOrigins[0] || '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    Vary: 'Origin',
   };
 }
+
+/**
+ * Cache search responses at the CDN edge. Browser TTL is short (a user's session)
+ * so docs updates show up quickly; edge TTL is long with SWR so the function
+ * almost never runs for repeated queries.
+ */
+const CACHE_CONTROL =
+  'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800';
 
 export async function OPTIONS(request: NextRequest) {
   const origin = request.headers.get('origin');
   return NextResponse.json({}, { headers: getCorsHeaders(origin) });
 }
-
-const allPages = await Promise.all([
-  ...source.getPages().map(async (page) => {
-    const data =
-      'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
-
-    return {
-      title: page.data.title ?? '',
-      description: page.data.description ?? '',
-      url: page.url,
-      id: page.url,
-      structuredData: data.structuredData,
-      tag: 'docs' as const,
-    };
-  }),
-  ...blog.getPages().map(async (page) => {
-    const data =
-      'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
-
-    return {
-      title: page.data.title ?? '',
-      description: page.data.description ?? '',
-      url: page.url,
-      id: page.url,
-      structuredData: data.structuredData,
-      tag: 'blog' as const,
-    };
-  }),
-]);
-
-const titleByUrl = new Map(allPages.map((p) => [p.url, p.title.toLowerCase()]));
-const tagByUrl = new Map(allPages.map((p) => [p.url, p.tag]));
-
-const searchServer = initAdvancedSearch({
-  language: 'english',
-  indexes: allPages,
-});
 
 function titleMatchScore(query: string, title: string): number {
   if (title === query) return 4;
@@ -79,9 +78,8 @@ function titleMatchScore(query: string, title: string): number {
  */
 function rerankResults(
   results: { type: string; url: string; [key: string]: any }[],
-  query: string
+  query: string,
 ) {
-  // Split flat list into page groups
   const groups: { type: string; url: string; [key: string]: any }[][] = [];
   for (const item of results) {
     if (item.type === 'page') {
@@ -107,16 +105,21 @@ function rerankResults(
 
 export async function GET(request: NextRequest) {
   const origin = request.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
   const url = new URL(request.url);
   const query = url.searchParams.get('query');
 
   if (!query) {
-    return NextResponse.json([], { headers: getCorsHeaders(origin) });
+    return NextResponse.json([], {
+      headers: { ...corsHeaders, 'Cache-Control': CACHE_CONTROL },
+    });
   }
 
   const tag = url.searchParams.get('tag')?.split(',');
   const results = await searchServer.search(query, { tag });
   const reranked = rerankResults(results, query);
 
-  return NextResponse.json(reranked, { headers: getCorsHeaders(origin) });
+  return NextResponse.json(reranked, {
+    headers: { ...corsHeaders, 'Cache-Control': CACHE_CONTROL },
+  });
 }
