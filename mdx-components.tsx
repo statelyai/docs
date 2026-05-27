@@ -4,6 +4,7 @@ import { EmbedMachine } from './content/components/EmbedMachine';
 import { YouTube } from './content/components/YouTube';
 import { Tweet } from './content/components/Tweet';
 import * as Twoslash from 'fumadocs-twoslash/ui';
+import { SplitItem, SplitItems } from './components/split-items';
 
 import type { MDXComponents } from 'mdx/types';
 
@@ -16,6 +17,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     EmbedMachine,
     YouTube,
     Tweet,
+    SplitItem,
+    SplitItems,
     ...Twoslash,
   };
 }

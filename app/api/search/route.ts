@@ -64,7 +64,7 @@ export async function OPTIONS(request: NextRequest) {
 function titleMatchScore(query: string, title: string): number {
   if (title === query) return 4;
   if (title.startsWith(query)) return 3;
-  const words = title.split(/\s+/);
+  const words = title.split(/[^a-z0-9]+/i).filter(Boolean);
   if (words.some((w) => w === query)) return 2;
   if (title.includes(query)) return 1;
   return 0;
@@ -97,7 +97,7 @@ function rerankResults(
     const scoreB = titleMatchScore(queryLower, titleB);
     const tagA = tagByUrl.get(a[0].url) === 'docs' ? 1 : 0;
     const tagB = tagByUrl.get(b[0].url) === 'docs' ? 1 : 0;
-    return scoreB - scoreA || tagB - tagA;
+    return tagB - tagA || scoreB - scoreA || titleA.length - titleB.length;
   });
 
   return groups.flat();

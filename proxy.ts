@@ -10,7 +10,7 @@ const LINK_HEADER = [
   `<${SITE_URL}/llms.txt>; rel="describedby"; type="text/plain"`,
 ].join(', ');
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   if (isMarkdownPreferred(request)) {
     const result = rewriteLLM(request.nextUrl.pathname);
     if (result) {

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next build",
-    "dev": "portless docs node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next dev --turbo",
+    "dev": "portless docs node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next dev",
     "docs:generate": "node scripts/docs-sync.mjs && fumadocs-mdx",
     "docs:sync": "node scripts/docs-sync.mjs",
     "docs:watch": "node scripts/docs-watch.mjs",
@@ -32,7 +32,7 @@
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^0.544.0",
     "mdx-embed": "^1.1.2",
-    "next": "16.1.0",
+    "next": "16.2.6",
     "next-themes": "^0.4.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
