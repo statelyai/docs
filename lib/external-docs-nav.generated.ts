@@ -24,6 +24,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/src-formats-cytoscape"
       },
       {
+        "title": "d2",
+        "url": "/docs/packages/graph/src-formats-d2"
+      },
+      {
         "title": "D3",
         "url": "/docs/packages/graph/src-formats-d3"
       },
