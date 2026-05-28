@@ -299,55 +299,105 @@ const tree = {
       ],
     },
     {
+      name: 'XState Store',
+      type: 'folder' as const,
+      index: {
+        type: 'page' as const,
+        name: 'Overview',
+        url: '/docs/xstate-store',
+      },
+      children: [
+        {
+          type: 'page' as const,
+          name: 'Vanilla',
+          url: '/docs/xstate-store',
+        },
+        {
+          type: 'page' as const,
+          name: 'React',
+          url: '/docs/xstate-store/react',
+        },
+        {
+          type: 'page' as const,
+          name: 'Vue',
+          url: '/docs/xstate-store/vue',
+        },
+        {
+          type: 'page' as const,
+          name: 'Svelte',
+          url: '/docs/xstate-store/svelte',
+        },
+        {
+          type: 'page' as const,
+          name: 'Solid',
+          url: '/docs/xstate-store/solid',
+        },
+        {
+          type: 'page' as const,
+          name: 'Angular',
+          url: '/docs/xstate-store/angular',
+        },
+        {
+          type: 'page' as const,
+          name: 'Preact',
+          url: '/docs/xstate-store/preact',
+        },
+        {
+          type: 'page' as const,
+          name: 'Undo/Redo extension',
+          url: '/docs/xstate-store/undo-redo',
+        },
+        {
+          type: 'page' as const,
+          name: 'Persist extension',
+          url: '/docs/xstate-store/persist',
+        },
+        {
+          type: 'page' as const,
+          name: 'Reset extension',
+          url: '/docs/xstate-store/reset',
+        },
+        {
+          type: 'page' as const,
+          name: 'Validation extension',
+          url: '/docs/xstate-store/validate-schemas',
+        },
+        {
+          type: 'page' as const,
+          name: 'Migration',
+          url: '/docs/xstate-store/migration',
+        },
+        // {
+        //   type: 'page' as const,
+        //   name: 'vs. Zustand',
+        //   url: '/docs/xstate-store/compare-zustand',
+        // },
+        // {
+        //   type: 'page' as const,
+        //   name: 'vs. Jotai',
+        //   url: '/docs/xstate-store/compare-jotai',
+        // },
+        // {
+        //   type: 'page' as const,
+        //   name: 'vs. Recoil',
+        //   url: '/docs/xstate-store/compare-recoil',
+        // },
+        // {
+        //   type: 'page' as const,
+        //   name: 'vs. Redux',
+        //   url: '/docs/xstate-store/compare-redux',
+        // },
+        // {
+        //   type: 'page' as const,
+        //   name: 'vs. Pinia',
+        //   url: '/docs/xstate-store/compare-pinia',
+        // },
+      ],
+    },
+    {
       name: 'Packages',
       type: 'folder' as const,
       children: [
-        {
-          name: 'XState Store',
-          type: 'folder' as const,
-          index: {
-            type: 'page' as const,
-            name: 'Overview',
-            url: '/docs/xstate-store',
-          },
-          children: [
-            {
-              type: 'page' as const,
-              name: 'Vanilla',
-              url: '/docs/xstate-store',
-            },
-            {
-              type: 'page' as const,
-              name: 'React',
-              url: '/docs/xstate-store/react',
-            },
-            {
-              type: 'page' as const,
-              name: 'Vue',
-              url: '/docs/xstate-store/vue',
-            },
-            {
-              type: 'page' as const,
-              name: 'Svelte',
-              url: '/docs/xstate-store/svelte',
-            },
-            {
-              type: 'page' as const,
-              name: 'Solid',
-              url: '/docs/xstate-store/solid',
-            },
-            {
-              type: 'page' as const,
-              name: 'Angular',
-              url: '/docs/xstate-store/angular',
-            },
-            {
-              type: 'page' as const,
-              name: 'Preact',
-              url: '/docs/xstate-store/preact',
-            },
-          ],
-        },
         {
           type: 'page' as const,
           name: 'XState React',

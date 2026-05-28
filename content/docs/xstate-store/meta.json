@@ -1,4 +1,21 @@
 {
   "title": "@xstate/store",
-  "pages": ["react", "vue", "svelte", "solid", "angular", "preact"]
+  "pages": [
+    "react",
+    "vue",
+    "svelte",
+    "solid",
+    "angular",
+    "preact",
+    "undo-redo",
+    "persist",
+    "reset",
+    "validate-schemas",
+    "compare-zustand",
+    "compare-jotai",
+    "compare-recoil",
+    "compare-redux",
+    "compare-pinia",
+    "migration"
+  ]
 }
