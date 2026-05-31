@@ -64,6 +64,7 @@ const store = createStore({
     inc: (context, event: { by: number }, enqueue) => {
       const count = context.count + event.by;
 
+      // [!code highlight:1]
       enqueue.emit.increased({ by: event.by, total: count });
 
       return { count };
@@ -75,10 +76,12 @@ store.subscribe((snapshot) => {
   console.log(snapshot.context);
 });
 
+// [!code highlight:3]
 store.on('increased', (event) => {
   console.log(`Count increased by ${event.by}`);
 });
 
+// [!code highlight:1]
 store.trigger.inc({ by: 2 });
 // logs { count: 2 }
 // logs "Count increased by 2"
@@ -151,9 +154,11 @@ const store = createStore({
   },
 });
 
+// [!code highlight:1]
 store.can.increment({ by: 4 });
 // => true
 
+// [!code highlight:1]
 store.can.increment({ by: 11 });
 // => false
 ```
@@ -209,6 +214,28 @@ Event and emitted-event schemas define payload objects. Use an empty object sche
 
 When events are declared through `schemas.events`, matching handlers in `on` are optional. Missing handlers are no-ops, but the event still exists for typing and `store.trigger`.
 
+### Accessing schemas at runtime
+
+Schemas are exposed on the store instance via `store.schemas`, making them available for runtime introspection, form generation, or integration with other tools:
+
+```ts
+const store = createStore({
+  schemas: {
+    context: z.object({ count: z.number() }),
+    events: {
+      inc: z.object({ by: z.number() }),
+    },
+  },
+  context: { count: 0 },
+  on: {
+    inc: (context, event) => ({ count: context.count + event.by }),
+  },
+});
+
+// [!code highlight:1]
+store.schemas?.events?.inc;
+```
+
 `fromStore(...)` also accepts `schemas` and can infer context, event, and emitted-event types from schema definitions.
 
 ### Validating schemas
@@ -235,6 +262,7 @@ const store = createStore({
       count: context.count + event.by,
     }),
   },
+// [!code highlight:1]
 }).with(validateSchemas());
 ```
 
@@ -282,6 +310,7 @@ const store = createStore({
 });
 
 // Listen for emitted events
+// [!code highlight:3]
 store.on('increased', (event) => {
   console.log(`Count increased by ${event.by}`);
 });
@@ -298,6 +327,7 @@ const store = createStore({
   context: { count: 0 },
   on: {
     incrementDelayed: (context, event, enqueue) => {
+      // [!code highlight:5]
       enqueue.effect(() => {
         setTimeout(() => {
           store.trigger.increment();
@@ -323,6 +353,7 @@ const store = createStore({
       count: context.count + 1,
     }),
     incTwice: (context, _event, enqueue) => {
+      // [!code highlight:2]
       enqueue.trigger.inc();
       enqueue.trigger.inc();
 
@@ -462,6 +493,7 @@ const store = createStore({
 });
 
 // Create a selector for the position
+// [!code highlight:1]
 const position = store.select((context) => context.position);
 
 // Get current value
@@ -482,6 +514,7 @@ store.trigger.positionUpdated({ position: { x: 100, y: 200 } });
 You can provide a custom equality function as the second argument to `store.select(selector, equalityFn)` to control when subscribers should be notified:
 
 ```ts
+// [!code highlight:5]
 const position = store.select(
   (context) => context.position,
   // Only notify if x coordinate changes
@@ -494,6 +527,7 @@ XState Store also provides a `shallowEqual` function that can be used as a defau
 ```ts
 import { shallowEqual } from '@xstate/store';
 
+// [!code highlight:1]
 const position = store.select((context) => context.position, shallowEqual);
 ```
 
@@ -504,10 +538,12 @@ Use `createStoreLogic(...)` to create reusable store definitions. Store logic ca
 ```ts
 import { createStoreLogic } from '@xstate/store';
 
+// [!code highlight:1]
 const counterLogic = createStoreLogic({
   context: (input: { initialCount: number }) => ({
     count: input.initialCount,
   }),
+  // [!code highlight:4]
   selectors: {
     count: (context) => context.count,
     doubled: (context) => context.count * 2,
@@ -519,11 +555,14 @@ const counterLogic = createStoreLogic({
   },
 });
 
+// [!code highlight:1]
 const store = counterLogic.createStore({ initialCount: 2 });
 
+// [!code highlight:1]
 store.selectors.count.get();
 // => 2
 
+// [!code highlight:1]
 store.selectors.doubled.get();
 // => 4
 ```
@@ -703,9 +742,11 @@ Create an atom using `createAtom()` with an initial value:
 import { createAtom } from '@xstate/store';
 
 // Create an atom with a primitive value
+// [!code highlight:1]
 const countAtom = createAtom(0);
 
 // Create an atom with an object
+// [!code highlight:1]
 const userAtom = createAtom({ name: 'David', count: 100 });
 ```
 
@@ -768,6 +809,7 @@ const nameAtom = createAtom('David');
 const ageAtom = createAtom(30);
 
 // Derive from multiple atoms
+// [!code highlight:4]
 const userAtom = createAtom(() => ({
   name: nameAtom.get(),
   age: ageAtom.get(),
@@ -790,6 +832,7 @@ const countAtom = createAtom(0);
 
 // Running total that aggregates all count changes
 // Note: Specify the type parameter for proper inference of prev
+// [!code highlight:1]
 const totalAtom = createAtom<number>((prev) => countAtom.get() + (prev ?? 0));
 
 console.log(totalAtom.get()); // 0
@@ -819,6 +862,7 @@ Use `createReducerAtom(...)` when updates should go through reducer events:
 ```ts
 import { createReducerAtom } from '@xstate/store';
 
+// [!code highlight:1]
 const countAtom = createReducerAtom(0, (state, event: { type: 'inc' }) => {
   if (event.type === 'inc') {
     return state + 1;
@@ -837,6 +881,7 @@ Use `createAtomConfig(...)` to create an inert atom definition that can be insta
 ```ts
 import { createAtomConfig } from '@xstate/store';
 
+// [!code highlight:3]
 const countConfig = createAtomConfig((input: { initialCount: number }) => {
   return input.initialCount;
 });
@@ -857,6 +902,7 @@ The value of an async atom will be an object with a `status` property that can b
 ```ts
 import { createAsyncAtom } from '@xstate/store';
 
+// [!code highlight:4]
 const userAtom = createAsyncAtom(async ({ signal }) => {
   const response = await fetch('/api/user', { signal });
   return response.json();
