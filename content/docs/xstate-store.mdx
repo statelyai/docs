@@ -399,6 +399,54 @@ This ensures **determinism**: all state changes, effects, and emitted events mus
 
 </Callout>
 
+### Triggering events from effects
+
+The effect callback receives an enqueue object with `trigger`, `send`, and `getSnapshot`, so an effect can dispatch events back into the store and read its latest state without referencing the store directly. This is the recommended way to handle async work, and is especially useful with [`createStoreLogic(...)`](#store-logic), where the store is created per instance and there is no `store` variable to close over:
+
+```ts
+const counterLogic = createStoreLogic({
+  context: () => ({ data: null, loading: false }),
+  on: {
+    fetchData: (context, event, enqueue) => {
+      // [!code highlight:5]
+      enqueue.effect(async ({ trigger }) => {
+        const result = await fetch('/api/data');
+        const data = await result.json();
+        trigger.dataLoaded({ data });
+      });
+
+      return { ...context, loading: true };
+    },
+    dataLoaded: (context, event: { data: string }) => ({
+      ...context,
+      data: event.data,
+      loading: false,
+    }),
+  },
+});
+```
+
+Use `trigger` for fully-typed dispatch (e.g. `trigger.dataLoaded({ data })`). The enqueue object also has a loosely-typed `send` as an escape hatch for dynamically-constructed events:
+
+```ts
+enqueue.effect(({ send }) => {
+  send({ type: someEventType, ...payload });
+});
+```
+
+After an `await`, the `context` argument passed to the transition is stale. Use `getSnapshot()` to read the store's current state at the time the effect runs:
+
+```ts
+enqueue.effect(async ({ getSnapshot, trigger }) => {
+  await someAsyncWork();
+
+  // reads the latest context, not the context from when the effect was enqueued
+  if (getSnapshot().context.loading) {
+    trigger.done();
+  }
+});
+```
+
 ## Pure transitions
 
 You can use `store.transition(state, event)` to compute a tuple of the next state and any effects from a given state and event. This is useful for debugging and testing, or for having full control over the state transitions in your application.
