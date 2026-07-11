@@ -1,13 +1,15 @@
 ---
-title: 'Stately MCP'
+title: "Stately MCP"
 description: "Use Stately's machine tools from an MCP compatible agent."
-sourcePath: 'packages/mcp/README.md'
-sourceUrl: 'https://github.com/statelyai/docs/blob/main/external-docs/mcp/docs/index.md'
+sourcePath: "packages/mcp/README.md"
+sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/mcp/docs/index.md"
 ---
 
 Use Stately's machine tools from an MCP-compatible agent.
 
 ## Connect
+
+
 
 Choose your client and add Stately MCP using one of these methods.
 
@@ -75,11 +77,15 @@ Complete Stately sign-in when the client connects.
 
 ## Machine input
 
+
+
 Most tools accept a machine config object or a source document. Conversion
 supports XState, SCXML, XGraph, and D2. Validation also supports JSON, YAML, and
 Mermaid.
 
 ## `validate_machine`
+
+
 
 Checks whether a machine can be parsed and reports structural issues such as
 unreachable states. A successful response contains `ok` and an `issues` array.
@@ -104,6 +110,8 @@ createMachine({
 </details>
 
 ## `convert_machine`
+
+
 
 Converts a machine between XState, SCXML, XGraph, and D2. The response contains
 the target `format`, converted `content`, and any `warnings`.
@@ -186,6 +194,8 @@ createMachine({
 
 ## `diff_machines`
 
+
+
 Compares two machine documents structurally instead of comparing their source
 text. It returns a summary and semantic diff; set `includePatches` to request
 applicable patches.
@@ -222,6 +232,8 @@ createMachine({
 
 ## `apply_machine_patches`
 
+
+
 Applies semantic patches to a machine and returns the updated document. Use
 `to` to choose the returned format.
 
@@ -244,6 +256,8 @@ createMachine({
 </details>
 
 ## `generate_graph_paths`
+
+
 
 Generates shortest or simple paths through a machine. The response includes
 the event steps for each path plus state and transition coverage. Stately MCP
@@ -270,6 +284,8 @@ createMachine({
 
 ## `simulate_machine`
 
+
+
 Runs up to 100 events through a machine and returns a step-by-step trace of
 states, context, and executed action names. Guards are stubbed during this
 deterministic simulation.
@@ -295,6 +311,8 @@ createMachine({
 
 ## `visualize_machine`
 
+
+
 Renders a machine as an SVG diagram. The response contains the SVG string,
 its width and height, and any warnings.
 
@@ -318,6 +336,8 @@ createMachine({
 </details>
 
 ## `analyze_machine`
+
+
 
 Combines deterministic checks with AI review. Provide optional intent to assess
 the machine against its expected behavior. The response contains issues and may
@@ -345,6 +365,8 @@ createMachine({
 
 ## `generate_test_code`
 
+
+
 Generates a runnable Vitest file with one test per generated path. Each test
 sends the path's events and asserts its final state. Guards and actions are
 stubbed.
@@ -369,6 +391,8 @@ createMachine({
 </details>
 
 ## `extract_machines_from_code`
+
+
 
 Parses XState source code and returns the extracted machine as an XGraph
 document.

@@ -34,6 +34,11 @@ const config = {
         destination: '/docs/graph',
         permanent: true,
       },
+      {
+        source: '/docs/mcp',
+        destination: '/docs/packages/mcp',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
