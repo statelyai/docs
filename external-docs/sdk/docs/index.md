@@ -33,11 +33,35 @@ embed.init({
 });
 ```
 
+Restrict an embed by passing a resolved access policy:
+
+```ts
+embed.init({
+  machine: myMachineConfig,
+  mode: 'viewing',
+  readOnly: true,
+  capabilities: {
+    edit: false,
+    export: false,
+    ai: false,
+    simulate: false,
+    navigateHierarchy: false,
+    maxDepth: 1,
+    panels: ['structure', 'details', 'validations'],
+  },
+});
+
+embed.on('capabilityDenied', (event) => {
+  console.warn(event.message);
+});
+```
+
 Key capabilities:
 
 - **Mount or attach** to any container element or existing iframe
 - **Two-way sync** - push machine configs in, get changes and saves back via event callbacks
 - **Export** to multiple formats: XState v5, XState JSON, Mermaid, Redux, Zustand, ASL, SCXML, and more
+- **Access policies** for read-only, no-export, no-AI, shallow-viewer embeds
 - **Comments** via Liveblocks integration (optional)
 - **Asset uploads** with built-in S3 and Supabase adapters, or bring your own upload handler
 - **Runtime settings** - toggle color mode, grid, snap lines, autolayout, and view mode on the fly
@@ -74,13 +98,20 @@ Programmatic access to Stately Studio for managing projects and machines, extrac
 import { createStatelyClient } from '@statelyai/sdk';
 
 const studio = createStatelyClient({
-  apiKey: process.env.STATELY_API_KEY,
+  credential: {
+    type: 'oauth',
+    accessToken: process.env.STATELY_ACCESS_TOKEN!,
+  },
 });
 
 const projects = await studio.projects.list();
 const machine = await studio.machines.get('machine-id');
 const extracted = await studio.code.extractMachines(sourceCode);
 ```
+
+Legacy `apiKey` is still accepted as an alias for
+`credential: { type: 'api_key', token }`. Use `authMode: 'none'` only for
+self-hosted deployments that intentionally accept unauthenticated calls.
 
 ### Inspector
 
@@ -90,10 +121,11 @@ Stream live actor-system state to the Stately inspector over WebSockets, with su
 import { createActor } from 'xstate';
 import { createStatelyInspector } from '@statelyai/sdk';
 
-const inspector = createStatelyInspector({
-  actor: createActor(machine),
-  autoOpen: true,
-});
+const actor = createActor(machine);
+const inspector = createStatelyInspector({ autoOpen: true });
+
+inspector.inspect(actor);
+actor.start();
 ```
 
 ### CLI and sync

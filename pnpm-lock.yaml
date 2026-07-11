@@ -71,6 +71,9 @@ importers:
       react-tweet:
         specifier: ^3.3.1
         version: 3.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      rehype-raw:
+        specifier: ^7.0.0
+        version: 7.0.0
       remark:
         specifier: ^15.0.1
         version: 15.0.1

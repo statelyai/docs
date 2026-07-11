@@ -12,6 +12,7 @@ import {
   rehypeCodeDefaultOptions,
   remarkImage,
 } from 'fumadocs-core/mdx-plugins';
+import rehypeRaw from 'rehype-raw';
 import z from 'zod';
 
 const sharedDocsCollectionOptions = {
@@ -52,6 +53,27 @@ const sharedMdxOptions: MDXPresetOptions = {
   ],
 };
 
+const externalMdxOptions: MDXPresetOptions = {
+  ...sharedMdxOptions,
+  remarkRehypeOptions: {
+    allowDangerousHtml: true,
+  },
+  rehypePlugins: [
+    [
+      rehypeRaw,
+      {
+        passThrough: [
+          'mdxjsEsm',
+          'mdxFlowExpression',
+          'mdxTextExpression',
+          'mdxJsxFlowElement',
+          'mdxJsxTextElement',
+        ],
+      },
+    ],
+  ],
+};
+
 export function createDocsCollection(dir = 'content/docs') {
   return defineDocs({
     dir,
@@ -74,7 +96,7 @@ export function createBlogCollection(dir = 'content/blog') {
 export function createDocsWorkspaceModule(dir: string): Record<string, unknown> {
   return {
     docs: createDocsCollection(dir),
-    default: createGlobalConfig(),
+    default: createGlobalConfig({ mdxOptions: externalMdxOptions }),
   };
 }
 

@@ -1,5 +1,11 @@
 [
   {
+    "name": "Agent",
+    "package": "agent",
+    "source": "agent",
+    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"]
+  },
+  {
     "name": "Graph",
     "package": "graph",
     "source": "graph"
@@ -14,6 +20,12 @@
     "name": "CLI",
     "package": "cli",
     "source": "viz/packages/cli",
+    "mode": "snapshot"
+  },
+  {
+    "name": "MCP",
+    "package": "mcp",
+    "source": "viz/packages/mcp",
     "mode": "snapshot"
   }
 ]

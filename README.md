@@ -55,6 +55,12 @@ The external docs manifest lives in `docs-sources.json`:
 
 ```json
 [
+  {
+    "name": "Agent",
+    "package": "agent",
+    "source": "agent",
+    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"]
+  },
   { "name": "Graph", "package": "graph", "source": "graph" },
   {
     "name": "SDK",
@@ -62,7 +68,18 @@ The external docs manifest lives in `docs-sources.json`:
     "source": "viz/packages/sdk",
     "mode": "snapshot"
   },
-  { "name": "Viz", "package": "viz", "source": "viz", "mode": "snapshot" }
+  {
+    "name": "CLI",
+    "package": "cli",
+    "source": "viz/packages/cli",
+    "mode": "snapshot"
+  },
+  {
+    "name": "MCP",
+    "package": "mcp",
+    "source": "viz/packages/mcp",
+    "mode": "snapshot"
+  }
 ]
 ```
 
@@ -71,6 +88,7 @@ Each entry means:
 - `name`: display name in the docs sidebar
 - `package`: public route segment under `/docs/packages/<package>`
 - `source`: repo root or repo subpath to scan for docs content
+- `include`: optional Markdown glob allowlist relative to `source`
 - `mode`: optional; use `"snapshot"` to commit generated docs for private
   sources instead of fetching the repo during deployment
 
@@ -83,12 +101,13 @@ For each manifest entry, it:
 1. Resolves the source repo locally from `../<repo>` when available.
 2. Falls back to a cached remote checkout in `.cache/docs-repos/<repo>` when
    the local repo is missing.
-3. Scans the configured `source` root for:
-   - root `README.md` / `readme.md`
-   - nested `**/README.md(x)`
-   - `docs/**/*.{md,mdx}`
+3. Scans the configured `source` root using its `include` allowlist. Without
+   one, it includes only the root `README.md` / `readme.md` and
+   `docs/**/*.{md,mdx}`.
 4. Flattens those pages into `.cache/docs-workspaces/<package>/docs`.
 5. Generates Fumadocs frontmatter when it is missing.
+6. Uses the source repo's optional `docs/meta.json` to order and select
+   navigation pages.
 
 The generated workspace is what `source.config.ts` points Fumadocs at. The app
 never copies external docs into `content/docs`.
@@ -100,12 +119,14 @@ available, the sync step uses the committed snapshot instead of cloning GitHub.
 ### Flattening Rules
 
 - Root `README.md` becomes `index.md` and maps to `/docs/packages/<package>`.
-- Nested `**/README.md(x)` are treated as index-like and flatten to their parent
-  path:
+- Included nested `**/README.md(x)` are treated as index-like and flatten to
+  their parent path:
   - `src/formats/adjacency-list/README.md` -> `src-formats-adjacency-list.md`
 - `docs/**/*.{md,mdx}` also flatten into the same package namespace.
 - Optional frontmatter `slug` overrides the flattened route segment.
 - Duplicate flattened slugs fail the sync.
+- A Fumadocs `docs/meta.json` `pages` array controls navigation order and
+  visibility using the flattened page slugs.
 
 For synced external docs, the pipeline also derives:
 

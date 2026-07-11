@@ -107,6 +107,7 @@ function getSourceSubpath(source) {
 function normalizeDocsSourceConfig(config) {
   return {
     ...config,
+    include: config.include,
     mode: config.mode,
     package: String(config.package),
     repo: getSourceRepo(config.source),
@@ -455,7 +456,16 @@ function isWithinExcludedPrefix(file, excludedPrefixes) {
   );
 }
 
-async function collectMarkdownSourcePaths(projectDir, excludedPrefixes = []) {
+function matchesDefaultDocsInclude(file) {
+  return (isReadmePath(file) && !file.includes('/')) || file.startsWith('docs/');
+}
+
+function matchesDocsInclude(file, include) {
+  if (!include) return matchesDefaultDocsInclude(file);
+  return include.some((pattern) => path.matchesGlob(file, pattern));
+}
+
+async function collectMarkdownSourcePaths(projectDir, include, excludedPrefixes = []) {
   const files = await listProjectFiles(projectDir);
   const markdownSources = new Set();
 
@@ -463,7 +473,7 @@ async function collectMarkdownSourcePaths(projectDir, excludedPrefixes = []) {
     if (isWithinExcludedPrefix(file, excludedPrefixes)) continue;
     if (!isMarkdownPath(file)) continue;
 
-    if (isReadmePath(file) || file.startsWith('docs/')) {
+    if (matchesDocsInclude(file, include)) {
       markdownSources.add(file);
     }
   }
@@ -472,11 +482,15 @@ async function collectMarkdownSourcePaths(projectDir, excludedPrefixes = []) {
 }
 
 async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, excludedPrefixes) {
-  const sourcePaths = await collectMarkdownSourcePaths(sourceBaseDir, excludedPrefixes);
+  const sourcePaths = await collectMarkdownSourcePaths(
+    sourceBaseDir,
+    docsSource.include,
+    excludedPrefixes,
+  );
 
   if (sourcePaths.length === 0) {
     throw new Error(
-      `Docs source "${docsSource.package}" is configured, but no README.md/readme.md or docs/**/*.md(x) files were found in ${sourceBaseDir}.`,
+      `Docs source "${docsSource.package}" is configured, but no included Markdown files were found in ${sourceBaseDir}.`,
     );
   }
 
@@ -672,13 +686,48 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
     });
   }
 
+  const metaPath = path.join(project.sourceBaseDir, 'docs', 'meta.json');
+  let orderedNavPages = navPages.sort((a, b) => {
+    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    return a.url.localeCompare(b.url);
+  });
+
+  if (await isFile(metaPath)) {
+    const meta = JSON.parse(await readFile(metaPath, 'utf8'));
+    if (!Array.isArray(meta.pages) || meta.pages.some((page) => typeof page !== 'string')) {
+      throw new Error(
+        `Docs metadata for "${project.package}" must define "pages" as an array of flattened page slugs.`,
+      );
+    }
+
+    const navBySlug = new Map(
+      navPages.map((page) => [page.url.split('/').at(-1) ?? 'index', page]),
+    );
+    navBySlug.set('index', navPages.find(
+      (page) => page.url === getProjectDocsUrl(project.package, 'index'),
+    ));
+
+    orderedNavPages = meta.pages.map((slug) => {
+      const page = navBySlug.get(slug);
+      if (!page) {
+        throw new Error(
+          `Docs metadata for "${project.package}" references unknown page "${slug}".`,
+        );
+      }
+      return page;
+    });
+
+    await copyFile(metaPath, path.join(generatedDocsDir, 'meta.json'));
+    generatedFiles.push({
+      outputPath: `${getProjectDocsDir()}/meta.json`,
+      sourcePath: normalizePath(path.relative(sourceRootDir, metaPath)),
+    });
+  }
+
   return {
     files: generatedFiles.sort((a, b) => a.outputPath.localeCompare(b.outputPath)),
-    navPages: navPages.sort((a, b) => {
-      if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
-      if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
-      return a.url.localeCompare(b.url);
-    }),
+    navPages: orderedNavPages,
   };
 }
 
@@ -754,6 +803,19 @@ function validateDocsSources(docsSources) {
     if (docsSource.mode && docsSource.mode !== 'snapshot') {
       throw new Error(
         `Unsupported docs source mode "${docsSource.mode}" for package "${docsSource.package}".`,
+      );
+    }
+
+    if (
+      docsSource.include !== undefined &&
+      (!Array.isArray(docsSource.include) ||
+        docsSource.include.length === 0 ||
+        docsSource.include.some(
+          (pattern) => typeof pattern !== 'string' || pattern.length === 0,
+        ))
+    ) {
+      throw new Error(
+        `Docs source "${docsSource.package}" must define "include" as a non-empty array of glob patterns.`,
       );
     }
 

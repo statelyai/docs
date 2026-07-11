@@ -4,6 +4,7 @@ export type DocsSourceConfig = {
   name: string;
   package: string;
   source: string;
+  include?: string[];
   mode?: 'snapshot';
 };
 

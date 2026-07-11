@@ -4,6 +4,72 @@
  */
 export const externalDocsNav = [
   {
+    "name": "Agent",
+    "package": "agent",
+    "pages": [
+      {
+        "title": "Agents",
+        "url": "/docs/packages/agent"
+      },
+      {
+        "title": "Quickstart",
+        "url": "/docs/packages/agent/quickstart"
+      },
+      {
+        "title": "Agent machines",
+        "url": "/docs/packages/agent/machines"
+      },
+      {
+        "title": "Decisions",
+        "url": "/docs/packages/agent/decisions"
+      },
+      {
+        "title": "Text requests",
+        "url": "/docs/packages/agent/text-requests"
+      },
+      {
+        "title": "Messages",
+        "url": "/docs/packages/agent/messages"
+      },
+      {
+        "title": "Context compaction",
+        "url": "/docs/packages/agent/context-compaction"
+      },
+      {
+        "title": "Human in the loop",
+        "url": "/docs/packages/agent/human-in-the-loop"
+      },
+      {
+        "title": "Hosts and executors",
+        "url": "/docs/packages/agent/hosts"
+      },
+      {
+        "title": "Using with other stacks",
+        "url": "/docs/packages/agent/interop"
+      },
+      {
+        "title": "The step path",
+        "url": "/docs/packages/agent/steps"
+      },
+      {
+        "title": "Machines as data",
+        "url": "/docs/packages/agent/machines-as-data"
+      },
+      {
+        "title": "Multi-agent composition",
+        "url": "/docs/packages/agent/multi-agent"
+      },
+      {
+        "title": "Examples",
+        "url": "/docs/packages/agent/examples"
+      },
+      {
+        "title": "Post-alpha roadmap",
+        "url": "/docs/packages/agent/roadmap"
+      }
+    ]
+  },
+  {
     "name": "Graph",
     "package": "graph",
     "pages": [
@@ -12,64 +78,32 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph"
       },
       {
-        "title": "Adjacency List",
-        "url": "/docs/packages/graph/src-formats-adjacency-list"
+        "title": "Algorithms reference",
+        "url": "/docs/packages/graph/algorithms"
       },
       {
-        "title": "Converter",
-        "url": "/docs/packages/graph/src-formats-converter"
+        "title": "Layout",
+        "url": "/docs/packages/graph/layout"
       },
       {
-        "title": "Cytoscape",
-        "url": "/docs/packages/graph/src-formats-cytoscape"
+        "title": "React Flow + ELK: automatic layout cookbook",
+        "url": "/docs/packages/graph/react-flow-elk-pipeline"
       },
       {
-        "title": "d2",
-        "url": "/docs/packages/graph/src-formats-d2"
+        "title": "Layout transitions",
+        "url": "/docs/packages/graph/layout-transitions"
       },
       {
-        "title": "D3",
-        "url": "/docs/packages/graph/src-formats-d3"
+        "title": "Migrating from @dagrejs/graphlib",
+        "url": "/docs/packages/graph/migrating-from-graphlib"
       },
       {
-        "title": "DOT",
-        "url": "/docs/packages/graph/src-formats-dot"
+        "title": "Benchmarks",
+        "url": "/docs/packages/graph/benchmarks"
       },
       {
-        "title": "Edge List",
-        "url": "/docs/packages/graph/src-formats-edge-list"
-      },
-      {
-        "title": "ELK",
-        "url": "/docs/packages/graph/src-formats-elk"
-      },
-      {
-        "title": "GEXF",
-        "url": "/docs/packages/graph/src-formats-gexf"
-      },
-      {
-        "title": "GML",
-        "url": "/docs/packages/graph/src-formats-gml"
-      },
-      {
-        "title": "GraphML",
-        "url": "/docs/packages/graph/src-formats-graphml"
-      },
-      {
-        "title": "JGF",
-        "url": "/docs/packages/graph/src-formats-jgf"
-      },
-      {
-        "title": "Mermaid",
-        "url": "/docs/packages/graph/src-formats-mermaid"
-      },
-      {
-        "title": "TGF",
-        "url": "/docs/packages/graph/src-formats-tgf"
-      },
-      {
-        "title": "xyflow",
-        "url": "/docs/packages/graph/src-formats-xyflow"
+        "title": "Scaling & Plugin Architecture",
+        "url": "/docs/packages/graph/scaling-and-plugins"
       }
     ]
   },
@@ -90,6 +124,16 @@ export const externalDocsNav = [
       {
         "title": "statelyai",
         "url": "/docs/packages/cli"
+      }
+    ]
+  },
+  {
+    "name": "MCP",
+    "package": "mcp",
+    "pages": [
+      {
+        "title": "Stately MCP",
+        "url": "/docs/packages/mcp"
       }
     ]
   }

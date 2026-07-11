@@ -12,20 +12,34 @@ This package contains the `statelyai` command implementation.
 
 ## Happy Path
 
-1. Get an API key from [Stately API Key settings](https://stately.ai/registry/user/my-settings?tab=API+Key).
-2. Log in once:
+1. Log in once:
 
 ```bash
 statelyai login
 ```
 
-3. Initialize the current repo:
+Automation can set `STATELY_ACCESS_TOKEN` for OAuth or `STATELY_API_KEY` for
+API-key auth.
+
+For a custom OAuth protected resource, discover OAuth from that resource:
+
+```bash
+statelyai login --base-url http://localhost:3000/registry/api/mcp
+```
+
+`statelyai login --auth bearer` uses the same browser OAuth flow explicitly.
+`statelyai login --api-key` prompts securely for an API key, and
+`statelyai login --stdin` reads an API key from standard input. All commands use
+stored OAuth credentials or stored API keys. Free accounts open read-only
+root-level views.
+
+2. Initialize the current repo:
 
 ```bash
 statelyai init
 ```
 
-4. Optionally scan the repo and save suggested source globs:
+3. Optionally scan the repo and save suggested source globs:
 
 ```bash
 statelyai init --scan
@@ -48,7 +62,7 @@ That writes a `statelyai.json` like:
 }
 ```
 
-5. Push local machines:
+4. Push local machines:
 
 ```bash
 statelyai push
@@ -62,7 +76,7 @@ statelyai push --dry-run
 
 If a saved `// @statelyai id=...` points to a deleted or inaccessible remote machine, `push` will prompt to relink the file as a new remote machine and replace the local id.
 
-6. Pull remote changes back into linked local files and create new local files for remote-only project machines when `newMachinesDir` is configured:
+5. Pull remote changes back into linked local files and create new local files for remote-only project machines when `newMachinesDir` is configured:
 
 ```bash
 statelyai pull
