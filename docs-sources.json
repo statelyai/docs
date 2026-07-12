@@ -3,12 +3,14 @@
     "name": "Agent",
     "package": "agent",
     "source": "agent",
-    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"]
+    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"],
+    "mode": "snapshot"
   },
   {
     "name": "Graph",
     "package": "graph",
-    "source": "graph"
+    "source": "graph",
+    "mode": "snapshot"
   },
   {
     "name": "SDK",

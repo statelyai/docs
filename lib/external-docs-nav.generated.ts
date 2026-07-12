@@ -60,6 +60,14 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/multi-agent"
       },
       {
+        "title": "Migrating from a hand-rolled loop",
+        "url": "/docs/packages/agent/from-a-loop"
+      },
+      {
+        "title": "Compared to LangGraph and hand-rolling",
+        "url": "/docs/packages/agent/comparison"
+      },
+      {
         "title": "Examples",
         "url": "/docs/packages/agent/examples"
       },
