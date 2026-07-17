@@ -5,6 +5,8 @@ sourcePath: "docs/context-compaction.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/context-compaction.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## The problem
 
 
@@ -20,7 +22,7 @@ This is userland work, and this library's answer is to make it a **machine state
 - You can pause, persist, and inspect exactly when the agent compacts.
 - The trigger is an authored transition, not a heuristic buried in a wrapper.
 
-[examples/context-compaction/index.ts](./_assets/examples/context-compaction/index.ts) is the full runnable example; its tests drive the loop with mock executors.
+[examples/context-compaction/index.ts](https://github.com/statelyai/agent/blob/main/examples/context-compaction/index.ts) is the full runnable example; its tests drive the loop with mock executors.
 
 ## Context shape
 
@@ -107,7 +109,7 @@ compacting: {
 },
 ```
 
-Passing `priorSummary` back in makes the summary *running*: each compaction folds the previous one in, so no fact needs to survive more than one hop.
+Passing `priorSummary` back in makes the summary _running_: each compaction folds the previous one in, so no fact needs to survive more than one hop.
 
 ## Summary as context
 
@@ -123,7 +125,7 @@ Counting messages is the simplest trigger. The same shape works with a token est
 
 ## Testing without a model
 
-Executors are injected, so the tests in [examples/context-compaction/index.test.ts](./_assets/examples/context-compaction/index.test.ts) drive the full loop with a mock `generateText` and a scripted `userInput`, asserting that:
+Executors are injected, so the tests in [examples/context-compaction/index.test.ts](https://github.com/statelyai/agent/blob/main/examples/context-compaction/index.test.ts) drive the full loop with a mock `generateText` and a scripted `userInput`, asserting that:
 
 - History is capped at `keepRecent` and the summary comes from the summarize request.
 - The first `respond` after compaction receives the summary as a system message.

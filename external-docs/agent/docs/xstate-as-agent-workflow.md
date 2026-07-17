@@ -1,16 +1,20 @@
 ---
-title: "Any XState machine is an agent workflow"
-description: "The central claim: a state machine is the portable definition of an agent workflow. You author the shape once (states, events, transitions). The LLM work is a set of actor sources bound at run time. Nothing about the sha"
+title: "Xstate As Agent Workflow"
+description: "Alpha: @statelyai/agent 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: github.com/statelyai/agent."
 sourcePath: "docs/xstate-as-agent-workflow.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/xstate-as-agent-workflow.md"
 ---
+
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
+# Any XState machine is an agent workflow
 
 The central claim: **a state machine is the portable definition of an agent workflow.** You author the shape once (states, events, transitions). The LLM work is a set of actor sources bound at run time. Nothing about the shape assumes an LLM, so the same machine runs as a plain workflow, an agent, or a pure next-step function.
 
 Two choices are fully independent of each other:
 
-- **Where prompts live** — embedded in the machine, or mapped in from outside.
-- **How you drive it** — hand the machine to `runAgent`, or step it yourself as a pure function in a `while` loop.
+- **Where prompts live**: embedded in the machine, or mapped in from outside.
+- **How you drive it**: hand the machine to `runAgent`, or step it yourself as a pure function in a `while` loop.
 
 This guide writes one rough workflow four ways to show all four corners.
 
@@ -26,30 +30,26 @@ A deliberately rough spec:
 
 Notice which steps are model calls (`write`, `judge`, `revise`) and which are plain code (`validate`, `send`). The machine treats them uniformly. The model only ever does two things: **produce a value** (text) or **choose an event** (a decision).
 
-## Version 1 — prompts embedded, run with `runAgent`
+## Version 1: prompts embedded, run with `runAgent`
 
 The default. Prompts live next to the states that use them.
 
 ```ts
-import { z } from 'zod';
-import { openai } from '@ai-sdk/openai';
-import {
-  createTextLogic,
-  runAgent,
-  setupAgent,
-} from '@statelyai/agent';
-import { createAiSdkExecutors, defineModels } from '@statelyai/agent/ai-sdk';
+import { z } from "zod";
+import { openai } from "@ai-sdk/openai";
+import { createTextLogic, runAgent, setupAgent } from "@statelyai/agent";
+import { createAiSdkExecutors, defineModels } from "@statelyai/agent/ai-sdk";
 
 const models = defineModels({
-  writer: openai('gpt-5.4-mini'),
-  judge: openai('gpt-5.4-mini'),
+  writer: openai("gpt-5.4-mini"),
+  judge: openai("gpt-5.4-mini"),
 });
 
 // Text logic: "produce a value." Prompt embedded.
 const writeHaiku = createTextLogic({
   schemas: { input: z.object({ topic: z.string() }), output: z.string() },
-  model: 'writer',
-  system: 'You write haiku. Three lines, 5-7-5. Output only the haiku.',
+  model: "writer",
+  system: "You write haiku. Three lines, 5-7-5. Output only the haiku.",
   prompt: ({ input }) => `Write a haiku about ${input.topic}.`,
 });
 
@@ -58,10 +58,9 @@ const reviseHaiku = createTextLogic({
     input: z.object({ haiku: z.string(), critique: z.string() }),
     output: z.string(),
   },
-  model: 'writer',
-  system: 'You revise haiku. Output only the revised haiku.',
-  prompt: ({ input }) =>
-    `Revise this haiku:\n${input.haiku}\n\nCritique:\n${input.critique}`,
+  model: "writer",
+  system: "You revise haiku. Output only the revised haiku.",
+  prompt: ({ input }) => `Revise this haiku:\n${input.haiku}\n\nCritique:\n${input.critique}`,
 });
 
 const agent = setupAgent({
@@ -83,81 +82,81 @@ const agent = setupAgent({
 });
 
 const haikuMachine = agent.createMachine({
-  id: 'haiku',
+  id: "haiku",
   context: ({ input }) => ({
     topic: input.topic,
     haiku: null,
     critique: null,
     revisions: 0,
   }),
-  output: ({ context }) => ({ haiku: context.haiku ?? '' }),
-  initial: 'writing',
+  output: ({ context }) => ({ haiku: context.haiku ?? "" }),
+  initial: "writing",
   states: {
     writing: {
       invoke: {
-        src: 'writeHaiku',
+        src: "writeHaiku",
         input: ({ context }) => ({ topic: context.topic }),
-        onDone: ({ output }) => ({ target: 'validating', context: { haiku: output } }),
+        onDone: ({ output }) => ({ target: "validating", context: { haiku: output } }),
       },
     },
 
     // Deterministic. No model. A `choice` state is just a branch.
     validating: {
-      type: 'choice',
+      type: "choice",
       choice: ({ context }) =>
-        (context.haiku ?? '').trim().split('\n').filter(Boolean).length === 3
-          ? { target: 'judging' }
-          : { target: 'revising', context: { critique: 'Must be exactly three lines.' } },
+        (context.haiku ?? "").trim().split("\n").filter(Boolean).length === 3
+          ? { target: "judging" }
+          : { target: "revising", context: { critique: "Must be exactly three lines." } },
     },
 
     // Decision: "choose an event." Prompt embedded in the invoke input.
     judging: {
       invoke: {
-        src: 'agent.decide',
+        src: "agent.decide",
         input: ({ context }) => ({
-          model: 'judge',
-          system: 'You are a poetry judge. APPROVE good haiku, else REVISE with a critique.',
+          model: "judge",
+          system: "You are a poetry judge. APPROVE good haiku, else REVISE with a critique.",
           prompt: `Judge this haiku:\n${context.haiku}`,
-          allowedEvents: ['APPROVE', 'REVISE'] as const,
+          allowedEvents: ["APPROVE", "REVISE"],
         }),
-        onError: { target: 'sending' }, // ran out of retries -> ship it
+        onError: { target: "sending" }, // ran out of retries -> ship it
       },
       on: {
-        APPROVE: { target: 'sending' },
+        APPROVE: { target: "sending" },
         // Cap the loop with a guard: return undefined = event is illegal.
         REVISE: ({ context, event }) =>
           context.revisions < 3
-            ? { target: 'revising', context: { critique: event.critique } }
+            ? { target: "revising", context: { critique: event.critique } }
             : undefined,
       },
     },
 
     revising: {
       invoke: {
-        src: 'reviseHaiku',
-        input: ({ context }) => ({ haiku: context.haiku ?? '', critique: context.critique ?? '' }),
+        src: "reviseHaiku",
+        input: ({ context }) => ({ haiku: context.haiku ?? "", critique: context.critique ?? "" }),
         onDone: ({ output }) => ({
-          target: 'validating',
+          target: "validating",
           context: { haiku: output, revisions: ({ context }) => context.revisions + 1 },
         }),
       },
     },
 
-    sending: { type: 'final' },
+    sending: { type: "final" },
   },
 });
 
 const result = await runAgent(haikuMachine, {
-  input: { topic: 'state machines' },
-  ...createAiSdkExecutors({ models }),
+  input: { topic: "state machines" },
+  executors: createAiSdkExecutors({ models }),
 });
 
-if (result.status === 'done') console.log(result.output.haiku);
+if (result.status === "done") console.log(result.output.haiku);
 ```
 
 `runAgent` walks the machine, binds each `agent.*` / text / decision source to your executors, and settles `done | idle | error`. The `REVISE` guard returning `undefined` is doing real work: it makes `REVISE` illegal past 3 revisions, and the decision core (`resolveDecision`) sees that via its `canTake` check, records `rejected-by-guard`, and retries the model. The machine's guards constrain the model. That is the whole point.
 
-## Version 2 — same shape, driven as a pure function
+## Version 2: same shape, driven as a pure function
 
 The machine can be a **next-step decider** instead of a runner. You own the loop; the machine only tells you what to do next. This is what durable hosts (Temporal, queues, Workflows) want: one model call per checkpoint, everything resumable.
 
@@ -172,15 +171,15 @@ import {
   resolveAgentStep,
   resolveDecision,
   transitionAgentStep,
-} from '@statelyai/agent';
+} from "@statelyai/agent";
 
 const executors = createAiSdkExecutors({ models });
 
-let step = initialAgentStep(haikuMachine, { topic: 'state machines' });
+let step = initialAgentStep(haikuMachine, { topic: "state machines" });
 
 while (!step.done) {
   for (const request of step.requests) {
-    if (request.kind === 'text') {
+    if (request.kind === "text") {
       // "produce a value" -> apply the output as the invoke's done event
       const output = await executeAgentRequest(request, executors);
       step = resolveAgentStep(haikuMachine, step, request, output);
@@ -202,11 +201,11 @@ Same machine, same executors, zero changes to the definition. `runAgent` **is** 
 
 There is no `agent.decide()` free function. "Decide the next step" is: read the legal events off the snapshot (`getAcceptedEvents(snapshot)` or, as above, the decision request's pre-computed `events`), then `resolveDecision(...)` to pick one. The machine's `snapshot.can(event)` is the guard.
 
-## Version 3 — prompts mapped in from outside the machine
+## Version 3: prompts mapped in from outside the machine
 
-Now strip every prompt out of the machine. The machine keeps only **structure** — state names and bare `src` strings. Prompts live in a separate map and are bound at the boundary.
+Now strip every prompt out of the machine. The machine keeps only **structure**: state names and bare `src` strings. Prompts live in a separate map and are bound at the boundary.
 
-> XState has no `mapStates` helper. External mapping is just a plain object keyed by actor-source name. That record *is* the map.
+> XState has no `mapStates` helper. External mapping is just a plain object keyed by actor-source name. That record _is_ the map.
 
 The machine, prompt-free:
 
@@ -232,7 +231,7 @@ const haikuMachine = agent.createMachine({
           model: 'judge',
           system: 'You judge haiku. APPROVE good ones, else REVISE with a critique.',
           prompt: `Judge:\n${context.haiku}`,
-          allowedEvents: ['APPROVE', 'REVISE'] as const,
+          allowedEvents: ['APPROVE', 'REVISE'],
         }),
         onError: { target: 'sending' },
       },
@@ -253,82 +252,112 @@ const haikuMachine = agent.createMachine({
 The prompt map, defined separately (could live in another file, a DB row, a config service):
 
 ```ts
-import { createTextLogic } from '@statelyai/agent';
+import { createTextLogic } from "@statelyai/agent";
 
 const prompts = {
   write: {
-    system: 'You write haiku. Three lines, 5-7-5.',
+    system: "You write haiku. Three lines, 5-7-5.",
     prompt: ({ input }) => `Write a haiku about ${input.topic}.`,
   },
   revise: {
-    system: 'You revise haiku.',
+    system: "You revise haiku.",
     prompt: ({ input }) => `Revise:\n${input.haiku}\n\nCritique:\n${input.critique}`,
   },
 };
 
-// Build text actor sources from the map — this is your `mapStates`.
+// Build text actor sources from the map. This is your `mapStates`.
 // The `judge` decision is state-local (`src: 'agent.decide'`), so its prompt
 // lives on the invoke's `input`, not here.
 const actorSources = {
-  write: createTextLogic({ model: 'writer', ...prompts.write }),
-  revise: createTextLogic({ model: 'writer', ...prompts.revise }),
+  write: createTextLogic({ model: "writer", ...prompts.write }),
+  revise: createTextLogic({ model: "writer", ...prompts.revise }),
 };
 
 // Bind at the boundary. runAgent merges actorSources onto the machine first.
 const result = await runAgent(haikuMachine, {
-  input: { topic: 'state machines' },
+  input: { topic: "state machines" },
   actorSources,
-  ...createAiSdkExecutors({ models }),
+  executors: createAiSdkExecutors({ models }),
 });
 ```
 
 Same machine graph as Version 1, but now the machine is pure control flow and the prompts are data you swap without touching it. This is the form you want when prompts are versioned separately, edited by non-engineers, or A/B tested.
 
-`actorSources` on `runAgent` is sugar for `machine.provide({ actorSources })` before the run. You can also `provide` them permanently, or pass them into the step-path helpers — the pure-function loop from Version 2 works unchanged here.
+`actorSources` on `runAgent` is sugar for `machine.provide({ actorSources })` before the run. You can also `provide` them permanently, or pass them into the step-path helpers: the pure-function loop from Version 2 works unchanged here.
 
-## Version 4 — a plain XState v5-style machine, no `setupAgent`
+## Version 4: a plain XState v5-style machine, no `setupAgent`
 
 The strongest form of the claim: the machine need not know about this library **at all**. Any machine whose invokes resolve to values, and whose events you can enumerate, is drivable.
 
-- **`setupAgent` is optional.** It registers the four `agent.*` builtins and the schema pack. Without it, use the free functions with explicit options and bind sources with `machine.provide`.
+- **`setupAgent` is optional.** It registers the four `agent.*` builtins and the schema pack. Without it, use the free functions with explicit options and bind sources with `machine.provide({ actorSources: { ... } })`, the same `actorSources` key `setup()` uses.
 - For a decision, you don't need `agent.decide` either. Any state that waits on events is a decision point: enumerate the legal events with `getAcceptedEvents(snapshot)`, and let the model choose one with `resolveDecision`, gated by `snapshot.can(event)`.
 
 ```ts
-import { getAcceptedEvents, resolveDecision } from '@statelyai/agent';
+import { getAcceptedEvents, resolveDecision } from "@statelyai/agent";
 
 // `machine` is a bog-standard xstate machine. Its 'judging' state has
 // `on: { APPROVE: ..., REVISE: ... }` and no agent-specific anything.
 const events = getAcceptedEvents(snapshot); // -> [{ type: 'APPROVE' }, { type: 'REVISE' }]
 
 const event = await resolveDecision(
-  { kind: 'decision', id: 'judge', model: 'judge', prompt: `Judge:\n${haiku}`, events, attempts: [] },
+  {
+    kind: "decision",
+    id: "judge",
+    model: "judge",
+    system: "You are a poetry judge.",
+    prompt: `Judge:\n${haiku}`,
+    events,
+    attempts: [],
+  },
   executors.decide,
   { canTake: (e) => snapshot.can(e) },
 );
 ```
 
-A rough, hand-written v5 machine works because the contract is minimal: **invokes return values, states accept events, guards decide legality.** The library supplies the model; the machine supplies the shape.
+A rough, hand-written v5 machine works because the contract is minimal: **invokes return values, states accept events, guards decide legality.** The library supplies the model; the machine supplies the shape. See the runnable [plain-xstate](https://github.com/statelyai/agent/blob/main/examples/plain-xstate/index.ts) example: a `setup()` machine with zero knowledge of this library, adopted with exactly these pieces.
+
+> **Guards on event transitions:** write them as function transitions that return `undefined` when blocked (as every example on this page does). XState v6 intentionally drops named string guards (`guard: 'canRevise'`) on `on:` transitions in favor of this form, which is also what makes `snapshot.can(event)`, and therefore `resolveDecision`'s `canTake`, reflect the guard.
+
+The one-call form of the same idea is `runAgent`'s `getRequests` option. A machine with **no invokes at all** (prompts written as state `description`s, `meta`, tags, or any lookup you keep outside the machine) runs unmodified: whenever the machine would otherwise settle idle, your hook maps the snapshot to the model request(s) to run, each with an explicit `onDone` event (or a `decide` call when omitted). The run aggregates a message log and stamps it on every settled `snapshot.messages` (read it with `getAgentMessages`, observe it live with `onMessage`, seed it with `messages`).
+
+```ts
+const result = await runAgent(plainMachine, {
+  executors,
+  getRequests: (snapshot) =>
+    snapshot._nodes
+      .filter((node) => node.description && !node.tags.includes("waiting"))
+      .map((node) => ({
+        model: "writer",
+        prompt: node.description!,
+        kind: node.tags.includes("decision") ? "decision" : "text",
+        onDone: node.ownEvents.length === 1 ? { type: node.ownEvents[0] } : undefined,
+        allowedEvents: node.ownEvents,
+      })),
+});
+```
+
+Where the prompts live is the hook's business, not the library's: this prompts-in-descriptions recipe is a starting point to copy and adapt. See the runnable [described-workflow](https://github.com/statelyai/agent/blob/main/examples/described-workflow/index.ts) example.
 
 ## The portability payoff
 
-Because the shape carries no LLM assumptions, the same definition round-trips through non-code representations. `setupAgent.fromConfig` builds a machine from serializable JSON — the kind a database, a visual editor, or an LLM could emit:
+Because the shape carries no LLM assumptions, the same definition round-trips through non-code representations. `setupAgent.fromConfig` builds a machine from serializable JSON: the kind a database, a visual editor, or an LLM could emit:
 
 ```ts
 const machine = setupAgent.fromConfig(workflowJson, { compileSchema });
-await runAgent(machine, { input, ...executors });
+await runAgent(machine, { input, executors });
 ```
 
-That closes the loop: **the machine is the portable artifact.** Prompts embedded or mapped, run whole or stepped by hand, authored in TypeScript or loaded as JSON — every combination drives the identical graph.
+That closes the loop: **the machine is the portable artifact.** Prompts embedded or mapped, run whole or stepped by hand, authored in TypeScript or loaded as JSON: every combination drives the identical graph.
 
-| | Prompts embedded | Prompts mapped outside |
-|---|---|---|
-| **Run with `runAgent`** | Version 1 | Version 3 |
-| **Pure-function `while` loop** | Version 2 | Version 2 + `actorSources` |
+|                                | Prompts embedded | Prompts mapped outside     |
+| ------------------------------ | ---------------- | -------------------------- |
+| **Run with `runAgent`**        | Version 1        | Version 3                  |
+| **Pure-function `while` loop** | Version 2        | Version 2 + `actorSources` |
 
 ## API reference
 
-- **`setupAgent(config)`** — schema-first `setup()`. Registers `agent.generateText` / `streamText` / `decide` / `userInput` builtins; returns `createMachine` plus `schemas`, `models`, `requests`, and `appendMessages`.
-- **`runAgent(machine, { input, generateText, decide, streamText?, actorSources?, userInput?, signal?, maxModelCalls?, snapshot?, event?, onTrace? })`** — runs to `done | idle | error`. Resume from `idle` by passing `{ snapshot, event }` back in.
-- **`createTextLogic(config)`** — reusable "produce a value" actor source. `system`/`prompt`/`model` can each be static or `({ input }) => value`. Decisions are state-local via `src: 'agent.decide'`; to reuse one, share its input builder.
-- **Step path** — `initialAgentStep` / `transitionAgentStep` / `resolveAgentStep` / `getAgentRequests`, `executeAgentRequest` (text), `resolveDecision` (decision), `getAcceptedEvents` (enumerate legal events).
-- **`createAiSdkExecutors({ models })`** — returns `{ generateText, streamText, decide }` from a Vercel AI SDK model map. Spread into `runAgent` or pass to the step helpers.
+- **`setupAgent(config)`**: schema-first `setup()`. Registers `agent.generateText` / `streamText` / `decide` / `userInput` builtins; returns `createMachine` plus `schemas`, `models`, `requests`, and `appendMessages`.
+- **`runAgent(machine, { input, executors, actorSources?, userInput?, signal?, maxModelCalls?, snapshot?, event?, onTrace?, getRequests?, messages?, onMessage? })`**: runs to `done | idle | error`. Resume from `idle` by passing `{ snapshot, event }` back in. `getRequests` overrides the invoke-driven default: it maps the snapshot to model requests whenever the machine would otherwise settle idle, so invoke-less described machines run as agents; `messages` seeds the run's aggregated log (array appends to resumed history, function replaces), `onMessage` observes it live, and `getAgentMessages(snapshot)` reads it off a settled snapshot.
+- **`createTextLogic(config)`**: reusable "produce a value" actor source. `system`/`prompt`/`model` can each be static or `({ input }) => value`. Decisions are state-local via `src: 'agent.decide'`; to reuse one, share its input builder.
+- **Step path**: `initialAgentStep` / `transitionAgentStep` / `resolveAgentStep` / `getAgentRequests`, `executeAgentRequest` (text), `resolveDecision` (decision), `getAcceptedEvents` (enumerate legal events).
+- **`createAiSdkExecutors({ models })`**: returns `{ generateText, streamText, decide }` from a Vercel AI SDK model map. Spread into `runAgent` or pass to the step helpers.

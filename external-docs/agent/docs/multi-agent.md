@@ -5,6 +5,8 @@ sourcePath: "docs/multi-agent.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/multi-agent.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## Multi-agent composition
 
 Because an agent machine is an XState actor, you compose agents with the actor patterns XState already gives you. There is no separate orchestration layer to learn:
@@ -21,43 +23,80 @@ The framing stays the same: the machine decides, the [host](/docs/packages/agent
 
 Register a child machine under `actorSources:` on the parent's `setupAgent(...)`, then invoke it by name. The parent treats the child like any other invoked actor: typed `input`, final output in `onDone`.
 
-[examples/subflows/index.ts](./_assets/examples/subflows/index.ts) builds a research-then-write pipeline this way:
+[examples/subflows/index.ts](https://github.com/statelyai/agent/blob/main/examples/subflows/index.ts) builds a research-then-write pipeline this way:
 
 ```ts
 const agentSetup = setupAgent({
   models,
-  context: z.object({ topic: z.string(), notes: z.string().nullable(), final: z.string().nullable() }),
+  context: z.object({
+    topic: z.string(),
+    notes: z.string().nullable(),
+    final: z.string().nullable(),
+  }),
   input: z.object({ topic: z.string() }),
   output: finalOutputSchema,
   actorSources: {
-    researchAgent: research.machine.provide({ actorSources: { /* ... */ } }),
-    writerAgent: writer.machine.provide({ actorSources: { /* ... */ } }),
+    researchAgent: research.machine.provide({
+      actorSources: {
+        /* ... */
+      },
+    }),
+    writerAgent: writer.machine.provide({
+      actorSources: {
+        /* ... */
+      },
+    }),
   },
 });
 
 const machine = agentSetup.createMachine({
-  initial: 'researching',
+  initial: "researching",
   states: {
     researching: {
       invoke: {
-        src: 'researchAgent',
+        src: "researchAgent",
         input: ({ context }) => ({ topic: context.topic }),
-        onDone: ({ output }) => ({ target: 'writing', context: { notes: output.notes } }),
+        onDone: ({ output }) => ({ target: "writing", context: { notes: output.notes } }),
       },
     },
     writing: {
       invoke: {
-        src: 'writerAgent',
-        input: ({ context }) => ({ notes: context.notes ?? '' }),
-        onDone: ({ output }) => ({ target: 'done', context: { final: output.draft } }),
+        src: "writerAgent",
+        input: ({ context }) => ({ notes: context.notes ?? "" }),
+        onDone: ({ output }) => ({ target: "done", context: { final: output.draft } }),
       },
     },
-    done: { type: 'final', output: ({ context }) => ({ final: context.final ?? '' }) },
+    done: { type: "final", output: ({ context }) => ({ final: context.final ?? "" }) },
   },
 });
 ```
 
-A child machine's own requests inherit the executors you pass to `runAgent` — no per-child binding needed. The section on nested executor inheritance below explains the rules.
+A child machine's own requests inherit the executors you pass to `runAgent`, no per-child binding needed. The section on nested executor inheritance below explains the rules.
+
+### Observing child actors
+
+
+
+`runAgent` exposes two observation seams:
+
+- **`onTransition`** fires for the **root** machine's transitions only. Use it for parent progress.
+- **`inspect`** is the raw, system-wide inspection stream (the root machine, every invoked child machine, and spawned actors), so it is the only way to see a child's states. Attribute each event via `event.actorRef.id` (the invoke id) or `.src`.
+
+`inspectTransitions(handler)` wraps `inspect`: it filters the stream to `@xstate.transition` events and hands the handler the typed snapshot and actorRef, replacing the manual `event.type === '@xstate.transition'` check and casts.
+
+```ts
+import { inspectTransitions, runAgent } from "@statelyai/agent";
+
+await runAgent(parentMachine, {
+  executors: { generateText },
+  onTransition: (snapshot) => console.log("parent:", snapshot.value),
+  inspect: inspectTransitions((snapshot, actorRef) => {
+    console.log(`[${actorRef.id}]`, snapshot.value); // child transitions included
+  }),
+});
+```
+
+[examples/subflows/index.ts](https://github.com/statelyai/agent/blob/main/examples/subflows/index.ts) contrasts the two channels side by side.
 
 ## Sub-agents as host-owned tools
 
@@ -65,7 +104,7 @@ A child machine's own requests inherit the executors you pass to `runAgent` — 
 
 A sub-agent does not have to be a machine. In this pattern the machine sees a single text request with tools; the host decides those tools delegate to worker agents built with another framework.
 
-[examples/ai-sdk-sub-agents/index.ts](./_assets/examples/ai-sdk-sub-agents/index.ts) exposes `askResearcher` and `askWriter` tools whose `execute` calls a Vercel AI SDK `ToolLoopAgent` worker:
+[examples/ai-sdk-sub-agents/index.ts](https://github.com/statelyai/agent/blob/main/examples/ai-sdk-sub-agents/index.ts) exposes `askResearcher` and `askWriter` tools whose `execute` calls a Vercel AI SDK `ToolLoopAgent` worker:
 
 ```ts
 requests: {
@@ -98,7 +137,7 @@ The same idea generalizes past tools: the host can provide **any async actor**. 
 
 
 
-A parent machine can invoke several child agents at once and pass messages between them, using each child's `on:` handlers as its inbox. [examples/debate-sub-agents/index.ts](./_assets/examples/debate-sub-agents/index.ts) runs a debate this way:
+A parent machine can invoke several child agents at once and pass messages between them, using each child's `on:` handlers as its inbox. [examples/debate-sub-agents/index.ts](https://github.com/statelyai/agent/blob/main/examples/debate-sub-agents/index.ts) runs a debate this way:
 
 ```ts
 invoke: [
@@ -128,23 +167,23 @@ Each debater sits idle until it receives `DEBATE.ARGUMENT_REQUESTED`, composes a
 
 
 
-`runAgent` rebinds the executors you pass it (`generateText`/`streamText`/`decide`) onto every unbound agent request in the machine — **including requests inside invoked child machines, at any depth**. A child request inherits the same host-backed executors as the parent's own requests and shares the run's `maxModelCalls` budget, `onTrace`, `onChunk`, and `onResult`.
+`runAgent` rebinds the executors you pass it (`generateText`/`streamText`/`decide`) onto every unbound agent request in the machine, **including requests inside invoked child machines, at any depth**. A child request inherits the same host-backed executors as the parent's own requests and shares the run's `maxModelCalls` budget, `onTrace`, `onChunk`, and `onResult`.
 
 ```ts
 const result = await runAgent(parentMachine, {
-  input: { topic: 'agents' },
-  generateText, // covers the parent's requests AND the child's researchTopic
+  input: { topic: "agents" },
+  executors: { generateText }, // covers the parent's requests AND the child's researchTopic
 });
 ```
 
 The rules:
 
 - **Inheritance is the default.** Any request reached through string-keyed actor sources (invoke `src` strings, registered `actorSources`) inherits, no matter how deeply nested. Cycles are handled.
-- **Explicit bindings win.** A request that already carries its own executor — via `.withExecutor(...)`, `bindRequestExecutor(...)`, or a child's own `.provide({ actorSources })` — keeps it. Explicit binding shadows inheritance, so the parent's executors are never called for it.
+- **Explicit bindings win.** A request that already carries its own executor (via `.withExecutor(...)`, `bindRequestExecutor(...)`, or a child's own `.provide({ actorSources })`) keeps it. Explicit binding shadows inheritance, so the parent's executors are never called for it.
 - **Missing executors still fail fast.** If a reachable request needs an executor kind you didn't pass (e.g. a child has a `mode: 'stream'` request but `runAgent` got no `streamText`), binding throws a loud error naming the invoke chain and the request `src` before any actor runs.
-- **Escape hatch for dynamic spawns.** Logics created dynamically (e.g. machine factories used with `enq.spawn`) aren't in any invoke config for the static bind walk to reach, so they can't inherit. Bind those explicitly with `bindRequestExecutor(...)` / `.withExecutor(...)` (see [examples/fan-out/index.ts](./_assets/examples/fan-out/index.ts)). The same applies to a child invoked as a **direct-object** `src` (an inline machine object rather than a registered name): register it as a string-keyed source to let it inherit, or bind its requests yourself.
+- **Escape hatch for dynamic spawns.** Logics created dynamically (e.g. machine factories used with `enq.spawn`) aren't in any invoke config for the static bind walk to reach, so they can't inherit. Bind those explicitly with `bindRequestExecutor(...)` / `.withExecutor(...)` (see [examples/fan-out/index.ts](https://github.com/statelyai/agent/blob/main/examples/fan-out/index.ts)). The same applies to a child invoked as a **direct-object** `src` (an inline machine object rather than a registered name): register it as a string-keyed source to let it inherit, or bind its requests yourself.
 
-[examples/subflows/index.ts](./_assets/examples/subflows/index.ts) shows the default: the parent registers the child under `actorSources.child`, passes `generateText` to `runAgent`, and the child's `researchTopic` request inherits it — no nested `.provide`.
+[examples/subflows/index.ts](https://github.com/statelyai/agent/blob/main/examples/subflows/index.ts) shows the default: the parent registers the child under `actorSources.child`, passes `generateText` to `runAgent`, and the child's `researchTopic` request inherits it, no nested `.provide`.
 
 ## Fan-out today
 

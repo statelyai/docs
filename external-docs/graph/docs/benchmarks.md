@@ -211,11 +211,11 @@ pnpm bench:report bench/compare/results/2026-06-12.json
 
 **Expected runtime** (Apple M1 Max, node 24): quick ≈ 1–2 min, full ≈ 4–8 min. Slower machines scale roughly linearly; the 100k PageRank/components cells for cytoscape dominate the tail (cytoscape self-skips after exceeding 10 s).
 
-**Note on CI:** a GitHub Actions workflow ([`.github/workflows/bench.yml`](./_assets/.github/workflows/bench.yml)) runs the quick variant on manual dispatch and uploads the JSON as an artifact. Shared CI runners are noisy and their absolute numbers are not canonical — that workflow exists to prove the harness runs end-to-end from a clean checkout, not to publish timings.
+**Note on CI:** a GitHub Actions workflow ([`.github/workflows/bench.yml`](https://github.com/statelyai/graph/blob/main/.github/workflows/bench.yml)) runs the quick variant on manual dispatch and uploads the JSON as an artifact. Shared CI runners are noisy and their absolute numbers are not canonical — that workflow exists to prove the harness runs end-to-end from a clean checkout, not to publish timings.
 
 ## Fairness notes
 
-The benchmark tries hard not to flatter `@statelyai/graph`. Every adapter (see [`bench/compare/adapters.ts`](./_assets/bench/compare/adapters.ts)) builds from the *same* neutral integer edge list and calls each library through its **idiomatic public API** — the code a user would actually write, not a hand-tuned port. Where a library has no equivalent API, the cell is `—` rather than a home-grown reimplementation counted against the competitor. Per-library specifics:
+The benchmark tries hard not to flatter `@statelyai/graph`. Every adapter (see [`bench/compare/adapters.ts`](https://github.com/statelyai/graph/blob/main/bench/compare/adapters.ts)) builds from the *same* neutral integer edge list and calls each library through its **idiomatic public API** — the code a user would actually write, not a hand-tuned port. Where a library has no equivalent API, the cell is `—` rather than a home-grown reimplementation counted against the competitor. Per-library specifics:
 
 - **`@statelyai/graph`** — BFS uses the public `bfs` generator; `sssp` uses `getShortestPath` (bidirectional Dijkstra); PageRank/components/betweenness/degree use their public functions. `getDegree` is O(1) after the recent index change; the degree-sweep numbers reflect that (and it still does not win the degree sweep).
 - **graphology** — `sssp` uses `dijkstra.bidirectional` (a like-for-like single-pair search, its best-case API here). BFS is a minimal queue loop over `forEachOutNeighbor` because graphology has no built-in directed BFS; that is the same loop a graphology user would write, so it is a fair representation, not a handicap. PageRank and betweenness run with `getEdgeWeight: null` (unweighted), matching the unweighted call on our side.
@@ -232,7 +232,7 @@ If you spot an adapter that misrepresents a library's best idiomatic API, that i
 
 ## Methodology
 
-Source: [`bench/compare/run.ts`](./_assets/bench/compare/run.ts), [`bench/compare/generate.ts`](./_assets/bench/compare/generate.ts), [`bench/compare/adapters.ts`](./_assets/bench/compare/adapters.ts), [`bench/compare/report.ts`](./_assets/bench/compare/report.ts). Raw output: [`bench/compare/results/2026-06-12.md`](https://github.com/statelyai/graph/blob/main/bench/compare/results/2026-06-12.md) and [`2026-06-12.json`](./_assets/bench/compare/results/2026-06-12.json).
+Source: [`bench/compare/run.ts`](https://github.com/statelyai/graph/blob/main/bench/compare/run.ts), [`bench/compare/generate.ts`](https://github.com/statelyai/graph/blob/main/bench/compare/generate.ts), [`bench/compare/adapters.ts`](https://github.com/statelyai/graph/blob/main/bench/compare/adapters.ts), [`bench/compare/report.ts`](https://github.com/statelyai/graph/blob/main/bench/compare/report.ts). Raw output: [`bench/compare/results/2026-06-12.md`](https://github.com/statelyai/graph/blob/main/bench/compare/results/2026-06-12.md) and [`2026-06-12.json`](https://github.com/statelyai/graph/blob/main/bench/compare/results/2026-06-12.json).
 
 - **Identical inputs.** Seeded generators emit a neutral edge list (integer endpoints, weights); every library builds from the same list. Simple directed graphs only (no parallel edges or self-loops) — the lowest common denominator across libraries.
 - **Four shapes × three sizes** (1,000 / 10,000 / 100,000 nodes):

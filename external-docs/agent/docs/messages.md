@@ -5,6 +5,8 @@ sourcePath: "docs/messages.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/messages.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## The message model
 
 
@@ -29,12 +31,12 @@ type AgentMessage = SystemMessage | UserMessage | AssistantMessage | ToolMessage
 Build each role with its helper:
 
 ```ts
-import { assistantMessage, systemMessage, userMessage } from '@statelyai/agent';
+import { assistantMessage, systemMessage, userMessage } from "@statelyai/agent";
 
 const messages = [
-  systemMessage('You draft concise emails.'),
-  userMessage('Draft a launch email.'),
-  assistantMessage('Here is a first draft: ...'),
+  systemMessage("You draft concise emails."),
+  userMessage("Draft a launch email."),
+  assistantMessage("Here is a first draft: ..."),
 ];
 ```
 
@@ -42,8 +44,8 @@ const messages = [
 
 ```ts
 userMessage([
-  { type: 'text', text: 'What is in this image?' },
-  { type: 'image', image: 'https://example.com/photo.png' },
+  { type: "text", text: "What is in this image?" },
+  { type: "image", image: "https://example.com/photo.png" },
 ]);
 ```
 
@@ -52,7 +54,7 @@ userMessage([
 Messages are plain context state. Declare a `messages` field validated by `messagesSchema`, and grow it over transitions:
 
 ```ts
-import { messagesSchema, setupAgent } from '@statelyai/agent';
+import { messagesSchema, setupAgent } from "@statelyai/agent";
 
 const agentSetup = setupAgent({
   context: z.object({
@@ -72,7 +74,37 @@ on: {
 }
 ```
 
-A request that needs history sends it through `messages` instead of a bare `prompt`. [examples/email-drafter/index.ts](./_assets/examples/email-drafter/index.ts) keeps a running `messages` array in context and feeds it to a `createTextLogic` request.
+A request that needs history sends it through `messages` instead of a bare `prompt`. [examples/email-drafter/index.ts](https://github.com/statelyai/agent/blob/main/examples/email-drafter/index.ts) keeps a running `messages` array in context and feeds it to a `createTextLogic` request.
+
+### A lightweight messages field
+
+`messagesSchema` is the shipped validator. When you want a messages field without deep per-part validation (the array is built from library helpers you already trust), reach for a field typed as `AgentMessage[]` with a cheap `Array.isArray` runtime check.
+
+With `zod`, use the shipped `zodAgentMessages()` from the `@statelyai/agent/zod` subpath (an optional `zod` peer):
+
+```ts
+import { z } from 'zod';
+import { zodAgentMessages } from '@statelyai/agent/zod';
+
+context: z.object({
+  messages: zodAgentMessages(),
+}),
+```
+
+`zodAgentMessages()` returns a `z.ZodType<AgentMessage[]>`: the exact `AgentMessage[]` type at author time, with the runtime check kept to a shallow `Array.isArray`.
+
+No-dependency fallback: the same recipe inline with `z.custom`, if you'd rather not add the subpath import:
+
+```ts
+import { z } from 'zod';
+import type { AgentMessage } from '@statelyai/agent';
+
+context: z.object({
+  messages: z.custom<AgentMessage[]>((v) => Array.isArray(v)),
+}),
+```
+
+Use `messagesSchema` instead when you want full structural validation of each part.
 
 ## Persisting messages
 

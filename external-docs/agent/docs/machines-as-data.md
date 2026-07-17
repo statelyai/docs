@@ -5,6 +5,8 @@ sourcePath: "docs/machines-as-data.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/machines-as-data.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## Machines as data
 
 
@@ -12,7 +14,7 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs
 An agent machine can be pure data. Describe it as a JSON or YAML config and hand it to `setupAgent.fromConfig(...)`. The lowering produces the same kind of runnable XState machine that `setupAgent(...)` builds by hand: states, choice routing, transitions with guard expressions, emitted progress events, text requests, decisions, and human/idle steps included. Only the authoring format changes.
 
 ```ts
-import { setupAgent } from '@statelyai/agent';
+import { setupAgent } from "@statelyai/agent";
 
 const machine = setupAgent.fromConfig(config, { compileSchema });
 ```
@@ -26,14 +28,14 @@ A config is portable: generate it from a model, store it in a database row, or e
 The package ships a JSON Schema for validating and editing configs:
 
 ```ts
-import workflowSchema from '@statelyai/agent/agent-workflow.json';
+import workflowSchema from "@statelyai/agent/agent-workflow.json";
 ```
 
 Point an editor, form generator, or validation step at it to catch a malformed config before it reaches `fromConfig(...)`. It describes the whole config surface: `schemas` (including `events` and `emitted`), `context`, `requests`, `actors`, `initial`, and `states`, down to choice states, transitions, invokes, and actions.
 
 ## Running example: a support ticket
 
-The rest of this page uses one config: the model triages a ticket (escalate or reply), drafts a reply when replying, then waits for a human to approve or reject. It is a real `.json` file at [examples/json-agent/workflow.json](./_assets/examples/json-agent/workflow.json), run by [examples/json-agent/index.ts](./_assets/examples/json-agent/index.ts). Here it is as YAML for readability:
+The rest of this page uses one config: the model triages a ticket (escalate or reply), drafts a reply when replying, then waits for a human to approve or reject. It is a real `.json` file at [examples/json-agent/workflow.json](https://github.com/statelyai/agent/blob/main/examples/json-agent/workflow.json), run by [examples/json-agent/index.ts](https://github.com/statelyai/agent/blob/main/examples/json-agent/index.ts). Here it is as YAML for readability:
 
 ```yaml
 id: support-ticket-json
@@ -135,17 +137,17 @@ JSON Schema engine; bring Ajv, @cfworker/json-schema, or another compiler that
 returns Standard Schema. Ajv recipe:
 
 ```ts
-import Ajv from 'ajv';
-import { setupAgent, type SchemaCompiler, type StandardSchemaV1 } from '@statelyai/agent';
+import Ajv from "ajv";
+import { setupAgent, type SchemaCompiler, type StandardSchemaV1 } from "@statelyai/agent";
 
 const ajv = new Ajv({ strict: false });
 
 const ajvCompileSchema: SchemaCompiler = (jsonSchema, name): StandardSchemaV1 => {
   const validate = ajv.compile(jsonSchema);
   return {
-    '~standard': {
+    "~standard": {
       version: 1,
-      vendor: 'ajv',
+      vendor: "ajv",
       validate: (value) =>
         validate(value)
           ? { value }
@@ -183,7 +185,7 @@ states:
       REPLY: { target: drafting }
 ```
 
-Delivery of the chosen event is automatic — the decision actor sends it to the invoking actor when it resolves, in both TypeScript and JSON. That event's transition usually exits the invoking state, cancelling the invoke, so `onDone` normally never fires; it is optional and only observed when the chosen event's transition stays in-state. Only `onError` (retries exhausted) is commonly configured.
+Delivery of the chosen event is automatic: the decision actor sends it to the invoking actor when it resolves, in both TypeScript and JSON. That event's transition usually exits the invoking state, cancelling the invoke, so `onDone` normally never fires; it is optional and only observed when the chosen event's transition stays in-state. Only `onError` (retries exhausted) is commonly configured.
 
 ## Choice states and emitted events
 
@@ -216,3 +218,7 @@ The data form is narrower than TypeScript authoring, by design:
 - Function-valued fields (`allowedEvents`, `guard`, `input` as functions) cannot appear in JSON at all.
 
 When you need comparisons, computed guards, or function-valued fields, author in TypeScript with `setupAgent(...)` and Zod (or any Standard Schema).
+
+## Verifying a generated machine
+
+A machine built from data can be checked before it ever runs: no API key, no model call. Lint it with `lintAgentMachine`, simulate a scripted playthrough, or enumerate its decision branches. The `statelyai-agent lint <workflow.json>` CLI does this for a JSON config in CI. See [verify](/docs/packages/agent/verify).

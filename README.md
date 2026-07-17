@@ -94,6 +94,8 @@ Each entry means:
 
 ### How Sync Works
 
+<!-- docs sync behavior matching scripts/docs-sync.mjs -->
+
 The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 
 For each manifest entry, it:
@@ -108,6 +110,7 @@ For each manifest entry, it:
 5. Generates Fumadocs frontmatter when it is missing.
 6. Uses the source repo's optional `docs/meta.json` to order and select
    navigation pages.
+7. Writes only changed outputs and removes stale generated files.
 
 The generated workspace is what `source.config.ts` points Fumadocs at. The app
 never copies external docs into `content/docs`.
@@ -135,6 +138,8 @@ For synced external docs, the pipeline also derives:
 - `sourcePath` and `sourceUrl` pointing to the original file in GitHub
 
 The first H1 in synced pages is stripped so the page title only renders once.
+Linked source files and directories stay on GitHub. Only embedded local images
+are copied into `_assets`.
 
 ### Overlapping Sources
 

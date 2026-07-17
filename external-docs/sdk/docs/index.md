@@ -35,11 +35,14 @@ embed.init({
 
 Restrict an embed by passing a resolved access policy:
 
+
+
 ```ts
 embed.init({
   machine: myMachineConfig,
   mode: 'viewing',
   readOnly: true,
+  readOnlyReason: 'free-plan',
   capabilities: {
     edit: false,
     export: false,
@@ -55,6 +58,10 @@ embed.on('capabilityDenied', (event) => {
   console.warn(event.message);
 });
 ```
+
+`readOnlyReason: 'free-plan'` shows a persistent **Upgrade to edit** action.
+Use `access-unverified` when reopening or signing in, rather than upgrading, is
+the appropriate recovery action.
 
 Key capabilities:
 

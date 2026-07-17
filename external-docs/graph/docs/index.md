@@ -455,10 +455,10 @@ Format-specific docs live alongside the source:
 
 
 
-The repo includes runnable examples under [`examples/`](./examples):
+The repo includes runnable examples under [`examples/`](https://github.com/statelyai/graph/tree/main/examples):
 
-- [Flow-based math](./_assets/examples/flow-based-math.ts) shows ports, topological ordering, and value propagation.
-- [Async workflow](./_assets/examples/async-workflow.ts) models an n8n/Zapier-style workflow with ports and dependency-aware execution.
+- [Flow-based math](https://github.com/statelyai/graph/blob/main/examples/flow-based-math.ts) shows ports, topological ordering, and value propagation.
+- [Async workflow](https://github.com/statelyai/graph/blob/main/examples/async-workflow.ts) models an n8n/Zapier-style workflow with ports and dependency-aware execution.
 
 ## Development
 

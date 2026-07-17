@@ -5,6 +5,8 @@ sourcePath: "docs/index.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/index.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## Overview
 
 `@statelyai/agent` lets you author an AI agent as a typed XState state machine. The machine is a portable blueprint of what your agent can do; it never talks to a model directly. The core idea: **the machine decides, the host executes.**
@@ -32,12 +34,12 @@ A [decision](/docs/packages/agent/decisions) is where this matters most: the mod
 
 
 ```ts
-import { z } from 'zod';
-import { runAgent, setupAgent } from '@statelyai/agent';
-import { createAiSdkExecutors, defineModels } from '@statelyai/agent/ai-sdk';
-import { openai } from '@ai-sdk/openai';
+import { z } from "zod";
+import { runAgent, setupAgent } from "@statelyai/agent";
+import { createAiSdkExecutors, defineModels } from "@statelyai/agent/ai-sdk";
+import { openai } from "@ai-sdk/openai";
 
-const models = defineModels({ quick: openai('gpt-5.4-mini') });
+const models = defineModels({ quick: openai("gpt-5.4-mini") });
 const answerSchema = z.object({ answer: z.string() });
 
 const agentSetup = setupAgent({
@@ -48,7 +50,7 @@ const agentSetup = setupAgent({
   requests: {
     answerQuestion: {
       schemas: { input: z.object({ prompt: z.string() }), output: answerSchema },
-      model: 'quick',
+      model: "quick",
       prompt: ({ input }) => input.prompt,
     },
   },
@@ -56,28 +58,28 @@ const agentSetup = setupAgent({
 
 const machine = agentSetup.createMachine({
   context: ({ input }) => ({ prompt: input.prompt, answer: null }),
-  initial: 'answering',
+  initial: "answering",
   states: {
     answering: {
       invoke: {
-        src: 'answerQuestion',
+        src: "answerQuestion",
         input: ({ context }) => ({ prompt: context.prompt }),
         onDone: ({ output }) => ({
-          target: 'done',
+          target: "done",
           context: { answer: output.answer },
         }),
       },
     },
-    done: { type: 'final', output: ({ context }) => ({ answer: context.answer ?? '' }) },
+    done: { type: "final", output: ({ context }) => ({ answer: context.answer ?? "" }) },
   },
 });
 
 const result = await runAgent(machine, {
-  input: { prompt: 'Why state machines?' },
-  ...createAiSdkExecutors({ models }),
+  input: { prompt: "Why state machines?" },
+  executors: createAiSdkExecutors({ models }),
 });
 
-if (result.status === 'done') {
+if (result.status === "done") {
   console.log(result.output.answer);
   // logs the model's answer
 }
@@ -89,7 +91,7 @@ See the [Quickstart](/docs/packages/agent/quickstart) for a step-by-step walkthr
 
 
 
-> **Warning:** This is a pre-release (2.0.0-alpha.0). The API changed completely in this release and is still settling. Expect breaking changes before 2.0 stable.
+The API changed completely in 2.0 and is still settling. Expect breaking changes before 2.0 stable.
 
 Explicitly not shipped yet:
 

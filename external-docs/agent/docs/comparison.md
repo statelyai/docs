@@ -5,6 +5,8 @@ sourcePath: "docs/comparison.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs/comparison.md"
 ---
 
+> **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
+
 ## Overview
 
 If you are choosing between this library, [LangGraph JS](https://github.com/langchain-ai/langgraphjs), and a hand-rolled loop, here is the honest comparison. The short version:
@@ -18,15 +20,15 @@ If you are choosing between this library, [LangGraph JS](https://github.com/lang
 
 LangGraph pauses with `interrupt()` inside a node. On resume, **the node function re-executes from the top** up to the `interrupt()` call, so any side effect before the interrupt runs again unless you isolate it in its own node. The author has to remember this.
 
-Here a waiting state **is** a state. `runAgent` settles `{ status: 'idle', snapshot }`; resume starts *at* the waiting state, so states before it never re-enter. Pre-pause side effects and model calls run exactly once, with nothing to isolate. This is pinned by a test in `src/run-agent.test.ts` ("pre-idle side effects and model calls run exactly once").
+Here a waiting state **is** a state. `runAgent` settles `{ status: 'idle', snapshot }`; resume starts _at_ the waiting state, so states before it never re-enter. Pre-pause side effects and model calls run exactly once, with nothing to isolate. This is pinned by a test in `src/run-agent.test.ts` ("pre-idle side effects and model calls run exactly once").
 
 ```ts
 // here: resume starts AT `reviewing`; `drafting` (and its model call) never re-runs
-const first = await runAgent(machine, { input, ...executors });   // -> idle
+const first = await runAgent(machine, { input, executors }); // -> idle
 const done = await runAgent(machine, {
   snapshot: first.snapshot,
-  event: { type: 'APPROVE' },
-  ...executors,
+  event: { type: "APPROVE" },
+  executors,
 });
 ```
 
@@ -38,17 +40,17 @@ LangGraph persists through a **checkpointer** wired to the graph, addressed by a
 
 ```ts
 const graph = builder.compile({ checkpointer: new MemorySaver() });
-await graph.invoke(input, { configurable: { thread_id: 'abc' } });
-const state = await graph.getState({ configurable: { thread_id: 'abc' } });
+await graph.invoke(input, { configurable: { thread_id: "abc" } });
+const state = await graph.getState({ configurable: { thread_id: "abc" } });
 ```
 
 Here the snapshot is plain JSON you store anywhere, with no checkpointer to wire and no thread addressing:
 
 ```ts
-const result = await runAgent(machine, { input, ...executors });
+const result = await runAgent(machine, { input, executors });
 await store.put(id, JSON.stringify(result.snapshot)); // any DB, file, queue, localStorage
 // later, any process:
-await runAgent(machine, { snapshot: JSON.parse(await store.get(id)), event, ...executors });
+await runAgent(machine, { snapshot: JSON.parse(await store.get(id)), event, executors });
 ```
 
 Context must be JSON-serializable; that is the one constraint. See [Human in the loop](/docs/packages/agent/human-in-the-loop#persist-and-resume-across-processes).
@@ -60,17 +62,17 @@ LangGraph nodes typically hold LangChain model objects (`ChatOpenAI`, `ChatAnthr
 Here the machine never talks to a model. It emits typed requests; a host resolves them with an executor set of up to three plain functions (`generateText`, `streamText`, `decide`) returning `{ output }`. Swap SDKs by swapping executors; the machine is untouched.
 
 ```ts
-const executors = createAiSdkExecutors({ models });      // Vercel AI SDK adapter
+const executors = createAiSdkExecutors({ models }); // Vercel AI SDK adapter
 // or createOpenAiCompatExecutors({ baseUrl }), or hand-rolled { generateText, decide }
-await runAgent(machine, { input, ...executors });
+await runAgent(machine, { input, executors });
 ```
 
 See [Host actors](/docs/packages/agent/host-actors).
 
 ### 4. Where LangGraph is ahead today
 
-- **Prebuilts.** `createReactAgent(...)` is a one-liner tool-calling agent. Here you author the states yourself (though [examples/react-agent](../examples/react-agent) shows the same loop, and the Vercel AI SDK loop can run inside a state).
-- **Dynamic fan-out.** LangGraph's `Send` API fans out to N branches at runtime cleanly. Fan-out invokes are landing in XState ([statelyai/xstate#5602](https://github.com/statelyai/xstate/pull/5602)) and will close this gap; see [examples/fan-out](../examples/fan-out) for what works today.
+- **Prebuilts.** `createReactAgent(...)` is a one-liner tool-calling agent. Here you author the states yourself (though [examples/react-agent](https://github.com/statelyai/agent/tree/main/examples/react-agent) shows the same loop, and the Vercel AI SDK loop can run inside a state).
+- **Dynamic fan-out.** LangGraph's `Send` API fans out to N branches at runtime cleanly. Fan-out invokes are landing in XState ([statelyai/xstate#5602](https://github.com/statelyai/xstate/pull/5602)) and will close this gap; see [examples/fan-out](https://github.com/statelyai/agent/tree/main/examples/fan-out) for what works today.
 - **Platform.** LangSmith tracing and LangGraph Studio are a mature, hosted observability and debugging platform. Here you get Stately's visualization and `onTrace`/JSONL, but not a hosted platform of that depth.
 
 ## Vs hand-rolling a switch-loop
@@ -79,12 +81,12 @@ A `while` loop over `switch (phase)` is the right first move. It is readable, ha
 
 Structure earns its place when one of these four shows up. Each is cheap in a machine and real work to hand-build:
 
-| What you need | Hand-rolled cost | Here |
-|---|---|---|
-| **Durable pause/resume across processes** | Serialize loop-local state, rebuild it on load, and make sure no pre-pause work re-runs. Easy to get subtly wrong. | Settle `idle`, persist the JSON snapshot, resume with an event. Pre-pause work runs once by construction. |
-| **Enforcing which actions are legal mid-flow** | Hand-written `if` checks scattered per phase; the model can still request an out-of-bounds action and you catch it late. | Guards make illegal transitions return `undefined`; the model can only choose a currently-legal event. See [Decisions](/docs/packages/agent/decisions). |
-| **Audit / replay of what happened** | Bolt on your own event log, then keep it in sync with the mutations. | The [step path](/docs/packages/agent/steps) is event-sourced: each step applies one event; persist the ordered log and replay deterministically. |
-| **Visualization / review by teammates or agents** | None; the flow lives only in code. | The machine is a graph — inspect it in Stately, review it visually, or hand the JSON to an agent. See [Machines as data](/docs/packages/agent/machines-as-data). |
+| What you need                                     | Hand-rolled cost                                                                                                         | Here                                                                                                                                           |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Durable pause/resume across processes**         | Serialize loop-local state, rebuild it on load, and make sure no pre-pause work re-runs. Easy to get subtly wrong.       | Settle `idle`, persist the JSON snapshot, resume with an event. Pre-pause work runs once by construction.                                      |
+| **Enforcing which actions are legal mid-flow**    | Hand-written `if` checks scattered per phase; the model can still request an out-of-bounds action and you catch it late. | Guards make illegal transitions return `undefined`; the model can only choose a currently-legal event. See [Decisions](/docs/packages/agent/decisions).          |
+| **Audit / replay of what happened**               | Bolt on your own event log, then keep it in sync with the mutations.                                                     | The [step path](/docs/packages/agent/steps) is event-sourced: each step applies one event; persist the ordered log and replay deterministically.                 |
+| **Visualization / review by teammates or agents** | None; the flow lives only in code.                                                                                       | The machine is a graph: inspect it in Stately, review it visually, or hand the JSON to an agent. See [Machines as data](/docs/packages/agent/machines-as-data). |
 
 The trade: a machine is more upfront structure than a loop. The payoff is that these four capabilities come from the shape of the machine instead of being hand-maintained. If you need none of them, a loop is genuinely fine.
 

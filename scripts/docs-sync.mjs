@@ -1,7 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import {
   access,
-  copyFile,
   mkdir,
   readdir,
   readFile,
@@ -51,6 +50,33 @@ async function isFile(filePath) {
   } catch {
     return false;
   }
+}
+
+async function isDirectory(filePath) {
+  try {
+    return (await stat(filePath)).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+async function writeFileIfChanged(filePath, content) {
+  const nextContent = Buffer.isBuffer(content) ? content : Buffer.from(content);
+
+  try {
+    const currentContent = await readFile(filePath);
+    if (currentContent.equals(nextContent)) return false;
+  } catch {
+    // Missing files are created below.
+  }
+
+  await mkdir(path.dirname(filePath), { recursive: true });
+  await writeFile(filePath, nextContent);
+  return true;
+}
+
+async function copyFileIfChanged(sourcePath, targetPath) {
+  return writeFileIfChanged(targetPath, await readFile(sourcePath));
 }
 
 function run(command, args, cwd = rootDir) {
@@ -165,8 +191,8 @@ function getProjectDocsUrl(packageName, slug) {
   return slug === 'index' ? prefix : `${prefix}/${slug}`;
 }
 
-function getSourceUrl(repo, sourcePath) {
-  return `https://github.com/${getProjectRepo(repo)}/blob/${getProjectBranch()}/${sourcePath}`;
+function getSourceUrl(repo, sourcePath, view = 'blob') {
+  return `https://github.com/${getProjectRepo(repo)}/${view}/${getProjectBranch()}/${sourcePath}`;
 }
 
 function getSnapshotSourceUrl(packageName, outputPath) {
@@ -450,6 +476,36 @@ async function listProjectFiles(dir, base = dir) {
   return files.sort();
 }
 
+async function listGeneratedFiles(dir, base = dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await listGeneratedFiles(fullPath, base)));
+      continue;
+    }
+
+    files.push(normalizePath(path.relative(base, fullPath)));
+  }
+
+  return files.sort();
+}
+
+async function removeEmptyDirectories(dir, removeCurrent = false) {
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    await removeEmptyDirectories(path.join(dir, entry.name), true);
+  }
+
+  if (removeCurrent && (await readdir(dir)).length === 0) {
+    await rm(dir, { recursive: true });
+  }
+}
+
 function isWithinExcludedPrefix(file, excludedPrefixes) {
   return excludedPrefixes.some(
     (prefix) => file === prefix || file.startsWith(`${prefix}/`),
@@ -583,15 +639,20 @@ async function rewriteEntryBody(
     }
 
     if (!replacementTarget) {
-      const absoluteAssetPath = path.join(sourceRootDir, resolvedPath);
-      if (!(await isFile(absoluteAssetPath))) {
-        continue;
-      }
+      const absoluteLinkedPath = path.join(sourceRootDir, resolvedPath);
 
-      const assetTarget = `_assets/${resolvedPath}`;
-      generatedAssetPaths.set(resolvedPath, assetTarget);
-      replacementTarget = `./${normalizePath(assetTarget)}${suffix}`;
+      if (open.startsWith('![') && (await isFile(absoluteLinkedPath))) {
+        const assetTarget = `_assets/${resolvedPath}`;
+        generatedAssetPaths.set(resolvedPath, assetTarget);
+        replacementTarget = `./${normalizePath(assetTarget)}${suffix}`;
+      } else if (await isFile(absoluteLinkedPath)) {
+        replacementTarget = `${getSourceUrl(repo, resolvedPath)}${suffix}`;
+      } else if (await isDirectory(absoluteLinkedPath)) {
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, 'tree')}${suffix}`;
+      }
     }
+
+    if (!replacementTarget) continue;
 
     rewritten = rewritten.replace(
       fullMatch,
@@ -657,12 +718,13 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       sourceRootDir,
     );
 
-    await writeFile(
+    const changed = await writeFileIfChanged(
       path.join(generatedDocsDir, filePath),
       `${buildEntryFrontmatter(outputEntry)}${finalBody}`,
     );
 
     generatedFiles.push({
+      changed,
       outputPath,
       sourcePath: entry.sourcePath,
     });
@@ -677,10 +739,13 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
     const absoluteSourcePath = path.join(sourceRootDir, sourcePath);
     const absoluteTargetPath = path.join(generatedDocsDir, assetTarget);
 
-    await mkdir(path.dirname(absoluteTargetPath), { recursive: true });
-    await copyFile(absoluteSourcePath, absoluteTargetPath);
+    const changed = await copyFileIfChanged(
+      absoluteSourcePath,
+      absoluteTargetPath,
+    );
 
     generatedFiles.push({
+      changed,
       outputPath: normalizePath(path.join(getProjectDocsDir(), assetTarget)),
       sourcePath,
     });
@@ -718,8 +783,12 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       return page;
     });
 
-    await copyFile(metaPath, path.join(generatedDocsDir, 'meta.json'));
+    const changed = await copyFileIfChanged(
+      metaPath,
+      path.join(generatedDocsDir, 'meta.json'),
+    );
     generatedFiles.push({
+      changed,
       outputPath: `${getProjectDocsDir()}/meta.json`,
       sourcePath: normalizePath(path.relative(sourceRootDir, metaPath)),
     });
@@ -928,7 +997,6 @@ async function syncProject(project) {
     );
   }
 
-  await rm(generatedRootDir, { recursive: true, force: true });
   await mkdir(generatedDocsDir, { recursive: true });
 
   const { files, navPages } = await writeFlattenedDocs(
@@ -939,6 +1007,22 @@ async function syncProject(project) {
     sourceRootDir,
     generatedDocsDir,
   );
+
+  const expectedFiles = new Set(files.map((file) => file.outputPath));
+  const existingFiles = await listGeneratedFiles(generatedRootDir);
+
+  for (const outputPath of existingFiles) {
+    if (expectedFiles.has(outputPath)) continue;
+
+    await rm(path.join(generatedRootDir, outputPath));
+    files.push({
+      changed: true,
+      deleted: true,
+      outputPath,
+    });
+  }
+
+  await removeEmptyDirectories(generatedRootDir);
 
   return {
     docsDir: generatedDocsDir,
@@ -960,13 +1044,20 @@ function printSyncSummary(results) {
       `[docs-sync] ${result.project} (${result.source}): ${path.relative(rootDir, result.docsDir)}`,
     );
 
-    if (result.files.length === 0) {
-      console.log('  - no files found');
+    const changedFiles = result.files.filter((file) => file.changed);
+
+    if (changedFiles.length === 0) {
+      const unit = result.files.length === 1 ? 'file' : 'files';
+      console.log(`  - up to date (${result.files.length} ${unit})`);
       continue;
     }
 
-    for (const file of result.files) {
-      console.log(`  - ${file.outputPath} <= ${file.sourcePath}`);
+    for (const file of changedFiles) {
+      console.log(
+        file.deleted
+          ? `  - removed ${file.outputPath}`
+          : `  - ${file.outputPath} <= ${file.sourcePath}`,
+      );
     }
   }
 }
@@ -990,7 +1081,7 @@ ${entries.join('\n')}
 } as const;
 `;
 
-  await writeFile(generatedModulePath, content);
+  await writeFileIfChanged(generatedModulePath, content);
 }
 
 async function writeGeneratedNav(results, enabledProjects) {
@@ -1011,7 +1102,7 @@ async function writeGeneratedNav(results, enabledProjects) {
 export const externalDocsNav = ${JSON.stringify(entries, null, 2)} as const;
 `;
 
-  await writeFile(generatedNavPath, content);
+  await writeFileIfChanged(generatedNavPath, content);
 }
 
 async function main() {

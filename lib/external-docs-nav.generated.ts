@@ -44,6 +44,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/hosts"
       },
       {
+        "title": "Host actors",
+        "url": "/docs/packages/agent/host-actors"
+      },
+      {
         "title": "Using with other stacks",
         "url": "/docs/packages/agent/interop"
       },
@@ -54,6 +58,10 @@ export const externalDocsNav = [
       {
         "title": "Machines as data",
         "url": "/docs/packages/agent/machines-as-data"
+      },
+      {
+        "title": "Verify",
+        "url": "/docs/packages/agent/verify"
       },
       {
         "title": "Multi-agent composition",
