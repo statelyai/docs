@@ -104,11 +104,11 @@ const embed = createStatelyEmbed({
 
 Key environment variables for self-hosted deployments:
 
-| Variable                    | Purpose                                      |
-| --------------------------- | -------------------------------------------- |
-| `AUTH_PROVIDER`             | Auth strategy used by the editor host        |
+| Variable                    | Purpose                                           |
+| --------------------------- | ------------------------------------------------- |
+| `AUTH_PROVIDER`             | Auth strategy used by the editor host             |
 | `EDITOR_SYNC_AUTH_REQUIRED` | Set to `false` to skip editor-sync API-key checks |
-| `NEXT_PUBLIC_BASE_URL`      | Public-facing editor URL                     |
+| `NEXT_PUBLIC_BASE_URL`      | Public-facing editor URL                          |
 
 ### Studio API client
 
@@ -130,8 +130,10 @@ const extracted = await studio.code.extractMachines(sourceCode);
 ```
 
 Legacy `apiKey` is still accepted as an alias for
-`credential: { type: 'api_key', token }`. Use `authMode: 'none'` only for
-self-hosted deployments that intentionally accept unauthenticated calls.
+`credential: { type: 'api_key', token }`. The default `authMode: 'auto'` sends
+a credential when present and otherwise lets the server accept or reject an
+unauthenticated request. Use `authMode: 'bearer'` to require a credential before
+making requests, or `authMode: 'none'` to ignore a configured credential.
 
 ### Inspector
 
@@ -165,12 +167,14 @@ Node process does not need a Stately API key.
 
 The separate [`statelyai`](https://www.npmjs.com/package/statelyai) CLI syncs
 local XState source files with Stately Studio projects: push local machines,
-pull remote changes, and open a local file in a browser-backed visual editor
-session.
+pull remote changes, inspect project inventory, compare machines, and open a
+local file in a browser-backed visual editor session.
 
 ```bash
+npx statelyai status
 npx statelyai push
 npx statelyai pull
+npx statelyai diff ./checkout.machine.ts machine-id
 npx statelyai open ./checkout.machine.ts
 ```
 
