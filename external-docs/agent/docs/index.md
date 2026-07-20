@@ -29,6 +29,14 @@ A [decision](/docs/packages/agent/decisions) is where this matters most: the mod
 - **Inspectable.** States, transitions, and requests are data you can read, diagram, and reason about before anything runs.
 - **Serializable.** Every settle point produces a plain, JSON-serializable snapshot. Persist it anywhere and resume later.
 
+Unlike a hand-rolled `while` loop or a graph framework, control flow is a state machine you can inspect, test, and resume, and the model can only ever pick a legal event. See [how this compares](/docs/packages/agent/comparison).
+
+## Three ways in
+
+- **Author a new agent.** Describe states, decisions, and typed requests, run locally with `runAgent`, then test and inspect it with no API key. Eject to any framework or runtime via `provideExecutors` with zero machine changes. Start at the [Quickstart](/docs/packages/agent/quickstart), then [Eject to your stack](/docs/packages/agent/eject).
+- **Retrofit an existing agent.** Have a `while` loop or tangled control flow? Your existing SDK calls, tools, and retry code become the executors; the machine replaces only the control flow and runs in your existing setup. See [Migrating from a loop](/docs/packages/agent/from-a-loop).
+- **Copy a known pattern.** ReAct, reflection, plan-and-execute, RAG, supervisor, swarm handoff, and more, each a single runnable file you lift in 60 seconds. Browse [Agent patterns](/docs/packages/agent/patterns).
+
 ## A quick teaser
 
 
@@ -64,10 +72,7 @@ const machine = agentSetup.createMachine({
       invoke: {
         src: "answerQuestion",
         input: ({ context }) => ({ prompt: context.prompt }),
-        onDone: ({ output }) => ({
-          target: "done",
-          context: { answer: output.answer },
-        }),
+        onDone: ({ output }) => ({ target: "done", context: { answer: output.answer } }),
       },
     },
     done: { type: "final", output: ({ context }) => ({ answer: context.answer ?? "" }) },
@@ -79,10 +84,7 @@ const result = await runAgent(machine, {
   executors: createAiSdkExecutors({ models }),
 });
 
-if (result.status === "done") {
-  console.log(result.output.answer);
-  // logs the model's answer
-}
+if (result.status === "done") console.log(result.output.answer);
 ```
 
 See the [Quickstart](/docs/packages/agent/quickstart) for a step-by-step walkthrough.
@@ -106,13 +108,18 @@ If something here blocks you, or the API surface feels wrong, open an issue. Thi
 ## Documentation map
 
 - [Quickstart](/docs/packages/agent/quickstart): install and run your first agent machine end to end.
+- [Eject to your stack](/docs/packages/agent/eject): one machine, three hosts (local, Express, Cloudflare), zero machine changes.
 - [Agent machines](/docs/packages/agent/machines): `setupAgent`, states, invokes, typed context, and guards.
 - [Decisions](/docs/packages/agent/decisions): the model choosing exactly one currently-legal machine event.
+- [Plans](/docs/packages/agent/plans): the multi-event decision, `agent.plan`.
 - [Text requests](/docs/packages/agent/text-requests): typed text and structured-output model calls.
 - [Messages](/docs/packages/agent/messages): the parts-based `AgentMessage` model.
 - [Human in the loop](/docs/packages/agent/human-in-the-loop): idle-first pauses and resuming by snapshot.
 - [Hosts](/docs/packages/agent/hosts): executors, the AI SDK adapter, and writing your own.
+- [Observability](/docs/packages/agent/observability): the Stately Inspector locally, and the trace stream to OpenTelemetry in production.
 - [Steps](/docs/packages/agent/steps): the lower-level step path for durable hosts.
 - [Machines as data](/docs/packages/agent/machines-as-data): authoring an agent machine as JSON.
 - [Multi-agent](/docs/packages/agent/multi-agent): sub-agents and child actors.
+- [Migrating from a loop](/docs/packages/agent/from-a-loop): convert a hand-rolled `while` loop into an agent machine.
+- [Agent patterns](/docs/packages/agent/patterns): ReAct, reflection, RAG, supervisor, and more as copy-paste machines.
 - [Examples](/docs/packages/agent/examples): a curated index of runnable examples.

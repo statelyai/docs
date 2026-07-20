@@ -11,7 +11,7 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs
 
 
 
-`AgentMessage` is a parts-based, discriminated union representing one conversation turn. It structurally mirrors the Vercel AI SDK's `ModelMessage`, but core has no dependency on `ai`. You build messages, store them in machine context, and pass them to a [text request](/docs/packages/agent/text-requests) or [decision](/docs/packages/agent/decisions) through the `messages` field.
+`AgentMessage` is a parts-based, discriminated union representing one conversation turn. It structurally mirrors the Vercel AI SDK's `ModelMessage`, but core has no dependency on `ai`. Build messages, store them in machine context, and pass them to a [text request](/docs/packages/agent/text-requests) or [decision](/docs/packages/agent/decisions) through the `messages` field.
 
 ```ts
 type AgentMessage = SystemMessage | UserMessage | AssistantMessage | ToolMessage;
@@ -49,6 +49,20 @@ userMessage([
 ]);
 ```
 
+`toolMessage(parts)` builds a `role: "tool"` message from `ToolResultPart`s; each tool result follows the assistant message whose `ToolCallPart` invoked it. Use it to seed `runAgent({ messages })` with a prior conversation where tools ran, or to append tool results from a custom host:
+
+```ts
+const messages = [
+  userMessage("What is the weather in Paris?"),
+  assistantMessage([
+    { type: "tool-call", toolCallId: "call_1", toolName: "getWeather", input: { city: "Paris" } },
+  ]),
+  toolMessage([
+    { type: "tool-result", toolCallId: "call_1", toolName: "getWeather", output: { type: "json", value: { tempC: 18 } } },
+  ]),
+];
+```
+
 ## Store messages in context
 
 Messages are plain context state. Declare a `messages` field validated by `messagesSchema`, and grow it over transitions:
@@ -78,12 +92,9 @@ A request that needs history sends it through `messages` instead of a bare `prom
 
 ### A lightweight messages field
 
-`messagesSchema` is the shipped validator. When you want a messages field without deep per-part validation (the array is built from library helpers you already trust), reach for a field typed as `AgentMessage[]` with a cheap `Array.isArray` runtime check.
-
-With `zod`, use the shipped `zodAgentMessages()` from the `@statelyai/agent/zod` subpath (an optional `zod` peer):
+`messagesSchema` gives full structural validation of each part. When the array comes from library helpers you already trust, a shallow `Array.isArray` check is enough: use `zodAgentMessages()` from `@statelyai/agent/zod` (optional `zod` peer), which returns a `z.ZodType<AgentMessage[]>` with the exact type at author time.
 
 ```ts
-import { z } from 'zod';
 import { zodAgentMessages } from '@statelyai/agent/zod';
 
 context: z.object({
@@ -91,23 +102,10 @@ context: z.object({
 }),
 ```
 
-`zodAgentMessages()` returns a `z.ZodType<AgentMessage[]>`: the exact `AgentMessage[]` type at author time, with the runtime check kept to a shallow `Array.isArray`.
-
-No-dependency fallback: the same recipe inline with `z.custom`, if you'd rather not add the subpath import:
-
-```ts
-import { z } from 'zod';
-import type { AgentMessage } from '@statelyai/agent';
-
-context: z.object({
-  messages: z.custom<AgentMessage[]>((v) => Array.isArray(v)),
-}),
-```
-
-Use `messagesSchema` instead when you want full structural validation of each part.
+The no-dependency fallback is the same recipe inline: `messages: z.custom<AgentMessage[]>((v) => Array.isArray(v))`.
 
 ## Persisting messages
 
-> **Warning:** `ImagePart` and `FilePart` can carry binary data (`Uint8Array` or `ArrayBuffer`) or a `URL` instance, none of which are JSON-serializable. If you persist machine context containing messages, store binary content as base64 strings and URLs as strings. The library does not convert this for you.
+> **Warning:** `ImagePart` and `FilePart` can carry binary data (`Uint8Array` or `ArrayBuffer`) or a `URL` instance, none of which are JSON-serializable. When persisting machine context with messages, store binary content as base64 strings and URLs as strings; the library does not convert this for you.
 
 Everything else in a message is plain JSON, so a history built from strings, base64, and URL strings survives a snapshot round-trip cleanly. See [Human in the loop](/docs/packages/agent/human-in-the-loop) for the persistence flow this applies to.

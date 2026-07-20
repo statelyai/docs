@@ -122,18 +122,29 @@ self-hosted deployments that intentionally accept unauthenticated calls.
 
 ### Inspector
 
+
+
 Stream live actor-system state to the Stately inspector over WebSockets, with support for automatic XState actor adoption and manual actor registration.
 
 ```ts
 import { createActor } from 'xstate';
-import { createStatelyInspector } from '@statelyai/sdk';
+import { createInspector } from '@statelyai/sdk';
 
 const actor = createActor(machine);
-const inspector = createStatelyInspector({ autoOpen: true });
+const inspector = createInspector({
+  url: 'ws://localhost:1999/inspect/local',
+});
 
 inspector.inspect(actor);
 actor.start();
 ```
+
+XState v5 and v6 inspection events normalize to actor, transition, and stop
+events before crossing the WebSocket protocol.
+In Node, the inspector opens in the default browser automatically. The SDK
+generates a cryptographically random session capability; hosted inspectors send
+signed-out users through OAuth and return them to that same live session. The
+Node process does not need a Stately API key.
 
 ### CLI and sync
 

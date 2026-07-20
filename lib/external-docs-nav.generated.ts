@@ -16,12 +16,20 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/quickstart"
       },
       {
+        "title": "Eject to your stack",
+        "url": "/docs/packages/agent/eject"
+      },
+      {
         "title": "Agent machines",
         "url": "/docs/packages/agent/machines"
       },
       {
         "title": "Decisions",
         "url": "/docs/packages/agent/decisions"
+      },
+      {
+        "title": "Plans",
+        "url": "/docs/packages/agent/plans"
       },
       {
         "title": "Text requests",
@@ -32,10 +40,6 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/messages"
       },
       {
-        "title": "Context compaction",
-        "url": "/docs/packages/agent/context-compaction"
-      },
-      {
         "title": "Human in the loop",
         "url": "/docs/packages/agent/human-in-the-loop"
       },
@@ -44,8 +48,8 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/hosts"
       },
       {
-        "title": "Host actors",
-        "url": "/docs/packages/agent/host-actors"
+        "title": "Observability",
+        "url": "/docs/packages/agent/observability"
       },
       {
         "title": "Using with other stacks",
@@ -60,7 +64,7 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/machines-as-data"
       },
       {
-        "title": "Verify",
+        "title": "Testing and verification",
         "url": "/docs/packages/agent/verify"
       },
       {
@@ -72,8 +76,16 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/from-a-loop"
       },
       {
+        "title": "You already have an agent workflow",
+        "url": "/docs/packages/agent/xstate-as-agent-workflow"
+      },
+      {
         "title": "Compared to LangGraph and hand-rolling",
         "url": "/docs/packages/agent/comparison"
+      },
+      {
+        "title": "Agent patterns",
+        "url": "/docs/packages/agent/patterns"
       },
       {
         "title": "Examples",
