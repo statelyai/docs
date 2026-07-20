@@ -75,6 +75,11 @@ Common agent workflows expressed as explicit XState machines.
 - [parallel-streams](https://github.com/statelyai/agent/blob/main/examples/parallel-streams/index.ts): fan-out over parallel worker streams relayed through a side channel.
 - [sse-transport](https://github.com/statelyai/agent/blob/main/examples/sse-transport/index.ts): relaying provider stream chunks over an SSE transport.
 
+## Migration and observability
+
+- [retrofit](https://github.com/statelyai/agent/blob/main/examples/retrofit/index.ts): a genuinely tangled hand-rolled agent (`before.ts`) refactored stepwise into a machine, each step shippable, with `simulateAgent` tests pinning the before/after behavior. The worked proof for [Migrating from a loop](/docs/packages/agent/from-a-loop).
+- [langsmith-otel](https://github.com/statelyai/agent/blob/main/examples/langsmith-otel/index.ts): the `onTrace` stream mapped to OpenTelemetry spans and exported to LangSmith; prints the trace stream to stdout without keys. See [Observability](/docs/packages/agent/observability).
+
 ## AI SDK pattern set
 
 The [Vercel AI SDK agent patterns](https://sdk.vercel.ai/docs/foundations/agents), each rebuilt as an explicit XState machine.
