@@ -50,10 +50,6 @@ For hosted Stately, authenticate once:
 statelyai login
 ```
 
-Skip login for a self-hosted server with authentication disabled. The CLI
-sends no authorization header when no credential exists; the server decides
-whether authentication is required.
-
 Initialize the current repository and scan for XState files:
 
 ```bash
@@ -124,44 +120,6 @@ Stored credentials use macOS Keychain or Linux Secret Service when available,
 with a private config file as fallback. Set `STATELYAI_CREDENTIALS_BACKEND=file`
 to force file storage, or `STATELYAI_CONFIG_DIR` to choose its directory.
 
-### Custom OAuth deployment
-
-Point login at an OAuth protected resource:
-
-```bash
-statelyai login --base-url https://editor.example.com/api/mcp
-```
-
-Passing only an origin uses its `/api/mcp` resource. The resource must
-advertise an authorization server. If that server does not support dynamic
-client registration, set `STATELY_OAUTH_CLIENT_ID`.
-
-No login mode is needed for deployments with authentication disabled. Run the
-command against that deployment; unauthenticated requests are sent normally.
-If the server requires authentication, it returns `401` and you can then log in.
-
-## Hosted and self-hosted URLs
-
-
-
-The URL flags are intentionally scoped:
-
-| Setting            | Used by                                  | Meaning                                                    |
-| ------------------ | ---------------------------------------- | ---------------------------------------------------------- |
-| `--base-url`       | `init`, `status`, `diff`, `push`, `pull` | Studio API origin.                                         |
-| `studioUrl`        | `statelyai.json` project sync            | Default Studio API origin for that project.                |
-| `login --base-url` | `login` only                             | OAuth protected-resource URL used for discovery.           |
-| `--editor-url`     | `open` only                              | Visual editor origin. Default `https://editor.stately.ai`. |
-
-For a custom deployment, the complete setup may look like:
-
-```bash
-statelyai login --base-url https://editor.example.com/api/mcp
-statelyai init --base-url https://studio.example.com --scan
-statelyai open src/checkout.machine.ts \
-  --editor-url https://editor.example.com
-```
-
 ## `statelyai.json`
 
 
@@ -187,7 +145,7 @@ statelyai open src/checkout.machine.ts \
 | `$schema`              | Published JSON Schema URL.                                      |
 | `version`              | Config format version. Currently `1.0.0`.                       |
 | `projectId`            | Remote Studio project ID.                                       |
-| `studioUrl`            | Hosted or self-hosted Studio origin.                            |
+| `studioUrl`            | Studio API origin.                                              |
 | `defaultXStateVersion` | XState version used when creating remote machines. Minimum `5`. |
 | `include`              | Source globs used by project-wide `push` and `pull`.            |
 | `exclude`              | Globs removed from discovery. Defaults to tests and specs.      |
@@ -213,7 +171,6 @@ Store an OAuth credential or API key.
 ```bash
 statelyai login
 statelyai login --api-key
-statelyai login --base-url https://editor.example.com/api/mcp
 ```
 
 Flags: `--api-key`, `--stdin`, `--base-url`.
@@ -254,7 +211,7 @@ Flags:
 - `--visibility Private|Public|Unlisted` defaults to `Private`.
 - `--scan` proposes source globs interactively.
 - `--force` replaces an existing config.
-- `--base-url <url>` targets another Studio deployment.
+- `--base-url <url>` overrides the Studio API origin.
 
 ### `open`
 
@@ -269,15 +226,12 @@ the source file.
 
 Flags:
 
-- `--editor-url <url>` selects the hosted or self-hosted editor. Default:
+- `--editor-url <url>` selects the editor origin. Default:
   `https://editor.stately.ai`.
 - `--host <host>` sets the local bridge host. Default: `127.0.0.1`.
 - `--port <port>` selects a port. Default: a random available port.
 - `--no-open` starts the bridge without launching a browser.
 - `--debug` logs editor protocol messages.
-
-Without a credential, `open` sends unauthenticated editor-sync requests. This
-works automatically when the editor deployment has authentication disabled.
 
 ### `diff`
 
@@ -295,7 +249,7 @@ Locators may be:
 - a Studio machine URL
 
 `--fail-on-changes` exits with status `1` when the normalized graphs differ.
-Use `--base-url` for remote IDs on another Studio deployment. `plan` remains a
+Use `--base-url` for remote IDs at another Studio origin. `plan` remains a
 hidden compatibility alias for `diff`.
 
 ### `push`
@@ -362,9 +316,8 @@ Fail when a local machine differs from Studio:
 npx statelyai diff src/checkout.machine.ts machine_123 --fail-on-changes
 ```
 
-For hosted Stately, provide `STATELY_API_KEY` or `STATELY_ACCESS_TOKEN` through
-the CI runner's secret environment. No credential is needed for a self-hosted
-deployment that disables authentication.
+Provide `STATELY_API_KEY` or `STATELY_ACCESS_TOKEN` through the CI runner's
+secret environment.
 
 Check project discovery without network credentials or writes:
 
@@ -393,3 +346,40 @@ Set `NO_COLOR=1` or `CI=true` for plain output.
   `push` offers to relink it as a new remote machine and replaces the local ID.
 
 Run `statelyai <command> --help` for generated command syntax and flags.
+
+## Self-hosting
+
+
+
+Skip login when the server has authentication disabled. The CLI sends no
+authorization header when no credential exists; the server decides whether
+authentication is required. This also applies to `open` editor-sync requests
+and CI commands.
+
+For OAuth, point login at the deployment's protected resource:
+
+```bash
+statelyai login --base-url https://editor.example.com/api/mcp
+```
+
+Passing only an origin uses its `/api/mcp` resource. The resource must
+advertise an authorization server. If that server does not support dynamic
+client registration, set `STATELY_OAUTH_CLIENT_ID`.
+
+URL settings are intentionally scoped:
+
+| Setting            | Used by                                  | Meaning                                                    |
+| ------------------ | ---------------------------------------- | ---------------------------------------------------------- |
+| `--base-url`       | `init`, `status`, `diff`, `push`, `pull` | Studio API origin.                                         |
+| `studioUrl`        | `statelyai.json` project sync            | Default Studio API origin for that project.                |
+| `login --base-url` | `login` only                             | OAuth protected-resource URL used for discovery.           |
+| `--editor-url`     | `open` only                              | Visual editor origin. Default `https://editor.stately.ai`. |
+
+A complete setup may look like:
+
+```bash
+statelyai login --base-url https://editor.example.com/api/mcp
+statelyai init --base-url https://studio.example.com --scan
+statelyai open src/checkout.machine.ts \
+  --editor-url https://editor.example.com
+```

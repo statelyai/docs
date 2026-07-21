@@ -85,31 +85,6 @@ Key capabilities:
 - **Asset uploads** with built-in S3 and Supabase adapters, or bring your own upload handler
 - **Runtime settings** - toggle color mode, grid, snap lines, autolayout, and view mode on the fly
 
-### Self-hosting
-
-
-
-The SDK works with both the hosted Stately editor (`editor.stately.ai`) and
-self-hosted deployments.
-
-When self-hosting, authentication is handled by your editor server, not by this npm package. The editor host supports configurable auth strategies, and you can disable API-key checks for editor-sync endpoints when running behind your own auth layer.
-
-A fully self-contained deployment with no external auth looks like:
-
-```ts
-const embed = createStatelyEmbed({
-  baseUrl: 'https://your-editor.example.com',
-});
-```
-
-Key environment variables for self-hosted deployments:
-
-| Variable                    | Purpose                                           |
-| --------------------------- | ------------------------------------------------- |
-| `AUTH_PROVIDER`             | Auth strategy used by the editor host             |
-| `EDITOR_SYNC_AUTH_REQUIRED` | Set to `false` to skip editor-sync API-key checks |
-| `NEXT_PUBLIC_BASE_URL`      | Public-facing editor URL                          |
-
 ### Studio API client
 
 Programmatic access to Stately Studio for managing projects and machines, extracting machine configs from source code, and verifying API keys.
@@ -184,5 +159,36 @@ Convert between Studio graph data, XState machine configs, and TypeScript source
 
 ## Support
 
-For pricing and self-hosting details, contact
+For pricing and support, contact
+[team@stately.ai](mailto:team@stately.ai).
+
+## Self-hosting
+
+
+
+The SDK works with both the hosted Stately editor (`editor.stately.ai`) and
+self-hosted deployments.
+
+When self-hosting, authentication is handled by your editor server, not by this
+npm package. The editor host supports configurable auth strategies, and you can
+disable API-key checks for editor-sync endpoints when running behind your own
+auth layer.
+
+A fully self-contained deployment with no external auth looks like:
+
+```ts
+const embed = createStatelyEmbed({
+  baseUrl: 'https://your-editor.example.com',
+});
+```
+
+Key environment variables for self-hosted deployments:
+
+| Variable                    | Purpose                                           |
+| --------------------------- | ------------------------------------------------- |
+| `AUTH_PROVIDER`             | Auth strategy used by the editor host             |
+| `EDITOR_SYNC_AUTH_REQUIRED` | Set to `false` to skip editor-sync API-key checks |
+| `NEXT_PUBLIC_BASE_URL`      | Public-facing editor URL                          |
+
+For self-hosting details, contact
 [team@stately.ai](mailto:team@stately.ai).
