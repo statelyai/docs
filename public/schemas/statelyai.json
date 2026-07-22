@@ -2,10 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://stately.ai/schemas/statelyai.json",
   "title": "Stately CLI project configuration",
-  "description": "Configuration for mapping local machine files to a Stately Studio project.",
+  "description": "Configuration for local machine discovery and optional Stately Studio project sync.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "projectId", "include"],
+  "required": ["version", "include"],
   "properties": {
     "$schema": {
       "type": "string",
@@ -20,13 +20,13 @@
     "projectId": {
       "type": "string",
       "minLength": 1,
-      "description": "Stable Stately Studio project identifier."
+      "description": "Stable Stately Studio project identifier. Omit for local-only projects."
     },
     "studioUrl": {
       "type": "string",
       "format": "uri",
       "default": "https://stately.ai",
-      "description": "Base URL of the Studio instance that owns the project."
+      "description": "Base URL of the Studio instance that owns the project. Omit for local-only projects."
     },
     "defaultXStateVersion": {
       "type": "integer",
@@ -61,6 +61,13 @@
     }
   },
   "examples": [
+    {
+      "$schema": "https://stately.ai/schemas/statelyai.json",
+      "version": "1.0.0",
+      "defaultXStateVersion": 5,
+      "include": ["src/**/*.ts", "src/**/*.tsx"],
+      "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+    },
     {
       "$schema": "https://stately.ai/schemas/statelyai.json",
       "version": "1.0.0",
