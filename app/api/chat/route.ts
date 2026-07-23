@@ -59,6 +59,32 @@ const systemPrompt = [
   'If you cannot find the answer in search results, say you do not know and suggest a better search query.',
 ].join('\n');
 
+const allowedOrigins = [
+  'https://stately.ai',
+  'https://www.stately.ai',
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+  process.env.NEXT_PUBLIC_SITE_URL,
+].filter(Boolean);
+
+function getCorsHeaders(origin: string | null) {
+  const isAllowed =
+    origin && (allowedOrigins.includes(origin) || origin.endsWith('.stately.ai'));
+
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? origin : allowedOrigins[0] || '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    Vary: 'Origin',
+  };
+}
+
+export async function OPTIONS(req: Request) {
+  return new Response(null, {
+    status: 204,
+    headers: getCorsHeaders(req.headers.get('origin')),
+  });
+}
+
 export async function POST(req: Request) {
   const reqJson: { messages?: UIMessage[] } = await req.json();
 
@@ -75,7 +101,9 @@ export async function POST(req: Request) {
     toolChoice: 'auto',
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({
+    headers: getCorsHeaders(req.headers.get('origin')),
+  });
 }
 
 const searchTool = tool({

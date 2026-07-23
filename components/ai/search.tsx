@@ -294,7 +294,10 @@ export function AISearch({ children }: { children: ReactNode }) {
   const chat = useChat({
     id: 'search',
     transport: new DefaultChatTransport({
-      api: '/api/chat',
+      api:
+        process.env.NODE_ENV === 'development'
+          ? '/api/chat'
+          : 'https://stately-docs.vercel.app/api/chat',
     }),
   });
 
