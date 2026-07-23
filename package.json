@@ -24,10 +24,10 @@
     "ai": "^6.0.116",
     "class-variance-authority": "^0.7.1",
     "flexsearch": "^0.8.212",
-    "fumadocs-core": "^16.6.16",
-    "fumadocs-mdx": "^14.2.9",
-    "fumadocs-twoslash": "^3.1.10",
-    "fumadocs-ui": "^16.6.16",
+    "fumadocs-core": "^16.11.5",
+    "fumadocs-mdx": "^15.2.0",
+    "fumadocs-twoslash": "^3.3.0",
+    "fumadocs-ui": "^16.11.5",
     "hast": "^1.0.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^0.544.0",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/hast": "^3.0.4",
     "@types/mdx": "^2.0.13",
     "@types/node": "24.6.2",
@@ -60,7 +60,7 @@
     "eslint-config-next": "16.1.0",
     "next-validate-link": "^1.6.3",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"

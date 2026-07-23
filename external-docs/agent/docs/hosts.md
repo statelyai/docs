@@ -13,7 +13,7 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs
 
 A **host** runs an agent machine and supplies the functions that call a model. The machine decides what to ask; the host executes it. The machine never talks to a model directly.
 
-Those functions are the **executors**, typed as `AgentRequestExecutors`:
+Those functions are the **executors**, typed as `AgentRequestExecutors`. Each is a plain async function taking a plain request object, so any SDK or a raw `fetch` can back it:
 
 | Executor | Returns | Required when |
 | --- | --- | --- |
@@ -21,15 +21,15 @@ Those functions are the **executors**, typed as `AgentRequestExecutors`:
 | `streamText(request, info)` | `{ output }` (accumulated text; chunks stream through `info.onChunk`) | machine has a streaming request |
 | `decide(request)` | `{ event }` (the one event the model chose) | machine has a decision |
 
-**Watch the arity:** `decide` takes **one** argument (the request); `generateText` and `streamText` take **two** (`request, info`, where `info` carries `onChunk` and the abort `signal`). Skimming the table, it's easy to give `decide` a second `info` param or drop `info` from a streaming executor.
+At bind time, before any actor runs, `runAgent` checks the required executors, so a machine that needs `decide` without one fails immediately rather than mid-run. A machine with only plain actors needs no executors.
 
-`runAgent` checks these at bind time, before any actor runs, so a machine that needs `decide` without one fails immediately rather than mid-run. A machine with only plain actors needs no executors. Each executor is a plain async function taking a plain request object, so any SDK or a raw `fetch` can back it.
+> **Note:** Mind the arity. `decide` takes one argument (the request); `generateText` and `streamText` take two (`request, info`, where `info` carries `onChunk` and the abort `signal`).
 
 ## The shipped AI SDK adapter
 
 
 
-`createAiSdkExecutors` from `@statelyai/agent/ai-sdk` is the one adapter this package ships. It builds the `{ generateText, streamText, decide }` set from the Vercel AI SDK (decisions map onto a tool-forced `generateText` call). The subpath is adapters-only (`defineModels`, `createAiSdkExecutors`); `runAgent` always comes from core and always takes explicit executors.
+The one adapter this package ships is `createAiSdkExecutors` from `@statelyai/agent/ai-sdk`. It builds the `{ generateText, streamText, decide }` set from the Vercel AI SDK (decisions map onto a tool-forced `generateText` call). The subpath exports adapters only (`defineModels`, `createAiSdkExecutors`); `runAgent` always comes from core and always takes explicit executors.
 
 ```ts
 import { runAgent } from "@statelyai/agent";
@@ -53,7 +53,7 @@ const executors = {
 };
 ```
 
-`ai` is an optional peer dependency, imported only by this subpath. Core's one runtime peer is `xstate`. You supply the model resolver, so no provider package becomes a dependency either.
+The `ai` package is an optional peer dependency, imported only by this subpath. Core's one runtime peer is `xstate`. You supply the model resolver, so no provider package becomes a dependency either.
 
 ## Raw AI SDK functions and the OpenAI-compat adapter
 
@@ -107,7 +107,7 @@ Model refs are opaque strings, so any string is a legal `model:` value; the `mod
 
 A text request runs a single model call by default. Set `metadata.maxSteps` on the request to allow a bounded tool-call loop; the adapter forwards it as `stopWhen: stepCountIs(maxSteps)`. This is adapter behavior, not core.
 
-`metadata` is the host-owned per-call channel: uninterpreted by core except for adapter conventions like `maxSteps`. A host that doesn't understand a key ignores it, so requests stay portable. It is distinct from XState `meta` (state-node/transition metadata for tooling); request `metadata` is runtime input passed to the executor. See [Text requests](/docs/packages/agent/text-requests#tools-and-multi-step-loops).
+Request `metadata` is the host-owned per-call channel: core leaves it uninterpreted except for adapter conventions like `maxSteps`. A host that doesn't understand a key ignores it, so requests stay portable. It differs from XState `meta` (state-node/transition metadata for tooling); request `metadata` is runtime input passed to the executor. See [Text requests](/docs/packages/agent/text-requests#tools-and-multi-step-loops).
 
 ## Writing your own executors
 
@@ -170,16 +170,17 @@ if (getAgentOutputMode(request.outputSchema) === "structured") {
 
 Return the **unwrapped** `.result` as `output`: the machine only ever validates and sees the schema it declared. `reasoning` is surfaced on the raw executor result only, never in machine context/output (see [reasoning opt-in](/docs/packages/agent/text-requests#reasoning)). The shipped adapters and the raw OpenAI/Anthropic example hosts all follow this contract. (Prompt-serialized hosts that don't send a response schema, e.g. the Workers AI host, parse best-effort JSON and skip the envelope.)
 
-Two related helpers for hand-rolled hosts:
+Related helpers for hand-rolled hosts and adapters, all from `@statelyai/agent/adapter`:
 
 - **`isStandardSchema(value)`** narrows an unknown schema before extraction. A tool's `inputSchema` may be an SDK-specific wrapper core can't read: check with `isStandardSchema` and fall back to unconstrained parameters instead of crashing (what the shipped adapters do internally).
 - **`renderDecisionAttempts(request)`** renders a decision request's prior failed `attempts` as feedback messages to append to the next call, so retries converge instead of repeating the same illegal choice. Both shipped adapters and all three raw-SDK example hosts use it; see [Decisions](/docs/packages/agent/decisions#validation-and-retries).
+- **`matchesEventPattern(eventType, pattern)`** tests an event type against an `allowedEvents` entry: an exact type, `'*'`, or a `'prefix.*'` wildcard (`'todo.*'` matches `'todo.add'`). Useful when a host filters candidate or emitted events by pattern.
 
 ## Retries and budgets
 
 Transport-level retries (429s, timeouts, backoff) belong in the executor or the SDK it wraps, not the machine. The AI SDK's `maxRetries` (and the OpenAI/Anthropic client equivalents) handles them; a raw-`fetch` executor adds its own loop. The machine never sees a transient network failure. Machine-level retry is different: an authored `onError` transition re-entering a state after a _semantic_ failure (a validation rejection, an exhausted decision) is control flow you model explicitly.
 
-`maxModelCalls` is the built-in loop backstop (default 100; exceeding it settles an `error` with cause `'max-model-calls'`). For finer budgets (a token cap, a per-request-src call count), wrap the executors. A child machine's requests inherit the parent's executors, so one wrapper counts the whole tree:
+The built-in loop backstop is `maxModelCalls` (default 100; exceeding it settles an `error` with cause `'max-model-calls'`). For finer budgets (a token cap, a per-request-src call count), wrap the executors. A child machine's requests inherit the parent's executors, so one wrapper counts the whole tree:
 
 ```ts
 function withBudget(base: AgentRequestExecutors, maxCalls: number) {
@@ -198,11 +199,11 @@ function withBudget(base: AgentRequestExecutors, maxCalls: number) {
 await runAgent(machine, { input, executors: withBudget(executors, 20) });
 ```
 
-## Observation seams
+## Observation callbacks
 
 
 
-`runAgent` exposes purely observational callbacks; they return `void` and cannot control the run:
+These `runAgent` callbacks are purely observational; they return `void` and cannot control the run:
 
 - **`onTrace(event)`**: one ordered stream of run/request/chunk/transition/emit/end events, each stamped with `schemaVersion` (currently `1`, exported as `AGENT_TRACE_SCHEMA_VERSION`), `runId`, `seq`, `timestamp`, `machineId`, `machineVersion` (the same identity stamped onto settled snapshots as `agentMeta`). The eval trace / JSONL / telemetry-adapter slot. Uncontrolled mode gets the same stream: `provideExecutors` also accepts an `onTrace`, paired with `traceTransitions` on the actor's `inspect` to fold transitions in.
 - **`onChunk(chunk, info)`**: each streamed chunk of a `mode: 'stream'` request, with the `AgentRequest` that produced it (parallel streams stay distinguishable).
@@ -223,7 +224,7 @@ await runAgent(machine, {
 });
 ```
 
-The split: `onTrace` is the whole ordered run ledger (evals, exports); `onTransition` narrates in xstate's vocabulary (state values, events); `on` narrates in _your_ vocabulary, rendering domain progress events the machine emits at authored moments (a progress UI, an SSE stream, a log line). Declare their schemas in `setupAgent` and both `enq.emit(...)` and the `on` handlers are fully typed:
+The three differ in level: `onTrace` is the whole ordered run ledger (evals, exports); `onTransition` reports in XState's terms (state values, events); `on` reports the domain events the machine emits at authored moments (a progress UI, an SSE stream, a log line). Declare their schemas in `setupAgent` and both `enq.emit(...)` and the `on` handlers are fully typed:
 
 ```ts
 const agentSetup = setupAgent({
@@ -265,7 +266,7 @@ const machine = emailDrafter.provide({
 
 ### Direct execution without runAgent
 
-`.withExecutor(...)` also binds execution onto one logic for normal XState use, bypassing `runAgent`'s executor slots. Provide the bound logic as an actor source and run with `createActor` directly:
+Calling `.withExecutor(...)` also binds execution onto one logic for normal XState use, bypassing `runAgent`'s executor slots. Provide the bound logic as an actor source and run with `createActor` directly:
 
 ```ts
 import { validateSchemaSync } from "@statelyai/agent/adapter";
@@ -290,11 +291,11 @@ createActor(
 
 This is the same mechanism `runAgent` uses internally to bind executors; the direct form is useful when a logic should carry its own execution wherever it's used, independent of the host loop. See [Which authoring form when](/docs/packages/agent/machines#which-authoring-form-when).
 
-## Beyond the happy path
+## Built-in actor sources
 
-The default is named `requests:` on `setupAgent`, executed by an adapter (above). `setupAgent` also registers built-in actor sources for model work: `agent.generateText`/`agent.streamText` for inline text, `agent.decide` for standalone decisions, `agent.plan` for multi-event plans, `agent.userInput` for human input.
+Named [`requests:`](/docs/packages/agent/text-requests) on `setupAgent`, executed by an adapter, are the default (above). `setupAgent` also registers built-in actor sources for ad-hoc model work: `agent.generateText`/`agent.streamText` for inline text, `agent.decide` for standalone decisions, `agent.plan` for multi-event plans, `agent.userInput` for human input.
 
-### Inline agent.generateText
+### Inline text requests
 
 
 
@@ -304,6 +305,7 @@ For a one-off text request, `agent.generateText` is a quick inline path (prefer 
 import { runAgent } from "@statelyai/agent";
 import { parseOutput } from "@statelyai/agent/adapter";
 
+// ...
 generating: {
   invoke: {
     id: "draft", // durable id: how a resumed/replayed run matches the invoke to its onDone
@@ -328,7 +330,7 @@ Every agent invoke should have a durable `id`: it's how a resumed/replayed run m
 
 ### Implementing agent.userInput
 
-`agent.userInput` gathers human input mid-run without settling. It's one of two waiting styles; see [Choosing between the two waiting styles](/docs/packages/agent/human-in-the-loop#choosing-between-the-two-waiting-styles). The host owns delivery and resume. Two ways to implement it.
+The `agent.userInput` builtin gathers human input mid-run without settling. It's one of two waiting styles; see [Choosing between the two waiting styles](/docs/packages/agent/human-in-the-loop#choosing-between-the-two-waiting-styles). The host owns delivery and resume. Two ways to implement it.
 
 **`RunAgentOptions.userInput`**, the inline path:
 
@@ -383,7 +385,7 @@ const event = await resolveDecision(request, decide);
 // { type: 'ATTACK', target: 'orc' }
 ```
 
-`resolveDecision` retries on an unknown event type, an invalid payload, or a guard rejection; its `snapshot.can(event)` check closes the gap at apply time. See [Decisions](/docs/packages/agent/decisions#validation-and-retries).
+The `resolveDecision` helper retries on an unknown event type, an invalid payload, or a guard rejection; its `snapshot.can(event)` check closes the gap at apply time. See [Decisions](/docs/packages/agent/decisions#validation-and-retries).
 
 ### Threading host context into actors and requests
 

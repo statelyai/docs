@@ -11,13 +11,13 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs
 
 
 
-`AgentMessage` is a parts-based, discriminated union representing one conversation turn. It structurally mirrors the Vercel AI SDK's `ModelMessage`, but core has no dependency on `ai`. Build messages, store them in machine context, and pass them to a [text request](/docs/packages/agent/text-requests) or [decision](/docs/packages/agent/decisions) through the `messages` field.
+An `AgentMessage` is a parts-based, discriminated union representing one conversation turn. It structurally mirrors the Vercel AI SDK's `ModelMessage`, but core has no dependency on `ai`. Build messages, store them in machine context, and pass them to a [text request](/docs/packages/agent/text-requests) or [decision](/docs/packages/agent/decisions) through the `messages` field.
 
 ```ts
 type AgentMessage = SystemMessage | UserMessage | AssistantMessage | ToolMessage;
 ```
 
-`content` is a string or an array of typed parts, depending on `role`:
+The `content` field is a string or an array of typed parts, depending on `role`:
 
 - **`system`**: a string.
 - **`user`**: a string, or `TextPart` / `ImagePart` / `FilePart` parts.
@@ -40,7 +40,7 @@ const messages = [
 ];
 ```
 
-`userMessage` and `assistantMessage` also accept a parts array for multimodal content:
+Both `userMessage` and `assistantMessage` also accept a parts array for multimodal content:
 
 ```ts
 userMessage([
@@ -49,7 +49,7 @@ userMessage([
 ]);
 ```
 
-`toolMessage(parts)` builds a `role: "tool"` message from `ToolResultPart`s; each tool result follows the assistant message whose `ToolCallPart` invoked it. Use it to seed `runAgent({ messages })` with a prior conversation where tools ran, or to append tool results from a custom host:
+The `toolMessage(parts)` helper builds a `role: "tool"` message from `ToolResultPart`s; each tool result follows the assistant message whose `ToolCallPart` invoked it. Use it to seed `runAgent({ messages })` with a prior conversation where tools ran, or to append tool results from a custom host:
 
 ```ts
 const messages = [
@@ -83,6 +83,7 @@ Append with `appendMessages`, which returns a transition result adding one or mo
 ```ts
 import { appendMessages, userMessage } from '@statelyai/agent';
 
+// inside a state
 on: {
   USER_REPLIED: appendMessages(({ event }) => userMessage(event.text)),
 }
@@ -92,11 +93,12 @@ A request that needs history sends it through `messages` instead of a bare `prom
 
 ### A lightweight messages field
 
-`messagesSchema` gives full structural validation of each part. When the array comes from library helpers you already trust, a shallow `Array.isArray` check is enough: use `zodAgentMessages()` from `@statelyai/agent/zod` (optional `zod` peer), which returns a `z.ZodType<AgentMessage[]>` with the exact type at author time.
+The `messagesSchema` validator gives full structural validation of each part. When the array comes from library helpers you already trust, a shallow `Array.isArray` check is enough: use `zodAgentMessages()` from `@statelyai/agent/zod` (optional `zod` peer), which returns a `z.ZodType<AgentMessage[]>` with the exact type at author time.
 
 ```ts
 import { zodAgentMessages } from '@statelyai/agent/zod';
 
+// inside setupAgent context
 context: z.object({
   messages: zodAgentMessages(),
 }),

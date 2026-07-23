@@ -140,12 +140,13 @@ Node process does not need a Stately API key.
 
 
 
-The separate [`statelyai`](https://www.npmjs.com/package/statelyai) CLI syncs
-local XState source files with Stately Studio projects: push local machines,
-pull remote changes, inspect project inventory, compare machines, and open a
-local file in a browser-backed visual editor session.
+The separate [`statelyai`](https://www.npmjs.com/package/statelyai) CLI lists
+local XState machines without authentication and can connect them to Stately
+Studio projects for push, pull, comparison, and browser-backed visual editing.
 
 ```bash
+npx statelyai scan
+npx statelyai init --local --scan
 npx statelyai status
 npx statelyai push
 npx statelyai pull
@@ -190,5 +191,5 @@ Key environment variables for self-hosted deployments:
 | `EDITOR_SYNC_AUTH_REQUIRED` | Set to `false` to skip editor-sync API-key checks |
 | `NEXT_PUBLIC_BASE_URL`      | Public-facing editor URL                          |
 
-For self-hosting details, contact
-[team@stately.ai](mailto:team@stately.ai).
+For enterprise self-hosting options, [see pricing and contact
+us](https://stately.ai/pricing).

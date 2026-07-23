@@ -1,7 +1,6 @@
 import { docs, blogPosts } from 'collections/server';
 import {
   getSlugs,
-  multiple,
   update,
   type InferPageType,
   loader,
@@ -41,47 +40,48 @@ function withProjectPrefix(project: string, source: Source) {
     .build();
 }
 
-function validateDocsSourceOwnership(source: Source) {
+function validateDocsSourceOwnership(sources: Record<string, Source>) {
   const seenRoutes = new Map<string, { sourceId: string; path: string }>();
 
-  for (const file of source.files) {
-    if (file.type !== 'page') continue;
+  for (const [sourceId, source] of Object.entries(sources)) {
+    for (const file of source.files) {
+      if (file.type !== 'page') continue;
 
-    const route = getRouteFromFile(file);
-    const sourceId = String((file.data as { type?: string }).type ?? 'docs');
-    const existing = seenRoutes.get(route);
+      const route = getRouteFromFile(file);
+      const existing = seenRoutes.get(route);
 
-    if (existing) {
-      throw new Error(
-        [
-          `Duplicate docs route detected for "${route || '/docs'}".`,
-          `- ${existing.sourceId}: ${existing.path}`,
-          `- ${sourceId}: ${file.path}`,
-        ].join('\n'),
-      );
-    }
-
-    seenRoutes.set(route, { sourceId, path: file.path });
-
-    if (sourceId === 'docs') {
-      const conflictingExternalSource = enabledExternalDocsSources.find(
-        (sourceConfig) =>
-          route === getProjectRoutePrefix(sourceConfig.package) ||
-          route.startsWith(`${getProjectRoutePrefix(sourceConfig.package)}/`),
-      );
-
-      if (conflictingExternalSource) {
+      if (existing) {
         throw new Error(
-          `Local docs page "${route || '/docs'}" conflicts with the reserved "/docs/${getProjectRoutePrefix(conflictingExternalSource.package)}" namespace.`,
+          [
+            `Duplicate docs route detected for "${route || '/docs'}".`,
+            `- ${existing.sourceId}: ${existing.path}`,
+            `- ${sourceId}: ${file.path}`,
+          ].join('\n'),
         );
       }
 
-      continue;
+      seenRoutes.set(route, { sourceId, path: file.path });
+
+      if (sourceId === 'docs') {
+        const conflictingExternalSource = enabledExternalDocsSources.find(
+          (sourceConfig) =>
+            route === getProjectRoutePrefix(sourceConfig.package) ||
+            route.startsWith(`${getProjectRoutePrefix(sourceConfig.package)}/`),
+        );
+
+        if (conflictingExternalSource) {
+          throw new Error(
+            `Local docs page "${route || '/docs'}" conflicts with the reserved "/docs/${getProjectRoutePrefix(conflictingExternalSource.package)}" namespace.`,
+          );
+        }
+
+        continue;
+      }
     }
   }
 }
 
-const mergedDocsSource = multiple({
+const docsSources = {
   docs: docs.toFumadocsSource(),
   ...Object.fromEntries(
     Object.entries(externalDocsCollections as DocsCollectionMap).map(
@@ -91,19 +91,17 @@ const mergedDocsSource = multiple({
       ],
     ),
   ),
-});
+};
 
-validateDocsSourceOwnership(mergedDocsSource);
+validateDocsSourceOwnership(docsSources);
 
-export const blog = loader({
+export const blog = loader(toFumadocsSource(blogPosts, []), {
   baseUrl: '/blog',
-  source: toFumadocsSource(blogPosts, []),
 });
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
-export const source = loader({
+export const source = loader(docsSources, {
   baseUrl: '/docs',
-  source: mergedDocsSource,
   plugins: [lucideIconsPlugin()],
 });
 
@@ -130,7 +128,7 @@ export function getPageGitHubUrl(page: InferPageType<typeof source>) {
     return page.data.sourceUrl;
   }
 
-  return getDocsPageGitHubUrl(page.data.type, page.path);
+  return getDocsPageGitHubUrl(page.type, page.path);
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {

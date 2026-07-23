@@ -420,3 +420,14 @@ export const player = createMachine({
 
 All Stately MCP tools are registered as read-only, non-destructive, idempotent,
 and closed-world.
+
+## Self-hosting
+
+
+
+Self-host Stately Studio, then replace the hosted URL above with your
+deployment's `/api/mcp` endpoint, for example
+`https://studio.example.com/api/mcp`.
+
+For enterprise self-hosting options, [see pricing and contact
+us](https://stately.ai/pricing).

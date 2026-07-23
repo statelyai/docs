@@ -79,6 +79,8 @@ const path = getShortestPath(graph, { from: 'a', to: 'c' });
 
 ## Graph Manipulation
 
+
+
 Look up, add, delete, and update nodes and edges. Query neighbors, predecessors, successors, degree, and more.
 
 ```ts
@@ -96,6 +98,19 @@ const roots = getSources(graph); // nodes with no incoming edges
 ```
 
 Batch operations (`addEntities`, `deleteEntities`, `updateEntities`) let you apply multiple changes at once.
+
+Every mutable CRUD operation has an immutable counterpart:
+
+| Mutable | Immutable |
+| --- | --- |
+| `addNode` / `addEdge` | `getGraphWithNode` / `getGraphWithEdge` |
+| `deleteNode` / `deleteEdge` | `getGraphWithoutNode` / `getGraphWithoutEdge` |
+| `updateNode` / `updateEdge` | `getGraphWithUpdatedNode` / `getGraphWithUpdatedEdge` |
+| `addEntities` | `getGraphWithEntities` |
+| `deleteEntities` | `getGraphWithoutEntities` |
+| `updateEntities` | `getGraphWithUpdatedEntities` |
+
+Immutable operations return a new graph, leave the source untouched, and reuse unchanged entities where safe.
 
 `updateNode`/`updateEdge` accept any config field. Optional fields (position, size, `shape`, `color`, `style`, edge `weight`/`mode`/ports) can be **unset** by passing `null`; `undefined` leaves them unchanged:
 
@@ -314,7 +329,12 @@ import { getForceAtlas2Layout } from '@statelyai/graph/layout/forceatlas2'; // g
 import { getTidyTreeLayout } from '@statelyai/graph/layout/d3-hierarchy'; // d3-hierarchy
 import { getColaLayout } from '@statelyai/graph/layout/webcola'; // webcola (constraints)
 import { getCytoscapeLayout } from '@statelyai/graph/layout/cytoscape'; // cytoscape ecosystem
-import { applyLayoutFrame, getLayoutBounds, centerGraph } from '@statelyai/graph/layout';
+import {
+  applyLayoutFrame,
+  getGraphWithLayoutFrame,
+  getLayoutBounds,
+  centerGraph,
+} from '@statelyai/graph/layout';
 
 const laidOut = await getElkLayout(graph, {
   measure: (node) => measureText(node.label), // text measurement stays yours
@@ -326,6 +346,13 @@ for (const frame of genForceLayout(graph, { seed: 42 })) {
   applyLayoutFrame(graph, frame);
   render(graph);
 }
+
+// Immutable alternative
+let current = graph;
+for (const frame of genForceLayout(graph, { seed: 42 })) {
+  current = getGraphWithLayoutFrame(current, frame);
+  render(current);
+}
 ```
 
 Edge `x`/`y`/`width`/`height` are canonically the edge-label rect; routes live in `edge.points` (`routing` says how to interpret them). Layouts are plain JSON — tween between engines with `genLayoutTransition`, or diff them with `getPatches`. See [docs/layout.md](/docs/packages/graph/layout) and [docs/layout-transitions.md](/docs/packages/graph/layout-transitions).
@@ -334,7 +361,7 @@ Edge `x`/`y`/`width`/`height` are canonically the edge-label rect; routes live i
 
 Beyond classic graph algorithms, the library also includes utilities for evolving and exploring graph state:
 
-- `getDiff()`, `getPatches()`, `updateGraphWithPatches()` for graph change tracking
+- `getDiff()`, `getPatches()`, `getPatchedGraph()` (immutable), and `updateGraphWithPatches()` (mutable) for graph change tracking
 - `genRandomWalk()`, `genWeightedRandomWalk()`, and coverage helpers for model-based testing and simulation
 - `getSubgraph()` and `getReversedGraph()` for structural transforms
 

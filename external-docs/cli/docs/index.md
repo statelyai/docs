@@ -1,13 +1,13 @@
 ---
 title: "statelyai"
-description: "statelyai connects local machine source files to Stately Studio. Use it to open a file in the visual editor, compare local and remote machines, or sync a project in both directions."
+description: "statelyai discovers local machine source files and can connect them to Stately Studio. Use it locally to inventory machines, or connect a project to open, compare, push, and pull machines."
 sourcePath: "packages/cli/README.md"
 sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/cli/docs/index.md"
 ---
 
-`statelyai` connects local machine source files to Stately Studio. Use it to
-open a file in the visual editor, compare local and remote machines, or sync a
-project in both directions.
+`statelyai` discovers local machine source files and can connect them to
+Stately Studio. Use it locally to inventory machines, or connect a project to
+open, compare, push, and pull machines.
 
 ## Run the CLI
 
@@ -31,8 +31,10 @@ npm install --global statelyai
 
 | Goal                         | Command                                              | Writes                                                  |
 | ---------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |
+| List local machines          | `statelyai scan`                                     | Nothing                                                 |
 | Edit one local file visually | `statelyai open <file>`                              | Local file, when you save in the editor                 |
-| Set up project sync          | `statelyai init [--scan]`                            | Remote project and local `statelyai.json`               |
+| Set up local discovery       | `statelyai init --local --scan`                      | Local `statelyai.json`                                  |
+| Set up project sync          | `statelyai init --scan`                              | Remote project and local `statelyai.json`               |
 | Inspect project machines     | `statelyai status`                                   | Nothing                                                 |
 | Preview project uploads      | `statelyai push --dry-run`                           | Nothing                                                 |
 | Upload local machines        | `statelyai push [file]`                              | Remote machines and local `@statelyai` IDs              |
@@ -58,6 +60,24 @@ statelyai init --scan
 
 `--scan` suggests `include` globs and asks before saving them. Without
 `--scan`, `init` creates `statelyai.json` with an empty `include` list.
+It also lists every discovered machine with its symbol, file, line, and linked
+Stately ID when present.
+
+For local discovery without authentication or a Studio project:
+
+```bash
+statelyai init --local --scan
+statelyai status
+```
+
+Run `statelyai init` later to connect the local config to a Studio project
+without losing its discovery globs.
+
+To list machines without creating any config:
+
+```bash
+statelyai scan
+```
 
 Preview the files and remote operations:
 
@@ -119,6 +139,10 @@ environment variables.
 Stored credentials use macOS Keychain or Linux Secret Service when available,
 with a private config file as fallback. Set `STATELYAI_CREDENTIALS_BACKEND=file`
 to force file storage, or `STATELYAI_CONFIG_DIR` to choose its directory.
+Stored OAuth sessions refresh automatically before expiration. If the OAuth
+server rejects the refresh token, the CLI removes the unusable credential and
+directs you to run `npx statelyai login`. Transient refresh failures preserve
+the credential so a later command can retry.
 
 ## `statelyai.json`
 
@@ -144,16 +168,15 @@ to force file storage, or `STATELYAI_CONFIG_DIR` to choose its directory.
 | ---------------------- | --------------------------------------------------------------- |
 | `$schema`              | Published JSON Schema URL.                                      |
 | `version`              | Config format version. Currently `1.0.0`.                       |
-| `projectId`            | Remote Studio project ID.                                       |
-| `studioUrl`            | Studio API origin.                                              |
+| `projectId`            | Remote Studio project ID. Omitted for local-only projects.      |
+| `studioUrl`            | Studio API origin. Omitted for local-only projects.             |
 | `defaultXStateVersion` | XState version used when creating remote machines. Minimum `5`. |
 | `include`              | Source globs used by project-wide `push` and `pull`.            |
 | `exclude`              | Globs removed from discovery. Defaults to tests and specs.      |
 | `newMachinesDir`       | Destination for remote-only machines created by `pull`.         |
 
-Project-wide `push` currently discovers machine-bearing JavaScript and
-TypeScript files configured as `xstate` or `auto`. The config schema accepts
-other format names, but project discovery does not push them.
+Project-wide discovery identifies configured JavaScript and TypeScript files
+that import XState and call `createMachine(...)` or `.createMachine(...)`.
 
 Mutating project commands rewrite legacy configs with one `sources` entry to
 the current top-level shape. `status` and `push --dry-run` normalize legacy
@@ -192,6 +215,7 @@ statelyai status
 ```
 
 Statuses are `linked`, `local-only`, `remote-only`, and `missing-remote`.
+Local-only configs require no credentials and never contact Studio.
 Use `--json` for automation or `--auth` to show only credential resolution.
 `status` is read-only and never migrates `statelyai.json`.
 
@@ -199,10 +223,11 @@ Flags: `--config <path>`, `--base-url <url>`, `--json`, `--auth`.
 
 ### `init`
 
-Create or reuse a Studio project and write `statelyai.json`.
+Create a local config or reuse a Studio project and write `statelyai.json`.
 
 ```bash
 statelyai init --name "Checkout" --visibility Private --scan
+statelyai init --local --scan
 ```
 
 Flags:
@@ -210,8 +235,21 @@ Flags:
 - `--name <name>` sets the remote project name.
 - `--visibility Private|Public|Unlisted` defaults to `Private`.
 - `--scan` proposes source globs interactively.
+- `--local` skips authentication and remote project creation.
 - `--force` replaces an existing config.
 - `--base-url <url>` overrides the Studio API origin.
+
+### `scan`
+
+List every local XState machine without authentication or `statelyai.json`:
+
+```bash
+statelyai scan
+statelyai scan --json
+```
+
+The output includes the machine symbol, source file, line, and linked Stately
+ID when present.
 
 ### `open`
 
@@ -322,6 +360,7 @@ secret environment.
 Check project discovery without network credentials or writes:
 
 ```bash
+npx statelyai scan
 npx statelyai push --dry-run
 ```
 
@@ -335,6 +374,8 @@ Set `NO_COLOR=1` or `CI=true` for plain output.
   `STATELY_ACCESS_TOKEN` or `STATELY_API_KEY`.
 - **`push` finds no files:** check `include` and `exclude`; `init` without
   `--scan` intentionally leaves `include` empty.
+- **You only need local inventory:** run `statelyai scan` or initialize with
+  `statelyai init --local --scan`; neither requires authentication.
 - **`push` matches files but finds no machines:** project discovery currently
   requires XState imports plus `createMachine(...)` or
   `setup(...).createMachine(...)`.
@@ -383,3 +424,6 @@ statelyai init --base-url https://studio.example.com --scan
 statelyai open src/checkout.machine.ts \
   --editor-url https://editor.example.com
 ```
+
+For enterprise self-hosting options, [see pricing and contact
+us](https://stately.ai/pricing).

@@ -16,8 +16,8 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/quickstart"
       },
       {
-        "title": "Eject to your stack",
-        "url": "/docs/packages/agent/eject"
+        "title": "Use in any stack",
+        "url": "/docs/packages/agent/any-stack"
       },
       {
         "title": "Agent machines",
@@ -46,6 +46,14 @@ export const externalDocsNav = [
       {
         "title": "Hosts and executors",
         "url": "/docs/packages/agent/hosts"
+      },
+      {
+        "title": "Express host",
+        "url": "/docs/packages/agent/express-host"
+      },
+      {
+        "title": "Cloudflare Durable Object host",
+        "url": "/docs/packages/agent/cloudflare-host"
       },
       {
         "title": "Observability",
@@ -78,10 +86,6 @@ export const externalDocsNav = [
       {
         "title": "You already have an agent workflow",
         "url": "/docs/packages/agent/xstate-as-agent-workflow"
-      },
-      {
-        "title": "Compared to LangGraph and hand-rolling",
-        "url": "/docs/packages/agent/comparison"
       },
       {
         "title": "Agent patterns",

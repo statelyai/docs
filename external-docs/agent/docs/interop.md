@@ -7,9 +7,9 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/agent/docs
 
 > **Alpha:** `@statelyai/agent` 2.0 is in alpha. APIs can change between releases; pin an exact version. Feedback: [github.com/statelyai/agent](https://github.com/statelyai/agent/issues).
 
-## Models are the interop currency
+## Reusing models from other frameworks
 
-Interop is about where a host's [executors](/docs/packages/agent/hosts) come from, and the shared currency is the AI SDK **`LanguageModel`** object. Whatever framework hands you one, drop it into `createAiSdkExecutors({ models })` for a full `{ generateText, streamText, decide }` set:
+Interop is about where a host's [executors](/docs/packages/agent/hosts) come from. The shared type across frameworks is the AI SDK **`LanguageModel`** object: whatever framework hands you one, drop it into `createAiSdkExecutors({ models })` for a full `{ generateText, streamText, decide }` set:
 
 ```ts
 import { createAiSdkExecutors } from "@statelyai/agent/ai-sdk";
@@ -48,7 +48,7 @@ Anything exposing a `LanguageModel` works the same way, so machine and Mastra sh
 
 ## Recipe: Cloudflare Workers AI
 
-`workers-ai-provider` turns a Workers AI binding into an AI SDK provider, so its models are ordinary `LanguageModel` objects:
+The `workers-ai-provider` package turns a Workers AI binding into an AI SDK provider, so its models are ordinary `LanguageModel` objects:
 
 ```ts
 import { createWorkersAI } from "workers-ai-provider";
@@ -96,4 +96,4 @@ Swap `baseUrl`/`apiKey` for Groq, vLLM, Together, or LM Studio and the executors
 | `createOpenAiCompatExecutors` | yes            | yes          | yes      | yes               |
 | Raw `ai` functions            | yes            | yes          | no       | best-effort       |
 
-`decide` maps each machine event to a forced tool call, and that mapping lives in an adapter, so raw `ai` functions cannot back a decision. For reliable structured output, use one of the two adapters. See [Text requests](/docs/packages/agent/text-requests) and [Decisions](/docs/packages/agent/decisions).
+The `decide` executor maps each machine event to a forced tool call, and that mapping lives in an adapter, so raw `ai` functions cannot back a decision. For reliable structured output, use one of the two adapters. See [Text requests](/docs/packages/agent/text-requests) and [Decisions](/docs/packages/agent/decisions).
