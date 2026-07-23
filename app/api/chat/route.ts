@@ -1,55 +1,7 @@
 import { openai } from '@ai-sdk/openai';
 import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
-import { source } from '@/lib/source';
-import { Document, type DocumentData } from 'flexsearch';
-
-interface CustomDocument extends DocumentData {
-  url: string;
-  title: string;
-  description: string;
-  content: string;
-}
-
-const searchServer = createSearchServer();
-
-async function createSearchServer() {
-  const search = new Document<CustomDocument>({
-    document: {
-      id: 'url',
-      index: ['title', 'description', 'content'],
-      store: true,
-    },
-  });
-
-  const docs = await chunkedAll(
-    source.getPages().map(async (page) => {
-      if (!('getText' in page.data)) return null;
-
-      return {
-        title: page.data.title,
-        description: page.data.description,
-        url: page.url,
-        content: await page.data.getText('raw'),
-      } as CustomDocument;
-    }),
-  );
-
-  for (const doc of docs) {
-    if (doc) search.add(doc);
-  }
-
-  return search;
-}
-
-async function chunkedAll<O>(promises: Promise<O>[]): Promise<O[]> {
-  const SIZE = 50;
-  const out: O[] = [];
-  for (let i = 0; i < promises.length; i += SIZE) {
-    out.push(...(await Promise.all(promises.slice(i, i + SIZE))));
-  }
-  return out;
-}
+import { searchDocs } from '@/lib/docs-search';
 
 const systemPrompt = [
   'You are an AI assistant for the XState documentation site (stately.ai/docs).',
@@ -113,8 +65,7 @@ const searchTool = tool({
     limit: z.number().int().min(1).max(100).default(10),
   }),
   async execute({ query, limit }) {
-    const search = await searchServer;
-    return await search.searchAsync(query, { limit, merge: true, enrich: true });
+    return await searchDocs(query, { limit: Math.max(limit, 10) });
   },
 });
 
