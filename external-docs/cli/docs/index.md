@@ -372,6 +372,9 @@ Set `NO_COLOR=1` or `CI=true` for plain output.
 
 - **The server returns `401`:** run `statelyai login`, or set
   `STATELY_ACCESS_TOKEN` or `STATELY_API_KEY`.
+- **A remote command says `Not logged in`:** run `statelyai login`, then retry,
+  or use `statelyai init --local` for a local-only project. Add `--force` to
+  replace an existing config.
 - **`push` finds no files:** check `include` and `exclude`; `init` without
   `--scan` intentionally leaves `include` empty.
 - **You only need local inventory:** run `statelyai scan` or initialize with

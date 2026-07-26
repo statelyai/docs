@@ -83,6 +83,30 @@ Most tools accept a machine config object or a source document. Conversion
 supports XState, SCXML, XGraph, and D2. Validation also supports JSON, YAML, and
 Mermaid.
 
+## `create_state_machine`
+
+
+
+Creates a new XState v5 machine from a natural-language request. The connected
+agent authors the XState source, then Stately normalizes it and returns the
+source. Visualization defaults on and returns native PNG image blocks because a
+diagram usually makes generated behavior easier to verify. Set `visualization`
+to `false` only for code-only requests, clients that cannot display images, or
+machines where a diagram adds no useful information.
+
+<details>
+<summary>Summary: create and visualize a machine</summary>
+
+```text
+Make a state machine representing an order checkout flow.
+```
+
+The agent calls Stately with complete XState v5 source. Omit `visualization` to
+render PNG diagrams, customize it with `direction` or `parentNodeIds`, or set it
+to `false` to return only the normalized XState source.
+
+</details>
+
 ## `validate_machine`
 
 
@@ -313,8 +337,17 @@ createMachine({
 
 
 
-Renders a machine as an SVG diagram. The response contains the SVG string,
-its width and height, and any warnings.
+Renders each machine hierarchy level as a directly viewable PNG. Codex,
+Claude, and other image-capable MCP clients receive one native image block per
+parent node. Structured content contains parent IDs, labels, hierarchy levels,
+dimensions, and warnings without duplicating image data. Use `parentNodeIds` to
+select levels; omit it to render every parent with direct child states.
+
+Each returned image uses the MCP `ImageContent` shape:
+
+```ts
+{ type: 'image', data: pngBase64, mimeType: 'image/png' }
+```
 
 <details>
 <summary>Summary: visualize a machine</summary>

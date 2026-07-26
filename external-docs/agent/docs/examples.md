@@ -60,6 +60,8 @@ These compose agent machines as sub-agents or child actors. See [Multi-agent](/d
 - [long-running-onboarding](https://github.com/statelyai/agent/blob/main/examples/long-running-onboarding/index.ts): a coordinator invoking typed IT provisioning between two event-driven waits.
 - [supervisor](https://github.com/statelyai/agent/blob/main/examples/supervisor/index.ts): a routing request whose structured output hands off to a format-specific worker.
 - [swarm-handoff](https://github.com/statelyai/agent/blob/main/examples/swarm-handoff/index.ts): a persistent multi-agent network handing off between typed child actors across turns.
+- [hierarchical-teams](https://github.com/statelyai/agent/blob/main/examples/hierarchical-teams/index.ts): a coordinator invokes research and writing child-team machines; each team owns specialist states and a typed boundary.
+- [trading-team](https://github.com/statelyai/agent/blob/main/examples/trading-team/index.ts): parallel analysts, bull/bear debate, trader proposal, risk review, and final approval as one composite workflow.
 
 ## Multi-step agent patterns
 
@@ -68,12 +70,19 @@ Common agent workflows expressed as explicit XState machines.
 - [react-agent](https://github.com/statelyai/agent/blob/main/examples/react-agent/index.ts): ReAct as an explicit loop: one reason-or-act request per iteration (discriminated union: call a tool or answer), typed tool actors execute, a step-budget guard breaks the loop with a best-effort answer.
 - [tool-calling](https://github.com/statelyai/agent/blob/main/examples/tool-calling/index.ts): the model selects a tool (structured output), typed tool actors execute, progress reported via transitions.
 - [rag](https://github.com/statelyai/agent/blob/main/examples/rag/index.ts): retrieve (typed plain actor over a sample corpus) then a grounded answer, with conversational memory in context.
+- [adaptive-rag](https://github.com/statelyai/agent/blob/main/examples/adaptive-rag/index.ts): routes local vs web, grades evidence, rewrites weak queries once, then grades the generated answer.
+- [deep-research](https://github.com/statelyai/agent/blob/main/examples/deep-research/index.ts): plans three searches, researches concurrently, reflects on coverage, optionally follows up once, then writes a sourced report.
 - [context-compaction](https://github.com/statelyai/agent/blob/main/examples/context-compaction/index.ts): a chat loop that bounds its own context window; a `compacting` state folds stale turns into a running summary once history passes a threshold, keeps the last N messages verbatim, and feeds the summary back as a system message.
 - [plan-and-execute](https://github.com/statelyai/agent/blob/main/examples/plan-and-execute/index.ts): a planner request produces structured output, execution states iterate the plan (the ReWOO evidence-map idea).
 - [sql-agent](https://github.com/statelyai/agent/blob/main/examples/sql-agent/index.ts): query generation, DB execution, and answer synthesis as separate typed states.
 - [triage](https://github.com/statelyai/agent/blob/main/examples/triage/index.ts): structured-output support ticket triage.
 - [parallel-streams](https://github.com/statelyai/agent/blob/main/examples/parallel-streams/index.ts): fan-out over parallel worker streams relayed through a side channel.
 - [sse-transport](https://github.com/statelyai/agent/blob/main/examples/sse-transport/index.ts): relaying provider stream chunks over an SSE transport.
+- [lats](https://github.com/statelyai/agent/blob/main/examples/lats/index.ts): bounded tree search with UCB-style leaf selection, candidate expansion, and reflection scoring.
+
+## Evaluation
+
+- [simulated-user-evaluation](https://github.com/statelyai/agent/blob/main/examples/simulated-user-evaluation/index.ts): a target chatbot and simulated user alternate under a turn bound, then an independent judge scores the transcript. LangSmith dataset and experiment services are intentionally excluded.
 
 ## Migration and observability
 

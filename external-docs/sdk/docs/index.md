@@ -120,21 +120,30 @@ Stream live actor-system state to the Stately inspector over WebSockets, with su
 import { createActor } from 'xstate';
 import { createInspector } from '@statelyai/sdk';
 
-const actor = createActor(machine);
 const inspector = createInspector({
   url: 'ws://localhost:4242',
 });
+const { inspect } = inspector;
 
-inspector.inspect(actor);
+const actor = createActor(machine, { inspect });
 actor.start();
 ```
 
-XState v5 and v6 inspection events normalize to actor, transition, and stop
-events before crossing the WebSocket protocol.
+If you already have the actor reference, `inspector.attach(actor)` subscribes to
+its system and backfills actors that are already running.
+
+Stopped actors remain in `inspector.actors` and in reconnect checkpoints, so
+completed request-scoped runs stay available for inspection.
+
+XState v5 and v6 inspection events normalize to independent actor, event,
+snapshot, and stop observations before crossing the WebSocket protocol.
+Observations captured before the first transport registration replay in order
+after the initial actor-tree baseline. Reconnects use the latest checkpoint.
 In Node, the inspector opens in the default browser automatically. The SDK
-generates a cryptographically random session capability; hosted inspectors send
-signed-out users through OAuth and return them to that same live session. The
-Node process does not need a Stately API key.
+generates a cryptographically random session capability; hosted inspectors open
+without requiring login. The session capability controls access to the live
+session. AI-backed features remain separately authenticated. The Node process
+does not need a Stately API key.
 
 ### CLI and sync
 

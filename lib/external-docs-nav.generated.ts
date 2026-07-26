@@ -20,6 +20,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/any-stack"
       },
       {
+        "title": "Scope and ecosystem boundaries",
+        "url": "/docs/packages/agent/scope"
+      },
+      {
         "title": "Agent machines",
         "url": "/docs/packages/agent/machines"
       },
@@ -66,6 +70,10 @@ export const externalDocsNav = [
       {
         "title": "The step path",
         "url": "/docs/packages/agent/steps"
+      },
+      {
+        "title": "The event log",
+        "url": "/docs/packages/agent/checkpoints"
       },
       {
         "title": "Machines as data",
