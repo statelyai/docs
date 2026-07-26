@@ -4,7 +4,7 @@ import {
   update,
   type InferPageType,
   loader,
-  type Source,
+  type StaticSource,
   type VirtualFile,
 } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
@@ -20,7 +20,7 @@ import {
 type DocsCollectionMap = Record<
   string,
   {
-    toFumadocsSource: () => Source;
+    toFumadocsSource: () => StaticSource;
   }
 >;
 
@@ -29,7 +29,7 @@ function getRouteFromFile(file: VirtualFile): string {
   return (file.slugs ?? getSlugs(file.path)).join('/');
 }
 
-function withProjectPrefix(project: string, source: Source) {
+function withProjectPrefix(project: string, source: StaticSource) {
   return update(source)
     .files((files) =>
       files.map((file) => ({
@@ -40,7 +40,7 @@ function withProjectPrefix(project: string, source: Source) {
     .build();
 }
 
-function validateDocsSourceOwnership(sources: Record<string, Source>) {
+function validateDocsSourceOwnership(sources: Record<string, StaticSource>) {
   const seenRoutes = new Map<string, { sourceId: string; path: string }>();
 
   for (const [sourceId, source] of Object.entries(sources)) {

@@ -2,11 +2,10 @@ import {
   defineCollections,
   defineConfig,
   defineDocs,
-  frontmatterSchema,
-  metaSchema,
   type GlobalConfig,
   type MDXPresetOptions,
 } from 'fumadocs-mdx/config';
+import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { transformerTwoslash } from 'fumadocs-twoslash';
 import {
   rehypeCodeDefaultOptions,
@@ -18,7 +17,7 @@ import z from 'zod';
 const sharedDocsCollectionOptions = {
   docs: {
     async: true,
-    schema: frontmatterSchema.extend({
+    schema: pageSchema.extend({
       slug: z.string().optional(),
       sourcePath: z.string().optional(),
       sourceUrl: z.string().url().optional(),
@@ -86,7 +85,7 @@ export function createBlogCollection(dir = 'content/blog') {
     type: 'doc',
     dir,
     async: true,
-    schema: frontmatterSchema.extend({
+    schema: pageSchema.extend({
       authors: z.array(z.string()),
       date: z.iso.date().or(z.date()),
     }),

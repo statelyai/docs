@@ -1,5 +1,6 @@
 'use client';
 import { useDocsSearch } from 'fumadocs-core/search/client';
+import { fetchClient } from 'fumadocs-core/search/client/fetch';
 import {
   SearchDialog,
   SearchDialogClose,
@@ -16,12 +17,13 @@ import { useI18n } from 'fumadocs-ui/contexts/i18n';
 export default function DefaultSearchDialog(props: SharedProps) {
   const { locale } = useI18n(); // (optional) for i18n
   const { search, setSearch, query } = useDocsSearch({
-    type: 'fetch',
-    locale,
-    api:
-      process.env.NODE_ENV === 'development'
-        ? '/api/search'
-        : 'https://stately-docs.vercel.app/api/search',
+    client: fetchClient({
+      locale,
+      api:
+        process.env.NODE_ENV === 'development'
+          ? '/api/search'
+          : 'https://stately-docs.vercel.app/api/search',
+    }),
   });
 
   return (

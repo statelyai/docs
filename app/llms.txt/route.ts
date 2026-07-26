@@ -1,16 +1,21 @@
 import { source } from '@/lib/source';
+import { llms } from 'fumadocs-core/source';
 
 export const revalidate = false;
 
-export async function GET() {
-  const pages = source.getPages();
+export function GET() {
+  const navigation = llms(source).index();
+  const unlistedPages = source
+    .getPages()
+    .filter((page) => !navigation.includes(`](${page.url})`));
+  const completeIndex = unlistedPages.length
+    ? `
 
-  const content = `# XState
+## Complete page index
+${unlistedPages.map((page) => `- [${page.data.title}](${page.url}.mdx)`).join('\n')}`
+    : '';
 
-> State machines and statecharts for the modern web. XState is a JavaScript/TypeScript library for creating state machines, statecharts, and actors.
-
-## Docs
-${pages.map((p) => `- [${p.data.title}](${p.url}.mdx)`).join('\n')}
+  const content = `${navigation}${completeIndex}
 
 ## Optional
 - [Full documentation](/llms-full.txt): Complete docs in one file
