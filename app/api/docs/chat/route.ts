@@ -2,12 +2,8 @@ import { openai } from '@ai-sdk/openai';
 import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
 import { z } from 'zod';
 import { searchDocs } from '@/lib/docs-search';
-import { createSupabaseAuth } from '@/lib/supabase-auth';
-import type { NextRequest } from 'next/server';
 
 export const dynamic = 'force-dynamic';
-
-// Public docs chat is authenticated before any model work begins.
 
 const systemPrompt = [
   'You are an AI assistant for the XState documentation site (stately.ai/docs).',
@@ -26,7 +22,7 @@ const allowedOrigins = [
 
 function getCorsHeaders(origin: string | null) {
   const headers: Record<string, string> = {
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     Vary: 'Origin',
   };
@@ -57,69 +53,13 @@ export async function OPTIONS(req: Request) {
   });
 }
 
-async function getAuthState(req: NextRequest) {
+export async function POST(req: Request) {
   const origin = req.headers.get('origin');
-  const corsHeaders = getCorsHeaders(origin);
 
   if (!isOriginAllowed(origin)) {
-    return {
-      response: Response.json(
-        { error: 'Origin is not allowed.' },
-        { status: 403, headers: corsHeaders },
-      ),
-    };
-  }
-
-  let auth: ReturnType<typeof createSupabaseAuth>;
-  try {
-    auth = createSupabaseAuth(req);
-  } catch {
-    return {
-      response: Response.json(
-        { error: 'Authentication is unavailable.' },
-        { status: 503, headers: corsHeaders },
-      ),
-    };
-  }
-
-  try {
-    const {
-      data: { user },
-    } = await auth.supabase.auth.getUser();
-
-    return { auth, corsHeaders, user };
-  } catch {
-    return {
-      response: Response.json(
-        { error: 'Authentication is unavailable.' },
-        { status: 503, headers: corsHeaders },
-      ),
-    };
-  }
-}
-
-export async function GET(req: NextRequest) {
-  const authState = await getAuthState(req);
-  if ('response' in authState) return authState.response;
-
-  return authState.auth.applyAuthCookies(
-    Response.json(
-      { authenticated: Boolean(authState.user) },
-      { headers: authState.corsHeaders },
-    ),
-  );
-}
-
-export async function POST(req: NextRequest) {
-  const authState = await getAuthState(req);
-  if ('response' in authState) return authState.response;
-
-  if (!authState.user) {
-    return authState.auth.applyAuthCookies(
-      new Response('AUTH_REQUIRED', {
-        status: 401,
-        headers: authState.corsHeaders,
-      }),
+    return Response.json(
+      { error: 'Origin is not allowed.' },
+      { status: 403, headers: getCorsHeaders(origin) },
     );
   }
 
@@ -138,9 +78,7 @@ export async function POST(req: NextRequest) {
     toolChoice: 'auto',
   });
 
-  return authState.auth.applyAuthCookies(
-    result.toUIMessageStreamResponse({ headers: authState.corsHeaders }),
-  );
+  return result.toUIMessageStreamResponse({ headers: getCorsHeaders(origin) });
 }
 
 const searchTool = tool({
