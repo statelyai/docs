@@ -18,12 +18,15 @@ import { type UIMessage, useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DefaultChatTransport, type Tool, type UIToolInvocation } from 'ai';
 import { Markdown } from '../markdown';
 import { Presence } from '@radix-ui/react-presence';
-import type { SearchTool } from '../../app/api/chat/route';
+import type { SearchTool } from '../../app/api/docs/chat/route';
+
+type AuthStatus = 'unknown' | 'authenticated' | 'unauthenticated' | 'error';
 
 const Context = createContext<{
   open: boolean;
   setOpen: (open: boolean) => void;
   chat: UseChatHelpers<UIMessage>;
+  authStatus: AuthStatus;
 } | null>(null);
 
 export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div'>) {
@@ -63,14 +66,14 @@ export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div
 }
 
 export function AISearchInputActions() {
-  const { messages, status, setMessages, regenerate } = useChatContext();
+  const { error, messages, status, setMessages, regenerate } = useChatContext();
   const isLoading = status === 'streaming';
 
   if (messages.length === 0) return null;
 
   return (
     <>
-      {!isLoading && messages.at(-1)?.role === 'assistant' && (
+      {!error && !isLoading && messages.at(-1)?.role === 'assistant' && (
         <button
           type="button"
           className={cn(
@@ -105,9 +108,13 @@ export function AISearchInputActions() {
 
 const StorageKeyInput = '__ai_search_input';
 export function AISearchInput(props: ComponentProps<'form'>) {
-  const { status, sendMessage, stop } = useChatContext();
+  const { error, status, sendMessage, stop } = useChatContext();
+  const { authStatus } = useAISearchContext();
   const [input, setInput] = useState(() => localStorage.getItem(StorageKeyInput) ?? '');
   const isLoading = status === 'streaming' || status === 'submitted';
+  const isAuthRequired =
+    authStatus === 'unauthenticated' || (error?.message.includes('AUTH_REQUIRED') ?? false);
+  const isDisabled = authStatus !== 'authenticated' || isLoading || isAuthRequired;
   const onStart = (e?: SyntheticEvent) => {
     e?.preventDefault();
     void sendMessage({ text: input });
@@ -126,7 +133,7 @@ export function AISearchInput(props: ComponentProps<'form'>) {
         placeholder={isLoading ? 'AI is answering...' : 'Ask a question'}
         autoFocus
         className="p-3"
-        disabled={status === 'streaming' || status === 'submitted'}
+        disabled={isDisabled}
         onChange={(e) => {
           setInput(e.target.value);
           localStorage.setItem(StorageKeyInput, e.target.value);
@@ -162,7 +169,7 @@ export function AISearchInput(props: ComponentProps<'form'>) {
               className: 'transition-all rounded-full mt-2',
             }),
           )}
-          disabled={input.length === 0}
+          disabled={input.length === 0 || isDisabled}
         >
           <Send className="size-4" />
         </button>
@@ -291,18 +298,36 @@ function Message({ message, ...props }: { message: UIMessage } & ComponentProps<
 
 export function AISearch({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [authStatus, setAuthStatus] = useState<AuthStatus>('unknown');
   const chat = useChat({
     id: 'search',
     transport: new DefaultChatTransport({
-      api:
-        process.env.NODE_ENV === 'development'
-          ? '/api/chat'
-          : 'https://stately-docs.vercel.app/api/chat',
+      api: '/api/docs/chat',
     }),
   });
 
+  useEffect(() => {
+    if (!open || authStatus !== 'unknown') return;
+
+    const controller = new AbortController();
+    void fetch('/api/docs/chat', { cache: 'no-store', signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Authentication check failed');
+        const result: { authenticated: boolean } = await response.json();
+        setAuthStatus(result.authenticated ? 'authenticated' : 'unauthenticated');
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        setAuthStatus('error');
+      });
+
+    return () => controller.abort();
+  }, [authStatus, open]);
+
   return (
-    <Context value={useMemo(() => ({ chat, open, setOpen }), [chat, open])}>{children}</Context>
+    <Context value={useMemo(() => ({ authStatus, chat, open, setOpen }), [authStatus, chat, open])}>
+      {children}
+    </Context>
   );
 }
 
@@ -392,7 +417,11 @@ export function AISearchPanel() {
 
 export function AISearchPanelList({ className, style, ...props }: ComponentProps<'div'>) {
   const chat = useChatContext();
+  const { authStatus } = useAISearchContext();
   const messages = chat.messages.filter((msg) => msg.role !== 'system');
+  const isAuthRequired =
+    authStatus === 'unauthenticated' ||
+    (chat.error?.message.includes('AUTH_REQUIRED') ?? false);
 
   return (
     <List
@@ -404,7 +433,26 @@ export function AISearchPanelList({ className, style, ...props }: ComponentProps
       }}
       {...props}
     >
-      {messages.length === 0 ? (
+      {authStatus === 'unknown' ? (
+        <div className="text-sm text-fd-muted-foreground size-full flex items-center justify-center text-center px-6">
+          Checking your Stately login…
+        </div>
+      ) : isAuthRequired ? (
+        <div className="text-sm text-fd-muted-foreground size-full flex flex-col items-center justify-center text-center gap-3 px-6">
+          <MessageCircleIcon fill="currentColor" stroke="none" />
+          <p>Log in to ask the Stately docs AI.</p>
+          <a
+            className={cn(buttonVariants({ color: 'primary', size: 'sm' }))}
+            href="/registry/login?redirectTo=%2Fdocs"
+          >
+            Log in
+          </a>
+        </div>
+      ) : authStatus === 'error' || chat.error ? (
+        <div className="text-sm text-fd-error size-full flex items-center justify-center text-center px-6">
+          AI chat is temporarily unavailable. Please try again.
+        </div>
+      ) : messages.length === 0 ? (
         <div className="text-sm text-fd-muted-foreground/80 size-full flex flex-col items-center justify-center text-center gap-2">
           <MessageCircleIcon fill="currentColor" stroke="none" />
           <p onClick={(e) => e.stopPropagation()}>Start a new chat below.</p>

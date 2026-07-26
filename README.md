@@ -22,11 +22,18 @@ In the project, you can see:
 - `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
 - `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+<!-- public routes matching app route handlers -->
+
+| Route                   | Description                                              |
+| ----------------------- | -------------------------------------------------------- |
+| `app/(home)`            | The route group for the landing page and other pages.    |
+| `app/docs`              | The documentation layout and pages.                      |
+| `/api/search`           | Public documentation search.                             |
+| `/api/docs/chat`        | Stately-login-protected documentation AI chat.           |
+
+The chat route requires `NEXT_PUBLIC_SUPABASE_URL` and
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` so it can validate the shared `.stately.ai`
+Supabase session.
 
 ### Fumadocs MDX
 
