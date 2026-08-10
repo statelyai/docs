@@ -478,7 +478,7 @@ const tree = {
         },
         {
           type: 'page' as const,
-          name: 'Stately Studio Community',
+          name: 'Stately Studio Free',
           url: '/docs/studio-community-plan',
         },
         {

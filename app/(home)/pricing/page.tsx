@@ -15,65 +15,29 @@ export default function PricingPage() {
               Pricing
             </h1>
             <p className="text-lg md:text-xl text-fd-muted-foreground max-w-3xl mx-auto">
-              Create unlimited public projects for free. Upgrade to work
-              privately and unlock more features. Get a team to add users and
-              enable collaboration.
+              Every new account starts with a free 7-day trial of Pro, no credit
+              card required. Upgrade to keep building and working privately. Get
+              a Team plan to add users and enable collaboration.
             </p>
           </div>
 
           {/* Main Tiers with Arrows */}
           <div className="mb-12">
-            <div className="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 items-center max-w-6xl mx-auto">
-              {/* Community Tier */}
+            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 items-center max-w-4xl mx-auto">
+              {/* Pro Tier */}
               <PricingCard
-                name="Community"
-                price="FREE"
-                cta="Get started"
-                ctaHref="/registry/billing"
-                features={[
-                  {
-                    text: 'Public projects and state machines',
-                    href: '/docs/projects#change-a-projects-visibility',
-                  },
-                  {
-                    text: 'Export to JavaScript and TypeScript',
-                    href: '/docs/export-as-code',
-                  },
-                  {
-                    text: 'State machine simulation',
-                    href: '/docs/simulate-mode',
-                  },
-                  {
-                    text: 'Generate and modify state machines using AI ✨',
-                    subtext: '3 generations / month',
-                    href: '/docs/generate-flow',
-                  },
-                  { text: 'Community support' },
-                ]}
-              />
-
-              {/* Arrow */}
-              <div className="hidden md:flex justify-center">
-                <ArrowRight className="w-8 h-8 text-fd-muted-foreground" />
-              </div>
-
-              {/* Professional Tier */}
-              <PricingCard
-                name="Professional"
+                name="Pro"
                 price="$33"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$39 per month for a monthly plan."
+                trialNote="Free 7-day trial included"
+                trialDetail="When your trial ends, your machines and projects become read-only until you upgrade."
                 cta="Start a free trial"
                 ctaHref="/registry/billing"
                 highlighted
                 features={[
                   {
-                    text: 'Everything from Community',
-                    href: '/docs/studio-community-plan',
-                    strong: true,
-                  },
-                  {
-                    text: 'Private and unlisted projects',
+                    text: 'Unlimited public, private, and unlisted projects',
                     href: '/docs/projects#change-a-projects-visibility',
                   },
                   {
@@ -82,8 +46,9 @@ export default function PricingPage() {
                     href: '/docs/generate-flow',
                   },
                   {
-                    text: 'Generate React UIs',
-                    href: '/docs/generate-react',
+                    text: 'Deploy state machines as workflows with Stately Sky',
+                    subtext: 'Beta feature',
+                    href: '/docs/stately-sky-getting-started',
                   },
                   {
                     text: 'Version history',
@@ -102,8 +67,13 @@ export default function PricingPage() {
                     href: '/docs/colors',
                   },
                   {
-                    text: 'GitHub Sync',
+                    text: 'Codebase sync',
+                    subtext: 'via GitHub or the CLI',
                     href: '/docs/import-from-github',
+                  },
+                  {
+                    text: 'Export to JavaScript and TypeScript',
+                    href: '/docs/export-as-code',
                   },
                   { text: 'Priority support' },
                 ]}
@@ -120,7 +90,7 @@ export default function PricingPage() {
                 price="$167"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$199 per month for a monthly plan."
-                cta="Start a free trial"
+                cta="Get started"
                 ctaHref="/registry/billing"
                 features={[
                   {
@@ -145,6 +115,7 @@ export default function PricingPage() {
                     text: 'Unlimited view-only access for non-team members',
                     href: '/docs/teams',
                   },
+                  { text: 'Live collaboration', subtext: 'Coming soon' },
                   { text: 'Priority support' },
                 ]}
               />
@@ -161,7 +132,7 @@ export default function PricingPage() {
               ctaHref="mailto:support@stately.ai?subject=I'm interested in the Stately Studio Enterprise plan"
               features={[
                 {
-                  text: 'Everything from the Community, Pro, and Team plans',
+                  text: 'Everything from the Pro and Team plans',
                   href: '/docs/studio-pro-plan',
                 },
                 {
@@ -203,6 +174,12 @@ export default function PricingPage() {
               ]}
             />
           </div>
+
+          {/* Free is a state, not a plan: it is what an account falls back to */}
+          <p className="mt-8 text-sm text-fd-muted-foreground text-center max-w-3xl mx-auto">
+            Not ready to upgrade? You can keep viewing your machines and
+            projects, and browse and simulate public machines, for free.
+          </p>
         </div>
       </main>
       <Footer />
@@ -223,6 +200,10 @@ interface PricingCardProps {
   customPrice?: string;
   priceDetails?: string;
   priceSubtext?: string;
+  /** Short badge under the price, e.g. "Free 7-day trial included". */
+  trialNote?: string;
+  /** Fine print under the trial note, e.g. what expiry means. */
+  trialDetail?: string;
   cta: string;
   ctaHref: string;
   features: Feature[];
@@ -235,6 +216,8 @@ function PricingCard({
   customPrice,
   priceDetails,
   priceSubtext,
+  trialNote,
+  trialDetail,
   cta,
   ctaHref,
   features,
@@ -278,6 +261,18 @@ function PricingCard({
           <div className="text-2xl font-semibold text-fd-muted-foreground mb-4">
             {customPrice}
           </div>
+        )}
+
+        {trialNote && (
+          <div className="mb-2">
+            <span className="inline-block rounded-md bg-blue-500/15 px-2 py-1 text-xs font-semibold text-blue-500">
+              {trialNote}
+            </span>
+          </div>
+        )}
+
+        {trialDetail && (
+          <p className="mb-4 text-xs text-fd-muted-foreground">{trialDetail}</p>
         )}
 
         {/* CTA Button */}
