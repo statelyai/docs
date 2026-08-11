@@ -13,18 +13,7 @@ import {
 } from 'fumadocs-core/mdx-plugins';
 import rehypeRaw from 'rehype-raw';
 import z from 'zod';
-import { extractLeadingMarkdownTitle } from '@/lib/markdown-title.mjs';
-
-function extractLeadingTitle(source: string, filePath: string): string {
-  const heading = extractLeadingMarkdownTitle(source);
-  if (heading) return heading;
-
-  const fileName = filePath.split(/[\\/]/u).at(-1) ?? filePath;
-  return fileName
-    .replace(/\.(md|mdx)$/iu, '')
-    .replace(/^readme$/iu, 'Overview')
-    .replace(/[-_]+/gu, ' ');
-}
+import { deriveMarkdownTitle } from '@/lib/markdown-title.mjs';
 
 function remarkPrepareWorkspaceMarkdown() {
   return (tree: {
@@ -169,7 +158,7 @@ export function createDirectDocsWorkspaceModule(
             })
             .transform((data) => ({
               ...data,
-              title: data.title ?? extractLeadingTitle(source, path),
+              title: data.title ?? deriveMarkdownTitle(source, path),
             })),
       },
       meta: {

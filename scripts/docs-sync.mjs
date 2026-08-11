@@ -10,6 +10,7 @@ import {
 } from 'node:fs/promises';
 import path from 'node:path';
 import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
+import { deriveMarkdownTitle } from '../lib/markdown-title.mjs';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
@@ -603,7 +604,9 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
         extractLeadingH1(bodyWithoutComments);
       const title =
         parseFrontmatterValue(raw, 'title') ??
-        deriveTitle(docsSource.name, sourcePath, heading);
+        (docsSource.mode === 'workspace'
+          ? deriveMarkdownTitle(original, sourcePath)
+          : deriveTitle(docsSource.name, sourcePath, heading));
       const description =
         parseFrontmatterValue(raw, 'description') ??
         deriveDescription(bodyWithoutHeading);

@@ -42,7 +42,7 @@ test('workspace route mapping collapses mounted README pages', async () => {
 });
 
 test('workspace title fallback only reads a leading heading', async () => {
-  const { extractLeadingMarkdownTitle } = await import(
+  const { deriveMarkdownTitle, extractLeadingMarkdownTitle } = await import(
     '../lib/markdown-title.mjs'
   );
 
@@ -55,8 +55,19 @@ test('workspace title fallback only reads a leading heading', async () => {
     'Setext title',
   );
   assert.equal(
+    extractLeadingMarkdownTitle(
+      '<p align="center"><img src="logo.svg" /></p>\n\n# Real title\n',
+    ),
+    'Real title',
+  );
+  assert.equal(
     extractLeadingMarkdownTitle('```bash\n# Install deps\n```\n'),
     undefined,
+  );
+  assert.equal(deriveMarkdownTitle('> Important\n', 'README.md'), 'Overview');
+  assert.equal(
+    deriveMarkdownTitle('No heading\n', 'guides/get_started.mdx'),
+    'get started',
   );
   assert.equal(
     extractLeadingMarkdownTitle('Intro paragraph.\n\n# Later heading\n'),
@@ -227,6 +238,10 @@ test('search indexing reads public workspaces once', async () => {
 
   const searchIndex = JSON.parse(
     await readFile(path.join(rootDir, 'lib', 'search-index.json'), 'utf8'),
+  );
+  assert.equal(
+    searchIndex.filter((page) => page.title === '').length,
+    0,
   );
   const agentIndexes = searchIndex.filter(
     (page) => page.url === '/docs/packages/agent',

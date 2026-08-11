@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { structure } from 'fumadocs-core/mdx-plugins';
 import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
-import { extractLeadingMarkdownTitle } from '../lib/markdown-title.mjs';
+import { deriveMarkdownTitle } from '../lib/markdown-title.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
@@ -183,7 +183,7 @@ for (const entry of patterns) {
 
     const raw = await readFile(path.join(entry.cwd, rel), 'utf8');
     const { data: fm, content } = parseFrontmatter(raw);
-    const headingTitle = extractLeadingMarkdownTitle(content);
+    const fallbackTitle = deriveMarkdownTitle(content, rel);
 
     let structuredData;
     try {
@@ -196,7 +196,7 @@ for (const entry of patterns) {
     }
 
     pages.push({
-      title: fm.title ?? headingTitle ?? '',
+      title: fm.title ?? fallbackTitle,
       description: fm.description ?? '',
       url,
       id: url,
