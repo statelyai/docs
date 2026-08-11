@@ -62,9 +62,72 @@ The external docs manifest lives in `docs-sources.json`:
     "name": "Agent",
     "package": "agent",
     "source": "agent",
-    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"]
+    "include": ["docs/**/*.md", "docs/**/*.mdx"],
+    "mode": "workspace",
+    "ref": "next"
   },
-  { "name": "Graph", "package": "graph", "source": "graph" },
+  {
+    "name": "Graph",
+    "package": "graph",
+    "source": "graph",
+    "mode": "workspace",
+    "ref": "main"
+  },
+  {
+    "name": "XState v6 alpha",
+    "package": "xstate-v6",
+    "source": "xstate",
+    "notice": {
+      "title": "XState v6 is in alpha",
+      "description": "APIs and behavior may change before the stable release.",
+      "type": "warning"
+    },
+    "include": [
+      "docs/**/*.md",
+      "docs/**/*.mdx",
+      "packages/xstate-react/docs/**/*.md",
+      "packages/xstate-react/docs/**/*.mdx",
+      "packages/xstate-vue/docs/**/*.md",
+      "packages/xstate-vue/docs/**/*.mdx",
+      "packages/xstate-svelte/docs/**/*.md",
+      "packages/xstate-svelte/docs/**/*.mdx",
+      "packages/xstate-solid/docs/**/*.md",
+      "packages/xstate-solid/docs/**/*.mdx",
+      "packages/xstate-store/docs/**/*.md",
+      "packages/xstate-store/docs/**/*.mdx"
+    ],
+    "mode": "workspace",
+    "mounts": [
+      { "source": "docs", "route": "" },
+      {
+        "source": "packages/xstate-react/docs",
+        "route": "react",
+        "title": "React"
+      },
+      {
+        "source": "packages/xstate-vue/docs",
+        "route": "vue",
+        "title": "Vue"
+      },
+      {
+        "source": "packages/xstate-svelte/docs",
+        "route": "svelte",
+        "title": "Svelte"
+      },
+      {
+        "source": "packages/xstate-solid/docs",
+        "route": "solid",
+        "title": "Solid"
+      },
+      {
+        "source": "packages/xstate-store/docs",
+        "route": "store",
+        "title": "Store"
+      }
+    ],
+    "ref": "next",
+    "route": "xstate/v6"
+  },
   {
     "name": "SDK",
     "package": "sdk",
@@ -91,9 +154,14 @@ Each entry means:
 - `name`: display name in the docs sidebar
 - `package`: public route segment under `/docs/packages/<package>`
 - `source`: repo root or repo subpath to scan for docs content
+- `notice`: optional source-wide callout shown on every page
+- `ref`: Git branch or tag; defaults to `main`
 - `include`: optional Markdown glob allowlist relative to `source`
-- `mode`: optional; use `"snapshot"` to commit generated docs for private
-  sources instead of fetching the repo during deployment
+- `mounts`: optional source-directory to route-directory mappings
+- `mode`: optional; `"workspace"` compiles a locked GitHub checkout directly;
+  `"snapshot"` commits generated docs for private sources
+- `route`: optional public route prefix under `/docs`; defaults to
+  `packages/<package>`
 
 ### How Sync Works
 
@@ -101,30 +169,32 @@ Each entry means:
 
 The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 
-For each manifest entry, it:
+For a `"workspace"` source, `pnpm docs:lock` resolves `ref` to an immutable
+commit in `docs-sources.lock.json`. Normal syncs check out that commit into
+`.cache/docs-sources/<repo>/<commit>`. Fumadocs compiles the allowlisted files
+directly as a workspace; the sync does not copy or rewrite Markdown. A clean
+checkout already at the locked commit is reused without contacting GitHub.
+`pnpm docs:watch` explicitly uses available sibling clones instead, so local
+workspace documentation edits appear immediately during development.
 
-1. Resolves the source repo locally from `../<repo>` when available.
-2. Falls back to a cached remote checkout in `.cache/docs-repos/<repo>` when
-   the local repo is missing.
-3. Scans the configured `source` root using its `include` allowlist. Without
-   one, it includes only the root `README.md` / `readme.md` and
-   `docs/**/*.{md,mdx}`.
-4. Flattens those pages into `.cache/docs-workspaces/<package>/docs`.
-5. Generates Fumadocs frontmatter when it is missing.
-6. Uses the source repo's optional `docs/meta.json` to order and select
-   navigation pages.
-7. Writes only changed outputs and removes stale generated files.
-
-The generated workspace is what `source.config.ts` points Fumadocs at. The app
-never copies external docs into `content/docs`.
+Other sources use the compatibility pipeline: resolve `../<repo>` locally,
+scan the configured allowlist, flatten pages into a generated workspace, add
+missing frontmatter, rewrite links/assets, and derive navigation. The app never
+copies external docs into `content/docs`.
 
 Snapshot sources are different: they write to `external-docs/<package>` so the
 generated docs can be committed. In CI, if the private local source repo is not
 available, the sync step uses the committed snapshot instead of cloning GitHub.
 
+Use `pnpm docs:lock` intentionally to advance workspace sources to the latest
+commit on their configured ref. Normal builds only consume the recorded commit,
+so a branch update cannot silently change a deployment.
+
 ### Flattening Rules
 
 - Root `README.md` becomes `index.md` and maps to `/docs/packages/<package>`.
+- Workspace `README.md(x)` files inside mounts map to the mount or nested
+  directory index.
 - Included nested `**/README.md(x)` are treated as index-like and flatten to
   their parent path:
   - `src/formats/adjacency-list/README.md` -> `src-formats-adjacency-list.md`
@@ -160,8 +230,9 @@ docs are not indexed twice.
 
 <!-- docs sync commands matching package.json#scripts -->
 
-- `pnpm docs:sync`: refresh external workspaces only
+- `pnpm docs:lock`: update immutable workspace revisions, then sync
+- `pnpm docs:sync`: sync external workspaces at their recorded revisions
 - `pnpm docs:generate`: sync external workspaces and regenerate Fumadocs output
-- `pnpm docs:watch`: watch local source repos and regenerate on changes
+- `pnpm docs:watch`: use and watch available sibling source repos, then regenerate
 - `pnpm dev`: run the app after a sync pass
 - `pnpm build`: run sync and then a production build

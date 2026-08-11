@@ -3,14 +3,71 @@
     "name": "Agent",
     "package": "agent",
     "source": "agent",
-    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"],
-    "mode": "snapshot"
+    "include": ["docs/**/*.md", "docs/**/*.mdx"],
+    "mode": "workspace",
+    "ref": "next"
   },
   {
     "name": "Graph",
     "package": "graph",
     "source": "graph",
-    "mode": "snapshot"
+    "mode": "workspace",
+    "ref": "main"
+  },
+  {
+    "name": "XState v6 alpha",
+    "package": "xstate-v6",
+    "source": "xstate",
+    "notice": {
+      "title": "XState v6 is in alpha",
+      "description": "APIs and behavior may change before the stable release.",
+      "type": "warning"
+    },
+    "include": [
+      "docs/**/*.md",
+      "docs/**/*.mdx",
+      "packages/xstate-react/docs/**/*.md",
+      "packages/xstate-react/docs/**/*.mdx",
+      "packages/xstate-vue/docs/**/*.md",
+      "packages/xstate-vue/docs/**/*.mdx",
+      "packages/xstate-svelte/docs/**/*.md",
+      "packages/xstate-svelte/docs/**/*.mdx",
+      "packages/xstate-solid/docs/**/*.md",
+      "packages/xstate-solid/docs/**/*.mdx",
+      "packages/xstate-store/docs/**/*.md",
+      "packages/xstate-store/docs/**/*.mdx"
+    ],
+    "mode": "workspace",
+    "mounts": [
+      { "source": "docs", "route": "" },
+      {
+        "source": "packages/xstate-react/docs",
+        "route": "react",
+        "title": "React"
+      },
+      {
+        "source": "packages/xstate-vue/docs",
+        "route": "vue",
+        "title": "Vue"
+      },
+      {
+        "source": "packages/xstate-svelte/docs",
+        "route": "svelte",
+        "title": "Svelte"
+      },
+      {
+        "source": "packages/xstate-solid/docs",
+        "route": "solid",
+        "title": "Solid"
+      },
+      {
+        "source": "packages/xstate-store/docs",
+        "route": "store",
+        "title": "Store"
+      }
+    ],
+    "ref": "next",
+    "route": "xstate/v6"
   },
   {
     "name": "SDK",

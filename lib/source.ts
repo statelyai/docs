@@ -13,6 +13,8 @@ import { externalDocsCollections } from '@/lib/external-docs.generated';
 import {
   enabledExternalDocsSources,
   getDocsPageGitHubUrl,
+  getDocsSourceRoutePath,
+  getDocsSourceByPackage,
   getProjectRoutePrefix,
   prefixRoute,
 } from '@/lib/docs-sources';
@@ -29,13 +31,37 @@ function getRouteFromFile(file: VirtualFile): string {
   return (file.slugs ?? getSlugs(file.path)).join('/');
 }
 
-function withProjectPrefix(project: string, source: StaticSource) {
+function withProjectRoutes(project: string, source: StaticSource) {
+  const sourceConfig = getDocsSourceByPackage(project);
+
   return update(source)
     .files((files) =>
-      files.map((file) => ({
-        ...file,
-        path: prefixRoute(project, file.path),
-      })),
+      files.map((file) => {
+        if (sourceConfig?.mode === 'workspace') {
+          const sourcePath = file.path.replace(/^\/+|\/+$/gu, '');
+          const path = prefixRoute(
+            project,
+            getDocsSourceRoutePath(sourceConfig, sourcePath),
+          );
+
+          return file.type === 'page'
+            ? {
+                ...file,
+                path,
+                slugs: getSlugs(path),
+                data: {
+                  ...file.data,
+                  sourcePath,
+                },
+              }
+            : { ...file, path };
+        }
+
+        return {
+          ...file,
+          path: prefixRoute(project, file.path),
+        };
+      }),
     )
     .build();
 }
@@ -87,7 +113,7 @@ const docsSources = {
     Object.entries(externalDocsCollections as DocsCollectionMap).map(
       ([sourceId, collection]) => [
         sourceId,
-        withProjectPrefix(sourceId, collection.toFumadocsSource()),
+        withProjectRoutes(sourceId, collection.toFumadocsSource()),
       ],
     ),
   ),
@@ -128,7 +154,7 @@ export function getPageGitHubUrl(page: InferPageType<typeof source>) {
     return page.data.sourceUrl;
   }
 
-  return getDocsPageGitHubUrl(page.type, page.path);
+  return getDocsPageGitHubUrl(page.type, page.path, page.data.sourcePath);
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {

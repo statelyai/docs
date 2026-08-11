@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import { access, readFile } from 'node:fs/promises';
 import { watch } from 'node:fs';
 import path from 'node:path';
+import { isDocsSourceWatchPath } from '../lib/docs-watch-path.mjs';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
@@ -20,10 +21,11 @@ async function exists(filePath) {
   }
 }
 
-function run(command, args) {
+function run(command, args, env = process.env) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       cwd: rootDir,
+      env,
       stdio: 'inherit',
     });
 
@@ -50,7 +52,10 @@ async function generate() {
   console.log(`[docs-watch] regenerate ${new Date().toLocaleTimeString()}`);
 
   try {
-    await run(process.execPath, ['scripts/docs-sync.mjs']);
+    await run(process.execPath, ['scripts/docs-sync.mjs'], {
+      ...process.env,
+      DOCS_USE_LOCAL_WORKSPACES: '1',
+    });
     await run(isWindows ? 'pnpm.cmd' : 'pnpm', ['exec', 'fumadocs-mdx']);
     console.log('[docs-watch] ready');
   } catch (error) {
@@ -76,15 +81,6 @@ function queueGenerate(reason) {
       generate();
     }
   }, 100);
-}
-
-function isProjectFileRelevant(relativePath) {
-  const normalized = relativePath.replace(/\\/g, '/');
-  return (
-    /(^|\/)readme\.(md|mdx)$/i.test(normalized) ||
-    normalized === 'docs' ||
-    normalized.startsWith('docs/')
-  );
 }
 
 async function readProjects() {
@@ -124,27 +120,37 @@ async function reloadWatchers() {
 
   for (const project of projects) {
     const repo = getSourceRepo(project.source);
-    if (!repo || repos.has(repo)) continue;
-    repos.set(repo, project);
+    if (!repo) continue;
+    const repoProjects = repos.get(repo) ?? [];
+    repoProjects.push(project);
+    repos.set(repo, repoProjects);
   }
 
-  for (const [repo] of repos) {
+  let watchedRepos = 0;
+  for (const [repo, repoProjects] of repos) {
     const projectDir = path.resolve(rootDir, '..', repo);
     if (!(await exists(projectDir))) continue;
+    watchedRepos++;
 
     addWatcher(
       projectDir,
       { recursive: true },
       (_, filename) => {
         if (!filename) return;
-        if (!isProjectFileRelevant(filename)) return;
+        if (
+          !repoProjects.some((project) =>
+            isDocsSourceWatchPath(project, filename),
+          )
+        ) {
+          return;
+        }
         queueGenerate(`${repo}/${filename}`);
       },
     );
   }
 
   console.log(
-    `[docs-watch] watching ${repos.size} project${repos.size === 1 ? '' : 's'}`,
+    `[docs-watch] watching ${watchedRepos} project${watchedRepos === 1 ? '' : 's'}`,
   );
 }
 

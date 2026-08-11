@@ -9,9 +9,14 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import path from 'node:path';
+import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
+import { deriveMarkdownTitle } from '../lib/markdown-title.mjs';
+import { getWorkspaceDescendantEntries } from '../lib/docs-nav.mjs';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
+const lockPath = path.join(rootDir, 'docs-sources.lock.json');
+const updateLock = process.argv.includes('--update-lock');
 const generatedModulePath = path.join(
   rootDir,
   'lib',
@@ -34,6 +39,7 @@ const ignoredDirectoryNames = new Set([
   'build',
   'node_modules',
 ]);
+const preparedWorkspaceDirs = new Set();
 
 async function exists(filePath) {
   try {
@@ -86,6 +92,14 @@ function run(command, args, cwd = rootDir) {
   });
 }
 
+function runCapture(command, args, cwd = rootDir) {
+  return execFileSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  }).trim();
+}
+
 function tryRun(command, args, cwd = rootDir) {
   try {
     execFileSync(command, args, {
@@ -93,6 +107,22 @@ function tryRun(command, args, cwd = rootDir) {
       stdio: 'ignore',
     });
     return true;
+  } catch {
+    return false;
+  }
+}
+
+async function isReusableLockedWorkspace(checkoutDir, expectedCommit) {
+  if (!(await exists(path.join(checkoutDir, '.git')))) return false;
+
+  try {
+    const head = runCapture('git', ['rev-parse', 'HEAD'], checkoutDir);
+    const status = runCapture(
+      'git',
+      ['status', '--porcelain', '--untracked-files=normal'],
+      checkoutDir,
+    );
+    return head === expectedCommit && status === '';
   } catch {
     return false;
   }
@@ -135,8 +165,15 @@ function normalizeDocsSourceConfig(config) {
     ...config,
     include: config.include,
     mode: config.mode,
+    mounts: config.mounts?.map((mount) => ({
+      ...mount,
+      route: normalizePath(String(mount.route ?? '')).replace(/^\/+|\/+$/gu, ''),
+      source: normalizePath(String(mount.source)).replace(/^\/+|\/+$/gu, ''),
+    })),
     package: String(config.package),
+    ref: String(config.ref ?? 'main'),
     repo: getSourceRepo(config.source),
+    route: normalizePath(String(config.route ?? '')).replace(/^\/+|\/+$/gu, ''),
     source: normalizeSourcePath(config.source),
     sourceSubpath: getSourceSubpath(config.source),
   };
@@ -148,6 +185,10 @@ function getLocalProjectDir(repo) {
 
 function getRemoteProjectDir(repo) {
   return path.resolve(rootDir, '.cache', 'docs-repos', repo);
+}
+
+function getWorkspaceProjectDir(repo, commit) {
+  return path.resolve(rootDir, '.cache', 'docs-sources', repo, commit);
 }
 
 function getGeneratedProjectDir(packageName) {
@@ -170,29 +211,25 @@ function getProjectRepo(repo) {
   return `statelyai/${repo}`;
 }
 
-function getProjectBranch() {
-  return 'main';
-}
-
 function getProjectDocsDir() {
   return 'docs';
 }
 
-function getProjectRoutePrefix(packageName) {
-  return path.join('packages', packageName);
+function getProjectRoutePrefix(project) {
+  return project.route || path.join('packages', project.package);
 }
 
 function normalizePath(value) {
   return value.replace(/\\/g, '/');
 }
 
-function getProjectDocsUrl(packageName, slug) {
-  const prefix = `/docs/${normalizePath(getProjectRoutePrefix(packageName))}`;
+function getProjectDocsUrl(project, slug) {
+  const prefix = `/docs/${normalizePath(getProjectRoutePrefix(project))}`;
   return slug === 'index' ? prefix : `${prefix}/${slug}`;
 }
 
-function getSourceUrl(repo, sourcePath, view = 'blob') {
-  return `https://github.com/${getProjectRepo(repo)}/${view}/${getProjectBranch()}/${sourcePath}`;
+function getSourceUrl(repo, sourcePath, ref, view = 'blob') {
+  return `https://github.com/${getProjectRepo(repo)}/${view}/${ref}/${sourcePath}`;
 }
 
 function getSnapshotSourceUrl(packageName, outputPath) {
@@ -457,14 +494,17 @@ async function listProjectFiles(dir, base = dir) {
   const files = [];
 
   for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    const relativeParts = normalizePath(path.relative(base, fullPath)).split('/');
+    const isInsideDocsDirectory = relativeParts.slice(0, -1).includes('docs');
     if (
       entry.isDirectory() &&
-      (ignoredDirectoryNames.has(entry.name) || entry.name.startsWith('.'))
+      ((ignoredDirectoryNames.has(entry.name) && !isInsideDocsDirectory) ||
+        entry.name.startsWith('.'))
     ) {
       continue;
     }
 
-    const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...(await listProjectFiles(fullPath, base)));
       continue;
@@ -565,7 +605,9 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
         extractLeadingH1(bodyWithoutComments);
       const title =
         parseFrontmatterValue(raw, 'title') ??
-        deriveTitle(docsSource.name, sourcePath, heading);
+        (docsSource.mode === 'workspace'
+          ? deriveMarkdownTitle(original, sourcePath)
+          : deriveTitle(docsSource.name, sourcePath, heading));
       const description =
         parseFrontmatterValue(raw, 'description') ??
         deriveDescription(bodyWithoutHeading);
@@ -579,8 +621,13 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
         rawFrontmatter: raw,
         slug,
         sourcePath: repoRelativeSourcePath,
-        sourceUrl: getSourceUrl(docsSource.repo, repoRelativeSourcePath),
+        sourceUrl: getSourceUrl(
+          docsSource.repo,
+          repoRelativeSourcePath,
+          docsSource.sourceRef,
+        ),
         title,
+        workspacePath: sourcePath,
       };
     }),
   );
@@ -608,8 +655,9 @@ async function rewriteEntryBody(
   entry,
   docsEntriesBySourcePath,
   generatedAssetPaths,
-  packageName,
+  project,
   repo,
+  sourceRef,
   sourceRootDir,
 ) {
   let rewritten = entry.body;
@@ -628,13 +676,13 @@ async function rewriteEntryBody(
       const linkedEntry = docsEntriesBySourcePath.get(candidate);
       if (!linkedEntry) continue;
 
-      replacementTarget = `${getProjectDocsUrl(packageName, linkedEntry.slug)}${suffix}`;
+      replacementTarget = `${getProjectDocsUrl(project, linkedEntry.slug)}${suffix}`;
       break;
     }
 
     if (!replacementTarget) {
       if (isMarkdownPath(resolvedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath)}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef)}${suffix}`;
       }
     }
 
@@ -646,9 +694,9 @@ async function rewriteEntryBody(
         generatedAssetPaths.set(resolvedPath, assetTarget);
         replacementTarget = `./${normalizePath(assetTarget)}${suffix}`;
       } else if (await isFile(absoluteLinkedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath)}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef)}${suffix}`;
       } else if (await isDirectory(absoluteLinkedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath, 'tree')}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef, 'tree')}${suffix}`;
       }
     }
 
@@ -713,8 +761,9 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       entry,
       docsEntriesBySourcePath,
       generatedAssetPaths,
-      project.package,
+      project,
       project.repo,
+      project.sourceRef,
       sourceRootDir,
     );
 
@@ -731,7 +780,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
     navPages.push({
       title: entry.title,
-      url: getProjectDocsUrl(project.package, entry.slug),
+      url: getProjectDocsUrl(project, entry.slug),
     });
   }
 
@@ -753,8 +802,8 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
   const metaPath = path.join(project.sourceBaseDir, 'docs', 'meta.json');
   let orderedNavPages = navPages.sort((a, b) => {
-    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
-    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    if (a.url === getProjectDocsUrl(project, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project, 'index')) return 1;
     return a.url.localeCompare(b.url);
   });
 
@@ -770,10 +819,15 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       navPages.map((page) => [page.url.split('/').at(-1) ?? 'index', page]),
     );
     navBySlug.set('index', navPages.find(
-      (page) => page.url === getProjectDocsUrl(project.package, 'index'),
+      (page) => page.url === getProjectDocsUrl(project, 'index'),
     ));
 
     orderedNavPages = meta.pages.map((slug) => {
+      const separator = slug.match(/^---(.+)---$/u);
+      if (separator) {
+        return { separator: true, title: separator[1] };
+      }
+
       const page = navBySlug.get(slug);
       if (!page) {
         throw new Error(
@@ -816,15 +870,174 @@ async function collectSnapshotNavPages(project, generatedDocsDir) {
     const slug = file.replace(/\.(md|mdx)$/iu, '');
     navPages.push({
       title,
-      url: getProjectDocsUrl(project.package, slug === 'index' ? 'index' : slug),
+      url: getProjectDocsUrl(project, slug === 'index' ? 'index' : slug),
     });
   }
 
   return navPages.sort((a, b) => {
-    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
-    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    if (a.url === getProjectDocsUrl(project, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project, 'index')) return 1;
     return a.url.localeCompare(b.url);
   });
+}
+
+function getWorkspaceRoutePath(project, workspacePath) {
+  const routePath = resolveDocsSourceRoutePath(project, workspacePath);
+  if (routePath === null) {
+    throw new Error(
+      `Workspace path "${workspacePath}" is not covered by a mount for source "${project.package}".`,
+    );
+  }
+
+  const withoutExtension = routePath.replace(/\.(md|mdx)$/iu, '');
+  const publicRoute = withoutExtension.replace(/(^|\/)index$/iu, '');
+  return publicRoute || 'index';
+}
+
+async function collectMountedWorkspaceNavPages(
+  project,
+  sourceBaseDir,
+  entries,
+  navBySourcePath,
+) {
+  const output = [];
+
+  async function readMeta(directoryPath) {
+    const metaPath = path.join(sourceBaseDir, directoryPath, 'meta.json');
+    if (!(await isFile(metaPath))) return undefined;
+
+    const meta = JSON.parse(await readFile(metaPath, 'utf8'));
+    if (!Array.isArray(meta.pages) || meta.pages.some((page) => typeof page !== 'string')) {
+      throw new Error(
+        `Docs metadata for "${project.package}" must define "pages" as an array of page routes.`,
+      );
+    }
+
+    return meta;
+  }
+
+  async function collectDirectory(directoryPath) {
+    const meta = await readMeta(directoryPath);
+    if (!meta) {
+      return getWorkspaceDescendantEntries(entries, directoryPath)
+        .map((entry) =>
+          navBySourcePath.get(entry.workspacePath.replace(/\.(md|mdx)$/iu, '')),
+        );
+    }
+
+    const pages = [];
+    for (const route of meta.pages) {
+      const separator = route.match(/^---(.+)---$/u);
+      if (separator) {
+        pages.push({ separator: true, title: separator[1] });
+        continue;
+      }
+
+      const normalizedRoute = route.replace(/\.(md|mdx)$/iu, '');
+      const sourcePathPrefix = path.posix.join(directoryPath, normalizedRoute);
+      const entry = navBySourcePath.get(sourcePathPrefix);
+      if (entry) {
+        pages.push(entry);
+        continue;
+      }
+
+      const childMeta = await readMeta(sourcePathPrefix);
+      if (childMeta) {
+        pages.push({ separator: true, title: childMeta.title ?? toTitleCase(route) });
+        pages.push(...(await collectDirectory(sourcePathPrefix)));
+        continue;
+      }
+
+      if (getWorkspaceDescendantEntries(entries, sourcePathPrefix).length > 0) {
+        pages.push({ separator: true, title: toTitleCase(route) });
+        pages.push(...(await collectDirectory(sourcePathPrefix)));
+        continue;
+      }
+
+      throw new Error(
+        `Docs metadata for "${project.package}" references unknown page or folder "${route}" in "${directoryPath}".`,
+      );
+    }
+
+    return pages;
+  }
+
+  for (const mount of project.mounts) {
+    if (mount.title) output.push({ separator: true, title: mount.title });
+    output.push(...(await collectDirectory(mount.source)));
+  }
+
+  return output;
+}
+
+async function collectWorkspaceNavPages(project, sourceRootDir, sourceBaseDir) {
+  const entries = await collectMarkdownEntries(
+    project,
+    sourceRootDir,
+    sourceBaseDir,
+    project.excludedSourcePrefixes,
+  );
+  const navByRoute = new Map();
+  const navBySourcePath = new Map();
+
+  for (const entry of entries) {
+    const route = getWorkspaceRoutePath(project, entry.workspacePath);
+    if (navByRoute.has(route)) {
+      throw new Error(
+        `Duplicate workspace docs route "${route}" for source "${project.package}".`,
+      );
+    }
+
+    const page = {
+      title: entry.title,
+      url: getProjectDocsUrl(project, route),
+    };
+    navByRoute.set(route, page);
+    navBySourcePath.set(
+      entry.workspacePath.replace(/\.(md|mdx)$/iu, ''),
+      page,
+    );
+  }
+
+  if (project.mounts) {
+    return collectMountedWorkspaceNavPages(
+      project,
+      sourceBaseDir,
+      entries,
+      navBySourcePath,
+    );
+  }
+
+  const metaPath = path.join(sourceBaseDir, 'docs', 'meta.json');
+  if (await isFile(metaPath)) {
+    const meta = JSON.parse(await readFile(metaPath, 'utf8'));
+    if (!Array.isArray(meta.pages) || meta.pages.some((page) => typeof page !== 'string')) {
+      throw new Error(
+        `Docs metadata for "${project.package}" must define "pages" as an array of page routes.`,
+      );
+    }
+
+    return meta.pages.map((route) => {
+      const separator = route.match(/^---(.+)---$/u);
+      if (separator) return { separator: true, title: separator[1] };
+
+      const page = navByRoute.get(route.replace(/\.(md|mdx)$/iu, ''));
+      if (!page) {
+        throw new Error(
+          `Docs metadata for "${project.package}" references unknown page "${route}".`,
+        );
+      }
+      return page;
+    });
+  }
+
+  return [...navByRoute.entries()]
+    .sort(([left], [right]) => {
+      if (left === 'index') return -1;
+      if (right === 'index') return 1;
+      return left.localeCompare(right);
+    })
+    .map(([, page]) => page);
 }
 
 function getExcludedSourcePrefixes(docsSource, allSources) {
@@ -851,6 +1064,7 @@ function getExcludedSourcePrefixes(docsSource, allSources) {
 function validateDocsSources(docsSources) {
   const seenPackages = new Map();
   const seenSources = new Map();
+  const seenRoutes = new Map();
 
   for (const docsSource of docsSources) {
     if (!docsSource.package) {
@@ -869,9 +1083,19 @@ function validateDocsSources(docsSources) {
       );
     }
 
-    if (docsSource.mode && docsSource.mode !== 'snapshot') {
+    if (
+      docsSource.mode &&
+      docsSource.mode !== 'workspace' &&
+      docsSource.mode !== 'snapshot'
+    ) {
       throw new Error(
         `Unsupported docs source mode "${docsSource.mode}" for package "${docsSource.package}".`,
+      );
+    }
+
+    if (!docsSource.ref) {
+      throw new Error(
+        `Docs source "${docsSource.package}" must define a non-empty "ref" field.`,
       );
     }
 
@@ -885,6 +1109,17 @@ function validateDocsSources(docsSources) {
     ) {
       throw new Error(
         `Docs source "${docsSource.package}" must define "include" as a non-empty array of glob patterns.`,
+      );
+    }
+
+    if (
+      docsSource.mounts !== undefined &&
+      (!Array.isArray(docsSource.mounts) ||
+        docsSource.mounts.length === 0 ||
+        docsSource.mounts.some((mount) => !mount.source))
+    ) {
+      throw new Error(
+        `Docs source "${docsSource.package}" must define "mounts" as a non-empty array with source paths.`,
       );
     }
 
@@ -903,14 +1138,92 @@ function validateDocsSources(docsSources) {
       );
     }
 
+    const routeKey = getProjectRoutePrefix(docsSource);
+    const existingRoute = seenRoutes.get(routeKey);
+    if (existingRoute) {
+      throw new Error(
+        `Duplicate docs route "${routeKey}" shared by "${existingRoute.package}" and "${docsSource.package}".`,
+      );
+    }
+
     seenPackages.set(docsSource.package, docsSource);
     seenSources.set(sourceKey, docsSource);
+    seenRoutes.set(routeKey, docsSource);
   }
+}
+
+async function readDocsSourceLocks() {
+  if (!(await exists(lockPath))) return {};
+  return JSON.parse(await readFile(lockPath, 'utf8'));
+}
+
+function resolveRemoteRef(project) {
+  const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
+  const output = runCapture('git', [
+    'ls-remote',
+    repoUrl,
+    `refs/heads/${project.ref}`,
+    `refs/tags/${project.ref}^{}`,
+    `refs/tags/${project.ref}`,
+  ]);
+  const refs = new Map(
+    output
+      .split('\n')
+      .filter(Boolean)
+      .map((line) => line.split(/\s+/u).reverse()),
+  );
+  const commit =
+    refs.get(`refs/tags/${project.ref}^{}`) ??
+    refs.get(`refs/heads/${project.ref}`) ??
+    refs.get(`refs/tags/${project.ref}`);
+
+  if (!commit) {
+    throw new Error(
+      `Unable to resolve ref "${project.ref}" for workspace docs source "${project.package}".`,
+    );
+  }
+
+  return commit;
+}
+
+async function resolveWorkspaceLocks(docsSources) {
+  const locks = await readDocsSourceLocks();
+
+  if (updateLock) {
+    for (const project of docsSources) {
+      if (project.mode !== 'workspace') continue;
+      locks[project.package] = {
+        commit: resolveRemoteRef(project),
+        ref: project.ref,
+        source: project.source,
+      };
+    }
+
+    await writeFileIfChanged(lockPath, `${JSON.stringify(locks, null, 2)}\n`);
+  }
+
+  for (const project of docsSources) {
+    if (project.mode !== 'workspace') continue;
+    const lock = locks[project.package];
+
+    if (
+      !lock ||
+      lock.source !== project.source ||
+      lock.ref !== project.ref ||
+      !/^[0-9a-f]{40}$/u.test(lock.commit)
+    ) {
+      throw new Error(
+        `Docs source "${project.package}" has no matching workspace lock. Run pnpm docs:lock.`,
+      );
+    }
+  }
+
+  return locks;
 }
 
 async function assertProjectNamespaceAvailable(project) {
   const contentDir = path.join(rootDir, 'content', 'docs');
-  const routePrefix = getProjectRoutePrefix(project.package);
+  const routePrefix = getProjectRoutePrefix(project);
   const reservedPaths = [
     path.join(contentDir, routePrefix),
     path.join(contentDir, `${routePrefix}.md`),
@@ -938,13 +1251,61 @@ async function assertProjectNamespaceAvailable(project) {
 
 async function syncProject(project) {
   const localProjectDir = getLocalProjectDir(project.repo);
+  const useLocalWorkspace =
+    project.mode === 'workspace' &&
+    process.env.DOCS_USE_LOCAL_WORKSPACES === '1' &&
+    (await exists(localProjectDir));
   let sourceRootDir;
   let sourceKind;
   let useExistingSnapshot = false;
 
-  if (await exists(localProjectDir)) {
+  if (project.mode === 'workspace' && !useLocalWorkspace) {
+    const checkoutDir = getWorkspaceProjectDir(project.repo, project.sourceRef);
+    const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
+
+    if (!preparedWorkspaceDirs.has(checkoutDir)) {
+      if (!(await isReusableLockedWorkspace(checkoutDir, project.sourceRef))) {
+        await mkdir(path.dirname(checkoutDir), { recursive: true });
+
+        if (!(await exists(path.join(checkoutDir, '.git')))) {
+          run('git', [
+            'clone',
+            '--filter=blob:none',
+            '--no-checkout',
+            repoUrl,
+            checkoutDir,
+          ]);
+        } else {
+          run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
+        }
+
+        tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
+        run(
+          'git',
+          ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef],
+          checkoutDir,
+        );
+        const fetchedCommit = runCapture(
+          'git',
+          ['rev-parse', 'FETCH_HEAD'],
+          checkoutDir,
+        );
+        if (fetchedCommit !== project.sourceRef) {
+          throw new Error(
+            `Workspace lock mismatch for "${project.package}": expected ${project.sourceRef}, fetched ${fetchedCommit}.`,
+          );
+        }
+        run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
+      }
+
+      preparedWorkspaceDirs.add(checkoutDir);
+    }
+
+    sourceRootDir = checkoutDir;
+    sourceKind = 'workspace';
+  } else if (await exists(localProjectDir)) {
     sourceRootDir = localProjectDir;
-    sourceKind = 'local';
+    sourceKind = useLocalWorkspace ? 'workspace-local' : 'local';
   } else if (project.mode === 'snapshot') {
     useExistingSnapshot = true;
     sourceKind = 'snapshot';
@@ -961,11 +1322,37 @@ async function syncProject(project) {
     }
 
     tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
-    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', getProjectBranch()], checkoutDir);
+    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
     run('git', ['checkout', '--force', 'FETCH_HEAD'], checkoutDir);
 
     sourceRootDir = checkoutDir;
     sourceKind = 'remote-cache';
+  }
+
+  const sourceBaseDir = sourceRootDir
+    ? project.sourceSubpath
+      ? path.join(sourceRootDir, project.sourceSubpath)
+      : sourceRootDir
+    : undefined;
+
+  if (project.mode === 'workspace') {
+    if (!sourceBaseDir || !(await exists(sourceBaseDir))) {
+      throw new Error(
+        `Docs source "${project.package}" points to "${project.source}", but that path does not exist in ${sourceRootDir}.`,
+      );
+    }
+
+    return {
+      docsDir: sourceBaseDir,
+      files: [],
+      navPages: await collectWorkspaceNavPages(
+        project,
+        sourceRootDir,
+        sourceBaseDir,
+      ),
+      project: project.package,
+      source: sourceKind,
+    };
   }
 
   const generatedRootDir = getOutputProjectDir(project);
@@ -987,11 +1374,7 @@ async function syncProject(project) {
     };
   }
 
-  const sourceBaseDir = project.sourceSubpath
-    ? path.join(sourceRootDir, project.sourceSubpath)
-    : sourceRootDir;
-
-  if (!(await exists(sourceBaseDir))) {
+  if (!sourceBaseDir || !(await exists(sourceBaseDir))) {
     throw new Error(
       `Docs source "${project.package}" points to "${project.source}", but that path does not exist in ${sourceRootDir}.`,
     );
@@ -1093,6 +1476,7 @@ async function writeGeneratedNav(results, enabledProjects) {
     name: project.name,
     package: project.package,
     pages: navByPackage.get(project.package) ?? [],
+    route: getProjectRoutePrefix(project),
   }));
 
   const content = `/**
@@ -1110,6 +1494,7 @@ async function main() {
   const enabledOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
   const docsSources = manifest.map(normalizeDocsSourceConfig);
   validateDocsSources(docsSources);
+  const workspaceLocks = await resolveWorkspaceLocks(docsSources);
 
   const enabledProjects = docsSources
     .filter((project) =>
@@ -1122,6 +1507,7 @@ async function main() {
     .map((project) => ({
       ...project,
       excludedSourcePrefixes: getExcludedSourcePrefixes(project, docsSources),
+      sourceRef: workspaceLocks[project.package]?.commit ?? project.ref,
     }));
 
   const results = [];

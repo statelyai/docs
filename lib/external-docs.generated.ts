@@ -4,15 +4,17 @@
  */
 import { docs as docsSource0 } from 'collections/agent/server';
 import { docs as docsSource1 } from 'collections/graph/server';
-import { docs as docsSource2 } from 'collections/sdk/server';
-import { docs as docsSource3 } from 'collections/cli/server';
-import { docs as docsSource4 } from 'collections/mcp/server';
+import { docs as docsSource2 } from 'collections/xstate-v6/server';
+import { docs as docsSource3 } from 'collections/sdk/server';
+import { docs as docsSource4 } from 'collections/cli/server';
+import { docs as docsSource5 } from 'collections/mcp/server';
 
 
 export const externalDocsCollections = {
   "agent": docsSource0,
   "graph": docsSource1,
-  "sdk": docsSource2,
-  "cli": docsSource3,
-  "mcp": docsSource4,
+  "xstate-v6": docsSource2,
+  "sdk": docsSource3,
+  "cli": docsSource4,
+  "mcp": docsSource5,
 } as const;

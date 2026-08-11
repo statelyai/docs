@@ -4,16 +4,29 @@ import { getProjectRoutePrefix } from '@/lib/docs-sources';
 import { externalDocsNav } from '@/lib/external-docs-nav.generated';
 import { baseOptions } from '@/lib/layout.shared';
 
-const externalProjectPages = externalDocsNav.map((sourceConfig) => {
+function toExternalProjectPage(sourceConfig: (typeof externalDocsNav)[number]) {
   const routePrefix = `/docs/${getProjectRoutePrefix(sourceConfig.package)}`;
-  const indexPage = sourceConfig.pages.find((page) => page.url === routePrefix);
+  const indexPage = sourceConfig.pages.find(
+    (page) => 'url' in page && page.url === routePrefix,
+  );
   const childPages = sourceConfig.pages
-    .filter((page) => page.url !== routePrefix)
-    .map((page) => ({
-      type: 'page' as const,
-      name: page.title,
-      url: page.url,
-    }));
+    .filter((page) => !('url' in page) || page.url !== routePrefix)
+    .map((page) =>
+      'separator' in page
+        ? {
+            type: 'separator' as const,
+            name: (
+              <span className="text-xs font-medium text-fd-muted-foreground">
+                {page.title}
+              </span>
+            ),
+          }
+        : {
+            type: 'page' as const,
+            name: page.title,
+            url: page.url,
+          },
+    );
 
   if (childPages.length === 0) {
     return {
@@ -23,21 +36,35 @@ const externalProjectPages = externalDocsNav.map((sourceConfig) => {
     };
   }
 
-  return {
+  const folder = {
     name: sourceConfig.name,
     type: 'folder' as const,
-    index: {
-      type: 'page' as const,
-      name: indexPage?.title ?? 'Overview',
-      url: routePrefix,
-    },
     children: childPages,
   };
-});
+
+  return indexPage
+    ? {
+        ...folder,
+        index: {
+          type: 'page' as const,
+          name: indexPage.title,
+          url: routePrefix,
+        },
+      }
+    : folder;
+}
+
+const versionedProjectPages = externalDocsNav
+  .filter((sourceConfig) => !sourceConfig.route.startsWith('packages/'))
+  .map(toExternalProjectPage);
+const externalPackagePages = externalDocsNav
+  .filter((sourceConfig) => sourceConfig.route.startsWith('packages/'))
+  .map(toExternalProjectPage);
 
 const tree = {
   name: 'docs',
   children: [
+    ...versionedProjectPages,
     {
       name: 'Get Started',
       type: 'folder' as const,
@@ -423,7 +450,7 @@ const tree = {
           name: 'XState Test',
           url: '/docs/xstate-test',
         },
-        ...externalProjectPages,
+        ...externalPackagePages,
       ],
     },
     {

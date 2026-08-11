@@ -8,6 +8,10 @@ export const externalDocsNav = [
     "package": "agent",
     "pages": [
       {
+        "separator": true,
+        "title": "Get started"
+      },
+      {
         "title": "Agents",
         "url": "/docs/packages/agent"
       },
@@ -16,12 +20,20 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/quickstart"
       },
       {
-        "title": "Use in any stack",
-        "url": "/docs/packages/agent/any-stack"
+        "title": "Thinking in state machines",
+        "url": "/docs/packages/agent/thinking-in-state-machines"
+      },
+      {
+        "title": "Migrating from a hand-rolled loop",
+        "url": "/docs/packages/agent/from-a-loop"
       },
       {
         "title": "Scope and ecosystem boundaries",
         "url": "/docs/packages/agent/scope"
+      },
+      {
+        "separator": true,
+        "title": "Core concepts"
       },
       {
         "title": "Agent machines",
@@ -32,82 +44,123 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/decisions"
       },
       {
-        "title": "Plans",
-        "url": "/docs/packages/agent/plans"
-      },
-      {
         "title": "Text requests",
         "url": "/docs/packages/agent/text-requests"
+      },
+      {
+        "title": "Tools",
+        "url": "/docs/packages/agent/tools"
       },
       {
         "title": "Messages",
         "url": "/docs/packages/agent/messages"
       },
       {
-        "title": "Human in the loop",
-        "url": "/docs/packages/agent/human-in-the-loop"
+        "title": "Preset machines",
+        "url": "/docs/packages/agent/machines-presets"
+      },
+      {
+        "separator": true,
+        "title": "Running agents"
+      },
+      {
+        "title": "Choosing a run mode",
+        "url": "/docs/packages/agent/choosing-a-run-mode"
       },
       {
         "title": "Hosts and executors",
         "url": "/docs/packages/agent/hosts"
       },
       {
-        "title": "Express host",
-        "url": "/docs/packages/agent/express-host"
-      },
-      {
-        "title": "Cloudflare Durable Object host",
-        "url": "/docs/packages/agent/cloudflare-host"
-      },
-      {
-        "title": "Observability",
-        "url": "/docs/packages/agent/observability"
-      },
-      {
-        "title": "Using with other stacks",
-        "url": "/docs/packages/agent/interop"
+        "title": "Use in any stack",
+        "url": "/docs/packages/agent/any-stack"
       },
       {
         "title": "The step path",
         "url": "/docs/packages/agent/steps"
       },
       {
+        "separator": true,
+        "title": "State & durability"
+      },
+      {
+        "title": "Where state lives",
+        "url": "/docs/packages/agent/persistence"
+      },
+      {
         "title": "The event log",
-        "url": "/docs/packages/agent/checkpoints"
+        "url": "/docs/packages/agent/event-log"
       },
       {
-        "title": "Machines as data",
-        "url": "/docs/packages/agent/machines-as-data"
+        "title": "Human in the loop",
+        "url": "/docs/packages/agent/human-in-the-loop"
       },
       {
-        "title": "Testing and verification",
-        "url": "/docs/packages/agent/verify"
+        "separator": true,
+        "title": "Production"
+      },
+      {
+        "title": "Models and providers",
+        "url": "/docs/packages/agent/models-and-providers"
+      },
+      {
+        "title": "Observability",
+        "url": "/docs/packages/agent/observability"
+      },
+      {
+        "title": "Usage and budgets",
+        "url": "/docs/packages/agent/usage-and-budgets"
+      },
+      {
+        "title": "Debugging",
+        "url": "/docs/packages/agent/debugging"
       },
       {
         "title": "Multi-agent composition",
         "url": "/docs/packages/agent/multi-agent"
       },
       {
-        "title": "Migrating from a hand-rolled loop",
-        "url": "/docs/packages/agent/from-a-loop"
+        "separator": true,
+        "title": "Machines as data"
       },
       {
-        "title": "You already have an agent workflow",
-        "url": "/docs/packages/agent/xstate-as-agent-workflow"
+        "title": "Machines as data",
+        "url": "/docs/packages/agent/machines-as-data"
+      },
+      {
+        "title": "Generating machines with an LLM",
+        "url": "/docs/packages/agent/generate-machines"
+      },
+      {
+        "separator": true,
+        "title": "Testing"
+      },
+      {
+        "title": "Testing and verification",
+        "url": "/docs/packages/agent/verify"
+      },
+      {
+        "title": "Evals",
+        "url": "/docs/packages/agent/evals"
+      },
+      {
+        "separator": true,
+        "title": "Resources"
       },
       {
         "title": "Agent patterns",
         "url": "/docs/packages/agent/patterns"
       },
       {
-        "title": "Examples",
-        "url": "/docs/packages/agent/examples"
+        "title": "Coming from LangGraph",
+        "url": "/docs/packages/agent/langgraph-comparison"
       },
       {
         "title": "Post-alpha roadmap",
         "url": "/docs/packages/agent/roadmap"
       }
-    ]
+    ],
+    "route": "packages/agent"
   },
   {
     "name": "Graph",
@@ -122,12 +175,12 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/algorithms"
       },
       {
-        "title": "Layout",
-        "url": "/docs/packages/graph/layout"
+        "title": "Benchmarks",
+        "url": "/docs/packages/graph/benchmarks"
       },
       {
-        "title": "React Flow + ELK: automatic layout cookbook",
-        "url": "/docs/packages/graph/react-flow-elk-pipeline"
+        "title": "Layout",
+        "url": "/docs/packages/graph/layout"
       },
       {
         "title": "Layout transitions",
@@ -138,14 +191,350 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/migrating-from-graphlib"
       },
       {
-        "title": "Benchmarks",
-        "url": "/docs/packages/graph/benchmarks"
+        "title": "React Flow + ELK: automatic layout cookbook",
+        "url": "/docs/packages/graph/react-flow-elk-pipeline"
       },
       {
         "title": "Scaling & Plugin Architecture",
         "url": "/docs/packages/graph/scaling-and-plugins"
       }
-    ]
+    ],
+    "route": "packages/graph"
+  },
+  {
+    "name": "XState v6 alpha",
+    "package": "xstate-v6",
+    "pages": [
+      {
+        "separator": true,
+        "title": "Start"
+      },
+      {
+        "title": "Quick start",
+        "url": "/docs/xstate/v6/start/quick-start"
+      },
+      {
+        "title": "Choose XState",
+        "url": "/docs/xstate/v6/start/choose-xstate"
+      },
+      {
+        "separator": true,
+        "title": "Learn"
+      },
+      {
+        "title": "Why state machines?",
+        "url": "/docs/xstate/v6/learn/why-state-machines"
+      },
+      {
+        "title": "Your first machine",
+        "url": "/docs/xstate/v6/learn/your-first-machine"
+      },
+      {
+        "title": "States, events and transitions",
+        "url": "/docs/xstate/v6/learn/states-events-transitions"
+      },
+      {
+        "title": "Data and effects",
+        "url": "/docs/xstate/v6/learn/data-and-effects"
+      },
+      {
+        "title": "Async logic",
+        "url": "/docs/xstate/v6/learn/async-logic"
+      },
+      {
+        "title": "Actors",
+        "url": "/docs/xstate/v6/learn/actors"
+      },
+      {
+        "title": "Statecharts",
+        "url": "/docs/xstate/v6/learn/statecharts"
+      },
+      {
+        "title": "Model application behavior",
+        "url": "/docs/xstate/v6/learn/modeling"
+      },
+      {
+        "separator": true,
+        "title": "Build"
+      },
+      {
+        "title": "Handle async requests",
+        "url": "/docs/xstate/v6/build/async-requests"
+      },
+      {
+        "title": "Add retries and timeouts",
+        "url": "/docs/xstate/v6/build/retries-and-timeouts"
+      },
+      {
+        "title": "Cancel async work",
+        "url": "/docs/xstate/v6/build/cancellation"
+      },
+      {
+        "title": "Build forms and wizards",
+        "url": "/docs/xstate/v6/build/forms-and-wizards"
+      },
+      {
+        "title": "Run backend workflows",
+        "url": "/docs/xstate/v6/build/backend-workflows"
+      },
+      {
+        "title": "Persist and restore actors",
+        "url": "/docs/xstate/v6/build/persistence"
+      },
+      {
+        "title": "Test XState logic",
+        "url": "/docs/xstate/v6/build/testing"
+      },
+      {
+        "title": "Inspect actor systems",
+        "url": "/docs/xstate/v6/build/inspection"
+      },
+      {
+        "title": "Troubleshooting",
+        "url": "/docs/xstate/v6/build/troubleshooting"
+      },
+      {
+        "separator": true,
+        "title": "Reference"
+      },
+      {
+        "separator": true,
+        "title": "Machines"
+      },
+      {
+        "title": "Machine configuration",
+        "url": "/docs/xstate/v6/reference/machine/configuration"
+      },
+      {
+        "title": "States",
+        "url": "/docs/xstate/v6/reference/machine/states"
+      },
+      {
+        "title": "Transitions",
+        "url": "/docs/xstate/v6/reference/machine/transitions"
+      },
+      {
+        "title": "Context",
+        "url": "/docs/xstate/v6/reference/machine/context"
+      },
+      {
+        "title": "Input and output",
+        "url": "/docs/xstate/v6/reference/machine/input-output"
+      },
+      {
+        "title": "Actions",
+        "url": "/docs/xstate/v6/reference/machine/actions"
+      },
+      {
+        "title": "Guards",
+        "url": "/docs/xstate/v6/reference/machine/guards"
+      },
+      {
+        "title": "Delays",
+        "url": "/docs/xstate/v6/reference/machine/delays"
+      },
+      {
+        "title": "Final, history and parallel states",
+        "url": "/docs/xstate/v6/reference/machine/final-history-parallel"
+      },
+      {
+        "separator": true,
+        "title": "Actors"
+      },
+      {
+        "title": "Create actors",
+        "url": "/docs/xstate/v6/reference/actors/create-actor"
+      },
+      {
+        "title": "Actor snapshots",
+        "url": "/docs/xstate/v6/reference/actors/snapshots"
+      },
+      {
+        "title": "Invoke actors",
+        "url": "/docs/xstate/v6/reference/actors/invoke"
+      },
+      {
+        "title": "Spawn actors",
+        "url": "/docs/xstate/v6/reference/actors/spawn"
+      },
+      {
+        "title": "Actor logic",
+        "url": "/docs/xstate/v6/reference/actors/actor-logic"
+      },
+      {
+        "title": "Actor systems",
+        "url": "/docs/xstate/v6/reference/actors/systems"
+      },
+      {
+        "title": "Lifecycle and errors",
+        "url": "/docs/xstate/v6/reference/actors/lifecycle-and-errors"
+      },
+      {
+        "title": "TypeScript",
+        "url": "/docs/xstate/v6/reference/typescript"
+      },
+      {
+        "title": "Persistence",
+        "url": "/docs/xstate/v6/reference/persistence"
+      },
+      {
+        "title": "Inspection",
+        "url": "/docs/xstate/v6/reference/inspection"
+      },
+      {
+        "title": "Utilities",
+        "url": "/docs/xstate/v6/reference/utilities"
+      },
+      {
+        "title": "Glossary",
+        "url": "/docs/xstate/v6/reference/glossary"
+      },
+      {
+        "separator": true,
+        "title": "Migrate"
+      },
+      {
+        "title": "Migrate from XState v5 to v6",
+        "url": "/docs/xstate/v6/migrate/xstate-v5-to-v6"
+      },
+      {
+        "separator": true,
+        "title": "React"
+      },
+      {
+        "title": "Use a machine in React",
+        "url": "/docs/xstate/v6/react/use-machine"
+      },
+      {
+        "title": "Select actor data",
+        "url": "/docs/xstate/v6/react/selectors"
+      },
+      {
+        "title": "Share actors",
+        "url": "/docs/xstate/v6/react/shared-actors"
+      },
+      {
+        "title": "Input and restored snapshots",
+        "url": "/docs/xstate/v6/react/input-and-snapshots"
+      },
+      {
+        "title": "Server rendering",
+        "url": "/docs/xstate/v6/react/server-rendering"
+      },
+      {
+        "separator": true,
+        "title": "Vue"
+      },
+      {
+        "title": "Use a machine in Vue",
+        "url": "/docs/xstate/v6/vue/use-machine"
+      },
+      {
+        "title": "Select actor data",
+        "url": "/docs/xstate/v6/vue/selectors"
+      },
+      {
+        "title": "Share actors",
+        "url": "/docs/xstate/v6/vue/shared-actors"
+      },
+      {
+        "title": "Input and restored snapshots",
+        "url": "/docs/xstate/v6/vue/input-and-snapshots"
+      },
+      {
+        "title": "Server rendering",
+        "url": "/docs/xstate/v6/vue/server-rendering"
+      },
+      {
+        "separator": true,
+        "title": "Svelte"
+      },
+      {
+        "title": "Use a machine in Svelte",
+        "url": "/docs/xstate/v6/svelte/use-machine"
+      },
+      {
+        "title": "Select actor data",
+        "url": "/docs/xstate/v6/svelte/selectors"
+      },
+      {
+        "title": "Share actors",
+        "url": "/docs/xstate/v6/svelte/shared-actors"
+      },
+      {
+        "title": "Input and restored snapshots",
+        "url": "/docs/xstate/v6/svelte/input-and-snapshots"
+      },
+      {
+        "title": "Server rendering",
+        "url": "/docs/xstate/v6/svelte/server-rendering"
+      },
+      {
+        "separator": true,
+        "title": "Solid"
+      },
+      {
+        "title": "Use a machine in Solid",
+        "url": "/docs/xstate/v6/solid/use-machine"
+      },
+      {
+        "title": "Select actor data",
+        "url": "/docs/xstate/v6/solid/selectors"
+      },
+      {
+        "title": "Share actors",
+        "url": "/docs/xstate/v6/solid/shared-actors"
+      },
+      {
+        "title": "Input and restored snapshots",
+        "url": "/docs/xstate/v6/solid/input-and-snapshots"
+      },
+      {
+        "title": "Server rendering",
+        "url": "/docs/xstate/v6/solid/server-rendering"
+      },
+      {
+        "separator": true,
+        "title": "Store"
+      },
+      {
+        "title": "Quick start",
+        "url": "/docs/xstate/v6/store/quick-start"
+      },
+      {
+        "title": "Events and context",
+        "url": "/docs/xstate/v6/store/events-and-context"
+      },
+      {
+        "title": "Effects and emitted events",
+        "url": "/docs/xstate/v6/store/effects-and-emitted-events"
+      },
+      {
+        "title": "Selectors",
+        "url": "/docs/xstate/v6/store/selectors"
+      },
+      {
+        "title": "Framework bindings",
+        "url": "/docs/xstate/v6/store/frameworks"
+      },
+      {
+        "title": "Persistence",
+        "url": "/docs/xstate/v6/store/persistence"
+      },
+      {
+        "title": "Undo and redo",
+        "url": "/docs/xstate/v6/store/undo-redo"
+      },
+      {
+        "title": "TypeScript",
+        "url": "/docs/xstate/v6/store/typescript"
+      },
+      {
+        "title": "Migration",
+        "url": "/docs/xstate/v6/store/migration"
+      }
+    ],
+    "route": "xstate/v6"
   },
   {
     "name": "SDK",
@@ -155,7 +544,8 @@ export const externalDocsNav = [
         "title": "@statelyai/sdk",
         "url": "/docs/packages/sdk"
       }
-    ]
+    ],
+    "route": "packages/sdk"
   },
   {
     "name": "CLI",
@@ -165,7 +555,8 @@ export const externalDocsNav = [
         "title": "statelyai",
         "url": "/docs/packages/cli"
       }
-    ]
+    ],
+    "route": "packages/cli"
   },
   {
     "name": "MCP",
@@ -175,6 +566,7 @@ export const externalDocsNav = [
         "title": "Stately MCP",
         "url": "/docs/packages/mcp"
       }
-    ]
+    ],
+    "route": "packages/mcp"
   }
 ] as const;
