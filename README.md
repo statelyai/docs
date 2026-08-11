@@ -172,7 +172,8 @@ The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 For a `"workspace"` source, `pnpm docs:lock` resolves `ref` to an immutable
 commit in `docs-sources.lock.json`. Normal syncs check out that commit into
 `.cache/docs-sources/<repo>/<commit>`. Fumadocs compiles the allowlisted files
-directly as a workspace; the sync does not copy or rewrite Markdown.
+directly as a workspace; the sync does not copy or rewrite Markdown. A clean
+checkout already at the locked commit is reused without contacting GitHub.
 
 Other sources use the compatibility pipeline: resolve `../<repo>` locally,
 scan the configured allowlist, flatten pages into a generated workspace, add
@@ -190,6 +191,8 @@ so a branch update cannot silently change a deployment.
 ### Flattening Rules
 
 - Root `README.md` becomes `index.md` and maps to `/docs/packages/<package>`.
+- Workspace `README.md(x)` files inside mounts map to the mount or nested
+  directory index.
 - Included nested `**/README.md(x)` are treated as index-like and flatten to
   their parent path:
   - `src/formats/adjacency-list/README.md` -> `src-formats-adjacency-list.md`

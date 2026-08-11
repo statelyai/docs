@@ -13,9 +13,10 @@ import {
 } from 'fumadocs-core/mdx-plugins';
 import rehypeRaw from 'rehype-raw';
 import z from 'zod';
+import { extractLeadingMarkdownTitle } from '@/lib/markdown-title.mjs';
 
 function extractLeadingTitle(source: string, filePath: string): string {
-  const heading = source.match(/^#\s+(.+)$/mu)?.[1]?.trim();
+  const heading = extractLeadingMarkdownTitle(source);
   if (heading) return heading;
 
   const fileName = filePath.split(/[\\/]/u).at(-1) ?? filePath;

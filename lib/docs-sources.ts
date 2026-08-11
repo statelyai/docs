@@ -1,5 +1,6 @@
 import docsSourcesJson from '../docs-sources.json';
 import docsSourcesLockJson from '../docs-sources.lock.json';
+import { resolveDocsSourceRoutePath } from '@/lib/docs-source-route.mjs';
 
 export type DocsSourceConfig = {
   name: string;
@@ -99,23 +100,12 @@ export function getDocsSourceRoutePath(
   sourceConfig: DocsSourceConfig,
   sourcePath: string,
 ): string {
-  const normalized = normalizeSourcePath(sourcePath);
-  const mount = sourceConfig.mounts
-    ?.filter(
-      (candidate) =>
-        normalized === normalizeSourcePath(candidate.source) ||
-        normalized.startsWith(`${normalizeSourcePath(candidate.source)}/`),
-    )
-    .sort((left, right) => right.source.length - left.source.length)[0];
+  const routePath = resolveDocsSourceRoutePath(sourceConfig, sourcePath);
+  if (routePath !== null) return routePath;
 
-  if (mount) {
-    const mountSource = normalizeSourcePath(mount.source);
-    const relative = normalized.slice(mountSource.length).replace(/^\/+/, '');
-    return [normalizeRoute(mount.route), relative].filter(Boolean).join('/');
-  }
-
-  if (/^readme\.(md|mdx)$/iu.test(normalized)) return 'index.md';
-  return normalized.replace(/^docs\//u, '');
+  throw new Error(
+    `Workspace path "${sourcePath}" is not covered by a mount for source "${sourceConfig.package}".`,
+  );
 }
 
 export function prefixRoute(packageName: string, route: string): string {

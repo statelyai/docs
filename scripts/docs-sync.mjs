@@ -9,6 +9,7 @@ import {
   writeFile,
 } from 'node:fs/promises';
 import path from 'node:path';
+import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
@@ -104,6 +105,22 @@ function tryRun(command, args, cwd = rootDir) {
       stdio: 'ignore',
     });
     return true;
+  } catch {
+    return false;
+  }
+}
+
+async function isReusableLockedWorkspace(checkoutDir, expectedCommit) {
+  if (!(await exists(path.join(checkoutDir, '.git')))) return false;
+
+  try {
+    const head = runCapture('git', ['rev-parse', 'HEAD'], checkoutDir);
+    const status = runCapture(
+      'git',
+      ['status', '--porcelain', '--untracked-files=normal'],
+      checkoutDir,
+    );
+    return head === expectedCommit && status === '';
   } catch {
     return false;
   }
@@ -860,45 +877,17 @@ async function collectSnapshotNavPages(project, generatedDocsDir) {
   });
 }
 
-function getWorkspaceMount(project, workspacePath) {
-  const normalized = normalizePath(workspacePath).replace(/^\/+|\/+$/gu, '');
-
-  return project.mounts
-    ?.filter(
-      (mount) =>
-        normalized === mount.source || normalized.startsWith(`${mount.source}/`),
-    )
-    .sort((left, right) => right.source.length - left.source.length)[0];
-}
-
 function getWorkspaceRoutePath(project, workspacePath) {
-  const normalized = normalizePath(workspacePath).replace(/^\/+|\/+$/gu, '');
-  const mount = getWorkspaceMount(project, normalized);
-  const mountedPath = mount
-    ? normalized.slice(mount.source.length).replace(/^\/+/, '')
-    : normalized;
-
-  if (project.mounts && !mount) {
+  const routePath = resolveDocsSourceRoutePath(project, workspacePath);
+  if (routePath === null) {
     throw new Error(
       `Workspace path "${workspacePath}" is not covered by a mount for source "${project.package}".`,
     );
   }
 
-  if (/^readme\.(md|mdx)$/iu.test(mountedPath)) {
-    return mount?.route || 'index';
-  }
-
-  const withoutDocsPrefix = mount ? mountedPath : mountedPath.replace(/^docs\//u, '');
-  const withoutExtension = withoutDocsPrefix.replace(/\.(md|mdx)$/iu, '');
-
-  let routePath = withoutExtension;
-  if (/(^|\/)(readme|index)$/iu.test(routePath)) {
-    routePath = path.posix.dirname(routePath).replace(/^\.\/?/u, '');
-  }
-
-  return [mount?.route, routePath]
-    .filter(Boolean)
-    .join('/') || 'index';
+  const withoutExtension = routePath.replace(/\.(md|mdx)$/iu, '');
+  const publicRoute = withoutExtension.replace(/(^|\/)index$/iu, '');
+  return publicRoute || 'index';
 }
 
 async function collectMountedWorkspaceNavPages(
@@ -1269,23 +1258,40 @@ async function syncProject(project) {
     const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
 
     if (!preparedWorkspaceDirs.has(checkoutDir)) {
-      await mkdir(path.dirname(checkoutDir), { recursive: true });
+      if (!(await isReusableLockedWorkspace(checkoutDir, project.sourceRef))) {
+        await mkdir(path.dirname(checkoutDir), { recursive: true });
 
-      if (!(await exists(path.join(checkoutDir, '.git')))) {
-        run('git', ['clone', '--filter=blob:none', '--no-checkout', repoUrl, checkoutDir]);
-      } else {
-        run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
-      }
+        if (!(await exists(path.join(checkoutDir, '.git')))) {
+          run('git', [
+            'clone',
+            '--filter=blob:none',
+            '--no-checkout',
+            repoUrl,
+            checkoutDir,
+          ]);
+        } else {
+          run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
+        }
 
-      tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
-      run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
-      const fetchedCommit = runCapture('git', ['rev-parse', 'FETCH_HEAD'], checkoutDir);
-      if (fetchedCommit !== project.sourceRef) {
-        throw new Error(
-          `Workspace lock mismatch for "${project.package}": expected ${project.sourceRef}, fetched ${fetchedCommit}.`,
+        tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
+        run(
+          'git',
+          ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef],
+          checkoutDir,
         );
+        const fetchedCommit = runCapture(
+          'git',
+          ['rev-parse', 'FETCH_HEAD'],
+          checkoutDir,
+        );
+        if (fetchedCommit !== project.sourceRef) {
+          throw new Error(
+            `Workspace lock mismatch for "${project.package}": expected ${project.sourceRef}, fetched ${fetchedCommit}.`,
+          );
+        }
+        run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
       }
-      run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
+
       preparedWorkspaceDirs.add(checkoutDir);
     }
 

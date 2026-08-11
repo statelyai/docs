@@ -6,6 +6,64 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
+test('workspace route mapping collapses mounted README pages', async () => {
+  const { resolveDocsSourceRoutePath } = await import(
+    '../lib/docs-source-route.mjs'
+  );
+  const source = {
+    mounts: [
+      {
+        source: 'packages/xstate-react/docs',
+        route: 'react',
+      },
+    ],
+  };
+
+  assert.equal(
+    resolveDocsSourceRoutePath(
+      source,
+      'packages/xstate-react/docs/README.md',
+    ),
+    'react/index.md',
+  );
+  assert.equal(
+    resolveDocsSourceRoutePath(
+      source,
+      'packages/xstate-react/docs/guides/README.mdx',
+    ),
+    'react/guides/index.mdx',
+  );
+  assert.equal(resolveDocsSourceRoutePath(source, 'docs/start.md'), null);
+  assert.equal(resolveDocsSourceRoutePath({}, 'README.md'), 'index.md');
+  assert.equal(
+    resolveDocsSourceRoutePath({}, 'docs/guides/README.md'),
+    'guides/index.md',
+  );
+});
+
+test('workspace title fallback only reads a leading heading', async () => {
+  const { extractLeadingMarkdownTitle } = await import(
+    '../lib/markdown-title.mjs'
+  );
+
+  assert.equal(
+    extractLeadingMarkdownTitle('---\ndescription: Test\n---\n# Actual title\n'),
+    'Actual title',
+  );
+  assert.equal(
+    extractLeadingMarkdownTitle('<!-- note -->\n\nSetext title\n===\n'),
+    'Setext title',
+  );
+  assert.equal(
+    extractLeadingMarkdownTitle('```bash\n# Install deps\n```\n'),
+    undefined,
+  );
+  assert.equal(
+    extractLeadingMarkdownTitle('Intro paragraph.\n\n# Later heading\n'),
+    undefined,
+  );
+});
+
 test('workspace links include bare relative targets', async () => {
   const { parseWorkspaceRelativeHref } = await import(
     '../lib/workspace-link.mjs'
@@ -141,6 +199,12 @@ test('an unchanged sync preserves locked workspaces', async () => {
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
     encoding: 'utf8',
+    env: {
+      ...process.env,
+      GIT_CONFIG_COUNT: '1',
+      GIT_CONFIG_KEY_0: 'url.file:///definitely-missing/.insteadOf',
+      GIT_CONFIG_VALUE_0: 'https://github.com/',
+    },
   });
   const after = await Promise.all(workspacePages.map((page) => stat(page)));
 
