@@ -6,31 +6,19 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
-test('workspace docs use a locked checkout and source-owned navigation', async () => {
+test('workspace docs use locked checkouts and available source-owned navigation', async () => {
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
     encoding: 'utf8',
   });
   assert.match(output, /agent \(workspace\)/u);
+  assert.match(output, /graph \(workspace\)/u);
 
-  await assert.rejects(
-    access(
-      path.join(rootDir, 'external-docs', 'agent', 'docs', 'index.md'),
-    ),
-  );
-
-  await assert.rejects(
-    access(
-      path.join(
-        rootDir,
-        'external-docs',
-        'graph',
-        'docs',
-        '_assets',
-        'examples',
-      ),
-    ),
-  );
+  for (const source of ['agent', 'graph']) {
+    await assert.rejects(
+      access(path.join(rootDir, 'external-docs', source, 'docs', 'index.md')),
+    );
+  }
 
   const locks = JSON.parse(
     await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
@@ -46,54 +34,60 @@ test('workspace docs use a locked checkout and source-owned navigation', async (
   );
   assert.match(await readFile(workspaceIndex, 'utf8'), /^title: Agents$/mu);
 
+  const graphIndex = path.join(
+    rootDir,
+    '.cache',
+    'docs-sources',
+    'graph',
+    locks.graph.commit,
+    'README.md',
+  );
+  assert.match(await readFile(graphIndex, 'utf8'), /^# @statelyai\/graph$/mu);
+
   const generatedNav = await readFile(
     path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
     'utf8',
   );
   assert.match(generatedNav, /"separator": true/u);
   assert.match(generatedNav, /"title": "Get started"/u);
-
-  const graphIndex = await readFile(
-    path.join(rootDir, 'external-docs', 'graph', 'docs', 'index.md'),
-    'utf8',
-  );
-  assert.match(
-    graphIndex,
-    /https:\/\/github\.com\/statelyai\/graph\/blob\/main\/examples\/flow-based-math\.ts/u,
-  );
 });
 
-test('an unchanged sync preserves the locked workspace', async () => {
+test('an unchanged sync preserves locked workspaces', async () => {
   const locks = JSON.parse(
     await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
   );
-  const workspacePage = path.join(
-    rootDir,
-    '.cache',
-    'docs-sources',
-    'agent',
-    locks.agent.commit,
-    'docs',
-    'index.md',
+  const workspacePages = ['agent', 'graph'].map((source) =>
+    path.join(
+      rootDir,
+      '.cache',
+      'docs-sources',
+      source,
+      locks[source].commit,
+      source === 'graph' ? 'README.md' : path.join('docs', 'index.md'),
+    ),
   );
-  const before = await stat(workspacePage);
+  const before = await Promise.all(workspacePages.map((page) => stat(page)));
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
     encoding: 'utf8',
   });
-  const after = await stat(workspacePage);
+  const after = await Promise.all(workspacePages.map((page) => stat(page)));
 
-  assert.equal(after.mtimeMs, before.mtimeMs);
+  assert.deepEqual(
+    after.map((entry) => entry.mtimeMs),
+    before.map((entry) => entry.mtimeMs),
+  );
   assert.doesNotMatch(output, / <= /u);
   assert.match(output, /up to date/u);
 });
 
-test('search indexing reads Agent from the workspace once', async () => {
+test('search indexing reads public workspaces once', async () => {
   const output = execFileSync(process.execPath, ['scripts/build-search-index.mjs'], {
     cwd: rootDir,
     encoding: 'utf8',
   });
   assert.doesNotMatch(output, /duplicate URL \/docs\/packages\/agent/u);
+  assert.doesNotMatch(output, /duplicate URL \/docs\/packages\/graph/u);
 
   const searchIndex = JSON.parse(
     await readFile(path.join(rootDir, 'lib', 'search-index.json'), 'utf8'),
@@ -103,4 +97,10 @@ test('search indexing reads Agent from the workspace once', async () => {
   );
   assert.equal(agentIndexes.length, 1);
   assert.equal(agentIndexes[0].title, 'Agents');
+
+  const graphIndexes = searchIndex.filter(
+    (page) => page.url === '/docs/packages/graph',
+  );
+  assert.equal(graphIndexes.length, 1);
+  assert.equal(graphIndexes[0].title, '@statelyai/graph');
 });

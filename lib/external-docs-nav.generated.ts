@@ -174,12 +174,12 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/algorithms"
       },
       {
-        "title": "Layout",
-        "url": "/docs/packages/graph/layout"
+        "title": "Benchmarks",
+        "url": "/docs/packages/graph/benchmarks"
       },
       {
-        "title": "React Flow + ELK: automatic layout cookbook",
-        "url": "/docs/packages/graph/react-flow-elk-pipeline"
+        "title": "Layout",
+        "url": "/docs/packages/graph/layout"
       },
       {
         "title": "Layout transitions",
@@ -190,8 +190,8 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/migrating-from-graphlib"
       },
       {
-        "title": "Benchmarks",
-        "url": "/docs/packages/graph/benchmarks"
+        "title": "React Flow + ELK: automatic layout cookbook",
+        "url": "/docs/packages/graph/react-flow-elk-pipeline"
       },
       {
         "title": "Scaling & Plugin Architecture",

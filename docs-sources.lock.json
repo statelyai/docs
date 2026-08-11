@@ -3,5 +3,10 @@
     "commit": "c5262ea026cfc63834d37c2eff63134c3a946442",
     "ref": "next",
     "source": "agent"
+  },
+  "graph": {
+    "commit": "7b5ac385d7d6fb7f5c2458dff9cc4440c523f268",
+    "ref": "main",
+    "source": "graph"
   }
 }

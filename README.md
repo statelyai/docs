@@ -66,7 +66,13 @@ The external docs manifest lives in `docs-sources.json`:
     "mode": "workspace",
     "ref": "next"
   },
-  { "name": "Graph", "package": "graph", "source": "graph" },
+  {
+    "name": "Graph",
+    "package": "graph",
+    "source": "graph",
+    "mode": "workspace",
+    "ref": "main"
+  },
   {
     "name": "SDK",
     "package": "sdk",
