@@ -1,14 +1,20 @@
 import docsSourcesJson from '../docs-sources.json';
+import docsSourcesLockJson from '../docs-sources.lock.json';
 
 export type DocsSourceConfig = {
   name: string;
   package: string;
   source: string;
   include?: string[];
-  mode?: 'snapshot';
+  mode?: 'remote' | 'snapshot';
+  ref?: string;
 };
 
 const docsSources = docsSourcesJson as DocsSourceConfig[];
+const docsSourceLocks = docsSourcesLockJson as Record<
+  string,
+  { commit: string; ref: string; source: string }
+>;
 
 function parseEnabledSourceOverride(value: string | undefined): Set<string> | 'all' {
   if (!value) return new Set();
@@ -48,8 +54,21 @@ export function getProjectRepo(repo: string): string {
   return `statelyai/${repo}`;
 }
 
-export function getProjectBranch(): string {
-  return 'main';
+export function getDocsSourceGitRef(sourceConfig: DocsSourceConfig): string {
+  if (sourceConfig.mode !== 'remote') return sourceConfig.ref ?? 'main';
+
+  const lock = docsSourceLocks[sourceConfig.package];
+  if (
+    !lock ||
+    lock.source !== sourceConfig.source ||
+    lock.ref !== (sourceConfig.ref ?? 'main')
+  ) {
+    throw new Error(
+      `Docs source "${sourceConfig.package}" has no matching remote lock. Run pnpm docs:lock.`,
+    );
+  }
+
+  return lock.commit;
 }
 
 export function getProjectDocsDir(): string {
@@ -106,7 +125,7 @@ export function getDocsPageGitHubUrl(sourceId: string, pagePath: string): string
     return `https://github.com/statelyai/docs/blob/main/content/docs/${normalizedPath}`;
   }
 
-  return `https://github.com/${getProjectRepo(getDocsSourceRepo(sourceConfig.source))}/blob/${getProjectBranch()}/${stripProjectPrefix(
+  return `https://github.com/${getProjectRepo(getDocsSourceRepo(sourceConfig.source))}/blob/${getDocsSourceGitRef(sourceConfig)}/${stripProjectPrefix(
     sourceId,
     normalizedPath,
   )}`;

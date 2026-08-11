@@ -4,7 +4,8 @@
     "package": "agent",
     "source": "agent",
     "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"],
-    "mode": "snapshot"
+    "mode": "remote",
+    "ref": "next"
   },
   {
     "name": "Graph",

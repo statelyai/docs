@@ -9,6 +9,7 @@
     "build": "node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next build",
     "dev": "portless docs node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next dev",
     "docs:generate": "node scripts/docs-sync.mjs && fumadocs-mdx",
+    "docs:lock": "node scripts/docs-sync.mjs --update-lock",
     "docs:sync": "node scripts/docs-sync.mjs",
     "docs:watch": "node scripts/docs-watch.mjs",
     "search-index": "node scripts/build-search-index.mjs",

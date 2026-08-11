@@ -7,7 +7,9 @@ export function isExternalDocsSlug(slugs: string[] = []): boolean {
 
 export function getExternalPackageStaticParams() {
   return externalDocsNav.flatMap((sourceConfig) =>
-    sourceConfig.pages.map((page) => {
+    sourceConfig.pages.flatMap((page) => {
+      if (!('url' in page)) return [];
+
       const [, docsRoot, packagesRoot, packageName, ...slug] =
         page.url.split('/');
 
@@ -19,10 +21,12 @@ export function getExternalPackageStaticParams() {
         throw new Error(`Invalid external docs URL in generated nav: ${page.url}`);
       }
 
-      return {
-        package: packageName,
-        slug,
-      };
+      return [
+        {
+          package: packageName,
+          slug,
+        },
+      ];
     }),
   );
 }

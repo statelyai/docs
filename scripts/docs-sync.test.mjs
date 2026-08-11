@@ -6,35 +6,40 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
-test('source-code links stay in the source repo instead of _assets', async () => {
+test('remote docs use locked source URLs and source-owned navigation', async () => {
   execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
     stdio: 'pipe',
   });
 
-  for (const packageName of ['agent', 'graph']) {
-    await assert.rejects(
-      access(
-        path.join(
-          rootDir,
-          'external-docs',
-          packageName,
-          'docs',
-          '_assets',
-          'examples',
-        ),
+  await assert.rejects(
+    access(
+      path.join(
+        rootDir,
+        'external-docs',
+        'graph',
+        'docs',
+        '_assets',
+        'examples',
       ),
-    );
-  }
+    ),
+  );
 
-  const agentExamples = await readFile(
-    path.join(rootDir, 'external-docs', 'agent', 'docs', 'examples.md'),
+  const agentIndex = await readFile(
+    path.join(rootDir, '.cache', 'docs-workspaces', 'agent', 'docs', 'index.md'),
     'utf8',
   );
   assert.match(
-    agentExamples,
-    /https:\/\/github\.com\/statelyai\/agent\/blob\/main\/examples\/twenty-questions\/index\.ts/u,
+    agentIndex,
+    /sourceUrl: "https:\/\/github\.com\/statelyai\/agent\/blob\/[0-9a-f]{40}\/docs\/index\.md"/u,
   );
+
+  const generatedNav = await readFile(
+    path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
+    'utf8',
+  );
+  assert.match(generatedNav, /"separator": true/u);
+  assert.match(generatedNav, /"title": "Get started"/u);
 
   const graphIndex = await readFile(
     path.join(rootDir, 'external-docs', 'graph', 'docs', 'index.md'),
@@ -49,7 +54,8 @@ test('source-code links stay in the source repo instead of _assets', async () =>
 test('an unchanged sync does not rewrite generated files', async () => {
   const generatedPage = path.join(
     rootDir,
-    'external-docs',
+    '.cache',
+    'docs-workspaces',
     'agent',
     'docs',
     'index.md',

@@ -22,7 +22,7 @@ export function getSnapshotProjectCheckoutDir(project: string): string {
 
 export function getProjectCheckoutDir(
   project: string,
-  mode?: 'snapshot',
+  mode?: 'remote' | 'snapshot',
 ): string {
   if (mode === 'snapshot') {
     return getSnapshotProjectCheckoutDir(project);

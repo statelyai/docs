@@ -6,14 +6,23 @@ import { baseOptions } from '@/lib/layout.shared';
 
 const externalProjectPages = externalDocsNav.map((sourceConfig) => {
   const routePrefix = `/docs/${getProjectRoutePrefix(sourceConfig.package)}`;
-  const indexPage = sourceConfig.pages.find((page) => page.url === routePrefix);
+  const indexPage = sourceConfig.pages.find(
+    (page) => 'url' in page && page.url === routePrefix,
+  );
   const childPages = sourceConfig.pages
-    .filter((page) => page.url !== routePrefix)
-    .map((page) => ({
-      type: 'page' as const,
-      name: page.title,
-      url: page.url,
-    }));
+    .filter((page) => !('url' in page) || page.url !== routePrefix)
+    .map((page) =>
+      'separator' in page
+        ? {
+            type: 'separator' as const,
+            name: page.title,
+          }
+        : {
+            type: 'page' as const,
+            name: page.title,
+            url: page.url,
+          },
+    );
 
   if (childPages.length === 0) {
     return {

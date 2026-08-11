@@ -12,6 +12,8 @@ import path from 'node:path';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
+const lockPath = path.join(rootDir, 'docs-sources.lock.json');
+const updateLock = process.argv.includes('--update-lock');
 const generatedModulePath = path.join(
   rootDir,
   'lib',
@@ -86,6 +88,14 @@ function run(command, args, cwd = rootDir) {
   });
 }
 
+function runCapture(command, args, cwd = rootDir) {
+  return execFileSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  }).trim();
+}
+
 function tryRun(command, args, cwd = rootDir) {
   try {
     execFileSync(command, args, {
@@ -136,6 +146,7 @@ function normalizeDocsSourceConfig(config) {
     include: config.include,
     mode: config.mode,
     package: String(config.package),
+    ref: String(config.ref ?? 'main'),
     repo: getSourceRepo(config.source),
     source: normalizeSourcePath(config.source),
     sourceSubpath: getSourceSubpath(config.source),
@@ -170,10 +181,6 @@ function getProjectRepo(repo) {
   return `statelyai/${repo}`;
 }
 
-function getProjectBranch() {
-  return 'main';
-}
-
 function getProjectDocsDir() {
   return 'docs';
 }
@@ -191,8 +198,8 @@ function getProjectDocsUrl(packageName, slug) {
   return slug === 'index' ? prefix : `${prefix}/${slug}`;
 }
 
-function getSourceUrl(repo, sourcePath, view = 'blob') {
-  return `https://github.com/${getProjectRepo(repo)}/${view}/${getProjectBranch()}/${sourcePath}`;
+function getSourceUrl(repo, sourcePath, ref, view = 'blob') {
+  return `https://github.com/${getProjectRepo(repo)}/${view}/${ref}/${sourcePath}`;
 }
 
 function getSnapshotSourceUrl(packageName, outputPath) {
@@ -579,7 +586,11 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
         rawFrontmatter: raw,
         slug,
         sourcePath: repoRelativeSourcePath,
-        sourceUrl: getSourceUrl(docsSource.repo, repoRelativeSourcePath),
+        sourceUrl: getSourceUrl(
+          docsSource.repo,
+          repoRelativeSourcePath,
+          docsSource.sourceRef,
+        ),
         title,
       };
     }),
@@ -610,6 +621,7 @@ async function rewriteEntryBody(
   generatedAssetPaths,
   packageName,
   repo,
+  sourceRef,
   sourceRootDir,
 ) {
   let rewritten = entry.body;
@@ -634,7 +646,7 @@ async function rewriteEntryBody(
 
     if (!replacementTarget) {
       if (isMarkdownPath(resolvedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath)}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef)}${suffix}`;
       }
     }
 
@@ -646,9 +658,9 @@ async function rewriteEntryBody(
         generatedAssetPaths.set(resolvedPath, assetTarget);
         replacementTarget = `./${normalizePath(assetTarget)}${suffix}`;
       } else if (await isFile(absoluteLinkedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath)}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef)}${suffix}`;
       } else if (await isDirectory(absoluteLinkedPath)) {
-        replacementTarget = `${getSourceUrl(repo, resolvedPath, 'tree')}${suffix}`;
+        replacementTarget = `${getSourceUrl(repo, resolvedPath, sourceRef, 'tree')}${suffix}`;
       }
     }
 
@@ -715,6 +727,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       generatedAssetPaths,
       project.package,
       project.repo,
+      project.sourceRef,
       sourceRootDir,
     );
 
@@ -774,6 +787,11 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
     ));
 
     orderedNavPages = meta.pages.map((slug) => {
+      const separator = slug.match(/^---(.+)---$/u);
+      if (separator) {
+        return { separator: true, title: separator[1] };
+      }
+
       const page = navBySlug.get(slug);
       if (!page) {
         throw new Error(
@@ -869,9 +887,19 @@ function validateDocsSources(docsSources) {
       );
     }
 
-    if (docsSource.mode && docsSource.mode !== 'snapshot') {
+    if (
+      docsSource.mode &&
+      docsSource.mode !== 'remote' &&
+      docsSource.mode !== 'snapshot'
+    ) {
       throw new Error(
         `Unsupported docs source mode "${docsSource.mode}" for package "${docsSource.package}".`,
+      );
+    }
+
+    if (!docsSource.ref) {
+      throw new Error(
+        `Docs source "${docsSource.package}" must define a non-empty "ref" field.`,
       );
     }
 
@@ -908,6 +936,75 @@ function validateDocsSources(docsSources) {
   }
 }
 
+async function readDocsSourceLocks() {
+  if (!(await exists(lockPath))) return {};
+  return JSON.parse(await readFile(lockPath, 'utf8'));
+}
+
+function resolveRemoteRef(project) {
+  const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
+  const output = runCapture('git', [
+    'ls-remote',
+    repoUrl,
+    `refs/heads/${project.ref}`,
+    `refs/tags/${project.ref}^{}`,
+    `refs/tags/${project.ref}`,
+  ]);
+  const refs = new Map(
+    output
+      .split('\n')
+      .filter(Boolean)
+      .map((line) => line.split(/\s+/u).reverse()),
+  );
+  const commit =
+    refs.get(`refs/tags/${project.ref}^{}`) ??
+    refs.get(`refs/heads/${project.ref}`) ??
+    refs.get(`refs/tags/${project.ref}`);
+
+  if (!commit) {
+    throw new Error(
+      `Unable to resolve ref "${project.ref}" for remote docs source "${project.package}".`,
+    );
+  }
+
+  return commit;
+}
+
+async function resolveRemoteLocks(docsSources) {
+  const locks = await readDocsSourceLocks();
+
+  if (updateLock) {
+    for (const project of docsSources) {
+      if (project.mode !== 'remote') continue;
+      locks[project.package] = {
+        commit: resolveRemoteRef(project),
+        ref: project.ref,
+        source: project.source,
+      };
+    }
+
+    await writeFileIfChanged(lockPath, `${JSON.stringify(locks, null, 2)}\n`);
+  }
+
+  for (const project of docsSources) {
+    if (project.mode !== 'remote') continue;
+    const lock = locks[project.package];
+
+    if (
+      !lock ||
+      lock.source !== project.source ||
+      lock.ref !== project.ref ||
+      !/^[0-9a-f]{40}$/u.test(lock.commit)
+    ) {
+      throw new Error(
+        `Docs source "${project.package}" has no matching remote lock. Run pnpm docs:lock.`,
+      );
+    }
+  }
+
+  return locks;
+}
+
 async function assertProjectNamespaceAvailable(project) {
   const contentDir = path.join(rootDir, 'content', 'docs');
   const routePrefix = getProjectRoutePrefix(project.package);
@@ -942,7 +1039,25 @@ async function syncProject(project) {
   let sourceKind;
   let useExistingSnapshot = false;
 
-  if (await exists(localProjectDir)) {
+  if (project.mode === 'remote') {
+    const checkoutDir = getRemoteProjectDir(project.repo);
+    const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
+
+    await mkdir(path.dirname(checkoutDir), { recursive: true });
+
+    if (!(await exists(path.join(checkoutDir, '.git')))) {
+      run('git', ['clone', '--filter=blob:none', '--no-checkout', repoUrl, checkoutDir]);
+    } else {
+      run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
+    }
+
+    tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
+    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
+    run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
+
+    sourceRootDir = checkoutDir;
+    sourceKind = 'remote-cache';
+  } else if (await exists(localProjectDir)) {
     sourceRootDir = localProjectDir;
     sourceKind = 'local';
   } else if (project.mode === 'snapshot') {
@@ -961,7 +1076,7 @@ async function syncProject(project) {
     }
 
     tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
-    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', getProjectBranch()], checkoutDir);
+    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
     run('git', ['checkout', '--force', 'FETCH_HEAD'], checkoutDir);
 
     sourceRootDir = checkoutDir;
@@ -1110,6 +1225,7 @@ async function main() {
   const enabledOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
   const docsSources = manifest.map(normalizeDocsSourceConfig);
   validateDocsSources(docsSources);
+  const remoteLocks = await resolveRemoteLocks(docsSources);
 
   const enabledProjects = docsSources
     .filter((project) =>
@@ -1122,6 +1238,7 @@ async function main() {
     .map((project) => ({
       ...project,
       excludedSourcePrefixes: getExcludedSourcePrefixes(project, docsSources),
+      sourceRef: remoteLocks[project.package]?.commit ?? project.ref,
     }));
 
   const results = [];

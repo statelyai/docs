@@ -38,6 +38,7 @@ yarn-error.log*
 .turbo
 .next
 .cache/docs-workspaces
+.cache/docs-repos
 dist
 .contentlayer
 .eslintcache

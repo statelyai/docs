@@ -8,6 +8,10 @@ export const externalDocsNav = [
     "package": "agent",
     "pages": [
       {
+        "separator": true,
+        "title": "Get started"
+      },
+      {
         "title": "Agents",
         "url": "/docs/packages/agent"
       },
@@ -16,12 +20,20 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/quickstart"
       },
       {
-        "title": "Use in any stack",
-        "url": "/docs/packages/agent/any-stack"
+        "title": "Thinking in state machines",
+        "url": "/docs/packages/agent/thinking-in-state-machines"
+      },
+      {
+        "title": "Migrating from a hand-rolled loop",
+        "url": "/docs/packages/agent/from-a-loop"
       },
       {
         "title": "Scope and ecosystem boundaries",
         "url": "/docs/packages/agent/scope"
+      },
+      {
+        "separator": true,
+        "title": "Core concepts"
       },
       {
         "title": "Agent machines",
@@ -32,76 +44,116 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/decisions"
       },
       {
-        "title": "Plans",
-        "url": "/docs/packages/agent/plans"
-      },
-      {
         "title": "Text requests",
         "url": "/docs/packages/agent/text-requests"
+      },
+      {
+        "title": "Tools",
+        "url": "/docs/packages/agent/tools"
       },
       {
         "title": "Messages",
         "url": "/docs/packages/agent/messages"
       },
       {
-        "title": "Human in the loop",
-        "url": "/docs/packages/agent/human-in-the-loop"
+        "title": "Preset machines",
+        "url": "/docs/packages/agent/machines-presets"
+      },
+      {
+        "separator": true,
+        "title": "Running agents"
+      },
+      {
+        "title": "Choosing a run mode",
+        "url": "/docs/packages/agent/choosing-a-run-mode"
       },
       {
         "title": "Hosts and executors",
         "url": "/docs/packages/agent/hosts"
       },
       {
-        "title": "Express host",
-        "url": "/docs/packages/agent/express-host"
-      },
-      {
-        "title": "Cloudflare Durable Object host",
-        "url": "/docs/packages/agent/cloudflare-host"
-      },
-      {
-        "title": "Observability",
-        "url": "/docs/packages/agent/observability"
-      },
-      {
-        "title": "Using with other stacks",
-        "url": "/docs/packages/agent/interop"
+        "title": "Use in any stack",
+        "url": "/docs/packages/agent/any-stack"
       },
       {
         "title": "The step path",
         "url": "/docs/packages/agent/steps"
       },
       {
+        "separator": true,
+        "title": "State & durability"
+      },
+      {
+        "title": "Where state lives",
+        "url": "/docs/packages/agent/persistence"
+      },
+      {
         "title": "The event log",
-        "url": "/docs/packages/agent/checkpoints"
+        "url": "/docs/packages/agent/event-log"
       },
       {
-        "title": "Machines as data",
-        "url": "/docs/packages/agent/machines-as-data"
+        "title": "Human in the loop",
+        "url": "/docs/packages/agent/human-in-the-loop"
       },
       {
-        "title": "Testing and verification",
-        "url": "/docs/packages/agent/verify"
+        "separator": true,
+        "title": "Production"
+      },
+      {
+        "title": "Models and providers",
+        "url": "/docs/packages/agent/models-and-providers"
+      },
+      {
+        "title": "Observability",
+        "url": "/docs/packages/agent/observability"
+      },
+      {
+        "title": "Usage and budgets",
+        "url": "/docs/packages/agent/usage-and-budgets"
+      },
+      {
+        "title": "Debugging",
+        "url": "/docs/packages/agent/debugging"
       },
       {
         "title": "Multi-agent composition",
         "url": "/docs/packages/agent/multi-agent"
       },
       {
-        "title": "Migrating from a hand-rolled loop",
-        "url": "/docs/packages/agent/from-a-loop"
+        "separator": true,
+        "title": "Machines as data"
       },
       {
-        "title": "You already have an agent workflow",
-        "url": "/docs/packages/agent/xstate-as-agent-workflow"
+        "title": "Machines as data",
+        "url": "/docs/packages/agent/machines-as-data"
+      },
+      {
+        "title": "Generating machines with an LLM",
+        "url": "/docs/packages/agent/generate-machines"
+      },
+      {
+        "separator": true,
+        "title": "Testing"
+      },
+      {
+        "title": "Testing and verification",
+        "url": "/docs/packages/agent/verify"
+      },
+      {
+        "title": "Evals",
+        "url": "/docs/packages/agent/evals"
+      },
+      {
+        "separator": true,
+        "title": "Resources"
       },
       {
         "title": "Agent patterns",
         "url": "/docs/packages/agent/patterns"
       },
       {
-        "title": "Examples",
-        "url": "/docs/packages/agent/examples"
+        "title": "Coming from LangGraph",
+        "url": "/docs/packages/agent/langgraph-comparison"
       },
       {
         "title": "Post-alpha roadmap",

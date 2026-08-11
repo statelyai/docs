@@ -62,7 +62,9 @@ The external docs manifest lives in `docs-sources.json`:
     "name": "Agent",
     "package": "agent",
     "source": "agent",
-    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"]
+    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"],
+    "mode": "remote",
+    "ref": "next"
   },
   { "name": "Graph", "package": "graph", "source": "graph" },
   {
@@ -91,9 +93,10 @@ Each entry means:
 - `name`: display name in the docs sidebar
 - `package`: public route segment under `/docs/packages/<package>`
 - `source`: repo root or repo subpath to scan for docs content
+- `ref`: Git branch or tag; defaults to `main`
 - `include`: optional Markdown glob allowlist relative to `source`
-- `mode`: optional; use `"snapshot"` to commit generated docs for private
-  sources instead of fetching the repo during deployment
+- `mode`: optional; `"remote"` always reads a locked GitHub revision;
+  `"snapshot"` commits generated docs for private sources
 
 ### How Sync Works
 
@@ -103,17 +106,17 @@ The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 
 For each manifest entry, it:
 
-1. Resolves the source repo locally from `../<repo>` when available.
-2. Falls back to a cached remote checkout in `.cache/docs-repos/<repo>` when
-   the local repo is missing.
-3. Scans the configured `source` root using its `include` allowlist. Without
+1. For `"remote"` sources, reads the immutable commit recorded in
+   `docs-sources.lock.json`. Other sources resolve locally from `../<repo>` and
+   fall back to a cached GitHub checkout when unavailable.
+2. Scans the configured `source` root using its `include` allowlist. Without
    one, it includes only the root `README.md` / `readme.md` and
    `docs/**/*.{md,mdx}`.
-4. Flattens those pages into `.cache/docs-workspaces/<package>/docs`.
-5. Generates Fumadocs frontmatter when it is missing.
-6. Uses the source repo's optional `docs/meta.json` to order and select
+3. Flattens those pages into `.cache/docs-workspaces/<package>/docs`.
+4. Generates Fumadocs frontmatter when it is missing.
+5. Uses the source repo's optional `docs/meta.json` to order and select
    navigation pages.
-7. Writes only changed outputs and removes stale generated files.
+6. Writes only changed outputs and removes stale generated files.
 
 The generated workspace is what `source.config.ts` points Fumadocs at. The app
 never copies external docs into `content/docs`.
@@ -121,6 +124,10 @@ never copies external docs into `content/docs`.
 Snapshot sources are different: they write to `external-docs/<package>` so the
 generated docs can be committed. In CI, if the private local source repo is not
 available, the sync step uses the committed snapshot instead of cloning GitHub.
+
+Use `pnpm docs:lock` intentionally to advance remote sources to the latest
+commit on their configured ref. Normal builds only consume the recorded commit,
+so a branch update cannot silently change a deployment.
 
 ### Flattening Rules
 
@@ -160,7 +167,8 @@ docs are not indexed twice.
 
 <!-- docs sync commands matching package.json#scripts -->
 
-- `pnpm docs:sync`: refresh external workspaces only
+- `pnpm docs:lock`: update immutable remote-source revisions, then sync
+- `pnpm docs:sync`: sync external workspaces at their recorded revisions
 - `pnpm docs:generate`: sync external workspaces and regenerate Fumadocs output
 - `pnpm docs:watch`: watch local source repos and regenerate on changes
 - `pnpm dev`: run the app after a sync pass
