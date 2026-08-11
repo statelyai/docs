@@ -39,6 +39,7 @@ yarn-error.log*
 .next
 .cache/docs-workspaces
 .cache/docs-repos
+.cache/docs-sources
 dist
 .contentlayer
 .eslintcache

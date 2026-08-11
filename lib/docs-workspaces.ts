@@ -12,6 +12,13 @@ export function getRemoteProjectCheckoutDir(project: string): string {
   return path.resolve(getRepoRoot(), '.cache', 'docs-repos', project);
 }
 
+export function getWorkspaceProjectCheckoutDir(
+  project: string,
+  commit: string,
+): string {
+  return path.resolve(getRepoRoot(), '.cache', 'docs-sources', project, commit);
+}
+
 export function getGeneratedProjectCheckoutDir(project: string): string {
   return path.resolve(getRepoRoot(), '.cache', 'docs-workspaces', project);
 }
@@ -22,7 +29,7 @@ export function getSnapshotProjectCheckoutDir(project: string): string {
 
 export function getProjectCheckoutDir(
   project: string,
-  mode?: 'remote' | 'snapshot',
+  mode?: 'snapshot' | 'workspace',
 ): string {
   if (mode === 'snapshot') {
     return getSnapshotProjectCheckoutDir(project);

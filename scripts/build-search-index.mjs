@@ -11,11 +11,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
 
 const docsSourcesPath = path.join(REPO, 'docs-sources.json');
-const enabledPackages = existsSync(docsSourcesPath)
-  ? new Set(
-      JSON.parse(await readFile(docsSourcesPath, 'utf8')).map((s) => s.package),
-    )
-  : new Set();
+const docsSourcesLockPath = path.join(REPO, 'docs-sources.lock.json');
+const docsSourceConfigs = existsSync(docsSourcesPath)
+  ? JSON.parse(await readFile(docsSourcesPath, 'utf8'))
+  : [];
+const docsSourceLocks = existsSync(docsSourcesLockPath)
+  ? JSON.parse(await readFile(docsSourcesLockPath, 'utf8'))
+  : {};
+const snapshotPackages = new Set(
+  docsSourceConfigs
+    .filter((source) => source.mode !== 'workspace')
+    .map((source) => source.package),
+);
 
 /**
  * Minimal frontmatter parser: handles scalar string fields only (single-line,
@@ -61,7 +68,7 @@ function toUrl(rel) {
   } else if (rel.startsWith('external-docs/')) {
     const parts = rel.split('/');
     const pkg = parts[1];
-    if (!enabledPackages.has(pkg) || parts[2] !== 'docs') return null;
+    if (!snapshotPackages.has(pkg) || parts[2] !== 'docs') return null;
     prefix = `/docs/packages/${pkg}`;
     slug = parts.slice(3).join('/');
   } else {
@@ -74,18 +81,85 @@ function toUrl(rel) {
 }
 
 const patterns = [
-  ['content/docs/**/*.{md,mdx}', 'docs'],
-  ['content/blog/**/*.{md,mdx}', 'blog'],
-  ['external-docs/*/docs/**/*.{md,mdx}', 'docs'],
+  {
+    cwd: REPO,
+    pattern: 'content/docs/**/*.{md,mdx}',
+    tag: 'docs',
+    toUrl,
+  },
+  {
+    cwd: REPO,
+    pattern: 'content/blog/**/*.{md,mdx}',
+    tag: 'blog',
+    toUrl,
+  },
+  {
+    cwd: REPO,
+    pattern: 'external-docs/*/docs/**/*.{md,mdx}',
+    tag: 'docs',
+    toUrl,
+  },
 ];
+
+for (const source of docsSourceConfigs) {
+  if (source.mode !== 'workspace') continue;
+
+  const [repo, ...subpath] = source.source.replace(/^\/+|\/+$/gu, '').split('/');
+  const lock = docsSourceLocks[source.package];
+  if (!lock?.commit) {
+    throw new Error(
+      `Docs source "${source.package}" has no workspace lock. Run pnpm docs:lock.`,
+    );
+  }
+  const cwd = path.join(
+    REPO,
+    '.cache',
+    'docs-sources',
+    repo,
+    lock.commit,
+    ...subpath,
+  );
+  const includes = source.include ?? [
+    'README.md',
+    'docs/**/*.md',
+    'docs/**/*.mdx',
+  ];
+
+  for (const pattern of includes) {
+    patterns.push({
+      cwd,
+      pattern,
+      tag: 'docs',
+      toUrl(rel) {
+        const normalized = rel.replace(/\\/gu, '/');
+        const docsPath = /^readme\.(md|mdx)$/iu.test(normalized)
+          ? ''
+          : normalized.replace(/^docs\//u, '').replace(/\.(md|mdx)$/iu, '');
+
+        return docsPath === 'index' || docsPath === ''
+          ? `/docs/packages/${source.package}`
+          : `/docs/packages/${source.package}/${docsPath}`;
+      },
+    });
+  }
+}
 
 const pages = [];
 let skipped = 0;
 const seenUrls = new Set();
 
-for (const [pattern, tag] of patterns) {
-  for await (const rel of glob(pattern, { cwd: REPO })) {
-    const url = toUrl(rel);
+for (const entry of patterns) {
+  for await (const rel of glob(entry.pattern, { cwd: entry.cwd })) {
+    const normalizedRel = rel.replace(/\\/gu, '/');
+    if (!/[?*\[\]{}]/u.test(entry.pattern) && normalizedRel !== entry.pattern) {
+      continue;
+    }
+    const literalExtension = entry.pattern.match(/\.([a-z0-9]+)$/u)?.[1];
+    if (literalExtension && path.extname(normalizedRel) !== `.${literalExtension}`) {
+      continue;
+    }
+
+    const url = entry.toUrl(rel);
     if (!url) {
       skipped++;
       continue;
@@ -96,8 +170,9 @@ for (const [pattern, tag] of patterns) {
     }
     seenUrls.add(url);
 
-    const raw = await readFile(path.join(REPO, rel), 'utf8');
+    const raw = await readFile(path.join(entry.cwd, rel), 'utf8');
     const { data: fm, content } = parseFrontmatter(raw);
+    const headingTitle = content.match(/^#\s+(.+)$/mu)?.[1]?.trim();
 
     let structuredData;
     try {
@@ -110,12 +185,12 @@ for (const [pattern, tag] of patterns) {
     }
 
     pages.push({
-      title: fm.title ?? '',
+      title: fm.title ?? headingTitle ?? '',
       description: fm.description ?? '',
       url,
       id: url,
       structuredData,
-      tag,
+      tag: entry.tag,
     });
   }
 }

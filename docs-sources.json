@@ -3,8 +3,8 @@
     "name": "Agent",
     "package": "agent",
     "source": "agent",
-    "include": ["README.md", "docs/**/*.md", "docs/**/*.mdx"],
-    "mode": "remote",
+    "include": ["docs/**/*.md", "docs/**/*.mdx"],
+    "mode": "workspace",
     "ref": "next"
   },
   {

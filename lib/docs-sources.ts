@@ -6,7 +6,7 @@ export type DocsSourceConfig = {
   package: string;
   source: string;
   include?: string[];
-  mode?: 'remote' | 'snapshot';
+  mode?: 'snapshot' | 'workspace';
   ref?: string;
 };
 
@@ -55,7 +55,7 @@ export function getProjectRepo(repo: string): string {
 }
 
 export function getDocsSourceGitRef(sourceConfig: DocsSourceConfig): string {
-  if (sourceConfig.mode !== 'remote') return sourceConfig.ref ?? 'main';
+  if (sourceConfig.mode !== 'workspace') return sourceConfig.ref ?? 'main';
 
   const lock = docsSourceLocks[sourceConfig.package];
   if (
@@ -64,7 +64,7 @@ export function getDocsSourceGitRef(sourceConfig: DocsSourceConfig): string {
     lock.ref !== (sourceConfig.ref ?? 'main')
   ) {
     throw new Error(
-      `Docs source "${sourceConfig.package}" has no matching remote lock. Run pnpm docs:lock.`,
+      `Docs source "${sourceConfig.package}" has no matching workspace lock. Run pnpm docs:lock.`,
     );
   }
 
@@ -113,7 +113,11 @@ export function getDocsSourceByPackage(packageName: string): DocsSourceConfig | 
   return docsSourceConfigs.find((sourceConfig) => sourceConfig.package === packageName);
 }
 
-export function getDocsPageGitHubUrl(sourceId: string, pagePath: string): string {
+export function getDocsPageGitHubUrl(
+  sourceId: string,
+  pagePath: string,
+  originalSourcePath?: string,
+): string {
   const normalizedPath = pagePath.replace(/^\/+/, '');
 
   if (sourceId === 'docs') {
@@ -125,8 +129,12 @@ export function getDocsPageGitHubUrl(sourceId: string, pagePath: string): string
     return `https://github.com/statelyai/docs/blob/main/content/docs/${normalizedPath}`;
   }
 
-  return `https://github.com/${getProjectRepo(getDocsSourceRepo(sourceConfig.source))}/blob/${getDocsSourceGitRef(sourceConfig)}/${stripProjectPrefix(
-    sourceId,
-    normalizedPath,
-  )}`;
+  const sourcePath = [
+    getDocsSourceSubpath(sourceConfig.source),
+    originalSourcePath ?? stripProjectPrefix(sourceId, normalizedPath),
+  ]
+    .filter(Boolean)
+    .join('/');
+
+  return `https://github.com/${getProjectRepo(getDocsSourceRepo(sourceConfig.source))}/blob/${getDocsSourceGitRef(sourceConfig)}/${sourcePath}`;
 }

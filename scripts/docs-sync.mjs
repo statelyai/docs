@@ -36,6 +36,7 @@ const ignoredDirectoryNames = new Set([
   'build',
   'node_modules',
 ]);
+const preparedWorkspaceDirs = new Set();
 
 async function exists(filePath) {
   try {
@@ -159,6 +160,10 @@ function getLocalProjectDir(repo) {
 
 function getRemoteProjectDir(repo) {
   return path.resolve(rootDir, '.cache', 'docs-repos', repo);
+}
+
+function getWorkspaceProjectDir(repo, commit) {
+  return path.resolve(rootDir, '.cache', 'docs-sources', repo, commit);
 }
 
 function getGeneratedProjectDir(packageName) {
@@ -592,6 +597,7 @@ async function collectMarkdownEntries(docsSource, sourceRootDir, sourceBaseDir, 
           docsSource.sourceRef,
         ),
         title,
+        workspacePath: sourcePath,
       };
     }),
   );
@@ -845,6 +851,75 @@ async function collectSnapshotNavPages(project, generatedDocsDir) {
   });
 }
 
+function getWorkspaceRoutePath(workspacePath) {
+  const normalized = normalizePath(workspacePath).replace(/^\/+|\/+$/gu, '');
+  if (/^readme\.(md|mdx)$/iu.test(normalized)) return 'index';
+
+  const withoutDocsPrefix = normalized.replace(/^docs\//u, '');
+  const withoutExtension = withoutDocsPrefix.replace(/\.(md|mdx)$/iu, '');
+
+  if (/(^|\/)readme$/iu.test(withoutExtension)) {
+    return path.posix.dirname(withoutExtension).replace(/^\.\/?/u, '') || 'index';
+  }
+
+  return withoutExtension;
+}
+
+async function collectWorkspaceNavPages(project, sourceRootDir, sourceBaseDir) {
+  const entries = await collectMarkdownEntries(
+    project,
+    sourceRootDir,
+    sourceBaseDir,
+    project.excludedSourcePrefixes,
+  );
+  const navByRoute = new Map();
+
+  for (const entry of entries) {
+    const route = getWorkspaceRoutePath(entry.workspacePath);
+    if (navByRoute.has(route)) {
+      throw new Error(
+        `Duplicate workspace docs route "${route}" for source "${project.package}".`,
+      );
+    }
+
+    navByRoute.set(route, {
+      title: entry.title,
+      url: getProjectDocsUrl(project.package, route),
+    });
+  }
+
+  const metaPath = path.join(sourceBaseDir, 'docs', 'meta.json');
+  if (await isFile(metaPath)) {
+    const meta = JSON.parse(await readFile(metaPath, 'utf8'));
+    if (!Array.isArray(meta.pages) || meta.pages.some((page) => typeof page !== 'string')) {
+      throw new Error(
+        `Docs metadata for "${project.package}" must define "pages" as an array of page routes.`,
+      );
+    }
+
+    return meta.pages.map((route) => {
+      const separator = route.match(/^---(.+)---$/u);
+      if (separator) return { separator: true, title: separator[1] };
+
+      const page = navByRoute.get(route.replace(/\.(md|mdx)$/iu, ''));
+      if (!page) {
+        throw new Error(
+          `Docs metadata for "${project.package}" references unknown page "${route}".`,
+        );
+      }
+      return page;
+    });
+  }
+
+  return [...navByRoute.entries()]
+    .sort(([left], [right]) => {
+      if (left === 'index') return -1;
+      if (right === 'index') return 1;
+      return left.localeCompare(right);
+    })
+    .map(([, page]) => page);
+}
+
 function getExcludedSourcePrefixes(docsSource, allSources) {
   return allSources
     .filter(
@@ -889,7 +964,7 @@ function validateDocsSources(docsSources) {
 
     if (
       docsSource.mode &&
-      docsSource.mode !== 'remote' &&
+      docsSource.mode !== 'workspace' &&
       docsSource.mode !== 'snapshot'
     ) {
       throw new Error(
@@ -963,19 +1038,19 @@ function resolveRemoteRef(project) {
 
   if (!commit) {
     throw new Error(
-      `Unable to resolve ref "${project.ref}" for remote docs source "${project.package}".`,
+      `Unable to resolve ref "${project.ref}" for workspace docs source "${project.package}".`,
     );
   }
 
   return commit;
 }
 
-async function resolveRemoteLocks(docsSources) {
+async function resolveWorkspaceLocks(docsSources) {
   const locks = await readDocsSourceLocks();
 
   if (updateLock) {
     for (const project of docsSources) {
-      if (project.mode !== 'remote') continue;
+      if (project.mode !== 'workspace') continue;
       locks[project.package] = {
         commit: resolveRemoteRef(project),
         ref: project.ref,
@@ -987,7 +1062,7 @@ async function resolveRemoteLocks(docsSources) {
   }
 
   for (const project of docsSources) {
-    if (project.mode !== 'remote') continue;
+    if (project.mode !== 'workspace') continue;
     const lock = locks[project.package];
 
     if (
@@ -997,7 +1072,7 @@ async function resolveRemoteLocks(docsSources) {
       !/^[0-9a-f]{40}$/u.test(lock.commit)
     ) {
       throw new Error(
-        `Docs source "${project.package}" has no matching remote lock. Run pnpm docs:lock.`,
+        `Docs source "${project.package}" has no matching workspace lock. Run pnpm docs:lock.`,
       );
     }
   }
@@ -1039,24 +1114,33 @@ async function syncProject(project) {
   let sourceKind;
   let useExistingSnapshot = false;
 
-  if (project.mode === 'remote') {
-    const checkoutDir = getRemoteProjectDir(project.repo);
+  if (project.mode === 'workspace') {
+    const checkoutDir = getWorkspaceProjectDir(project.repo, project.sourceRef);
     const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
 
-    await mkdir(path.dirname(checkoutDir), { recursive: true });
+    if (!preparedWorkspaceDirs.has(checkoutDir)) {
+      await mkdir(path.dirname(checkoutDir), { recursive: true });
 
-    if (!(await exists(path.join(checkoutDir, '.git')))) {
-      run('git', ['clone', '--filter=blob:none', '--no-checkout', repoUrl, checkoutDir]);
-    } else {
-      run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
+      if (!(await exists(path.join(checkoutDir, '.git')))) {
+        run('git', ['clone', '--filter=blob:none', '--no-checkout', repoUrl, checkoutDir]);
+      } else {
+        run('git', ['remote', 'set-url', 'origin', repoUrl], checkoutDir);
+      }
+
+      tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
+      run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
+      const fetchedCommit = runCapture('git', ['rev-parse', 'FETCH_HEAD'], checkoutDir);
+      if (fetchedCommit !== project.sourceRef) {
+        throw new Error(
+          `Workspace lock mismatch for "${project.package}": expected ${project.sourceRef}, fetched ${fetchedCommit}.`,
+        );
+      }
+      run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
+      preparedWorkspaceDirs.add(checkoutDir);
     }
 
-    tryRun('git', ['sparse-checkout', 'disable'], checkoutDir);
-    run('git', ['fetch', '--depth', '1', '--no-tags', 'origin', project.sourceRef], checkoutDir);
-    run('git', ['checkout', '--force', project.sourceRef], checkoutDir);
-
     sourceRootDir = checkoutDir;
-    sourceKind = 'remote-cache';
+    sourceKind = 'workspace';
   } else if (await exists(localProjectDir)) {
     sourceRootDir = localProjectDir;
     sourceKind = 'local';
@@ -1083,6 +1167,32 @@ async function syncProject(project) {
     sourceKind = 'remote-cache';
   }
 
+  const sourceBaseDir = sourceRootDir
+    ? project.sourceSubpath
+      ? path.join(sourceRootDir, project.sourceSubpath)
+      : sourceRootDir
+    : undefined;
+
+  if (project.mode === 'workspace') {
+    if (!sourceBaseDir || !(await exists(sourceBaseDir))) {
+      throw new Error(
+        `Docs source "${project.package}" points to "${project.source}", but that path does not exist in ${sourceRootDir}.`,
+      );
+    }
+
+    return {
+      docsDir: sourceBaseDir,
+      files: [],
+      navPages: await collectWorkspaceNavPages(
+        project,
+        sourceRootDir,
+        sourceBaseDir,
+      ),
+      project: project.package,
+      source: sourceKind,
+    };
+  }
+
   const generatedRootDir = getOutputProjectDir(project);
   const generatedDocsDir = path.join(generatedRootDir, getProjectDocsDir());
 
@@ -1102,11 +1212,7 @@ async function syncProject(project) {
     };
   }
 
-  const sourceBaseDir = project.sourceSubpath
-    ? path.join(sourceRootDir, project.sourceSubpath)
-    : sourceRootDir;
-
-  if (!(await exists(sourceBaseDir))) {
+  if (!sourceBaseDir || !(await exists(sourceBaseDir))) {
     throw new Error(
       `Docs source "${project.package}" points to "${project.source}", but that path does not exist in ${sourceRootDir}.`,
     );
@@ -1225,7 +1331,7 @@ async function main() {
   const enabledOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
   const docsSources = manifest.map(normalizeDocsSourceConfig);
   validateDocsSources(docsSources);
-  const remoteLocks = await resolveRemoteLocks(docsSources);
+  const workspaceLocks = await resolveWorkspaceLocks(docsSources);
 
   const enabledProjects = docsSources
     .filter((project) =>
@@ -1238,7 +1344,7 @@ async function main() {
     .map((project) => ({
       ...project,
       excludedSourcePrefixes: getExcludedSourcePrefixes(project, docsSources),
-      sourceRef: remoteLocks[project.package]?.commit ?? project.ref,
+      sourceRef: workspaceLocks[project.package]?.commit ?? project.ref,
     }));
 
   const results = [];

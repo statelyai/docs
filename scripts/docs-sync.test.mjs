@@ -6,11 +6,18 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
-test('remote docs use locked source URLs and source-owned navigation', async () => {
-  execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
+test('workspace docs use a locked checkout and source-owned navigation', async () => {
+  const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
-    stdio: 'pipe',
+    encoding: 'utf8',
   });
+  assert.match(output, /agent \(workspace\)/u);
+
+  await assert.rejects(
+    access(
+      path.join(rootDir, 'external-docs', 'agent', 'docs', 'index.md'),
+    ),
+  );
 
   await assert.rejects(
     access(
@@ -25,14 +32,19 @@ test('remote docs use locked source URLs and source-owned navigation', async () 
     ),
   );
 
-  const agentIndex = await readFile(
-    path.join(rootDir, '.cache', 'docs-workspaces', 'agent', 'docs', 'index.md'),
-    'utf8',
+  const locks = JSON.parse(
+    await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
   );
-  assert.match(
-    agentIndex,
-    /sourceUrl: "https:\/\/github\.com\/statelyai\/agent\/blob\/[0-9a-f]{40}\/docs\/index\.md"/u,
+  const workspaceIndex = path.join(
+    rootDir,
+    '.cache',
+    'docs-sources',
+    'agent',
+    locks.agent.commit,
+    'docs',
+    'index.md',
   );
+  assert.match(await readFile(workspaceIndex, 'utf8'), /^title: Agents$/mu);
 
   const generatedNav = await readFile(
     path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
@@ -51,23 +63,44 @@ test('remote docs use locked source URLs and source-owned navigation', async () 
   );
 });
 
-test('an unchanged sync does not rewrite generated files', async () => {
-  const generatedPage = path.join(
+test('an unchanged sync preserves the locked workspace', async () => {
+  const locks = JSON.parse(
+    await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
+  );
+  const workspacePage = path.join(
     rootDir,
     '.cache',
-    'docs-workspaces',
+    'docs-sources',
     'agent',
+    locks.agent.commit,
     'docs',
     'index.md',
   );
-  const before = await stat(generatedPage);
+  const before = await stat(workspacePage);
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
     encoding: 'utf8',
   });
-  const after = await stat(generatedPage);
+  const after = await stat(workspacePage);
 
   assert.equal(after.mtimeMs, before.mtimeMs);
   assert.doesNotMatch(output, / <= /u);
   assert.match(output, /up to date/u);
+});
+
+test('search indexing reads Agent from the workspace once', async () => {
+  const output = execFileSync(process.execPath, ['scripts/build-search-index.mjs'], {
+    cwd: rootDir,
+    encoding: 'utf8',
+  });
+  assert.doesNotMatch(output, /duplicate URL \/docs\/packages\/agent/u);
+
+  const searchIndex = JSON.parse(
+    await readFile(path.join(rootDir, 'lib', 'search-index.json'), 'utf8'),
+  );
+  const agentIndexes = searchIndex.filter(
+    (page) => page.url === '/docs/packages/agent',
+  );
+  assert.equal(agentIndexes.length, 1);
+  assert.equal(agentIndexes[0].title, 'Agents');
 });

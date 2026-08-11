@@ -12,6 +12,7 @@ import {
   getExternalPackageStaticParams,
   getPageGitHubUrl,
   getPageImage,
+  resolveExternalPackageHref,
 } from '@/lib/external-package-source';
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
@@ -42,6 +43,7 @@ export default async function Page(
     'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data
   ) as unknown as RenderableDocsData;
   const MDX = data.body;
+  const RelativeLink = createRelativeLink(source as any, page);
 
   return (
     <DocsPage toc={data.toc} full={data.full}>
@@ -57,7 +59,12 @@ export default async function Page(
         </div>
         <MDX
           components={getMDXComponents({
-            a: createRelativeLink(source as any, page),
+            a: (linkProps) => (
+              <RelativeLink
+                {...linkProps}
+                href={resolveExternalPackageHref(page, linkProps.href)}
+              />
+            ),
           })}
         />
       </DocsBody>

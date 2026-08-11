@@ -14,6 +14,41 @@ import {
 import rehypeRaw from 'rehype-raw';
 import z from 'zod';
 
+function extractLeadingTitle(source: string, filePath: string): string {
+  const heading = source.match(/^#\s+(.+)$/mu)?.[1]?.trim();
+  if (heading) return heading;
+
+  const fileName = filePath.split(/[\\/]/u).at(-1) ?? filePath;
+  return fileName
+    .replace(/\.(md|mdx)$/iu, '')
+    .replace(/^readme$/iu, 'Overview')
+    .replace(/[-_]+/gu, ' ');
+}
+
+function remarkPrepareWorkspaceMarkdown() {
+  return (tree: {
+    children?: Array<{ depth?: number; type?: string; value?: string }>;
+  }) => {
+    const children = tree.children ?? [];
+    const firstContentIndex = children.findIndex(
+      (node) => node.type !== 'yaml' && node.type !== 'html',
+    );
+
+    if (
+      firstContentIndex >= 0 &&
+      children[firstContentIndex]?.type === 'heading' &&
+      children[firstContentIndex]?.depth === 1
+    ) {
+      children.splice(firstContentIndex, 1);
+    }
+
+    tree.children = children.filter(
+      (node) =>
+        node.type !== 'html' || !node.value?.trimStart().startsWith('<!--'),
+    );
+  };
+}
+
 const sharedDocsCollectionOptions = {
   docs: {
     async: true,
@@ -73,6 +108,19 @@ const externalMdxOptions: MDXPresetOptions = {
   ],
 };
 
+const workspaceMdxOptions: MDXPresetOptions = {
+  ...externalMdxOptions,
+  remarkPlugins: [
+    [
+      remarkImage,
+      {
+        external: false,
+      },
+    ],
+    remarkPrepareWorkspaceMarkdown,
+  ],
+};
+
 export function createDocsCollection(dir = 'content/docs') {
   return defineDocs({
     dir,
@@ -96,6 +144,38 @@ export function createDocsWorkspaceModule(dir: string): Record<string, unknown> 
   return {
     docs: createDocsCollection(dir),
     default: createGlobalConfig({ mdxOptions: externalMdxOptions }),
+  };
+}
+
+export function createDirectDocsWorkspaceModule(
+  dir = '.',
+  files?: string[],
+): Record<string, unknown> {
+  return {
+    docs: defineDocs({
+      dir,
+      docs: {
+        ...sharedDocsCollectionOptions.docs,
+        files: files ?? ['README.md', 'docs/**/*.md', 'docs/**/*.mdx'],
+        schema: ({ path, source }) =>
+          pageSchema
+            .extend({
+              title: z.string().optional(),
+              slug: z.string().optional(),
+              sourcePath: z.string().optional(),
+              sourceUrl: z.string().url().optional(),
+            })
+            .transform((data) => ({
+              ...data,
+              title: data.title ?? extractLeadingTitle(source, path),
+            })),
+      },
+      meta: {
+        ...sharedDocsCollectionOptions.meta,
+        files: ['docs/**/*.{json,yaml,yml}'],
+      },
+    }),
+    default: createGlobalConfig({ mdxOptions: workspaceMdxOptions }),
   };
 }
 
