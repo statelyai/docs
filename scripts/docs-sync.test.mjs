@@ -6,6 +6,57 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
+test('docs watcher includes workspace mounts and source subpaths', async () => {
+  const { isDocsSourceWatchPath } = await import(
+    '../lib/docs-watch-path.mjs'
+  );
+  const xstate = {
+    source: 'xstate',
+    mounts: [
+      { source: 'docs' },
+      { source: 'packages/xstate-react/docs' },
+    ],
+  };
+
+  assert.equal(isDocsSourceWatchPath(xstate, 'docs/start/quick-start.md'), true);
+  assert.equal(
+    isDocsSourceWatchPath(
+      xstate,
+      'packages/xstate-react/docs/guides/use-machine.md',
+    ),
+    true,
+  );
+  assert.equal(isDocsSourceWatchPath(xstate, 'packages/core/src/index.ts'), false);
+  assert.equal(
+    isDocsSourceWatchPath(
+      { source: 'viz/packages/sdk' },
+      'packages/sdk/docs/index.md',
+    ),
+    true,
+  );
+});
+
+test('mounted navigation fallback includes nested pages', async () => {
+  const { getWorkspaceDescendantEntries } = await import(
+    '../lib/docs-nav.mjs'
+  );
+  const entries = [
+    { workspacePath: 'packages/store/docs/index.md' },
+    { workspacePath: 'packages/store/docs/extensions/undo-redo.md' },
+    { workspacePath: 'packages/store/src/internal.md' },
+  ];
+
+  assert.deepEqual(
+    getWorkspaceDescendantEntries(entries, 'packages/store/docs').map(
+      (entry) => entry.workspacePath,
+    ),
+    [
+      'packages/store/docs/extensions/undo-redo.md',
+      'packages/store/docs/index.md',
+    ],
+  );
+});
+
 test('workspace route mapping collapses mounted README pages', async () => {
   const { resolveDocsSourceRoutePath } = await import(
     '../lib/docs-source-route.mjs'

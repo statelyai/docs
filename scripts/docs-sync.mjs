@@ -11,6 +11,7 @@ import {
 import path from 'node:path';
 import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
 import { deriveMarkdownTitle } from '../lib/markdown-title.mjs';
+import { getWorkspaceDescendantEntries } from '../lib/docs-nav.mjs';
 
 const rootDir = process.cwd();
 const manifestPath = path.join(rootDir, 'docs-sources.json');
@@ -918,15 +919,7 @@ async function collectMountedWorkspaceNavPages(
   async function collectDirectory(directoryPath) {
     const meta = await readMeta(directoryPath);
     if (!meta) {
-      return entries
-        .filter((entry) => {
-          const entryDirectory = path.posix.dirname(entry.workspacePath);
-          return (
-            entry.workspacePath.startsWith(`${directoryPath}/`) &&
-            entryDirectory === directoryPath
-          );
-        })
-        .sort((left, right) => left.workspacePath.localeCompare(right.workspacePath))
+      return getWorkspaceDescendantEntries(entries, directoryPath)
         .map((entry) =>
           navBySourcePath.get(entry.workspacePath.replace(/\.(md|mdx)$/iu, '')),
         );
@@ -951,6 +944,12 @@ async function collectMountedWorkspaceNavPages(
       const childMeta = await readMeta(sourcePathPrefix);
       if (childMeta) {
         pages.push({ separator: true, title: childMeta.title ?? toTitleCase(route) });
+        pages.push(...(await collectDirectory(sourcePathPrefix)));
+        continue;
+      }
+
+      if (getWorkspaceDescendantEntries(entries, sourcePathPrefix).length > 0) {
+        pages.push({ separator: true, title: toTitleCase(route) });
         pages.push(...(await collectDirectory(sourcePathPrefix)));
         continue;
       }
@@ -1252,11 +1251,15 @@ async function assertProjectNamespaceAvailable(project) {
 
 async function syncProject(project) {
   const localProjectDir = getLocalProjectDir(project.repo);
+  const useLocalWorkspace =
+    project.mode === 'workspace' &&
+    process.env.DOCS_USE_LOCAL_WORKSPACES === '1' &&
+    (await exists(localProjectDir));
   let sourceRootDir;
   let sourceKind;
   let useExistingSnapshot = false;
 
-  if (project.mode === 'workspace') {
+  if (project.mode === 'workspace' && !useLocalWorkspace) {
     const checkoutDir = getWorkspaceProjectDir(project.repo, project.sourceRef);
     const repoUrl = `https://github.com/${getProjectRepo(project.repo)}.git`;
 
@@ -1302,7 +1305,7 @@ async function syncProject(project) {
     sourceKind = 'workspace';
   } else if (await exists(localProjectDir)) {
     sourceRootDir = localProjectDir;
-    sourceKind = 'local';
+    sourceKind = useLocalWorkspace ? 'workspace-local' : 'local';
   } else if (project.mode === 'snapshot') {
     useExistingSnapshot = true;
     sourceKind = 'snapshot';

@@ -174,6 +174,8 @@ commit in `docs-sources.lock.json`. Normal syncs check out that commit into
 `.cache/docs-sources/<repo>/<commit>`. Fumadocs compiles the allowlisted files
 directly as a workspace; the sync does not copy or rewrite Markdown. A clean
 checkout already at the locked commit is reused without contacting GitHub.
+`pnpm docs:watch` explicitly uses available sibling clones instead, so local
+workspace documentation edits appear immediately during development.
 
 Other sources use the compatibility pipeline: resolve `../<repo>` locally,
 scan the configured allowlist, flatten pages into a generated workspace, add
@@ -231,6 +233,6 @@ docs are not indexed twice.
 - `pnpm docs:lock`: update immutable workspace revisions, then sync
 - `pnpm docs:sync`: sync external workspaces at their recorded revisions
 - `pnpm docs:generate`: sync external workspaces and regenerate Fumadocs output
-- `pnpm docs:watch`: watch local source repos and regenerate on changes
+- `pnpm docs:watch`: use and watch available sibling source repos, then regenerate
 - `pnpm dev`: run the app after a sync pass
 - `pnpm build`: run sync and then a production build
