@@ -7,7 +7,13 @@ export type DocsSourceConfig = {
   source: string;
   include?: string[];
   mode?: 'snapshot' | 'workspace';
+  mounts?: Array<{
+    source: string;
+    route: string;
+    title?: string;
+  }>;
   ref?: string;
+  route?: string;
 };
 
 const docsSources = docsSourcesJson as DocsSourceConfig[];
@@ -81,7 +87,30 @@ export function normalizeRoute(route: string | string[]): string {
 }
 
 export function getProjectRoutePrefix(packageName: string): string {
-  return `packages/${packageName}`;
+  return getDocsSourceByPackage(packageName)?.route ?? `packages/${packageName}`;
+}
+
+export function getDocsSourceRoutePath(
+  sourceConfig: DocsSourceConfig,
+  sourcePath: string,
+): string {
+  const normalized = normalizeSourcePath(sourcePath);
+  const mount = sourceConfig.mounts
+    ?.filter(
+      (candidate) =>
+        normalized === normalizeSourcePath(candidate.source) ||
+        normalized.startsWith(`${normalizeSourcePath(candidate.source)}/`),
+    )
+    .sort((left, right) => right.source.length - left.source.length)[0];
+
+  if (mount) {
+    const mountSource = normalizeSourcePath(mount.source);
+    const relative = normalized.slice(mountSource.length).replace(/^\/+/, '');
+    return [normalizeRoute(mount.route), relative].filter(Boolean).join('/');
+  }
+
+  if (/^readme\.(md|mdx)$/iu.test(normalized)) return 'index.md';
+  return normalized.replace(/^docs\//u, '');
 }
 
 export function prefixRoute(packageName: string, route: string): string {

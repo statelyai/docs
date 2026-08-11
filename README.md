@@ -74,6 +74,56 @@ The external docs manifest lives in `docs-sources.json`:
     "ref": "main"
   },
   {
+    "name": "XState v6 alpha",
+    "package": "xstate-v6",
+    "source": "xstate",
+    "include": [
+      "docs/**/*.md",
+      "docs/**/*.mdx",
+      "packages/xstate-react/docs/**/*.md",
+      "packages/xstate-react/docs/**/*.mdx",
+      "packages/xstate-vue/docs/**/*.md",
+      "packages/xstate-vue/docs/**/*.mdx",
+      "packages/xstate-svelte/docs/**/*.md",
+      "packages/xstate-svelte/docs/**/*.mdx",
+      "packages/xstate-solid/docs/**/*.md",
+      "packages/xstate-solid/docs/**/*.mdx",
+      "packages/xstate-store/docs/**/*.md",
+      "packages/xstate-store/docs/**/*.mdx"
+    ],
+    "mode": "workspace",
+    "mounts": [
+      { "source": "docs", "route": "" },
+      {
+        "source": "packages/xstate-react/docs",
+        "route": "react",
+        "title": "React"
+      },
+      {
+        "source": "packages/xstate-vue/docs",
+        "route": "vue",
+        "title": "Vue"
+      },
+      {
+        "source": "packages/xstate-svelte/docs",
+        "route": "svelte",
+        "title": "Svelte"
+      },
+      {
+        "source": "packages/xstate-solid/docs",
+        "route": "solid",
+        "title": "Solid"
+      },
+      {
+        "source": "packages/xstate-store/docs",
+        "route": "store",
+        "title": "Store"
+      }
+    ],
+    "ref": "next",
+    "route": "xstate/v6"
+  },
+  {
     "name": "SDK",
     "package": "sdk",
     "source": "viz/packages/sdk",
@@ -101,8 +151,11 @@ Each entry means:
 - `source`: repo root or repo subpath to scan for docs content
 - `ref`: Git branch or tag; defaults to `main`
 - `include`: optional Markdown glob allowlist relative to `source`
+- `mounts`: optional source-directory to route-directory mappings
 - `mode`: optional; `"workspace"` compiles a locked GitHub checkout directly;
   `"snapshot"` commits generated docs for private sources
+- `route`: optional public route prefix under `/docs`; defaults to
+  `packages/<package>`
 
 ### How Sync Works
 

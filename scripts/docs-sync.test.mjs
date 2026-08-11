@@ -13,8 +13,9 @@ test('workspace docs use locked checkouts and available source-owned navigation'
   });
   assert.match(output, /agent \(workspace\)/u);
   assert.match(output, /graph \(workspace\)/u);
+  assert.match(output, /xstate-v6 \(workspace\)/u);
 
-  for (const source of ['agent', 'graph']) {
+  for (const source of ['agent', 'graph', 'xstate-v6']) {
     await assert.rejects(
       access(path.join(rootDir, 'external-docs', source, 'docs', 'index.md')),
     );
@@ -44,28 +45,66 @@ test('workspace docs use locked checkouts and available source-owned navigation'
   );
   assert.match(await readFile(graphIndex, 'utf8'), /^# @statelyai\/graph$/mu);
 
+  const xstateQuickStart = path.join(
+    rootDir,
+    '.cache',
+    'docs-sources',
+    'xstate',
+    locks['xstate-v6'].commit,
+    'docs',
+    'start',
+    'quick-start.md',
+  );
+  assert.match(await readFile(xstateQuickStart, 'utf8'), /^title: Quick start$/mu);
+
   const generatedNav = await readFile(
     path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
     'utf8',
   );
   assert.match(generatedNav, /"separator": true/u);
   assert.match(generatedNav, /"title": "Get started"/u);
+  assert.match(generatedNav, /"route": "xstate\/v6"/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/build\/async-requests/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/react\/use-machine/u);
+  assert.ok(
+    generatedNav.indexOf('/docs/xstate/v6/start/quick-start') <
+      generatedNav.indexOf('/docs/xstate/v6/learn/why-state-machines'),
+  );
 });
 
 test('an unchanged sync preserves locked workspaces', async () => {
   const locks = JSON.parse(
     await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
   );
-  const workspacePages = ['agent', 'graph'].map((source) =>
+  const workspacePages = [
     path.join(
       rootDir,
       '.cache',
       'docs-sources',
-      source,
-      locks[source].commit,
-      source === 'graph' ? 'README.md' : path.join('docs', 'index.md'),
+      'agent',
+      locks.agent.commit,
+      'docs',
+      'index.md',
     ),
-  );
+    path.join(
+      rootDir,
+      '.cache',
+      'docs-sources',
+      'graph',
+      locks.graph.commit,
+      'README.md',
+    ),
+    path.join(
+      rootDir,
+      '.cache',
+      'docs-sources',
+      'xstate',
+      locks['xstate-v6'].commit,
+      'docs',
+      'start',
+      'quick-start.md',
+    ),
+  ];
   const before = await Promise.all(workspacePages.map((page) => stat(page)));
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,
@@ -88,6 +127,7 @@ test('search indexing reads public workspaces once', async () => {
   });
   assert.doesNotMatch(output, /duplicate URL \/docs\/packages\/agent/u);
   assert.doesNotMatch(output, /duplicate URL \/docs\/packages\/graph/u);
+  assert.doesNotMatch(output, /duplicate URL \/docs\/xstate\/v6/u);
 
   const searchIndex = JSON.parse(
     await readFile(path.join(rootDir, 'lib', 'search-index.json'), 'utf8'),
@@ -103,4 +143,17 @@ test('search indexing reads public workspaces once', async () => {
   );
   assert.equal(graphIndexes.length, 1);
   assert.equal(graphIndexes[0].title, '@statelyai/graph');
+
+  const xstateQuickStarts = searchIndex.filter(
+    (page) => page.url === '/docs/xstate/v6/start/quick-start',
+  );
+  assert.equal(xstateQuickStarts.length, 1);
+  assert.equal(xstateQuickStarts[0].title, 'Quick start');
+
+  assert.equal(
+    searchIndex.filter(
+      (page) => page.url === '/docs/xstate/v6/build/async-requests',
+    ).length,
+    1,
+  );
 });

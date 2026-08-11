@@ -146,9 +146,15 @@ function normalizeDocsSourceConfig(config) {
     ...config,
     include: config.include,
     mode: config.mode,
+    mounts: config.mounts?.map((mount) => ({
+      ...mount,
+      route: normalizePath(String(mount.route ?? '')).replace(/^\/+|\/+$/gu, ''),
+      source: normalizePath(String(mount.source)).replace(/^\/+|\/+$/gu, ''),
+    })),
     package: String(config.package),
     ref: String(config.ref ?? 'main'),
     repo: getSourceRepo(config.source),
+    route: normalizePath(String(config.route ?? '')).replace(/^\/+|\/+$/gu, ''),
     source: normalizeSourcePath(config.source),
     sourceSubpath: getSourceSubpath(config.source),
   };
@@ -190,16 +196,16 @@ function getProjectDocsDir() {
   return 'docs';
 }
 
-function getProjectRoutePrefix(packageName) {
-  return path.join('packages', packageName);
+function getProjectRoutePrefix(project) {
+  return project.route || path.join('packages', project.package);
 }
 
 function normalizePath(value) {
   return value.replace(/\\/g, '/');
 }
 
-function getProjectDocsUrl(packageName, slug) {
-  const prefix = `/docs/${normalizePath(getProjectRoutePrefix(packageName))}`;
+function getProjectDocsUrl(project, slug) {
+  const prefix = `/docs/${normalizePath(getProjectRoutePrefix(project))}`;
   return slug === 'index' ? prefix : `${prefix}/${slug}`;
 }
 
@@ -469,14 +475,17 @@ async function listProjectFiles(dir, base = dir) {
   const files = [];
 
   for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    const relativeParts = normalizePath(path.relative(base, fullPath)).split('/');
+    const isInsideDocsDirectory = relativeParts.slice(0, -1).includes('docs');
     if (
       entry.isDirectory() &&
-      (ignoredDirectoryNames.has(entry.name) || entry.name.startsWith('.'))
+      ((ignoredDirectoryNames.has(entry.name) && !isInsideDocsDirectory) ||
+        entry.name.startsWith('.'))
     ) {
       continue;
     }
 
-    const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...(await listProjectFiles(fullPath, base)));
       continue;
@@ -625,7 +634,7 @@ async function rewriteEntryBody(
   entry,
   docsEntriesBySourcePath,
   generatedAssetPaths,
-  packageName,
+  project,
   repo,
   sourceRef,
   sourceRootDir,
@@ -646,7 +655,7 @@ async function rewriteEntryBody(
       const linkedEntry = docsEntriesBySourcePath.get(candidate);
       if (!linkedEntry) continue;
 
-      replacementTarget = `${getProjectDocsUrl(packageName, linkedEntry.slug)}${suffix}`;
+      replacementTarget = `${getProjectDocsUrl(project, linkedEntry.slug)}${suffix}`;
       break;
     }
 
@@ -731,7 +740,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       entry,
       docsEntriesBySourcePath,
       generatedAssetPaths,
-      project.package,
+      project,
       project.repo,
       project.sourceRef,
       sourceRootDir,
@@ -750,7 +759,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
     navPages.push({
       title: entry.title,
-      url: getProjectDocsUrl(project.package, entry.slug),
+      url: getProjectDocsUrl(project, entry.slug),
     });
   }
 
@@ -772,8 +781,8 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
 
   const metaPath = path.join(project.sourceBaseDir, 'docs', 'meta.json');
   let orderedNavPages = navPages.sort((a, b) => {
-    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
-    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    if (a.url === getProjectDocsUrl(project, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project, 'index')) return 1;
     return a.url.localeCompare(b.url);
   });
 
@@ -789,7 +798,7 @@ async function writeFlattenedDocs(project, sourceRootDir, generatedDocsDir) {
       navPages.map((page) => [page.url.split('/').at(-1) ?? 'index', page]),
     );
     navBySlug.set('index', navPages.find(
-      (page) => page.url === getProjectDocsUrl(project.package, 'index'),
+      (page) => page.url === getProjectDocsUrl(project, 'index'),
     ));
 
     orderedNavPages = meta.pages.map((slug) => {
@@ -840,29 +849,134 @@ async function collectSnapshotNavPages(project, generatedDocsDir) {
     const slug = file.replace(/\.(md|mdx)$/iu, '');
     navPages.push({
       title,
-      url: getProjectDocsUrl(project.package, slug === 'index' ? 'index' : slug),
+      url: getProjectDocsUrl(project, slug === 'index' ? 'index' : slug),
     });
   }
 
   return navPages.sort((a, b) => {
-    if (a.url === getProjectDocsUrl(project.package, 'index')) return -1;
-    if (b.url === getProjectDocsUrl(project.package, 'index')) return 1;
+    if (a.url === getProjectDocsUrl(project, 'index')) return -1;
+    if (b.url === getProjectDocsUrl(project, 'index')) return 1;
     return a.url.localeCompare(b.url);
   });
 }
 
-function getWorkspaceRoutePath(workspacePath) {
+function getWorkspaceMount(project, workspacePath) {
   const normalized = normalizePath(workspacePath).replace(/^\/+|\/+$/gu, '');
-  if (/^readme\.(md|mdx)$/iu.test(normalized)) return 'index';
 
-  const withoutDocsPrefix = normalized.replace(/^docs\//u, '');
-  const withoutExtension = withoutDocsPrefix.replace(/\.(md|mdx)$/iu, '');
+  return project.mounts
+    ?.filter(
+      (mount) =>
+        normalized === mount.source || normalized.startsWith(`${mount.source}/`),
+    )
+    .sort((left, right) => right.source.length - left.source.length)[0];
+}
 
-  if (/(^|\/)readme$/iu.test(withoutExtension)) {
-    return path.posix.dirname(withoutExtension).replace(/^\.\/?/u, '') || 'index';
+function getWorkspaceRoutePath(project, workspacePath) {
+  const normalized = normalizePath(workspacePath).replace(/^\/+|\/+$/gu, '');
+  const mount = getWorkspaceMount(project, normalized);
+  const mountedPath = mount
+    ? normalized.slice(mount.source.length).replace(/^\/+/, '')
+    : normalized;
+
+  if (project.mounts && !mount) {
+    throw new Error(
+      `Workspace path "${workspacePath}" is not covered by a mount for source "${project.package}".`,
+    );
   }
 
-  return withoutExtension;
+  if (/^readme\.(md|mdx)$/iu.test(mountedPath)) {
+    return mount?.route || 'index';
+  }
+
+  const withoutDocsPrefix = mount ? mountedPath : mountedPath.replace(/^docs\//u, '');
+  const withoutExtension = withoutDocsPrefix.replace(/\.(md|mdx)$/iu, '');
+
+  let routePath = withoutExtension;
+  if (/(^|\/)(readme|index)$/iu.test(routePath)) {
+    routePath = path.posix.dirname(routePath).replace(/^\.\/?/u, '');
+  }
+
+  return [mount?.route, routePath]
+    .filter(Boolean)
+    .join('/') || 'index';
+}
+
+async function collectMountedWorkspaceNavPages(
+  project,
+  sourceBaseDir,
+  entries,
+  navBySourcePath,
+) {
+  const output = [];
+
+  async function readMeta(directoryPath) {
+    const metaPath = path.join(sourceBaseDir, directoryPath, 'meta.json');
+    if (!(await isFile(metaPath))) return undefined;
+
+    const meta = JSON.parse(await readFile(metaPath, 'utf8'));
+    if (!Array.isArray(meta.pages) || meta.pages.some((page) => typeof page !== 'string')) {
+      throw new Error(
+        `Docs metadata for "${project.package}" must define "pages" as an array of page routes.`,
+      );
+    }
+
+    return meta;
+  }
+
+  async function collectDirectory(directoryPath) {
+    const meta = await readMeta(directoryPath);
+    if (!meta) {
+      return entries
+        .filter((entry) => {
+          const entryDirectory = path.posix.dirname(entry.workspacePath);
+          return (
+            entry.workspacePath.startsWith(`${directoryPath}/`) &&
+            entryDirectory === directoryPath
+          );
+        })
+        .sort((left, right) => left.workspacePath.localeCompare(right.workspacePath))
+        .map((entry) =>
+          navBySourcePath.get(entry.workspacePath.replace(/\.(md|mdx)$/iu, '')),
+        );
+    }
+
+    const pages = [];
+    for (const route of meta.pages) {
+      const separator = route.match(/^---(.+)---$/u);
+      if (separator) {
+        pages.push({ separator: true, title: separator[1] });
+        continue;
+      }
+
+      const normalizedRoute = route.replace(/\.(md|mdx)$/iu, '');
+      const sourcePathPrefix = path.posix.join(directoryPath, normalizedRoute);
+      const entry = navBySourcePath.get(sourcePathPrefix);
+      if (entry) {
+        pages.push(entry);
+        continue;
+      }
+
+      const childMeta = await readMeta(sourcePathPrefix);
+      if (childMeta) {
+        pages.push({ separator: true, title: childMeta.title ?? toTitleCase(route) });
+        pages.push(...(await collectDirectory(sourcePathPrefix)));
+        continue;
+      }
+
+      throw new Error(
+        `Docs metadata for "${project.package}" references unknown page or folder "${route}" in "${directoryPath}".`,
+      );
+    }
+
+    return pages;
+  }
+
+  for (const mount of project.mounts) {
+    if (mount.title) output.push({ separator: true, title: mount.title });
+    output.push(...(await collectDirectory(mount.source)));
+  }
+
+  return output;
 }
 
 async function collectWorkspaceNavPages(project, sourceRootDir, sourceBaseDir) {
@@ -873,19 +987,34 @@ async function collectWorkspaceNavPages(project, sourceRootDir, sourceBaseDir) {
     project.excludedSourcePrefixes,
   );
   const navByRoute = new Map();
+  const navBySourcePath = new Map();
 
   for (const entry of entries) {
-    const route = getWorkspaceRoutePath(entry.workspacePath);
+    const route = getWorkspaceRoutePath(project, entry.workspacePath);
     if (navByRoute.has(route)) {
       throw new Error(
         `Duplicate workspace docs route "${route}" for source "${project.package}".`,
       );
     }
 
-    navByRoute.set(route, {
+    const page = {
       title: entry.title,
-      url: getProjectDocsUrl(project.package, route),
-    });
+      url: getProjectDocsUrl(project, route),
+    };
+    navByRoute.set(route, page);
+    navBySourcePath.set(
+      entry.workspacePath.replace(/\.(md|mdx)$/iu, ''),
+      page,
+    );
+  }
+
+  if (project.mounts) {
+    return collectMountedWorkspaceNavPages(
+      project,
+      sourceBaseDir,
+      entries,
+      navBySourcePath,
+    );
   }
 
   const metaPath = path.join(sourceBaseDir, 'docs', 'meta.json');
@@ -944,6 +1073,7 @@ function getExcludedSourcePrefixes(docsSource, allSources) {
 function validateDocsSources(docsSources) {
   const seenPackages = new Map();
   const seenSources = new Map();
+  const seenRoutes = new Map();
 
   for (const docsSource of docsSources) {
     if (!docsSource.package) {
@@ -991,6 +1121,17 @@ function validateDocsSources(docsSources) {
       );
     }
 
+    if (
+      docsSource.mounts !== undefined &&
+      (!Array.isArray(docsSource.mounts) ||
+        docsSource.mounts.length === 0 ||
+        docsSource.mounts.some((mount) => !mount.source))
+    ) {
+      throw new Error(
+        `Docs source "${docsSource.package}" must define "mounts" as a non-empty array with source paths.`,
+      );
+    }
+
     const existingPackage = seenPackages.get(docsSource.package);
     if (existingPackage) {
       throw new Error(
@@ -1006,8 +1147,17 @@ function validateDocsSources(docsSources) {
       );
     }
 
+    const routeKey = getProjectRoutePrefix(docsSource);
+    const existingRoute = seenRoutes.get(routeKey);
+    if (existingRoute) {
+      throw new Error(
+        `Duplicate docs route "${routeKey}" shared by "${existingRoute.package}" and "${docsSource.package}".`,
+      );
+    }
+
     seenPackages.set(docsSource.package, docsSource);
     seenSources.set(sourceKey, docsSource);
+    seenRoutes.set(routeKey, docsSource);
   }
 }
 
@@ -1082,7 +1232,7 @@ async function resolveWorkspaceLocks(docsSources) {
 
 async function assertProjectNamespaceAvailable(project) {
   const contentDir = path.join(rootDir, 'content', 'docs');
-  const routePrefix = getProjectRoutePrefix(project.package);
+  const routePrefix = getProjectRoutePrefix(project);
   const reservedPaths = [
     path.join(contentDir, routePrefix),
     path.join(contentDir, `${routePrefix}.md`),
@@ -1314,6 +1464,7 @@ async function writeGeneratedNav(results, enabledProjects) {
     name: project.name,
     package: project.package,
     pages: navByPackage.get(project.package) ?? [],
+    route: getProjectRoutePrefix(project),
   }));
 
   const content = `/**

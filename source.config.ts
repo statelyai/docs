@@ -38,7 +38,13 @@ export default createGlobalConfig({
             : getProjectCheckoutDir(sourceConfig.package, sourceConfig.mode),
         config:
           sourceConfig.mode === 'workspace'
-            ? createDirectDocsWorkspaceModule('.', sourceConfig.include)
+            ? createDirectDocsWorkspaceModule(
+                '.',
+                sourceConfig.include,
+                sourceConfig.mounts?.map(
+                  (mount) => `${mount.source}/**/*.{json,yaml,yml}`,
+                ),
+              )
             : createDocsWorkspaceModule(getProjectDocsDir()),
       },
     ]),

@@ -8,5 +8,10 @@
     "commit": "7b5ac385d7d6fb7f5c2458dff9cc4440c523f268",
     "ref": "main",
     "source": "graph"
+  },
+  "xstate-v6": {
+    "commit": "d2db48696b27ac67904cd2abae5041a50af7950f",
+    "ref": "next",
+    "source": "xstate"
   }
 }

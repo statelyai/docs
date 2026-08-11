@@ -13,6 +13,7 @@ import { externalDocsCollections } from '@/lib/external-docs.generated';
 import {
   enabledExternalDocsSources,
   getDocsPageGitHubUrl,
+  getDocsSourceRoutePath,
   getDocsSourceByPackage,
   getProjectRoutePrefix,
   prefixRoute,
@@ -38,11 +39,10 @@ function withProjectRoutes(project: string, source: StaticSource) {
       files.map((file) => {
         if (sourceConfig?.mode === 'workspace') {
           const sourcePath = file.path.replace(/^\/+|\/+$/gu, '');
-          const docsPath =
-            file.type === 'page' && /^readme\.(md|mdx)$/iu.test(sourcePath)
-              ? 'index.md'
-              : sourcePath.replace(/^docs\//u, '');
-          const path = prefixRoute(project, docsPath);
+          const path = prefixRoute(
+            project,
+            getDocsSourceRoutePath(sourceConfig, sourcePath),
+          );
 
           return file.type === 'page'
             ? {

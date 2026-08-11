@@ -24,6 +24,36 @@ const snapshotPackages = new Set(
     .map((source) => source.package),
 );
 
+function getSourceRoutePrefix(source) {
+  return source.route ?? `packages/${source.package}`;
+}
+
+function getWorkspaceRoutePath(source, rel) {
+  const normalized = rel.replace(/\\/gu, '/').replace(/^\/+|\/+$/gu, '');
+  const mount = source.mounts
+    ?.filter(
+      (candidate) =>
+        normalized === candidate.source ||
+        normalized.startsWith(`${candidate.source}/`),
+    )
+    .sort((left, right) => right.source.length - left.source.length)[0];
+  const mountedPath = mount
+    ? normalized.slice(mount.source.length).replace(/^\/+/, '')
+    : normalized;
+
+  if (source.mounts && !mount) return null;
+
+  let docsPath = /^readme\.(md|mdx)$/iu.test(mountedPath)
+    ? ''
+    : (mount ? mountedPath : mountedPath.replace(/^docs\//u, ''))
+        .replace(/\.(md|mdx)$/iu, '');
+  docsPath = docsPath.replace(/(^|\/)(readme|index)$/iu, '');
+
+  return [mount?.route, docsPath]
+    .filter(Boolean)
+    .join('/');
+}
+
 /**
  * Minimal frontmatter parser: handles scalar string fields only (single-line,
  * optionally single/double quoted). Multi-line/array/nested values are skipped
@@ -131,14 +161,10 @@ for (const source of docsSourceConfigs) {
       pattern,
       tag: 'docs',
       toUrl(rel) {
-        const normalized = rel.replace(/\\/gu, '/');
-        const docsPath = /^readme\.(md|mdx)$/iu.test(normalized)
-          ? ''
-          : normalized.replace(/^docs\//u, '').replace(/\.(md|mdx)$/iu, '');
-
-        return docsPath === 'index' || docsPath === ''
-          ? `/docs/packages/${source.package}`
-          : `/docs/packages/${source.package}/${docsPath}`;
+        const docsPath = getWorkspaceRoutePath(source, rel);
+        if (docsPath === null) return null;
+        const prefix = `/docs/${getSourceRoutePrefix(source)}`;
+        return docsPath ? `${prefix}/${docsPath}` : prefix;
       },
     });
   }

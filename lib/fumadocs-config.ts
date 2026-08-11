@@ -150,6 +150,7 @@ export function createDocsWorkspaceModule(dir: string): Record<string, unknown> 
 export function createDirectDocsWorkspaceModule(
   dir = '.',
   files?: string[],
+  metaFiles?: string[],
 ): Record<string, unknown> {
   return {
     docs: defineDocs({
@@ -172,7 +173,7 @@ export function createDirectDocsWorkspaceModule(
       },
       meta: {
         ...sharedDocsCollectionOptions.meta,
-        files: ['docs/**/*.{json,yaml,yml}'],
+        files: metaFiles ?? ['docs/**/*.{json,yaml,yml}'],
       },
     }),
     default: createGlobalConfig({ mdxOptions: workspaceMdxOptions }),

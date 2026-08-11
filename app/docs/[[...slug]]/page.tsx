@@ -5,20 +5,31 @@ import {
   DocsPage,
   DocsTitle,
 } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getMDXComponents } from '@/mdx-components';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
-import { isExternalDocsSlug } from '@/lib/external-package-source';
+import {
+  isExternalDocsSlug,
+  getVersionedDocsRoot,
+  getVersionedDocsStaticParams,
+  resolveExternalPackageHref,
+} from '@/lib/external-package-source';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
   const page = source.getPage(params.slug);
-  if (!page) notFound();
+  if (!page) {
+    const versionedRoot = getVersionedDocsRoot(params.slug);
+    const firstPage = versionedRoot?.pages.find((item) => 'url' in item);
+    if (firstPage && 'url' in firstPage) redirect(firstPage.url);
+    notFound();
+  }
 
   const data = 'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
   const MDX = data.body;
+  const RelativeLink = createRelativeLink(source as any, page);
 
   return (
     <DocsPage toc={data.toc} full={data.full}>
@@ -34,8 +45,12 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         </div>
         <MDX
           components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source as any, page),
+            a: (linkProps) => (
+              <RelativeLink
+                {...linkProps}
+                href={resolveExternalPackageHref(page, linkProps.href)}
+              />
+            ),
           })}
         />
       </DocsBody>
@@ -48,9 +63,12 @@ export async function generateStaticParams() {
     return [];
   }
 
-  return source
-    .generateParams()
-    .filter((params) => !isExternalDocsSlug(params.slug));
+  return [
+    ...source
+      .generateParams()
+      .filter((params) => !isExternalDocsSlug(params.slug)),
+    ...getVersionedDocsStaticParams(),
+  ];
 }
 
 export async function generateMetadata(
@@ -58,7 +76,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);
-  if (!page) notFound();
+  if (!page) {
+    const versionedRoot = getVersionedDocsRoot(params.slug);
+    if (versionedRoot) return { title: versionedRoot.name };
+    notFound();
+  }
 
   return {
     title: page.data.title,

@@ -6,7 +6,9 @@ import {
   getDocsSourceByPackage,
   getDocsSourceGitRef,
   getDocsSourceRepo,
+  getDocsSourceRoutePath,
   getDocsSourceSubpath,
+  getProjectRoutePrefix,
   getProjectRepo,
   stripProjectPrefix,
 } from '@/lib/docs-sources';
@@ -15,9 +17,25 @@ export function isExternalDocsSlug(slugs: string[] = []): boolean {
   return slugs[0] === 'packages' && typeof slugs[1] === 'string';
 }
 
+export function getVersionedDocsRoot(slugs: string[] = []) {
+  const route = slugs.join('/');
+  return externalDocsNav.find(
+    (sourceConfig) =>
+      !sourceConfig.route.startsWith('packages/') && sourceConfig.route === route,
+  );
+}
+
+export function getVersionedDocsStaticParams() {
+  return externalDocsNav
+    .filter((sourceConfig) => !sourceConfig.route.startsWith('packages/'))
+    .map((sourceConfig) => ({ slug: sourceConfig.route.split('/') }));
+}
+
 export function getExternalPackageStaticParams() {
-  return externalDocsNav.flatMap((sourceConfig) =>
-    sourceConfig.pages.flatMap((page) => {
+  return externalDocsNav.flatMap((sourceConfig) => {
+    if (sourceConfig.route !== `packages/${sourceConfig.package}`) return [];
+
+    return sourceConfig.pages.flatMap((page) => {
       if (!('url' in page)) return [];
 
       const [, docsRoot, packagesRoot, packageName, ...slug] =
@@ -37,8 +55,8 @@ export function getExternalPackageStaticParams() {
           slug,
         },
       ];
-    }),
-  );
+    });
+  });
 }
 
 export function resolveExternalPackageHref(
@@ -64,6 +82,23 @@ export function resolveExternalPackageHref(
   );
 
   if (workspacePath.startsWith('../')) return href;
+
+  const isIncludedMarkdown =
+    /\.(md|mdx)$/iu.test(workspacePath) &&
+    (sourceConfig.include ?? [
+      'README.md',
+      'docs/**/*.md',
+      'docs/**/*.mdx',
+    ]).some((pattern) => path.matchesGlob(workspacePath, pattern));
+
+  if (isIncludedMarkdown) {
+    let routePath = getDocsSourceRoutePath(sourceConfig, workspacePath)
+      .replace(/\.(md|mdx)$/iu, '')
+      .replace(/(^|\/)(readme|index)$/iu, '');
+    routePath = routePath.replace(/^\/+|\/+$/gu, '');
+    const prefix = `/docs/${getProjectRoutePrefix(sourceConfig.package)}`;
+    return `${routePath ? `${prefix}/${routePath}` : prefix}${suffix}`;
+  }
 
   const sourcePath = path.posix.join(
     getDocsSourceSubpath(sourceConfig.source),
