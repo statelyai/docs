@@ -18,6 +18,11 @@
     "name": "XState v6 alpha",
     "package": "xstate-v6",
     "source": "xstate",
+    "notice": {
+      "title": "XState v6 is in alpha",
+      "description": "APIs and behavior may change before the stable release.",
+      "type": "warning"
+    },
     "include": [
       "docs/**/*.md",
       "docs/**/*.mdx",

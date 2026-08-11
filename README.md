@@ -77,6 +77,11 @@ The external docs manifest lives in `docs-sources.json`:
     "name": "XState v6 alpha",
     "package": "xstate-v6",
     "source": "xstate",
+    "notice": {
+      "title": "XState v6 is in alpha",
+      "description": "APIs and behavior may change before the stable release.",
+      "type": "warning"
+    },
     "include": [
       "docs/**/*.md",
       "docs/**/*.mdx",
@@ -149,6 +154,7 @@ Each entry means:
 - `name`: display name in the docs sidebar
 - `package`: public route segment under `/docs/packages/<package>`
 - `source`: repo root or repo subpath to scan for docs content
+- `notice`: optional source-wide callout shown on every page
 - `ref`: Git branch or tag; defaults to `main`
 - `include`: optional Markdown glob allowlist relative to `source`
 - `mounts`: optional source-directory to route-directory mappings

@@ -15,7 +15,11 @@ function toExternalProjectPage(sourceConfig: (typeof externalDocsNav)[number]) {
       'separator' in page
         ? {
             type: 'separator' as const,
-            name: page.title,
+            name: (
+              <span className="text-xs font-medium text-fd-muted-foreground">
+                {page.title}
+              </span>
+            ),
           }
         : {
             type: 'page' as const,

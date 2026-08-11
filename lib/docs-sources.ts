@@ -5,6 +5,11 @@ export type DocsSourceConfig = {
   name: string;
   package: string;
   source: string;
+  notice?: {
+    title: string;
+    description: string;
+    type?: 'info' | 'warning';
+  };
   include?: string[];
   mode?: 'snapshot' | 'workspace';
   mounts?: Array<{
