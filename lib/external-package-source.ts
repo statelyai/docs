@@ -12,6 +12,7 @@ import {
   getProjectRepo,
   stripProjectPrefix,
 } from '@/lib/docs-sources';
+import { parseWorkspaceRelativeHref } from '@/lib/workspace-link.mjs';
 
 export function isExternalDocsSlug(slugs: string[] = []): boolean {
   return slugs[0] === 'packages' && typeof slugs[1] === 'string';
@@ -67,14 +68,14 @@ export function resolveExternalPackageHref(
 
   const resolved = source.resolveHref(href, page);
   if (resolved !== href) return resolved;
-  if (!href.startsWith('./') && !href.startsWith('../')) return href;
 
   const sourceConfig = getDocsSourceByPackage(page.type);
   if (sourceConfig?.mode !== 'workspace') return href;
 
-  const suffixIndex = href.search(/[?#]/u);
-  const target = suffixIndex === -1 ? href : href.slice(0, suffixIndex);
-  const suffix = suffixIndex === -1 ? '' : href.slice(suffixIndex);
+  const relativeHref = parseWorkspaceRelativeHref(href);
+  if (!relativeHref) return href;
+
+  const { target, suffix } = relativeHref;
   const sourcePagePath =
     page.data.sourcePath ?? stripProjectPrefix(page.type, page.path);
   const workspacePath = path.posix.normalize(

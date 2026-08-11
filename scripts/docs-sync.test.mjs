@@ -6,6 +6,38 @@ import test from 'node:test';
 
 const rootDir = process.cwd();
 
+test('workspace links include bare relative targets', async () => {
+  const { parseWorkspaceRelativeHref } = await import(
+    '../lib/workspace-link.mjs'
+  );
+
+  assert.deepEqual(parseWorkspaceRelativeHref('docs/layout.md#usage'), {
+    target: 'docs/layout.md',
+    suffix: '#usage',
+  });
+  assert.deepEqual(parseWorkspaceRelativeHref('examples/foo.ts?raw=1'), {
+    target: 'examples/foo.ts',
+    suffix: '?raw=1',
+  });
+  assert.deepEqual(parseWorkspaceRelativeHref('../CONTRIBUTING.md'), {
+    target: '../CONTRIBUTING.md',
+    suffix: '',
+  });
+  assert.deepEqual(parseWorkspaceRelativeHref('./README.md'), {
+    target: './README.md',
+    suffix: '',
+  });
+  assert.equal(parseWorkspaceRelativeHref('/docs/layout'), undefined);
+  assert.equal(
+    parseWorkspaceRelativeHref('//cdn.example.com/file.js'),
+    undefined,
+  );
+  assert.equal(parseWorkspaceRelativeHref('#usage'), undefined);
+  assert.equal(parseWorkspaceRelativeHref('?raw=1'), undefined);
+  assert.equal(parseWorkspaceRelativeHref('https://example.com'), undefined);
+  assert.equal(parseWorkspaceRelativeHref('mailto:docs@example.com'), undefined);
+});
+
 test('workspace docs use locked checkouts and available source-owned navigation', async () => {
   const output = execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
     cwd: rootDir,

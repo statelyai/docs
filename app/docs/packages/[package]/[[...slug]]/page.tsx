@@ -17,6 +17,7 @@ import {
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
 import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
+import { DocsSourceNotice } from '@/components/docs-source-notice';
 
 type RenderableDocsData = {
   body: React.ComponentType<{
@@ -57,6 +58,7 @@ export default async function Page(
             githubUrl={getPageGitHubUrl(page)}
           />
         </div>
+        <DocsSourceNotice sourceId={page.type} />
         <MDX
           components={getMDXComponents({
             a: (linkProps) => (

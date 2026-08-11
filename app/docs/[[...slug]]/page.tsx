@@ -10,8 +10,7 @@ import { getMDXComponents } from '@/mdx-components';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
-import { Callout } from 'fumadocs-ui/components/callout';
-import { getDocsSourceByPackage } from '@/lib/docs-sources';
+import { DocsSourceNotice } from '@/components/docs-source-notice';
 import {
   isExternalDocsSlug,
   getVersionedDocsRoot,
@@ -32,7 +31,6 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const data = 'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data;
   const MDX = data.body;
   const RelativeLink = createRelativeLink(source as any, page);
-  const notice = getDocsSourceByPackage(page.type)?.notice;
 
   return (
     <DocsPage toc={data.toc} full={data.full}>
@@ -46,16 +44,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
             githubUrl={getPageGitHubUrl(page)}
           />
         </div>
-        {notice ? (
-          <Callout
-            className="mt-6"
-            role="note"
-            title={notice.title}
-            type={notice.type}
-          >
-            {notice.description}
-          </Callout>
-        ) : null}
+        <DocsSourceNotice sourceId={page.type} />
         <MDX
           components={getMDXComponents({
             a: (linkProps) => (
