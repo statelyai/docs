@@ -211,11 +211,11 @@ export const externalDocsNav = [
       },
       {
         "title": "Quick start",
-        "url": "/docs/xstate/v6/start/quick-start"
+        "url": "/docs/xstate/v6/quick-start"
       },
       {
         "title": "Choose XState",
-        "url": "/docs/xstate/v6/start/choose-xstate"
+        "url": "/docs/xstate/v6/choose-xstate"
       },
       {
         "separator": true,
@@ -223,35 +223,35 @@ export const externalDocsNav = [
       },
       {
         "title": "Why state machines?",
-        "url": "/docs/xstate/v6/learn/why-state-machines"
+        "url": "/docs/xstate/v6/why-state-machines"
       },
       {
         "title": "Your first machine",
-        "url": "/docs/xstate/v6/learn/your-first-machine"
+        "url": "/docs/xstate/v6/your-first-machine"
       },
       {
         "title": "States, events and transitions",
-        "url": "/docs/xstate/v6/learn/states-events-transitions"
+        "url": "/docs/xstate/v6/states-events-transitions"
       },
       {
         "title": "Data and effects",
-        "url": "/docs/xstate/v6/learn/data-and-effects"
+        "url": "/docs/xstate/v6/data-and-effects"
       },
       {
         "title": "Async logic",
-        "url": "/docs/xstate/v6/learn/async-logic"
+        "url": "/docs/xstate/v6/async-logic"
       },
       {
         "title": "Actors",
-        "url": "/docs/xstate/v6/learn/actors"
+        "url": "/docs/xstate/v6/actors"
       },
       {
         "title": "Statecharts",
-        "url": "/docs/xstate/v6/learn/statecharts"
+        "url": "/docs/xstate/v6/statecharts"
       },
       {
         "title": "Model application behavior",
-        "url": "/docs/xstate/v6/learn/modeling"
+        "url": "/docs/xstate/v6/modeling"
       },
       {
         "separator": true,
@@ -259,135 +259,135 @@ export const externalDocsNav = [
       },
       {
         "title": "Handle async requests",
-        "url": "/docs/xstate/v6/build/async-requests"
+        "url": "/docs/xstate/v6/async-requests"
       },
       {
         "title": "Add retries and timeouts",
-        "url": "/docs/xstate/v6/build/retries-and-timeouts"
+        "url": "/docs/xstate/v6/retries-and-timeouts"
       },
       {
         "title": "Cancel async work",
-        "url": "/docs/xstate/v6/build/cancellation"
+        "url": "/docs/xstate/v6/cancellation"
       },
       {
         "title": "Build forms and wizards",
-        "url": "/docs/xstate/v6/build/forms-and-wizards"
+        "url": "/docs/xstate/v6/forms-and-wizards"
       },
       {
         "title": "Run backend workflows",
-        "url": "/docs/xstate/v6/build/backend-workflows"
+        "url": "/docs/xstate/v6/backend-workflows"
       },
       {
         "title": "Persist and restore actors",
-        "url": "/docs/xstate/v6/build/persistence"
+        "url": "/docs/xstate/v6/persist-and-restore-actors"
       },
       {
         "title": "Test XState logic",
-        "url": "/docs/xstate/v6/build/testing"
+        "url": "/docs/xstate/v6/testing"
       },
       {
         "title": "Inspect actor systems",
-        "url": "/docs/xstate/v6/build/inspection"
+        "url": "/docs/xstate/v6/inspect-actor-systems"
       },
       {
         "title": "Troubleshooting",
-        "url": "/docs/xstate/v6/build/troubleshooting"
+        "url": "/docs/xstate/v6/troubleshooting"
+      },
+      {
+        "separator": true,
+        "title": "Machine reference"
+      },
+      {
+        "title": "Machine configuration",
+        "url": "/docs/xstate/v6/configuration"
+      },
+      {
+        "title": "States",
+        "url": "/docs/xstate/v6/states"
+      },
+      {
+        "title": "Transitions",
+        "url": "/docs/xstate/v6/transitions"
+      },
+      {
+        "title": "Context",
+        "url": "/docs/xstate/v6/context"
+      },
+      {
+        "title": "Input and output",
+        "url": "/docs/xstate/v6/input-output"
+      },
+      {
+        "title": "Actions",
+        "url": "/docs/xstate/v6/actions"
+      },
+      {
+        "title": "Guards",
+        "url": "/docs/xstate/v6/guards"
+      },
+      {
+        "title": "Delays",
+        "url": "/docs/xstate/v6/delays"
+      },
+      {
+        "title": "Final, history and parallel states",
+        "url": "/docs/xstate/v6/final-history-parallel"
+      },
+      {
+        "separator": true,
+        "title": "Actor reference"
+      },
+      {
+        "title": "Create actors",
+        "url": "/docs/xstate/v6/create-actor"
+      },
+      {
+        "title": "Actor snapshots",
+        "url": "/docs/xstate/v6/snapshots"
+      },
+      {
+        "title": "Invoke actors",
+        "url": "/docs/xstate/v6/invoke"
+      },
+      {
+        "title": "Spawn actors",
+        "url": "/docs/xstate/v6/spawn"
+      },
+      {
+        "title": "Actor logic",
+        "url": "/docs/xstate/v6/actor-logic"
+      },
+      {
+        "title": "Actor systems",
+        "url": "/docs/xstate/v6/systems"
+      },
+      {
+        "title": "Lifecycle and errors",
+        "url": "/docs/xstate/v6/lifecycle-and-errors"
       },
       {
         "separator": true,
         "title": "Reference"
       },
       {
-        "separator": true,
-        "title": "Machines"
-      },
-      {
-        "title": "Machine configuration",
-        "url": "/docs/xstate/v6/reference/machine/configuration"
-      },
-      {
-        "title": "States",
-        "url": "/docs/xstate/v6/reference/machine/states"
-      },
-      {
-        "title": "Transitions",
-        "url": "/docs/xstate/v6/reference/machine/transitions"
-      },
-      {
-        "title": "Context",
-        "url": "/docs/xstate/v6/reference/machine/context"
-      },
-      {
-        "title": "Input and output",
-        "url": "/docs/xstate/v6/reference/machine/input-output"
-      },
-      {
-        "title": "Actions",
-        "url": "/docs/xstate/v6/reference/machine/actions"
-      },
-      {
-        "title": "Guards",
-        "url": "/docs/xstate/v6/reference/machine/guards"
-      },
-      {
-        "title": "Delays",
-        "url": "/docs/xstate/v6/reference/machine/delays"
-      },
-      {
-        "title": "Final, history and parallel states",
-        "url": "/docs/xstate/v6/reference/machine/final-history-parallel"
-      },
-      {
-        "separator": true,
-        "title": "Actors"
-      },
-      {
-        "title": "Create actors",
-        "url": "/docs/xstate/v6/reference/actors/create-actor"
-      },
-      {
-        "title": "Actor snapshots",
-        "url": "/docs/xstate/v6/reference/actors/snapshots"
-      },
-      {
-        "title": "Invoke actors",
-        "url": "/docs/xstate/v6/reference/actors/invoke"
-      },
-      {
-        "title": "Spawn actors",
-        "url": "/docs/xstate/v6/reference/actors/spawn"
-      },
-      {
-        "title": "Actor logic",
-        "url": "/docs/xstate/v6/reference/actors/actor-logic"
-      },
-      {
-        "title": "Actor systems",
-        "url": "/docs/xstate/v6/reference/actors/systems"
-      },
-      {
-        "title": "Lifecycle and errors",
-        "url": "/docs/xstate/v6/reference/actors/lifecycle-and-errors"
-      },
-      {
         "title": "TypeScript",
-        "url": "/docs/xstate/v6/reference/typescript"
+        "url": "/docs/xstate/v6/typescript"
       },
       {
         "title": "Persistence",
-        "url": "/docs/xstate/v6/reference/persistence"
+        "url": "/docs/xstate/v6/persistence"
       },
       {
         "title": "Inspection",
-        "url": "/docs/xstate/v6/reference/inspection"
+        "url": "/docs/xstate/v6/inspection"
       },
       {
         "title": "Utilities",
-        "url": "/docs/xstate/v6/reference/utilities"
+        "url": "/docs/xstate/v6/utilities"
       },
       {
         "title": "Glossary",
-        "url": "/docs/xstate/v6/reference/glossary"
+        "url": "/docs/xstate/v6/glossary"
       },
       {
         "separator": true,
@@ -395,7 +395,15 @@ export const externalDocsNav = [
       },
       {
         "title": "Migrate from XState v5 to v6",
-        "url": "/docs/xstate/v6/migrate/xstate-v5-to-v6"
+        "url": "/docs/xstate/v6/xstate-v5-to-v6"
+      },
+      {
+        "separator": true,
+        "title": "Contribute"
+      },
+      {
+        "title": "Contributing documentation",
+        "url": "/docs/xstate/v6/documentation"
       },
       {
         "separator": true,
