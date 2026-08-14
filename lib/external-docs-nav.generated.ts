@@ -218,6 +218,14 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/choose-xstate"
       },
       {
+        "title": "Use with your framework",
+        "url": "/docs/xstate/v6/frameworks"
+      },
+      {
+        "title": "Examples",
+        "url": "/docs/xstate/v6/examples"
+      },
+      {
         "separator": true,
         "title": "Learn"
       },
@@ -228,6 +236,10 @@ export const externalDocsNav = [
       {
         "title": "Your first machine",
         "url": "/docs/xstate/v6/your-first-machine"
+      },
+      {
+        "title": "Tutorial: build a media player",
+        "url": "/docs/xstate/v6/tutorial"
       },
       {
         "title": "States, events and transitions",
@@ -248,6 +260,10 @@ export const externalDocsNav = [
       {
         "title": "Statecharts",
         "url": "/docs/xstate/v6/statecharts"
+      },
+      {
+        "title": "How XState runs your machine",
+        "url": "/docs/xstate/v6/how-xstate-runs-machines"
       },
       {
         "title": "Model application behavior",
@@ -302,6 +318,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/configuration"
       },
       {
+        "title": "Setup and provide",
+        "url": "/docs/xstate/v6/setup-and-provide"
+      },
+      {
         "title": "States",
         "url": "/docs/xstate/v6/states"
       },
@@ -318,6 +338,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/input-output"
       },
       {
+        "title": "State input",
+        "url": "/docs/xstate/v6/state-input"
+      },
+      {
         "title": "Actions",
         "url": "/docs/xstate/v6/actions"
       },
@@ -330,8 +354,32 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/delays"
       },
       {
-        "title": "Final, history and parallel states",
-        "url": "/docs/xstate/v6/final-history-parallel"
+        "title": "Timeouts",
+        "url": "/docs/xstate/v6/timeouts"
+      },
+      {
+        "title": "Internal events",
+        "url": "/docs/xstate/v6/internal-events"
+      },
+      {
+        "title": "Choice states",
+        "url": "/docs/xstate/v6/choice-states"
+      },
+      {
+        "title": "Route states",
+        "url": "/docs/xstate/v6/route-states"
+      },
+      {
+        "title": "Final states",
+        "url": "/docs/xstate/v6/final-states"
+      },
+      {
+        "title": "History states",
+        "url": "/docs/xstate/v6/history-states"
+      },
+      {
+        "title": "Parallel states",
+        "url": "/docs/xstate/v6/parallel-states"
       },
       {
         "separator": true,
@@ -346,6 +394,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/snapshots"
       },
       {
+        "title": "Selectors",
+        "url": "/docs/xstate/v6/selectors"
+      },
+      {
         "title": "Invoke actors",
         "url": "/docs/xstate/v6/invoke"
       },
@@ -356,6 +408,14 @@ export const externalDocsNav = [
       {
         "title": "Actor logic",
         "url": "/docs/xstate/v6/actor-logic"
+      },
+      {
+        "title": "Emitted events",
+        "url": "/docs/xstate/v6/emitted-events"
+      },
+      {
+        "title": "Listen and subscribe to actors",
+        "url": "/docs/xstate/v6/listen-and-subscribe"
       },
       {
         "title": "Actor systems",
@@ -378,12 +438,24 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/persistence"
       },
       {
+        "title": "Serialization",
+        "url": "/docs/xstate/v6/serialization"
+      },
+      {
         "title": "Inspection",
         "url": "/docs/xstate/v6/inspection"
       },
       {
         "title": "Utilities",
         "url": "/docs/xstate/v6/utilities"
+      },
+      {
+        "title": "Cheatsheet",
+        "url": "/docs/xstate/v6/cheatsheet"
+      },
+      {
+        "title": "Frequently asked questions",
+        "url": "/docs/xstate/v6/faq"
       },
       {
         "title": "Glossary",
@@ -422,12 +494,20 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/react/shared-actors"
       },
       {
+        "title": "Global state",
+        "url": "/docs/xstate/v6/react/global-state"
+      },
+      {
         "title": "Input and restored snapshots",
         "url": "/docs/xstate/v6/react/input-and-snapshots"
       },
       {
         "title": "Server rendering",
         "url": "/docs/xstate/v6/react/server-rendering"
+      },
+      {
+        "title": "Test React components",
+        "url": "/docs/xstate/v6/react/testing"
       },
       {
         "separator": true,
@@ -454,6 +534,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/vue/server-rendering"
       },
       {
+        "title": "Test Vue components with actors",
+        "url": "/docs/xstate/v6/vue/testing"
+      },
+      {
         "separator": true,
         "title": "Svelte"
       },
@@ -478,6 +562,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/svelte/server-rendering"
       },
       {
+        "title": "Test Svelte components with actors",
+        "url": "/docs/xstate/v6/svelte/testing"
+      },
+      {
         "separator": true,
         "title": "Solid"
       },
@@ -500,6 +588,10 @@ export const externalDocsNav = [
       {
         "title": "Server rendering",
         "url": "/docs/xstate/v6/solid/server-rendering"
+      },
+      {
+        "title": "Test Solid components with actors",
+        "url": "/docs/xstate/v6/solid/testing"
       },
       {
         "separator": true,
