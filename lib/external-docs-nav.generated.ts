@@ -294,6 +294,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/backend-workflows"
       },
       {
+        "title": "Durable execution",
+        "url": "/docs/xstate/v6/durable-execution"
+      },
+      {
         "title": "Persist and restore actors",
         "url": "/docs/xstate/v6/persist-and-restore-actors"
       },
