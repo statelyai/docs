@@ -10,7 +10,7 @@
     "source": "graph"
   },
   "xstate-v6": {
-    "commit": "c1dab220fac3a43beafd6462eab81064e717eeaf",
+    "commit": "6e3b9d354a84c5d66ca6c3a6383808077f9a65a5",
     "ref": "next",
     "source": "xstate"
   }

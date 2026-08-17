@@ -206,10 +206,6 @@ export const externalDocsNav = [
     "package": "xstate-v6",
     "pages": [
       {
-        "separator": true,
-        "title": "Start"
-      },
-      {
         "title": "Quick start",
         "url": "/docs/xstate/v6/quick-start"
       },
@@ -224,10 +220,6 @@ export const externalDocsNav = [
       {
         "title": "Examples",
         "url": "/docs/xstate/v6/examples"
-      },
-      {
-        "separator": true,
-        "title": "Learn"
       },
       {
         "title": "Why state machines?",
@@ -270,10 +262,6 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/modeling"
       },
       {
-        "separator": true,
-        "title": "Build"
-      },
-      {
         "title": "Handle async requests",
         "url": "/docs/xstate/v6/async-requests"
       },
@@ -312,10 +300,6 @@ export const externalDocsNav = [
       {
         "title": "Troubleshooting",
         "url": "/docs/xstate/v6/troubleshooting"
-      },
-      {
-        "separator": true,
-        "title": "Machine reference"
       },
       {
         "title": "Machine configuration",
@@ -386,10 +370,6 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/parallel-states"
       },
       {
-        "separator": true,
-        "title": "Actor reference"
-      },
-      {
         "title": "Create actors",
         "url": "/docs/xstate/v6/create-actor"
       },
@@ -430,10 +410,6 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/lifecycle-and-errors"
       },
       {
-        "separator": true,
-        "title": "Reference"
-      },
-      {
         "title": "TypeScript",
         "url": "/docs/xstate/v6/typescript"
       },
@@ -466,16 +442,8 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/glossary"
       },
       {
-        "separator": true,
-        "title": "Migrate"
-      },
-      {
         "title": "Migrate from XState v5 to v6",
         "url": "/docs/xstate/v6/xstate-v5-to-v6"
-      },
-      {
-        "separator": true,
-        "title": "Contribute"
       },
       {
         "title": "Contributing documentation",
