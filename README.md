@@ -1,26 +1,22 @@
-# fumadocs
+# Stately documentation
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+Next.js and Fumadocs site for Stately's product and package documentation.
 
-Run development server:
+## Local development
+
+<!-- runtime and development command matching package.json#engines, packageManager, and scripts.dev -->
+
+Requires Node.js 24 or newer and pnpm 11.
 
 ```bash
-npm run dev
-# or
+pnpm install
 pnpm dev
-# or
-yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+The Portless URL is printed in the terminal. `pnpm dev` syncs external docs and
+rebuilds the search index before starting Next.js.
 
-## Explore
-
-In the project, you can see:
-
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+## Application routes
 
 <!-- public routes matching app route handlers -->
 
@@ -31,26 +27,10 @@ In the project, you can see:
 | `/api/search`           | Public documentation search.                             |
 | `/api/docs/chat`        | Public documentation AI chat.                             |
 
-### Fumadocs MDX
-
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
-
 ## Multi-Repo Docs Sync
 
 This repo can ingest docs content from other `statelyai/*` repos and mount it
-under `stately.ai/docs/packages/...`.
+under a configured `stately.ai/docs/...` route.
 
 The external docs manifest lives in `docs-sources.json`:
 
@@ -152,7 +132,7 @@ The external docs manifest lives in `docs-sources.json`:
 Each entry means:
 
 - `name`: display name in the docs sidebar
-- `package`: public route segment under `/docs/packages/<package>`
+- `package`: stable source key and default route segment
 - `source`: repo root or repo subpath to scan for docs content
 - `notice`: optional source-wide callout shown on every page
 - `ref`: Git branch or tag; defaults to `main`
@@ -190,15 +170,19 @@ Use `pnpm docs:lock` intentionally to advance workspace sources to the latest
 commit on their configured ref. Normal builds only consume the recorded commit,
 so a branch update cannot silently change a deployment.
 
-### Flattening Rules
+### Routing and Flattening
 
-- Root `README.md` becomes `index.md` and maps to `/docs/packages/<package>`.
-- Workspace `README.md(x)` files inside mounts map to the mount or nested
-  directory index.
-- Included nested `**/README.md(x)` are treated as index-like and flatten to
-  their parent path:
+Workspace sources preserve their relative hierarchy under `route`. When
+`mounts` are configured, each source directory maps to its mount route and its
+`README.md(x)` maps to that route's index. Nested `docs/meta.json` files control
+workspace navigation order and visibility.
+
+Compatibility and snapshot sources flatten pages into their route namespace:
+
+- Root `README.md` becomes the route index.
+- Included nested `**/README.md(x)` become their parent path:
   - `src/formats/adjacency-list/README.md` -> `src-formats-adjacency-list.md`
-- `docs/**/*.{md,mdx}` also flatten into the same package namespace.
+- `docs/**/*.{md,mdx}` flatten into the same route namespace.
 - Optional frontmatter `slug` overrides the flattened route segment.
 - Duplicate flattened slugs fail the sync.
 - A Fumadocs `docs/meta.json` `pages` array controls navigation order and
