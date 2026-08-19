@@ -1,5 +1,8 @@
 packages:
   - '.'
+minimumReleaseAgeExclude:
+  - '@fumadocs/base-ui@16.14.5'
+  - fumadocs-core@16.14.5
 onlyBuiltDependencies:
   - esbuild
   - sharp
