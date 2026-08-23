@@ -15,9 +15,8 @@ export default function PricingPage() {
               Pricing
             </h1>
             <p className="text-lg md:text-xl text-fd-muted-foreground max-w-3xl mx-auto">
-              Every new account starts with a free 7-day trial of Pro, no credit
-              card required. Upgrade to keep building and working privately. Get
-              a Team plan to add users and enable collaboration.
+              Upgrade to Pro to keep building and working privately. Get a Team
+              plan to add users and enable collaboration.
             </p>
           </div>
 
@@ -30,9 +29,7 @@ export default function PricingPage() {
                 price="$33"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$39 per month for a monthly plan."
-                trialNote="Free 7-day trial included"
-                trialDetail="When your trial ends, your machines and projects become read-only until you upgrade."
-                cta="Start a free trial"
+                cta="Upgrade to Pro"
                 ctaHref="/registry/billing"
                 highlighted
                 features={[
@@ -90,7 +87,7 @@ export default function PricingPage() {
                 price="$167"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$199 per month for a monthly plan."
-                cta="Get started"
+                cta="Upgrade to Team"
                 ctaHref="/registry/billing"
                 features={[
                   {
@@ -177,8 +174,8 @@ export default function PricingPage() {
 
           {/* Free is a state, not a plan: it is what an account falls back to */}
           <p className="mt-8 text-sm text-fd-muted-foreground text-center max-w-3xl mx-auto">
-            Not ready to upgrade? You can keep viewing your machines and
-            projects, and browse and simulate public machines, for free.
+            Not ready to upgrade? The free plan includes 2 public projects and 3
+            machines you create, plus browsing and simulating public machines.
           </p>
         </div>
       </main>
@@ -200,10 +197,6 @@ interface PricingCardProps {
   customPrice?: string;
   priceDetails?: string;
   priceSubtext?: string;
-  /** Short badge under the price, e.g. "Free 7-day trial included". */
-  trialNote?: string;
-  /** Fine print under the trial note, e.g. what expiry means. */
-  trialDetail?: string;
   cta: string;
   ctaHref: string;
   features: Feature[];
@@ -216,8 +209,6 @@ function PricingCard({
   customPrice,
   priceDetails,
   priceSubtext,
-  trialNote,
-  trialDetail,
   cta,
   ctaHref,
   features,
@@ -261,18 +252,6 @@ function PricingCard({
           <div className="text-2xl font-semibold text-fd-muted-foreground mb-4">
             {customPrice}
           </div>
-        )}
-
-        {trialNote && (
-          <div className="mb-2">
-            <span className="inline-block rounded-md bg-blue-500/15 px-2 py-1 text-xs font-semibold text-blue-500">
-              {trialNote}
-            </span>
-          </div>
-        )}
-
-        {trialDetail && (
-          <p className="mb-4 text-xs text-fd-muted-foreground">{trialDetail}</p>
         )}
 
         {/* CTA Button */}
