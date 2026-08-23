@@ -175,7 +175,7 @@ export default function PricingPage() {
           {/* Free is a state, not a plan: it is what an account falls back to */}
           <p className="mt-8 text-sm text-fd-muted-foreground text-center max-w-3xl mx-auto">
             Not ready to upgrade? The free plan includes 2 public projects and 3
-            machines you create, plus browsing and simulating public machines.
+            machines, plus browsing and simulating public machines.
           </p>
         </div>
       </main>
