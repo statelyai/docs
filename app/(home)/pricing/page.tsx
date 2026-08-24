@@ -15,24 +15,65 @@ export default function PricingPage() {
               Pricing
             </h1>
             <p className="text-lg md:text-xl text-fd-muted-foreground max-w-3xl mx-auto">
-              Every new account starts with a free 7-day trial of Pro, no credit
-              card required. Upgrade to keep building and working privately. Get
-              a Team plan to add users and enable collaboration.
+              Build state machines for free. Upgrade to Pro to work privately
+              and unlock more features. Get a Team plan to add users and enable
+              collaboration.
             </p>
           </div>
 
           {/* Main Tiers with Arrows */}
           <div className="mb-12">
-            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 items-center max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 items-center max-w-6xl mx-auto">
+              {/* Free Tier */}
+              <PricingCard
+                name="Free"
+                price="$0"
+                priceDetails="Free forever."
+                cta="Get started"
+                ctaHref="/registry/signup"
+                features={[
+                  {
+                    text: '2 projects',
+                    subtext: 'Your Drafts project plus one more',
+                    href: '/docs/studio-community-plan',
+                  },
+                  {
+                    text: '3 machines',
+                    subtext:
+                      'Projects and machines you fork count towards these limits',
+                    href: '/docs/studio-community-plan',
+                  },
+                  {
+                    text: 'Create and edit state machines in the editor',
+                    href: '/docs/projects',
+                  },
+                  {
+                    text: 'Browse and simulate public machines',
+                    href: '/docs/simulate-mode',
+                  },
+                  {
+                    text: 'Export to JavaScript and TypeScript',
+                    href: '/docs/export-as-code',
+                  },
+                  {
+                    text: 'Community support',
+                    href: 'https://discord.stately.ai',
+                  },
+                ]}
+              />
+
+              {/* Arrow */}
+              <div className="hidden md:flex justify-center">
+                <ArrowRight className="w-8 h-8 text-fd-muted-foreground" />
+              </div>
+
               {/* Pro Tier */}
               <PricingCard
                 name="Pro"
                 price="$33"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$39 per month for a monthly plan."
-                trialNote="Free 7-day trial included"
-                trialDetail="When your trial ends, your machines and projects become read-only until you upgrade."
-                cta="Start a free trial"
+                cta="Upgrade to Pro"
                 ctaHref="/registry/billing"
                 highlighted
                 features={[
@@ -90,7 +131,7 @@ export default function PricingPage() {
                 price="$167"
                 priceDetails="per month for an annual plan."
                 priceSubtext="$199 per month for a monthly plan."
-                cta="Get started"
+                cta="Upgrade to Team"
                 ctaHref="/registry/billing"
                 features={[
                   {
@@ -175,10 +216,9 @@ export default function PricingPage() {
             />
           </div>
 
-          {/* Free is a state, not a plan: it is what an account falls back to */}
           <p className="mt-8 text-sm text-fd-muted-foreground text-center max-w-3xl mx-auto">
-            Not ready to upgrade? You can keep viewing your machines and
-            projects, and browse and simulate public machines, for free.
+            Everything you make on the free plan stays editable. The limits only
+            apply to creating more.
           </p>
         </div>
       </main>
@@ -200,10 +240,6 @@ interface PricingCardProps {
   customPrice?: string;
   priceDetails?: string;
   priceSubtext?: string;
-  /** Short badge under the price, e.g. "Free 7-day trial included". */
-  trialNote?: string;
-  /** Fine print under the trial note, e.g. what expiry means. */
-  trialDetail?: string;
   cta: string;
   ctaHref: string;
   features: Feature[];
@@ -216,8 +252,6 @@ function PricingCard({
   customPrice,
   priceDetails,
   priceSubtext,
-  trialNote,
-  trialDetail,
   cta,
   ctaHref,
   features,
@@ -261,18 +295,6 @@ function PricingCard({
           <div className="text-2xl font-semibold text-fd-muted-foreground mb-4">
             {customPrice}
           </div>
-        )}
-
-        {trialNote && (
-          <div className="mb-2">
-            <span className="inline-block rounded-md bg-blue-500/15 px-2 py-1 text-xs font-semibold text-blue-500">
-              {trialNote}
-            </span>
-          </div>
-        )}
-
-        {trialDetail && (
-          <p className="mb-4 text-xs text-fd-muted-foreground">{trialDetail}</p>
         )}
 
         {/* CTA Button */}
