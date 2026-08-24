@@ -15,14 +15,58 @@ export default function PricingPage() {
               Pricing
             </h1>
             <p className="text-lg md:text-xl text-fd-muted-foreground max-w-3xl mx-auto">
-              Upgrade to Pro to keep building and working privately. Get a Team
-              plan to add users and enable collaboration.
+              Build state machines for free. Upgrade to Pro to work privately
+              and unlock more features. Get a Team plan to add users and enable
+              collaboration.
             </p>
           </div>
 
           {/* Main Tiers with Arrows */}
           <div className="mb-12">
-            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 items-center max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-6 items-center max-w-6xl mx-auto">
+              {/* Free Tier */}
+              <PricingCard
+                name="Free"
+                price="$0"
+                priceDetails="Free forever."
+                cta="Get started"
+                ctaHref="/registry/signup"
+                features={[
+                  {
+                    text: '2 projects',
+                    subtext: 'Your Drafts project plus one more',
+                    href: '/docs/studio-community-plan',
+                  },
+                  {
+                    text: '3 machines',
+                    subtext:
+                      'Projects and machines you fork count towards these limits',
+                    href: '/docs/studio-community-plan',
+                  },
+                  {
+                    text: 'Create and edit state machines in the editor',
+                    href: '/docs/projects',
+                  },
+                  {
+                    text: 'Browse and simulate public machines',
+                    href: '/docs/simulate-mode',
+                  },
+                  {
+                    text: 'Export to JavaScript and TypeScript',
+                    href: '/docs/export-as-code',
+                  },
+                  {
+                    text: 'Community support',
+                    href: 'https://discord.stately.ai',
+                  },
+                ]}
+              />
+
+              {/* Arrow */}
+              <div className="hidden md:flex justify-center">
+                <ArrowRight className="w-8 h-8 text-fd-muted-foreground" />
+              </div>
+
               {/* Pro Tier */}
               <PricingCard
                 name="Pro"
@@ -172,10 +216,9 @@ export default function PricingPage() {
             />
           </div>
 
-          {/* Free is a state, not a plan: it is what an account falls back to */}
           <p className="mt-8 text-sm text-fd-muted-foreground text-center max-w-3xl mx-auto">
-            Not ready to upgrade? The free plan includes 2 public projects and 3
-            machines, plus browsing and simulating public machines.
+            Everything you make on the free plan stays editable. The limits only
+            apply to creating more.
           </p>
         </div>
       </main>
