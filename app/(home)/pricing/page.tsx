@@ -168,10 +168,19 @@ export default function PricingPage() {
             {/* Enterprise Tier */}
             <PricingCard
               name="Enterprise"
-              customPrice="Contact us"
-              cta="Contact us"
+              price="From $20,000"
+              priceDetails="per year."
+              cta="Talk to us"
               ctaHref="mailto:support@stately.ai?subject=I'm interested in the Stately Studio Enterprise plan"
               features={[
+                {
+                  text: 'Self-hosted',
+                  subtext: 'Docker or repo — the code is yours',
+                  href: '/docs/self-hosting',
+                },
+                { text: 'Single sign-on (SSO)' },
+                { text: 'Dedicated priority support' },
+                { text: 'Data processing agreement (DPA)' },
                 {
                   text: 'Everything from the Pro and Team plans',
                   href: '/docs/studio-pro-plan',
@@ -180,10 +189,7 @@ export default function PricingPage() {
                   text: 'Unlimited generated flows',
                   href: '/docs/generate-flow',
                 },
-                { text: 'Flexible hosting' },
-                { text: 'Dedicated priority support' },
                 { text: 'Custom server locations' },
-                { text: 'Single sign-on (SSO)' },
                 { text: 'Audit logs' },
                 { text: 'Embed Stately into your own apps' },
                 {
