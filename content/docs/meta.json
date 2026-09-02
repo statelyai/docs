@@ -12,6 +12,7 @@
     "packages",
     "developer-tools",
     "glossary",
-    "self-hosting"
+    "self-hosting",
+    "self-hosted-onboarding"
   ]
 }

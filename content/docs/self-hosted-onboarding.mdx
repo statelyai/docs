@@ -1,0 +1,218 @@
+---
+title: Self-hosted onboarding
+description: Install and update a self-hosted Stately deployment, move machine JSON between the editor and your repository, and check house rules in CI.
+---
+
+<Callout type="warning">
+
+Self-hosting is an early preview. Parts of the workflow below are not finished, and each section says which. If you are piloting a self-hosted deployment, [contact us](mailto:support@stately.ai).
+
+</Callout>
+
+This guide is for a team that runs Stately inside its own network and keeps machine definitions in its own version control. It covers installing and updating the deployment, the authoring round trip between the editor and a repository, exporting machine JSON without hand-copying it, checking project rules in CI, and how fixes reach you.
+
+[Self-hosting](self-hosting) covers the deployment configuration itself: environment variables, auth modes, embedding, and the production checklist. Read that page first. This page covers the workflow around it.
+
+## Install the deployment
+
+The deployment ships as a repository checkout, not as a published container image. You receive access to a delivery repository that mirrors the editor source. Install and run it with Node and pnpm:
+
+```bash
+pnpm install
+AUTH_PROVIDER=none \
+EDITOR_SYNC_AUTH_REQUIRED=false \
+AI_ENABLED=false \
+NEXT_PUBLIC_BASE_URL=https://studio.example.internal \
+pnpm build:app
+
+AUTH_PROVIDER=none \
+EDITOR_SYNC_AUTH_REQUIRED=false \
+AI_ENABLED=false \
+NEXT_PUBLIC_BASE_URL=https://studio.example.internal \
+pnpm start -H 0.0.0.0
+```
+
+The editor is a Next.js server and listens on port 3000. To run it in a container, build your own image around these two commands. Stately does not publish a container image for self-hosted deployments today.
+
+Confirm the deployment is serving:
+
+```bash
+curl -f https://studio.example.internal/
+curl -f https://studio.example.internal/api/v1/openapi.json
+```
+
+## Update the deployment
+
+Updates arrive as commits on the delivery repository. Releases are marked with dated tags of the form `enterprise-studio@2026-09-02-1`. To update, fetch the repository, check out the tag you want, reinstall, rebuild, and restart:
+
+```bash
+git fetch --tags
+git checkout enterprise-studio@2026-09-02-1
+pnpm install
+pnpm build:app
+pnpm start -H 0.0.0.0
+```
+
+Re-run the smoke checks above after the restart, and re-run one representative machine through import, edit, and export before reopening access.
+
+A versioned release channel is being stood up: a tagged container image, a `CHANGELOG-selfhosted.md` listing what changed in each release, and a documented supported-version window. None of that exists yet. Until it does, ask your Stately contact which tag to move to and what changed in it.
+
+## Author machines and merge them
+
+A typical repository-backed workflow has five steps. Steps 1 and 5 are yours; steps 2 to 4 are described in the rest of this page.
+
+1. An author edits the machine in the self-hosted editor.
+2. The machine is exported as JSON into a working branch of the repository.
+3. The author opens a merge request.
+4. CI checks the machine JSON against the project's rules.
+5. A downstream build transpiles the merged JSON into the target language.
+
+Two rules are common in teams that generate code from machines, and both are checkable in CI:
+
+- **State names follow a fixed casing convention.** For example, every state key is capitalized.
+- **Every transition that shares an event with another transition from the same state carries a guard.** Without this, the transition order decides which target is taken, and the generated code depends on ordering rather than on an explicit condition.
+
+Neither rule is built into Stately. Both are checks you write against the exported JSON. [Check house rules in CI](#check-house-rules-in-ci) shows the shape of that check.
+
+## Export machine JSON
+
+Do not copy machine JSON out of the editor by hand. There are two mechanical routes, and which one applies depends on whether your deployment can reach hosted Stately.
+
+### The CLI, when the machine store is reachable
+
+The `statelyai` CLI pulls a machine into a local file:
+
+```bash
+npx statelyai pull <machine-id> src/machines/checkout.graph.json
+```
+
+Point it at a deployment with `--base-url`, or set `studioUrl` in `statelyai.json`:
+
+```bash
+npx statelyai pull <machine-id> src/machines/checkout.graph.json \
+  --base-url https://studio.example.internal
+```
+
+Pull to a `.graph.json` target. The target extension decides the output format: `.graph.json` writes the graph, `.digraph.json` writes the Studio machine definition, and `.ts`, `.tsx`, `.js`, or `.jsx` writes generated XState source.
+
+<Callout type="warning">
+
+Pulling to a source file regenerates that whole file. Comments, imports, and hand-written helpers in the file are lost. `pull` refuses to overwrite a target with uncommitted git changes unless you pass `--force`, which limits the damage but does not prevent it. A fix is in review. Until it ships, pull to a `.graph.json` target and keep hand-written code in separate files.
+
+</Callout>
+
+`pull` reads the machine from the deployment's machine store. That store is only present when the deployment is configured with `RESOURCE_PROVIDER=stately`, which forwards the read to hosted Stately. With the default `RESOURCE_PROVIDER=none`, machine and project reads return HTTP 501 `capability_disabled`, and `pull` has nothing to read.
+
+### The embed save event, on an air-gapped host
+
+An air-gapped deployment has no machine store, so neither `statelyai pull` nor `GET /api/v1/machines/<id>` works there. Export instead from the host application that embeds the editor. The SDK emits the machine on every save, and your host application writes it into the repository:
+
+```ts
+import { createStatelyEmbed } from '@statelyai/sdk';
+
+const embed = createStatelyEmbed({
+  baseUrl: 'https://studio.example.internal',
+  origin: 'https://studio.example.internal',
+});
+
+embed.on('save', async ({ machineConfig, graph }) => {
+  await writeToWorkingBranch('src/machines/checkout.graph.json', graph);
+});
+```
+
+The stateless `/api/v1` endpoints work air-gapped, because they only transform the document in the request body. These are `convert`, `validate`, `diff`, `apply-patches`, `graph-paths`, `simulate`, and `code/extract-machines`. The endpoints that read stored machines and projects are the ones that need a machine store.
+
+## Check house rules in CI
+
+### Structural checks
+
+`POST /api/v1/validate` checks a machine document for structural problems. Send a `.graph.json` file as `xgraph`:
+
+```bash
+curl -sf https://studio.example.internal/api/v1/validate \
+  -H 'content-type: application/json' \
+  -d "$(jq '{source: {format: "xgraph", content: .}}' src/machines/checkout.graph.json)"
+```
+
+The response is `{ "ok": boolean, "issues": [...] }`. `ok` is `false` when any issue has level `error`. Issue codes include `unreachable_state`, `missing_initial`, `duplicate_transition`, `transition_never_taken`, and `missing_guard`.
+
+The same check is available to agents as the MCP tool `validate_machine`. Point an MCP client at the deployment with `STATELY_API_BASE_URL`:
+
+```json
+{
+  "mcpServers": {
+    "stately": {
+      "command": "npx",
+      "args": ["-y", "@statelyai/mcp"],
+      "env": {
+        "STATELY_API_BASE_URL": "https://studio.example.internal/api",
+        "STATELY_AUTH_MODE": "none"
+      }
+    }
+  }
+}
+```
+
+`missing_guard` covers part of the determinism rule. It reports an unguarded transition when the same state has more than one transition for that event and the unguarded one is not the last in the group. The last transition in a group may be unguarded, because it is a valid default branch. If your rule allows no unguarded transition at all, check for it yourself.
+
+### Project-specific checks
+
+Casing and strict determinism are project rules, so write them against the `.graph.json` file. States are `nodes[]` with the state key at `data.key`. Transitions are `edges[]` with `sourceId`, `targetId`, the event at `data.eventType`, and the guard at `data.guard`:
+
+```js
+import { readFileSync } from 'node:fs';
+
+const graph = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+const failures = [];
+
+for (const node of graph.nodes) {
+  const key = node.data?.key;
+  if (key && key[0] !== key[0].toUpperCase()) {
+    failures.push(`State "${key}" is not capitalized`);
+  }
+}
+
+const groups = new Map();
+for (const edge of graph.edges) {
+  const groupKey = `${edge.sourceId}:${edge.data?.eventType ?? ''}`;
+  groups.set(groupKey, [...(groups.get(groupKey) ?? []), edge]);
+}
+
+for (const [groupKey, edges] of groups) {
+  if (edges.length > 1 && edges.some((edge) => !edge.data?.guard)) {
+    failures.push(`Transition group ${groupKey} has an unguarded transition`);
+  }
+}
+
+if (failures.length > 0) {
+  console.error(failures.join('\n'));
+  process.exit(1);
+}
+```
+
+Run it over every changed machine file in the merge request pipeline.
+
+### Change detection
+
+`statelyai diff` compares two machine documents and, with `--fail-on-changes`, exits nonzero when they differ:
+
+```bash
+npx statelyai diff <machine-id> src/machines/checkout.graph.json --fail-on-changes
+```
+
+<Callout type="warning">
+
+`diff` compares layout as well as structure. Node and edge `x`, `y`, `width`, `height`, `points`, `color`, and `style` are all part of the comparison, so moving a state on the canvas reports a change. A pipeline gated on `--fail-on-changes` therefore fails on layout-only edits. A fix is in review. Until it ships, do not gate CI on this command; use the validation checks above instead.
+
+</Callout>
+
+## Report problems and get fixes
+
+Report problems to your Stately contact or to [support@stately.ai](mailto:support@stately.ai). Include the deployment tag you are running, the machine document that reproduces the problem, and the exact command or endpoint with its response.
+
+Fixes reach a self-hosted deployment through the delivery repository. A fix lands in the editor source, then appears in the next synced commit and tag on that repository, and reaches you when you check out that tag and rebuild. The npm-published pieces, `statelyai` and `@statelyai/mcp`, update independently of the deployment: reinstall them to pick up a CLI or MCP fix without rebuilding the editor.
+
+## What next?
+
+- [Self-hosting](self-hosting) for deployment configuration, auth modes, and the production checklist.
+- The rendered API reference on your own deployment at `/api/v1/docs`, and the OpenAPI document at `/api/v1/openapi.json`.
