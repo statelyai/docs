@@ -74,7 +74,9 @@ The external docs manifest lives in `docs-sources.json`:
       "packages/xstate-solid/docs/**/*.md",
       "packages/xstate-solid/docs/**/*.mdx",
       "packages/xstate-store/docs/**/*.md",
-      "packages/xstate-store/docs/**/*.mdx"
+      "packages/xstate-store/docs/**/*.mdx",
+      "packages/xstate-effect/docs/**/*.md",
+      "packages/xstate-effect/docs/**/*.mdx"
     ],
     "mode": "workspace",
     "mounts": [
@@ -103,6 +105,11 @@ The external docs manifest lives in `docs-sources.json`:
         "source": "packages/xstate-store/docs",
         "route": "store",
         "title": "Store"
+      },
+      {
+        "source": "packages/xstate-effect/docs",
+        "route": "effect",
+        "title": "Effect"
       }
     ],
     "ref": "next",

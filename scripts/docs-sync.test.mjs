@@ -224,6 +224,22 @@ test('workspace docs use locked checkouts and available source-owned navigation'
   );
 });
 
+test('XState Effect docs appear in the mounted workspace navigation', async () => {
+  execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
+    cwd: rootDir,
+    encoding: 'utf8',
+    env: { ...process.env, DOCS_SOURCE_IDS: 'xstate-v6' },
+  });
+
+  const generatedNav = await readFile(
+    path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
+    'utf8',
+  );
+  assert.match(generatedNav, /"title": "Effect"/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/effect\/quick-start/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/effect\/testing-and-errors/u);
+});
+
 test('an unchanged sync preserves locked workspaces', async () => {
   const locks = JSON.parse(
     await readFile(path.join(rootDir, 'docs-sources.lock.json'), 'utf8'),
