@@ -29,18 +29,19 @@ npm install --global statelyai
 
 
 
-| Goal                         | Command                                              | Writes                                                  |
-| ---------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |
-| List local machines          | `statelyai scan`                                     | Nothing                                                 |
-| Edit one local file visually | `statelyai open <file>`                              | Local file, when you save in the editor                 |
-| Set up local discovery       | `statelyai init --local --scan`                      | Local `statelyai.json`                                  |
-| Set up project sync          | `statelyai init --scan`                              | Remote project and local `statelyai.json`               |
-| Inspect project machines     | `statelyai status`                                   | Nothing                                                 |
-| Preview project uploads      | `statelyai push --dry-run`                           | Nothing                                                 |
-| Upload local machines        | `statelyai push [file]`                              | Remote machines and local `@statelyai` IDs              |
-| Download project machines    | `statelyai pull`                                     | Linked local files and new files under `newMachinesDir` |
-| Compare two machines         | `statelyai diff <source> <target>`                   | Nothing                                                 |
-| Fail on differences in CI    | `statelyai diff <source> <target> --fail-on-changes` | Nothing                                                 |
+| Goal                                | Command                                              | Writes                                                  |
+| ----------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |
+| Process a saved verification report | `statelyai verify --from-report report.json`         | Local report file                                       |
+| List local machines                 | `statelyai scan`                                     | Nothing                                                 |
+| Edit local machines visually        | `statelyai open [file]`                              | Local source, when you save in the editor               |
+| Set up local discovery              | `statelyai init --local --scan`                      | Local `statelyai.json`                                  |
+| Set up project sync                 | `statelyai init --scan`                              | Remote project and local `statelyai.json`               |
+| Inspect project machines            | `statelyai status`                                   | Nothing                                                 |
+| Preview project uploads             | `statelyai push --dry-run`                           | Nothing                                                 |
+| Upload local machines               | `statelyai push [file]`                              | Remote machines and local `@statelyai` IDs              |
+| Download project machines           | `statelyai pull`                                     | Linked local files and new files under `newMachinesDir` |
+| Compare two machines                | `statelyai diff <source> <target>`                   | Nothing                                                 |
+| Fail on differences in CI           | `statelyai diff <source> <target> --fail-on-changes` | Nothing                                                 |
 
 ## Quick start
 
@@ -93,9 +94,30 @@ statelyai pull
 ```
 
 `push` creates remote machines for unlinked source machines, updates already
-linked machines, and writes returned IDs into source comments. `pull` updates
-linked files. If `newMachinesDir` is configured, it also creates local files
-for machines that exist only in the Studio project.
+linked machines, and writes returned IDs into source comments. Updating a
+linked machine preserves Studio layout, colors, and annotations for unchanged
+states while applying local structural changes. New states use default layout.
+`pull` updates linked files. If `newMachinesDir` is configured, it also creates
+local files for machines that exist only in the Studio project.
+Push re-reads and retries when it observes a concurrent Studio edit. Registry
+updates do not yet expose an atomic revision precondition, so avoid editing the
+same machine in Studio during a push.
+
+`open` restores layout, colors, annotations, and canvas assets from Studio for
+machines with an `@statelyai id`. Unlinked machines keep only non-inferable
+presentation values (canonical coordinates, colors, annotations, and canvas
+assets) in `.statelyai/local.json` at the project root; machine structure is
+not duplicated. The CLI uses Git's repository-local `.git/info/exclude`
+mechanism for this local-only file. It is available to the CLI and VS Code on
+this checkout, and file locking preserves both hosts' concurrent updates, but
+it is not shared until the machine is linked to Studio. Linked presentation
+saves merge into Studio's current structure with an atomic `updatedAt` guard.
+Outside a Git repository, run `statelyai open` from the VS Code workspace root
+so both hosts use the same sidecar.
+Where unambiguous, older CLI sidecars keyed by display name are read and
+migrated to the shared machine key on the next save.
+New states keep their generated coordinates when clear, or move beside
+existing states when they would overlap restored layout.
 
 ## Authentication
 
@@ -158,25 +180,35 @@ the credential so a later command can retry.
   "projectId": "project_123",
   "studioUrl": "https://stately.ai",
   "defaultXStateVersion": 5,
+  "sourceUpdateStrategy": "preserve",
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.test.*", "**/*.spec.*"],
   "newMachinesDir": "src/machines"
 }
 ```
 
-| Field                  | Purpose                                                         |
-| ---------------------- | --------------------------------------------------------------- |
-| `$schema`              | Published JSON Schema URL.                                      |
-| `version`              | Config format version. Currently `1.0.0`.                       |
-| `projectId`            | Remote Studio project ID. Omitted for local-only projects.      |
-| `studioUrl`            | Studio API origin. Omitted for local-only projects.             |
-| `defaultXStateVersion` | XState version used when creating remote machines. Minimum `5`. |
-| `include`              | Source globs used by project-wide `push` and `pull`.            |
-| `exclude`              | Globs removed from discovery. Defaults to tests and specs.      |
-| `newMachinesDir`       | Destination for remote-only machines created by `pull`.         |
+| Field                  | Purpose                                                                 |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `$schema`              | Published JSON Schema URL.                                              |
+| `version`              | Config format version. Currently `1.0.0`.                               |
+| `projectId`            | Remote Studio project ID. Omitted for local-only projects.              |
+| `studioUrl`            | Studio API origin. Omitted for local-only projects.                     |
+| `defaultXStateVersion` | XState version used when creating remote machines. Minimum `5`.         |
+| `sourceUpdateStrategy` | Visual writeback mode: `preserve` or `rewrite`. Defaults to `preserve`. |
+| `include`              | Source globs used by project-wide `push` and `pull`.                    |
+| `exclude`              | Globs removed from discovery. Defaults to tests and specs.              |
+| `newMachinesDir`       | Destination for remote-only machines created by `pull`.                 |
 
 Project-wide discovery identifies configured JavaScript and TypeScript files
 that import XState and call `createMachine(...)` or `.createMachine(...)`.
+
+
+
+Remote commands call the server-owned `/api/v1` resource contract on the editor
+API server. Existing configs need no change: a `studioUrl` pointing at hosted
+Stately (`stately.ai` or `www.stately.ai`) resolves to
+`https://editor.stately.ai` at request time, and the file is never rewritten for
+this. Any other `studioUrl`, such as a self-hosted origin, is used as-is.
 
 Mutating project commands rewrite legacy configs with one `sources` entry to
 the current top-level shape. `status` and `push --dry-run` normalize legacy
@@ -253,14 +285,41 @@ ID when present.
 
 ### `open`
 
-Start a local bridge and open one source file in the browser editor:
+Start a local bridge and open every machine in one source file as a workspace:
 
 ```bash
 statelyai open src/checkout.machine.ts
 ```
 
+Omit the file to discover every machine in the current worktree:
+
+```bash
+statelyai open
+```
+
+The workspace sidebar starts collapsed. Select a machine there without opening
+a separate browser tab.
+
+
+
 Saved file changes refresh the editor. Saving visual edits writes them back to
-the source file.
+the source file. Editor Sync loads the opened file, its reachable relative
+imports, and ancestor package manifests locally; unrelated sibling files are
+excluded. The CLI checks access once per session and verifies the editor
+protocol before exchanging machine data. Parsing and writeback run locally.
+By default, the CLI loads up to 1,000 reachable files and 64 MiB of source;
+`STATELY_SYNC_MAX_FILES` and `STATELY_SYNC_MAX_BYTES` adjust these limits.
+If a visual edit cannot be written or a saved source change cannot be parsed,
+the editor keeps the current graph visible and offers retry, copy-details, and
+diagnostic-download actions. Use `--debug` to include the structured diagnostic
+in the CLI's redacted editor protocol log.
+
+Source updates default to `preserve`, which keeps existing formatting and
+comments with focused edits. Use `--source-update rewrite` or set
+`"sourceUpdateStrategy": "rewrite"` in `statelyai.json` to regenerate the
+selected machine from its semantic model. Rewrite may change formatting and
+comments inside that machine. When preserve cannot safely apply an edit, the
+editor offers `Rewrite machine` without discarding the visual changes.
 
 Flags:
 
@@ -269,7 +328,8 @@ Flags:
 - `--host <host>` sets the local bridge host. Default: `127.0.0.1`.
 - `--port <port>` selects a port. Default: a random available port.
 - `--no-open` starts the bridge without launching a browser.
-- `--debug` logs editor protocol messages.
+- `--debug` logs editor protocol messages with credentials redacted.
+- `--source-update <preserve|rewrite>` overrides the configured source update strategy.
 
 ### `diff`
 
@@ -286,9 +346,10 @@ Locators may be:
 - a Studio machine ID
 - a Studio machine URL
 
-`--fail-on-changes` exits with status `1` when the normalized graphs differ.
-Use `--base-url` for remote IDs at another Studio origin. `plan` remains a
-hidden compatibility alias for `diff`.
+`--fail-on-changes` exits with status `1` when machine semantics differ.
+Entity IDs and presentation-only layout or color fields do not count as
+changes. Use `--base-url` for remote IDs at another Studio origin. `plan`
+remains a hidden compatibility alias for `diff`.
 
 ### `push`
 
@@ -312,6 +373,13 @@ statelyai push --dry-run
 
 `--dry-run` does not create or update machines, write `@statelyai` IDs, or
 migrate legacy configuration.
+
+For linked machines, `push` reads the current remote definition before updating
+it. Local source remains authoritative for structure; Studio presentation for
+unchanged states and transitions is preserved.
+Push re-reads before writing and retries if it observes a remote change.
+Registry updates do not yet expose an atomic revision precondition, so avoid
+editing the same machine in Studio during a push.
 
 Flags: `--config <path>`, `--base-url <url>`, `--dry-run`.
 
@@ -337,9 +405,17 @@ statelyai pull machine_123 src/checkout.machine.ts
 
 New targets support JavaScript/TypeScript, `.digraph.json`, and `.graph.json`.
 For existing JSON targets, the current file shape determines the output format.
+Existing JavaScript and TypeScript targets are updated through surgical graph
+patches so surrounding comments, imports, helpers, and implementation bodies
+survive. New source files and JSON targets are generated as complete files.
 
 Project-wide pull skips linked files with uncommitted Git changes. Pass
-`--force` to overwrite them. Remote-only machines are skipped until
+`--force` to overwrite them. If an existing source file cannot be updated
+safely, pull leaves it unchanged and exits nonzero; `--force` explicitly allows
+complete regeneration, which discards comments, imports, and helper code around
+the machine. `--force` enables both behaviors together, so use it only when full
+regeneration is acceptable. Every linked machine in a multi-machine source file
+is pulled independently. Remote-only machines are skipped until
 `newMachinesDir` is set.
 
 Flags: `--config <path>`, `--base-url <url>`, `--force`.
@@ -391,14 +467,23 @@ Set `NO_COLOR=1` or `CI=true` for plain output.
 
 Run `statelyai <command> --help` for generated command syntax and flags.
 
+## Verification reports
+
+
+
+See [Verification reports](https://github.com/statelyai/viz/blob/main/docs/cli/verify.md) for offline JSON/JUnit
+processing and the programmatic executor hook. Live verification requires a host
+adapter; no verification engine is bundled.
+
 ## Self-hosting
 
 
 
 Skip login when the server has authentication disabled. The CLI sends no
 authorization header when no credential exists; the server decides whether
-authentication is required. This also applies to `open` editor-sync requests
-and CI commands.
+authentication is required. `open` checks Editor Sync access once per session,
+then parses and applies source edits locally. CI commands use the same credential
+policy.
 
 For OAuth, point login at the deployment's protected resource:
 

@@ -12,7 +12,7 @@ export const externalDocsNav = [
         "title": "Get started"
       },
       {
-        "title": "Agents",
+        "title": "Stately Agent",
         "url": "/docs/packages/agent"
       },
       {
@@ -76,20 +76,28 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/any-stack"
       },
       {
-        "title": "The step path",
+        "title": "Use in an XState 4 or 5 app",
+        "url": "/docs/packages/agent/xstate-4-and-5-apps"
+      },
+      {
+        "title": "The step API",
         "url": "/docs/packages/agent/steps"
+      },
+      {
+        "title": "Advanced: bare XState actors and hand-written executors",
+        "url": "/docs/packages/agent/advanced"
       },
       {
         "separator": true,
         "title": "State & durability"
       },
       {
-        "title": "Where state lives",
-        "url": "/docs/packages/agent/persistence"
-      },
-      {
         "title": "The event log",
         "url": "/docs/packages/agent/event-log"
+      },
+      {
+        "title": "Persistence",
+        "url": "/docs/packages/agent/persistence"
       },
       {
         "title": "Human in the loop",
@@ -152,11 +160,19 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/patterns"
       },
       {
+        "title": "Statechart policy examples",
+        "url": "/docs/packages/agent/statechart-policy-examples"
+      },
+      {
+        "title": "Validate and repair model output with a loop",
+        "url": "/docs/packages/agent/validate-and-repair"
+      },
+      {
         "title": "Coming from LangGraph",
         "url": "/docs/packages/agent/langgraph-comparison"
       },
       {
-        "title": "Post-alpha roadmap",
+        "title": "Roadmap",
         "url": "/docs/packages/agent/roadmap"
       }
     ],
@@ -175,12 +191,12 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/algorithms"
       },
       {
-        "title": "Benchmarks",
-        "url": "/docs/packages/graph/benchmarks"
-      },
-      {
         "title": "Layout",
         "url": "/docs/packages/graph/layout"
+      },
+      {
+        "title": "React Flow + ELK: automatic layout cookbook",
+        "url": "/docs/packages/graph/react-flow-elk-pipeline"
       },
       {
         "title": "Layout transitions",
@@ -191,8 +207,8 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph/migrating-from-graphlib"
       },
       {
-        "title": "React Flow + ELK: automatic layout cookbook",
-        "url": "/docs/packages/graph/react-flow-elk-pipeline"
+        "title": "Benchmarks",
+        "url": "/docs/packages/graph/benchmarks"
       },
       {
         "title": "Scaling & Plugin Architecture",
@@ -304,6 +320,10 @@ export const externalDocsNav = [
       {
         "title": "Machine configuration",
         "url": "/docs/xstate/v6/configuration"
+      },
+      {
+        "title": "Compact finite state machines",
+        "url": "/docs/xstate/v6/fsm"
       },
       {
         "title": "Setup and provide",
@@ -420,6 +440,10 @@ export const externalDocsNav = [
       {
         "title": "Serialization",
         "url": "/docs/xstate/v6/serialization"
+      },
+      {
+        "title": "SCXML",
+        "url": "/docs/xstate/v6/scxml"
       },
       {
         "title": "Inspection",
