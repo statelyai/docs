@@ -628,6 +628,42 @@ export const externalDocsNav = [
       {
         "title": "Migration",
         "url": "/docs/xstate/v6/store/migration"
+      },
+      {
+        "separator": true,
+        "title": "Effect"
+      },
+      {
+        "title": "Quick start",
+        "url": "/docs/xstate/v6/effect/quick-start"
+      },
+      {
+        "title": "Actors",
+        "url": "/docs/xstate/v6/effect/actors"
+      },
+      {
+        "title": "Observing actors",
+        "url": "/docs/xstate/v6/effect/observing-actors"
+      },
+      {
+        "title": "Matching states",
+        "url": "/docs/xstate/v6/effect/matching-states"
+      },
+      {
+        "title": "Effect actor logic",
+        "url": "/docs/xstate/v6/effect/effect-logic"
+      },
+      {
+        "title": "Schemas and actions",
+        "url": "/docs/xstate/v6/effect/schemas-and-actions"
+      },
+      {
+        "title": "Atoms and React",
+        "url": "/docs/xstate/v6/effect/atoms-and-react"
+      },
+      {
+        "title": "Testing and errors",
+        "url": "/docs/xstate/v6/effect/testing-and-errors"
       }
     ],
     "route": "xstate/v6"
