@@ -52,6 +52,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/tools"
       },
       {
+        "title": "Judgments with the AI SDK",
+        "url": "/docs/packages/agent/judgments"
+      },
+      {
         "title": "Messages",
         "url": "/docs/packages/agent/messages"
       },
@@ -308,6 +312,10 @@ export const externalDocsNav = [
       {
         "title": "Test XState logic",
         "url": "/docs/xstate/v6/testing"
+      },
+      {
+        "title": "Model-based testing",
+        "url": "/docs/xstate/v6/model-based-testing"
       },
       {
         "title": "Inspect actor systems",
