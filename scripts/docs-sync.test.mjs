@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { access, readFile, stat } from 'node:fs/promises';
+import { access, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
@@ -222,6 +222,37 @@ test('workspace docs use locked checkouts and available source-owned navigation'
     generatedNav.indexOf('/docs/xstate/v6/start/quick-start') <
       generatedNav.indexOf('/docs/xstate/v6/learn/why-state-machines'),
   );
+});
+
+test('XState Effect docs appear in the mounted workspace navigation', async (t) => {
+  const generatedModules = [
+    path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
+    path.join(rootDir, 'lib', 'external-docs.generated.ts'),
+  ];
+  const originalModules = await Promise.all(
+    generatedModules.map((file) => readFile(file, 'utf8')),
+  );
+  t.after(async () => {
+    await Promise.all(
+      generatedModules.map((file, index) =>
+        writeFile(file, originalModules[index], 'utf8'),
+      ),
+    );
+  });
+
+  execFileSync(process.execPath, ['scripts/docs-sync.mjs'], {
+    cwd: rootDir,
+    encoding: 'utf8',
+    env: { ...process.env, DOCS_SOURCE_IDS: 'xstate-v6' },
+  });
+
+  const generatedNav = await readFile(
+    path.join(rootDir, 'lib', 'external-docs-nav.generated.ts'),
+    'utf8',
+  );
+  assert.match(generatedNav, /"title": "Effect"/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/effect\/quick-start/u);
+  assert.match(generatedNav, /\/docs\/xstate\/v6\/effect\/testing-and-errors/u);
 });
 
 test('an unchanged sync preserves locked workspaces', async () => {
