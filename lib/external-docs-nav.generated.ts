@@ -642,35 +642,35 @@ export const externalDocsNav = [
         "title": "Effect"
       },
       {
-        "title": "Quick start",
+        "title": "XState Effect: Quick start",
         "url": "/docs/xstate/v6/effect/quick-start"
       },
       {
-        "title": "Actors",
+        "title": "XState Effect: Actors",
         "url": "/docs/xstate/v6/effect/actors"
       },
       {
-        "title": "Observing actors",
+        "title": "XState Effect: Observing actors",
         "url": "/docs/xstate/v6/effect/observing-actors"
       },
       {
-        "title": "Matching states",
+        "title": "XState Effect: Matching states",
         "url": "/docs/xstate/v6/effect/matching-states"
       },
       {
-        "title": "Effect actor logic",
+        "title": "XState Effect: Actor logic",
         "url": "/docs/xstate/v6/effect/effect-logic"
       },
       {
-        "title": "Schemas and actions",
+        "title": "XState Effect: Schemas and actions",
         "url": "/docs/xstate/v6/effect/schemas-and-actions"
       },
       {
-        "title": "Atoms and React",
+        "title": "XState Effect: Atoms and React",
         "url": "/docs/xstate/v6/effect/atoms-and-react"
       },
       {
-        "title": "Testing and errors",
+        "title": "XState Effect: Testing and errors",
         "url": "/docs/xstate/v6/effect/testing-and-errors"
       }
     ],
