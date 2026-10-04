@@ -1,21 +1,18 @@
 {
-  "title": "@xstate/store",
+  "title": "XState Store",
   "pages": [
-    "react",
-    "vue",
-    "svelte",
-    "solid",
-    "angular",
-    "preact",
-    "undo-redo",
-    "persist",
-    "reset",
-    "validate-schemas",
-    "compare-zustand",
-    "compare-jotai",
-    "compare-recoil",
-    "compare-redux",
-    "compare-pinia",
-    "migration"
-  ]
+    "[Vanilla](/docs/xstate-store)",
+    "[React](/docs/xstate-store/react)",
+    "[Vue](/docs/xstate-store/vue)",
+    "[Svelte](/docs/xstate-store/svelte)",
+    "[Solid](/docs/xstate-store/solid)",
+    "[Angular](/docs/xstate-store/angular)",
+    "[Preact](/docs/xstate-store/preact)",
+    "[Undo/Redo extension](/docs/xstate-store/undo-redo)",
+    "[Persist extension](/docs/xstate-store/persist)",
+    "[Reset extension](/docs/xstate-store/reset)",
+    "[Validation extension](/docs/xstate-store/validate-schemas)",
+    "[Migration](/docs/xstate-store/migration)"
+  ],
+  "pagesIndex": "[Overview](/docs/xstate-store)"
 }

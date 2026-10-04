@@ -1,12 +1,13 @@
 {
-  "title": "Get started",
+  "title": "Get Started",
   "pages": [
-    "quick-start",
-    "installation",
-    "migration",
-    "examples",
-    "templates",
-    "cheatsheet",
-    "typescript"
+    "[Quick start](/docs/quick-start)",
+    "[Install XState](/docs/installation)",
+    "[Migrate to XState v5](/docs/migration)",
+    "[Examples](/docs/examples)",
+    "[Templates](/docs/templates)",
+    "[Cheatsheet](/docs/cheatsheet)",
+    "[Typescript](/docs/typescript)",
+    "[API](https://www.jsdocs.io/package/xstate)"
   ]
 }

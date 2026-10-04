@@ -34,7 +34,7 @@ function getRouteFromFile(file: VirtualFile): string {
 function withProjectRoutes(project: string, source: StaticSource) {
   const sourceConfig = getDocsSourceByPackage(project);
 
-  return update(source)
+  const routed = update(source)
     .files((files) =>
       files.map((file) => {
         if (sourceConfig?.mode === 'workspace') {
@@ -61,6 +61,69 @@ function withProjectRoutes(project: string, source: StaticSource) {
           ...file,
           path: prefixRoute(project, file.path),
         };
+      }),
+    )
+    .build();
+
+  const metaPath = `${getProjectRoutePrefix(project)}/meta.json`;
+  const existingMeta = routed.files.find(
+    (file) => file.type === 'meta' && file.path === metaPath,
+  );
+  return update(routed)
+    .files((files) => [
+      ...files.filter((file) => file.path !== metaPath),
+      {
+        type: 'meta',
+        path: metaPath,
+        data: {
+          ...existingMeta?.data,
+          title: sourceConfig?.name ?? project,
+        },
+      },
+    ])
+    .build();
+}
+
+function withExternalNavigation(
+  localSource: ReturnType<typeof docs.toFumadocsSource>,
+) {
+  return update(localSource)
+    .files((files) =>
+      files.map((file) => {
+        if (file.type !== 'meta') return file;
+        const versionedSources = enabledExternalDocsSources
+          .filter(
+            (item) =>
+              !getProjectRoutePrefix(item.package).startsWith('packages/'),
+          )
+          .map((item) => getProjectRoutePrefix(item.package));
+        const packages = enabledExternalDocsSources
+          .filter((item) =>
+            getProjectRoutePrefix(item.package).startsWith('packages/'),
+          )
+          .map((item) =>
+            getProjectRoutePrefix(item.package).slice('packages/'.length),
+          );
+
+        if (file.path === 'meta.json') {
+          return {
+            ...file,
+            data: {
+              ...file.data,
+              pages: [...versionedSources, ...(file.data.pages ?? [])],
+            },
+          };
+        }
+        if (file.path === 'packages/meta.json') {
+          return {
+            ...file,
+            data: {
+              ...file.data,
+              pages: [...(file.data.pages ?? []), ...packages],
+            },
+          };
+        }
+        return file;
       }),
     )
     .build();
@@ -108,7 +171,7 @@ function validateDocsSourceOwnership(sources: Record<string, StaticSource>) {
 }
 
 const docsSources = {
-  docs: docs.toFumadocsSource(),
+  docs: withExternalNavigation(docs.toFumadocsSource()),
   ...Object.fromEntries(
     Object.entries(externalDocsCollections as DocsCollectionMap).map(
       ([sourceId, collection]) => [

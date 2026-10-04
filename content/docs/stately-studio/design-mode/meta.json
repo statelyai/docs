@@ -1,16 +1,16 @@
 {
   "title": "Design mode",
   "pages": [
-    "design-mode",
-    "generate-flow",
-    "generate-react",
-    "colors",
-    "annotations",
-    "descriptions",
-    "figma",
-    "assets",
-    "editor-tags",
-    "machine-restore",
-    "autolayout"
+    "[Design mode](/docs/design-mode)",
+    "[Generate with AI](/docs/generate-flow)",
+    "[Generate React app](/docs/generate-react)",
+    "[Colors](/docs/colors)",
+    "[Notes](/docs/annotations)",
+    "[Descriptions](/docs/descriptions)",
+    "[Embed Figma](/docs/figma)",
+    "[Assets](/docs/assets)",
+    "[Tags](/docs/editor-tags)",
+    "[Machine restore](/docs/machine-restore)",
+    "[Autolayout](/docs/autolayout)"
   ]
 }

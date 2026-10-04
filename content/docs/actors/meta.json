@@ -1,15 +1,15 @@
 {
   "title": "Actors",
   "pages": [
-    "actors",
-    "state-machine-actors",
-    "promise-actors",
-    "transition-actors",
-    "callback-actors",
-    "observable-actors",
-    "invoke",
-    "spawn",
-    "system",
-    "inspection"
+    "[Actors](/docs/actors)",
+    "[State machine actors](/docs/state-machine-actors)",
+    "[Promise actors](/docs/promise-actors)",
+    "[Transition actors](/docs/transition-actors)",
+    "[Callback actors](/docs/callback-actors)",
+    "[Observable actors](/docs/observable-actors)",
+    "[Invoke](/docs/invoke)",
+    "[Spawn](/docs/spawn)",
+    "[System](/docs/system)",
+    "[Inspection](/docs/inspection)"
   ]
 }

@@ -11,13 +11,19 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Loader2, MessageCircleIcon, RefreshCw, SearchIcon, Send, X } from 'lucide-react';
+import {
+  Loader2,
+  MessageCircleIcon,
+  RefreshCw,
+  SearchIcon,
+  Send,
+  X,
+} from 'lucide-react';
 import { cn } from '../../lib/cn';
-import { buttonVariants } from '../ui/button';
+import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { type UIMessage, useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DefaultChatTransport, type Tool, type UIToolInvocation } from 'ai';
 import { Markdown } from '../markdown';
-import { Presence } from '@radix-ui/react-presence';
 import type { SearchTool } from '../../app/api/docs/chat/route';
 
 const Context = createContext<{
@@ -26,7 +32,10 @@ const Context = createContext<{
   chat: UseChatHelpers<UIMessage>;
 } | null>(null);
 
-export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div'>) {
+export function AISearchPanelHeader({
+  className,
+  ...props
+}: ComponentProps<'div'>) {
   const { setOpen } = useAISearchContext();
 
   return (
@@ -46,7 +55,6 @@ export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div
 
       <button
         aria-label="Close"
-        tabIndex={-1}
         className={cn(
           buttonVariants({
             size: 'icon-sm',
@@ -106,7 +114,9 @@ export function AISearchInputActions() {
 const StorageKeyInput = '__ai_search_input';
 export function AISearchInput(props: ComponentProps<'form'>) {
   const { status, sendMessage, stop } = useChatContext();
-  const [input, setInput] = useState(() => localStorage.getItem(StorageKeyInput) ?? '');
+  const [input, setInput] = useState(
+    () => localStorage.getItem(StorageKeyInput) ?? '',
+  );
   const isLoading = status === 'streaming' || status === 'submitted';
   const onStart = (e?: SyntheticEvent) => {
     e?.preventDefault();
@@ -120,7 +130,11 @@ export function AISearchInput(props: ComponentProps<'form'>) {
   }, [isLoading]);
 
   return (
-    <form {...props} className={cn('flex items-start pe-2', props.className)} onSubmit={onStart}>
+    <form
+      {...props}
+      className={cn('flex items-start pe-2', props.className)}
+      onSubmit={onStart}
+    >
       <Input
         value={input}
         placeholder={isLoading ? 'AI is answering...' : 'Ask a question'}
@@ -204,7 +218,10 @@ function List(props: Omit<ComponentProps<'div'>, 'dir'>) {
     <div
       ref={containerRef}
       {...props}
-      className={cn('fd-scroll-container overflow-y-auto min-w-0 flex flex-col', props.className)}
+      className={cn(
+        'fd-scroll-container overflow-y-auto min-w-0 flex flex-col',
+        props.className,
+      )}
     >
       {props.children}
     </div>
@@ -237,7 +254,10 @@ const roleName: Record<string, string> = {
   assistant: 'fumadocs',
 };
 
-function Message({ message, ...props }: { message: UIMessage } & ComponentProps<'div'>) {
+function Message({
+  message,
+  ...props
+}: { message: UIMessage } & ComponentProps<'div'>) {
   let markdown = '';
   const searchCalls: UIToolInvocation<SearchTool>[] = [];
 
@@ -278,9 +298,15 @@ function Message({ message, ...props }: { message: UIMessage } & ComponentProps<
           >
             <SearchIcon className="size-4" />
             {call.state === 'output-error' || call.state === 'output-denied' ? (
-              <p className="text-fd-error">{call.errorText ?? 'Failed to search'}</p>
+              <p className="text-fd-error">
+                {call.errorText ?? 'Failed to search'}
+              </p>
             ) : (
-              <p>{!call.output ? 'Searching…' : `${call.output.length} search results`}</p>
+              <p>
+                {!call.output
+                  ? 'Searching…'
+                  : `${call.output.length} search results`}
+              </p>
             )}
           </div>
         );
@@ -299,7 +325,9 @@ export function AISearch({ children }: { children: ReactNode }) {
   });
 
   return (
-    <Context value={useMemo(() => ({ chat, open, setOpen }), [chat, open])}>{children}</Context>
+    <Context value={useMemo(() => ({ chat, open, setOpen }), [chat, open])}>
+      {children}
+    </Context>
   );
 }
 
@@ -329,65 +357,25 @@ export function AISearchTrigger({
 }
 
 export function AISearchPanel() {
-  const { open, setOpen } = useAISearchContext();
-  useHotKey();
-
   return (
-    <>
-      <style>
-        {`
-        @keyframes ask-ai-open {
-          from {
-            translate: 100% 0;
-          }
-          to {
-            translate: 0 0;
-          }
-        }
-        @keyframes ask-ai-close {
-          from {
-            width: var(--ai-chat-width);
-          }
-          to {
-            width: 0px;
-          }
-        }`}
-      </style>
-      <Presence present={open}>
-        <div
-          data-state={open ? 'open' : 'closed'}
-          className="fixed inset-0 z-30 backdrop-blur-xs bg-fd-overlay data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out lg:hidden"
-          onClick={() => setOpen(false)}
-        />
-      </Presence>
-      <Presence present={open}>
-        <div
-          className={cn(
-            'overflow-hidden z-30 bg-fd-card text-fd-card-foreground [--ai-chat-width:400px] 2xl:[--ai-chat-width:460px]',
-            'max-lg:fixed max-lg:inset-x-2 max-lg:top-4 max-lg:border max-lg:rounded-2xl max-lg:shadow-xl',
-            'lg:sticky lg:top-0 lg:h-dvh lg:border-s lg:ms-auto lg:in-[#nd-docs-layout]:[grid-area:toc] lg:in-[#nd-notebook-layout]:row-span-full lg:in-[#nd-notebook-layout]:col-start-5',
-            open
-              ? 'animate-fd-dialog-in lg:animate-[ask-ai-open_200ms]'
-              : 'animate-fd-dialog-out lg:animate-[ask-ai-close_200ms]',
-          )}
-        >
-          <div className="flex flex-col size-full p-2 max-lg:max-h-[80dvh] lg:p-3 lg:w-(--ai-chat-width)">
-            <AISearchPanelHeader />
-            <AISearchPanelList className="flex-1" />
-            <div className="rounded-xl border bg-fd-secondary text-fd-secondary-foreground shadow-sm has-focus-visible:shadow-md">
-              <AISearchInput />
-              <div className="flex items-center gap-1.5 p-1 empty:hidden">
-                <AISearchInputActions />
-              </div>
-            </div>
-          </div>
+    <div className="flex flex-col size-full min-h-0 p-2 lg:p-3">
+      <AISearchPanelHeader />
+      <AISearchPanelList className="flex-1" />
+      <div className="rounded-xl border bg-fd-secondary text-fd-secondary-foreground shadow-sm has-focus-visible:shadow-md">
+        <AISearchInput />
+        <div className="flex items-center gap-1.5 p-1 empty:hidden">
+          <AISearchInputActions />
         </div>
-      </Presence>
-    </>
+      </div>
+    </div>
   );
 }
 
-export function AISearchPanelList({ className, style, ...props }: ComponentProps<'div'>) {
+export function AISearchPanelList({
+  className,
+  style,
+  ...props
+}: ComponentProps<'div'>) {
   const chat = useChatContext();
   const messages = chat.messages.filter((msg) => msg.role !== 'system');
 

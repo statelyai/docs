@@ -1,17 +1,15 @@
 {
-  "title": "Documentation",
+  "title": "docs",
   "pages": [
-    "index",
     "get-started",
     "core-concepts",
-    "stately-studio",
-    "actors",
     "state-machines",
-    "agents",
+    "actors",
     "guides",
+    "xstate-store",
     "packages",
     "developer-tools",
-    "glossary",
-    "self-hosting"
+    "stately-studio",
+    "[Glossary](/docs/glossary)"
   ]
 }

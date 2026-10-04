@@ -1,11 +1,10 @@
 {
   "title": "Packages",
   "pages": [
-    "xstate-store",
-    "xstate-react",
-    "xstate-vue",
-    "xstate-svelte",
-    "xstate-graph",
-    "xstate-test"
+    "[XState React](/docs/xstate-react)",
+    "[XState Vue](/docs/xstate-vue)",
+    "[XState Svelte](/docs/xstate-svelte)",
+    "[XState Graph](/docs/xstate-graph)",
+    "[XState Test](/docs/xstate-test)"
   ]
 }

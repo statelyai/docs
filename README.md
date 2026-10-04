@@ -27,6 +27,18 @@ rebuilds the search index before starting Next.js.
 | `/api/search`           | Public documentation search.                             |
 | `/api/docs/chat`        | Public documentation AI chat.                             |
 
+## Documentation UI
+
+<!-- docs navigation and UI ownership matching app/docs/layout.tsx, lib/source.ts, and app/layout.tsx -->
+
+The sidebar uses Fumadocs' source page tree. Local `content/docs/**/meta.json`
+files define its labels, groups, and order; explicit links preserve flat page
+URLs. External sources join the tree through the source manifest.
+
+Search, page actions, buttons, and navigation links use built-in Fumadocs
+components. Search keeps the configured production API endpoint. Ask AI is
+available on documentation routes; Fumadocs manages its responsive panel layout.
+
 ## Multi-Repo Docs Sync
 
 This repo can ingest docs content from other `statelyai/*` repos and mount it

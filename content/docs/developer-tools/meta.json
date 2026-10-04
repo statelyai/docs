@@ -1,9 +1,9 @@
 {
-  "title": "Developer tools",
+  "title": "Developer Tools",
   "pages": [
-    "xstate-vscode-extension",
-    "visualizer",
-    "inspector",
-    "developer-tools"
+    "[XState VS Code extension](/docs/xstate-vscode-extension)",
+    "[Visualizer](/docs/visualizer)",
+    "[Inspector](/docs/inspector)",
+    "[Other tools](/docs/developer-tools)"
   ]
 }
