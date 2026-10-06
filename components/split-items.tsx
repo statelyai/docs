@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '@/lib/cn';
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 
 export interface SplitItemProps {
   value: string;

@@ -3,8 +3,8 @@ import { llms } from 'fumadocs-core/source';
 
 export const revalidate = false;
 
-export function GET() {
-  const navigation = llms(source).index();
+export async function GET() {
+  const navigation = await llms(source).index();
   const unlistedPages = source
     .getPages()
     .filter((page) => !navigation.includes(`](${page.url})`));

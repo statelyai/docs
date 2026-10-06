@@ -6,7 +6,9 @@ import {
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from 'fumadocs-ui/page';
+  MarkdownCopyButton,
+  ViewOptionsPopover,
+} from 'fumadocs-ui/layouts/docs/page';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import {
   getExternalPackageStaticParams,
@@ -16,7 +18,6 @@ import {
 } from '@/lib/external-package-source';
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
-import { LLMCopyButton, ViewOptions } from '@/components/page-actions';
 import { DocsSourceNotice } from '@/components/docs-source-notice';
 
 type RenderableDocsData = {
@@ -40,9 +41,9 @@ export default async function Page(
   const page = getPackagePage(params.package, params.slug);
   if (!page) notFound();
 
-  const data = (
-    'load' in page.data ? { ...page.data, ...(await page.data.load()) } : page.data
-  ) as unknown as RenderableDocsData;
+  const data = ('load' in page.data
+    ? { ...page.data, ...(await page.data.load()) }
+    : page.data) as unknown as RenderableDocsData;
   const MDX = data.body;
   const RelativeLink = createRelativeLink(source as any, page);
 
@@ -52,8 +53,8 @@ export default async function Page(
       <DocsDescription>{data.description}</DocsDescription>
       <DocsBody>
         <div className="flex flex-row gap-2 items-center border-b pt-2 pb-6">
-          <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
-          <ViewOptions
+          <MarkdownCopyButton markdownUrl={`${page.url}.mdx`} />
+          <ViewOptionsPopover
             markdownUrl={`${page.url}.mdx`}
             githubUrl={getPageGitHubUrl(page)}
           />

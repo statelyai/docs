@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, BookOpenIcon } from 'lucide-react';
 import Link from 'next/link';
 
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { ThemedLogo } from '@/lib/ThemedLogo';
 import { cn } from '@/lib/cn';
 

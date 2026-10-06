@@ -1,8 +1,8 @@
 {
   "title": "Share",
   "pages": [
-    "embed",
-    "image",
-    "url"
+    "[Embed URL](/docs/embed)",
+    "[Image URL](/docs/image)",
+    "[Share URL](/docs/url)"
   ]
 }

@@ -1,8 +1,8 @@
 {
-  "title": "Core concepts",
+  "title": "Core Concepts",
   "pages": [
-    "state-machines-and-statecharts",
-    "actor-model",
-    "xstate"
+    "[State machines and statecharts](/docs/state-machines-and-statecharts)",
+    "[Actor model](/docs/actor-model)",
+    "[What is XState?](/docs/xstate)"
   ]
 }

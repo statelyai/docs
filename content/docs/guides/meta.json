@@ -1,7 +1,8 @@
 {
   "title": "Guides",
   "pages": [
-    "testing",
-    "immer"
+    "[Graph utilities](/docs/graph)",
+    "[Testing](/docs/testing)",
+    "[Immer](/docs/immer)"
   ]
 }

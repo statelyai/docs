@@ -1,0 +1,27 @@
+{
+  "title": "State Machines",
+  "pages": [
+    "[State machines](/docs/machines)",
+    "[Setup](/docs/setup)",
+    "[States](/docs/states)",
+    "[Context](/docs/context)",
+    "[Input](/docs/input)",
+    "[Output](/docs/output)",
+    "[Events and transitions](/docs/transitions)",
+    "[Routes](/docs/routes)",
+    "[Pure transition functions](/docs/pure-transitions)",
+    "[Eventless transitions](/docs/eventless-transitions)",
+    "[Delayed transitions](/docs/delayed-transitions)",
+    "[Actions](/docs/actions)",
+    "[Guards](/docs/guards)",
+    "[Initial states](/docs/initial-states)",
+    "[Finite states](/docs/finite-states)",
+    "[Parent states](/docs/parent-states)",
+    "[Parallel states](/docs/parallel-states)",
+    "[Final states](/docs/final-states)",
+    "[History states](/docs/history-states)",
+    "[Persistence](/docs/persistence)",
+    "[Tags](/docs/tags)",
+    "[Event emitter](/docs/event-emitter)"
+  ]
+}

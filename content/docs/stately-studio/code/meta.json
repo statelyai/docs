@@ -1,10 +1,10 @@
 {
   "title": "Code",
   "pages": [
-    "import-from-code",
-    "import-from-github",
-    "generate-test-paths",
-    "sources",
-    "export-as-code"
+    "[Import from code](/docs/import-from-code)",
+    "[Connect GitHub repo](/docs/import-from-github)",
+    "[Generate test paths](/docs/generate-test-paths)",
+    "[Sources](/docs/sources)",
+    "[Export as code](/docs/export-as-code)"
   ]
 }
