@@ -5,11 +5,13 @@
     "core-concepts",
     "state-machines",
     "actors",
+    "agents",
     "guides",
     "xstate-store",
     "packages",
     "developer-tools",
     "stately-studio",
-    "[Glossary](/docs/glossary)"
+    "[Glossary](/docs/glossary)",
+    "[Self-hosting](/docs/self-hosting)"
   ]
 }

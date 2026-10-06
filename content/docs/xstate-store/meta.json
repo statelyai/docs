@@ -1,7 +1,6 @@
 {
   "title": "XState Store",
   "pages": [
-    "[Vanilla](/docs/xstate-store)",
     "[React](/docs/xstate-store/react)",
     "[Vue](/docs/xstate-store/vue)",
     "[Svelte](/docs/xstate-store/svelte)",
@@ -12,6 +11,11 @@
     "[Persist extension](/docs/xstate-store/persist)",
     "[Reset extension](/docs/xstate-store/reset)",
     "[Validation extension](/docs/xstate-store/validate-schemas)",
+    "[Compare to Zustand](/docs/xstate-store/compare-zustand)",
+    "[Compare to Jotai](/docs/xstate-store/compare-jotai)",
+    "[Compare to Recoil](/docs/xstate-store/compare-recoil)",
+    "[Compare to Redux](/docs/xstate-store/compare-redux)",
+    "[Compare to Pinia](/docs/xstate-store/compare-pinia)",
     "[Migration](/docs/xstate-store/migration)"
   ],
   "pagesIndex": "[Overview](/docs/xstate-store)"
