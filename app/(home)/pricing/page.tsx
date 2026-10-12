@@ -87,11 +87,6 @@ export default function PricingPage() {
                     href: '/docs/generate-flow',
                   },
                   {
-                    text: 'Deploy state machines as workflows with Stately Sky',
-                    subtext: 'Beta feature',
-                    href: '/docs/stately-sky-getting-started',
-                  },
-                  {
                     text: 'Version history',
                     href: '/docs/versions',
                   },

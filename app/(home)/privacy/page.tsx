@@ -337,18 +337,6 @@ export default function PrivacyPage() {
             .
           </p>
 
-          <h2 id="connecting-actors">Connecting actors</h2>
-          <p>
-            We use Partykit for live connections between running actors. We
-            don&apos;t send any personal data to Partykit. We send machine
-            configurations and events for the actors.
-          </p>
-          <p>
-            <a href="https://partykit.io/privacy">
-              Partykit&apos;s privacy policy
-            </a>
-          </p>
-
           <h2 id="stately-ai">Stately AI</h2>
           <p>
             We use OpenAI for Stately AI features including generating flows,
