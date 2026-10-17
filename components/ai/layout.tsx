@@ -1,41 +1,25 @@
 'use client';
 
+import { AIChatPanel, AIChatTrigger, useAIChat } from '@fumadocs/ai-chat';
 import { DocsLayout, type DocsLayoutProps } from 'fumadocs-ui/layouts/docs';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
-import { MessageCircleIcon } from 'lucide-react';
-import {
-  AISearch,
-  AISearchTrigger,
-  useAISearchContext,
-  useHotKey,
-} from './search';
-import { AISearchPanel } from './search-panel';
+import { AIChat } from './search';
 
 export function DocsChatLayout(props: DocsLayoutProps) {
   return (
-    <AISearch>
+    <AIChat>
       <ChatLayout {...props} />
-      <AISearchTrigger
-        position="float"
-        className={buttonVariants({
-          variant: 'secondary',
-          className: 'text-fd-muted-foreground rounded-2xl',
-        })}
-      >
-        <MessageCircleIcon className="size-4.5" /> Ask AI
-      </AISearchTrigger>
-    </AISearch>
+      <AIChatTrigger />
+    </AIChat>
   );
 }
 
 function ChatLayout(props: DocsLayoutProps) {
-  const { open, setOpen } = useAISearchContext();
-  useHotKey();
+  const { open, setOpen } = useAIChat();
 
   return (
     <DocsLayout
       {...props}
-      aiChat={{ open, onOpenChange: setOpen, panel: <AISearchPanel /> }}
+      aiChat={{ open, onOpenChange: setOpen, panel: <AIChatPanel /> }}
     />
   );
 }
