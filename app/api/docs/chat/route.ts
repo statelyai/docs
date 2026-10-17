@@ -1,5 +1,13 @@
 import { openai } from '@ai-sdk/openai';
-import { convertToModelMessages, stepCountIs, streamText, tool, type UIMessage } from 'ai';
+import {
+  convertToModelMessages,
+  stepCountIs,
+  streamText,
+  tool,
+  type InferUITools,
+  type UIDataTypes,
+  type UIMessage,
+} from 'ai';
 import { z } from 'zod';
 import { searchDocs } from '@/lib/docs-search';
 
@@ -63,7 +71,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const reqJson: { messages?: UIMessage[] } = await req.json();
+  const reqJson: { messages?: DocsChatMessage[] } = await req.json();
 
   const result = streamText({
     model: openai('gpt-4o'),
@@ -71,10 +79,8 @@ export async function POST(req: Request) {
     tools: {
       search: searchTool,
     },
-    messages: [
-      { role: 'system', content: systemPrompt },
-      ...(await convertToModelMessages(reqJson.messages ?? [])),
-    ],
+    instructions: systemPrompt,
+    messages: await convertToModelMessages(reqJson.messages ?? []),
     toolChoice: 'auto',
   });
 
@@ -92,4 +98,8 @@ const searchTool = tool({
   },
 });
 
-export type SearchTool = typeof searchTool;
+export type DocsChatMessage = UIMessage<
+  unknown,
+  UIDataTypes,
+  InferUITools<{ search: typeof searchTool }>
+>;

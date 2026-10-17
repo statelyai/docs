@@ -37,7 +37,9 @@ URLs. External sources join the tree through the source manifest.
 
 Search, page actions, buttons, and navigation links use built-in Fumadocs
 components. Search keeps the configured production API endpoint. Ask AI is
-available on documentation routes; Fumadocs manages its responsive panel layout.
+available on documentation routes; `@fumadocs/ai-chat` provides its panel,
+streaming Markdown, draft storage, and keyboard shortcuts. The AI SDK transport
+uses `/api/docs/chat`; search tool results link back to documentation pages.
 
 ## Multi-Repo Docs Sync
 
