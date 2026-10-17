@@ -46,3 +46,6 @@ dist
 .source
 lib/search-index.json
 tsconfig.tsbuildinfo
+
+# Twoslash analysis cache
+.twoslash
