@@ -58,7 +58,7 @@ function Hero() {
               Try the visual editor
             </Link>
             <Link
-              href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
+              href="https://cal.com/statelyai/enterprise-calls"
               target="_blank"
               className="inline-flex items-center gap-2 px-6 py-3 bg-fd-secondary hover:bg-fd-accent text-fd-foreground font-medium rounded-full transition-colors"
             >
@@ -590,7 +590,7 @@ function CTA() {
                 Sign up for free
               </Link>
               <Link
-                href="https://calendly.com/d/yc8-3hq-rpc/request-a-demo"
+                href="https://cal.com/statelyai/enterprise-calls"
                 target="_blank"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-400 text-white font-semibold rounded-full transition-colors"
               >
