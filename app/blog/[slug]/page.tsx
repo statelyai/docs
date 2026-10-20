@@ -10,6 +10,7 @@ import {
 import { blog, getBlogImage } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
 import path from 'node:path';
+import { pageMetadata, SITE_URL } from '@/lib/seo';
 
 export default async function Page(props: PageProps<'/blog/[slug]'>) {
   const params = await props.params;
@@ -23,6 +24,25 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
 
   return (
     <DocsPage toc={toc}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: page.data.title,
+            description: page.data.description,
+            url: `${SITE_URL}${page.url}`,
+            mainEntityOfPage: `${SITE_URL}${page.url}`,
+            image: `${SITE_URL}${getBlogImage(page).url}`,
+            datePublished: new Date(page.data.date).toISOString(),
+            author: page.data.authors.map((name) => ({
+              '@type': 'Person',
+              name,
+            })),
+          }).replace(/</g, '\\u003c'),
+        }}
+      />
       <Link
         href="/blog"
         className="text-sm text-fd-muted-foreground hover:text-fd-foreground mb-4 inline-block"
@@ -55,12 +75,20 @@ export async function generateMetadata(
 
   if (!page) notFound();
 
-  return {
+  const metadata = pageMetadata({
     title: page.data.title,
-    description:
-      page.data.description ?? 'The library for building documentation sites',
+    description: page.data.description,
+    path: page.url,
+    image: getBlogImage(page).url,
+  });
+
+  return {
+    ...metadata,
     openGraph: {
-      images: getBlogImage(page).url,
+      ...metadata.openGraph,
+      type: 'article',
+      publishedTime: new Date(page.data.date).toISOString(),
+      authors: page.data.authors,
     },
   };
 }

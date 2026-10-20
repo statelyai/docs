@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { Footer } from '@/components/Footer';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Privacy',
   description:
     'The Stately privacy policy outlines how we collect, use, and protect your personal data when you use our platform.',
-};
+  path: '/privacy',
+});
 
 export default function PrivacyPage() {
   return (

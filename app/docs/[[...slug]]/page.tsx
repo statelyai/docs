@@ -12,6 +12,7 @@ import { getMDXComponents } from '@/mdx-components';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { DocsSourceNotice } from '@/components/docs-source-notice';
+import { pageMetadata } from '@/lib/seo';
 import {
   isExternalDocsSlug,
   getVersionedDocsRoot,
@@ -88,11 +89,10 @@ export async function generateMetadata(
     notFound();
   }
 
-  return {
+  return pageMetadata({
     title: page.data.title,
     description: page.data.description,
-    openGraph: {
-      images: getPageImage(page).url,
-    },
-  };
+    path: page.url,
+    image: getPageImage(page).url,
+  });
 }

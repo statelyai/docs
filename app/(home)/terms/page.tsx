@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { Footer } from '@/components/Footer';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Terms of Service',
   description:
     'The Stately Platform Agreement outlines the terms and conditions for using the Stately platform.',
-};
+  path: '/terms',
+});
 
 export default function TermsPage() {
   return (
