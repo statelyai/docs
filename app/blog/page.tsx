@@ -1,6 +1,14 @@
 import Link from 'next/link';
 import { DocsBody, DocsPage, DocsTitle } from 'fumadocs-ui/page';
 import { blog } from '@/lib/source';
+import { pageMetadata } from '@/lib/seo';
+
+export const metadata = pageMetadata({
+  title: 'Blog: XState, state machines, and product updates',
+  description:
+    'Guides, examples, and updates about XState, state machines, statecharts, actors, and the Stately visual editor.',
+  path: '/blog',
+});
 
 export default function Page() {
   const posts = [...blog.getPages()].sort(

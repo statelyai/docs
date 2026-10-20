@@ -1,6 +1,5 @@
-'use client';
-
 import Link from 'next/link';
+import { pageMetadata, SITE_URL } from '@/lib/seo';
 import {
   ArrowRight,
   Play,
@@ -17,9 +16,27 @@ import {
 } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 
+export const metadata = pageMetadata({
+  title: 'Visual state machine editor and XState tools',
+  description:
+    'Visually design, simulate, and build state machines and statecharts. Turn application logic into executable XState code with the Stately editor.',
+  path: '/',
+});
+
 export default function HomePage() {
   return (
     <main className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Stately',
+            url: `${SITE_URL}/`,
+          }),
+        }}
+      />
       <Hero />
       <Companies />
       <DesignSection />
@@ -52,8 +69,8 @@ function Hero() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/editor?source=landing-page"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-full transition-colors"
+              href="https://editor.stately.ai/?source=landing-page"
+              className="plausible-event-name=Editor+CTA inline-flex items-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-full transition-colors"
             >
               Try the visual editor
             </Link>
@@ -73,6 +90,9 @@ function Hero() {
           <div className="rounded-xl border border-fd-border shadow-2xl shadow-blue-500/10 overflow-hidden bg-fd-card">
             <img
               src="/assets/landing/room-readings.png"
+              width={3024}
+              height={1716}
+              fetchPriority="high"
               alt="This state machine is called Accumulate room readings. Its purpose is to get temperature and humidity readings from IoT sensors and generate a report every hour."
               className="w-full h-auto"
             />
@@ -265,6 +285,10 @@ function BuildSection() {
         <div className="mt-12 rounded-xl border border-fd-border shadow-xl overflow-hidden">
           <img
             src="/assets/landing/vscode-split.png"
+            width={2360}
+            height={1246}
+            loading="lazy"
+            decoding="async"
             alt="A book lender state machine in VSCode. One panel shows the state machine as a JavaScript object, the other panel shows the same state machine visualized using the XState VSCode extension."
             className="w-full h-auto"
           />
@@ -321,6 +345,10 @@ function BuildSection() {
             </div>
             <img
               src="/assets/landing/generate-react.png"
+              width={1366}
+              height={782}
+              loading="lazy"
+              decoding="async"
               alt="The room reading state machine visualized in the Stately editor alongside the React app code generated for that app logic."
               className="w-full h-auto"
             />
@@ -339,6 +367,10 @@ function BuildSection() {
           </div>
           <img
             src="/assets/landing/test-generation.png"
+            width={3096}
+            height={738}
+            loading="lazy"
+            decoding="async"
             alt="A test path list of states and events in the Stately editor alongside that path being highlighted on the canvas, and the code generated to implement the tests."
             className="w-full h-auto"
           />
@@ -385,6 +417,10 @@ function BuildSection() {
           </div>
           <img
             src="/assets/landing/inspector.png"
+            width={3360}
+            height={1885}
+            loading="lazy"
+            decoding="async"
             alt="The Stately Inspector view, showing a state machine and a sequence diagram for the pizza ordering process side-by-side."
             className="w-full h-auto"
           />

@@ -58,7 +58,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         text: 'Editor',
-        url: '/editor',
+        url: 'https://editor.stately.ai/',
         external: true,
         icon: <PanelsTopLeftIcon size={18} />,
       },
