@@ -16,6 +16,11 @@ pnpm dev
 The Portless URL is printed in the terminal. `pnpm dev` syncs external docs and
 rebuilds the search index before starting Next.js.
 
+<!-- AI chat environment from app/api/docs/chat/route.ts -->
+
+Set `OPENAI_API_KEY` to use **Ask AI** locally. Search and the rest of the site
+work without it.
+
 ## Application routes
 
 <!-- public routes matching app route handlers -->
