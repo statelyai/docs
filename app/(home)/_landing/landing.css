@@ -1,0 +1,60 @@
+/* Landing page tokens: mirrors the Viz editor (dark). See landing-design-language.md. */
+.sp {
+  --sp-bg: oklch(0.141 0.005 285.823);
+  --sp-canvas: #15151d;
+  --sp-surface: oklch(0.21 0.016 285);
+  --sp-fg: oklch(0.985 0 0);
+  --sp-muted: oklch(0.705 0.015 286.067);
+  --sp-muted-2: oklch(0.55 0.015 286);
+  --sp-border: oklch(1 0 0 / 10%);
+  --sp-border-strong: oklch(1 0 0 / 18%);
+  --sp-primary: #0f6ee5;
+  --sp-primary-hover: #005cde;
+  --sp-node: #2d3143;
+  --sp-node-stroke: #5b6079;
+  --sp-edge: #8b90a8;
+  --sp-sim: oklch(0.78 0.12 190);
+  --sp-inspect: oklch(0.75 0.15 50);
+  --sp-warn: oklch(0.82 0.15 80);
+  --sp-success: oklch(0.78 0.15 150);
+  --sp-ai: oklch(0.74 0.15 295);
+  --sp-info: oklch(0.75 0.11 240);
+  --sp-radius: 0.45rem;
+  background: var(--sp-bg);
+  color: var(--sp-fg);
+  color-scheme: dark;
+}
+.sp-grid {
+  background-color: var(--sp-canvas);
+  background-image: radial-gradient(oklch(1 0 0 / 9%) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.sp-mono {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-feature-settings: 'tnum';
+}
+.sp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  border-radius: var(--sp-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.sp-btn-primary {
+  background: var(--sp-primary);
+  color: #fff;
+}
+.sp-btn-primary:hover {
+  background: var(--sp-primary-hover);
+}
+.sp-btn-outline {
+  border: 1px solid var(--sp-border-strong);
+  color: var(--sp-fg);
+}
+.sp-btn-outline:hover {
+  border-color: oklch(1 0 0 / 32%);
+}

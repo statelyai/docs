@@ -1,6 +1,16 @@
-export function Footer() {
+export function Footer({ tone = 'blue' }: { tone?: 'blue' | 'neutral' }) {
+  const neutral = tone === 'neutral';
+  const rootCls = neutral
+    ? 'bg-[var(--sp-canvas)] border-t border-[var(--sp-border)] pb-24 pt-24'
+    : 'bg-blue-950 pb-24 pt-24';
+  const linkCls = neutral
+    ? 'text-[var(--sp-fg)] underline underline-offset-4 decoration-[var(--sp-border-strong)] hover:decoration-[var(--sp-fg)] font-semibold'
+    : 'text-blue-300 hover:text-white font-bold';
+  const submitCls = neutral
+    ? 'text-white bg-[var(--sp-primary)] hover:bg-[var(--sp-primary-hover)] rounded-md px-3 py-2 text-base font-medium cursor-pointer'
+    : 'text-blue-900 bg-blue-300 rounded-md px-3 py-2 text-base font-medium cursor-pointer hover:bg-blue-200';
   return (
-    <div className="bg-blue-950 pb-24 pt-24">
+    <div className={rootCls}>
       <section className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl pb-16 px-6">
         {/* Newsletter */}
         <aside>
@@ -30,7 +40,7 @@ export function Footer() {
               <input type="hidden" value="1" name="embed" />
               <input
                 type="submit"
-                className="text-blue-900 bg-blue-300 rounded-md px-3 py-2 text-base font-medium cursor-pointer hover:bg-blue-200"
+                className={submitCls}
                 value="Subscribe"
               />
             </div>
@@ -45,14 +55,14 @@ export function Footer() {
           <p className="text-white/60 font-medium">
             <a
               href="https://discord.gg/xstate"
-              className="text-blue-300 hover:text-white font-bold"
+              className={linkCls}
             >
               Join our Discord
             </a>{' '}
             to give us feedback and get support. And participate in our{' '}
             <a
               href="https://www.youtube.com/@Statelyai/streams"
-              className="text-blue-300 hover:text-white font-bold"
+              className={linkCls}
             >
               Office Hours
             </a>{' '}
