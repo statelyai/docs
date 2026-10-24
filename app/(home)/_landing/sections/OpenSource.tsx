@@ -72,9 +72,9 @@ export function OpenSource() {
         ))}
       </dl>
       <p className="mt-3 sp-mono text-[11.5px] leading-relaxed text-[var(--sp-muted)]">
-        Sources: npm registry (weekly downloads, first publish 2017), GitHub
-        (stars and dependent repositories). Rounded down, as of{' '}
-        {xstateFacts[1].asOf}; refreshed before each release.
+        Sources: npm registry (weekly downloads as of {xstateFacts[0].asOf}; first
+        publish 2017), GitHub (stars and dependent repositories as of{' '}
+        {xstateFacts[1].asOf}). Rounded down; refreshed before each release.
       </p>
       <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
         <div className="min-w-0 space-y-6">

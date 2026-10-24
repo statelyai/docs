@@ -89,14 +89,30 @@ export function Statechart({
   label?: string;
 }) {
   const { w, h, nodes, edges } = machine;
+  // Text alternative: every state and transition, so the chart is readable
+  // without the picture.
+  const describe = () => {
+    const states = nodes
+      .map((n) => {
+        const flags = [n.initial && 'initial', n.final && 'final', n.unreachable && 'unreachable', n.active === 'sim' && 'current'].filter(Boolean);
+        return flags.length ? `${n.label} (${flags.join(', ')})` : n.label;
+      })
+      .join(', ');
+    const transitions = edges.map((e) => `${e.from} on ${e.label} to ${e.to}`).join('; ');
+    return `States: ${states}. Transitions: ${transitions}.`;
+  };
+  const titleId = `sc-title-${machine.nodes.map((n) => n.id).join('-')}`;
+  const descId = `${titleId}-desc`;
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
       className={className}
       role="img"
-      aria-label={label}
+      aria-labelledby={label ? `${titleId} ${descId}` : undefined}
       style={{ opacity: dim ? 0.55 : 1 }}
     >
+      {label && <title id={titleId}>{label}</title>}
+      {label && <desc id={descId}>{describe()}</desc>}
       <defs>
         {(
           [
