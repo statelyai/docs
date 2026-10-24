@@ -70,6 +70,15 @@ export function OpenSource() {
           </div>
         ))}
       </dl>
+      <p className="mt-3 sp-mono text-[11.5px] leading-relaxed text-[var(--sp-muted)]">
+        Sources: {xstateFacts.map((f, i) => (
+          <span key={f.label}>
+            {i > 0 && ' · '}
+            {f.label}: {f.source}, as of {f.asOf}
+          </span>
+        ))}
+        . Rounded down; refreshed before each release.
+      </p>
       <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
         <div className="min-w-0 space-y-6">
           <Pane title="install" right={<Stability level="stable" />}>

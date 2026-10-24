@@ -66,7 +66,7 @@ function Region({
 }) {
   return (
     <div className={`min-w-0 flex flex-col px-5 pt-4 pb-6 lg:px-6 ${first ? '' : `border-t lg:border-t-0 lg:border-l ${parallelRegionCls}`}`}>
-      <div aria-hidden>{children}</div>
+      <div>{children}</div>
       <h3 className="mt-6 text-[17px] font-semibold text-[var(--sp-fg)]">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-[var(--sp-muted)]">{body}</p>
       <p className="mt-3 text-[14px]">
