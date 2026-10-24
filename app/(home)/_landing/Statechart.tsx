@@ -14,6 +14,8 @@ export type Node = {
   final?: boolean;
   unreachable?: boolean;
   active?: 'selected' | 'sim' | 'inspect';
+  /** selection outline; combinable with a sim/inspect runtime outline */
+  selected?: boolean;
 };
 
 export type Edge = {
@@ -69,11 +71,13 @@ export function Statechart({
   className,
   dim = false,
   showEvidence = true,
+  label = 'Statechart of a checkout flow mapped from source code',
 }: {
   machine: Machine;
   className?: string;
   dim?: boolean;
   showEvidence?: boolean;
+  label?: string;
 }) {
   const { w, h, nodes, edges } = machine;
   return (
@@ -81,7 +85,7 @@ export function Statechart({
       viewBox={`0 0 ${w} ${h}`}
       className={className}
       role="img"
-      aria-label="Statechart of a checkout flow mapped from source code"
+      aria-label={label}
       style={{ opacity: dim ? 0.55 : 1 }}
     >
       <defs>
@@ -154,7 +158,7 @@ export function Statechart({
         const nh = n.h ?? NH;
         const stroke = n.unreachable
           ? 'var(--sp-warn)'
-          : n.active === 'selected'
+          : n.selected || n.active === 'selected'
             ? 'var(--sp-primary)'
             : 'var(--sp-node-stroke)';
         return (

@@ -1,33 +1,25 @@
-// §3 The problem: the same change shown twice. An agent's PR diff (opaque)
-// vs the same change as a graph with one new transition highlighted.
-import { Statechart, checkoutMachine } from '../Statechart';
-import { FigCaption, Section, SectionHeading } from '../shared';
+// §3 The problem: the same change shown twice. An agent's PR diff (abstract,
+// unreadable at a glance) vs the same change as a graph with RETRY highlighted.
+import { MachineCanvas } from '../MachineCanvas';
+import { Edge, FigCaption, Section, SectionHeading } from '../shared';
 
-const diff: Array<[' ' | '+' | '-', string]> = [
-  [' ', 'export const checkoutMachine = setup({'],
-  [' ', '  actors: { charge, verifyAddress },'],
-  ['-', '  guards: { hasItems },'],
-  ['+', '  guards: { hasItems, canRetry },'],
-  [' ', '}).createMachine({'],
-  [' ', '  states: {'],
-  [' ', '    payment: {'],
-  [' ', '      invoke: { src: "charge", onDone: "confirmed",'],
-  ['-', '        onError: "declined" },'],
-  ['+', '        onError: [{ guard: "canRetry", target: "declined" },'],
-  ['+', '                  { target: "cart" }] },'],
-  [' ', '    },'],
-  [' ', '    declined: {'],
-  ['+', '      on: { RETRY: "payment", CANCEL: "cart" },'],
-  ['-', '      on: { CANCEL: "cart" },'],
-  [' ', '    },'],
-  [' ', '    confirmed: {'],
-  ['-', '      on: { REFUND: "refund" },'],
-  [' ', '      type: "final",'],
-  [' ', '    },'],
-  [' ', '    refund: { entry: "issueRefund", type: "final" },'],
-  [' ', '  },'],
-  [' ', '});'],
+// Skeleton rows: widths in %, indent in steps. 2 removed, 2 added, 4 context.
+const rows: Array<[' ' | '+' | '-', number, number]> = [
+  [' ', 0, 62],
+  [' ', 1, 44],
+  ['-', 2, 56],
+  ['+', 2, 78],
+  [' ', 2, 38],
+  ['-', 3, 48],
+  ['+', 3, 70],
+  [' ', 1, 30],
 ];
+
+const tint = {
+  ' ': { row: '', bar: 'oklch(1 0 0 / 9%)' },
+  '+': { row: 'bg-[oklch(0.78_0.15_150/10%)]', bar: 'oklch(0.78 0.15 150 / 45%)' },
+  '-': { row: 'bg-[oklch(0.7_0.19_22/10%)]', bar: 'oklch(0.7 0.19 22 / 45%)' },
+} as const;
 
 export function DiffVsGraph() {
   return (
@@ -36,64 +28,59 @@ export function DiffVsGraph() {
         title="Agents write code faster than anyone can review it."
         lede="A diff shows which lines moved. It doesn't show that refund can no longer be reached, or that RETRY now loops back into payment."
       />
-        {/* the argument */}
-        <div className="mt-12 grid lg:grid-cols-[minmax(0,1fr)_56px_minmax(0,1.25fr)] gap-4 lg:gap-0 items-stretch">
-          {/* diff */}
-          <div className="rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-surface)] overflow-hidden">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)]">
-              <span className="sp-mono text-[11px] text-[var(--sp-fg)]">PR #4821 · checkout retry</span>
-              <span className="sp-mono text-[11px] text-[var(--sp-muted-2)]">src/checkout.ts</span>
-              <span className="ml-auto sp-mono text-[11px]">
-                <span className="text-[var(--sp-success)]">+4</span>{' '}
-                <span className="text-[oklch(0.7_0.19_22)]">−4</span>
-              </span>
-            </div>
-            <pre className="sp-mono text-[11.5px] leading-[1.6] p-4 overflow-hidden text-[var(--sp-muted)]">
-              {diff.map(([k, line], i) => (
-                <div
-                  key={i}
-                  className={
-                    k === '+'
-                      ? 'bg-[oklch(0.78_0.15_150/10%)] text-[var(--sp-fg)]'
-                      : k === '-'
-                        ? 'bg-[oklch(0.7_0.19_22/10%)] text-[var(--sp-muted-2)] line-through decoration-[oklch(0.7_0.19_22/50%)]'
-                        : ''
-                  }
-                >
-                  <span className="inline-block w-5 select-none text-[var(--sp-muted-2)]">{k}</span>
-                  {line}
-                </div>
-              ))}
-            </pre>
-            <div className="px-4 pb-4">
-              <FigCaption n={1}>What the reviewer sees. 8 changed lines in src/checkout.ts.</FigCaption>
-            </div>
+      <div className="mt-12 grid lg:grid-cols-[minmax(0,1fr)_56px_minmax(0,1.25fr)] gap-4 lg:gap-0 items-stretch">
+        {/* diff: abstract, no readable code */}
+        <div className="lg:h-[360px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-surface)] overflow-hidden flex flex-col">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)]">
+            <span className="sp-mono text-[11px] text-[var(--sp-fg)]">PR #4821 · checkout retry</span>
+            <span className="sp-mono text-[11px] text-[var(--sp-muted-2)]">src/checkout.ts</span>
+            <span className="ml-auto sp-mono text-[11px]">
+              <span className="text-[var(--sp-success)]">+4</span>{' '}
+              <span className="text-[oklch(0.7_0.19_22)]">−4</span>
+            </span>
           </div>
-
-          {/* connector: a transition between the two panes */}
-          <div className="hidden lg:flex items-center justify-center">
-            <svg width="56" height="24" viewBox="0 0 56 24" aria-hidden>
-              <path d="M 2 12 L 50 12" stroke="var(--sp-primary)" strokeWidth="2" markerEnd="url(#sp-arrow-accent)" />
-            </svg>
+          <div aria-hidden className="flex-1 flex flex-col justify-center gap-1.5 p-4">
+            {rows.map(([k, indent, width], i) => (
+              <div key={i} className={`flex items-center h-6 rounded-sm ${tint[k].row}`}>
+                <span className="sp-mono w-6 shrink-0 text-center text-[11px] text-[var(--sp-muted-2)]">{k}</span>
+                <span
+                  className="h-2 rounded-full"
+                  style={{ marginLeft: indent * 14, width: `${width}%`, background: tint[k].bar }}
+                />
+              </div>
+            ))}
           </div>
-
-          {/* graph */}
-          <div className="rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden flex flex-col">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)] bg-[var(--sp-canvas)]">
-              <span className="sp-mono text-[11px] text-[var(--sp-fg)]">same change, as behavior</span>
-              <span className="ml-auto sp-mono text-[10.5px] uppercase tracking-[0.06em]">
-                <span className="text-[var(--sp-primary)]">1 new transition</span>
-                <span className="text-[var(--sp-muted-2)]"> · </span>
-                <span className="text-[var(--sp-warn)]">1 state unreachable</span>
-              </span>
-            </div>
-            <Statechart machine={checkoutMachine} className="w-full flex-1 p-4" />
-            <div className="px-4 pb-4">
-              <FigCaption n={2}>The same PR as a graph. One new transition, one state now unreachable.</FigCaption>
-            </div>
+          <div className="px-4 pb-4">
+            <FigCaption n={1}>Excerpt of src/checkout.ts. 8 lines changed.</FigCaption>
           </div>
         </div>
 
+        <div className="hidden lg:flex items-center">
+          <Edge dir="right" accent length={56} />
+        </div>
+
+        {/* graph */}
+        <div className="lg:h-[360px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden flex flex-col">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)] bg-[var(--sp-canvas)]">
+            <span className="sp-mono text-[11px] text-[var(--sp-fg)]">same change, as behavior</span>
+            <span className="ml-auto sp-mono text-[10.5px] uppercase tracking-[0.06em]">
+              <span className="text-[var(--sp-primary)]">1 new transition</span>
+              <span className="text-[var(--sp-muted-2)]"> · </span>
+              <span className="text-[var(--sp-warn)]">1 state unreachable</span>
+            </span>
+          </div>
+          <MachineCanvas
+            slot="diff-graph"
+            selected="payment"
+            sim="payment"
+            className="flex-1 min-h-0 p-4"
+            svgClassName="block w-full h-auto lg:h-full"
+          />
+          <div className="px-4 pb-4">
+            <FigCaption n={2}>One new transition and one unreachable state.</FigCaption>
+          </div>
+        </div>
+      </div>
     </Section>
   );
 }

@@ -10,6 +10,10 @@
   --sp-border-strong: oklch(1 0 0 / 18%);
   --sp-primary: #0f6ee5;
   --sp-primary-hover: #005cde;
+  /* Stately orange: XState and runtime/inspection. Use sparingly. */
+  --sp-orange: #ff7f2c;
+  --sp-orange-strong: #db4206;
+  --sp-orange-soft: oklch(0.75 0.15 50 / 14%);
   --sp-node: #2d3143;
   --sp-node-stroke: #5b6079;
   --sp-edge: #8b90a8;

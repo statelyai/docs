@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Statechart, type Machine } from '../Statechart';
 import { DataTable, Section, SectionHeading } from '../shared';
-import { stackOn3 } from './CopyLine';
+import { stackOn3 } from '../classes';
 
 const cell = (s: React.ReactNode) => <span className="text-[13px] leading-snug block">{s}</span>;
 const price = (main: string, sub?: string) => (
@@ -13,10 +13,10 @@ const price = (main: string, sub?: string) => (
 );
 
 const tiers: [string, React.ReactNode, string][] = [
-  ['Community', price('$0', 'free'), 'Create and edit machines in the editor, browse and simulate public machines, export to JavaScript and TypeScript. 2 projects, 3 machines.'],
-  ['Pro', price('$33 / mo', 'annual · $39 monthly'), 'Unlimited public, private, and unlisted projects, version history, live simulation, codebase sync via GitHub or the CLI.'],
-  ['Team', price('$167 / mo', 'annual · $199 monthly'), 'Everything in Pro for up to 10 members, shared team projects, admins and editors, unlimited view-only access.'],
-  ['Enterprise', price('Contact us'), 'Cloud or self-hosted, SSO, audit logs, custom server locations, dedicated priority support.'],
+  ['Community', price('$0', 'free'), 'Editor and code export, 2 projects, 3 machines.'],
+  ['Pro', price('$33 / mo', 'annual · $39 monthly'), 'Private projects, version history, live simulation, codebase sync.'],
+  ['Team', price('$167 / mo', 'annual · $199 monthly'), 'Pro for up to 10 members, shared projects.'],
+  ['Enterprise', price('Contact us'), 'Cloud or self-hosted, SSO, audit logs, priority support.'],
 ];
 
 // The tiers as one chain of states; evidence lines match the table.
@@ -59,8 +59,8 @@ export function PricingTeaser() {
   return (
     <Section id="pricing" event="PRICE">
       <SectionHeading
-        title="XState is free. So is the editor's base plan."
-        lede="XState and the open-source packages are free. The editor has a free plan; pay when you need private projects or a team."
+        title="XState is free. The editor starts free."
+        lede="XState and the open-source packages are free, and the editor has a free Community plan. Pro and Team add private projects, version history, and team features. Enterprise adds self-hosting, SSO, and audit logs."
       />
       <div aria-hidden className="mt-12 hidden lg:block">
         <Statechart machine={tierMachine} className="w-full h-auto max-w-[60rem]" />

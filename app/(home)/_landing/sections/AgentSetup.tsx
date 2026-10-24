@@ -1,8 +1,8 @@
 'use client';
-// §2 Set up your agent: per-client install line + the MCP capability table.
+// §2 Set up your agent: per-client install line + the MCP tools as four capability cards.
 import { useState } from 'react';
-import { DataTable, Edge, Pane, Section, SectionHeading, Stability } from '../shared';
-import { CopyLine, TextLink, stackOn3 } from './CopyLine';
+import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
+import { CopyLine, TextLink } from './CopyLine';
 
 const MCP_URL = 'https://mcp.stately.ai/mcp';
 
@@ -25,19 +25,32 @@ const clients: Client[] = [
 ];
 
 type Level = 'stable' | 'beta' | 'alpha';
-const tools: [string, string, Level][] = [
-  ['validate_machine', 'Check syntax and graph structure: missing targets, unreachable states, invalid config.', 'stable'],
-  ['convert_machine', 'Translate a machine between XState, SCXML, XGraph, Mermaid, and D2.', 'stable'],
-  ['diff_machines', 'List added, removed, and changed states and transitions between two machines.', 'stable'],
-  ['apply_machine_patches', 'Apply structured edits to a machine and return the result.', 'stable'],
-  ['generate_graph_paths', 'Enumerate shortest and simple paths between states.', 'stable'],
-  ['simulate_machine', 'Step a machine through a sequence of events and report each state.', 'stable'],
-  ['visualize_machine', 'Render a machine as a diagram.', 'beta'],
-  ['extract_machines_from_code', 'Statically extract every XState machine from JavaScript or TypeScript source.', 'beta'],
-  ['review_machine_implementation', 'Compare a machine to its implementation and list mismatches.', 'beta'],
-  ['verify', 'Run a verification report through a host adapter and return matches or drifted.', 'beta'],
-  ['generate_test_paths', 'Return the recorded paths from a verification report.', 'beta'],
-  ['coverage_report', 'Report model and executed coverage from a verification report.', 'beta'],
+/** 12 tools in four groups. A tool whose level differs from its group's is marked on its chip. */
+const groups: { title: string; body: string; level: Level; tools: [string, Level?][] }[] = [
+  {
+    title: 'Validate and convert',
+    body: 'Find missing targets, unreachable states, and invalid config, then translate between XState, SCXML, Mermaid, and D2.',
+    level: 'stable',
+    tools: [['validate_machine'], ['convert_machine']],
+  },
+  {
+    title: 'Diff and patch',
+    body: 'List the states and transitions that changed between two machines, and apply structured edits.',
+    level: 'stable',
+    tools: [['diff_machines'], ['apply_machine_patches']],
+  },
+  {
+    title: 'Paths and simulation',
+    body: 'Enumerate paths between states, step a machine through events, and render it as a diagram.',
+    level: 'stable',
+    tools: [['generate_graph_paths'], ['simulate_machine'], ['visualize_machine', 'beta']],
+  },
+  {
+    title: 'Extract, review, verify',
+    body: 'Pull machines out of source, compare them to the implementation, and report matches or drifted with coverage.',
+    level: 'beta',
+    tools: [['extract_machines_from_code'], ['review_machine_implementation'], ['verify'], ['generate_test_paths'], ['coverage_report']],
+  },
 ];
 
 export function AgentSetup() {
@@ -76,23 +89,22 @@ export function AgentSetup() {
                 </button>
               ))}
             </div>
-            <div className="p-4 space-y-4">
-              <div>
-                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">1 · add the server · {client.note}</p>
-                <CopyLine text={client.cmd} prompt={client.prompt} />
-              </div>
-              <div>
-                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">2 · sign in</p>
+            <div className="p-3 space-y-2.5">
+              <p className="sp-mono text-[11px] text-[var(--sp-muted-2)]">{client.note}</p>
+              <CopyLine text={client.cmd} prompt={client.prompt} />
+              <p className="text-[13px] leading-snug text-[var(--sp-muted)]">
                 {'cmd' in client.login ? (
-                  <CopyLine text={client.login.cmd} prompt />
+                  <>
+                    Sign in with <code className="sp-mono text-[12px] text-[var(--sp-fg)]">{client.login.cmd}</code>.
+                  </>
                 ) : (
-                  <p className="text-[13px] text-[var(--sp-muted)]">{client.login.text}</p>
+                  client.login.text
                 )}
-              </div>
-              <div>
-                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">3 · add the skills · terminal</p>
-                <CopyLine text="npx skills add statelyai/skills" />
-              </div>
+              </p>
+              <p className="text-[13px] leading-snug text-[var(--sp-muted)]">
+                Add the skills with{' '}
+                <code className="sp-mono text-[12px] text-[var(--sp-fg)] whitespace-nowrap">npx skills add statelyai/skills</code>.
+              </p>
             </div>
           </Pane>
           <dl className="mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-[14px]">
@@ -110,27 +122,29 @@ export function AgentSetup() {
           <Edge dir="down" label="CONNECT" length={76} className="lg:hidden" />
           <Edge dir="right" label="CONNECT" length={128} className="hidden lg:block" />
         </div>
-        <div className="min-w-0">
-          <DataTable
-            className={stackOn3}
-            head={['Tool', 'What it does', 'Stability']}
-            rows={tools.map(([name, what, level]) => [
-              <code key="n" className="sp-mono text-[12px] font-normal whitespace-normal">
-                {name.split('_').map((part, i) => (
-                  <span key={i}>
-                    {i > 0 && '_'}
-                    {i > 0 && <wbr />}
-                    {part}
-                  </span>
+        <div className="min-w-0 grid sm:grid-cols-2 gap-3">
+          {groups.map((g) => (
+            <Pane key={g.title} className="p-4 flex flex-col">
+              <div className="flex items-baseline gap-3">
+                <h3 className="text-[14px] font-semibold text-[var(--sp-fg)]">{g.title}</h3>
+                <span className="ml-auto shrink-0"><Stability level={g.level} /></span>
+              </div>
+              <p className="mt-1.5 text-[13px] leading-snug text-[var(--sp-muted)]">{g.body}</p>
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {g.tools.map(([name, level]) => (
+                  <li
+                    key={name}
+                    className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 max-w-full rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] text-[11px] text-[var(--sp-fg)]"
+                  >
+                    <span className="truncate">{name}</span>
+                    {level && level !== g.level && (
+                      <span className="text-[10px] uppercase" style={{ color: 'var(--sp-info)' }}>{level}</span>
+                    )}
+                  </li>
                 ))}
-              </code>,
-              <span key="w" className="text-[13px] leading-snug block sm:min-w-[14rem]">{what}</span>,
-              <span key="s" className="whitespace-nowrap"><Stability level={level} /></span>,
-            ])}
-          />
-          <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mt-3">
-            12 tools · stability labeled per tool
-          </p>
+              </ul>
+            </Pane>
+          ))}
         </div>
       </div>
     </Section>

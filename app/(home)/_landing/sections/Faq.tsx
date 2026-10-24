@@ -14,19 +14,11 @@ export const faqItems: { q: string; a: string }[] = [
   },
   {
     q: 'Does my code leave my network?',
-    a: 'With the hosted service, the code you send is processed under the Stately privacy policy. With self-hosted Stately and AI features turned off, no traffic leaves your network.',
+    a: 'With the hosted service, the code you send is processed under the Stately privacy policy. With self-hosted Stately, and AI features and hosted comments turned off, no traffic leaves your network.',
   },
   {
     q: 'What does my agent actually do with Stately?',
     a: 'It calls the MCP tools to map code into a statechart with cited evidence, propose changes to that graph, and verify the implementation still matches. Each step produces an artifact a human can review and approve.',
-  },
-  {
-    q: 'Which clients are supported? Which parts are alpha?',
-    a: 'Any MCP client works, including Claude Code, Codex, Cursor, and VS Code. Every tool and package is labeled stable, beta, or alpha; XState v6 and @statelyai/agent are alpha.',
-  },
-  {
-    q: 'Is it free? What is paid?',
-    a: 'XState and the open-source packages are free, and the editor has a free Community plan. Pro and Team add private projects, version history, and team features; Enterprise adds cloud or self-hosted, SSO, and audit logs. Details are on the pricing page.',
   },
   {
     q: 'Where are the machine-readable docs?',

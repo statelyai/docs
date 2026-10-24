@@ -1,5 +1,6 @@
 // §4 The Stately loop: five steps as one machine, each with its artifact.
-import { Statechart, type Machine } from '../Statechart';
+import { MachineCanvas } from '../MachineCanvas';
+import { type Machine } from '../Statechart';
 import { Edge, Pane, Section, SectionHeading } from '../shared';
 import { TextLink } from './CopyLine';
 
@@ -51,7 +52,7 @@ export function Loop() {
         lede="Each step leaves something you can check: a map, a proposal, a visual diff, a code change, a verdict."
       />
       <div className="mt-12 hidden lg:block" aria-hidden>
-        <Statechart machine={loopMachine} className="w-full h-auto" />
+        <MachineCanvas slot="loop" machine={loopMachine} sim="approved" />
       </div>
       <ol className="mt-10 lg:mt-8 grid sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8">
         {steps.map((s, i) => (
@@ -92,20 +93,11 @@ export function Loop() {
         </p>
       </div>
       <Pane title="what we test" className="mt-12 max-w-[44rem]">
-        <div className="p-5">
-          <p className="text-[15px] leading-relaxed text-[var(--sp-fg)]">
-            We run Claude Code and Codex through map, edit, apply, and verify,
-            and keep the runs.
-          </p>
-          <p className="mt-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
-            What we claim from that: each change is cited to its source and
-            checked by verify. We do not claim agents make fewer mistakes with
-            Stately.
-          </p>
-          <p className="mt-4 text-[14px]">
-            <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
-          </p>
-        </div>
+        <p className="p-5 text-[14px] leading-relaxed text-[var(--sp-muted)]">
+          We run Claude Code and Codex through map, edit, apply, and verify, and
+          keep the runs. In each run, every change is cited to its source and
+          checked by verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
+        </p>
       </Pane>
     </Section>
   );

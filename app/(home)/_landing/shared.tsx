@@ -13,42 +13,43 @@ export function InstallPill({ align = 'left' }: { align?: 'left' | 'center' }) {
       : 'claude mcp add --transport http stately https://mcp.stately.ai/mcp';
   return (
     <div className={align === 'center' ? 'flex flex-col items-center' : ''}>
-      <div className="inline-flex items-stretch rounded-[var(--sp-radius)] border border-[var(--sp-border-strong)] bg-[var(--sp-surface)] overflow-hidden">
-        <div className="flex border-r border-[var(--sp-border)]">
+      <div className="flex flex-col w-full max-w-full rounded-[var(--sp-radius)] border border-[var(--sp-border-strong)] bg-[var(--sp-surface)] overflow-hidden">
+        <div className="flex border-b border-[var(--sp-border)]">
           {(['agent', 'human'] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`sp-mono px-3 text-[11px] uppercase tracking-[0.06em] font-medium whitespace-nowrap transition-colors ${
+              className={`sp-mono px-3 py-1.5 text-[11px] uppercase tracking-[0.06em] font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
                 tab === t
-                  ? 'text-[var(--sp-fg)] bg-[oklch(1_0_0/6%)]'
-                  : 'text-[var(--sp-muted-2)] hover:text-[var(--sp-muted)]'
+                  ? 'text-[var(--sp-fg)] border-[var(--sp-primary)]'
+                  : 'text-[var(--sp-muted-2)] border-transparent hover:text-[var(--sp-muted)]'
               }`}
             >
-              <span className="sm:hidden">{t === 'human' ? 'XState' : 'Agent'}</span>
-              <span className="hidden sm:inline">{t === 'human' ? 'Have XState? Find machines' : 'For your agent'}</span>
+              {t === 'human' ? 'Have XState? Find machines' : 'For your agent'}
             </button>
           ))}
         </div>
-        <code className="sp-mono px-3 sm:px-4 py-2.5 text-[12px] sm:text-[13px] text-[var(--sp-fg)] whitespace-nowrap overflow-hidden text-ellipsis">
-          <span className="text-[var(--sp-muted-2)] select-none">$ </span>
-          {cmd}
-        </code>
-        <button
-          onClick={async () => {
-            try {
-              await navigator.clipboard.writeText(cmd);
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1200);
-            } catch {
-              setCopied(false);
-            }
-          }}
-          className="px-3 text-[var(--sp-muted)] hover:text-[var(--sp-fg)] border-l border-[var(--sp-border)] transition-colors"
-          aria-label="Copy command"
-        >
-          {copied ? <Check size={14} /> : <Copy size={14} />}
-        </button>
+        <div className="flex items-stretch">
+          <code className="sp-mono flex-1 min-w-0 px-3 sm:px-4 py-2.5 text-[12px] sm:text-[12.5px] leading-snug text-[var(--sp-fg)] whitespace-normal break-all self-center">
+            <span className="text-[var(--sp-muted-2)] select-none">$ </span>
+            {cmd}
+          </code>
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(cmd);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1200);
+              } catch {
+                setCopied(false);
+              }
+            }}
+            className="shrink-0 px-3 text-[var(--sp-muted)] hover:text-[var(--sp-fg)] border-l border-[var(--sp-border)] transition-colors"
+            aria-label="Copy command"
+          >
+            {copied ? <Check size={14} /> : <Copy size={14} />}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -94,14 +95,30 @@ export function FigCaption({ n, children }: { n: number; children: React.ReactNo
  * with an event label and arrowhead onto the heading. This is the page's
  * state-machine motif; each section is a state, each divider an edge.
  */
-export function Transition({ event, className = '' }: { event: string; className?: string }) {
+export function Transition({
+  event,
+  accent = 'blue',
+  className = '',
+}: {
+  event: string;
+  /** blue: Stately product (default). orange: XState and runtime. */
+  accent?: 'blue' | 'orange';
+  className?: string;
+}) {
+  const orange = accent === 'orange';
+  const edge = orange ? 'var(--sp-orange)' : 'var(--sp-edge)';
   return (
     <div className={`relative h-20 lg:h-28 ${className}`} aria-hidden>
-      <div className="absolute left-[39px] top-0 bottom-[8px] w-[2px] bg-[var(--sp-edge)]" />
+      <div className="absolute left-[39px] top-0 bottom-[8px] w-[2px]" style={{ background: edge }} />
       <svg className="absolute left-[33px] bottom-0" width="14" height="9" viewBox="0 0 14 9">
-        <path d="M0 0 L14 0 L7 9 Z" fill="var(--sp-edge)" />
+        <path d="M0 0 L14 0 L7 9 Z" fill={edge} />
       </svg>
-      <span className="absolute left-[40px] top-1/2 -translate-x-1/2 -translate-y-1/2 sp-mono text-[10.5px] uppercase tracking-[0.05em] font-medium text-[var(--sp-muted)] border-2 border-[var(--sp-edge)] rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap">
+      <span
+        className={`absolute left-[40px] top-1/2 -translate-x-1/2 -translate-y-1/2 sp-mono text-[10.5px] uppercase tracking-[0.05em] font-medium border-2 rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap transition-colors duration-150 ${
+          orange ? 'text-[var(--sp-orange)]' : 'text-[var(--sp-muted)] hover:text-[var(--sp-primary)]'
+        }`}
+        style={{ borderColor: edge }}
+      >
         {event}
       </span>
     </div>
@@ -115,17 +132,19 @@ export function Section({
   children,
   className = '',
   bleed = false,
+  accent,
 }: {
   id?: string;
   event?: string;
   children: React.ReactNode;
   className?: string;
   bleed?: boolean;
+  accent?: 'blue' | 'orange';
 }) {
   return (
     <section id={id} className={`border-t border-[var(--sp-border)] ${className}`}>
       <div className={bleed ? '' : 'mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28'}>
-        {event ? <Transition event={event} /> : <div className="h-20 lg:h-28" />}
+        {event ? <Transition event={event} accent={accent} /> : <div className="h-20 lg:h-28" />}
         {children}
       </div>
     </section>
@@ -243,9 +262,12 @@ export function Edge({
   label,
   length = 56,
   accent = false,
+  bidirectional = false,
   className = '',
 }: {
   dir?: 'down' | 'right' | 'left';
+  /** arrowheads at both ends (e.g. two-way sync) */
+  bidirectional?: boolean;
   label?: string;
   /** px along the axis */
   length?: number;
@@ -264,7 +286,12 @@ export function Edge({
   if (dir === 'down') {
     return (
       <div className={`relative mx-auto w-[14px] ${className}`} style={{ height: length }} aria-hidden>
-        <div className="absolute left-[6px] top-0 bottom-[8px] w-[2px]" style={{ background: color }} />
+        <div className="absolute left-[6px] bottom-[8px] w-[2px]" style={{ background: color, top: bidirectional ? 8 : 0 }} />
+        {bidirectional && (
+          <svg className="absolute left-0 top-0" width="14" height="9" viewBox="0 0 14 9">
+            <path d="M0 9 L14 9 L7 0 Z" fill={color} />
+          </svg>
+        )}
         <svg className="absolute left-0 bottom-0" width="14" height="9" viewBox="0 0 14 9">
           <path d="M0 0 L14 0 L7 9 Z" fill={color} />
         </svg>
@@ -277,8 +304,13 @@ export function Edge({
     <div className={`relative h-[14px] ${className}`} style={{ width: length }} aria-hidden>
       <div
         className="absolute top-[6px] h-[2px]"
-        style={{ background: color, left: left ? 8 : 0, right: left ? 0 : 8 }}
+        style={{ background: color, left: left || bidirectional ? 8 : 0, right: left && !bidirectional ? 0 : 8 }}
       />
+      {bidirectional && (
+        <svg className={`absolute top-0 ${left ? 'right-0' : 'left-0'}`} width="9" height="14" viewBox="0 0 9 14">
+          <path d={left ? 'M0 0 L0 14 L9 7 Z' : 'M9 0 L9 14 L0 7 Z'} fill={color} />
+        </svg>
+      )}
       <svg
         className={`absolute top-0 ${left ? 'left-0' : 'right-0'}`}
         width="9"
@@ -311,7 +343,3 @@ export function FinalFrame({ children, className = '' }: { children: React.React
     </div>
   );
 }
-
-/** Parallel-state region divider: dashed, as statecharts draw orthogonal regions. */
-export const parallelRegionCls =
-  'border-dashed border-[var(--sp-node-stroke)]';

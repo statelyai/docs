@@ -41,9 +41,9 @@ export function CopyLine({
 }
 
 /** Small bordered mono chip. */
-export function Chip({ children }: { children: React.ReactNode }) {
+export function Chip({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <span className="sp-mono inline-flex items-center h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-border)] text-[11px] text-[var(--sp-muted)]">
+    <span className={`sp-mono inline-flex items-center h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-border)] text-[11px] text-[var(--sp-muted)] ${className}`}>
       {children}
     </span>
   );
@@ -62,10 +62,3 @@ export function TextLink({ href, children }: { href: string; children: React.Rea
     </a>
   );
 }
-
-/**
- * className for a 3-column DataTable that reflows on phones: header hidden,
- * row = [col 1 | col 3] on top, col 2 full width below. Same <table> markup.
- */
-export const stackOn3 =
-  'max-sm:[&_thead]:hidden max-sm:[&_tbody_tr]:grid max-sm:[&_tbody_tr]:grid-cols-[minmax(0,1fr)_auto] max-sm:[&_td:nth-child(2)]:col-span-2 max-sm:[&_td:nth-child(2)]:row-start-2 max-sm:[&_td:nth-child(2)]:pt-0';

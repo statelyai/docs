@@ -23,7 +23,7 @@ export function FinalCta() {
             Map your first repo.
           </h2>
           <div className="mt-8 [&_.inline-flex]:max-w-full">
-            <InstallPill />
+            <div className="max-w-[32rem]"><InstallPill /></div>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link

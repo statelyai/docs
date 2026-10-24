@@ -1,24 +1,16 @@
-// §7 Open source anchor: XState install, packages with stability, when to use,
+// §8 Open source anchor: XState facts, install, packages with stability,
 // plus XState users (logos are old page assets) and permitted testimonials.
+import { xstateFacts } from '../facts';
 import { DataTable, Edge, Pane, Section, SectionHeading, Stability } from '../shared';
-import { Chip, CopyLine, TextLink, stackOn3 } from './CopyLine';
+import { stackOn3 } from '../classes';
+import { Chip, CopyLine, TextLink } from './CopyLine';
 
 type Level = 'stable' | 'beta' | 'alpha';
 const packages: [string, string, Level][] = [
   ['xstate', 'v5 · state machines, statecharts, and actors', 'stable'],
-  ['xstate', 'v6 · next major', 'alpha'],
+  ['xstate/graph', 'shortest and simple paths, run as model-based tests', 'stable'],
   ['@xstate/store', 'small event-driven store', 'stable'],
-  ['xstate/graph', 'shortest paths, simple paths, and adjacency; part of xstate, run paths as model-based tests', 'stable'],
-  ['@statelyai/agent', 'agents whose decisions run through a state machine', 'alpha'],
 ];
-
-const use = [
-  'Multi-step flows',
-  'Async orchestration',
-  'Anything with modes, retries, or timeouts',
-  'Behavior that must be reviewed',
-];
-const skip = ['A single boolean', 'Pure derived state', 'Forms with no sequencing'];
 
 const companies = [
   { name: 'AWS', src: '/landing-page/assets/aws.svg', width: 65 },
@@ -53,25 +45,9 @@ const quotes = [
   },
 ];
 
-function List({ title, items, mark }: { title: string; items: string[]; mark: string }) {
-  return (
-    <div>
-      <p className="sp-mono text-[11px] uppercase tracking-[0.06em] text-[var(--sp-muted)] mb-3">{title}</p>
-      <ul className="space-y-2 text-[15px] text-[var(--sp-fg)]">
-        {items.map((i) => (
-          <li key={i} className="flex gap-3">
-            <span className="sp-mono text-[var(--sp-muted-2)] select-none w-3 shrink-0">{mark}</span>
-            <span>{i}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 export function OpenSource() {
   return (
-    <Section id="xstate" event="BUILD">
+    <Section id="xstate" event="BUILD" accent="orange">
       <SectionHeading
         title="Build with XState."
         lede={
@@ -82,14 +58,30 @@ export function OpenSource() {
           </>
         }
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
+      <dl className="mt-12 grid grid-cols-2 lg:grid-cols-4 rounded-[var(--sp-radius)] border border-[var(--sp-border)] overflow-hidden">
+        {xstateFacts.map((f, i) => (
+          <div
+            key={f.label}
+            title={`${f.source} · as of ${f.asOf}`}
+            className={`flex flex-col-reverse justify-end px-4 py-4 sm:px-5 border-[var(--sp-border)] ${i % 2 === 1 ? 'border-l' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${i === 2 ? 'lg:border-l' : ''}`}
+          >
+            <dt className="mt-1 text-[13px] text-[var(--sp-muted)]">{f.label}</dt>
+            <dd className="text-[30px] leading-none font-semibold tracking-tight tabular-nums text-[var(--sp-orange)]">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
         <div className="min-w-0 space-y-6">
           <Pane title="install" right={<Stability level="stable" />}>
             <div className="p-4">
               <CopyLine text="npm install xstate" />
+              <p className="mt-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
+                For multi-step flows, async orchestration, retries and timeouts,
+                and any behavior that must be reviewed.
+              </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {['React', 'Vue', 'Svelte', 'Solid'].map((f) => (
-                  <Chip key={f}>{f}</Chip>
+                  <Chip key={f} className="!border-[var(--sp-orange)]/50">{f}</Chip>
                 ))}
               </div>
             </div>
@@ -103,12 +95,15 @@ export function OpenSource() {
               <span key="s" className="whitespace-nowrap"><Stability level={level} /></span>,
             ])}
           />
+          <p className="sp-mono flex flex-wrap items-center gap-x-2 text-[11px] text-[var(--sp-muted-2)]">
+            xstate v6 · next major · <Stability level="alpha" />
+          </p>
         </div>
         <div className="my-1 lg:my-0 lg:mx-1 lg:mt-[11px]">
           <Edge dir="down" label="INSPECT" length={76} className="lg:hidden" />
           <Edge dir="right" label="INSPECT" length={128} className="hidden lg:block" />
         </div>
-        <div className="min-w-0 space-y-10">
+        <div className="min-w-0">
           <Pane title="inspector">
             <div className="p-5">
               <p className="text-[16px] font-semibold text-[var(--sp-fg)]">
@@ -123,10 +118,6 @@ export function OpenSource() {
               </a>
             </div>
           </Pane>
-          <div className="grid sm:grid-cols-2 gap-8">
-            <List title="Use it for" items={use} mark="+" />
-            <List title="Skip it for" items={skip} mark="−" />
-          </div>
         </div>
       </div>
       <div className="mt-16 pt-8 border-t border-[var(--sp-border)]">

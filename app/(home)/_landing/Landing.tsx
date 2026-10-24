@@ -5,7 +5,7 @@ import { AgentSetup } from './sections/AgentSetup';
 import { DiffVsGraph } from './sections/DiffVsGraph';
 import { Loop } from './sections/Loop';
 import { Compat } from './sections/Compat';
-import { Pillars } from './sections/Pillars';
+import { System } from './sections/System';
 import { OpenSource } from './sections/OpenSource';
 import { Enterprise } from './sections/Enterprise';
 import { PricingTeaser } from './sections/PricingTeaser';
@@ -19,8 +19,8 @@ export function Landing() {
       <AgentSetup />
       <DiffVsGraph />
       <Loop />
+      <System />
       <Compat />
-      <Pillars />
       <OpenSource />
       <Enterprise />
       <PricingTeaser />

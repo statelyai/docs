@@ -1,46 +1,22 @@
-// §5 Compat matrix. Real <table> markup so agents can parse it.
-import { DataTable, Edge, Section, SectionHeading } from '../shared';
+// §6 Compat: what Stately reads, writes, and sits above, as chip rows joined by edges.
+import { Edge, Section, SectionHeading } from '../shared';
+import { Chip } from './CopyLine';
 
-const cell = (s: string) => <span className="text-[13px] leading-snug block min-w-[7rem]">{s}</span>;
-
-const imports: [string, string][] = [
-  ['XState', 'v4 and v5 machines'],
-  ['Redux', 'reducers and actions'],
-  ['Zustand', 'stores'],
-  ['XState Store', 'stores'],
-  ['Mermaid', 'state diagrams'],
-  ['SCXML', 'W3C statecharts'],
-  ['D2', 'diagrams'],
-  ['ASL', 'AWS Step Functions'],
-  ['Inngest', 'functions and steps'],
-  ['Restate', 'workflows and handlers'],
-  ['LangGraph', 'Python, JS, TS graphs'],
-  ['Live app captures', 'running apps, no XState needed'],
+const columns: { term: string; items: string[] }[] = [
+  {
+    term: 'Reads',
+    items: ['XState', 'Redux', 'Zustand', 'XState Store', 'Mermaid', 'SCXML', 'D2', 'ASL', 'Inngest', 'Restate', 'LangGraph', 'running apps'],
+  },
+  { term: 'Writes', items: ['XState', 'SCXML', 'Mermaid', 'D2', 'JSON', 'test paths', 'React scaffold'] },
+  { term: 'Sits above', items: ['Temporal', 'Inngest', 'Restate', 'LangGraph'] },
 ];
 
-const exports: [string, string][] = [
-  ['XState', 'executable TypeScript or JavaScript'],
-  ['SCXML', 'non-JS execution targets'],
-  ['Mermaid', 'docs, READMEs, PRs'],
-  ['D2', 'architecture diagrams'],
-  ['JSON', 'structured graph for tools and agents'],
-  ['Test paths', 'shortest and simple paths, run as model-based tests'],
-  ['React scaffold', 'components wired to the machine'],
-];
-
-const runtimes: [string, string][] = [
-  ['Temporal', 'no importer yet; model and verify by hand'],
-  ['Inngest', 'import, map, and verify functions'],
-  ['Restate', 'import, map, and verify handlers'],
-  ['LangGraph', 'import, map, and verify agent graphs'],
-];
-
-/** Edge between two tables: down when stacked, right on lg (centered on the header row). */
-function TableEdge({ label }: { label: string }) {
+/** Edge between two columns: down when stacked, right on lg (centered on the term line). */
+function ColumnEdge({ label }: { label: string }) {
   return (
-    <div className="my-1 lg:my-0 lg:mx-1 lg:mt-[11px]">
-      <Edge dir="down" label={label} length={64} className="lg:hidden" />
-      <Edge dir="right" label={label} length={80} className="hidden lg:block" />
+    <div className="my-2 lg:my-0 lg:ml-3 lg:mr-1 lg:mt-[3px]">
+      <Edge dir="down" label={label} length={56} className="lg:hidden !ml-6" />
+      <Edge dir="right" label={label} length={72} className="hidden lg:block" />
     </div>
   );
 }
@@ -52,28 +28,29 @@ export function Compat() {
         title="Point it at the code you have."
         lede="Import Redux, LangGraph, Step Functions, XState, or a running app. Export XState, SCXML, Mermaid, D2, or generated tests."
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
-        <DataTable
-          head={['Import from', 'Reads']}
-          rows={imports.map(([a, b]) => [a, cell(b)])}
-        />
-        <TableEdge label="MAP" />
-        <DataTable
-          head={['Export to', 'For']}
-          rows={exports.map(([a, b]) => [a, cell(b)])}
-        />
-        <TableEdge label="RUN" />
-        <div className="min-w-0">
-          <DataTable
-            head={['Runtime', 'Stately’s role']}
-            rows={runtimes.map(([a, b]) => [a, cell(b)])}
-          />
-          <p className="mt-5 text-[15px] leading-relaxed text-[var(--sp-muted)]">
-            Stately is the correctness layer for Temporal, Inngest, Restate,
-            and LangGraph. It does not replace them.
-          </p>
-        </div>
+      <div className="mt-12 grid lg:grid-cols-[minmax(0,1.3fr)_auto_minmax(0,1fr)_auto_minmax(0,0.9fr)] items-start">
+        {columns.map((c, i) => (
+          <div key={c.term} className="contents">
+            {i > 0 && <ColumnEdge label={i === 1 ? 'MAP' : 'RUN'} />}
+            <dl className="min-w-0">
+              <dt className="text-[14px] leading-5 font-semibold text-[var(--sp-fg)]">{c.term}</dt>
+              <dd className="mt-3">
+                <ul className="flex flex-wrap gap-1.5">
+                  {c.items.map((item) => (
+                    <li key={item}>
+                      <Chip>{item}</Chip>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </dl>
+          </div>
+        ))}
       </div>
+      <p className="mt-10 max-w-[38rem] text-[15px] leading-relaxed text-[var(--sp-muted)]">
+        Stately is the correctness layer for Temporal, Inngest, Restate, and
+        LangGraph. It does not replace them.
+      </p>
     </Section>
   );
 }
