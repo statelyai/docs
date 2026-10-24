@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Statechart, type Machine } from '../Statechart';
 import { DataTable, Section, SectionHeading } from '../shared';
 import { stackOn3 } from '../classes';
+import { DEMO_URL, NewTab } from '../lib';
 
 const cell = (s: React.ReactNode) => <span className="text-[13px] leading-snug block">{s}</span>;
 const price = (main: string, sub?: string) => (
@@ -16,7 +17,20 @@ const tiers: [string, React.ReactNode, string][] = [
   ['Community', price('$0', 'free'), 'Editor and code export, 2 projects, 3 machines.'],
   ['Pro', price('$33 / mo', 'annual · $39 monthly'), 'Private projects, version history, live simulation, codebase sync.'],
   ['Team', price('$167 / mo', 'annual · $199 monthly'), 'Pro for up to 10 members, shared projects.'],
-  ['Enterprise', price('Contact us'), 'Cloud or self-hosted, SSO, audit logs, priority support.'],
+  [
+    'Enterprise',
+    <a
+      key="demo"
+      href={DEMO_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whitespace-nowrap text-[var(--sp-fg)] underline decoration-[var(--sp-border-strong)] underline-offset-4 hover:decoration-[var(--sp-fg)]"
+    >
+      Book a demo
+      <NewTab />
+    </a>,
+    'Cloud or self-hosted, SSO, audit logs, priority support.',
+  ],
 ];
 
 // The tiers as one chain of states; evidence lines match the table.
@@ -29,7 +43,7 @@ const tierChain: [string, string, string][] = [
   ['Community', '$0', 'UPGRADE'],
   ['Pro', '$33/mo', 'ADD_SEATS'],
   ['Team', '$167/mo', 'CONTACT'],
-  ['Enterprise', 'contact us', ''],
+  ['Enterprise', 'book a demo', ''],
 ];
 const tierMachine: Machine = {
   w: X0 + 3 * STEP + NW + 4,
@@ -57,13 +71,13 @@ const tierMachine: Machine = {
 
 export function PricingTeaser() {
   return (
-    <Section id="pricing" event="PRICE">
+    <Section id="pricing" event="UPGRADE">
       <SectionHeading
         title="XState is free. The editor starts free."
         lede="XState and the open-source packages are free, and the editor has a free Community plan. Pro and Team add private projects, version history, and team features. Enterprise adds self-hosting, SSO, and audit logs."
       />
       <div aria-hidden className="mt-12 hidden lg:block">
-        <Statechart machine={tierMachine} className="w-full h-auto max-w-[60rem]" />
+        <Statechart machine={tierMachine} label="Plans as a chain of states: Community, Pro, Team, Enterprise" className="w-full h-auto max-w-[60rem]" />
       </div>
       <DataTable
         className={`mt-12 lg:mt-8 ${stackOn3}`}
@@ -74,7 +88,7 @@ export function PricingTeaser() {
         <Link href="/pricing" className="sp-btn sp-btn-outline">
           See pricing
         </Link>
-        <Link href="/registry/signup" className="sp-btn text-[var(--sp-muted)] hover:text-[var(--sp-fg)]">
+        <Link href="/registry/signup" className="sp-btn sp-btn-outline">
           Start free
         </Link>
       </div>

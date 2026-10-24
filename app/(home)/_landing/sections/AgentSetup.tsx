@@ -1,28 +1,10 @@
 'use client';
 // §2 Set up your agent: per-client install line + the MCP tools as four capability cards.
-import { useState } from 'react';
-import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
+import { Edge, Pane, Section, SectionHeading, Stability, tabCls, useTabs } from '../shared';
+import { MCP_URL, clients } from '../lib';
 import { CopyLine, TextLink } from './CopyLine';
 
-const MCP_URL = 'https://mcp.stately.ai/mcp';
-
-type Client = {
-  id: string;
-  label: string;
-  note: string;
-  cmd: string;
-  prompt: boolean;
-  /** Step 3: how to complete Stately sign-in. A command (prompt) or a sentence. */
-  login: { cmd: string } | { text: string };
-};
-
-const clients: Client[] = [
-  { id: 'claude', label: 'Claude Code', note: 'terminal', cmd: `claude mcp add --transport http stately ${MCP_URL}`, prompt: true, login: { text: 'In Claude Code, run /mcp and complete Stately sign-in.' } },
-  { id: 'codex', label: 'Codex', note: 'terminal', cmd: `codex mcp add stately --url ${MCP_URL}`, prompt: true, login: { cmd: 'codex mcp login stately' } },
-  { id: 'cursor', label: 'Cursor', note: '.cursor/mcp.json', cmd: `{"mcpServers":{"stately":{"url":"${MCP_URL}"}}}`, prompt: false, login: { text: 'Enable the server in Cursor Settings → MCP and complete Stately sign-in.' } },
-  { id: 'vscode', label: 'VS Code', note: 'terminal', cmd: `code --add-mcp '{"name":"stately","type":"http","url":"${MCP_URL}"}'`, prompt: true, login: { text: 'Run MCP: List Servers, start stately, and complete Stately sign-in.' } },
-  { id: 'any', label: 'Any MCP client', note: 'server URL (streamable HTTP)', cmd: MCP_URL, prompt: false, login: { text: 'Start the server in your client and complete Stately sign-in (OAuth).' } },
-];
+const clientIds = clients.map((c) => c.id);
 
 type Level = 'stable' | 'beta' | 'alpha';
 /** 12 tools in four groups. A tool whose level differs from its group's is marked on its chip. */
@@ -54,15 +36,14 @@ const groups: { title: string; body: string; level: Level; tools: [string, Level
 ];
 
 export function AgentSetup() {
-  const [active, setActive] = useState<string>('claude');
-  const client = clients.find((c) => c.id === active)!;
+  const { active, tabProps, panelProps } = useTabs(clientIds, 'claude');
   return (
-    <Section id="agent-setup" event="SET_UP">
+    <Section id="agent-setup" event="CONNECT_AGENT">
       <SectionHeading
         title="Give your agent the graph."
         lede="A hosted MCP server with 12 tools. Your agent maps code into a statechart, diffs it, lists its paths, and checks it against the source."
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,4fr)_auto_minmax(0,8fr)] items-start">
+      <div className="mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
         <div className="min-w-0">
           <Pane
             title="stately mcp"
@@ -71,46 +52,38 @@ export function AgentSetup() {
             <div
               role="tablist"
               aria-label="MCP client"
-              className="flex overflow-x-auto border-b border-[var(--sp-border)]"
+              className="flex flex-wrap px-1 border-b border-[var(--sp-border)]"
             >
               {clients.map((c) => (
-                <button
-                  key={c.id}
-                  role="tab"
-                  aria-selected={c.id === active}
-                  onClick={() => setActive(c.id)}
-                  className={`sp-mono shrink-0 h-9 px-3 text-[11px] uppercase tracking-[0.06em] font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
-                    c.id === active
-                      ? 'text-[var(--sp-fg)] border-[var(--sp-primary)]'
-                      : 'text-[var(--sp-muted-2)] border-transparent hover:text-[var(--sp-muted)]'
-                  }`}
-                >
+                <button key={c.id} {...tabProps(c.id)} className={`h-9 px-2.5 ${tabCls(c.id === active)}`}>
                   {c.label}
                 </button>
               ))}
             </div>
-            <div className="p-3 space-y-2.5">
-              <p className="sp-mono text-[11px] text-[var(--sp-muted-2)]">{client.note}</p>
-              <CopyLine text={client.cmd} prompt={client.prompt} />
-              <p className="text-[13px] leading-snug text-[var(--sp-muted)]">
-                {'cmd' in client.login ? (
-                  <>
-                    Sign in with <code className="sp-mono text-[12px] text-[var(--sp-fg)]">{client.login.cmd}</code>.
-                  </>
-                ) : (
-                  client.login.text
-                )}
-              </p>
-              <p className="text-[13px] leading-snug text-[var(--sp-muted)]">
-                Add the skills with{' '}
-                <code className="sp-mono text-[12px] text-[var(--sp-fg)] whitespace-nowrap">npx skills add statelyai/skills</code>.
-              </p>
-            </div>
+            {clients.map((c) => (
+              <div key={c.id} {...panelProps(c.id)} className="px-4 pt-3 pb-1">
+                <p className="sp-mono text-[11.5px] text-[var(--sp-muted-2)]">{c.note}</p>
+                <CopyLine flush text={c.cmd} prompt={c.prompt} />
+                <p className="text-[13px] leading-snug text-[var(--sp-muted)]">
+                  {'cmd' in c.login ? (
+                    <>
+                      Sign in with <code className="sp-mono text-[12px] text-[var(--sp-fg)]">{c.login.cmd}</code>.
+                    </>
+                  ) : (
+                    c.login.text
+                  )}
+                </p>
+              </div>
+            ))}
+            <p className="px-4 pt-2 pb-4 text-[13px] leading-snug text-[var(--sp-muted)]">
+              Add the skills with{' '}
+              <code className="sp-mono text-[12px] text-[var(--sp-fg)] whitespace-nowrap">npx skills add statelyai/skills</code>.
+            </p>
           </Pane>
           <dl className="mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-[14px]">
-            <dt className="sp-mono text-[11px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">MCP URL</dt>
-            <dd className="sp-mono text-[12.5px] text-[var(--sp-fg)] break-all">{MCP_URL}</dd>
-            <dt className="sp-mono text-[11px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">Docs</dt>
+            <dt className="sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">MCP URL</dt>
+            <dd className="sp-mono text-[12.5px] text-[var(--sp-fg)] break-words">{MCP_URL}</dd>
+            <dt className="sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">Docs</dt>
             <dd className="text-[var(--sp-muted)]">
               <TextLink href="/docs/packages/mcp">MCP server</TextLink>
               <span className="text-[var(--sp-muted-2)]"> · </span>
@@ -134,11 +107,11 @@ export function AgentSetup() {
                 {g.tools.map(([name, level]) => (
                   <li
                     key={name}
-                    className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 max-w-full rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] text-[11px] text-[var(--sp-fg)]"
+                    className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 max-w-full rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] text-[11.5px] text-[var(--sp-fg)]"
                   >
                     <span className="truncate">{name}</span>
                     {level && level !== g.level && (
-                      <span className="text-[10px] uppercase" style={{ color: 'var(--sp-info)' }}>{level}</span>
+                      <span className="text-[11.5px] uppercase" style={{ color: 'var(--sp-info)' }}>{level}</span>
                     )}
                   </li>
                 ))}

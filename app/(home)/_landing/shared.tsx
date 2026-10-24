@@ -1,88 +1,113 @@
 'use client';
 // PROTOTYPE — bits shared by hero variants.
-import { useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Check, Copy } from 'lucide-react';
+import { CopyButton, TextLink } from './sections/CopyLine';
+import { DEMO_URL, SCAN_CMD, breakable, clients } from './lib';
 
-export function InstallPill({ align = 'left' }: { align?: 'left' | 'center' }) {
-  const [tab, setTab] = useState<'human' | 'agent'>('agent');
-  const [copied, setCopied] = useState(false);
-  const cmd =
-    tab === 'human'
-      ? 'npx statelyai scan'
-      : 'claude mcp add --transport http stately https://mcp.stately.ai/mcp';
+/**
+ * ARIA tabs with roving tabindex: ArrowLeft/ArrowRight/Home/End move focus
+ * and selection. Every panel stays in the DOM (`hidden` when inactive) so the
+ * server HTML carries every command.
+ */
+export function useTabs<T extends string>(ids: readonly T[], initial: T) {
+  const [active, setActive] = useState<T>(initial);
+  const base = useId();
+  const refs = useRef<Partial<Record<T, HTMLButtonElement | null>>>({});
+  const tabId = (id: T) => `${base}-tab-${id}`;
+  const panelId = (id: T) => `${base}-panel-${id}`;
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const i = ids.indexOf(active);
+    const n =
+      e.key === 'ArrowRight' ? (i + 1) % ids.length
+      : e.key === 'ArrowLeft' ? (i - 1 + ids.length) % ids.length
+      : e.key === 'Home' ? 0
+      : e.key === 'End' ? ids.length - 1
+      : -1;
+    if (n < 0) return;
+    e.preventDefault();
+    setActive(ids[n]);
+    refs.current[ids[n]]?.focus();
+  };
+  return {
+    active,
+    tabProps: (id: T) => ({
+      id: tabId(id),
+      type: 'button' as const,
+      role: 'tab' as const,
+      'aria-selected': id === active,
+      'aria-controls': panelId(id),
+      tabIndex: id === active ? 0 : -1,
+      onClick: () => setActive(id),
+      onKeyDown,
+      ref: (el: HTMLButtonElement | null) => {
+        refs.current[id] = el;
+      },
+    }),
+    panelProps: (id: T) => ({
+      id: panelId(id),
+      role: 'tabpanel' as const,
+      'aria-labelledby': tabId(id),
+      hidden: id !== active,
+    }),
+  };
+}
+
+const tabCls = (on: boolean) =>
+  `sp-mono text-[11.5px] uppercase tracking-[0.06em] font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
+    on
+      ? 'text-[var(--sp-fg)] border-[var(--sp-primary)]'
+      : 'text-[var(--sp-muted-2)] border-transparent hover:text-[var(--sp-muted)]'
+  }`;
+export { tabCls };
+
+const installTabs = [
+  { id: 'agent', label: 'For your agent', short: 'For your agent', cmd: clients[0].cmd },
+  { id: 'scan', label: 'Scan a repo', short: 'Scan', cmd: SCAN_CMD },
+] as const;
+const installIds = installTabs.map((t) => t.id);
+
+export function InstallPill() {
+  const { active, tabProps, panelProps } = useTabs(installIds, 'agent');
   return (
-    <div className={align === 'center' ? 'flex flex-col items-center' : ''}>
-      <div className="flex flex-col w-full max-w-full rounded-[var(--sp-radius)] border border-[var(--sp-border-strong)] bg-[var(--sp-surface)] overflow-hidden">
-        <div className="flex border-b border-[var(--sp-border)]">
-          {(['agent', 'human'] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`sp-mono px-3 py-1.5 text-[11px] uppercase tracking-[0.06em] font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
-                tab === t
-                  ? 'text-[var(--sp-fg)] border-[var(--sp-primary)]'
-                  : 'text-[var(--sp-muted-2)] border-transparent hover:text-[var(--sp-muted)]'
-              }`}
-            >
-              {t === 'human' ? 'Have XState? Find machines' : 'For your agent'}
-            </button>
-          ))}
-        </div>
-        <div className="flex items-stretch">
-          <code className="sp-mono flex-1 min-w-0 px-3 sm:px-4 py-2.5 text-[12px] sm:text-[12.5px] leading-snug text-[var(--sp-fg)] whitespace-normal break-all self-center">
-            <span className="text-[var(--sp-muted-2)] select-none">$ </span>
-            {cmd}
-          </code>
-          <button
-            onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(cmd);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 1200);
-              } catch {
-                setCopied(false);
-              }
-            }}
-            className="shrink-0 px-3 text-[var(--sp-muted)] hover:text-[var(--sp-fg)] border-l border-[var(--sp-border)] transition-colors"
-            aria-label="Copy command"
-          >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
+    <div className="flex flex-col w-full max-w-full rounded-[var(--sp-radius)] border border-[var(--sp-border-strong)] bg-[var(--sp-surface)] overflow-hidden">
+      <div role="tablist" aria-label="Install command" className="flex border-b border-[var(--sp-border)]">
+        {installTabs.map((t) => (
+          <button key={t.id} {...tabProps(t.id)} className={`px-3 py-1.5 ${tabCls(active === t.id)}`}>
+            <span className="sm:hidden">{t.short}</span>
+            <span className="hidden sm:inline">{t.label}</span>
           </button>
-        </div>
+        ))}
       </div>
+      {installTabs.map((t) => (
+        <div key={t.id} {...panelProps(t.id)} className="flex items-stretch [&[hidden]]:hidden">
+          <code className="sp-mono flex-1 min-w-0 px-3 sm:px-4 py-2.5 text-[12px] sm:text-[12.5px] leading-snug text-[var(--sp-fg)] whitespace-normal break-words self-center">
+            <span className="text-[var(--sp-muted-2)] select-none">$ </span>
+            {breakable(t.cmd)}
+          </code>
+          <CopyButton text={t.cmd} className="border-l border-[var(--sp-border)]" />
+        </div>
+      ))}
     </div>
   );
 }
 
 export function CtaRow({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      <Link href="https://editor.stately.ai/?source=landing-page" className="plausible-event-name=Editor+CTA sp-btn sp-btn-primary">
+    <div className={`flex flex-wrap items-center gap-x-6 gap-y-3 ${className}`}>
+      <Link href="https://editor.stately.ai/?source=landing-page" className="plausible-event-name=Editor+CTA sp-btn sp-btn-outline">
         Open the editor
       </Link>
-      <Link
-        href="https://cal.com/statelyai/enterprise-calls"
-        target="_blank"
-        className="sp-btn sp-btn-outline"
-      >
-        Book a demo
-      </Link>
+      <span className="text-[14px] font-medium">
+        <TextLink href={DEMO_URL}>Book a demo</TextLink>
+      </span>
     </div>
-  );
-}
-
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="sp-mono text-[11px] uppercase tracking-[0.08em] text-[var(--sp-muted)] font-medium">
-      {children}
-    </p>
   );
 }
 
 export function FigCaption({ n, children }: { n: number; children: React.ReactNode }) {
   return (
-    <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mt-3">
+    <p className="sp-mono text-[11.5px] text-[var(--sp-muted-2)] mt-3">
       <span className="text-[var(--sp-muted)]">Fig {n}</span> — {children}
     </p>
   );
@@ -98,28 +123,38 @@ export function FigCaption({ n, children }: { n: number; children: React.ReactNo
 export function Transition({
   event,
   accent = 'blue',
+  variant = 'default',
+  guard,
   className = '',
 }: {
   event: string;
   /** blue: Stately product (default). orange: XState and runtime. */
   accent?: 'blue' | 'orange';
+  /** guarded: dashed edge, `EVENT [guard]` pill with a warn border. */
+  variant?: 'default' | 'guarded';
+  guard?: string;
   className?: string;
 }) {
   const orange = accent === 'orange';
+  const guarded = variant === 'guarded';
   const edge = orange ? 'var(--sp-orange)' : 'var(--sp-edge)';
   return (
     <div className={`relative h-20 lg:h-28 ${className}`} aria-hidden>
-      <div className="absolute left-[39px] top-0 bottom-[8px] w-[2px]" style={{ background: edge }} />
+      <div
+        className="absolute left-[39px] top-0 bottom-[8px] w-[2px]"
+        style={guarded ? { borderLeft: `2px dashed ${edge}` } : { background: edge }}
+      />
       <svg className="absolute left-[33px] bottom-0" width="14" height="9" viewBox="0 0 14 9">
         <path d="M0 0 L14 0 L7 9 Z" fill={edge} />
       </svg>
       <span
-        className={`absolute left-[40px] top-1/2 -translate-x-1/2 -translate-y-1/2 sp-mono text-[10.5px] uppercase tracking-[0.05em] font-medium border-2 rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap transition-colors duration-150 ${
-          orange ? 'text-[var(--sp-orange)]' : 'text-[var(--sp-muted)] hover:text-[var(--sp-primary)]'
+        className={`absolute top-1/2 -translate-y-1/2 ${guarded ? 'left-[22px]' : 'left-[22px] sm:left-[40px] sm:-translate-x-1/2'} sp-mono text-[11.5px] uppercase tracking-[0.05em] font-medium border-2 rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap ${
+          orange ? 'text-[var(--sp-orange)]' : 'text-[var(--sp-muted)]'
         }`}
-        style={{ borderColor: edge }}
+        style={{ borderColor: guarded ? 'var(--sp-warn)' : edge }}
       >
         {event}
+        {guarded && guard && <span className="normal-case tracking-normal text-[var(--sp-warn)]"> [{guard}]</span>}
       </span>
     </div>
   );
@@ -133,6 +168,7 @@ export function Section({
   className = '',
   bleed = false,
   accent,
+  guard,
 }: {
   id?: string;
   event?: string;
@@ -140,11 +176,13 @@ export function Section({
   className?: string;
   bleed?: boolean;
   accent?: 'blue' | 'orange';
+  /** guarded entry transition: `EVENT [guard]` on a dashed edge */
+  guard?: string;
 }) {
   return (
     <section id={id} className={`border-t border-[var(--sp-border)] ${className}`}>
       <div className={bleed ? '' : 'mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28'}>
-        {event ? <Transition event={event} accent={accent} /> : <div className="h-20 lg:h-28" />}
+        {event ? <Transition event={event} accent={accent} variant={guard ? 'guarded' : 'default'} guard={guard} /> : <div className="h-20 lg:h-28" />}
         {children}
       </div>
     </section>
@@ -191,8 +229,8 @@ export function Pane({
     <div className={`rounded-[var(--sp-radius)] border border-[var(--sp-border)] overflow-hidden ${grid ? 'sp-grid' : 'bg-[var(--sp-surface)]'} ${className}`}>
       {title !== undefined && (
         <div className="flex items-center gap-3 px-4 h-9 border-b border-[var(--sp-border)] bg-[var(--sp-canvas)]">
-          <span className="sp-mono text-[11px] text-[var(--sp-fg)]">{title}</span>
-          {right && <span className="ml-auto sp-mono text-[10.5px] uppercase tracking-[0.06em]">{right}</span>}
+          <span className="sp-mono text-[11.5px] text-[var(--sp-fg)]">{title}</span>
+          {right && <span className="ml-auto sp-mono text-[11.5px] uppercase tracking-[0.06em]">{right}</span>}
         </div>
       )}
       {children}
@@ -216,7 +254,7 @@ export function DataTable({
         <thead>
           <tr className="bg-[var(--sp-canvas)]">
             {head.map((h) => (
-              <th key={h} className="sp-mono text-left text-[10.5px] uppercase tracking-[0.06em] font-medium text-[var(--sp-muted)] px-4 py-2.5 border-b border-[var(--sp-border)] whitespace-nowrap">
+              <th key={h} className="sp-mono text-left text-[11.5px] uppercase tracking-[0.06em] font-medium text-[var(--sp-muted)] px-4 py-2.5 border-b border-[var(--sp-border)] whitespace-nowrap">
                 {h}
               </th>
             ))}
@@ -243,7 +281,7 @@ export function Stability({ level }: { level: 'stable' | 'beta' | 'alpha' }) {
   const color =
     level === 'stable' ? 'var(--sp-success)' : level === 'beta' ? 'var(--sp-info)' : 'var(--sp-warn)';
   return (
-    <span className="sp-mono inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-[0.06em]" style={{ color }}>
+    <span className="sp-mono inline-flex items-center gap-1.5 text-[11.5px] uppercase tracking-[0.06em]" style={{ color }}>
       <span className="inline-block size-1.5 rounded-full bg-current" />
       {level}
     </span>
@@ -277,7 +315,7 @@ export function Edge({
   const color = accent ? 'var(--sp-primary)' : 'var(--sp-edge)';
   const pill = label ? (
     <span
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sp-mono text-[10.5px] uppercase tracking-[0.05em] font-medium border-2 rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap"
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sp-mono text-[11.5px] uppercase tracking-[0.05em] font-medium border-2 rounded-2xl px-3 py-[3px] bg-[var(--sp-bg)] whitespace-nowrap"
       style={{ borderColor: color, color: accent ? 'var(--sp-fg)' : 'var(--sp-muted)' }}
     >
       {label}

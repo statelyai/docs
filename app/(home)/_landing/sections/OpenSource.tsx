@@ -1,16 +1,8 @@
-// §8 Open source anchor: XState facts, install, packages with stability,
+// §8 Open source anchor: XState facts, install, one package line,
 // plus XState users (logos are old page assets) and permitted testimonials.
 import { xstateFacts } from '../facts';
-import { DataTable, Edge, Pane, Section, SectionHeading, Stability } from '../shared';
-import { stackOn3 } from '../classes';
+import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
 import { Chip, CopyLine, TextLink } from './CopyLine';
-
-type Level = 'stable' | 'beta' | 'alpha';
-const packages: [string, string, Level][] = [
-  ['xstate', 'v5 · state machines, statecharts, and actors', 'stable'],
-  ['xstate/graph', 'shortest and simple paths, run as model-based tests', 'stable'],
-  ['@xstate/store', 'small event-driven store', 'stable'],
-];
 
 const companies = [
   { name: 'AWS', src: '/landing-page/assets/aws.svg', width: 65 },
@@ -36,14 +28,23 @@ const quotes = [
     company: 'Coder',
     avatar: '/landing-page/assets/presley.png',
   },
-  {
-    quote:
-      'Advantages of XState: Visually clear view of the code flow, code reusability, test coverage, easy to debug/ spot bugs, code scalability & maintenance, and better code design & planning.',
-    name: 'Maya Shavin',
-    company: 'Microsoft',
-    avatar: '/landing-page/assets/maya.png',
-  },
 ];
+
+function Quote({ t }: { t: (typeof quotes)[number] }) {
+  return (
+    <figure className="border-t border-[var(--sp-border)] pt-5">
+      <blockquote className="text-[14px] leading-relaxed text-[var(--sp-fg)]">{t.quote}</blockquote>
+      <figcaption className="mt-4 flex items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={t.avatar} alt="" width={36} height={36} className="size-9 rounded-full" />
+        <span className="text-[13px] leading-tight">
+          <span className="block font-medium text-[var(--sp-fg)]">{t.name}</span>
+          <span className="block text-[var(--sp-muted-2)]">{t.company}</span>
+        </span>
+      </figcaption>
+    </figure>
+  );
+}
 
 export function OpenSource() {
   return (
@@ -71,20 +72,16 @@ export function OpenSource() {
         ))}
       </dl>
       <p className="mt-3 sp-mono text-[11.5px] leading-relaxed text-[var(--sp-muted)]">
-        Sources: {xstateFacts.map((f, i) => (
-          <span key={f.label}>
-            {i > 0 && ' · '}
-            {f.label}: {f.source}, as of {f.asOf}
-          </span>
-        ))}
-        . Rounded down; refreshed before each release.
+        Sources: npm registry (weekly downloads, first publish 2017), GitHub
+        (stars and dependent repositories). Rounded down, as of{' '}
+        {xstateFacts[1].asOf}; refreshed before each release.
       </p>
       <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
         <div className="min-w-0 space-y-6">
           <Pane title="install" right={<Stability level="stable" />}>
-            <div className="p-4">
-              <CopyLine text="npm install xstate" />
-              <p className="mt-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
+            <div className="px-4 pt-1 pb-4">
+              <CopyLine flush text="npm install xstate" />
+              <p className="mt-1 text-[14px] leading-relaxed text-[var(--sp-muted)]">
                 For multi-step flows, async orchestration, retries and timeouts,
                 and any behavior that must be reviewed.
               </p>
@@ -95,24 +92,31 @@ export function OpenSource() {
               </div>
             </div>
           </Pane>
-          <DataTable
-            className={stackOn3}
-            head={['Package', 'What it is', 'Stability']}
-            rows={packages.map(([name, what, level]) => [
-              <code key="n" className="sp-mono text-[12px] font-normal">{name}</code>,
-              <span key="w" className="text-[13px] leading-snug block sm:min-w-[12rem]">{what}</span>,
-              <span key="s" className="whitespace-nowrap"><Stability level={level} /></span>,
-            ])}
-          />
-          <p className="sp-mono flex flex-wrap items-center gap-x-2 text-[11px] text-[var(--sp-muted-2)]">
-            xstate v6 · next major · <Stability level="alpha" />
+          <p className="sp-mono text-[12px] text-[var(--sp-muted)]">
+            xstate 5 · xstate/graph · @xstate/store · xstate 6 <span className="text-[var(--sp-warn)]">alpha</span>
           </p>
+          <Quote t={quotes[1]} />
+          <div className="border-t border-[var(--sp-border)] pt-5">
+            <p className="sp-mono text-[11.5px] text-[var(--sp-muted-2)]">XState is used by engineers at</p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-4">
+              {companies.map((c) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={c.name}
+                  src={c.src}
+                  alt={c.name}
+                  width={c.width}
+                  className="h-8 w-auto opacity-70"
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="my-1 lg:my-0 lg:mx-1 lg:mt-[11px]">
           <Edge dir="down" label="INSPECT" length={76} className="lg:hidden" />
           <Edge dir="right" label="INSPECT" length={128} className="hidden lg:block" />
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 space-y-6">
           <Pane title="inspector">
             <div className="p-5">
               <p className="text-[16px] font-semibold text-[var(--sp-fg)]">
@@ -127,39 +131,8 @@ export function OpenSource() {
               </a>
             </div>
           </Pane>
+          <Quote t={quotes[0]} />
         </div>
-      </div>
-      <div className="mt-16 pt-8 border-t border-[var(--sp-border)]">
-        <p className="sp-mono text-[11px] text-[var(--sp-muted-2)]">XState is used by engineers at</p>
-        <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6 sm:gap-x-14">
-          {companies.map((c) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={c.name}
-              src={c.src}
-              alt={c.name}
-              width={c.width}
-              className="h-10 sm:h-12 w-auto opacity-50"
-            />
-          ))}
-        </div>
-      </div>
-      <div className="mt-10 grid md:grid-cols-3 gap-6 items-start">
-        {quotes.map((t) => (
-          <Pane key={t.name}>
-            <figure className="p-5">
-              <blockquote className="text-[14px] leading-relaxed text-[var(--sp-fg)]">{t.quote}</blockquote>
-              <figcaption className="mt-4 flex items-center gap-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.avatar} alt="" width={36} height={36} className="size-9 rounded-full" />
-                <span className="text-[13px] leading-tight">
-                  <span className="block font-medium text-[var(--sp-fg)]">{t.name}</span>
-                  <span className="block text-[var(--sp-muted-2)]">{t.company}</span>
-                </span>
-              </figcaption>
-            </figure>
-          </Pane>
-        ))}
       </div>
     </Section>
   );

@@ -1,7 +1,8 @@
 // §11 FAQ. faqItems also feeds FAQPage JSON-LD in page.tsx (a server component),
 // so this file has no 'use client': a client module would export a reference,
 // not the array. It still renders client-side via Landing. Answers: plain text.
-import { Section, SectionHeading } from '../shared';
+import { NewTab, SCAN_CMD, breakable, clients } from '../lib';
+import { Pane, Section, SectionHeading } from '../shared';
 
 export const faqItems: { q: string; a: string }[] = [
   {
@@ -26,12 +27,29 @@ export const faqItems: { q: string; a: string }[] = [
   },
 ];
 
+const byId = Object.fromEntries(clients.map((c) => [c.id, c]));
+
+/** Plain list an agent can parse: [text, what it is, href or null]. */
+const resources: [string, string, string | null][] = [
+  ['/llms.txt', 'Site summary for agents', '/llms.txt'],
+  ['/llms-full.txt', 'Full docs as plain text', '/llms-full.txt'],
+  ['https://mcp.stately.ai/mcp', 'Hosted MCP server', null],
+  [byId.claude.cmd, 'Add the MCP server to Claude Code', null],
+  [byId.codex.cmd, 'Add the MCP server to Codex', null],
+  [byId.cursor.cmd, 'Cursor: .cursor/mcp.json', null],
+  [byId.vscode.cmd, 'Add the MCP server to VS Code', null],
+  [SCAN_CMD, 'Find the machines in a repo', null],
+  ['npx skills add statelyai/skills', 'Agent skills', null],
+  ['/docs/packages/mcp.mdx', 'MCP docs as markdown', '/docs/packages/mcp.mdx'],
+  ['https://github.com/statelyai', 'Source', 'https://github.com/statelyai'],
+];
+
 export function Faq() {
   return (
     <Section id="faq" event="ASK">
-      <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
-        <SectionHeading title="Questions." />
-        <div className="border-t border-[var(--sp-border)]">
+      <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_1fr] gap-x-16 gap-y-10 items-start">
+        <SectionHeading title="Questions." className="lg:col-start-1 lg:row-start-1" />
+        <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 border-t border-[var(--sp-border)]">
           {faqItems.map((f) => (
             <details key={f.q} className="group border-b border-[var(--sp-border)]">
               <summary className="flex items-start gap-4 py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
@@ -47,6 +65,29 @@ export function Faq() {
             </details>
           ))}
         </div>
+        <Pane title="machine-readable" className="min-w-0 lg:col-start-1 lg:row-start-2">
+          <ul className="divide-y divide-[var(--sp-border)]">
+            {resources.map(([path, what, href]) => (
+              <li key={path} className="flex flex-col gap-1 px-4 py-2.5">
+                <span className="sp-mono text-[12px] text-[var(--sp-fg)] break-words">
+                  {href ? (
+                    <a
+                      href={href}
+                      {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="underline decoration-[var(--sp-border-strong)] underline-offset-4 hover:decoration-[var(--sp-fg)]"
+                    >
+                      {breakable(path)}
+                      {href.startsWith('http') && <NewTab />}
+                    </a>
+                  ) : (
+                    breakable(path)
+                  )}
+                </span>
+                <span className="text-[13px] text-[var(--sp-muted)]">{what}</span>
+              </li>
+            ))}
+          </ul>
+        </Pane>
       </div>
     </Section>
   );

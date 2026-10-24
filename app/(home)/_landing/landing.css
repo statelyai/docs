@@ -5,7 +5,7 @@
   --sp-surface: oklch(0.21 0.016 285);
   --sp-fg: oklch(0.985 0 0);
   --sp-muted: oklch(0.705 0.015 286.067);
-  --sp-muted-2: oklch(0.55 0.015 286);
+  --sp-muted-2: oklch(0.63 0.015 286);
   --sp-border: oklch(1 0 0 / 10%);
   --sp-border-strong: oklch(1 0 0 / 18%);
   --sp-primary: #0f6ee5;
@@ -21,6 +21,7 @@
   --sp-inspect: oklch(0.75 0.15 50);
   --sp-warn: oklch(0.82 0.15 80);
   --sp-success: oklch(0.78 0.15 150);
+  --sp-destructive: oklch(0.7 0.19 22);
   --sp-ai: oklch(0.74 0.15 295);
   --sp-info: oklch(0.75 0.11 240);
   --sp-radius: 0.45rem;
@@ -61,4 +62,10 @@
 }
 .sp-btn-outline:hover {
   border-color: oklch(1 0 0 / 32%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp * {
+    transition-duration: 0ms !important;
+    animation: none !important;
+  }
 }

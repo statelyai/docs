@@ -26,9 +26,18 @@ export type Edge = {
   points: [number, number][];
   /** index of the segment that carries the label (default: middle) */
   labelSeg?: number;
+  /** shorthand for tone: 'accent' */
   accent?: boolean;
+  /** accent: highlighted (primary). added: new in a diff (success, solid). removed: gone in a diff (destructive, dashed). */
+  tone?: 'accent' | 'added' | 'removed';
   dashed?: boolean;
 };
+
+const toneColor = {
+  accent: 'var(--sp-primary)',
+  added: 'var(--sp-success)',
+  removed: 'var(--sp-destructive)',
+} as const;
 
 export type Machine = { w: number; h: number; nodes: Node[]; edges: Edge[] };
 
@@ -89,34 +98,35 @@ export function Statechart({
       style={{ opacity: dim ? 0.55 : 1 }}
     >
       <defs>
-        <marker
-          id="sp-arrow"
-          viewBox="0 0 10 10"
-          refX="9"
-          refY="5"
-          markerWidth="7"
-          markerHeight="7"
-          orient="auto-start-reverse"
-        >
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--sp-edge)" />
-        </marker>
-        <marker
-          id="sp-arrow-accent"
-          viewBox="0 0 10 10"
-          refX="9"
-          refY="5"
-          markerWidth="7"
-          markerHeight="7"
-          orient="auto-start-reverse"
-        >
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--sp-primary)" />
-        </marker>
+        {(
+          [
+            ['sp-arrow', 'var(--sp-edge)'],
+            ['sp-arrow-accent', toneColor.accent],
+            ['sp-arrow-added', toneColor.added],
+            ['sp-arrow-removed', toneColor.removed],
+          ] as const
+        ).map(([id, fill]) => (
+          <marker
+            key={id}
+            id={id}
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill={fill} />
+          </marker>
+        ))}
       </defs>
 
       {edges.map((e) => {
-        const stroke = e.accent ? 'var(--sp-primary)' : 'var(--sp-edge)';
+        const tone = e.tone ?? (e.accent ? 'accent' : undefined);
+        const stroke = tone ? toneColor[tone] : 'var(--sp-edge)';
+        const dashed = e.dashed || tone === 'removed';
         const [mx, my] = segMid(e.points, e.labelSeg);
-        const lw = e.label.length * 7.2 + 20;
+        const lw = e.label.length * 7.6 + 22;
         return (
           <g key={`${e.from}-${e.to}-${e.label}`}>
             <path
@@ -124,8 +134,8 @@ export function Statechart({
               fill="none"
               stroke={stroke}
               strokeWidth={2}
-              strokeDasharray={e.dashed ? '4 4' : undefined}
-              markerEnd={e.accent ? 'url(#sp-arrow-accent)' : 'url(#sp-arrow)'}
+              strokeDasharray={dashed ? '4 4' : undefined}
+              markerEnd={tone ? `url(#sp-arrow-${tone})` : 'url(#sp-arrow)'}
             />
             <rect
               x={mx - lw / 2}
@@ -142,10 +152,10 @@ export function Statechart({
               y={my + 4}
               textAnchor="middle"
               className="sp-mono"
-              fontSize={10.5}
+              fontSize={11}
               fontWeight={500}
               letterSpacing={0.4}
-              fill={e.accent ? 'var(--sp-fg)' : 'var(--sp-muted)'}
+              fill={tone ? 'var(--sp-fg)' : 'var(--sp-muted)'}
             >
               {e.label}
             </text>
@@ -236,7 +246,7 @@ export function Statechart({
                 x={n.x + 12}
                 y={n.y + 42}
                 className="sp-mono"
-                fontSize={10}
+                fontSize={11}
                 fontWeight={500}
                 fill={n.unreachable ? 'var(--sp-warn)' : 'var(--sp-muted-2)'}
               >
@@ -265,7 +275,7 @@ export const checkoutMachine: Machine = {
     { id: 'payment', label: 'payment', x: col(2), y: row(1), evidence: 'payment.ts:9', active: 'selected' },
     { id: 'declined', label: 'declined', x: col(1), y: row(1), evidence: 'payment.ts:44' },
     { id: 'confirmed', label: 'confirmed', x: col(2), y: row(2), final: true, evidence: 'checkout.ts:97' },
-    { id: 'refund', label: 'refund', x: col(0), y: row(2), w: 176, unreachable: true, evidence: 'unreachable · refund.ts:3' },
+    { id: 'refund', label: 'refund', x: col(0), y: row(2), w: 196, unreachable: true, evidence: 'unreachable · refund.ts:3' },
   ],
   edges: [
     { from: 'idle', to: 'cart', label: 'ADD_ITEM', points: [[col(0) + NW, row(0) + 28], [col(1), row(0) + 28]] },

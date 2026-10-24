@@ -22,8 +22,8 @@ export function Landing() {
       <System />
       <Compat />
       <OpenSource />
-      <Enterprise />
       <PricingTeaser />
+      <Enterprise />
       <Faq />
       <FinalCta />
       <Footer tone="neutral" />

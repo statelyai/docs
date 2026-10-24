@@ -25,7 +25,8 @@ export function MachineCanvas({
   /** node id shown as selected */
   selected?: string;
   showEvidence?: boolean;
-  label?: string;
+  /** accessible name for the chart (required: say what this slot shows) */
+  label: string;
   className?: string;
   svgClassName?: string;
 }) {

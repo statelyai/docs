@@ -9,7 +9,7 @@ const steps = [
   { verb: 'PROPOSE', title: 'Propose', state: 'proposed', artifact: 'proposal', body: 'Edit the graph visually or let the agent propose a change. Proposals are immutable.' },
   { verb: 'REVIEW', title: 'Review', state: 'approved', artifact: 'visual diff', body: 'The change appears as a visual diff on the PR. A human approves it.' },
   { verb: 'IMPLEMENT', title: 'Implement', state: 'implemented', artifact: 'source change', body: 'The agent applies the approved change in source.' },
-  { verb: 'VERIFY', title: 'Verify', state: 'verified', artifact: 'matches | drifted', body: 'Remap from source and compare. The verdict is matches or drifted.' },
+  { verb: 'VERIFY', title: 'Verify', state: 'verified', artifact: 'verdict', body: 'Remap from source and compare. The verdict is matches or drifted.' },
 ];
 
 // Hand-placed: entry edge (MAP) from the left, then 4 transitions.
@@ -44,59 +44,72 @@ const loopMachine: Machine = {
   })),
 };
 
+const chipCls =
+  'sp-mono inline-flex items-center gap-1.5 h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border text-[11.5px]';
+
 export function Loop() {
   return (
-    <Section id="loop" event="HOW">
+    <Section id="loop" event="MAP">
       <SectionHeading
         title="How an agent's change gets reviewed."
         lede="Each step leaves something you can check: a map, a proposal, a visual diff, a code change, a verdict."
       />
-      <div className="mt-12 hidden lg:block" aria-hidden>
-        <MachineCanvas slot="loop" machine={loopMachine} sim="approved" />
-      </div>
-      <ol className="mt-10 lg:mt-8 grid sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8">
-        {steps.map((s, i) => (
-          <li key={s.verb} className="border-t border-[var(--sp-border)] pt-4 lg:border-t-0 lg:pt-0">
-            <p className="sp-mono text-[11px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)]">
-              {String(i + 1).padStart(2, '0')} · {s.artifact}
-            </p>
-            <h3 className="mt-2 text-[16px] font-semibold text-[var(--sp-fg)]">{s.title}</h3>
-            <p className="mt-2 text-[14px] leading-relaxed text-[var(--sp-muted)]">{s.body}</p>
-          </li>
-        ))}
-      </ol>
-      {/* VERIFY step gates CI: edge drops from the last step column into the ci pane. */}
-      <div className="mt-8 lg:mt-6 lg:grid lg:grid-cols-5 lg:gap-x-6">
-        <Edge dir="down" length={40} className="lg:hidden" />
-        <Edge dir="down" label="GATE" length={72} className="hidden lg:block lg:col-start-5" />
-      </div>
-      <div className="mt-1 grid lg:grid-cols-5 gap-x-6 gap-y-6 items-center">
-        <Pane className="lg:col-start-3 lg:col-span-3 lg:row-start-1" title="ci" right={<span className="text-[var(--sp-muted-2)]">verify step</span>}>
-          <div className="p-4 space-y-3">
-            <code className="sp-mono block text-[12.5px] text-[var(--sp-fg)] whitespace-pre overflow-x-auto">
-              <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
-            </code>
-            <div className="flex flex-wrap gap-2">
-              <span className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-success)]/40 text-[11px] text-[var(--sp-success)]">
-                <span className="inline-block size-1.5 rounded-full bg-current" />
-                matches
-              </span>
-              <span className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-warn)]/40 text-[11px] text-[var(--sp-warn)]">
-                <span className="inline-block size-1.5 rounded-full bg-current" />
-                drifted
-              </span>
-            </div>
+      {/* The loop is one compound state, `review`, holding the five steps and the CI gate. */}
+      <div className="mt-12 rounded-md border-2 border-[var(--sp-node-stroke)]">
+        <div className="px-3 py-2 text-[13px] font-semibold text-[var(--sp-fg)]">review</div>
+        <div className="px-4 sm:px-6 pb-6 lg:pt-2">
+          <div className="hidden lg:block" aria-hidden>
+            <MachineCanvas slot="loop" machine={loopMachine} sim="approved" label="The review loop as a statechart: mapped, proposed, approved, implemented, verified" />
           </div>
-        </Pane>
-        <p className="lg:col-start-1 lg:col-span-2 lg:row-start-1 text-[15px] leading-relaxed text-[var(--sp-muted)]">
-          Runs over MCP, with the CLI for scan, push, pull, and diff. The editor is optional, and so is XState in your code.
-        </p>
+          <ol className="lg:mt-8 grid lg:grid-cols-5 gap-x-6 lg:gap-y-8">
+            {steps.map((s, i) => (
+              <li key={s.verb} className="min-w-0 flex flex-col">
+                {/* Below lg the machine row is hidden: the steps become a vertical chain. */}
+                <Edge dir="down" label={s.verb} length={i === 0 ? 48 : 64} className="lg:hidden !ml-12" />
+                <h3 className="max-lg:order-1 max-lg:self-start max-lg:rounded-md max-lg:border-2 max-lg:border-[var(--sp-node-stroke)] max-lg:bg-[var(--sp-node)] max-lg:px-3 max-lg:py-1.5 lg:mt-2 text-[16px] font-semibold text-[var(--sp-fg)]">
+                  {s.title}
+                </h3>
+                <p className="max-lg:order-2 max-lg:mt-2 lg:order-first sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)]">
+                  {String(i + 1).padStart(2, '0')} · {s.artifact}
+                </p>
+                <p className="max-lg:order-3 mt-2 text-[14px] leading-relaxed text-[var(--sp-muted)]">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+          {/* VERIFY step gates CI: edge drops from the last step column into the ci pane. */}
+          <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-6">
+            <Edge dir="down" label="GATE" length={64} className="lg:hidden !ml-12" />
+            <Edge dir="down" label="GATE" length={72} className="hidden lg:block lg:col-start-5" />
+          </div>
+          <div className="mt-1 grid lg:grid-cols-5 gap-x-6 gap-y-6 items-center">
+            <Pane className="lg:col-start-3 lg:col-span-3 lg:row-start-1" title="ci gate" right={<span className="text-[var(--sp-muted-2)]">diff step</span>}>
+              <div className="p-4 space-y-3">
+                <code className="sp-mono block text-[12.5px] text-[var(--sp-fg)] whitespace-pre overflow-x-auto">
+                  <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
+                </code>
+                <div className="flex flex-wrap gap-2">
+                  <span className={`${chipCls} border-[var(--sp-success)]/40 text-[var(--sp-success)]`}>
+                    <span className="inline-block size-1.5 rounded-full bg-current" />
+                    no changes
+                  </span>
+                  <span className={`${chipCls} border-[var(--sp-warn)]/40 text-[var(--sp-warn)]`}>
+                    <span className="inline-block size-1.5 rounded-full bg-current" />
+                    changes
+                  </span>
+                </div>
+              </div>
+            </Pane>
+            <p className="lg:col-start-1 lg:col-span-2 lg:row-start-1 text-[15px] leading-relaxed text-[var(--sp-muted)]">
+              Runs over MCP, with the CLI for scan, push, pull, and diff. The editor is optional, and so is XState in your code.
+            </p>
+          </div>
+        </div>
       </div>
       <Pane title="what we test" className="mt-12 max-w-[44rem]">
         <p className="p-5 text-[14px] leading-relaxed text-[var(--sp-muted)]">
-          We run Claude Code and Codex through map, edit, apply, and verify, and
-          keep the runs. In each run, every change is cited to its source and
-          checked by verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
+          We run Claude Code and Codex through map, edit, apply, and verify. In
+          each run, every change is cited to its source and checked by verify.{' '}
+          <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
         </p>
       </Pane>
     </Section>

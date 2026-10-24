@@ -78,7 +78,7 @@ function Region({
 
 export function System() {
   return (
-    <Section id="system" event="SYSTEM">
+    <Section id="system" event="INSPECT">
       <SectionHeading title="Understand the whole system." />
       {/* One parallel state: three orthogonal regions, dashed dividers. */}
       <div className="mt-12 rounded-md border-2 border-[var(--sp-node-stroke)]">
@@ -114,7 +114,7 @@ export function System() {
               label="Payment statechart with the live state outlined"
               className={graphCls}
             />
-            <ol className={`mt-2 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11px] leading-[1.7] text-[var(--sp-muted)] ${graphCls}`}>
+            <ol className={`mt-2 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.7] text-[var(--sp-muted)] ${graphCls}`}>
               {log.map(([event, state], i) => (
                 <li key={event} className="flex gap-3">
                   <span className="text-[var(--sp-muted-2)]">{String(i + 1).padStart(2, '0')}</span>
@@ -144,7 +144,7 @@ export function System() {
             <div className={graphCls}>
               <Edge dir="down" label="SYNC" length={52} bidirectional accent />
             </div>
-            <pre className={`rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11px] leading-[1.7] text-[var(--sp-muted)] overflow-hidden ${graphCls}`}>
+            <pre className={`rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.7] text-[var(--sp-muted)] overflow-hidden ${graphCls}`}>
               {'states: {\n  declined: {\n    on: { '}
               <span className="text-[var(--sp-fg)] underline decoration-[var(--sp-primary)] decoration-2 underline-offset-[3px]">RETRY: &apos;payment&apos;</span>
               {' },\n  },'}
