@@ -5,7 +5,7 @@ import { Edge, Pane, Section, SectionHeading } from '../shared';
 import { TextLink } from './CopyLine';
 
 const steps = [
-  { verb: 'MAP', title: 'Map', state: 'mapped', artifact: 'statechart + sha', body: 'Your agent or the CLI reads the code and produces a statechart. Every transition cites its source; the map carries a source hash.' },
+  { verb: 'MAP', title: 'Map', state: 'mapped', artifact: 'statechart + sha', body: 'Your agent reads the code and produces a statechart. Every transition cites its source; the map carries a source hash.' },
   { verb: 'PROPOSE', title: 'Propose', state: 'proposed', artifact: 'proposal', body: 'Edit the graph visually or let the agent propose a change. Proposals are immutable.' },
   { verb: 'REVIEW', title: 'Review', state: 'approved', artifact: 'visual diff', body: 'The change appears as a visual diff on the PR. A human approves it.' },
   { verb: 'IMPLEMENT', title: 'Implement', state: 'implemented', artifact: 'source change', body: 'The agent applies the approved change in source.' },
@@ -74,7 +74,7 @@ export function Loop() {
         <Pane className="lg:col-start-3 lg:col-span-3 lg:row-start-1" title="ci" right={<span className="text-[var(--sp-muted-2)]">verify step</span>}>
           <div className="p-4 space-y-3">
             <code className="sp-mono block text-[12.5px] text-[var(--sp-fg)] whitespace-pre overflow-x-auto">
-              <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff --fail-on-changes
+              <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
             </code>
             <div className="flex flex-wrap gap-2">
               <span className="sp-mono inline-flex items-center gap-1.5 h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border border-[var(--sp-success)]/40 text-[11px] text-[var(--sp-success)]">
@@ -89,7 +89,7 @@ export function Loop() {
           </div>
         </Pane>
         <p className="lg:col-start-1 lg:col-span-2 lg:row-start-1 text-[15px] leading-relaxed text-[var(--sp-muted)]">
-          Runs from the CLI or MCP. The editor is optional, and so is XState in your code.
+          Runs over MCP, with the CLI for scan, push, pull, and diff. The editor is optional, and so is XState in your code.
         </p>
       </div>
       <Pane title="what we test" className="mt-12 max-w-[44rem]">

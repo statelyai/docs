@@ -6,32 +6,42 @@ import { CopyLine, TextLink, stackOn3 } from './CopyLine';
 
 const MCP_URL = 'https://mcp.stately.ai/mcp';
 
-const clients = [
-  { id: 'claude', label: 'Claude Code', note: 'terminal', cmd: `claude mcp add stately ${MCP_URL}`, prompt: true },
-  { id: 'codex', label: 'Codex', note: 'terminal', cmd: `codex mcp add stately --url ${MCP_URL}`, prompt: true },
-  { id: 'cursor', label: 'Cursor', note: '.cursor/mcp.json', cmd: `{"mcpServers":{"stately":{"url":"${MCP_URL}"}}}`, prompt: false },
-  { id: 'vscode', label: 'VS Code', note: 'terminal', cmd: `code --add-mcp '{"name":"stately","url":"${MCP_URL}"}'`, prompt: true },
-  { id: 'any', label: 'Any MCP client', note: 'server URL (streamable HTTP)', cmd: MCP_URL, prompt: false },
-] as const;
+type Client = {
+  id: string;
+  label: string;
+  note: string;
+  cmd: string;
+  prompt: boolean;
+  /** Step 3: how to complete Stately sign-in. A command (prompt) or a sentence. */
+  login: { cmd: string } | { text: string };
+};
+
+const clients: Client[] = [
+  { id: 'claude', label: 'Claude Code', note: 'terminal', cmd: `claude mcp add --transport http stately ${MCP_URL}`, prompt: true, login: { text: 'In Claude Code, run /mcp and complete Stately sign-in.' } },
+  { id: 'codex', label: 'Codex', note: 'terminal', cmd: `codex mcp add stately --url ${MCP_URL}`, prompt: true, login: { cmd: 'codex mcp login stately' } },
+  { id: 'cursor', label: 'Cursor', note: '.cursor/mcp.json', cmd: `{"mcpServers":{"stately":{"url":"${MCP_URL}"}}}`, prompt: false, login: { text: 'Enable the server in Cursor Settings → MCP and complete Stately sign-in.' } },
+  { id: 'vscode', label: 'VS Code', note: 'terminal', cmd: `code --add-mcp '{"name":"stately","type":"http","url":"${MCP_URL}"}'`, prompt: true, login: { text: 'Run MCP: List Servers, start stately, and complete Stately sign-in.' } },
+  { id: 'any', label: 'Any MCP client', note: 'server URL (streamable HTTP)', cmd: MCP_URL, prompt: false, login: { text: 'Start the server in your client and complete Stately sign-in (OAuth).' } },
+];
 
 type Level = 'stable' | 'beta' | 'alpha';
 const tools: [string, string, Level][] = [
-  ['validate', 'Check a machine for structural errors: missing targets, unreachable states, invalid config.', 'stable'],
-  ['convert', 'Translate a machine between XState, SCXML, Mermaid, D2, and JSON.', 'stable'],
-  ['diff', 'List added, removed, and changed states and transitions between two machines.', 'stable'],
-  ['apply_patches', 'Apply structured edits to a machine and return the result.', 'stable'],
-  ['graph_paths', 'Enumerate shortest and simple paths between states.', 'stable'],
-  ['simulate', 'Step a machine through a sequence of events and report each state.', 'stable'],
-  ['visualize', 'Render a machine as a diagram.', 'beta'],
-  ['extract_from_code', 'Read source files and produce a machine with file:line evidence.', 'beta'],
-  ['review_implementation', 'Compare a machine to its implementation and list mismatches.', 'beta'],
-  ['verify', 'Remap from source and return matches or drifted.', 'beta'],
-  ['generate_test_paths', 'Generate test cases that cover every state and transition.', 'beta'],
-  ['coverage_report', 'Report which states and transitions a test run exercised.', 'beta'],
+  ['validate_machine', 'Check syntax and graph structure: missing targets, unreachable states, invalid config.', 'stable'],
+  ['convert_machine', 'Translate a machine between XState, SCXML, XGraph, Mermaid, and D2.', 'stable'],
+  ['diff_machines', 'List added, removed, and changed states and transitions between two machines.', 'stable'],
+  ['apply_machine_patches', 'Apply structured edits to a machine and return the result.', 'stable'],
+  ['generate_graph_paths', 'Enumerate shortest and simple paths between states.', 'stable'],
+  ['simulate_machine', 'Step a machine through a sequence of events and report each state.', 'stable'],
+  ['visualize_machine', 'Render a machine as a diagram.', 'beta'],
+  ['extract_machines_from_code', 'Statically extract every XState machine from JavaScript or TypeScript source.', 'beta'],
+  ['review_machine_implementation', 'Compare a machine to its implementation and list mismatches.', 'beta'],
+  ['verify', 'Run a verification report through a host adapter and return matches or drifted.', 'beta'],
+  ['generate_test_paths', 'Return the recorded paths from a verification report.', 'beta'],
+  ['coverage_report', 'Report model and executed coverage from a verification report.', 'beta'],
 ];
 
 export function AgentSetup() {
-  const [active, setActive] = useState<(typeof clients)[number]['id']>('claude');
+  const [active, setActive] = useState<string>('claude');
   const client = clients.find((c) => c.id === active)!;
   return (
     <Section id="agent-setup" event="SET_UP">
@@ -39,7 +49,7 @@ export function AgentSetup() {
         title="Give your agent the graph."
         lede="A hosted MCP server with 12 tools. Your agent maps code into a statechart, diffs it, lists its paths, and checks it against the source."
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
+      <div className="mt-12 grid lg:grid-cols-[minmax(0,4fr)_auto_minmax(0,8fr)] items-start">
         <div className="min-w-0">
           <Pane
             title="stately mcp"
@@ -72,7 +82,15 @@ export function AgentSetup() {
                 <CopyLine text={client.cmd} prompt={client.prompt} />
               </div>
               <div>
-                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">2 · add the skills · terminal</p>
+                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">2 · sign in</p>
+                {'cmd' in client.login ? (
+                  <CopyLine text={client.login.cmd} prompt />
+                ) : (
+                  <p className="text-[13px] text-[var(--sp-muted)]">{client.login.text}</p>
+                )}
+              </div>
+              <div>
+                <p className="sp-mono text-[11px] text-[var(--sp-muted-2)] mb-2">3 · add the skills · terminal</p>
                 <CopyLine text="npx skills add statelyai/skills" />
               </div>
             </div>
@@ -97,7 +115,15 @@ export function AgentSetup() {
             className={stackOn3}
             head={['Tool', 'What it does', 'Stability']}
             rows={tools.map(([name, what, level]) => [
-              <code key="n" className="sp-mono text-[12px] font-normal">{name}</code>,
+              <code key="n" className="sp-mono text-[12px] font-normal whitespace-normal">
+                {name.split('_').map((part, i) => (
+                  <span key={i}>
+                    {i > 0 && '_'}
+                    {i > 0 && <wbr />}
+                    {part}
+                  </span>
+                ))}
+              </code>,
               <span key="w" className="text-[13px] leading-snug block sm:min-w-[14rem]">{what}</span>,
               <span key="s" className="whitespace-nowrap"><Stability level={level} /></span>,
             ])}

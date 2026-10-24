@@ -64,8 +64,8 @@ const pillars = [
     link: 'Statecharts',
   },
   {
-    title: 'A test for every path',
-    body: '@xstate/graph lists every path through the machine and generates a test for each one.',
+    title: 'Paths you can run as tests',
+    body: 'xstate/graph generates the shortest and simple paths through the machine, and you run them as model-based tests.',
     chart: determinismChart,
     caption: 'payment → paid | declined',
     href: '/docs/graph',

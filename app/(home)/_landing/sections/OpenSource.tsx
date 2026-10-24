@@ -9,8 +9,7 @@ const packages: [string, string, Level][] = [
   ['xstate', 'v5 · state machines, statecharts, and actors', 'stable'],
   ['xstate', 'v6 · next major', 'alpha'],
   ['@xstate/store', 'small event-driven store', 'stable'],
-  ['@xstate/graph', 'paths, shortest paths, and adjacency over any machine', 'stable'],
-  ['@xstate/test', 'model-based tests from the graph', 'stable'],
+  ['xstate/graph', 'shortest paths, simple paths, and adjacency; part of xstate, run paths as model-based tests', 'stable'],
   ['@statelyai/agent', 'agents whose decisions run through a state machine', 'alpha'],
 ];
 

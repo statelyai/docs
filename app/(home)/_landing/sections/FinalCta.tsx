@@ -9,7 +9,7 @@ const resources: [string, string, string | null][] = [
   ['/llms-full.txt', 'Full docs as plain text', '/llms-full.txt'],
   ['https://mcp.stately.ai/mcp', 'Hosted MCP server', null],
   ['npx skills add statelyai/skills', 'Agent skills', null],
-  ['/docs/packages/mcp.md', 'MCP docs as markdown', '/docs/packages/mcp.md'],
+  ['/docs/packages/mcp.mdx', 'MCP docs as markdown', '/docs/packages/mcp.mdx'],
   ['https://github.com/statelyai', 'Source', 'https://github.com/statelyai'],
 ];
 

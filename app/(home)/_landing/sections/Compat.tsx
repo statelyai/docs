@@ -25,7 +25,7 @@ const exports: [string, string][] = [
   ['Mermaid', 'docs, READMEs, PRs'],
   ['D2', 'architecture diagrams'],
   ['JSON', 'structured graph for tools and agents'],
-  ['Test paths', 'one test per path, generated'],
+  ['Test paths', 'shortest and simple paths, run as model-based tests'],
   ['React scaffold', 'components wired to the machine'],
 ];
 

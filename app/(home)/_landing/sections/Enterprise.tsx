@@ -3,9 +3,9 @@
 import { Section, SectionHeading } from '../shared';
 
 const facts = [
-  { k: 'Self-hosted', v: 'Run Stately inside your infrastructure. No traffic leaves your network.' },
+  { k: 'Self-hosted', v: 'Run Stately inside your infrastructure. With AI features and hosted comments turned off, no traffic leaves your network.' },
   { k: 'SSO', v: 'Single sign-on through your identity provider, with audit logs.' },
-  { k: 'Models in your git', v: 'Machines are files in your repo, versioned and reviewed like code.' },
+  { k: 'Models in your git', v: 'Keep machines as files in your repo with CLI sync, so they are versioned and reviewed like code.' },
   { k: 'SCXML export', v: 'The W3C statechart standard, for non-JS execution targets.' },
 ];
 

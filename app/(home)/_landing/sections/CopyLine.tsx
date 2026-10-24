@@ -22,10 +22,14 @@ export function CopyLine({
         {text}
       </code>
       <button
-        onClick={() => {
-          navigator.clipboard?.writeText(text);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1200);
+        onClick={async () => {
+          try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1200);
+          } catch {
+            setCopied(false);
+          }
         }}
         className="shrink-0 px-3 text-[var(--sp-muted)] hover:text-[var(--sp-fg)] border-l border-[var(--sp-border)] transition-colors"
         aria-label={`Copy ${text}`}

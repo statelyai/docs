@@ -21,8 +21,11 @@ const diff: Array<[' ' | '+' | '-', string]> = [
   ['+', '      on: { RETRY: "payment", CANCEL: "cart" },'],
   ['-', '      on: { CANCEL: "cart" },'],
   [' ', '    },'],
-  ['-', '    refund: { entry: "issueRefund", type: "final" },'],
-  ['+', '    refund: { entry: "issueRefund" },'],
+  [' ', '    confirmed: {'],
+  ['-', '      on: { REFUND: "refund" },'],
+  [' ', '      type: "final",'],
+  [' ', '    },'],
+  [' ', '    refund: { entry: "issueRefund", type: "final" },'],
   [' ', '  },'],
   [' ', '});'],
 ];
@@ -42,7 +45,7 @@ export function DiffVsGraph() {
               <span className="sp-mono text-[11px] text-[var(--sp-fg)]">PR #4821 · checkout retry</span>
               <span className="sp-mono text-[11px] text-[var(--sp-muted-2)]">src/checkout.ts</span>
               <span className="ml-auto sp-mono text-[11px]">
-                <span className="text-[var(--sp-success)]">+5</span>{' '}
+                <span className="text-[var(--sp-success)]">+4</span>{' '}
                 <span className="text-[oklch(0.7_0.19_22)]">−4</span>
               </span>
             </div>
@@ -64,7 +67,7 @@ export function DiffVsGraph() {
               ))}
             </pre>
             <div className="px-4 pb-4">
-              <FigCaption n={1}>What the reviewer sees. 9 changed lines in src/checkout.ts.</FigCaption>
+              <FigCaption n={1}>What the reviewer sees. 8 changed lines in src/checkout.ts.</FigCaption>
             </div>
           </div>
 

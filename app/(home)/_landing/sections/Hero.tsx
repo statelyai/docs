@@ -29,8 +29,8 @@ export function Hero() {
             actually does.
           </h1>
           <p className="mt-7 text-lg leading-relaxed text-[var(--sp-muted)] max-w-[32rem]">
-            Stately reads your code and draws the statechart humans can see and
-            agents can reason about. Each transition cites its file and line,
+            Your coding agent reads the code. Stately draws the statechart humans
+            can see and agents can reason about. Each state cites its file and line,
             and verify checks that the chart still matches the source.
           </p>
           <CtaRow className="mt-9" />

@@ -14,7 +14,7 @@ export const faqItems: { q: string; a: string }[] = [
   },
   {
     q: 'Does my code leave my network?',
-    a: 'With the hosted service, the code you send is processed under the Stately privacy policy. With self-hosted Stately, no traffic leaves your network.',
+    a: 'With the hosted service, the code you send is processed under the Stately privacy policy. With self-hosted Stately and AI features turned off, no traffic leaves your network.',
   },
   {
     q: 'What does my agent actually do with Stately?',
@@ -29,8 +29,8 @@ export const faqItems: { q: string; a: string }[] = [
     a: 'XState and the open-source packages are free, and the editor has a free Community plan. Pro and Team add private projects, version history, and team features; Enterprise adds cloud or self-hosted, SSO, and audit logs. Details are on the pricing page.',
   },
   {
-    q: 'Where is the machine-readable version of this page?',
-    a: 'Start with /llms.txt and /llms-full.txt. Docs pages are available as markdown by adding .md to the URL. The MCP server is at https://mcp.stately.ai/mcp, and npx skills add statelyai/skills installs the agent skills.',
+    q: 'Where are the machine-readable docs?',
+    a: 'Start with /llms.txt and /llms-full.txt. Docs pages are available as markdown by adding .mdx to the URL. The MCP server is at https://mcp.stately.ai/mcp, and npx skills add statelyai/skills installs the agent skills.',
   },
 ];
 

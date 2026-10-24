@@ -5,17 +5,17 @@ import Link from 'next/link';
 import { Check, Copy } from 'lucide-react';
 
 export function InstallPill({ align = 'left' }: { align?: 'left' | 'center' }) {
-  const [tab, setTab] = useState<'human' | 'agent'>('human');
+  const [tab, setTab] = useState<'human' | 'agent'>('agent');
   const [copied, setCopied] = useState(false);
   const cmd =
     tab === 'human'
       ? 'npx statelyai scan'
-      : 'claude mcp add stately https://mcp.stately.ai/mcp';
+      : 'claude mcp add --transport http stately https://mcp.stately.ai/mcp';
   return (
     <div className={align === 'center' ? 'flex flex-col items-center' : ''}>
       <div className="inline-flex items-stretch rounded-[var(--sp-radius)] border border-[var(--sp-border-strong)] bg-[var(--sp-surface)] overflow-hidden">
         <div className="flex border-r border-[var(--sp-border)]">
-          {(['human', 'agent'] as const).map((t) => (
+          {(['agent', 'human'] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -25,8 +25,8 @@ export function InstallPill({ align = 'left' }: { align?: 'left' | 'center' }) {
                   : 'text-[var(--sp-muted-2)] hover:text-[var(--sp-muted)]'
               }`}
             >
-              <span className="sm:hidden">{t === 'human' ? 'You' : 'Agent'}</span>
-              <span className="hidden sm:inline">{t === 'human' ? 'For you' : 'For your agent'}</span>
+              <span className="sm:hidden">{t === 'human' ? 'XState' : 'Agent'}</span>
+              <span className="hidden sm:inline">{t === 'human' ? 'Have XState? Find machines' : 'For your agent'}</span>
             </button>
           ))}
         </div>
@@ -35,10 +35,14 @@ export function InstallPill({ align = 'left' }: { align?: 'left' | 'center' }) {
           {cmd}
         </code>
         <button
-          onClick={() => {
-            navigator.clipboard?.writeText(cmd);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1200);
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(cmd);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1200);
+            } catch {
+              setCopied(false);
+            }
           }}
           className="px-3 text-[var(--sp-muted)] hover:text-[var(--sp-fg)] border-l border-[var(--sp-border)] transition-colors"
           aria-label="Copy command"
