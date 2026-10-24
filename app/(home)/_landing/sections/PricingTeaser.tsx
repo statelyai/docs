@@ -1,4 +1,3 @@
-'use client';
 // §10 Pricing teaser. Tiers and lines mirror app/(home)/pricing/page.tsx.
 import Link from 'next/link';
 import { Statechart, type Machine } from '../Statechart';

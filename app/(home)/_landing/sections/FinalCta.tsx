@@ -1,4 +1,3 @@
-'use client';
 // §12 Final CTA and machine-readable resources.
 import Link from 'next/link';
 import { FinalFrame, InstallPill, Pane, Transition } from '../shared';

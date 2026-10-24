@@ -1,4 +1,3 @@
-'use client';
 // §8 Enterprise & trust. No price.
 import { Section, SectionHeading } from '../shared';
 

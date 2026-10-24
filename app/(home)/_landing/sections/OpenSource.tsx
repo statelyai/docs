@@ -1,4 +1,3 @@
-'use client';
 // §7 Open source anchor: XState install, packages with stability, when to use,
 // plus XState users (logos are old page assets) and permitted testimonials.
 import { DataTable, Edge, Pane, Section, SectionHeading, Stability } from '../shared';

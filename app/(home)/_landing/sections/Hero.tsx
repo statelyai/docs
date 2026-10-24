@@ -1,4 +1,3 @@
-'use client';
 // Hero: "inside the canvas". Copy sits on the editor's dot grid; a running
 // machine lives to the right (embed slot); an editor-style status bar closes it.
 import { MachineCanvas } from '../MachineCanvas';

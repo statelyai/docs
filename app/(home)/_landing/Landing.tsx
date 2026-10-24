@@ -1,4 +1,3 @@
-'use client';
 import './landing.css';
 import { Footer } from '@/components/Footer';
 import { Hero } from './sections/Hero';

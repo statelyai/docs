@@ -1,4 +1,3 @@
-'use client';
 // §5 Compat matrix. Real <table> markup so agents can parse it.
 import { DataTable, Edge, Section, SectionHeading } from '../shared';
 

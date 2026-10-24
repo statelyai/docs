@@ -1,4 +1,3 @@
-'use client';
 // §6 What teams get: three pillars, each with one quiet statechart.
 import { Statechart, type Machine } from '../Statechart';
 import { Section, SectionHeading, parallelRegionCls } from '../shared';

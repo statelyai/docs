@@ -1,4 +1,3 @@
-'use client';
 // §4 The Stately loop: five steps as one machine, each with its artifact.
 import { Statechart, type Machine } from '../Statechart';
 import { Edge, Pane, Section, SectionHeading } from '../shared';

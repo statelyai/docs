@@ -1,4 +1,3 @@
-'use client';
 // Slot for the embeddable Stately editor (transparent background, minimal
 // visualization). Until the embed/React component ships, renders the static
 // SVG statechart in editor styling. Swap the body of this component only.

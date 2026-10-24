@@ -1,4 +1,3 @@
-'use client';
 // §3 The problem: the same change shown twice. An agent's PR diff (opaque)
 // vs the same change as a graph with one new transition highlighted.
 import { Statechart, checkoutMachine } from '../Statechart';
