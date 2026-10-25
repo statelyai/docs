@@ -62,7 +62,7 @@ export function System() {
               slot="system-architecture"
               source={servicesSource}
               title="Four services and the messages between them"
-              description="Services. States: api (initial), checkout, payments, email (final). Transitions: api on ORDER to checkout; checkout on CHARGE to payments; payments on RECEIPT to email."
+              description="Services. States: api (initial), checkout, payments, email (final). Transitions: api on ORDER to checkout; checkout on CHARGE to payments; checkout on NOTIFY to email; payments on RECEIPT to email; payments on REFUND to api."
               className="flex-1 min-h-0"
             />
           </Region>

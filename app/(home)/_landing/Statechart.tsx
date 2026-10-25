@@ -109,6 +109,7 @@ export function Statechart({
   };
   const titleId = `sc-title-${nodes.map((n) => n.id.replace(/\W/g, '')).join('-')}-${w}`;
   const descId = `${titleId}-desc`;
+  const mk = `${titleId}-arrow`;
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
@@ -122,9 +123,9 @@ export function Statechart({
       <defs>
         {(
           [
-            ['sp-arrow', EDGE],
-            ['sp-arrow-added', toneColor.added],
-            ['sp-arrow-removed', toneColor.removed],
+            [mk, EDGE],
+            [`${mk}-added`, toneColor.added],
+            [`${mk}-removed`, toneColor.removed],
           ] as const
         ).map(([id, fill]) => (
           <marker key={id} id={id} viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto">
@@ -149,7 +150,7 @@ export function Statechart({
                   stroke={stroke}
                   strokeWidth={2}
                   strokeDasharray={dash}
-                  markerEnd={k === 1 ? `url(#sp-arrow${e.tone ? `-${e.tone}` : ''})` : undefined}
+                  markerEnd={k === 1 ? `url(#${mk}${e.tone ? `-${e.tone}` : ''})` : undefined}
                 />
               </g>
             ))}
