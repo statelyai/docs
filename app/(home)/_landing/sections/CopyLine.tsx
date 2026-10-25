@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { NewTab, breakable } from '../lib';
+import { textLinkCls } from '../classes';
 
 /** Copy button with visible, announced "Copied" feedback for 1.2 s. */
 export function CopyButton({ text, className = '' }: { text: string; className?: string }) {
@@ -74,14 +75,14 @@ export function Chip({ children, className = '' }: { children: React.ReactNode; 
   );
 }
 
-/** Underlined text link in muted fg, used for doc pointers. */
+/** Underlined primary text link, used for doc pointers. */
 export function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
   const external = href.startsWith('http');
   return (
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className="text-[var(--sp-fg)] underline decoration-[var(--sp-border-strong)] underline-offset-4 hover:decoration-[var(--sp-fg)] transition-colors"
+      className={textLinkCls}
     >
       {children}
       {external && <NewTab />}

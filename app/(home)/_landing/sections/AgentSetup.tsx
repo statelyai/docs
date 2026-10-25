@@ -40,8 +40,8 @@ export function AgentSetup() {
   return (
     <Section id="agent-setup" event="CONNECT_AGENT">
       <SectionHeading
-        title="Give your agent the graph."
-        lede="A hosted MCP server with 12 tools. Your agent maps code into a statechart, diffs it, lists its paths, and checks it against the source."
+        title="Connect once. Your agent maps the rest."
+        lede="A hosted MCP server with 12 tools. Your agent reads the repo, draws the statechart, diffs it, lists its paths, and checks it against the source. You don't draw anything."
       />
       <div className="mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
         <div className="min-w-0">
@@ -91,9 +91,9 @@ export function AgentSetup() {
             </dd>
           </dl>
         </div>
-        <div className="my-1 lg:my-0 lg:mx-1 lg:mt-[11px]">
-          <Edge dir="down" label="CONNECT" length={76} className="lg:hidden" />
-          <Edge dir="right" label="CONNECT" length={128} className="hidden lg:block" />
+        <div className="my-1 lg:my-0 lg:mx-1 lg:-mt-[2px]">
+          <Edge dir="down" label="CONNECT" length={104} className="lg:hidden" />
+          <Edge dir="right" label="CONNECT" length={160} className="hidden lg:flex" />
         </div>
         <div className="min-w-0 grid sm:grid-cols-2 gap-3">
           {groups.map((g) => (

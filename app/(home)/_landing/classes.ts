@@ -11,3 +11,11 @@ export const stackOn3 =
 /** Parallel-state region divider: dashed, as statecharts draw orthogonal regions. */
 export const parallelRegionCls =
   'border-dashed border-[var(--sp-node-stroke)]';
+
+/** Inline text link: primary, underlined, so it reads as clickable. */
+export const textLinkCls =
+  'text-[var(--sp-primary)] underline underline-offset-4 decoration-[color:var(--sp-primary)]/40 hover:decoration-[color:var(--sp-primary)] transition-colors';
+
+/** State node title type, as the editor draws it: 20/25 600, -0.2px tracking. */
+export const nodeTitleCls =
+  'text-[20px] leading-[25px] font-semibold tracking-[-0.2px] text-[#fafafa]';

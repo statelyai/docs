@@ -3,6 +3,7 @@
 // not the array. It still renders client-side via Landing. Answers: plain text.
 import { NewTab, SCAN_CMD, breakable, clients } from '../lib';
 import { Pane, Section, SectionHeading } from '../shared';
+import { textLinkCls } from '../classes';
 
 export const faqItems: { q: string; a: string }[] = [
   {
@@ -74,7 +75,7 @@ export function Faq() {
                     <a
                       href={href}
                       {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className="underline decoration-[var(--sp-border-strong)] underline-offset-4 hover:decoration-[var(--sp-fg)]"
+                      className={textLinkCls}
                     >
                       {breakable(path)}
                       {href.startsWith('http') && <NewTab />}

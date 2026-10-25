@@ -1,12 +1,14 @@
 // §9 Enterprise & trust. No price.
 import { DEMO_URL, NewTab } from '../lib';
 import { Pane, Section, SectionHeading } from '../shared';
+import { TextLink } from './CopyLine';
 
-const facts = [
-  { k: 'Self-hosted', v: 'Run Stately inside your infrastructure. With AI features and hosted comments turned off, no traffic leaves your network.' },
-  { k: 'SSO', v: 'Single sign-on through your identity provider, with audit logs.' },
-  { k: 'Models in your git', v: 'Keep machines as files in your repo with CLI sync, so they are versioned and reviewed like code.' },
-  { k: 'SCXML export', v: 'The W3C statechart standard, for non-JS execution targets.' },
+const bullets = [
+  'Self-host the editor on your own network. No database required.',
+  'Sign in through your identity provider: an SSO proxy or your OAuth issuer.',
+  'Turn AI off with one flag. No traffic leaves your network.',
+  'The same REST API and MCP endpoint on your host.',
+  'Commercial license, with MIT-licensed SDK and CLI.',
 ];
 
 const audit = [
@@ -20,18 +22,17 @@ export function Enterprise() {
   return (
     <Section id="enterprise" event="DEPLOY_PRIVATE">
       <SectionHeading
-        title="Run Stately inside your network."
-        lede="For teams whose changes need an auditor's sign-off."
+        title="Enterprise-ready."
+        lede="Self-host it, sign in through your identity provider, and keep the model inside your boundary."
       />
       <div className="mt-12 grid lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-16 items-start">
-        <dl className="border-t border-[var(--sp-border)]">
-          {facts.map((f) => (
-            <div key={f.k} className="grid sm:grid-cols-[11rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-4 border-b border-[var(--sp-border)]">
-              <dt className="text-[15px] font-semibold text-[var(--sp-fg)]">{f.k}</dt>
-              <dd className="text-[15px] leading-relaxed text-[var(--sp-muted)]">{f.v}</dd>
-            </div>
+        <ul className="border-t border-[var(--sp-border)]">
+          {bullets.map((b) => (
+            <li key={b} className="py-4 border-b border-[var(--sp-border)] text-[15px] leading-relaxed text-[var(--sp-fg)]">
+              {b}
+            </li>
           ))}
-        </dl>
+        </ul>
         <div className="min-w-0">
           <Pane title="self-hosted">
             <pre className="sp-mono px-4 py-3 text-[12.5px] leading-[1.7] text-[var(--sp-fg)] overflow-x-auto">
@@ -47,11 +48,14 @@ export function Enterprise() {
           </ul>
         </div>
       </div>
-      <div className="mt-10">
-        <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="sp-btn sp-btn-outline">
+      <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="sp-btn sp-btn-primary !min-h-12 !px-6 !text-[15px]">
           Book a demo
           <NewTab />
         </a>
+        <span className="text-[14px] font-medium">
+          <TextLink href="/docs/self-hosting">Self-hosting guide</TextLink>
+        </span>
       </div>
     </Section>
   );

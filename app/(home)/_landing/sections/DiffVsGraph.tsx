@@ -1,33 +1,8 @@
 // §3 The problem: the same change shown twice. An agent's PR diff (abstract,
-// unreadable at a glance) vs the same change as a graph: RETRY added, REFUND removed.
-import { MachineCanvas } from '../MachineCanvas';
-import { type Machine } from '../Statechart';
+// unreadable at a glance) vs the same change as the editor draws it.
+import { EmbedMachine } from '../EmbedMachine';
+import { checkoutAfterSource } from '../machines';
 import { Edge, FigCaption, Section, SectionHeading } from '../shared';
-
-// Fig 2: only the states this PR touches. Hand-placed.
-const NW = 148;
-const NH = 56;
-const L = 40; // left column x
-const R = 324; // right column x
-const T = 30; // top row y
-const B = 180; // bottom row y
-const RW = 196; // refund is wider for its evidence line
-const prMachine: Machine = {
-  w: R + NW + 40,
-  h: B + NH + 24,
-  nodes: [
-    { id: 'declined', label: 'declined', x: L, y: T, evidence: 'payment.ts:44' },
-    { id: 'payment', label: 'payment', x: R, y: T, evidence: 'payment.ts:9' },
-    { id: 'confirmed', label: 'confirmed', x: R, y: B, final: true, evidence: 'checkout.ts:97' },
-    { id: 'refund', label: 'refund', x: L, y: B, w: RW, unreachable: true, evidence: 'unreachable · refund.ts:3' },
-  ],
-  edges: [
-    { from: 'payment', to: 'declined', label: 'FAIL', points: [[R, T + 16], [L + NW, T + 16]] },
-    { from: 'declined', to: 'payment', label: 'RETRY', tone: 'added', points: [[L + NW, T + 42], [R, T + 42]] },
-    { from: 'payment', to: 'confirmed', label: 'PAID', points: [[R + NW / 2, T + NH], [R + NW / 2, B]] },
-    { from: 'confirmed', to: 'refund', label: 'REFUND', tone: 'removed', points: [[R, B + NH / 2], [L + RW, B + NH / 2]] },
-  ],
-};
 
 // Skeleton rows: widths in %, indent in steps. 2 removed, 2 added, 4 context.
 const rows: Array<[' ' | '+' | '-', number, number]> = [
@@ -54,9 +29,9 @@ export function DiffVsGraph() {
         title="Agents write code faster than anyone can review it."
         lede="A diff shows which lines moved. It doesn't show that refund can no longer be reached, or that RETRY now loops back into payment."
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,1fr)_56px_minmax(0,1.25fr)] gap-4 lg:gap-0 items-stretch">
+      <div className="mt-12 grid lg:grid-cols-[minmax(0,2fr)_56px_minmax(0,3fr)] gap-4 lg:gap-0 items-stretch">
         {/* diff: abstract, no readable code */}
-        <div className="lg:h-[360px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-surface)] overflow-hidden flex flex-col">
+        <div className="lg:h-[520px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-surface)] overflow-hidden flex flex-col">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)]">
             <span className="sp-mono text-[11.5px] text-[var(--sp-fg)]">PR #4821 · checkout retry</span>
             <span className="sp-mono text-[11.5px] text-[var(--sp-muted-2)]">src/checkout.ts</span>
@@ -82,30 +57,24 @@ export function DiffVsGraph() {
         </div>
 
         <div className="hidden lg:flex items-center">
-          <Edge dir="right" accent length={56} />
+          <Edge dir="right" length={56} />
         </div>
 
         {/* graph */}
-        <div className="lg:h-[360px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden flex flex-col">
+        <div className="lg:h-[520px] rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden flex flex-col">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 min-h-9 border-b border-[var(--sp-border)] bg-[var(--sp-canvas)]">
             <span className="sp-mono text-[11.5px] text-[var(--sp-fg)]">same change, as behavior</span>
-            <span className="ml-auto sp-mono text-[11.5px] uppercase tracking-[0.06em]">
-              <span className="text-[var(--sp-success)]">+1 transition</span>
-              <span className="text-[var(--sp-muted-2)]"> · </span>
-              <span className="text-[var(--sp-destructive)]">−1 transition</span>
-              <span className="text-[var(--sp-muted-2)]"> · </span>
-              <span className="text-[var(--sp-warn)]">1 unreachable</span>
-            </span>
+            <span className="ml-auto sp-mono text-[11.5px] text-[var(--sp-warn)]">refund unreachable</span>
           </div>
-          <MachineCanvas
+          <EmbedMachine
             slot="diff-graph"
-            machine={prMachine}
-            label="The same PR as a statechart: RETRY from declined to payment added, REFUND from confirmed to refund removed, refund unreachable"
-            className="flex-1 min-h-0 p-4"
-            svgClassName="block w-full h-auto lg:h-full"
+            source={checkoutAfterSource}
+            title="The same PR as a statechart"
+            description="The checkout statechart after the PR. States: idle (initial), cart, address, payment, declined, confirmed (final), refund (unreachable: no transition leads to it). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart."
+            className="h-[420px] lg:h-auto lg:flex-1 lg:min-h-[300px]"
           />
           <div className="px-4 pb-4">
-            <FigCaption n={2}>Same PR as a graph. RETRY added, REFUND removed, refund unreachable.</FigCaption>
+            <FigCaption n={2}>The same PR as a graph. refund can no longer be reached.</FigCaption>
           </div>
         </div>
       </div>

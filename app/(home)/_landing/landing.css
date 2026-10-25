@@ -10,16 +10,20 @@
   --sp-border-strong: oklch(1 0 0 / 18%);
   --sp-primary: #0f6ee5;
   --sp-primary-hover: #005cde;
-  /* Stately orange: XState and runtime/inspection. Use sparingly. */
+  /* Stately orange: XState brand accents only. */
   --sp-orange: #ff7f2c;
   --sp-orange-strong: #db4206;
   --sp-orange-soft: oklch(0.75 0.15 50 / 14%);
   --sp-node: #2d3143;
-  --sp-node-stroke: #5b6079;
-  --sp-edge: #8b90a8;
-  --sp-sim: oklch(0.78 0.12 190);
-  --sp-inspect: oklch(0.75 0.15 50);
-  --sp-warn: oklch(0.82 0.15 80);
+  /* Motif: values copied from the editor. */
+  --sp-node-stroke: #464a5b;
+  --sp-edge: #464a5b;
+  --sp-edge-hover: #8a8d98;
+  --sp-label-bg: rgb(20 24 34 / 0.5);
+  --sp-select: #3178aa;
+  --sp-sim: #63a3fc;
+  --sp-warn: #f7b83d;
+  --sp-final-icon: #bdc2cc;
   --sp-success: oklch(0.78 0.15 150);
   --sp-destructive: oklch(0.7 0.19 22);
   --sp-ai: oklch(0.74 0.15 295);

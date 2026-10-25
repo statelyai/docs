@@ -2,7 +2,7 @@
 // plus XState users (logos are old page assets) and permitted testimonials.
 import { xstateFacts } from '../facts';
 import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
-import { Chip, CopyLine, TextLink } from './CopyLine';
+import { Chip, CopyLine } from './CopyLine';
 
 const companies = [
   { name: 'AWS', src: '/landing-page/assets/aws.svg', width: 65 },
@@ -48,16 +48,10 @@ function Quote({ t }: { t: (typeof quotes)[number] }) {
 
 export function OpenSource() {
   return (
-    <Section id="xstate" event="BUILD" accent="orange">
+    <Section id="xstate" event="BUILD">
       <SectionHeading
-        title="Build with XState."
-        lede={
-          <>
-            XState runs the machine you reviewed, in the browser or on Node.
-            MIT licensed,{' '}
-            <TextLink href="https://github.com/statelyai/xstate">on GitHub</TextLink>.
-          </>
-        }
+        title="Built on XState."
+        lede="The open-source state machine library under every Stately diagram. It runs the machine you reviewed, in the browser or on Node, MIT licensed."
       />
       <dl className="mt-12 grid grid-cols-2 lg:grid-cols-4 rounded-[var(--sp-radius)] border border-[var(--sp-border)] overflow-hidden">
         {xstateFacts.map((f, i) => (
@@ -112,9 +106,9 @@ export function OpenSource() {
             </div>
           </div>
         </div>
-        <div className="my-1 lg:my-0 lg:mx-1 lg:mt-[11px]">
-          <Edge dir="down" label="INSPECT" length={76} className="lg:hidden" />
-          <Edge dir="right" label="INSPECT" length={128} className="hidden lg:block" />
+        <div className="my-1 lg:my-0 lg:mx-1 lg:-mt-[2px]">
+          <Edge dir="down" label="INSPECT" length={104} className="lg:hidden" />
+          <Edge dir="right" label="INSPECT" length={160} className="hidden lg:flex" />
         </div>
         <div className="min-w-0 space-y-6">
           <Pane title="inspector">

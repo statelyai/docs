@@ -4,6 +4,7 @@
 
 export const MCP_URL = 'https://mcp.stately.ai/mcp';
 export const SCAN_CMD = 'npx statelyai scan';
+export const MCP_CMD = 'npx -y @statelyai/mcp';
 export const DEMO_URL = 'https://cal.com/statelyai/enterprise-calls';
 
 export type Client = {

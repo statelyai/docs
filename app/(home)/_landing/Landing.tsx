@@ -11,6 +11,7 @@ import { Enterprise } from './sections/Enterprise';
 import { PricingTeaser } from './sections/PricingTeaser';
 import { Faq } from './sections/Faq';
 import { FinalCta } from './sections/FinalCta';
+import { CtaBand } from './sections/CtaBand';
 
 export function Landing() {
   return (
@@ -19,8 +20,10 @@ export function Landing() {
       <AgentSetup />
       <DiffVsGraph />
       <Loop />
+      <CtaBand text="Try it on your own code." />
       <System />
       <Compat />
+      <CtaBand text="See it on a running app." />
       <OpenSource />
       <PricingTeaser />
       <Enterprise />

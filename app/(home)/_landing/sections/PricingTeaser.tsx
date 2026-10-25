@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Statechart, type Machine } from '../Statechart';
 import { DataTable, Section, SectionHeading } from '../shared';
-import { stackOn3 } from '../classes';
+import { stackOn3, textLinkCls } from '../classes';
 import { DEMO_URL, NewTab } from '../lib';
 
 const cell = (s: React.ReactNode) => <span className="text-[13px] leading-snug block">{s}</span>;
@@ -14,18 +14,12 @@ const price = (main: string, sub?: string) => (
 );
 
 const tiers: [string, React.ReactNode, string][] = [
-  ['Community', price('$0', 'free'), 'Editor and code export, 2 projects, 3 machines.'],
-  ['Pro', price('$33 / mo', 'annual · $39 monthly'), 'Private projects, version history, live simulation, codebase sync.'],
-  ['Team', price('$167 / mo', 'annual · $199 monthly'), 'Pro for up to 10 members, shared projects.'],
+  ['Community', price('$0'), 'Editor and code export, 2 projects, 3 machines.'],
+  ['Pro', price('$39 / mo', '$399 / yr'), 'Private projects, AI generation, code sync.'],
+  ['Team', price('$199 / mo', '$167 / mo billed yearly'), 'Pro for up to 10 people.'],
   [
     'Enterprise',
-    <a
-      key="demo"
-      href={DEMO_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="whitespace-nowrap text-[var(--sp-fg)] underline decoration-[var(--sp-border-strong)] underline-offset-4 hover:decoration-[var(--sp-fg)]"
-    >
+    <a key="demo" href={DEMO_URL} target="_blank" rel="noopener noreferrer" className={`whitespace-nowrap ${textLinkCls}`}>
       Book a demo
       <NewTab />
     </a>,
@@ -34,15 +28,15 @@ const tiers: [string, React.ReactNode, string][] = [
 ];
 
 // The tiers as one chain of states; evidence lines match the table.
-const NW = 120;
-const NH = 56;
-const X0 = 40;
-const STEP = NW + 140;
+const NW = 170;
+const NH = 57;
+const X0 = 28;
+const STEP = NW + 150;
 const Y = 8;
 const tierChain: [string, string, string][] = [
   ['Community', '$0', 'UPGRADE'],
-  ['Pro', '$33/mo', 'ADD_SEATS'],
-  ['Team', '$167/mo', 'CONTACT'],
+  ['Pro', '$39/mo', 'ADD_SEATS'],
+  ['Team', '$199/mo', 'CONTACT'],
   ['Enterprise', 'book a demo', ''],
 ];
 const tierMachine: Machine = {
@@ -73,11 +67,11 @@ export function PricingTeaser() {
   return (
     <Section id="pricing" event="UPGRADE">
       <SectionHeading
-        title="XState is free. The editor starts free."
-        lede="XState and the open-source packages are free, and the editor has a free Community plan. Pro and Team add private projects, version history, and team features. Enterprise adds self-hosting, SSO, and audit logs."
+        title="Start free."
+        lede="Community includes 2 projects and 3 machines. Pro adds private projects, AI generation, and code sync. Team shares it with up to 10 people. Enterprise runs on your infrastructure."
       />
       <div aria-hidden className="mt-12 hidden lg:block">
-        <Statechart machine={tierMachine} label="Plans as a chain of states: Community, Pro, Team, Enterprise" className="w-full h-auto max-w-[60rem]" />
+        <Statechart machine={tierMachine} className="w-full h-auto max-w-[64rem]" />
       </div>
       <DataTable
         className={`mt-12 lg:mt-8 ${stackOn3}`}

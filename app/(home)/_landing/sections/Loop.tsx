@@ -1,48 +1,38 @@
-// §4 The Stately loop: five steps as one machine, each with its artifact.
-import { MachineCanvas } from '../MachineCanvas';
-import { type Machine } from '../Statechart';
-import { Edge, Pane, Section, SectionHeading } from '../shared';
+// §4 The Stately loop: five steps as one machine, each with what it leaves behind.
+import { Statechart, type Machine } from '../Statechart';
+import { nodeTitleCls } from '../classes';
+import { Edge, Pane, Section, SectionHeading, StateNode } from '../shared';
 import { TextLink } from './CopyLine';
 
-const steps = [
-  { verb: 'MAP', title: 'Map', state: 'mapped', artifact: 'statechart + sha', body: 'Your agent reads the code and produces a statechart. Every transition cites its source; the map carries a source hash.' },
-  { verb: 'PROPOSE', title: 'Propose', state: 'proposed', artifact: 'proposal', body: 'Edit the graph visually or let the agent propose a change. Proposals are immutable.' },
-  { verb: 'REVIEW', title: 'Review', state: 'approved', artifact: 'visual diff', body: 'The change appears as a visual diff on the PR. A human approves it.' },
-  { verb: 'IMPLEMENT', title: 'Implement', state: 'implemented', artifact: 'source change', body: 'The agent applies the approved change in source.' },
-  { verb: 'VERIFY', title: 'Verify', state: 'verified', artifact: 'verdict', body: 'Remap from source and compare. The verdict is matches or drifted.' },
-];
-
-// Hand-placed: entry edge (MAP) from the left, then 4 transitions.
-const NW = 124;
-const NH = 56;
-const X0 = 72;
-const STEP = 222;
-const Y = 20;
-const x = (i: number) => X0 + i * STEP;
-
+// Five states in a row; the editor lays machines out top-down, so this
+// figure is drawn here in editor styling to keep the loop horizontal.
+const LW = 148;
+const LX = (i: number) => 24 + i * 268;
 const loopMachine: Machine = {
-  w: x(4) + NW + 4,
-  h: Y + NH + 20,
-  nodes: steps.map((s, i) => ({
-    id: s.state,
-    label: s.state,
-    x: x(i),
-    y: Y,
-    w: NW,
-    evidence: s.artifact,
-    final: i === steps.length - 1,
-  })),
-  edges: steps.map((s, i) => ({
-    from: i === 0 ? 'source' : steps[i - 1].state,
-    to: s.state,
-    label: s.verb,
-    accent: i === steps.length - 1,
-    points: [
-      [i === 0 ? 0 : x(i - 1) + NW, Y + NH / 2],
-      [x(i), Y + NH / 2],
-    ],
-  })),
+  w: 24 + 5 * 268 - 120 + 24,
+  h: 61,
+  nodes: [
+    { id: 'mapped', label: 'mapped', x: LX(0), y: 8, initial: true },
+    { id: 'proposed', label: 'proposed', x: LX(1), y: 8 },
+    { id: 'approved', label: 'approved', x: LX(2), y: 8 },
+    { id: 'implemented', label: 'implemented', x: LX(3), y: 8, w: 168 },
+    { id: 'verified', label: 'verified', x: LX(4), y: 8, final: true },
+  ],
+  edges: [
+    { from: 'mapped', to: 'proposed', label: 'PROPOSE', points: [[LX(0) + LW, 30], [LX(1), 30]] },
+    { from: 'proposed', to: 'approved', label: 'REVIEW', points: [[LX(1) + LW, 30], [LX(2), 30]] },
+    { from: 'approved', to: 'implemented', label: 'IMPLEMENT', points: [[LX(2) + LW, 30], [LX(3), 30]] },
+    { from: 'implemented', to: 'verified', label: 'VERIFY', points: [[LX(3) + 168, 30], [LX(4), 30]] },
+  ],
 };
+
+const steps = [
+  { verb: 'MAP', title: 'Map', body: 'Your agent reads the code and produces a statechart. Every transition cites its source; the map carries a source hash.' },
+  { verb: 'PROPOSE', title: 'Propose', body: 'Edit the graph visually or let the agent propose a change. Proposals are immutable.' },
+  { verb: 'REVIEW', title: 'Review', body: 'The change appears as a visual diff on the PR. A human approves it.' },
+  { verb: 'IMPLEMENT', title: 'Implement', body: 'The agent applies the approved change in source.' },
+  { verb: 'VERIFY', title: 'Verify', body: 'Remap from source and compare. The verdict is matches or drifted.' },
+];
 
 const chipCls =
   'sp-mono inline-flex items-center gap-1.5 h-6 px-2 rounded-[calc(var(--sp-radius)-2px)] border text-[11.5px]';
@@ -54,35 +44,36 @@ export function Loop() {
         title="How an agent's change gets reviewed."
         lede="Each step leaves something you can check: a map, a proposal, a visual diff, a code change, a verdict."
       />
-      {/* The loop is one compound state, `review`, holding the five steps and the CI gate. */}
+      {/* The loop is one compound state, `review`, holding the five steps, the CI gate, and what we test. */}
       <div className="mt-12 rounded-md border-2 border-[var(--sp-node-stroke)]">
         <div className="px-3 py-2 text-[13px] font-semibold text-[var(--sp-fg)]">review</div>
         <div className="px-4 sm:px-6 pb-6 lg:pt-2">
-          <div className="hidden lg:block" aria-hidden>
-            <MachineCanvas slot="loop" machine={loopMachine} sim="approved" label="The review loop as a statechart: mapped, proposed, approved, implemented, verified" />
+          <div data-embed-slot="loop" className="hidden lg:block">
+            <Statechart
+              machine={loopMachine}
+              label="The review loop as a statechart"
+              className="w-full h-auto"
+            />
           </div>
           <ol className="lg:mt-8 grid lg:grid-cols-5 gap-x-6 lg:gap-y-8">
             {steps.map((s, i) => (
               <li key={s.verb} className="min-w-0 flex flex-col">
-                {/* Below lg the machine row is hidden: the steps become a vertical chain. */}
-                <Edge dir="down" label={s.verb} length={i === 0 ? 48 : 64} className="lg:hidden !ml-12" />
-                <h3 className="max-lg:order-1 max-lg:self-start max-lg:rounded-md max-lg:border-2 max-lg:border-[var(--sp-node-stroke)] max-lg:bg-[var(--sp-node)] max-lg:px-3 max-lg:py-1.5 lg:mt-2 text-[16px] font-semibold text-[var(--sp-fg)]">
+                {/* Below lg the steps become a vertical chain of nodes. */}
+                <Edge dir="down" label={s.verb} length={i === 0 ? 72 : 96} className="lg:hidden !ml-12" />
+                <h3 className="max-lg:self-start max-lg:rounded-[5.2px] max-lg:border-2 max-lg:border-[var(--sp-node-stroke)] max-lg:bg-[var(--sp-node)] max-lg:px-3 max-lg:py-1.5 text-[16px] font-semibold text-[var(--sp-fg)]">
                   {s.title}
                 </h3>
-                <p className="max-lg:order-2 max-lg:mt-2 lg:order-first sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)]">
-                  {String(i + 1).padStart(2, '0')} · {s.artifact}
-                </p>
-                <p className="max-lg:order-3 mt-2 text-[14px] leading-relaxed text-[var(--sp-muted)]">{s.body}</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--sp-muted)]">{s.body}</p>
               </li>
             ))}
           </ol>
-          {/* VERIFY step gates CI: edge drops from the last step column into the ci pane. */}
+          {/* The CI gate runs on the PR: an edge drops from the Review column into the ci pane. */}
           <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-6">
-            <Edge dir="down" label="GATE" length={64} className="lg:hidden !ml-12" />
-            <Edge dir="down" label="GATE" length={72} className="hidden lg:block lg:col-start-5" />
+            <Edge dir="down" label="GATE" length={96} className="lg:hidden !ml-12" />
+            <Edge dir="down" label="GATE" length={96} className="hidden lg:flex lg:col-start-3" />
           </div>
-          <div className="mt-1 grid lg:grid-cols-5 gap-x-6 gap-y-6 items-center">
-            <Pane className="lg:col-start-3 lg:col-span-3 lg:row-start-1" title="ci gate" right={<span className="text-[var(--sp-muted-2)]">diff step</span>}>
+          <div className="grid lg:grid-cols-5 gap-x-6 items-center">
+            <Pane className="lg:col-span-3" title="ci gate" right={<span className="text-[var(--sp-muted-2)]">diff step</span>}>
               <div className="p-4 space-y-3">
                 <code className="sp-mono block text-[12.5px] text-[var(--sp-fg)] whitespace-pre overflow-x-auto">
                   <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
@@ -99,19 +90,24 @@ export function Loop() {
                 </div>
               </div>
             </Pane>
-            <p className="lg:col-start-1 lg:col-span-2 lg:row-start-1 text-[15px] leading-relaxed text-[var(--sp-muted)]">
-              Runs over MCP, with the CLI for scan, push, pull, and diff. The editor is optional, and so is XState in your code.
-            </p>
+            {/* RUN: the ci pane into what we test. Right on lg, down below. */}
+            <div className="min-w-0 lg:col-span-2 flex flex-col lg:flex-row lg:items-center lg:-ml-6">
+              <Edge dir="down" label="RUN" length={96} className="lg:hidden !ml-12" />
+              <Edge dir="right" label="RUN" length={104} className="hidden lg:flex shrink-0" />
+              <StateNode title={<h3 className={nodeTitleCls}>what we test</h3>} className="min-w-0 flex-1">
+                <p className="px-3 pb-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
+                  We run Claude Code and Codex through map, edit, apply, and
+                  verify. In each run, every change is cited to its source and
+                  checked by verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
+                </p>
+              </StateNode>
+            </div>
           </div>
+          <p className="mt-8 max-w-[44rem] text-[15px] leading-relaxed text-[var(--sp-muted)]">
+            Runs over MCP, with the CLI for scan, push, pull, and diff. The editor is optional, and so is XState in your code.
+          </p>
         </div>
       </div>
-      <Pane title="what we test" className="mt-12 max-w-[44rem]">
-        <p className="p-5 text-[14px] leading-relaxed text-[var(--sp-muted)]">
-          We run Claude Code and Codex through map, edit, apply, and verify. In
-          each run, every change is cited to its source and checked by verify.{' '}
-          <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
-        </p>
-      </Pane>
     </Section>
   );
 }
