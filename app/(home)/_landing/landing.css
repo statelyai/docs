@@ -1,71 +1,146 @@
-/* Landing page tokens: mirrors the Viz editor (dark). See landing-design-language.md. */
+/* Landing page tokens: mirror the Viz editor. Light by default; `.dark` on <html> (next-themes) switches.
+   See landing-design-language.md. */
 .sp {
-  --sp-bg: oklch(0.141 0.005 285.823);
-  --sp-canvas: #15151d;
-  --sp-surface: oklch(0.21 0.016 285);
-  --sp-fg: oklch(0.985 0 0);
-  --sp-muted: oklch(0.705 0.015 286.067);
-  --sp-muted-2: oklch(0.63 0.015 286);
-  --sp-border: oklch(1 0 0 / 10%);
-  --sp-border-strong: oklch(1 0 0 / 18%);
+  --sp-bg: #fdfdff;
+  --sp-canvas: #eff1f3;
+  --sp-surface: #fdfdff;
+  --sp-fg: #09090b;
+  --sp-muted: #5c5c67;
+  --sp-muted-2: #6b6b76;
+  --sp-muted-fill: #f1f4f8;
+  --sp-border: #e4e4e7;
+  --sp-border-strong: #d4d4d8;
+  --sp-ring: #9f9fa9;
   --sp-primary: #0f6ee5;
   --sp-primary-hover: #005cde;
-  /* Stately orange: XState brand accents only. */
-  --sp-orange: #ff7f2c;
-  --sp-orange-strong: #db4206;
-  --sp-orange-soft: oklch(0.75 0.15 50 / 14%);
-  --sp-node: #2d3143;
-  /* Motif: values copied from the editor. */
-  --sp-node-stroke: #464a5b;
-  --sp-edge: #464a5b;
-  --sp-edge-hover: #8a8d98;
-  --sp-label-bg: rgb(20 24 34 / 0.5);
   --sp-select: #3178aa;
-  --sp-sim: #63a3fc;
-  --sp-warn: #f7b83d;
-  --sp-final-icon: #bdc2cc;
-  --sp-success: oklch(0.78 0.15 150);
-  --sp-destructive: oklch(0.7 0.19 22);
-  --sp-ai: oklch(0.74 0.15 295);
-  --sp-info: oklch(0.75 0.11 240);
+  /* Stately orange: XState brand accents only. */
+  --sp-orange: #db4206;
+  --sp-orange-soft: color-mix(in oklab, #db4206 10%, transparent);
+  /* Motif: values copied from the editor. */
+  --sp-node: #dfe3e7;
+  --sp-node-stroke: #9a9da0;
+  --sp-edge: #9a9da0;
+  --sp-edge-hover: #323334;
+  --sp-edge-halo: rgb(239 241 243 / 0.7);
+  --sp-label-bg: rgb(234 237 239 / 0.5);
+  --sp-sim: #005cde;
+  --sp-final-icon: #606478;
+  --sp-grid: #e6e9ec;
+  --sp-warn: #8a5600;
+  --sp-success: #207029;
+  --sp-destructive: #c50516;
+  --sp-info: #27699c;
+  --sp-ai: #6a3fc8;
+
+  /* Authored color ramps (light: fill 100 / border 400 / title 900). */
+  --sp-ramp-purple-fill: #edddfb; --sp-ramp-purple-border: #b092ee; --sp-ramp-purple-title: #241257;
+  --sp-ramp-pink-fill: #fdd7fd;   --sp-ramp-pink-border: #f571d3;   --sp-ramp-pink-title: #44032f;
+  --sp-ramp-red-fill: #f8dcd8;    --sp-ramp-red-border: #f17f7b;    --sp-ramp-red-title: #300408;
+  --sp-ramp-orange-fill: #ffdeae; --sp-ramp-orange-border: #f18622; --sp-ramp-orange-title: #3d1400;
+  --sp-ramp-yellow-fill: #fde283; --sp-ramp-yellow-border: #da931e; --sp-ramp-yellow-title: #2e1e00;
+  --sp-ramp-green-fill: #c9edbc;  --sp-ramp-green-border: #54b559;  --sp-ramp-green-title: #0c2612;
+  --sp-ramp-blue-fill: #beeaf9;   --sp-ramp-blue-border: #43abdf;   --sp-ramp-blue-title: #0a213d;
+
   --sp-radius: 0.45rem;
   background: var(--sp-bg);
   color: var(--sp-fg);
+  color-scheme: light;
+}
+.dark .sp {
+  --sp-bg: #09090b;
+  --sp-canvas: #15151d;
+  --sp-surface: #17171f;
+  --sp-fg: #fafafa;
+  --sp-muted: #9f9fa9;
+  --sp-muted-2: oklch(0.63 0.015 286);
+  --sp-muted-fill: #262630;
+  --sp-border: rgb(255 255 255 / 0.1);
+  --sp-border-strong: rgb(255 255 255 / 0.18);
+  --sp-ring: #71717b;
+  --sp-orange: #ff7f2c;
+  --sp-orange-soft: color-mix(in oklab, #ff7f2c 14%, transparent);
+  --sp-node: #2d3143;
+  --sp-node-stroke: #464a5b;
+  --sp-edge: #464a5b;
+  --sp-edge-hover: #8a8d98;
+  --sp-edge-halo: rgb(0 0 0 / 0.5);
+  --sp-label-bg: rgb(20 24 34 / 0.5);
+  --sp-sim: #63a3fc;
+  --sp-final-icon: #bdc2cc;
+  --sp-grid: #1a1a24;
+  --sp-warn: #f7b83d;
+  --sp-success: #67d283;
+  --sp-destructive: #ff6467;
+  --sp-info: #68b7ed;
+  --sp-ai: oklch(0.74 0.15 295);
+
+  /* dark: fill 800 / border 700 / title 100 */
+  --sp-ramp-purple-fill: #341c79; --sp-ramp-purple-border: #5c31b9; --sp-ramp-purple-title: #edddfb;
+  --sp-ramp-pink-fill: #5d0843;   --sp-ramp-pink-border: #95146b;   --sp-ramp-pink-title: #fdd7fd;
+  --sp-ramp-red-fill: #5d1219;    --sp-ramp-red-border: #982020;    --sp-ramp-red-title: #f8dcd8;
+  --sp-ramp-orange-fill: #561e00; --sp-ramp-orange-border: #8a3500; --sp-ramp-orange-title: #ffdeae;
+  --sp-ramp-yellow-fill: #432b00; --sp-ramp-yellow-border: #714700; --sp-ramp-yellow-title: #fde283;
+  --sp-ramp-green-fill: #14371c;  --sp-ramp-green-border: #265a2f;  --sp-ramp-green-title: #c9edbc;
+  --sp-ramp-blue-fill: #123153;   --sp-ramp-blue-border: #20527f;   --sp-ramp-blue-title: #beeaf9;
+
   color-scheme: dark;
 }
-.sp-grid {
-  background-color: var(--sp-canvas);
-  background-image: radial-gradient(oklch(1 0 0 / 9%) 1px, transparent 1px);
-  background-size: 20px 20px;
+/* Architecture-node fills: ramp fill 25% over the page background. Declared on
+   every .sp so they resolve against that element's (themed) ramp values. */
+.sp {
+  --sp-arch-purple: color-mix(in oklab, var(--sp-ramp-purple-fill) 25%, var(--sp-bg));
+  --sp-arch-pink: color-mix(in oklab, var(--sp-ramp-pink-fill) 25%, var(--sp-bg));
+  --sp-arch-red: color-mix(in oklab, var(--sp-ramp-red-fill) 25%, var(--sp-bg));
+  --sp-arch-orange: color-mix(in oklab, var(--sp-ramp-orange-fill) 25%, var(--sp-bg));
+  --sp-arch-yellow: color-mix(in oklab, var(--sp-ramp-yellow-fill) 25%, var(--sp-bg));
+  --sp-arch-green: color-mix(in oklab, var(--sp-ramp-green-fill) 25%, var(--sp-bg));
+  --sp-arch-blue: color-mix(in oklab, var(--sp-ramp-blue-fill) 25%, var(--sp-bg));
 }
-.sp-mono {
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  font-feature-settings: 'tnum';
+.sp ::selection {
+  background: color-mix(in oklab, var(--sp-select) 35%, transparent);
 }
-.sp-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  padding: 0 1.125rem;
-  border-radius: var(--sp-radius);
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: background-color 150ms ease-out, border-color 150ms ease-out;
-}
-.sp-btn-primary {
-  background: var(--sp-primary);
-  color: #fff;
-}
-.sp-btn-primary:hover {
-  background: var(--sp-primary-hover);
-}
-.sp-btn-outline {
-  border: 1px solid var(--sp-border-strong);
-  color: var(--sp-fg);
-}
-.sp-btn-outline:hover {
-  border-color: oklch(1 0 0 / 32%);
+/* Component classes sit in the components layer so Tailwind utilities
+   (hidden, md:hidden, min-h-*) override them. */
+@layer components {
+  /* The editor canvas: 24px line grid, 1px lines. */
+  .sp-grid {
+    background-color: var(--sp-canvas);
+    background-image:
+      linear-gradient(var(--sp-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--sp-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .sp-mono {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-feature-settings: 'tnum';
+  }
+  .sp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 1.125rem;
+    border-radius: var(--sp-radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out;
+  }
+  .sp-btn-primary {
+    background: var(--sp-primary);
+    color: #fff;
+  }
+  .sp-btn-primary:hover {
+    background: var(--sp-primary-hover);
+  }
+  .sp-btn-outline {
+    border: 1px solid var(--sp-border-strong);
+    color: var(--sp-fg);
+  }
+  .sp-btn-outline:hover {
+    border-color: var(--sp-ring);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .sp * {

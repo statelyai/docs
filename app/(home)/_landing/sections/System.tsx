@@ -1,7 +1,7 @@
 // §5 System level: one parallel state, three dashed regions. Architecture,
-// live inspection, and two-way editing, each with the editor's render.
-import { EmbedMachine } from '../EmbedMachine';
-import { paymentSource, servicesSource } from '../machines';
+// live inspection, and two-way editing, each drawn in the editor's styling.
+import { Statechart } from '../Statechart';
+import { paymentMachine, servicesMachine } from '../machines';
 import { parallelRegionCls } from '../classes';
 import { Edge, Section, SectionHeading } from '../shared';
 import { TextLink } from './CopyLine';
@@ -58,13 +58,14 @@ export function System() {
             href="/docs/studio"
             link="The editor"
           >
-            <EmbedMachine
-              slot="system-architecture"
-              source={servicesSource}
-              title="Four services and the messages between them"
-              description="Services. States: api (initial), checkout, payments, email (final). Transitions: api on ORDER to checkout; checkout on CHARGE to payments; checkout on NOTIFY to email; payments on RECEIPT to email; payments on REFUND to api."
-              className="flex-1 min-h-0"
-            />
+            <div data-machine-slot="system-architecture" className="flex-1 min-h-0 flex items-center justify-center">
+              <Statechart
+                machine={servicesMachine}
+                label="Four services and the messages between them"
+                description="Services. States: api (initial), checkout, payments, email (final). Transitions: api on ORDER to checkout; checkout on CHARGE to payments; checkout on NOTIFY to email; payments on RECEIPT to email; payments on REFUND to api."
+                className="w-full h-full max-w-[22rem]"
+              />
+            </div>
           </Region>
           <Region
             title="Inspection"
@@ -72,13 +73,9 @@ export function System() {
             href="/docs/inspector"
             link="Inspector"
           >
-            <EmbedMachine
-              slot="system-inspection"
-              source={paymentSource}
-              title="Payment statechart"
-              description={paymentDescription}
-              className="flex-1 min-h-0"
-            />
+            <div data-machine-slot="system-inspection" className="flex-1 min-h-0 flex items-center justify-center">
+              <Statechart machine={paymentMachine} label="Payment statechart" description={paymentDescription} className="w-full h-full max-w-[22rem]" />
+            </div>
             <ol className="mt-2 shrink-0 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.7] text-[var(--sp-muted)]">
               {log.map(([event, state], i) => (
                 <li key={event} className="flex gap-3">
@@ -98,13 +95,12 @@ export function System() {
             href="/docs/xstate-vscode-extension"
             link="VS Code extension"
           >
-            <EmbedMachine
-              slot="system-edit"
-              source={paymentSource}
-              title="Payment statechart in the editor"
-              description={paymentDescription}
-              className="flex-1 min-h-0 rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden"
-            />
+            <div
+              data-machine-slot="system-edit"
+              className="flex-1 min-h-0 flex items-center justify-center p-3 rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden"
+            >
+              <Statechart machine={paymentMachine} label="Payment statechart in the editor" description={paymentDescription} className="w-full h-full max-w-[22rem]" />
+            </div>
             <Edge dir="down" label="SYNC" length={88} bidirectional className="shrink-0" />
             <pre className="shrink-0 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.5] text-[var(--sp-muted)] overflow-hidden">
               {'states: {\n  declined: {\n    on: { '}

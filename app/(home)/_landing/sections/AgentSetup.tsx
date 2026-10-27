@@ -1,6 +1,7 @@
 'use client';
 // §2 Set up your agent: per-client install line + the MCP tools as four capability cards.
-import { Edge, Pane, Section, SectionHeading, Stability, tabCls, useTabs } from '../shared';
+import { EdgeLayer } from '../EdgeLayer';
+import { Pane, Section, SectionHeading, Stability, tabCls, useTabs } from '../shared';
 import { MCP_URL, clients } from '../lib';
 import { CopyLine, TextLink } from './CopyLine';
 
@@ -43,8 +44,10 @@ export function AgentSetup() {
         title="Connect once. Your agent maps the rest."
         lede="A hosted MCP server with 12 tools. Your agent reads the repo, draws the statechart, diffs it, lists its paths, and checks it against the source. You don't draw anything."
       />
-      <div className="mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
-        <div className="min-w-0">
+      {/* CONNECT is routed between the real boxes by EdgeLayer (right→left on lg, down below). */}
+      <div className="relative mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
+        <div className="min-w-0 flex flex-col">
+          <div data-edge-id="mcp-pane">
           <Pane
             title="stately mcp"
             right={<Stability level="stable" />}
@@ -80,7 +83,9 @@ export function AgentSetup() {
               <code className="sp-mono text-[12px] text-[var(--sp-fg)] whitespace-nowrap">npx skills add statelyai/skills</code>.
             </p>
           </Pane>
-          <dl className="mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-[14px]">
+          </div>
+          {/* Below lg the URL and docs sit above the pane so CONNECT runs straight down from it. */}
+          <dl className="max-lg:order-first max-lg:mb-6 lg:mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-2 text-[14px]">
             <dt className="sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">MCP URL</dt>
             <dd className="sp-mono text-[12.5px] text-[var(--sp-fg)] break-words">{MCP_URL}</dd>
             <dt className="sp-mono text-[11.5px] uppercase tracking-[0.06em] text-[var(--sp-muted-2)] pt-0.5">Docs</dt>
@@ -91,13 +96,11 @@ export function AgentSetup() {
             </dd>
           </dl>
         </div>
-        <div className="my-1 lg:my-0 lg:mx-1 lg:-mt-[2px]">
-          <Edge dir="down" label="CONNECT" length={104} className="lg:hidden" />
-          <Edge dir="right" label="CONNECT" length={160} className="hidden lg:flex" />
-        </div>
+        <div aria-hidden className="h-[104px] lg:h-auto lg:w-[160px]" />
         <div className="min-w-0 grid sm:grid-cols-2 gap-3">
-          {groups.map((g) => (
-            <Pane key={g.title} className="p-4 flex flex-col">
+          {groups.map((g, i) => (
+            <div key={g.title} data-edge-id={i === 0 ? 'cap-validate' : undefined} className="min-w-0 flex flex-col">
+            <Pane className="flex-1 p-4 flex flex-col">
               <div className="flex items-baseline gap-3">
                 <h3 className="text-[14px] font-semibold text-[var(--sp-fg)]">{g.title}</h3>
                 <span className="ml-auto shrink-0"><Stability level={g.level} /></span>
@@ -117,8 +120,10 @@ export function AgentSetup() {
                 ))}
               </ul>
             </Pane>
+            </div>
           ))}
         </div>
+        <EdgeLayer edges={[{ id: 'connect', from: 'mcp-pane', to: 'cap-validate', label: 'CONNECT' }]} />
       </div>
     </Section>
   );

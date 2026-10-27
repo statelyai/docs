@@ -2,9 +2,18 @@
 // Static (no simulated state). Find every slot with: [data-embed-slot]
 import { EmbedFrame } from './EmbedFrame';
 
-export function embedUrl(source: string) {
-  const machine = Buffer.from(source, 'utf8').toString('base64url');
-  return `https://editor.stately.ai/viz?chrome=plain&theme=dark#machine=${machine}&format=xstate`;
+export type EmbedTheme = 'light' | 'dark';
+
+/** base64url of a UTF-8 string; works on the server and in the browser. */
+export function encodeMachine(source: string) {
+  const bytes = new TextEncoder().encode(source);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+export function embedUrl(source: string, theme: EmbedTheme = 'dark', extra = '') {
+  return `https://editor.stately.ai/viz?chrome=plain&theme=${theme}${extra}#machine=${encodeMachine(source)}&format=xstate`;
 }
 
 export function EmbedMachine({
@@ -28,8 +37,9 @@ export function EmbedMachine({
   slot: string;
 }) {
   return (
-    <div data-embed-slot={slot} style={{ colorScheme: 'dark', height }} className={`relative ${className}`}>
-      <EmbedFrame src={embedUrl(source)} title={title} />
+    <div data-embed-slot={slot} style={{ height }} className={`relative ${className}`}>
+      {/* followTheme swaps theme=dark for the site's resolved theme on the client */}
+      <EmbedFrame src={embedUrl(source)} title={title} followTheme />
       <p className="sr-only">{description}</p>
     </div>
   );

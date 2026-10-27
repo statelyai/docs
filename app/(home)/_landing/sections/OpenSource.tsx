@@ -4,13 +4,15 @@ import { xstateFacts } from '../facts';
 import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
 import { Chip, CopyLine } from './CopyLine';
 
+// Logos are white-filled SVGs; drawn as masks so they take the theme's ink.
+// w/h: the SVG's intrinsic size, so each keeps its aspect at 32px tall.
 const companies = [
-  { name: 'AWS', src: '/landing-page/assets/aws.svg', width: 65 },
-  { name: 'Netflix', src: '/landing-page/assets/netflix.svg', width: 122 },
-  { name: 'Lyft', src: '/landing-page/assets/lyft.svg', width: 58 },
-  { name: 'Microsoft', src: '/landing-page/assets/microsoft.svg', width: 154 },
-  { name: 'Epic Games', src: '/landing-page/assets/epic-games.svg', width: 45 },
-  { name: 'Cisco', src: '/landing-page/assets/cisco.svg', width: 74 },
+  { name: 'AWS', src: '/landing-page/assets/aws.svg', w: 335 },
+  { name: 'Netflix', src: '/landing-page/assets/netflix.svg', w: 630 },
+  { name: 'Lyft', src: '/landing-page/assets/lyft.svg', w: 297 },
+  { name: 'Microsoft', src: '/landing-page/assets/microsoft.svg', w: 796 },
+  { name: 'Epic Games', src: '/landing-page/assets/epic-games.svg', w: 234 },
+  { name: 'Cisco', src: '/landing-page/assets/cisco.svg', w: 380 },
 ];
 
 const quotes = [
@@ -66,9 +68,7 @@ export function OpenSource() {
         ))}
       </dl>
       <p className="mt-3 sp-mono text-[11.5px] leading-relaxed text-[var(--sp-muted)]">
-        Sources: npm registry (weekly downloads as of {xstateFacts[0].asOf}; first
-        publish 2017), GitHub (stars and dependent repositories as of{' '}
-        {xstateFacts[1].asOf}). Rounded down; refreshed before each release.
+        Sources: npm registry and GitHub, as of {xstateFacts[1].asOf}.
       </p>
       <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
         <div className="min-w-0 space-y-6">
@@ -94,13 +94,16 @@ export function OpenSource() {
             <p className="sp-mono text-[11.5px] text-[var(--sp-muted-2)]">XState is used by engineers at</p>
             <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-4">
               {companies.map((c) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <span
                   key={c.name}
-                  src={c.src}
-                  alt={c.name}
-                  width={c.width}
-                  className="h-8 w-auto opacity-70"
+                  role="img"
+                  aria-label={c.name}
+                  className="block h-8 bg-[var(--sp-muted)]"
+                  style={{
+                    width: Math.round((c.w * 32) / 330),
+                    mask: `url(${c.src}) center / contain no-repeat`,
+                    WebkitMask: `url(${c.src}) center / contain no-repeat`,
+                  }}
                 />
               ))}
             </div>

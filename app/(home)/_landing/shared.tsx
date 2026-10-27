@@ -119,7 +119,7 @@ export function FigCaption({ n, children }: { n: number; children: React.ReactNo
 
 const EDGE = 'var(--sp-edge)';
 /** 2px edge with the editor's 6px translucent black halo. */
-const segCls = 'bg-[var(--sp-edge)] shadow-[0_0_0_2px_rgb(0_0_0/0.5)]';
+const segCls = 'bg-[var(--sp-edge)] shadow-[0_0_0_2px_var(--sp-edge-halo)]';
 
 /** Filled 10x10 triangle (M0,0 L0,10 L10,5 z), rotated to point along the edge. */
 export function Arrowhead({ dir, className = '' }: { dir: 'down' | 'up' | 'right' | 'left'; className?: string }) {
@@ -135,7 +135,7 @@ export function Arrowhead({ dir, className = '' }: { dir: 'down' | 'up' | 'right
 export function EventLabel({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <span
-      className={`relative shrink-0 block w-max rounded-[15.2px] border-2 px-3 py-2 text-[14px] leading-5 font-semibold text-[#fafafa] whitespace-nowrap ${className}`}
+      className={`relative shrink-0 block w-max rounded-[15.2px] border-2 px-3 py-2 text-[14px] leading-5 font-semibold text-[var(--sp-fg)] whitespace-nowrap ${className}`}
       style={{ borderColor: EDGE, background: 'var(--sp-label-bg)' }}
     >
       {children}
@@ -151,12 +151,12 @@ export function GuardLabel({ event, guard }: { event: string; guard: string }) {
       style={{ borderColor: EDGE, background: 'var(--sp-label-bg)' }}
     >
       <span className="row-span-2 grid size-5 place-items-center">
-        <span className="block size-[14px] rotate-45 rounded-[2px] bg-[#fafafa]" />
+        <span className="block size-[14px] rotate-45 rounded-[2px] bg-[var(--sp-fg)]" />
       </span>
-      <span className="text-[14px] leading-5 font-semibold text-[#fafafa]">{event}</span>
+      <span className="text-[14px] leading-5 font-semibold text-[var(--sp-fg)]">{event}</span>
       <span className="leading-5">
-        <span className="text-[14px] font-semibold text-[#9f9fa9]">IF</span>{' '}
-        <span className="text-[12px] font-semibold text-[#fafafa]/80">{guard}</span>
+        <span className="text-[14px] font-semibold text-[var(--sp-muted)]">IF</span>{' '}
+        <span className="text-[12px] font-semibold text-[var(--sp-fg)] opacity-80">{guard}</span>
       </span>
     </span>
   );
@@ -166,7 +166,7 @@ export function GuardLabel({ event, guard }: { event: string; guard: string }) {
 function DashedV({ className = '' }: { className?: string }) {
   return (
     <svg className={`w-[6px] overflow-visible ${className}`} aria-hidden>
-      <line x1="3" y1="0" x2="3" y2="100%" stroke="black" strokeOpacity="0.5" strokeWidth="6" />
+      <line x1="3" y1="0" x2="3" y2="100%" stroke="var(--sp-edge-halo)" strokeWidth="6" />
       <line x1="3" y1="0" x2="3" y2="100%" stroke={EDGE} strokeWidth="2" strokeDasharray="5 5" strokeDashoffset="2.5" />
     </svg>
   );
@@ -188,7 +188,7 @@ export function Transition({ event, guard, className = '' }: { event: string; gu
       {/* Column centered on the final segment: heading left + 12px where the gutter allows. */}
       <div className="absolute top-0 bottom-[8px] left-0 xl:left-[12px] xl:-translate-x-1/2 flex flex-col items-center w-max">
         <svg width="84" height="34" viewBox="0 0 84 34" className="shrink-0 overflow-visible">
-          <path d={route} fill="none" stroke="black" strokeOpacity="0.5" strokeWidth="6" />
+          <path d={route} fill="none" stroke="var(--sp-edge-halo)" strokeWidth="6" />
           <path d={route} fill="none" stroke={EDGE} strokeWidth="2" strokeDasharray={guarded ? '5 5' : undefined} strokeDashoffset={guarded ? 2.5 : undefined} />
         </svg>
         {guarded ? <DashedV className="flex-1 min-h-0" /> : <span className={`flex-1 w-[2px] ${segCls}`} />}
@@ -314,13 +314,12 @@ export function DataTable({
   );
 }
 
-/** Stability chip: stable / beta / alpha. */
+/** Stability label: stable / beta / alpha, as colored text. */
 export function Stability({ level }: { level: 'stable' | 'beta' | 'alpha' }) {
   const color =
     level === 'stable' ? 'var(--sp-success)' : level === 'beta' ? 'var(--sp-info)' : 'var(--sp-warn)';
   return (
-    <span className="sp-mono inline-flex items-center gap-1.5 text-[11.5px] uppercase tracking-[0.06em]" style={{ color }}>
-      <span className="inline-block size-1.5 rounded-full bg-current" />
+    <span className="sp-mono text-[11.5px] uppercase tracking-[0.06em]" style={{ color }}>
       {level}
     </span>
   );

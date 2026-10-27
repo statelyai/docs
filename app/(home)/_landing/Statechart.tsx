@@ -2,6 +2,8 @@
 // 2px edges with a translucent halo, 10px cubic corners, edges split at their
 // event labels, 10x10 arrowheads with the tip 5px off the target.
 // Hand-placed coordinates; not a layout engine. Used for page motif diagrams.
+import { useId } from 'react';
+import { pathD } from './router';
 
 export type Node = {
   id: string;
@@ -35,7 +37,7 @@ export type Edge = {
 export type Machine = { w: number; h: number; nodes: Node[]; edges: Edge[] };
 
 const EDGE = 'var(--sp-edge)';
-const toneColor = { added: '#4ade80', removed: '#f87171' } as const;
+const toneColor = { added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
 const NW = 148;
 const NH = 45;
 const LABEL_H = 40;
@@ -50,23 +52,6 @@ const unit = (v: P): P => {
   return [v[0] / l, v[1] / l];
 };
 const along = (p: P, d: P, t: number): P => [p[0] + d[0] * t, p[1] + d[1] * t];
-
-/** Orthogonal path with 10px corners drawn as `L p0 C p0 corner p1`. */
-function route(points: P[], r = 10) {
-  if (points.length < 2) return '';
-  let d = `M ${points[0][0]} ${points[0][1]}`;
-  for (let i = 1; i < points.length - 1; i++) {
-    const c = points[i];
-    const inV = sub(c, points[i - 1]);
-    const outV = sub(points[i + 1], c);
-    const rr = Math.min(r, Math.hypot(...inV) / 2, Math.hypot(...outV) / 2);
-    const p0 = along(c, unit(inV), -rr);
-    const p1 = along(c, unit(outV), rr);
-    d += ` L ${p0[0]} ${p0[1]} C ${p0[0]} ${p0[1]} ${c[0]} ${c[1]} ${p1[0]} ${p1[1]}`;
-  }
-  const last = points[points.length - 1];
-  return d + ` L ${last[0]} ${last[1]}`;
-}
 
 /** Split an edge at its label; the target half ends 10px before the target. */
 function splitEdge(e: Edge) {
@@ -89,11 +74,14 @@ export function Statechart({
   machine,
   className,
   label,
+  description,
 }: {
   machine: Machine;
   className?: string;
   /** accessible name; omit when the chart is decorative (aria-hidden parent) */
   label?: string;
+  /** text alternative; defaults to a generated list of states and transitions */
+  description?: string;
 }) {
   const { w, h, nodes, edges } = machine;
   const byId = Object.fromEntries(nodes.map((n) => [n.id, n.label]));
@@ -107,7 +95,7 @@ export function Statechart({
     const transitions = edges.map((e) => `${byId[e.from] ?? e.from} on ${e.label} to ${byId[e.to] ?? e.to}`).join('; ');
     return `States: ${states}. Transitions: ${transitions}.`;
   };
-  const titleId = `sc-title-${nodes.map((n) => n.id.replace(/\W/g, '')).join('-')}-${w}`;
+  const titleId = `sc-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
   const descId = `${titleId}-desc`;
   const mk = `${titleId}-arrow`;
   return (
@@ -119,7 +107,7 @@ export function Statechart({
       aria-hidden={label ? undefined : true}
     >
       {label && <title id={titleId}>{label}</title>}
-      {label && <desc id={descId}>{describe()}</desc>}
+      {label && <desc id={descId}>{description ?? describe()}</desc>}
       <defs>
         {(
           [
@@ -143,9 +131,9 @@ export function Statechart({
           <g key={`${e.from}-${e.to}-${e.label}`}>
             {[source, target].map((pts, k) => (
               <g key={k}>
-                <path d={route(pts)} fill="none" stroke="black" strokeOpacity={0.5} strokeWidth={6} />
+                <path d={pathD(pts)} fill="none" stroke="var(--sp-edge-halo)" strokeWidth={6} />
                 <path
-                  d={route(pts)}
+                  d={pathD(pts)}
                   fill="none"
                   stroke={stroke}
                   strokeWidth={2}
@@ -157,7 +145,7 @@ export function Statechart({
             {!e.labelHidden && (
               <>
                 <rect x={mid[0] - lw / 2} y={mid[1] - LABEL_H / 2} width={lw} height={LABEL_H} rx={15.2} fill="var(--sp-label-bg)" stroke={stroke} strokeWidth={2} />
-                <text x={mid[0]} y={mid[1] + 5} textAnchor="middle" fontSize={14} fontWeight={600} fill="#fafafa">
+                <text x={mid[0]} y={mid[1] + 5} textAnchor="middle" fontSize={14} fontWeight={600} fill="var(--sp-fg)">
                   {e.label}
                 </text>
               </>
@@ -194,7 +182,7 @@ export function Statechart({
                 <circle cx={n.x + 22} cy={titleMid} r={4} fill="var(--sp-final-icon)" />
               </g>
             )}
-            <text x={tx} y={titleMid + 7} fontSize={20} fontWeight={600} letterSpacing={-0.2} fill="#fafafa">
+            <text x={tx} y={titleMid + 7} fontSize={20} fontWeight={600} letterSpacing={-0.2} fill="var(--sp-fg)">
               {n.label}
             </text>
             {n.evidence && (
@@ -205,7 +193,7 @@ export function Statechart({
             {n.unreachable && (
               <g transform={`translate(${n.x + nw} ${n.y})`}>
                 <circle r={10} fill="var(--sp-warn)" />
-                <path d="M0,-4.5 L4.5,3.5 L-4.5,3.5 z" fill="#1b1b1f" />
+                <path d="M0,-4.5 L4.5,3.5 L-4.5,3.5 z" fill="var(--sp-bg)" />
               </g>
             )}
           </g>

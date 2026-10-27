@@ -18,4 +18,4 @@ export const textLinkCls =
 
 /** State node title type, as the editor draws it: 20/25 600, -0.2px tracking. */
 export const nodeTitleCls =
-  'text-[20px] leading-[25px] font-semibold tracking-[-0.2px] text-[#fafafa]';
+  'text-[20px] leading-[25px] font-semibold tracking-[-0.2px] text-[var(--sp-fg)]';

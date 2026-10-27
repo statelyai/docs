@@ -1,7 +1,7 @@
 // §3 The problem: the same change shown twice. An agent's PR diff (abstract,
 // unreadable at a glance) vs the same change as the editor draws it.
-import { EmbedMachine } from '../EmbedMachine';
-import { checkoutAfterSource } from '../machines';
+import { Statechart } from '../Statechart';
+import { checkoutAfterMachine } from '../machines';
 import { Edge, FigCaption, Section, SectionHeading } from '../shared';
 
 // Skeleton rows: widths in %, indent in steps. 2 removed, 2 added, 4 context.
@@ -17,10 +17,14 @@ const rows: Array<[' ' | '+' | '-', number, number]> = [
 ];
 
 const tint = {
-  ' ': { row: '', bar: 'oklch(1 0 0 / 9%)' },
+  ' ': { row: '', bar: 'var(--sp-muted-fill)' },
   '+': { row: 'bg-[oklch(0.78_0.15_150/10%)]', bar: 'oklch(0.78 0.15 150 / 45%)' },
   '-': { row: 'bg-[oklch(0.7_0.19_22/10%)]', bar: 'oklch(0.7 0.19 22 / 45%)' },
 } as const;
+
+const diffTitle = 'The same PR as a statechart';
+const diffDescription =
+  'The checkout statechart after the PR. States: idle (initial), cart, address, payment, declined, confirmed (final), refund (unreachable: no transition leads to it). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment (added in this PR); declined on CANCEL to cart. Removed in this PR: declined on REFUND to refund.';
 
 export function DiffVsGraph() {
   return (
@@ -66,13 +70,20 @@ export function DiffVsGraph() {
             <span className="sp-mono text-[11.5px] text-[var(--sp-fg)]">same change, as behavior</span>
             <span className="ml-auto sp-mono text-[11.5px] text-[var(--sp-warn)]">refund unreachable</span>
           </div>
-          <EmbedMachine
-            slot="diff-graph"
-            source={checkoutAfterSource}
-            title="The same PR as a statechart"
-            description="The checkout statechart after the PR. States: idle (initial), cart, address, payment, declined, confirmed (final), refund (unreachable: no transition leads to it). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart."
-            className="h-[420px] lg:h-auto lg:flex-1 lg:min-h-[300px]"
-          />
+          <div data-machine-slot="diff-graph" className="flex-1 min-h-0 flex items-center justify-center p-4">
+            <Statechart
+              machine={checkoutAfterMachine.wide}
+              label={diffTitle}
+              description={diffDescription}
+              className="hidden sm:block w-full h-auto max-h-full"
+            />
+            <Statechart
+              machine={checkoutAfterMachine.tall}
+              label={diffTitle}
+              description={diffDescription}
+              className="sm:hidden w-full h-auto max-w-[24rem]"
+            />
+          </div>
           <div className="px-4 pb-4">
             <FigCaption n={2}>The same PR as a graph. refund can no longer be reached.</FigCaption>
           </div>

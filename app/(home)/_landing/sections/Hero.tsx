@@ -1,8 +1,13 @@
-// Hero: copy on the editor's dot grid; the editor's own render of the example
-// checkout machine to the right; an editor-style status bar closes it.
-import { EmbedMachine } from '../EmbedMachine';
-import { checkoutSource } from '../machines';
+// Hero: copy on the editor's dot grid; the example checkout machine, drawn in
+// the editor's styling and paused in payment, to the right; an editor-style
+// status bar closes it.
+import { Statechart } from '../Statechart';
+import { checkoutMachine } from '../machines';
 import { CtaRow, InitialMarker, InstallPill } from '../shared';
+
+const heroTitle = 'Statechart of an example checkout flow';
+const heroDescription =
+  'Example checkout statechart, simulation paused in payment. States: idle (initial), cart, address, payment (active), declined, confirmed (final), refund (unreachable). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart.';
 
 export function Hero() {
   return (
@@ -31,14 +36,22 @@ export function Hero() {
         </div>
       </div>
 
-      {/* graph layer: the editor's render. Stacks under the copy below lg. */}
-      <div className="relative lg:absolute lg:inset-y-0 lg:left-[55%] xl:left-[50%] lg:right-0 flex items-center px-2 lg:px-0 pb-6 lg:pb-0">
-        <EmbedMachine
-          slot="hero"
-          source={checkoutSource}
-          title="Statechart of an example checkout flow"
-          description="Example checkout statechart. States: idle (initial), cart, address, payment, declined, confirmed (final), refund (unreachable). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart."
-          className="w-full h-[560px] lg:h-[640px]"
+      {/* graph layer. Stacks under the copy below lg. */}
+      <div
+        data-machine-slot="hero"
+        className="relative lg:absolute lg:inset-y-0 lg:left-[55%] xl:left-[50%] lg:right-0 flex items-center justify-center px-4 sm:px-10 lg:pl-0 lg:pr-10 pb-8 lg:pb-0"
+      >
+        <Statechart
+          machine={checkoutMachine.wide}
+          label={heroTitle}
+          description={heroDescription}
+          className="hidden sm:block w-full h-auto max-w-[44rem]"
+        />
+        <Statechart
+          machine={checkoutMachine.tall}
+          label={heroTitle}
+          description={heroDescription}
+          className="sm:hidden w-full h-auto max-w-[26rem]"
         />
       </div>
 
