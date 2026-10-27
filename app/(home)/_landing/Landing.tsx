@@ -15,6 +15,7 @@ import { CtaBand } from './sections/CtaBand';
 
 export function Landing() {
   return (
+    <>
     <main className="sp min-h-screen">
       <Hero />
       <AgentSetup />
@@ -30,7 +31,8 @@ export function Landing() {
       <Enterprise />
       <Faq />
       <FinalCta />
-      <Footer />
     </main>
+    <Footer />
+    </>
   );
 }

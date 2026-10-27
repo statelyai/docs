@@ -30,7 +30,7 @@ const center: ArchNode = { title: 'Statechart', icon: Component, description: 't
 const outputs: ArchNode[] = [
   { title: 'XState', icon: Component },
   { title: 'SCXML', icon: FileCode },
-  { title: 'Mermaid', icon: GitBranch },
+  { title: 'D2', icon: GitBranch },
   { title: 'Tests', icon: FlaskConical },
 ];
 
@@ -184,7 +184,7 @@ export function Compat() {
     <Section id="compat" event="IMPORT">
       <SectionHeading
         title="Works with any code."
-        lede="Point it at Redux, LangGraph, Step Functions, XState, or a running app. Get back XState, SCXML, Mermaid, D2, or tests."
+        lede="Point it at Redux, LangGraph, Step Functions, XState, or a running app. Get back XState, SCXML, D2, or tests."
       />
       {/* lg: sources | MAP | statechart | EXPORT | outputs */}
       <div className="mt-12 hidden lg:grid grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)_160px_minmax(0,1fr)]">

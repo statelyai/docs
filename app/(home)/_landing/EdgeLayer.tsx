@@ -36,7 +36,7 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
   const [mounted, setMounted] = useState(false);
   const [geo, setGeo] = useState<Geo | null>(null);
   const [way, setWay] = useState<Record<string, Pt>>({});
-  const [dragging, setDragging] = useState<{ id: string; off: Pt } | null>(null);
+  const [dragging, setDragging] = useState<{ id: string; off: Pt; moved: boolean } | null>(null);
   // Stable dependency for inline `edges` arrays.
   const spec = JSON.stringify(edges);
 
@@ -171,17 +171,21 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
               ev.preventDefault();
               ev.currentTarget.setPointerCapture(ev.pointerId);
               const p = local(ev);
-              setDragging({ id: e.id, off: [p[0] - at[0], p[1] - at[1]] });
+              setDragging({ id: e.id, off: [p[0] - at[0], p[1] - at[1]], moved: false });
             }}
             onPointerMove={(ev) => {
               if (!active || !dragging) return;
               const p = local(ev);
+              if (!dragging.moved) setDragging({ ...dragging, moved: true });
               move([p[0] - dragging.off[0], p[1] - dragging.off[1]]);
             }}
             onPointerUp={() => {
               if (!active) return;
+              const moved = dragging?.moved;
               setDragging(null);
-              if (at) move(at); // settle on the label's routed position
+              // A click without movement keeps the auto-routed position;
+              // only a real drag settles a waypoint.
+              if (moved && at) move(at);
             }}
             onPointerCancel={() => setDragging(null)}
             onKeyDown={(ev) => {
