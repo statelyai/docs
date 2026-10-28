@@ -6,6 +6,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 export type HubRamp = 'blue' | 'green' | 'purple' | 'orange';
+// Each spoke's edge takes the spoke's color, arrowheads included.
+const RAMPS: HubRamp[] = ['blue', 'green', 'purple', 'orange'];
 export type HubNode = { id: string; title: string; meta?: string; mono?: boolean; ramp: HubRamp; icon: ReactNode };
 
 type Body = { x: number; y: number; vx: number; vy: number; w: number; h: number; hx: number; hy: number; pinned: boolean };
@@ -267,14 +269,16 @@ export function HubGraph({ hub, spokes, className = '' }: { hub: HubNode; spokes
     <div ref={box} aria-hidden className={`relative w-full select-none ${className}`}>
       <svg className="absolute inset-0 overflow-visible" width="100%" height="100%">
         <defs>
-          <marker id="hub-arrow" viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto-start-reverse">
-            <path d="M0,0 L0,10 L10,5 z" fill="var(--sp-edge)" />
-          </marker>
+          {RAMPS.map((c) => (
+            <marker key={c} id={`hub-arrow-${c}`} viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto-start-reverse">
+              <path d="M0,0 L0,10 L10,5 z" fill={`var(--sp-ramp-${c}-edge)`} />
+            </marker>
+          ))}
         </defs>
         {spokes.map((s, i) => {
           if (!placed) {
             const p = pos(i);
-            return <line key={s.id} x1="50%" y1="50%" x2={p.left} y2={p.top} stroke="var(--sp-edge)" strokeWidth={2} />;
+            return <line key={s.id} x1="50%" y1="50%" x2={p.left} y2={p.top} stroke={`var(--sp-ramp-${s.ramp}-edge)`} strokeWidth={2} />;
           }
           const b = bodies.current[i];
           const len = Math.hypot(b.x, b.y);
@@ -291,7 +295,7 @@ export function HubGraph({ hub, spokes, className = '' }: { hub: HubNode; spokes
           return (
             <g key={s.id}>
               <path d={d} fill="none" stroke="var(--sp-edge-halo)" strokeWidth={6} />
-              <path d={d} fill="none" stroke="var(--sp-edge)" strokeWidth={2} markerStart="url(#hub-arrow)" markerEnd="url(#hub-arrow)" />
+              <path d={d} fill="none" stroke={`var(--sp-ramp-${s.ramp}-edge)`} strokeWidth={2} markerStart={`url(#hub-arrow-${s.ramp})`} markerEnd={`url(#hub-arrow-${s.ramp})`} />
             </g>
           );
         })}

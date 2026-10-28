@@ -3,7 +3,7 @@
 // cells), a vertical chain below. The CI gate hangs off Verified.
 import { EdgeLayer, type EdgeSpec } from '../EdgeLayer';
 import { nodeTitleCls } from '../classes';
-import { Pane, Section, SectionHeading, StateNode } from '../shared';
+import { Section, SectionHeading, StateNode } from '../shared';
 import { TextLink } from './CopyLine';
 
 const states = [
@@ -53,21 +53,16 @@ export function Loop() {
             </div>
           ))}
           <div data-edge-id="ci-gate" className="min-w-0 lg:col-start-4 lg:col-span-2 lg:row-start-3 lg:mt-12">
-            <Pane className="h-full" title="ci gate" right={<span className="text-[var(--sp-muted-2)]">diff step</span>}>
-              <div className="p-4 space-y-3">
-                <code className="sp-mono block text-[12.5px] text-[var(--sp-fg)] whitespace-pre-wrap break-words">
-                  <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
-                </code>
-                <div className="flex flex-wrap gap-2">
-                  <span className={`${chipCls} border-[var(--sp-success)]/40 text-[var(--sp-success)]`}>
-                    no changes
-                  </span>
-                  <span className={`${chipCls} border-[var(--sp-warn)]/40 text-[var(--sp-warn)]`}>
-                    changes
-                  </span>
-                </div>
+            <StateNode title={<h3 className={nodeTitleCls}>CI gate</h3>} className="h-full">
+              <p className="px-3 text-[13px] leading-snug text-[var(--sp-muted)]">The diff step fails the build when the behavior changed.</p>
+              <code className="sp-mono block px-3 pt-2 text-[12px] text-[var(--sp-fg)] opacity-80 whitespace-pre-wrap break-words">
+                <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
+              </code>
+              <div className="flex flex-wrap gap-2 px-3 pt-2 pb-3">
+                <span className={`${chipCls} border-[var(--sp-success)]/40 text-[var(--sp-success)]`}>no changes</span>
+                <span className={`${chipCls} border-[var(--sp-warn)]/40 text-[var(--sp-warn)]`}>changes</span>
               </div>
-            </Pane>
+            </StateNode>
           </div>
           <div data-edge-id="what-we-test" className="min-w-0 lg:col-start-1 lg:col-span-2 lg:row-start-3 lg:mt-12">
             <StateNode title={<h3 className={nodeTitleCls}>What we test</h3>} className="h-full">

@@ -1,7 +1,7 @@
 // §10 Pricing teaser. Tiers and lines mirror app/(home)/pricing/page.tsx.
 import { Check } from 'lucide-react';
 import Link from 'next/link';
-import { Statechart, type Machine } from '../Statechart';
+import { Statechart, type Machine, type Ramp } from '../Statechart';
 import { DataTable, Section, SectionHeading } from '../shared';
 import { stackOn3, textLinkCls } from '../classes';
 import { DEMO_URL, NewTab } from '../lib';
@@ -49,19 +49,21 @@ const NH = 57;
 const X0 = 28;
 const STEP = NW + 150;
 const Y = 8;
-const tierChain: [string, string, string][] = [
-  ['Community', '$0', 'UPGRADE'],
-  ['Pro', '$39/mo', 'ADD_SEATS'],
-  ['Team', '$199/mo', 'CONTACT'],
-  ['Enterprise', 'book a demo', ''],
+// Each tier has a color; the transition into a tier takes that tier's color.
+const tierChain: [string, string, string, Ramp][] = [
+  ['Community', '$0', 'UPGRADE', 'green'],
+  ['Pro', '$39/mo', 'ADD_SEATS', 'blue'],
+  ['Team', '$199/mo', 'CONTACT', 'purple'],
+  ['Enterprise', 'book a demo', '', 'orange'],
 ];
 const tierMachine: Machine = {
   w: X0 + 3 * STEP + NW + 4,
   h: Y + NH + 8,
-  nodes: tierChain.map(([label, evidence], i) => ({
+  nodes: tierChain.map(([label, evidence, , color], i) => ({
     id: label,
     label,
     evidence,
+    color,
     x: X0 + i * STEP,
     y: Y,
     w: NW,
@@ -72,6 +74,7 @@ const tierMachine: Machine = {
     from: label,
     to: tierChain[i + 1][0],
     label: event,
+    color: tierChain[i + 1][3],
     points: [
       [X0 + i * STEP + NW, Y + NH / 2],
       [X0 + (i + 1) * STEP, Y + NH / 2],
@@ -95,11 +98,11 @@ export function PricingTeaser() {
         rows={tiers.map(([n, p, f]) => [n, features(f), p])}
       />
       <div className="mt-8 flex flex-wrap items-center gap-3">
+        <Link href="/registry/signup" className="sp-btn sp-btn-primary">
+          Start free
+        </Link>
         <Link href="/pricing" className="sp-btn sp-btn-outline">
           See pricing
-        </Link>
-        <Link href="/registry/signup" className="sp-btn sp-btn-outline">
-          Start free
         </Link>
       </div>
     </Section>

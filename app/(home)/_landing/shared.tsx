@@ -168,9 +168,9 @@ export function TransitionIn({ event, guard, color }: { event: string; guard?: s
   );
 }
 
-// `data-section-title` marks the box TransitionIn lands on. It goes on the
-// heading itself, sized to its text (`w-fit`) rather than the column, so the
-// arrow can be dragged anywhere along its top.
+// `data-section-title` marks the box TransitionIn lands on: the heading's
+// text itself rather than its column, so the arrow can be dragged anywhere
+// along the title's top and no further.
 
 /** Standard section shell: hairline top border, transition edge in, container. */
 export function Section({
@@ -214,8 +214,9 @@ export function SectionHeading({
 }) {
   return (
     <div className={`relative max-w-[44rem] ${className}`}>
-      <h2 data-section-title="" className="w-fit text-[2rem] sm:text-[2.25rem] lg:text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
-        {title}
+      <h2 className="text-[2rem] sm:text-[2.25rem] lg:text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
+        {/* Inline, so the target box is the text's own extent (its longest line), even when the title wraps. */}
+        <span data-section-title="">{title}</span>
       </h2>
       {lede && (
         <p className="mt-4 text-[1.0625rem] leading-relaxed text-[var(--sp-muted)] max-w-[38rem]">{lede}</p>

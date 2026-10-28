@@ -266,7 +266,7 @@ export function EdgeLayer({
             {e.guard ? (
               <>
                 <span className="row-span-2 grid size-5 place-items-center" aria-hidden>
-                  <span className="block size-[14px] rotate-45 rounded-[2px] bg-[var(--sp-fg)]" />
+                  <span className="block size-[14px] rotate-45 rounded-[2px]" style={{ background: e.color ? strokeOf(e) : 'var(--sp-fg)' }} />
                 </span>
                 <span>{e.label}</span>
                 <span className="leading-5">
