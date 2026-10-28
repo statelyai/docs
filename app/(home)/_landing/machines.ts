@@ -58,25 +58,6 @@ export const checkoutMachine = { wide: checkout('wide', { active: true }), tall:
 /** Fig 2: the same checkout after the PR. RETRY added, REFUND removed. */
 export const checkoutAfterMachine = { wide: checkout('wide', { diff: true }), tall: checkout('tall', { diff: true }) };
 
-/** Four services and the messages between them. */
-export const servicesMachine: Machine = {
-  w: 330,
-  h: 460,
-  nodes: [
-    { id: 'api', label: 'api', initial: true, x: 100, y: 20, w: 120 },
-    { id: 'checkout', label: 'checkout', x: 100, y: 145, w: 120 },
-    { id: 'payments', label: 'payments', x: 100, y: 270, w: 120 },
-    { id: 'email', label: 'email', final: true, x: 100, y: 395, w: 120 },
-  ],
-  edges: [
-    { from: 'api', to: 'checkout', label: 'ORDER', points: [[175, 65], [175, 145]] },
-    { from: 'checkout', to: 'payments', label: 'CHARGE', points: [[160, 190], [160, 270]] },
-    { from: 'checkout', to: 'email', label: 'NOTIFY', points: [[220, 167.5], [270, 167.5], [270, 417.5], [220, 417.5]], labelSeg: 1 },
-    { from: 'payments', to: 'email', label: 'RECEIPT', points: [[160, 315], [160, 395]] },
-    { from: 'payments', to: 'api', label: 'REFUND', points: [[100, 292.5], [50, 292.5], [50, 100], [115, 100], [115, 65]], labelSeg: 1 },
-  ],
-};
-
 /** payment, confirmed (final), declined. */
 export const paymentMachine: Machine = {
   w: 370,

@@ -16,6 +16,13 @@
 // 7. Case 1, waypoint [150,-80] (auto sides) → top→top U through y=-80.
 // 8. Never more than 3 bends, never through either box; a waypoint no such
 //    route reaches is projected onto the nearest one (the label slides).
+// 9. Corner labels: a waypoint at a bend attaches the label to that corner,
+//    so the edge enters one side of the pill and leaves an adjacent side
+//    (in from the left, out of the bottom). a {0,0,80,16}, b {0,240,790,60},
+//    waypoint [270,150] → [[40,16],[40,150],[270,150],[270,240]], label at
+//    the bend [270,150] instead of a detour around the target.
+// 10. The label always leaves a visible run before the arrow: at least TAIL
+//    px of line, then the 10px arrow, so the arrowhead never sits on the pill.
 
 export type Pt = [number, number];
 export type Side = 'top' | 'right' | 'bottom' | 'left';
@@ -27,10 +34,12 @@ export type RouteOpts = {
   /** label pill [w, h]; keeps the label on a segment it fits */
   label?: [number, number];
 };
-export type Route = { points: Pt[]; label: Pt; seg: number };
+/** `seg`: segment index the label sits on; with `corner`, the label is at that segment's end bend. */
+export type Route = { points: Pt[]; label: Pt; seg: number; corner: boolean };
 
 const STUB = 10; // straight run out of the source
 const ARROW = 10; // path ends this far before the target border (tip 5px off)
+const TAIL = 14; // visible line between a label and the arrow
 const R = 10; // corner radius
 const SNAP = 8;
 const INSET = 12; // anchors stay this far from box corners
@@ -44,6 +53,8 @@ const eq = (a: number, b: number) => Math.abs(a - b) < 0.5;
 const dirOf = (a: Pt, b: Pt): Pt => [eq(a[0], b[0]) ? 0 : Math.sign(b[0] - a[0]), eq(a[1], b[1]) ? 0 : Math.sign(b[1] - a[1])];
 const len = (a: Pt, b: Pt) => Math.abs(b[0] - a[0]) + Math.abs(b[1] - a[1]);
 const add = (p: Pt, d: Pt, t: number): Pt => [p[0] + d[0] * t, p[1] + d[1] * t];
+/** Half the label extent along direction d. */
+const half = (size: [number, number], d: Pt) => (d[0] ? size[0] : size[1]) / 2;
 
 export function autoSides(a: Box, b: Box): [Side, Side] {
   const gx = Math.max(b.x - (a.x + a.w), a.x - (b.x + b.w));
@@ -62,16 +73,36 @@ function sideMid(b: Box, s: Side): Pt {
   return [b.x + b.w, b.y + b.h / 2];
 }
 
-/** Side centers; facing sides whose spans overlap share one straight line (slid toward w). */
-function anchors(a: Box, b: Box, fs: Side, ts: Side, w: Pt | null): [Pt, Pt] {
+/**
+ * Anchor pairs to try. Side centers; facing sides whose spans overlap share
+ * one straight line (slid toward w). With a waypoint, each anchor may also
+ * slide along its own side toward it, so a corner label can sit anywhere
+ * over the target rather than only over the shared span.
+ */
+function anchorPairs(a: Box, b: Box, fs: Side, ts: Side, w: Pt | null): [Pt, Pt][] {
   const s = sideMid(a, fs);
   const t = sideMid(b, ts);
-  if (OPP[fs] !== ts) return [s, t];
+  if (OPP[fs] !== ts) return [[s, t]];
   const k = fs === 'top' || fs === 'bottom' ? 0 : 1;
-  const lo = Math.max(k ? a.y : a.x, k ? b.y : b.x) + INSET;
-  const hi = Math.min(k ? a.y + a.h : a.x + a.w, k ? b.y + b.h : b.x + b.w) - INSET;
-  if (hi >= lo) s[k] = t[k] = w ? clamp(w[k], lo, hi) : (lo + hi) / 2;
-  return [s, t];
+  const span = (x: Box): [number, number] => [(k ? x.y : x.x) + INSET, (k ? x.y + x.h : x.x + x.w) - INSET];
+  const [alo, ahi] = span(a);
+  const [blo, bhi] = span(b);
+  const lo = Math.max(alo, blo);
+  const hi = Math.min(ahi, bhi);
+  const out: [Pt, Pt][] = [];
+  if (hi >= lo) {
+    const v = w ? clamp(w[k], lo, hi) : (lo + hi) / 2;
+    const s1: Pt = [s[0], s[1]], t1: Pt = [t[0], t[1]];
+    s1[k] = t1[k] = v;
+    out.push([s1, t1]);
+  }
+  if (w || !out.length) {
+    const s2: Pt = [s[0], s[1]], t2: Pt = [t[0], t[1]];
+    if (w && ahi >= alo) s2[k] = clamp(w[k], alo, ahi);
+    if (w && bhi >= blo) t2[k] = clamp(w[k], blo, bhi);
+    if (!out.length || s2[k] !== out[0][0][k] || t2[k] !== out[0][1][k]) out.push([s2, t2]);
+  }
+  return out;
 }
 
 /** Drop duplicate points and merge same-direction collinear runs (reversals are kept, then rejected). */
@@ -119,16 +150,18 @@ function valid(pts: Pt[], fs: Side, ts: Side, a: Box, b: Box) {
   return d0[0] === out[0] && d0[1] === out[1] && dn[0] === -into[0] && dn[1] === -into[1] && len(pts[n - 1], pts[n]) >= STUB + ARROW;
 }
 
-/** Usable label-center range on segment i (corners and arrow excluded). */
+/** Usable label-center range on segment i (stub, corners, tail and arrow excluded). */
 function range(pts: Pt[], i: number, ext: number): [number, number] {
   const L = len(pts[i], pts[i + 1]);
-  const lo = (i === 0 ? 0 : R) + ext / 2;
-  const hi = L - (i === pts.length - 2 ? ARROW : R) - ext / 2;
+  const lo = (i === 0 ? STUB : R) + ext / 2;
+  const hi = L - (i === pts.length - 2 ? ARROW + TAIL : R) - ext / 2;
   return [lo, hi];
 }
 
-function place(pts: Pt[], w: Pt | null, size: [number, number]) {
-  let best = { pt: pts[0], seg: 0, d: Infinity, fits: false, key: -Infinity };
+type Placement = { pt: Pt; seg: number; d: number; fits: boolean; key: number; corner: boolean };
+
+function place(pts: Pt[], w: Pt | null, size: [number, number]): Placement {
+  let best: Placement = { pt: pts[0], seg: 0, d: Infinity, fits: false, key: -Infinity, corner: false };
   const n = pts.length - 1;
   for (let i = 0; i < n; i++) {
     const a = pts[i], b = pts[i + 1];
@@ -146,8 +179,24 @@ function place(pts: Pt[], w: Pt | null, size: [number, number]) {
     // Default: fitting middle segment with the most room. Waypoint: nearest.
     const middle = n < 3 || (i > 0 && i < n - 1);
     const key = w ? -dist - (fits ? 0 : 1000) : (fits ? 1e6 : 0) + (middle ? 1e5 : 0) + (hi - lo);
-    if (key > best.key) best = { pt, seg: i, d: dist, fits, key };
+    if (key > best.key) best = { pt, seg: i, d: dist, fits, key, corner: false };
   }
+  // Dragged onto a bend: the label takes the corner (in one side, out an
+  // adjacent side) when both runs beside it have room for half the pill.
+  if (w)
+    for (let i = 1; i < n; i++) {
+      const c = pts[i];
+      const din = dirOf(pts[i - 1], c);
+      const dout = dirOf(c, pts[i + 1]);
+      // The pill may sit right against the neighbouring bend; it only needs
+      // the stub, or the tail and arrow, kept clear.
+      const needIn = (i === 1 ? STUB : 0) + half(size, din);
+      const needOut = (i === n - 1 ? ARROW + TAIL : 0) + half(size, dout);
+      const fits = len(pts[i - 1], c) >= needIn && len(c, pts[i + 1]) >= needOut;
+      const dist = Math.hypot(w[0] - c[0], w[1] - c[1]);
+      const key = -dist - (fits ? 0 : 1000) - 2; // a straight placement wins exact ties
+      if (key > best.key) best = { pt: c, seg: i - 1, d: dist, fits, key, corner: true };
+    }
   return best;
 }
 
@@ -168,9 +217,9 @@ export function routeElbow(a: Box, b: Box, w: Pt | null, opts: RouteOpts = {}): 
   const toSides = w && !fixedT ? SIDES : [pt];
   let best: (Route & { score: number }) | null = null;
   for (const fs of fromSides)
-    for (const ts of toSides) {
-      const [s0, t0] = anchors(a, b, fs, ts, w);
-      let ww: Pt | null = w ? [w[0], w[1]] : null;
+    for (const ts of toSides)
+     for (const [s0, t0] of anchorPairs(a, b, fs, ts, w)) {
+      const ww: Pt | null = w ? [w[0], w[1]] : null;
       if (ww) for (const p of [s0, t0]) for (const k of [0, 1]) if (Math.abs(ww[k] - p[k]) < SNAP) ww[k] = p[k];
       const s1 = add(s0, OUT[fs], STUB);
       const t1 = add(t0, OUT[ts], STUB + ARROW);
@@ -181,6 +230,8 @@ export function routeElbow(a: Box, b: Box, w: Pt | null, opts: RouteOpts = {}): 
         [s0, s1, [t1[0], s1[1]], t1, t0],
         [s0, s1, [s1[0], t1[1]], t1, t0],
       ];
+      // Routes that bend at the waypoint itself, for corner labels.
+      if (ww) cands.push([s0, s1, [m[0], s1[1]], m, [t1[0], m[1]], t1, t0], [s0, s1, [s1[0], m[1]], m, [m[0], t1[1]], t1, t0]);
       for (const c of cands) {
         const pts = simplify(c);
         if (!valid(pts, fs, ts, a, b)) continue;
@@ -188,13 +239,13 @@ export function routeElbow(a: Box, b: Box, w: Pt | null, opts: RouteOpts = {}): 
         const total = pts.slice(1).reduce((acc, q, i) => acc + len(pts[i], q), 0);
         const sideCost = fs === pf && ts === pt ? 0 : 45;
         const score = (pts.length - 2) * 40 + (w ? p.d * 4 : 0) + (p.fits ? 0 : 150) + total * 0.01 + sideCost;
-        if (!best || score < best.score) best = { points: pts, label: p.pt, seg: p.seg, score };
+        if (!best || score < best.score) best = { points: pts, label: p.pt, seg: p.seg, corner: p.corner, score };
       }
     }
-  if (best) return { points: best.points, label: best.label, seg: best.seg };
+  if (best) return { points: best.points, label: best.label, seg: best.seg, corner: best.corner };
   // Fallback: straight between preferred anchors.
-  const [s0, t0] = anchors(a, b, pf, pt, null);
-  return { points: [s0, t0], label: [(s0[0] + t0[0]) / 2, (s0[1] + t0[1]) / 2], seg: 0 };
+  const [s0, t0] = anchorPairs(a, b, pf, pt, null)[0];
+  return { points: [s0, t0], label: [(s0[0] + t0[0]) / 2, (s0[1] + t0[1]) / 2], seg: 0, corner: false };
 }
 
 /**
@@ -210,12 +261,26 @@ export function splitAtLabel(r: Route, size: [number, number] | null, both = fal
     pts[n - 1] = shorten(pts[n - 2], pts[n - 1]);
     return [pts];
   }
-  const a = pts[r.seg];
-  const d = dirOf(a, pts[r.seg + 1]);
-  const half = (d[0] ? size[0] : size[1]) / 2;
-  const src = [...pts.slice(0, r.seg + 1), add(r.label, d, -half)];
-  const dst = [add(r.label, d, half), ...pts.slice(r.seg + 1)];
-  dst[dst.length - 1] = shorten(dst[dst.length - 2], dst[dst.length - 1]);
+  let src: Pt[];
+  let dst: Pt[];
+  if (r.corner) {
+    const c = pts[r.seg + 1];
+    const din = dirOf(pts[r.seg], c);
+    const dout = dirOf(c, pts[r.seg + 2]);
+    src = [...pts.slice(0, r.seg + 1), add(c, din, -half(size, din))];
+    dst = [add(c, dout, half(size, dout)), ...pts.slice(r.seg + 2)];
+  } else {
+    const d = dirOf(pts[r.seg], pts[r.seg + 1]);
+    src = [...pts.slice(0, r.seg + 1), add(r.label, d, -half(size, d))];
+    dst = [add(r.label, d, half(size, d)), ...pts.slice(r.seg + 1)];
+  }
+  const last = dst.length - 1;
+  const dir = dirOf(pts[n - 2], pts[n - 1]);
+  dst[last] = shorten(dst[last - 1], dst[last]);
+  // A label that overflows its segment must not leave the arrow pointing
+  // backwards: keep a short forward run into the arrowhead.
+  const run = (dst[last][0] - dst[last - 1][0]) * dir[0] + (dst[last][1] - dst[last - 1][1]) * dir[1];
+  if (run < 4) dst[last - 1] = add(dst[last], dir, -4);
   return [src, dst];
 }
 

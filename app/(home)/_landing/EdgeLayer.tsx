@@ -18,6 +18,10 @@ export type EdgeSpec = {
   tone?: 'default' | 'added' | 'removed';
   /** arrowheads at both ends */
   bidirectional?: boolean;
+  /** dashed stroke, like the editor's architecture `sends` relationship */
+  dashed?: boolean;
+  /** `text`: the architecture view's bare 12px label instead of the event pill */
+  labelStyle?: 'pill' | 'text';
 };
 
 const STROKE = { default: 'var(--sp-edge)', added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
@@ -25,11 +29,21 @@ const NUDGE = 8;
 const keys: Record<string, Pt> = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
 
 const selector = (k: string) => (/^[.#[]/.test(k) ? k : `[data-edge-id="${CSS.escape(k)}"]`);
-const estimate = (e: EdgeSpec): [number, number] => [Math.round((e.label ?? '').length * 9.4) + 28, e.guard ? 64 : 40];
+const estimate = (e: EdgeSpec): [number, number] =>
+  e.labelStyle === 'text' ? [Math.round((e.label ?? '').length * 7) + 16, 24] : [Math.round((e.label ?? '').length * 9.4) + 28, e.guard ? 64 : 40];
 
 type Geo = { boxes: Record<string, Box | null>; pills: Record<string, [number, number]> };
 
-export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; className?: string }) {
+export function EdgeLayer({
+  edges,
+  className = '',
+  decorative = false,
+}: {
+  edges: EdgeSpec[];
+  className?: string;
+  /** labels stay draggable with a pointer but leave the tab order and the accessibility tree */
+  decorative?: boolean;
+}) {
   const uid = useId().replace(/[^a-zA-Z0-9-]/g, '');
   const root = useRef<HTMLDivElement>(null);
   const pills = useRef<Record<string, HTMLDivElement | null>>({});
@@ -129,7 +143,7 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
               {halves.map((pts, k) => {
                 const first = k === 0;
                 const last = k === halves.length - 1;
-                const dashed = tone === 'removed' || (!!e.guard && first && halves.length > 1);
+                const dashed = tone === 'removed' || !!e.dashed || (!!e.guard && first && halves.length > 1);
                 const d = pathD(pts);
                 return (
                   <g key={k}>
@@ -156,6 +170,7 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
         const r = routes[e.id];
         const at = r?.label;
         const active = dragging?.id === e.id;
+        const text = e.labelStyle === 'text';
         const move = (p: Pt) => setWay((w) => ({ ...w, [e.id]: p }));
         return (
           <div
@@ -163,9 +178,10 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
             ref={(el) => {
               pills.current[e.id] = el;
             }}
-            role="button"
-            tabIndex={at ? 0 : -1}
-            aria-roledescription="movable label"
+            role={decorative ? undefined : 'button'}
+            tabIndex={at && !decorative ? 0 : -1}
+            aria-hidden={decorative || undefined}
+            aria-roledescription={decorative ? undefined : 'movable label'}
             onPointerDown={(ev) => {
               if (!at || ev.button !== 0) return;
               ev.preventDefault();
@@ -194,12 +210,12 @@ export function EdgeLayer({ edges, className = '' }: { edges: EdgeSpec[]; classN
               ev.preventDefault();
               move([at[0] + k[0] * NUDGE, at[1] + k[1] * NUDGE]);
             }}
-            className={`pointer-events-auto absolute left-0 top-0 touch-none select-none whitespace-nowrap rounded-[15.2px] border-2 px-3 py-2 text-[14px] leading-5 font-semibold text-[var(--sp-fg)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--sp-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--sp-bg)] ${
-              active ? 'cursor-grabbing' : 'cursor-grab'
-            } ${e.guard ? 'grid grid-cols-[20px_auto] items-center gap-x-2' : ''}`}
+            className={`pointer-events-auto absolute left-0 top-0 touch-none select-none whitespace-nowrap text-[var(--sp-fg)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--sp-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--sp-bg)] ${
+              text ? 'px-2 py-1 text-[12px] leading-4' : 'rounded-[15.2px] border-2 px-3 py-2 text-[14px] leading-5 font-semibold'
+            } ${active ? 'cursor-grabbing' : 'cursor-grab'} ${e.guard ? 'grid grid-cols-[20px_auto] items-center gap-x-2' : ''}`}
             style={{
               borderColor: STROKE[e.tone ?? 'default'],
-              background: 'var(--sp-label-bg)',
+              background: text ? 'transparent' : 'var(--sp-label-bg)',
               transform: at ? `translate(${at[0]}px, ${at[1]}px) translate(-50%, -50%)` : undefined,
               visibility: at ? 'visible' : 'hidden',
             }}

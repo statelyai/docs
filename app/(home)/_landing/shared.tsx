@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CopyButton } from './sections/CopyLine';
+import { EdgeLayer } from './EdgeLayer';
 import { DEMO_URL, MCP_CMD, NewTab, SCAN_CMD, breakable } from './lib';
 
 /**
@@ -143,61 +144,31 @@ export function EventLabel({ children, className = '' }: { children: React.React
   );
 }
 
-/** Guarded event label: diamond, event name, then `IF guard`. */
-export function GuardLabel({ event, guard }: { event: string; guard: string }) {
-  return (
-    <span
-      className="relative shrink-0 grid w-max grid-cols-[20px_auto] items-center gap-x-2 rounded-[15.2px] border-2 px-3 py-2 whitespace-nowrap"
-      style={{ borderColor: EDGE, background: 'var(--sp-label-bg)' }}
-    >
-      <span className="row-span-2 grid size-5 place-items-center">
-        <span className="block size-[14px] rotate-45 rounded-[2px] bg-[var(--sp-fg)]" />
-      </span>
-      <span className="text-[14px] leading-5 font-semibold text-[var(--sp-fg)]">{event}</span>
-      <span className="leading-5">
-        <span className="text-[14px] font-semibold text-[var(--sp-muted)]">IF</span>{' '}
-        <span className="text-[12px] font-semibold text-[var(--sp-fg)] opacity-80">{guard}</span>
-      </span>
-    </span>
-  );
-}
-
-/** Vertical dashed segment (5 5, offset 2.5) that fills its flex slot. */
-function DashedV({ className = '' }: { className?: string }) {
-  return (
-    <svg className={`w-[6px] overflow-visible ${className}`} aria-hidden>
-      <line x1="3" y1="0" x2="3" y2="100%" stroke="var(--sp-edge-halo)" strokeWidth="6" />
-      <line x1="3" y1="0" x2="3" y2="100%" stroke={EDGE} strokeWidth="2" strokeDasharray="5 5" strokeDashoffset="2.5" />
-    </svg>
-  );
-}
-
 /**
- * A transition into the section, routed like the editor would: from the
- * section's top hairline down 24px, a 10px-radius corner right for 40px, a
- * corner down, then the label on that final segment and the arrow tip 8px
- * above the heading. Guarded: the source half is dashed and the label shows
- * the guard. The edge is split at the label; no line runs under it.
+ * The transition into a section, routed by EdgeLayer like any other edge:
+ * from a 4px anchor on the section's top hairline (in the gutter on xl) to
+ * the heading's anchor, so the label can be dragged and the edge re-routes.
+ * Guarded: the source half is dashed and the label shows the guard. The
+ * spacer keeps the heading where it was while the edge is measured.
  */
-export function Transition({ event, guard, className = '' }: { event: string; guard?: string; className?: string }) {
-  const guarded = !!guard;
-  // Route head: start x=2, final x=42 (the column center), 24px drop.
-  const route = 'M2,0 L2,14 C2,14 2,24 12,24 L32,24 C32,24 42,24 42,34';
+export function TransitionIn({ event, guard }: { event: string; guard?: string }) {
   return (
-    <div className={`relative ${guarded ? 'h-[136px] lg:h-[144px]' : 'h-[112px] lg:h-[128px]'} ${className}`} aria-hidden>
-      {/* Column centered on the final segment: heading left + 12px where the gutter allows. */}
-      <div className="absolute top-0 bottom-[8px] left-0 xl:left-[12px] xl:-translate-x-1/2 flex flex-col items-center w-max">
-        <svg width="84" height="34" viewBox="0 0 84 34" className="shrink-0 overflow-visible">
-          <path d={route} fill="none" stroke="var(--sp-edge-halo)" strokeWidth="6" />
-          <path d={route} fill="none" stroke={EDGE} strokeWidth="2" strokeDasharray={guarded ? '5 5' : undefined} strokeDashoffset={guarded ? 2.5 : undefined} />
-        </svg>
-        {guarded ? <DashedV className="flex-1 min-h-0" /> : <span className={`flex-1 w-[2px] ${segCls}`} />}
-        {guarded ? <GuardLabel event={event} guard={guard} /> : <EventLabel>{event}</EventLabel>}
-        <span className={`flex-1 w-[2px] -mb-[5px] ${segCls}`} />
-        <Arrowhead dir="down" />
+    <>
+      <div className={`relative ${guard ? 'h-[136px] lg:h-[144px]' : 'h-[112px] lg:h-[128px]'}`} aria-hidden>
+        {/* Below md the edge drops straight onto the title so wide labels stay inside the viewport. */}
+        <span data-edge-id="section-in" className="absolute -top-1 left-[88px] md:left-[2px] xl:left-[-28px] size-1" />
       </div>
-    </div>
+      <EdgeLayer
+        decorative
+        edges={[{ id: 'in', from: 'section-in', to: '[data-section-title]', label: event, guard, fromSide: 'bottom', toSide: 'top' }]}
+      />
+    </>
   );
+}
+
+/** Target anchor for TransitionIn: 4px box whose top is 3px above the title; 88px in below md, 42px from md, 12px on xl. */
+export function TitleAnchor() {
+  return <span data-section-title aria-hidden className="absolute -top-[3px] left-[88px] md:left-[42px] xl:left-[12px] size-1" />;
 }
 
 /** Standard section shell: hairline top border, transition edge in, container. */
@@ -219,15 +190,15 @@ export function Section({
 }) {
   return (
     <section id={id} className={`border-t border-[var(--sp-border)] ${className}`}>
-      <div className={bleed ? '' : 'mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28'}>
-        {event ? <Transition event={event} guard={guard} /> : <div className="h-20 lg:h-28" />}
+      <div className={`relative ${bleed ? '' : 'mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28'}`}>
+        {event ? <TransitionIn event={event} guard={guard} /> : <div className="h-20 lg:h-28" />}
         {children}
       </div>
     </section>
   );
 }
 
-/** Section heading: title + optional lede. No eyebrow; the Transition above carries the label. */
+/** Section heading: title + optional lede. No eyebrow; the TransitionIn edge lands on it. */
 export function SectionHeading({
   title,
   lede,
@@ -238,7 +209,8 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={`max-w-[44rem] ${className}`}>
+    <div className={`relative max-w-[44rem] ${className}`}>
+      <TitleAnchor />
       <h2 className="text-[2rem] sm:text-[2.25rem] lg:text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
         {title}
       </h2>
@@ -338,7 +310,7 @@ export function Edge({
   bidirectional = false,
   className = '',
 }: {
-  dir?: 'down' | 'right' | 'left';
+  dir?: 'down' | 'up' | 'right' | 'left';
   /** arrowheads at both ends (e.g. two-way sync) */
   bidirectional?: boolean;
   label?: string;
@@ -346,23 +318,27 @@ export function Edge({
   length?: number;
   className?: string;
 }) {
-  const down = dir === 'down';
-  const seg = <span className={`flex-1 ${down ? 'w-[2px]' : 'h-[2px]'} ${segCls}`} />;
-  const head = down ? 'down' : dir;
-  const tail = down ? 'up' : dir === 'right' ? 'left' : 'right';
+  const vertical = dir === 'down' || dir === 'up';
+  const seg = <span className={`flex-1 ${vertical ? 'w-[2px]' : 'h-[2px]'} ${segCls}`} />;
+  const opposite = { down: 'up', up: 'down', right: 'left', left: 'right' } as const;
+  // The arrowhead overlaps the end of its run by 5px, so the tip sits 5px off the target.
+  const pull = { down: '-mt-[5px] mb-[5px]', up: '-mb-[5px] mt-[5px]', right: '-ml-[5px] mr-[5px]', left: '-mr-[5px] ml-[5px]' } as const;
+  // One-way edges get an arrow-sized spacer at the tail, so a label sits at
+  // the same point on an edge whichever way it runs.
   const parts = (
     <>
-      {bidirectional && <Arrowhead dir={tail} className={down ? 'mt-[5px] -mb-[5px]' : 'ml-[5px] -mr-[5px]'} />}
+      {bidirectional ? <Arrowhead dir={opposite[dir]} className={pull[opposite[dir]]} /> : <span className={vertical ? 'h-[10px]' : 'w-[10px]'} />}
       {seg}
       {label && <EventLabel>{label}</EventLabel>}
       {label && seg}
-      <Arrowhead dir={head} className={down ? '-mt-[5px] mb-[5px]' : '-ml-[5px] mr-[5px]'} />
+      <Arrowhead dir={dir} className={pull[dir]} />
     </>
   );
+  const flow = { down: 'flex-col', up: 'flex-col-reverse', right: 'flex-row', left: 'flex-row-reverse' } as const;
   return (
     <div
-      className={`${down ? 'flex-col mx-auto w-max' : 'flex-row h-max'} flex items-center ${dir === 'left' ? 'flex-row-reverse' : ''} ${className}`}
-      style={down ? { height: length } : { width: length }}
+      className={`${flow[dir]} ${vertical ? 'mx-auto w-max' : 'h-max'} flex items-center ${className}`}
+      style={vertical ? { height: length } : { width: length }}
       aria-hidden
     >
       {parts}

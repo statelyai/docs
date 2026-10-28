@@ -39,3 +39,19 @@ export function breakable(text: string): React.ReactNode[] {
 export function NewTab() {
   return <span className="sr-only"> (opens in a new tab)</span>;
 }
+
+/** base64url of a UTF-8 string; works on the server and in the browser. */
+export function encodeMachine(source: string) {
+  const bytes = new TextEncoder().encode(source);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/**
+ * The editor's read-only /viz route on an inline XState source: full chrome
+ * (toolbar, command palette, simulation) in the given theme. No account needed.
+ */
+export function vizUrl(source: string, theme: 'light' | 'dark' = 'dark') {
+  return `https://editor.stately.ai/viz?theme=${theme}#machine=${encodeMachine(source)}&format=xstate`;
+}
