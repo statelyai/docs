@@ -47,7 +47,7 @@ const resources: [string, string, string | null][] = [
 
 export function Faq() {
   return (
-    <Section id="faq" event="ASK">
+    <Section id="faq" event="ASK" color="yellow">
       <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_1fr] gap-x-16 gap-y-10 items-start">
         <SectionHeading title="Questions." className="lg:col-start-1 lg:row-start-1" />
         <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 border-t border-[var(--sp-border)]">

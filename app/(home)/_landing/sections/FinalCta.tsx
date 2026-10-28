@@ -5,7 +5,7 @@ export function FinalCta() {
   return (
     <section id="start" className="sp-grid border-t border-[var(--sp-border)]">
       <div className="relative mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28">
-        <TransitionIn event="START" />
+        <TransitionIn event="START" color="blue" />
         <div data-section-title="" className="relative w-fit max-w-[44rem]">
           <StateNode
             final

@@ -29,7 +29,7 @@ export function LiveDemo() {
   const theme = useSiteTheme();
   const [live, setLive] = useState(false);
   return (
-    <Section id="live" event="OPEN_EDITOR">
+    <Section id="live" event="OPEN_EDITOR" color="green">
       <SectionHeading
         title="Try it live."
         lede="The editor in viewing mode, on the checkout machine. Run a simulation, step through events, open the command palette, and find the unreachable state."

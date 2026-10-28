@@ -91,8 +91,8 @@ export const paymentMachine: Machine = {
     { id: 'declined', label: 'declined', x: 230, y: 170, w: 120 },
   ],
   edges: [
-    { from: 'payment', to: 'confirmed', label: 'PAID', points: [[120, 65], [120, 170]] },
-    { from: 'payment', to: 'declined', label: 'FAIL', points: [[220, 42.5], [290, 42.5], [290, 170]], labelSeg: 1 },
-    { from: 'declined', to: 'payment', label: 'RETRY', points: [[230, 192.5], [205, 192.5], [205, 65]], labelSeg: 1 },
+    { from: 'payment', to: 'confirmed', label: 'PAID', color: 'green', points: [[120, 65], [120, 170]] },
+    { from: 'payment', to: 'declined', label: 'FAIL', color: 'red', points: [[220, 42.5], [290, 42.5], [290, 170]], labelSeg: 1 },
+    { from: 'declined', to: 'payment', label: 'RETRY', color: 'orange', points: [[230, 192.5], [205, 192.5], [205, 65]], labelSeg: 1 },
   ],
 };

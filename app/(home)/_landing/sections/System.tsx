@@ -69,8 +69,8 @@ const relationships: EdgeSpec[] = [
 /* ---------- two-way editing: one transition each way, side by side ---------- */
 
 const editEdges: EdgeSpec[] = [
-  { id: 'graph', from: 'edit-graph', to: 'edit-code', label: 'EDIT_GRAPH', fromSide: 'bottom', toSide: 'top', offset: -72 },
-  { id: 'code', from: 'edit-code', to: 'edit-graph', label: 'EDIT_CODE', fromSide: 'top', toSide: 'bottom', offset: 72 },
+  { id: 'graph', from: 'edit-graph', to: 'edit-code', label: 'EDIT_GRAPH', color: 'purple', fromSide: 'bottom', toSide: 'top', offset: -72 },
+  { id: 'code', from: 'edit-code', to: 'edit-graph', label: 'EDIT_CODE', color: 'green', fromSide: 'top', toSide: 'bottom', offset: 72 },
 ];
 
 const architectureDescription =
@@ -142,7 +142,7 @@ function Region({
 
 export function System() {
   return (
-    <Section id="system" event="INSPECT">
+    <Section id="system" event="INSPECT" color="orange">
       <SectionHeading title="Understand the whole system." />
       {/* One parallel state: three orthogonal regions, dashed dividers. */}
       <div className="mt-12 rounded-md border-2 border-[var(--sp-node-stroke)]">

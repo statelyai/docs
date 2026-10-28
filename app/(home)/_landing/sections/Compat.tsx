@@ -65,7 +65,7 @@ const hub: HubNode = { id: 'model', title: 'Graph model', meta: 'statecharts · 
 
 export function Compat() {
   return (
-    <Section id="compat" event="IMPORT">
+    <Section id="compat" event="IMPORT" color="pink">
       <SectionHeading
         title="Works with any code."
         lede="Everything here reads into one graph model and writes back out of it, so any two convert to each other. Bring in a Redux reducer and get an XState machine, or turn a Step Functions workflow into Playwright tests."

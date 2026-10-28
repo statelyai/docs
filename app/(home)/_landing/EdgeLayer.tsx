@@ -5,6 +5,7 @@
 // keys) and the edge re-routes through them. Nothing persists.
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { pathD, routeElbow, splitAtLabel, type Box, type Pt, type Route, type SideOpt } from './router';
+import type { Ramp } from './Statechart';
 
 export type EdgeSpec = {
   id: string;
@@ -24,7 +25,14 @@ export type EdgeSpec = {
   labelStyle?: 'pill' | 'text';
   /** initial label position: px from the midpoint between the two boxes, across the edge's axis (x for a vertical edge) */
   offset?: number;
+  /** the editor's transition color: stroke, arrowhead, label border and fill */
+  color?: Ramp;
 };
+
+const RAMPS: Ramp[] = ['purple', 'pink', 'red', 'orange', 'yellow', 'green', 'blue'];
+/** Stroke for an edge: diff tone first, then color, then the plain edge. */
+const strokeOf = (e: EdgeSpec) => (e.tone && e.tone !== 'default' ? STROKE[e.tone] : e.color ? `var(--sp-ramp-${e.color}-edge)` : STROKE.default);
+const markerKey = (e: EdgeSpec) => (e.tone && e.tone !== 'default' ? e.tone : (e.color ?? 'default'));
 
 const STROKE = { default: 'var(--sp-edge)', added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
 const NUDGE = 8;
@@ -35,7 +43,7 @@ const selector = (k: string) => (/^[.#[]/.test(k) ? k : `[data-edge-id="${CSS.es
 const estimate = (e: EdgeSpec): [number, number] =>
   e.labelStyle === 'text' ? [Math.round((e.label ?? '').length * 7) + 16, 24] : [Math.round((e.label ?? '').length * 9.4) + 28, e.guard ? 64 : 40];
 
-type Geo = { boxes: Record<string, Box | null>; pills: Record<string, [number, number]> };
+type Geo = { boxes: Record<string, Box | null>; pills: Record<string, [number, number]>; size: [number, number] };
 
 export function EdgeLayer({
   edges,
@@ -83,7 +91,7 @@ export function EdgeLayer({
         const p = pills.current[e.id];
         sizes[e.id] = p && p.offsetWidth ? [p.offsetWidth, p.offsetHeight] : estimate(e);
       }
-      setGeo({ boxes, pills: sizes });
+      setGeo({ boxes, pills: sizes, size: [box.clientWidth, box.clientHeight] });
     };
     let raf = 0;
     const schedule = () => {
@@ -117,7 +125,15 @@ export function EdgeLayer({
         w = [(a.x + a.w / 2 + b.x + b.w / 2) / 2, (a.y + a.h / 2 + b.y + b.h / 2) / 2];
         w[vertical ? 0 : 1] += e.offset;
       }
-      out[e.id] = routeElbow(a, b, w, { fromSide: e.fromSide, toSide: e.toSide, label: size });
+      const opts = { fromSide: e.fromSide, toSide: e.toSide, label: size };
+      let r = routeElbow(a, b, w, opts);
+      // An auto-placed label that would hang out of the layer is pulled back in (e.g. a wide label on a drop near the left edge).
+      if (!w && size && r.label) {
+        const [pw, ph] = size;
+        const q: Pt = [clamp(r.label[0], pw / 2, geo.size[0] - pw / 2), clamp(r.label[1], ph / 2, geo.size[1] - ph / 2)];
+        if (q[0] !== r.label[0] || q[1] !== r.label[1]) r = routeElbow(a, b, q, opts);
+      }
+      out[e.id] = r;
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,16 +145,21 @@ export function EdgeLayer({
     const r = root.current!.getBoundingClientRect();
     return [e.clientX - r.left, e.clientY - r.top];
   };
-  const tones = ['default', 'added', 'removed'] as const;
-  const marker = (tone: EdgeSpec['tone'] = 'default') => `url(#${uid}-arrow-${tone})`;
+  const marks: [string, string][] = [
+    ['default', STROKE.default],
+    ['added', STROKE.added],
+    ['removed', STROKE.removed],
+    ...RAMPS.map((c): [string, string] => [c, `var(--sp-ramp-${c}-edge)`]),
+  ];
+  const marker = (e: EdgeSpec) => `url(#${uid}-arrow-${markerKey(e)})`;
 
   return (
     <div ref={root} className={`pointer-events-none absolute inset-0 z-10 ${className}`}>
       <svg className="absolute inset-0 overflow-visible" width="100%" height="100%" aria-hidden>
         <defs>
-          {tones.map((t) => (
-            <marker key={t} id={`${uid}-arrow-${t}`} viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto-start-reverse">
-              <path d="M0,0 L0,10 L10,5 z" fill={STROKE[t]} />
+          {marks.map(([k, fill]) => (
+            <marker key={k} id={`${uid}-arrow-${k}`} viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto-start-reverse">
+              <path d="M0,0 L0,10 L10,5 z" fill={fill} />
             </marker>
           ))}
         </defs>
@@ -146,6 +167,7 @@ export function EdgeLayer({
           const r = routes[e.id];
           if (!r) return null;
           const tone = e.tone ?? 'default';
+          const stroke = strokeOf(e);
           const halves = splitAtLabel(r, e.label ? geo!.pills[e.id] : null, e.bidirectional);
           return (
             <g key={e.id}>
@@ -160,12 +182,12 @@ export function EdgeLayer({
                     <path
                       d={d}
                       fill="none"
-                      stroke={STROKE[tone]}
+                      stroke={stroke}
                       strokeWidth={2}
                       strokeDasharray={dashed ? '5 5' : undefined}
                       strokeDashoffset={dashed ? 2.5 : undefined}
-                      markerEnd={last ? marker(tone) : undefined}
-                      markerStart={first && e.bidirectional ? marker(tone) : undefined}
+                      markerEnd={last ? marker(e) : undefined}
+                      markerStart={first && e.bidirectional ? marker(e) : undefined}
                     />
                   </g>
                 );
@@ -235,8 +257,8 @@ export function EdgeLayer({
               text ? 'px-2 py-1 text-[12px] leading-4' : 'rounded-[15.2px] border-2 px-3 py-2 text-[14px] leading-5 font-semibold'
             } ${active ? 'cursor-grabbing' : 'cursor-grab'} ${e.guard ? 'grid grid-cols-[20px_auto] items-center gap-x-2' : ''}`}
             style={{
-              borderColor: STROKE[e.tone ?? 'default'],
-              background: text ? 'transparent' : 'var(--sp-label-bg)',
+              borderColor: strokeOf(e),
+              background: text ? 'transparent' : e.color ? `var(--sp-ramp-${e.color}-label)` : 'var(--sp-label-bg)',
               transform: at ? `translate(${at[0]}px, ${at[1]}px) translate(-50%, -50%)` : undefined,
               visibility: at ? 'visible' : 'hidden',
             }}

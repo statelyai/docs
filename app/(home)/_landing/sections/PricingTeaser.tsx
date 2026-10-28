@@ -81,7 +81,7 @@ const tierMachine: Machine = {
 
 export function PricingTeaser() {
   return (
-    <Section id="pricing" event="UPGRADE">
+    <Section id="pricing" event="UPGRADE" color="green">
       <SectionHeading
         title="Start free."
         lede="Community is the editor, simulation, and code export. Pro adds private projects, AI generation, and codebase sync. Team shares all of it with up to 10 people. Enterprise runs where you need it to."

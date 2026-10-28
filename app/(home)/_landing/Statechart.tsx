@@ -41,6 +41,8 @@ export type Edge = {
   labelHidden?: boolean;
   /** added: new in a diff (solid). removed: gone in a diff (dashed). */
   tone?: 'added' | 'removed';
+  /** the editor's transition color */
+  color?: Ramp;
 };
 
 export type Machine = { w: number; h: number; nodes: Node[]; edges: Edge[] };
@@ -60,6 +62,9 @@ export const edgeKey = (e: Pick<Edge, 'from' | 'label'>) => `${e.from}:${e.label
 const EDGE = 'var(--sp-edge)';
 const SIM = 'var(--sp-sim)';
 const toneColor = { added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
+const RAMPS: Ramp[] = ['purple', 'pink', 'red', 'orange', 'yellow', 'green', 'blue'];
+const edgeStroke = (e: Edge) => (e.tone ? toneColor[e.tone] : e.color ? `var(--sp-ramp-${e.color}-edge)` : EDGE);
+const edgeMarker = (e: Edge) => e.tone ?? e.color ?? '';
 const NH = 45;
 const LABEL_H = 40;
 /** 12px padding and a 2px border on each side. */
@@ -150,13 +155,12 @@ export function Statechart({
       {label && <title id={titleId}>{label}</title>}
       {label && <desc id={descId}>{description ?? describe()}</desc>}
       <defs>
-        {(
-          [
-            [mk, EDGE],
-            [`${mk}-added`, toneColor.added],
-            [`${mk}-removed`, toneColor.removed],
-          ] as const
-        ).map(([id, fill]) => (
+        {[
+          [mk, EDGE],
+          [`${mk}-added`, toneColor.added],
+          [`${mk}-removed`, toneColor.removed],
+          ...RAMPS.map((c) => [`${mk}-${c}`, `var(--sp-ramp-${c}-edge)`]),
+        ].map(([id, fill]) => (
           <marker key={id} id={id} viewBox="0 0 10 10" markerWidth="5" markerHeight="5" markerUnits="strokeWidth" refX="5" refY="5" orient="auto">
             <path d="M0,0 L0,10 L10,5 z" fill={fill} />
           </marker>
@@ -165,7 +169,7 @@ export function Statechart({
 
       {edges.map((e) => {
         const key = edgeKey(e);
-        const stroke = e.tone ? toneColor[e.tone] : EDGE;
+        const stroke = edgeStroke(e);
         const dash = e.tone === 'removed' ? '5 5' : undefined;
         const { source, target, mid, end, dir } = splitEdge(e);
         const lw = labelWidth(e.label);
@@ -190,7 +194,7 @@ export function Statechart({
                   stroke={stroke}
                   strokeWidth={2}
                   strokeDasharray={dash}
-                  markerEnd={k === 1 ? `url(#${mk}${e.tone ? `-${e.tone}` : ''})` : undefined}
+                  markerEnd={k === 1 ? `url(#${mk}${edgeMarker(e) ? `-${edgeMarker(e)}` : ''})` : undefined}
                 />
               </g>
             ))}
@@ -210,7 +214,16 @@ export function Statechart({
                     style={{ opacity: enabled ? 1 : 0, transition: EASE }}
                   />
                 )}
-                <rect x={mid[0] - lw / 2} y={mid[1] - LABEL_H / 2} width={lw} height={LABEL_H} rx={15.2} fill="var(--sp-label-bg)" stroke={stroke} strokeWidth={2} />
+                <rect
+                  x={mid[0] - lw / 2}
+                  y={mid[1] - LABEL_H / 2}
+                  width={lw}
+                  height={LABEL_H}
+                  rx={15.2}
+                  fill={e.color ? `var(--sp-ramp-${e.color}-label)` : 'var(--sp-label-bg)'}
+                  stroke={stroke}
+                  strokeWidth={2}
+                />
                 <text x={mid[0]} y={mid[1] + 5} textAnchor="middle" fontSize={14} fontWeight={600} fill="var(--sp-fg)">
                   {e.label}
                 </text>

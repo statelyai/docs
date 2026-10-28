@@ -20,7 +20,7 @@ const audit = [
 
 export function Enterprise() {
   return (
-    <Section id="enterprise" event="DEPLOY_PRIVATE">
+    <Section id="enterprise" event="DEPLOY_PRIVATE" color="purple">
       <SectionHeading
         title="Enterprise-ready."
         lede="Self-host it, sign in through your identity provider, and keep the model inside your boundary."

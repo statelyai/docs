@@ -42,6 +42,15 @@
   --sp-ramp-green-fill: #c9edbc;  --sp-ramp-green-border: #54b559;  --sp-ramp-green-title: #0c2612;
   --sp-ramp-blue-fill: #beeaf9;   --sp-ramp-blue-border: #43abdf;   --sp-ramp-blue-title: #0a213d;
 
+  /* Colored transitions, as in the editor: stroke 600, label fill 200 at 50%. */
+  --sp-ramp-purple-edge: #7245dc; --sp-ramp-purple-label: color-mix(in oklab, #dac9f7 50%, transparent);
+  --sp-ramp-pink-edge: #bd0c8b; --sp-ramp-pink-label: color-mix(in oklab, #fbbdf8 50%, transparent);
+  --sp-ramp-red-edge: #bd2b29; --sp-ramp-red-label: color-mix(in oklab, #f4c4c0 50%, transparent);
+  --sp-ramp-orange-edge: #af4108; --sp-ramp-orange-label: color-mix(in oklab, #ffc77a 50%, transparent);
+  --sp-ramp-yellow-edge: #905900; --sp-ramp-yellow-label: color-mix(in oklab, #f9cb50 50%, transparent);
+  --sp-ramp-green-edge: #0f7528; --sp-ramp-green-label: color-mix(in oklab, #a8df97 50%, transparent);
+  --sp-ramp-blue-edge: #27699c; --sp-ramp-blue-label: color-mix(in oklab, #8fdbf8 50%, transparent);
+
   --sp-radius: 0.45rem;
   background: var(--sp-bg);
   color: var(--sp-fg);
@@ -83,6 +92,15 @@
   --sp-ramp-yellow-fill: #432b00; --sp-ramp-yellow-border: #714700; --sp-ramp-yellow-title: #fde283;
   --sp-ramp-green-fill: #14371c;  --sp-ramp-green-border: #265a2f;  --sp-ramp-green-title: #c9edbc;
   --sp-ramp-blue-fill: #123153;   --sp-ramp-blue-border: #20527f;   --sp-ramp-blue-title: #beeaf9;
+
+  /* Colored transitions: stroke 500, label fill 900 toned 65% black, at 50%. */
+  --sp-ramp-purple-edge: #8355e5; --sp-ramp-purple-label: color-mix(in oklab, color-mix(in oklab, #241257 65%, black) 50%, transparent);
+  --sp-ramp-pink-edge: #cf249b; --sp-ramp-pink-label: color-mix(in oklab, color-mix(in oklab, #44032f 65%, black) 50%, transparent);
+  --sp-ramp-red-edge: #d4332d; --sp-ramp-red-label: color-mix(in oklab, color-mix(in oklab, #300408 65%, black) 50%, transparent);
+  --sp-ramp-orange-edge: #c14f0f; --sp-ramp-orange-label: color-mix(in oklab, color-mix(in oklab, #3d1400 65%, black) 50%, transparent);
+  --sp-ramp-yellow-edge: #a06500; --sp-ramp-yellow-label: color-mix(in oklab, color-mix(in oklab, #2e1e00 65%, black) 50%, transparent);
+  --sp-ramp-green-edge: #29833b; --sp-ramp-green-label: color-mix(in oklab, color-mix(in oklab, #0c2612 65%, black) 50%, transparent);
+  --sp-ramp-blue-edge: #3178aa; --sp-ramp-blue-label: color-mix(in oklab, color-mix(in oklab, #0a213d 65%, black) 50%, transparent);
 
   color-scheme: dark;
 }

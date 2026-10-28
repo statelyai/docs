@@ -39,7 +39,7 @@ const groups: { title: string; body: string; level: Level; tools: [string, Level
 export function AgentSetup() {
   const { active, tabProps, panelProps } = useTabs(clientIds, 'claude');
   return (
-    <Section id="agent-setup" event="CONNECT_AGENT">
+    <Section id="agent-setup" event="CONNECT_AGENT" color="blue">
       <SectionHeading
         title="Connect once. Your agent maps the rest."
         lede="A hosted MCP server with 12 tools. Your agent reads the repo, draws the statechart, diffs it, lists its paths, and checks it against the source. You don't draw anything."

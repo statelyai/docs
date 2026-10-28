@@ -28,7 +28,7 @@ const diffDescription =
 
 export function DiffVsGraph() {
   return (
-    <Section id="problem" event="REVIEW" guard="diff unreadable">
+    <Section id="problem" event="REVIEW" guard="diff unreadable" color="red">
       <SectionHeading
         title="Agents write code faster than anyone can review it."
         lede="A diff shows which lines moved. It doesn't show that refund can no longer be reached, or that RETRY now loops back into payment."

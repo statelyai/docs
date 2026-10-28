@@ -51,7 +51,7 @@ function Quote({ t }: { t: (typeof quotes)[number] }) {
 
 export function OpenSource() {
   return (
-    <Section id="xstate" event="BUILD">
+    <Section id="xstate" event="BUILD" color="blue">
       <SectionHeading
         title="Built on XState."
         lede="The open-source state machine library under every Stately diagram. It runs the machine you reviewed, in the browser or on Node, MIT licensed."
@@ -134,7 +134,7 @@ export function OpenSource() {
         <div className="min-w-0 lg:col-start-3 lg:row-start-2">
           <Quote t={quotes[0]} />
         </div>
-        <EdgeLayer decorative edges={[{ id: 'inspect', from: 'xstate-install', to: 'xstate-inspector', label: 'INSPECT' }]} />
+        <EdgeLayer decorative edges={[{ id: 'inspect', from: 'xstate-install', to: 'xstate-inspector', label: 'INSPECT', color: 'blue' }]} />
       </div>
     </Section>
   );

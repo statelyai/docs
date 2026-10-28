@@ -4,6 +4,7 @@ import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CopyButton } from './sections/CopyLine';
 import { EdgeLayer } from './EdgeLayer';
+import type { Ramp } from './Statechart';
 import { DEMO_URL, MCP_CMD, NewTab, SCAN_CMD, breakable } from './lib';
 
 /**
@@ -152,16 +153,16 @@ export function EventLabel({ children, className = '' }: { children: React.React
  * Guarded: the source half is dashed and the label shows the guard. The
  * spacer keeps the heading where it was while the edge is measured.
  */
-export function TransitionIn({ event, guard }: { event: string; guard?: string }) {
+export function TransitionIn({ event, guard, color }: { event: string; guard?: string; color?: Ramp }) {
   return (
     <>
       <div className={`relative ${guard ? 'h-[136px] lg:h-[144px]' : 'h-[112px] lg:h-[128px]'}`} aria-hidden>
-        {/* Below md the edge drops straight onto the title so wide labels stay inside the viewport. */}
-        <span data-edge-id="section-in" className="absolute -top-1 left-[88px] md:left-[2px] xl:left-[-28px] size-1" />
+        {/* Below xl the edge drops straight onto the title, far enough in that wide labels stay inside the viewport. */}
+        <span data-edge-id="section-in" className="absolute -top-1 left-[88px] md:left-[72px] xl:left-[-28px] size-1" />
       </div>
       <EdgeLayer
         decorative
-        edges={[{ id: 'in', from: 'section-in', to: '[data-section-title]', label: event, guard, fromSide: 'bottom', toSide: 'top' }]}
+        edges={[{ id: 'in', from: 'section-in', to: '[data-section-title]', label: event, guard, color, fromSide: 'bottom', toSide: 'top' }]}
       />
     </>
   );
@@ -179,6 +180,7 @@ export function Section({
   className = '',
   bleed = false,
   guard,
+  color,
 }: {
   id?: string;
   event?: string;
@@ -187,11 +189,13 @@ export function Section({
   bleed?: boolean;
   /** guarded entry transition: dashed source half, `IF guard` label */
   guard?: string;
+  /** the entry transition's color */
+  color?: Ramp;
 }) {
   return (
     <section id={id} className={`border-t border-[var(--sp-border)] ${className}`}>
       <div className={`relative ${bleed ? '' : 'mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28'}`}>
-        {event ? <TransitionIn event={event} guard={guard} /> : <div className="h-20 lg:h-28" />}
+        {event ? <TransitionIn event={event} guard={guard} color={color} /> : <div className="h-20 lg:h-28" />}
         {children}
       </div>
     </section>

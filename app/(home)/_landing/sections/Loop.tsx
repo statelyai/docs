@@ -15,13 +15,13 @@ const states = [
 ];
 
 const chain: EdgeSpec[] = [
-  { id: 'maps', from: 'loop-start', to: 'mapped', label: 'AGENT_MAPS' },
-  { id: 'propose', from: 'mapped', to: 'proposed', label: 'PROPOSE_CHANGE' },
-  { id: 'approve', from: 'proposed', to: 'approved', label: 'HUMAN_APPROVES' },
-  { id: 'implement', from: 'approved', to: 'implemented', label: 'AGENT_IMPLEMENTS' },
-  { id: 'verify', from: 'implemented', to: 'verified', label: 'VERIFY' },
-  { id: 'gate', from: 'verified', to: 'ci-gate', label: 'GATE' },
-  { id: 'run', from: 'ci-gate', to: 'what-we-test', label: 'RUN' },
+  { id: 'maps', from: 'loop-start', to: 'mapped', label: 'AGENT_MAPS', color: 'purple' },
+  { id: 'propose', from: 'mapped', to: 'proposed', label: 'PROPOSE_CHANGE', color: 'blue' },
+  { id: 'approve', from: 'proposed', to: 'approved', label: 'HUMAN_APPROVES', color: 'green' },
+  { id: 'implement', from: 'approved', to: 'implemented', label: 'AGENT_IMPLEMENTS', color: 'purple' },
+  { id: 'verify', from: 'implemented', to: 'verified', label: 'VERIFY', color: 'orange' },
+  { id: 'gate', from: 'verified', to: 'ci-gate', label: 'GATE', color: 'yellow' },
+  { id: 'run', from: 'ci-gate', to: 'what-we-test', label: 'RUN', color: 'green' },
 ];
 // lg zigzag: out of each node's right side, into the next one's bottom (row 1) or top (row 2).
 const zigzag: EdgeSpec[] = chain.map((e, i) =>
@@ -33,7 +33,7 @@ const chipCls =
 
 export function Loop() {
   return (
-    <Section id="loop" event="MAP">
+    <Section id="loop" event="MAP" color="purple">
       <SectionHeading
         title="How an agent's change gets reviewed."
         lede="Each state leaves something you can check: a map, a proposal, a visual diff, a code change, a verdict."
