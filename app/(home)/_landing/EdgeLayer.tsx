@@ -202,6 +202,7 @@ export function EdgeLayer({
               if (!at || ev.button !== 0) return;
               ev.preventDefault();
               ev.currentTarget.setPointerCapture(ev.pointerId);
+              document.body.style.userSelect = 'none';
               const p = local(ev);
               setDragging({ id: e.id, off: [p[0] - at[0], p[1] - at[1]], moved: false });
             }}
@@ -213,13 +214,17 @@ export function EdgeLayer({
             }}
             onPointerUp={() => {
               if (!active) return;
+              document.body.style.userSelect = '';
               const moved = dragging?.moved;
               setDragging(null);
               // A click without movement keeps the auto-routed position;
               // only a real drag settles a waypoint.
               if (moved && at) move(at);
             }}
-            onPointerCancel={() => setDragging(null)}
+            onPointerCancel={() => {
+              document.body.style.userSelect = '';
+              setDragging(null);
+            }}
             onKeyDown={(ev) => {
               const k = keys[ev.key];
               if (!k || !at) return;

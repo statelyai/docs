@@ -1,11 +1,11 @@
 // §10 Pricing teaser. Tiers and lines mirror app/(home)/pricing/page.tsx.
+import { Check } from 'lucide-react';
 import Link from 'next/link';
 import { Statechart, type Machine } from '../Statechart';
 import { DataTable, Section, SectionHeading } from '../shared';
 import { stackOn3, textLinkCls } from '../classes';
 import { DEMO_URL, NewTab } from '../lib';
 
-const cell = (s: React.ReactNode) => <span className="text-[13px] leading-snug block">{s}</span>;
 const price = (main: string, sub?: string) => (
   <span className="block whitespace-nowrap">
     <span className="text-[var(--sp-fg)]">{main}</span>
@@ -13,17 +13,33 @@ const price = (main: string, sub?: string) => (
   </span>
 );
 
-const tiers: [string, React.ReactNode, string][] = [
-  ['Community', price('$0'), 'Editor and code export, 2 projects, 3 machines.'],
-  ['Pro', price('$39 / mo', '$399 / yr'), 'Private projects, AI generation, code sync.'],
-  ['Team', price('$199 / mo', '$167 / mo billed yearly'), 'Pro for up to 10 people.'],
+/** The plan's features, as on /pricing: one line each, the ones people upgrade for first. */
+const features = (items: string[]) => (
+  <ul className="sm:min-w-[18rem] space-y-1 text-[13px] leading-snug">
+    {items.map((f) => (
+      <li key={f} className="flex gap-2">
+        <Check size={14} strokeWidth={2.5} aria-hidden className="mt-[2px] shrink-0 text-[var(--sp-sim)]" />
+        <span>{f}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+const tiers: [string, React.ReactNode, string[]][] = [
+  ['Community', price('$0'), ['Editor and simulation', 'Export to JavaScript and TypeScript', '2 projects, 3 machines']],
+  [
+    'Pro',
+    price('$39 / mo', '$33 / mo billed yearly'),
+    ['Unlimited private projects', 'AI generation, 1,000 a month', 'Codebase sync via GitHub or the CLI', 'Version history and live simulation', 'Figma embeds, colored states'],
+  ],
+  ['Team', price('$199 / mo', '$167 / mo billed yearly'), ['Everything in Pro for up to 10 people', 'Shared team projects', 'Admins, editors, and unlimited viewers']],
   [
     'Enterprise',
     <a key="demo" href={DEMO_URL} target="_blank" rel="noopener noreferrer" className={`whitespace-nowrap ${textLinkCls}`}>
       Book a demo
       <NewTab />
     </a>,
-    'Cloud or self-hosted, SSO, audit logs, priority support.',
+    ['Cloud or self-hosted, custom server locations', 'SSO and audit logs', 'Custom export formats and effect collections', 'Embed Stately in your own apps', 'Dedicated priority support'],
   ],
 ];
 
@@ -68,15 +84,15 @@ export function PricingTeaser() {
     <Section id="pricing" event="UPGRADE">
       <SectionHeading
         title="Start free."
-        lede="Community includes 2 projects and 3 machines. Pro adds private projects, AI generation, and code sync. Team shares it with up to 10 people. Enterprise runs on your infrastructure."
+        lede="Community is the editor, simulation, and code export. Pro adds private projects, AI generation, and codebase sync. Team shares all of it with up to 10 people. Enterprise runs where you need it to."
       />
       <div aria-hidden className="mt-12 hidden lg:block">
         <Statechart machine={tierMachine} className="w-full h-auto max-w-[64rem]" />
       </div>
       <DataTable
         className={`mt-12 lg:mt-8 ${stackOn3}`}
-        head={['Plan', 'Includes', 'Price']}
-        rows={tiers.map(([n, p, f]) => [n, <span key="f" className="block sm:min-w-[16rem]">{cell(f)}</span>, p])}
+        head={['Plan', 'Features', 'Price']}
+        rows={tiers.map(([n, p, f]) => [n, features(f), p])}
       />
       <div className="mt-8 flex flex-wrap items-center gap-3">
         <Link href="/pricing" className="sp-btn sp-btn-outline">

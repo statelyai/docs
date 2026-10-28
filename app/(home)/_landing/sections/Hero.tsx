@@ -1,13 +1,12 @@
 // Hero: copy on the editor's dot grid; the example checkout machine, drawn in
-// the editor's styling and paused in payment, to the right; an editor-style
+// the editor's styling and simulated on a loop, to the right; an editor-style
 // status bar closes it.
-import { Statechart } from '../Statechart';
-import { checkoutMachine } from '../machines';
+import { HeroMachine } from '../HeroMachine';
 import { CtaRow, InitialMarker, InstallPill } from '../shared';
 
 const heroTitle = 'Statechart of an example checkout flow';
 const heroDescription =
-  'Example checkout statechart, simulation paused in payment. States: idle (initial), cart, address, payment (active), declined, confirmed (final), refund (unreachable). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart.';
+  'Example checkout statechart, simulated on a loop: an order is added, checked out, submitted, declined, cancelled, and then paid. States: idle (initial), cart, address, payment, declined, confirmed (final), refund (unreachable). Transitions: idle on ADD_ITEM to cart; cart on CHECKOUT to address; cart on EMPTY to idle; address on SUBMIT to payment; payment on PAID to confirmed; payment on FAIL to declined; declined on RETRY to payment; declined on CANCEL to cart.';
 
 export function Hero() {
   return (
@@ -36,31 +35,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* graph layer. Stacks under the copy below lg. */}
-      <div
-        data-machine-slot="hero"
-        className="relative lg:absolute lg:inset-y-0 lg:left-[55%] xl:left-[50%] lg:right-0 flex items-center justify-center px-4 sm:px-10 lg:pl-0 lg:pr-10 pb-8 lg:pb-0"
-      >
-        <Statechart
-          machine={checkoutMachine.wide}
-          label={heroTitle}
-          description={heroDescription}
-          className="hidden sm:block w-full h-auto max-w-[44rem]"
-        />
-        <Statechart
-          machine={checkoutMachine.tall}
-          label={heroTitle}
-          description={heroDescription}
-          className="sm:hidden w-full h-auto max-w-[26rem]"
-        />
-      </div>
-
-      {/* status bar */}
-      <div className="relative h-8 border-t border-[var(--sp-border)] bg-[var(--sp-canvas)] flex items-center px-4 sm:px-10 sp-mono text-[11.5px] text-[var(--sp-muted-2)] whitespace-nowrap overflow-hidden">
-        <span className="truncate">
-          7 states · 8 transitions · <span className="text-[var(--sp-warn)]">1 unreachable</span> · example: checkout
-        </span>
-      </div>
+      {/* graph layer (stacks under the copy below lg) and the status bar */}
+      <HeroMachine label={heroTitle} description={heroDescription} />
     </section>
   );
 }

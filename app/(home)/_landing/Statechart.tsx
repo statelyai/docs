@@ -1,22 +1,31 @@
-// SVG statechart drawn with the editor's exact styling: 45px rounded nodes,
-// 2px edges with a translucent halo, 10px cubic corners, edges split at their
-// event labels, 10x10 arrowheads with the tip 5px off the target.
+// SVG statechart drawn with the editor's exact styling: nodes sized from
+// their text (12px padding, 2px border, 45px tall), 2px edges with a
+// translucent halo, 10px cubic corners, edges split at their event labels,
+// 10x10 arrowheads with the tip 5px off the target. Optional simulation
+// highlights follow the editor's: a 4px outline on the active state, a 2px
+// ring on labels of enabled transitions, an 8px half-opacity halo on the
+// taken transition, everything else dimmed to 0.5.
 // Hand-placed coordinates; not a layout engine. Used for page motif diagrams.
 import { useId } from 'react';
 import { pathD } from './router';
+import { eventTextWidth, stateTextWidth } from './text';
+
+export type Ramp = 'purple' | 'pink' | 'red' | 'orange' | 'yellow' | 'green' | 'blue';
 
 export type Node = {
   id: string;
   label: string;
   x: number;
   y: number;
+  /** defaults to the text width plus padding, like the editor */
   w?: number;
   h?: number;
   evidence?: string;
   initial?: boolean;
   final?: boolean;
   unreachable?: boolean;
-  active?: 'sim';
+  /** the editor's per-state color */
+  color?: Ramp;
   selected?: boolean;
 };
 
@@ -36,14 +45,34 @@ export type Edge = {
 
 export type Machine = { w: number; h: number; nodes: Node[]; edges: Edge[] };
 
+/** Simulation state: which state is active, which transitions can be taken, which one just was. */
+export type Sim = {
+  active?: string;
+  /** edge keys (see `edgeKey`) */
+  enabled?: string[];
+  taken?: string;
+  /** state being entered: a short fill flash before it becomes active */
+  preview?: string;
+};
+
+export const edgeKey = (e: Pick<Edge, 'from' | 'label'>) => `${e.from}:${e.label}`;
+
 const EDGE = 'var(--sp-edge)';
+const SIM = 'var(--sp-sim)';
 const toneColor = { added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
-const NW = 148;
 const NH = 45;
 const LABEL_H = 40;
+/** 12px padding and a 2px border on each side. */
+const BOX_X = 28;
+/** The final-state icon column. */
+const TYPE_ICON = 28;
+const EASE = 'opacity 0.3s ease-out';
 
-/** Width of an event label: Inter 14px 600, 12px padding, 2px border. */
-export const labelWidth = (s: string) => Math.round(s.length * 9.4) + 28;
+/** Width of a state node: Inter 20px 600 plus padding, plus the icon column for final states. */
+export const nodeWidth = (label: string, final = false) => Math.round(stateTextWidth(label)) + BOX_X + (final ? TYPE_ICON : 0);
+
+/** Width of an event label: Inter 14px 600 plus padding. */
+export const labelWidth = (s: string) => Math.round(eventTextWidth(s)) + BOX_X;
 
 type P = [number, number];
 const sub = (a: P, b: P): P => [a[0] - b[0], a[1] - b[1]];
@@ -67,7 +96,15 @@ function splitEdge(e: Edge) {
   const n = target.length;
   const ld = unit(sub(target[n - 1], target[n - 2]));
   target[n - 1] = along(target[n - 1], ld, -10);
-  return { source, target, mid };
+  return { source, target, mid, end: target[n - 1], dir: ld };
+}
+
+/** The taken-transition halo arrowhead: 18px, same tip as the 10px one. */
+function haloArrow(end: P, d: P) {
+  const tip = along(end, d, 5);
+  const base = along(tip, d, -18);
+  const n: P = [-d[1], d[0]];
+  return [tip, along(base, n, 9), along(base, n, -9)].map((p) => p.join(',')).join(' ');
 }
 
 export function Statechart({
@@ -75,6 +112,7 @@ export function Statechart({
   className,
   label,
   description,
+  sim,
 }: {
   machine: Machine;
   className?: string;
@@ -82,9 +120,11 @@ export function Statechart({
   label?: string;
   /** text alternative; defaults to a generated list of states and transitions */
   description?: string;
+  /** simulation highlights; omit for a plain diagram */
+  sim?: Sim | null;
 }) {
   const { w, h, nodes, edges } = machine;
-  const byId = Object.fromEntries(nodes.map((n) => [n.id, n.label]));
+  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
   const describe = () => {
     const states = nodes
       .map((n) => {
@@ -92,12 +132,13 @@ export function Statechart({
         return flags.length ? `${n.label} (${flags.join(', ')})` : n.label;
       })
       .join(', ');
-    const transitions = edges.map((e) => `${byId[e.from] ?? e.from} on ${e.label} to ${byId[e.to] ?? e.to}`).join('; ');
+    const transitions = edges.map((e) => `${byId[e.from]?.label ?? e.from} on ${e.label} to ${byId[e.to]?.label ?? e.to}`).join('; ');
     return `States: ${states}. Transitions: ${transitions}.`;
   };
   const titleId = `sc-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
   const descId = `${titleId}-desc`;
   const mk = `${titleId}-arrow`;
+  const simOn = !!sim;
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
@@ -123,12 +164,23 @@ export function Statechart({
       </defs>
 
       {edges.map((e) => {
+        const key = edgeKey(e);
         const stroke = e.tone ? toneColor[e.tone] : EDGE;
         const dash = e.tone === 'removed' ? '5 5' : undefined;
-        const { source, target, mid } = splitEdge(e);
+        const { source, target, mid, end, dir } = splitEdge(e);
         const lw = labelWidth(e.label);
+        const enabled = !!sim?.enabled?.includes(key);
+        const taken = sim?.taken === key;
         return (
-          <g key={`${e.from}-${e.to}-${e.label}`}>
+          <g key={key} style={{ opacity: simOn && !enabled && !taken ? 0.5 : 1, transition: EASE }}>
+            {sim !== undefined && (
+              // Taken-transition halo under the stroke, drawn along the path when it fires.
+              <g style={{ opacity: taken ? 1 : 0, transition: EASE }}>
+                <path d={pathD(source)} pathLength={1} fill="none" stroke={SIM} strokeWidth={8} strokeOpacity={0.5} className={taken ? 'sp-sim-draw' : undefined} />
+                <path d={pathD(target)} pathLength={1} fill="none" stroke={SIM} strokeWidth={8} strokeOpacity={0.5} className={taken ? 'sp-sim-draw sp-sim-draw-target' : undefined} />
+                <polygon points={haloArrow(end, dir)} fill={SIM} fillOpacity={0.5} className={taken ? 'sp-sim-arrow' : undefined} />
+              </g>
+            )}
             {[source, target].map((pts, k) => (
               <g key={k}>
                 <path d={pathD(pts)} fill="none" stroke="var(--sp-edge-halo)" strokeWidth={6} />
@@ -144,6 +196,20 @@ export function Statechart({
             ))}
             {!e.labelHidden && (
               <>
+                {sim !== undefined && (
+                  // Enabled transition: a 2px ring outside the label border.
+                  <rect
+                    x={mid[0] - lw / 2 - 1}
+                    y={mid[1] - LABEL_H / 2 - 1}
+                    width={lw + 2}
+                    height={LABEL_H + 2}
+                    rx={16.2}
+                    fill="none"
+                    stroke={SIM}
+                    strokeWidth={2}
+                    style={{ opacity: enabled ? 1 : 0, transition: EASE }}
+                  />
+                )}
                 <rect x={mid[0] - lw / 2} y={mid[1] - LABEL_H / 2} width={lw} height={LABEL_H} rx={15.2} fill="var(--sp-label-bg)" stroke={stroke} strokeWidth={2} />
                 <text x={mid[0]} y={mid[1] + 5} textAnchor="middle" fontSize={14} fontWeight={600} fill="var(--sp-fg)">
                   {e.label}
@@ -155,13 +221,18 @@ export function Statechart({
       })}
 
       {nodes.map((n) => {
-        const nw = n.w ?? NW;
+        const nw = n.w ?? nodeWidth(n.label, n.final);
         const nh = n.h ?? (n.evidence ? 57 : NH);
         // Title line box: 8px top padding, 25px line; or centered when alone.
         const titleMid = n.evidence ? n.y + 8 + 12.5 : n.y + nh / 2;
-        const tx = n.x + 12 + (n.final ? 28 : 0);
+        const tx = n.x + 12 + (n.final ? TYPE_ICON : 0);
+        const fill = n.color ? `var(--sp-ramp-${n.color}-fill)` : 'var(--sp-node)';
+        const border = n.color ? `var(--sp-ramp-${n.color}-border)` : 'var(--sp-node-stroke)';
+        const ink = n.color ? `var(--sp-ramp-${n.color}-title)` : 'var(--sp-fg)';
+        const active = sim?.active === n.id;
+        const preview = sim?.preview === n.id;
         return (
-          <g key={n.id}>
+          <g key={n.id} style={{ opacity: simOn && !active && !preview ? 0.5 : 1, transition: EASE }}>
             {n.initial && (
               <g transform={`translate(${n.x - 24} ${titleMid - 15})`}>
                 <circle cx={4} cy={4} r={4} fill={EDGE} />
@@ -169,20 +240,35 @@ export function Statechart({
                 <path d="M11,11 L11,19 L19,15 z" fill={EDGE} />
               </g>
             )}
-            {n.active === 'sim' && (
-              <rect x={n.x - 5} y={n.y - 5} width={nw + 10} height={nh + 10} rx={10.2} fill="none" stroke="var(--sp-sim)" strokeWidth={4} />
+            {sim !== undefined && (
+              // Active state: 4px outline, 2px off the border.
+              <rect x={n.x - 4} y={n.y - 4} width={nw + 8} height={nh + 8} rx={9.2} fill="none" stroke={SIM} strokeWidth={4} style={{ opacity: active ? 1 : 0, transition: EASE }} />
             )}
             {n.selected && (
               <rect x={n.x - 4} y={n.y - 4} width={nw + 8} height={nh + 8} rx={9.2} fill="none" stroke="var(--sp-select)" strokeWidth={2} />
             )}
-            <rect x={n.x} y={n.y} width={nw} height={nh} rx={5.2} fill="var(--sp-node)" stroke="var(--sp-node-stroke)" strokeWidth={2} />
+            <rect x={n.x} y={n.y} width={nw} height={nh} rx={5.2} fill={fill} stroke={border} strokeWidth={2} />
+            {sim !== undefined && (
+              // Entering a state: the editor's 16% fill, faded in.
+              <rect
+                x={n.x}
+                y={n.y}
+                width={nw}
+                height={nh}
+                rx={5.2}
+                fill={SIM}
+                fillOpacity={0.16}
+                className={preview ? 'sp-sim-fill' : undefined}
+                style={{ opacity: preview ? 1 : 0, transition: preview ? undefined : EASE }}
+              />
+            )}
             {n.final && (
               <g>
-                <circle cx={n.x + 22} cy={titleMid} r={9} fill="none" stroke="var(--sp-final-icon)" strokeWidth={3} />
-                <circle cx={n.x + 22} cy={titleMid} r={4} fill="var(--sp-final-icon)" />
+                <circle cx={n.x + 22} cy={titleMid} r={9} fill="none" stroke={n.color ? ink : 'var(--sp-final-icon)'} strokeWidth={3} />
+                <circle cx={n.x + 22} cy={titleMid} r={4} fill={n.color ? ink : 'var(--sp-final-icon)'} />
               </g>
             )}
-            <text x={tx} y={titleMid + 7} fontSize={20} fontWeight={600} letterSpacing={-0.2} fill="var(--sp-fg)">
+            <text x={tx} y={titleMid + 7} fontSize={20} fontWeight={600} letterSpacing={-0.2} fill={ink}>
               {n.label}
             </text>
             {n.evidence && (

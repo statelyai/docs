@@ -1,43 +1,63 @@
-// Example machines as Statechart data: hand-placed, editor-styled layouts.
-// Wide variants read left to right; tall variants are for phones.
-import type { Edge, Machine, Node } from './Statechart';
+// Example machines as Statechart data: editor-styled layouts with nodes sized
+// from their text, placed on a small grid; edge waypoints are derived from
+// the node boxes. Wide variants read left to right; tall variants are for phones.
+import { nodeWidth, type Edge, type Machine, type Node } from './Statechart';
 
 type Variant = 'wide' | 'tall';
+type Box = Node & { w: number; h: number; r: number; b: number; cx: number; cy: number };
+
+const H = 45;
+const box = (n: Node): Box => {
+  const w = n.w ?? nodeWidth(n.label, n.final);
+  return { ...n, w, h: H, r: n.x + w, b: n.y + H, cx: n.x + w / 2, cy: n.y + H / 2 };
+};
 
 /** checkout: 7 states, 8 transitions; refund has no way in. */
-function checkout(v: Variant, opts: { active?: boolean; diff?: boolean } = {}): Machine {
+function checkout(v: Variant, opts: { diff?: boolean } = {}): Machine {
   const wide = v === 'wide';
-  const at = (wx: number, wy: number, tx: number, ty: number) => (wide ? { x: wx, y: wy } : { x: tx, y: ty });
-  const nodes: Node[] = [
-    { id: 'idle', label: 'idle', initial: true, ...at(40, 40, 44, 30), w: wide ? 148 : 120 },
-    { id: 'cart', label: 'cart', ...at(348, 40, 44, 170), w: wide ? 148 : 120 },
-    { id: 'address', label: 'address', ...at(656, 40, 44, 310), w: wide ? 148 : 120 },
-    { id: 'payment', label: 'payment', ...at(656, 220, 44, 450), w: wide ? 148 : 120, active: opts.active ? 'sim' : undefined },
-    { id: 'declined', label: 'declined', ...at(348, 220, 264, 450), w: wide ? 148 : 130 },
-    { id: 'confirmed', label: 'confirmed', final: true, ...at(646, 400, 44, 590), w: 168 },
-    { id: 'refund', label: 'refund', unreachable: true, ...at(40, 220, 264, 590), w: wide ? 148 : 130 },
-  ];
-  const edges: Edge[] = wide
-    ? [
-        { from: 'idle', to: 'cart', label: 'ADD_ITEM', points: [[188, 62.5], [348, 62.5]] },
-        { from: 'cart', to: 'idle', label: 'EMPTY', points: [[380, 85], [380, 150], [114, 150], [114, 85]], labelSeg: 1 },
-        { from: 'cart', to: 'address', label: 'CHECKOUT', points: [[496, 62.5], [656, 62.5]] },
-        { from: 'address', to: 'payment', label: 'SUBMIT', points: [[730, 85], [730, 220]] },
-        { from: 'payment', to: 'confirmed', label: 'PAID', points: [[750, 265], [750, 400]] },
-        { from: 'payment', to: 'declined', label: 'FAIL', points: [[656, 242.5], [496, 242.5]] },
-        { from: 'declined', to: 'payment', label: 'RETRY', points: [[422, 265], [422, 330], [690, 330], [690, 265]], labelSeg: 1 },
-        { from: 'declined', to: 'cart', label: 'CANCEL', points: [[460, 220], [460, 85]] },
-      ]
-    : [
-        { from: 'idle', to: 'cart', label: 'ADD_ITEM', points: [[104, 75], [104, 170]] },
-        { from: 'cart', to: 'idle', label: 'EMPTY', points: [[164, 180], [214, 180], [214, 52.5], [164, 52.5]], labelSeg: 1 },
-        { from: 'cart', to: 'address', label: 'CHECKOUT', points: [[104, 215], [104, 310]] },
-        { from: 'address', to: 'payment', label: 'SUBMIT', points: [[104, 355], [104, 450]] },
-        { from: 'payment', to: 'confirmed', label: 'PAID', points: [[84, 495], [84, 590]] },
-        { from: 'payment', to: 'declined', label: 'FAIL', points: [[164, 472.5], [264, 472.5]] },
-        { from: 'declined', to: 'payment', label: 'RETRY', points: [[300, 495], [300, 540], [134, 540], [134, 495]], labelSeg: 1 },
-        { from: 'declined', to: 'cart', label: 'CANCEL', points: [[329, 450], [329, 205], [164, 205]], labelSeg: 0 },
-      ];
+  // Columns: the left edge of each is the previous column's widest node plus a gap.
+  const gap = wide ? 160 : 104;
+  const x0 = wide ? 40 : 44;
+  const x1 = x0 + Math.max(nodeWidth('idle'), nodeWidth('refund'), wide ? 0 : nodeWidth('confirmed', true)) + gap;
+  const x2 = x1 + Math.max(nodeWidth('cart'), nodeWidth('declined')) + gap;
+  const at = (col: number, row: number) => (wide ? { x: [x0, x1, x2][col], y: 40 + row * 180 } : { x: col ? x1 : x0, y: 30 + row * 140 });
+  const n = {
+    idle: box({ id: 'idle', label: 'idle', initial: true, ...at(0, 0) }),
+    cart: box({ id: 'cart', label: 'cart', ...(wide ? at(1, 0) : at(0, 1)) }),
+    address: box({ id: 'address', label: 'address', ...(wide ? at(2, 0) : at(0, 2)) }),
+    payment: box({ id: 'payment', label: 'payment', color: 'purple', ...(wide ? at(2, 1) : at(0, 3)) }),
+    declined: box({ id: 'declined', label: 'declined', color: 'red', ...(wide ? at(1, 1) : at(1, 3)) }),
+    confirmed: box({ id: 'confirmed', label: 'confirmed', final: true, color: 'green', ...(wide ? { x: x2 - 10, y: 400 } : at(0, 4)) }),
+    refund: box({ id: 'refund', label: 'refund', unreachable: true, color: 'yellow', ...(wide ? at(0, 1) : at(1, 4)) }),
+  };
+  const { idle, cart, address, payment, declined, confirmed, refund } = n;
+  let edges: Edge[];
+  if (wide) {
+    const cancelX = cart.r - 16; // inside both cart and declined
+    edges = [
+      { from: 'idle', to: 'cart', label: 'ADD_ITEM', points: [[idle.r, idle.cy], [cart.x, idle.cy]] },
+      { from: 'cart', to: 'idle', label: 'EMPTY', points: [[cart.x + 16, cart.b], [cart.x + 16, cart.b + 65], [idle.cx, cart.b + 65], [idle.cx, idle.b]], labelSeg: 1 },
+      { from: 'cart', to: 'address', label: 'CHECKOUT', points: [[cart.r, cart.cy], [address.x, cart.cy]] },
+      { from: 'address', to: 'payment', label: 'SUBMIT', points: [[address.x + 74, address.b], [address.x + 74, payment.y]] },
+      { from: 'payment', to: 'confirmed', label: 'PAID', points: [[payment.x + 94, payment.b], [payment.x + 94, confirmed.y]] },
+      { from: 'payment', to: 'declined', label: 'FAIL', points: [[payment.x, payment.cy], [declined.r, payment.cy]] },
+      { from: 'declined', to: 'payment', label: 'RETRY', points: [[declined.x + 74, declined.b], [declined.x + 74, declined.b + 65], [payment.x + 34, declined.b + 65], [payment.x + 34, payment.b]], labelSeg: 1 },
+      { from: 'declined', to: 'cart', label: 'CANCEL', points: [[cancelX, declined.y], [cancelX, cart.b]] },
+    ];
+  } else {
+    const spine = x0 + 30; // a vertical run that fits the narrowest node
+    const emptyX = Math.max(idle.r, cart.r) + 72; // clear of the ADD_ITEM label
+    edges = [
+      { from: 'idle', to: 'cart', label: 'ADD_ITEM', points: [[spine, idle.b], [spine, cart.y]] },
+      { from: 'cart', to: 'idle', label: 'EMPTY', points: [[cart.r, cart.y + 12], [emptyX, cart.y + 12], [emptyX, idle.cy], [idle.r, idle.cy]], labelSeg: 1 },
+      { from: 'cart', to: 'address', label: 'CHECKOUT', points: [[spine, cart.b], [spine, address.y]] },
+      { from: 'address', to: 'payment', label: 'SUBMIT', points: [[spine, address.b], [spine, payment.y]] },
+      { from: 'payment', to: 'confirmed', label: 'PAID', points: [[spine, payment.b], [spine, confirmed.y]] },
+      { from: 'payment', to: 'declined', label: 'FAIL', points: [[payment.r, payment.cy], [declined.x, payment.cy]] },
+      { from: 'declined', to: 'payment', label: 'RETRY', points: [[declined.x + 36, declined.b], [declined.x + 36, declined.b + 45], [payment.x + 90, declined.b + 45], [payment.x + 90, payment.b]], labelSeg: 1 },
+      { from: 'declined', to: 'cart', label: 'CANCEL', points: [[declined.x + 65, declined.y], [declined.x + 65, cart.y + 33], [cart.r, cart.y + 33]], labelSeg: 0 },
+    ];
+  }
   if (opts.diff) {
     // The PR: RETRY is new, and the only way into refund is gone.
     for (const e of edges) if (e.label === 'RETRY') e.tone = 'added';
@@ -46,14 +66,17 @@ function checkout(v: Variant, opts: { active?: boolean; diff?: boolean } = {}): 
       to: 'refund',
       label: 'REFUND',
       tone: 'removed',
-      points: wide ? [[348, 242.5], [188, 242.5]] : [[364, 495], [364, 590]],
+      points: wide ? [[declined.x, declined.cy], [refund.r, declined.cy]] : [[declined.x + 80, declined.b], [declined.x + 80, refund.y]],
     });
   }
-  return wide ? { w: 854, h: 485, nodes, edges } : { w: 420, h: 655, nodes, edges };
+  const nodes = Object.values(n);
+  const w = Math.max(...nodes.map((b) => b.r), wide ? 0 : Math.max(idle.r, cart.r) + 72 + 50) + 40;
+  const h = Math.max(...nodes.map((b) => b.b)) + 40;
+  return { w, h, nodes, edges };
 }
 
-/** Hero: 7 states, 8 transitions, refund unreachable; simulation paused in payment. */
-export const checkoutMachine = { wide: checkout('wide', { active: true }), tall: checkout('tall', { active: true }) };
+/** Hero: 7 states, 8 transitions, refund unreachable; simulated live. */
+export const checkoutMachine = { wide: checkout('wide'), tall: checkout('tall') };
 
 /** Fig 2: the same checkout after the PR. RETRY added, REFUND removed. */
 export const checkoutAfterMachine = { wide: checkout('wide', { diff: true }), tall: checkout('tall', { diff: true }) };

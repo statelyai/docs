@@ -21,8 +21,8 @@ export const xstateFacts: { label: string; value: string; source: string; asOf: 
   },
   {
     label: 'years in production',
-    value: '9',
-    source: 'registry.npmjs.org/xstate, first publish 2017-05-24',
+    value: '10',
+    source: 'github.com/statelyai/xstate, project history from 2016',
     asOf: '2026-10-24',
   },
 ];

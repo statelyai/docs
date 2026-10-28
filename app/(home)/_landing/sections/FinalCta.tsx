@@ -9,9 +9,9 @@ export function FinalCta() {
         <div data-section-title="" className="relative w-fit max-w-[44rem]">
           <StateNode
             final
-            iconSize={30}
+            iconSize={24}
             title={
-              <h2 className="text-[2.25rem] sm:text-[2.75rem] lg:text-[3.25rem] leading-[1.05] font-semibold tracking-tight text-[var(--sp-fg)]">
+              <h2 className="text-[1.75rem] sm:text-[2rem] lg:text-[2.25rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
                 Map your first repo.
               </h2>
             }

@@ -1,7 +1,8 @@
 // §8 Open source anchor: XState facts, install, one package line,
 // plus XState users (logos are old page assets) and permitted testimonials.
 import { xstateFacts } from '../facts';
-import { Edge, Pane, Section, SectionHeading, Stability } from '../shared';
+import { EdgeLayer } from '../EdgeLayer';
+import { Pane, Section, SectionHeading, Stability } from '../shared';
 import { Chip, CopyLine } from './CopyLine';
 
 // Logos are white-filled SVGs; drawn as masks so they take the theme's ink.
@@ -63,15 +64,14 @@ export function OpenSource() {
             className={`flex flex-col-reverse justify-end px-4 py-4 sm:px-5 border-[var(--sp-border)] ${i % 2 === 1 ? 'border-l' : ''} ${i >= 2 ? 'border-t lg:border-t-0' : ''} ${i === 2 ? 'lg:border-l' : ''}`}
           >
             <dt className="mt-1 text-[13px] text-[var(--sp-muted)]">{f.label}</dt>
-            <dd className="text-[30px] leading-none font-semibold tracking-tight tabular-nums text-[var(--sp-orange)]">{f.value}</dd>
+            <dd className="text-[30px] leading-none font-semibold tracking-tight tabular-nums text-[var(--sp-sim)]">{f.value}</dd>
           </div>
         ))}
       </dl>
-      <p className="mt-3 sp-mono text-[11.5px] leading-relaxed text-[var(--sp-muted)]">
-        Sources: npm registry and GitHub, as of {xstateFacts[1].asOf}.
-      </p>
-      <div className="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start">
-        <div className="min-w-0 space-y-6">
+      {/* lg: install | INSPECT | inspector, with the quotes and logos in a second row. Below lg the two panes stack first, so the edge spans only the gap. */}
+      <div className="relative mt-8 grid gap-y-6 lg:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] items-start">
+        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+          <div data-edge-id="xstate-install">
           <Pane title="install" right={<Stability level="stable" />}>
             <div className="px-4 pt-1 pb-4">
               <CopyLine flush text="npm install xstate" />
@@ -81,11 +81,33 @@ export function OpenSource() {
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {['React', 'Vue', 'Svelte', 'Solid'].map((f) => (
-                  <Chip key={f} className="!border-[var(--sp-orange)]/50">{f}</Chip>
+                  <Chip key={f} className="!border-[var(--sp-sim)]/50">{f}</Chip>
                 ))}
               </div>
             </div>
           </Pane>
+          </div>
+        </div>
+        <div className="h-[56px] lg:h-auto lg:col-start-2 lg:row-start-1" aria-hidden />
+        <div className="min-w-0 lg:col-start-3 lg:row-start-1">
+          <div data-edge-id="xstate-inspector">
+          <Pane title="inspector">
+            <div className="p-5">
+              <p className="text-[16px] font-semibold text-[var(--sp-fg)]">
+                Inspect a running XState app.
+              </p>
+              <p className="mt-2 text-[15px] leading-relaxed text-[var(--sp-muted)]">
+                Attach the inspector to a running app and watch states,
+                events, and actors as they happen.
+              </p>
+              <a href="/docs/inspector" className="sp-btn sp-btn-outline mt-5">
+                Open the inspector docs
+              </a>
+            </div>
+          </Pane>
+          </div>
+        </div>
+        <div className="min-w-0 space-y-6 lg:col-start-1 lg:row-start-2">
           <p className="sp-mono text-[12px] text-[var(--sp-muted)]">
             xstate 5 · xstate/graph · @xstate/store · xstate 6 <span className="text-[var(--sp-warn)]">alpha</span>
           </p>
@@ -109,27 +131,10 @@ export function OpenSource() {
             </div>
           </div>
         </div>
-        <div className="my-1 lg:my-0 lg:mx-1 lg:-mt-[2px]">
-          <Edge dir="down" label="INSPECT" length={104} className="lg:hidden" />
-          <Edge dir="right" label="INSPECT" length={160} className="hidden lg:flex" />
-        </div>
-        <div className="min-w-0 space-y-6">
-          <Pane title="inspector">
-            <div className="p-5">
-              <p className="text-[16px] font-semibold text-[var(--sp-fg)]">
-                Inspect a running XState app.
-              </p>
-              <p className="mt-2 text-[15px] leading-relaxed text-[var(--sp-muted)]">
-                Attach the inspector to a running app and watch states,
-                events, and actors as they happen.
-              </p>
-              <a href="/docs/inspector" className="sp-btn sp-btn-outline mt-5">
-                Open the inspector docs
-              </a>
-            </div>
-          </Pane>
+        <div className="min-w-0 lg:col-start-3 lg:row-start-2">
           <Quote t={quotes[0]} />
         </div>
+        <EdgeLayer decorative edges={[{ id: 'inspect', from: 'xstate-install', to: 'xstate-inspector', label: 'INSPECT' }]} />
       </div>
     </Section>
   );
