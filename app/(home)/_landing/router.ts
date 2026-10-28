@@ -100,6 +100,8 @@ function anchorPairs(a: Box, b: Box, fs: Side, ts: Side, w: Pt | null): [Pt, Pt]
     const s2: Pt = [s[0], s[1]], t2: Pt = [t[0], t[1]];
     if (w && ahi >= alo) s2[k] = clamp(w[k], alo, ahi);
     if (w && bhi >= blo) t2[k] = clamp(w[k], blo, bhi);
+    // A point source (no span of its own) lands at the nearest spot on the target side.
+    if (!w && ahi < alo && bhi >= blo) t2[k] = clamp(s[k], blo, bhi);
     if (!out.length || s2[k] !== out[0][0][k] || t2[k] !== out[0][1][k]) out.push([s2, t2]);
   }
   return out;

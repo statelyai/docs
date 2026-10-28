@@ -147,7 +147,8 @@ export function EventLabel({ children, className = '' }: { children: React.React
 /**
  * The transition into a section, routed by EdgeLayer like any other edge:
  * from a 4px anchor on the section's top hairline (in the gutter on xl) to
- * the heading's anchor, so the label can be dragged and the edge re-routes.
+ * the top of the heading's own box, so the label can be dragged along it and
+ * the edge re-routes.
  * Guarded: the source half is dashed and the label shows the guard. The
  * spacer keeps the heading where it was while the edge is measured.
  */
@@ -166,10 +167,9 @@ export function TransitionIn({ event, guard }: { event: string; guard?: string }
   );
 }
 
-/** Target anchor for TransitionIn: 4px box whose top is 3px above the title; 88px in below md, 42px from md, 12px on xl. */
-export function TitleAnchor() {
-  return <span data-section-title aria-hidden className="absolute -top-[3px] left-[88px] md:left-[42px] xl:left-[12px] size-1" />;
-}
+// `data-section-title` marks the box TransitionIn lands on. It goes on the
+// heading itself, sized to its text (`w-fit`) rather than the column, so the
+// arrow can be dragged anywhere along its top.
 
 /** Standard section shell: hairline top border, transition edge in, container. */
 export function Section({
@@ -210,8 +210,7 @@ export function SectionHeading({
 }) {
   return (
     <div className={`relative max-w-[44rem] ${className}`}>
-      <TitleAnchor />
-      <h2 className="text-[2rem] sm:text-[2.25rem] lg:text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
+      <h2 data-section-title="" className="w-fit text-[2rem] sm:text-[2.25rem] lg:text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-[var(--sp-fg)]">
         {title}
       </h2>
       {lede && (

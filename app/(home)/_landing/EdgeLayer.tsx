@@ -178,6 +178,7 @@ export function EdgeLayer({
             ref={(el) => {
               pills.current[e.id] = el;
             }}
+            data-edge-label={e.id}
             role={decorative ? undefined : 'button'}
             tabIndex={at && !decorative ? 0 : -1}
             aria-hidden={decorative || undefined}

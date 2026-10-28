@@ -1,13 +1,12 @@
 // §12 Final CTA: the page ends in a final state.
-import { CtaRow, InstallPill, StateNode, TitleAnchor, TransitionIn } from '../shared';
+import { CtaRow, InstallPill, StateNode, TransitionIn } from '../shared';
 
 export function FinalCta() {
   return (
     <section id="start" className="sp-grid border-t border-[var(--sp-border)]">
       <div className="relative mx-auto max-w-6xl px-6 sm:px-10 pb-20 lg:pb-28">
         <TransitionIn event="START" />
-        <div className="relative max-w-[44rem]">
-          <TitleAnchor />
+        <div data-section-title="" className="relative w-fit max-w-[44rem]">
           <StateNode
             final
             iconSize={30}
