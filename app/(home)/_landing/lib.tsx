@@ -53,5 +53,5 @@ export function encodeMachine(source: string) {
  * (toolbar, command palette, simulation) in the given theme. No account needed.
  */
 export function vizUrl(source: string, theme: 'light' | 'dark' = 'dark') {
-  return `https://editor.stately.ai/viz?theme=${theme}#machine=${encodeMachine(source)}&format=xstate`;
+  return `https://editor.stately.ai/viz?theme=${theme}&panels=simulation#machine=${encodeMachine(source)}&format=xstate`;
 }
