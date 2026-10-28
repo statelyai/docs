@@ -22,10 +22,13 @@ export type EdgeSpec = {
   dashed?: boolean;
   /** `text`: the architecture view's bare 12px label instead of the event pill */
   labelStyle?: 'pill' | 'text';
+  /** initial label position: px from the midpoint between the two boxes, across the edge's axis (x for a vertical edge) */
+  offset?: number;
 };
 
 const STROKE = { default: 'var(--sp-edge)', added: 'var(--sp-success)', removed: 'var(--sp-destructive)' } as const;
 const NUDGE = 8;
+const clamp = (v: number, lo: number, hi: number) => (hi < lo ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, v)));
 const keys: Record<string, Pt> = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
 
 const selector = (k: string) => (/^[.#[]/.test(k) ? k : `[data-edge-id="${CSS.escape(k)}"]`);
@@ -108,7 +111,13 @@ export function EdgeLayer({
       const b = geo.boxes[e.to];
       if (!a || !b) continue;
       const size = e.label ? geo.pills[e.id] : undefined;
-      out[e.id] = routeElbow(a, b, way[e.id] ?? null, { fromSide: e.fromSide, toSide: e.toSide, label: size });
+      let w = way[e.id] ?? null;
+      if (!w && e.offset !== undefined) {
+        const vertical = e.fromSide === 'top' || e.fromSide === 'bottom';
+        w = [(a.x + a.w / 2 + b.x + b.w / 2) / 2, (a.y + a.h / 2 + b.y + b.h / 2) / 2];
+        w[vertical ? 0 : 1] += e.offset;
+      }
+      out[e.id] = routeElbow(a, b, w, { fromSide: e.fromSide, toSide: e.toSide, label: size });
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,7 +180,13 @@ export function EdgeLayer({
         const at = r?.label;
         const active = dragging?.id === e.id;
         const text = e.labelStyle === 'text';
-        const move = (p: Pt) => setWay((w) => ({ ...w, [e.id]: p }));
+        // Waypoints stay inside the layer, so a label cannot be dragged out of its pane.
+        const move = (p: Pt) => {
+          const el = root.current;
+          const [pw, ph] = geo!.pills[e.id] ?? [0, 0];
+          const q: Pt = el ? [clamp(p[0], pw / 2, el.clientWidth - pw / 2), clamp(p[1], ph / 2, el.clientHeight - ph / 2)] : p;
+          setWay((w) => ({ ...w, [e.id]: q }));
+        };
         return (
           <div
             key={e.id}

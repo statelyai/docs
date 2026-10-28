@@ -309,7 +309,7 @@ export function Edge({
   bidirectional = false,
   className = '',
 }: {
-  dir?: 'down' | 'up' | 'right' | 'left';
+  dir?: 'down' | 'right';
   /** arrowheads at both ends (e.g. two-way sync) */
   bidirectional?: boolean;
   label?: string;
@@ -317,26 +317,22 @@ export function Edge({
   length?: number;
   className?: string;
 }) {
-  const vertical = dir === 'down' || dir === 'up';
+  const vertical = dir === 'down';
   const seg = <span className={`flex-1 ${vertical ? 'w-[2px]' : 'h-[2px]'} ${segCls}`} />;
-  const opposite = { down: 'up', up: 'down', right: 'left', left: 'right' } as const;
   // The arrowhead overlaps the end of its run by 5px, so the tip sits 5px off the target.
   const pull = { down: '-mt-[5px] mb-[5px]', up: '-mb-[5px] mt-[5px]', right: '-ml-[5px] mr-[5px]', left: '-mr-[5px] ml-[5px]' } as const;
-  // One-way edges get an arrow-sized spacer at the tail, so a label sits at
-  // the same point on an edge whichever way it runs.
   const parts = (
     <>
-      {bidirectional ? <Arrowhead dir={opposite[dir]} className={pull[opposite[dir]]} /> : <span className={vertical ? 'h-[10px]' : 'w-[10px]'} />}
+      {bidirectional && <Arrowhead dir={vertical ? 'up' : 'left'} className={vertical ? pull.up : pull.left} />}
       {seg}
       {label && <EventLabel>{label}</EventLabel>}
       {label && seg}
       <Arrowhead dir={dir} className={pull[dir]} />
     </>
   );
-  const flow = { down: 'flex-col', up: 'flex-col-reverse', right: 'flex-row', left: 'flex-row-reverse' } as const;
   return (
     <div
-      className={`${flow[dir]} ${vertical ? 'mx-auto w-max' : 'h-max'} flex items-center ${className}`}
+      className={`${vertical ? 'mx-auto w-max flex-col' : 'h-max flex-row'} flex items-center ${className}`}
       style={vertical ? { height: length } : { width: length }}
       aria-hidden
     >

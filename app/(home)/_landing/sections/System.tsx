@@ -7,7 +7,7 @@ import { EdgeLayer, type EdgeSpec } from '../EdgeLayer';
 import { Statechart } from '../Statechart';
 import { paymentMachine } from '../machines';
 import { parallelRegionCls } from '../classes';
-import { Edge, Section, SectionHeading } from '../shared';
+import { Section, SectionHeading } from '../shared';
 import { TextLink } from './CopyLine';
 
 const paymentDescription =
@@ -64,6 +64,13 @@ const relationships: EdgeSpec[] = [
   { id: 'writes', from: 'arch-checkout', to: 'arch-orders' },
   { id: 'charge', from: 'arch-checkout', to: 'arch-payments', label: 'CHARGE', dashed: true, labelStyle: 'text' },
   { id: 'receipt', from: 'arch-payments', to: 'arch-email', label: 'RECEIPT', dashed: true, labelStyle: 'text' },
+];
+
+/* ---------- two-way editing: one transition each way, side by side ---------- */
+
+const editEdges: EdgeSpec[] = [
+  { id: 'graph', from: 'edit-graph', to: 'edit-code', label: 'EDIT_GRAPH', fromSide: 'bottom', toSide: 'top', offset: -72 },
+  { id: 'code', from: 'edit-code', to: 'edit-graph', label: 'EDIT_CODE', fromSide: 'top', toSide: 'bottom', offset: 72 },
 ];
 
 const architectureDescription =
@@ -168,22 +175,26 @@ export function System() {
             href="/docs/xstate-vscode-extension"
             link="VS Code extension"
           >
-            <div
-              data-machine-slot="system-edit"
-              className="flex-1 min-h-0 flex items-center justify-center p-3 rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden"
-            >
-              <Statechart machine={paymentMachine} label="Payment statechart in the editor" description={paymentDescription} className="w-full h-full max-w-[22rem]" />
+            <div className="relative flex-1 min-h-0 flex flex-col">
+              <div
+                data-machine-slot="system-edit"
+                data-edge-id="edit-graph"
+                className="flex-1 min-h-0 flex items-center justify-center p-3 rounded-[var(--sp-radius)] border border-[var(--sp-border)] sp-grid overflow-hidden"
+              >
+                <Statechart machine={paymentMachine} label="Payment statechart in the editor" description={paymentDescription} className="w-full h-full max-w-[22rem]" />
+              </div>
+              {/* Room for the two transitions, one each way: the diagram writes the source, the source redraws the diagram. */}
+              <div className="h-[88px] shrink-0" aria-hidden />
+              <pre
+                data-edge-id="edit-code"
+                className="shrink-0 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.5] text-[var(--sp-muted)] overflow-hidden"
+              >
+                {'states: {\n  declined: {\n    on: { '}
+                <span className="text-[var(--sp-fg)] underline decoration-[var(--sp-primary)] decoration-2 underline-offset-[3px]">RETRY: &apos;payment&apos;</span>
+                {' },\n  },'}
+              </pre>
+              <EdgeLayer decorative edges={editEdges} />
             </div>
-            {/* Two transitions, one each way: the diagram writes the source, the source redraws the diagram. */}
-            <div className="shrink-0 flex justify-center gap-3" aria-hidden>
-              <Edge dir="down" label="EDIT_GRAPH" length={88} />
-              <Edge dir="up" label="EDIT_CODE" length={88} />
-            </div>
-            <pre className="shrink-0 rounded-[var(--sp-radius)] border border-[var(--sp-border)] bg-[var(--sp-canvas)] px-3 py-2 sp-mono text-[11.5px] leading-[1.5] text-[var(--sp-muted)] overflow-hidden">
-              {'states: {\n  declined: {\n    on: { '}
-              <span className="text-[var(--sp-fg)] underline decoration-[var(--sp-primary)] decoration-2 underline-offset-[3px]">RETRY: &apos;payment&apos;</span>
-              {' },\n  },'}
-            </pre>
           </Region>
         </div>
       </div>
