@@ -4,7 +4,7 @@
     "[XState React](/docs/xstate-react)",
     "[XState Vue](/docs/xstate-vue)",
     "[XState Svelte](/docs/xstate-svelte)",
-    "[XState Graph](/docs/xstate-graph)",
+    "[XState Graph](/docs/graph)",
     "[XState Test](/docs/xstate-test)"
   ]
 }

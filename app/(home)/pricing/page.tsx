@@ -1,8 +1,14 @@
-'use client';
-
 import Link from 'next/link';
+import { pageMetadata } from '@/lib/seo';
 import { Check, ArrowRight } from 'lucide-react';
 import { Footer } from '@/components/Footer';
+
+export const metadata = pageMetadata({
+  title: 'Pricing',
+  description:
+    'Compare Stately Free, Pro, Team, and Enterprise plans for designing, simulating, and collaborating on state machines.',
+  path: '/pricing',
+});
 
 export default function PricingPage() {
   return (

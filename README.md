@@ -46,6 +46,39 @@ available on documentation routes; `@fumadocs/ai-chat` provides its panel,
 streaming Markdown, draft storage, and keyboard shortcuts. The AI SDK transport
 uses `/api/docs/chat`; search tool results link back to documentation pages.
 
+## Search metadata
+
+<!-- search metadata and checks matching lib/seo.ts, app/sitemap.ts, app/llms.mdx/[[...slug]]/route.ts, and scripts/check-seo.mjs -->
+
+Public HTML routes declare canonical URLs on `https://stately.ai`, with shared
+brand defaults and social cards from `lib/seo.ts`. Blog articles also publish
+their frontmatter dates and authors as article metadata and BlogPosting
+structured data. Markdown responses point to their HTML canonical through the
+HTTP `Link` header.
+
+The sitemap contains unique public page URLs and excludes legacy redirect
+sources. It omits modification dates until a source of actual page updates is
+available. Build time is not a page modification date.
+
+To check rendered HTML, article data, sitemap URLs, and Markdown headers, start
+the app and run:
+
+```bash
+pnpm seo:check http://localhost:3000
+```
+
+The check also accepts a deployed or preview origin. Expected canonical and
+social URLs always use the production domain.
+
+<!-- website analytics matching app/layout.tsx and app/(home)/page.tsx -->
+
+Production Vercel builds restore the existing `stately.ai` Plausible tracker,
+including automatic pageviews and tagged click events. Preview and local builds
+omit the script. The landing page editor button sends the `Editor CTA` event;
+add that exact custom event goal in Plausible to report conversions. This event
+counts editor CTA clicks, not completed signups or activation. No prompt text or
+user identifiers are added to analytics.
+
 ## Multi-Repo Docs Sync
 
 This repo can ingest docs content from other `statelyai/*` repos and mount it

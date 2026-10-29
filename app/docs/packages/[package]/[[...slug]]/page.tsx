@@ -19,6 +19,7 @@ import {
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/mdx-components';
 import { DocsSourceNotice } from '@/components/docs-source-notice';
+import { pageMetadata } from '@/lib/seo';
 
 type RenderableDocsData = {
   body: React.ComponentType<{
@@ -90,11 +91,10 @@ export async function generateMetadata(
   const page = getPackagePage(params.package, params.slug);
   if (!page) notFound();
 
-  return {
+  return pageMetadata({
     title: page.data.title,
     description: page.data.description,
-    openGraph: {
-      images: getPageImage(page).url,
-    },
-  };
+    path: page.url,
+    image: getPageImage(page).url,
+  });
 }
