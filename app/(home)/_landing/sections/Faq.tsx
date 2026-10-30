@@ -4,8 +4,13 @@
 import { NewTab, SCAN_CMD, breakable, clients } from '../lib';
 import { Pane, Section, SectionHeading } from '../shared';
 import { textLinkCls } from '../classes';
+import Link from 'next/link';
 
 export const faqItems: { q: string; a: string }[] = [
+  {
+    q: 'What is a state machine?',
+    a: 'A state machine models behavior as states and transitions between them. Events can trigger transitions, changing the current state. Statecharts extend state machines with nested states and parallel regions for concurrent behavior.',
+  },
   {
     q: 'Does Stately replace my workflow runtime?',
     a: 'No. Temporal, Inngest, Restate, and LangGraph keep running your workflows. Stately models, analyzes, and verifies the behavior they run.',
@@ -49,7 +54,19 @@ export function Faq() {
   return (
     <Section id="faq" event="ASK" color="yellow">
       <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_1fr] gap-x-16 gap-y-10 items-start">
-        <SectionHeading title="Questions." className="lg:col-start-1 lg:row-start-1" />
+        <div className="lg:col-start-1 lg:row-start-1">
+          <SectionHeading title="Questions." />
+          <p className="mt-5 text-[15px] leading-relaxed text-[var(--sp-muted)]">
+            Start with{' '}
+            <Link href="/blog/2023-10-02-what-is-a-state-machine" className={textLinkCls}>
+              what a state machine is
+            </Link>, then explore{' '}
+            <Link href="/docs/state-machines-and-statecharts" className={textLinkCls}>
+              state machines and statecharts
+            </Link>{' '}
+            and the <Link href="/docs/actor-model" className={textLinkCls}>actor model</Link>.
+          </p>
+        </div>
         <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 border-t border-[var(--sp-border)]">
           {faqItems.map((f) => (
             <details key={f.q} className="group border-b border-[var(--sp-border)]">

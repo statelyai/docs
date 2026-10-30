@@ -21,9 +21,9 @@ export function Hero() {
             actually does.
           </h1>
           <p className="mt-7 text-lg leading-relaxed text-[var(--sp-muted)] max-w-[32rem]">
-            Your coding agent reads the code. Stately draws the statechart
-            humans can see and agents can reason about, and every part of it
-            can be checked against the code.
+            Stately is a visual state machine editor and software modeling tool.
+            Map your code into statecharts that humans can see and coding agents
+            can reason about.
           </p>
           <CtaRow className="mt-9" />
           <div className="mt-6 max-w-[29rem]">
