@@ -2,14 +2,11 @@ import { pageMetadata, SITE_URL } from '@/lib/seo';
 import { Landing } from './_landing/Landing';
 import { faqItems } from './_landing/sections/Faq';
 
-const title = 'See what your software actually does';
+const title = 'Visual state machine editor and software modeling';
 const description =
-  'Stately maps any app into a statechart humans can see and agents can reason about. Every state, every path, verified against your code. MCP server, CLI, visual editor, and XState.';
+  "Design state machines, statecharts, and workflows in Stately's visual editor. Use MCP tools to help coding agents model and reason about your software.";
 
-export const metadata = {
-  ...pageMetadata({ title, description, path: '/' }),
-  alternates: { canonical: '/', types: { 'text/markdown': '/llms.txt' } },
-};
+export const metadata = pageMetadata({ title, description, path: '/' });
 
 const jsonLd = {
   '@context': 'https://schema.org',

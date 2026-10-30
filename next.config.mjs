@@ -25,6 +25,11 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/blog/2023-10-05-what-is-a-state-machine',
+        destination: '/blog/2023-10-02-what-is-a-state-machine',
+        permanent: true,
+      },
+      {
         source: '/docs/privacy',
         destination: '/privacy',
         permanent: true,
