@@ -58,20 +58,36 @@ export function Faq() {
           <SectionHeading title="Questions." />
           <p className="mt-5 text-[15px] leading-relaxed text-[var(--sp-muted)]">
             Start with{' '}
-            <Link href="/blog/2023-10-02-what-is-a-state-machine" className={textLinkCls}>
+            <Link
+              href="/blog/2023-10-02-what-is-a-state-machine"
+              className={textLinkCls}
+            >
               what a state machine is
-            </Link>, then explore{' '}
-            <Link href="/docs/state-machines-and-statecharts" className={textLinkCls}>
+            </Link>
+            , then explore{' '}
+            <Link
+              href="/docs/state-machines-and-statecharts"
+              className={textLinkCls}
+            >
               state machines and statecharts
             </Link>{' '}
-            and the <Link href="/docs/actor-model" className={textLinkCls}>actor model</Link>.
+            and the{' '}
+            <Link href="/docs/actor-model" className={textLinkCls}>
+              actor model
+            </Link>
+            .
           </p>
         </div>
         <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 border-t border-[var(--sp-border)]">
           {faqItems.map((f) => (
-            <details key={f.q} className="group border-b border-[var(--sp-border)]">
+            <details
+              key={f.q}
+              className="group border-b border-[var(--sp-border)]"
+            >
               <summary className="flex items-start gap-4 py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                <span className="flex-1 text-[15px] sm:text-[16px] font-medium text-[var(--sp-fg)]">{f.q}</span>
+                <span className="flex-1 text-[15px] sm:text-[16px] font-medium text-[var(--sp-fg)]">
+                  {f.q}
+                </span>
                 <span
                   aria-hidden
                   className="sp-mono text-[15px] leading-6 text-[var(--sp-muted)] transition-transform duration-150 group-open:rotate-45"
@@ -79,11 +95,16 @@ export function Faq() {
                   +
                 </span>
               </summary>
-              <p className="pb-5 pr-8 text-[15px] leading-relaxed text-[var(--sp-muted)]">{f.a}</p>
+              <p className="pb-5 pr-8 text-[15px] leading-relaxed text-[var(--sp-muted)]">
+                {f.a}
+              </p>
             </details>
           ))}
         </div>
-        <Pane title="machine-readable" className="min-w-0 lg:col-start-1 lg:row-start-2">
+        <Pane
+          title="machine-readable"
+          className="min-w-0 lg:col-start-1 lg:row-start-2"
+        >
           <ul className="divide-y divide-[var(--sp-border)]">
             {resources.map(([path, what, href]) => (
               <li key={path} className="flex flex-col gap-1 px-4 py-2.5">
@@ -91,7 +112,9 @@ export function Faq() {
                   {href ? (
                     <a
                       href={href}
-                      {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      {...(href.startsWith('http')
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}
                       className={textLinkCls}
                     >
                       {breakable(path)}
@@ -101,7 +124,9 @@ export function Faq() {
                     breakable(path)
                   )}
                 </span>
-                <span className="text-[13px] text-[var(--sp-muted)]">{what}</span>
+                <span className="text-[13px] text-[var(--sp-muted)]">
+                  {what}
+                </span>
               </li>
             ))}
           </ul>

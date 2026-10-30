@@ -111,7 +111,10 @@ for (const path of paths) {
   }
   assert(!content('robots')?.includes('noindex'), `${path} remains indexable`);
   if (path === '/') {
-    assert(/state machine editor/i.test(title), 'Homepage title identifies the product category');
+    assert(
+      /state machine editor/i.test(title),
+      'Homepage title identifies the product category',
+    );
     assert(
       !links.some(
         (link) =>
@@ -140,7 +143,9 @@ for (const path of paths) {
       .flatMap((match) => JSON.parse(match[1])['@graph'] ?? [])
       .find((item) => item['@type'] === 'FAQPage');
     assert(schema?.mainEntity.length > 0, 'Homepage has FAQ structured data');
-    const visibleFaq = [...body.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g)]
+    const visibleFaq = [
+      ...body.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g),
+    ]
       .map(([, detail]) => [
         detail.match(/<summary\b[^>]*>\s*<span\b[^>]*>([\s\S]*?)<\/span>/)?.[1],
         detail.match(/<p\b[^>]*>([\s\S]*?)<\/p>/)?.[1],
@@ -198,7 +203,11 @@ const legacyArticle = await fetch(new URL(legacyStateMachineArticle, baseUrl), {
   redirect: 'manual',
   signal: AbortSignal.timeout(60_000),
 });
-assert.equal(legacyArticle.status, 308, 'Historical article URL redirects permanently');
+assert.equal(
+  legacyArticle.status,
+  308,
+  'Historical article URL redirects permanently',
+);
 assert.equal(
   new URL(legacyArticle.headers.get('location'), baseUrl).href,
   new URL(stateMachineArticle, baseUrl).href,

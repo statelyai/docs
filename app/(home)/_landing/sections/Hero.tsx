@@ -16,8 +16,7 @@ export function Hero() {
         <div className="max-w-[40rem] lg:max-w-[36rem] xl:max-w-[40rem]">
           <h1 className="relative text-[2.75rem] sm:text-[3.5rem] lg:text-[3.25rem] xl:text-[3.5rem] leading-[1.04] font-semibold tracking-tight text-[var(--sp-fg)]">
             <InitialMarker className="absolute right-[calc(100%+4px)] top-0 hidden sm:block" />
-            See what your software{' '}
-            <br className="hidden xl:inline" />
+            See what your software <br className="hidden xl:inline" />
             actually does.
           </h1>
           <p className="mt-7 text-lg leading-relaxed text-[var(--sp-muted)] max-w-[32rem]">

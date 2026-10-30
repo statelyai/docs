@@ -20,12 +20,12 @@ rebuilds the search index before starting Next.js.
 
 <!-- public routes matching app route handlers -->
 
-| Route                   | Description                                              |
-| ----------------------- | -------------------------------------------------------- |
-| `app/(home)`            | The route group for the landing page and other pages.    |
-| `app/docs`              | The documentation layout and pages.                      |
-| `/api/search`           | Public documentation search.                             |
-| `/api/docs/chat`        | Public documentation AI chat.                             |
+| Route            | Description                                           |
+| ---------------- | ----------------------------------------------------- |
+| `app/(home)`     | The route group for the landing page and other pages. |
+| `app/docs`       | The documentation layout and pages.                   |
+| `/api/search`    | Public documentation search.                          |
+| `/api/docs/chat` | Public documentation AI chat.                         |
 
 ## Documentation UI
 

@@ -4,7 +4,7 @@ import { faqItems } from './_landing/sections/Faq';
 
 const title = 'Visual state machine editor and software modeling';
 const description =
-  'Design state machines, statecharts, and workflows in Stately\'s visual editor. Use MCP tools to help coding agents model and reason about your software.';
+  "Design state machines, statecharts, and workflows in Stately's visual editor. Use MCP tools to help coding agents model and reason about your software.";
 
 export const metadata = pageMetadata({ title, description, path: '/' });
 
