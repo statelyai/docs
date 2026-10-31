@@ -74,6 +74,13 @@ assert.match(
   /https:\/\/stately.ai\/docs\/statecharts/,
 );
 assert.match(await markdown.text(), /Nested states/);
+const announcement = await get('/blog/2023-01-19-introducing-the-stately-docs');
+assert.equal(announcement.status, 200);
+assert.match(
+  await announcement.text(),
+  /href="https:\/\/stately.ai\/docs\/xstate"[^>]*>jump straight into XState/,
+  'The coding invitation still links to XState documentation',
+);
 console.log(
   'Statecharts guide, static diagrams, deferred embeds, discovery links, 308 redirect, sitemap, and Markdown: PASS',
 );
