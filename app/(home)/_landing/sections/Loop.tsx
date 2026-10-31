@@ -67,9 +67,9 @@ export function Loop() {
           <div data-edge-id="what-we-test" className="min-w-0 lg:col-start-1 lg:col-span-2 lg:row-start-3 lg:mt-12">
             <StateNode title={<h3 className={nodeTitleCls}>What we test</h3>} className="h-full">
               <p className="px-3 pb-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
-                We run Claude Code and Codex through map, edit, apply, and
-                verify. In each run, every change is cited to its source and
-                checked by verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
+                We run Claude Code and Codex through map, edit, and apply. Each
+                change carries source citations. A trusted execution host can
+                also run verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
               </p>
             </StateNode>
           </div>
