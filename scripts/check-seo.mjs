@@ -18,7 +18,7 @@ async function get(path, headers = {}) {
 function attributes(tag) {
   return Object.fromEntries(
     [...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map((match) => [
-      match[1],
+      match[1].toLowerCase(),
       match[2].replaceAll('&amp;', '&'),
     ]),
   );
@@ -127,8 +127,16 @@ for (const path of paths) {
   const meta = [...body.matchAll(/<meta\b[^>]*>/g)].map(([tag]) =>
     attributes(tag),
   );
-  const content = (name) =>
-    meta.find((item) => item.name === name || item.property === name)?.content;
+  const contents = (name) =>
+    meta
+      .filter(
+        (item) =>
+          item.name?.toLowerCase() === name ||
+          item.property?.toLowerCase() === name,
+      )
+      .map((item) => item.content)
+      .filter((value) => value !== undefined);
+  const content = (name) => contents(name)[0];
   assert(content('description'), `${path} has a description`);
   assert.equal(
     new URL(content('og:url')).href,
@@ -147,8 +155,8 @@ for (const path of paths) {
     );
   }
   for (const directive of [
-    content('robots'),
-    content('googlebot'),
+    ...contents('robots'),
+    ...contents('googlebot'),
     response.headers.get('x-robots-tag'),
   ]) {
     assert(
