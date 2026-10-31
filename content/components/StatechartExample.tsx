@@ -25,18 +25,20 @@ export function StatechartExample({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <figure className="my-6">
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        unoptimized
-        className="h-auto w-full rounded-lg bg-white"
-      />
-      <figcaption className="mt-2 text-sm text-fd-muted-foreground">
-        {caption}
-      </figcaption>
+    <div className="my-6">
+      <figure>
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          unoptimized
+          className="h-auto w-full rounded-lg bg-white"
+        />
+        <figcaption className="mt-2 text-sm text-fd-muted-foreground">
+          {caption}
+        </figcaption>
+      </figure>
       <details
         className="mt-3 rounded-lg border p-3"
         onToggle={(event) => setExpanded(event.currentTarget.open)}
@@ -63,6 +65,6 @@ export function StatechartExample({
           />
         )}
       </details>
-    </figure>
+    </div>
   );
 }
