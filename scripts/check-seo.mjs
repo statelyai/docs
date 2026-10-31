@@ -42,7 +42,14 @@ for (const url of urls) {
 for (const path of ['/', '/pricing', '/privacy', '/terms', '/blog', '/docs']) {
   assert(urls.includes(`${canonicalOrigin}${path}`), `${path} is in sitemap`);
 }
-for (const path of ['/docs/privacy', '/docs/xstate-graph', '/docs/mcp']) {
+const stateMachineArticle = '/blog/2023-10-02-what-is-a-state-machine';
+const legacyStateMachineArticle = '/blog/2023-10-05-what-is-a-state-machine';
+for (const path of [
+  '/docs/privacy',
+  '/docs/xstate-graph',
+  '/docs/mcp',
+  legacyStateMachineArticle,
+]) {
   assert(
     !urls.includes(`${canonicalOrigin}${path}`),
     `${path} redirect is absent`,
@@ -60,6 +67,9 @@ const paths = [
   '/docs',
   '/docs/xstate',
   '/docs/packages/mcp',
+  '/docs/state-machines-and-statecharts',
+  '/docs/actor-model',
+  stateMachineArticle,
   new URL(blogUrl).pathname,
 ];
 
@@ -100,6 +110,77 @@ for (const path of paths) {
     );
   }
   assert(!content('robots')?.includes('noindex'), `${path} remains indexable`);
+  if (path === '/') {
+    assert(
+      /state machine editor/i.test(title),
+      'Homepage title identifies the product category',
+    );
+    assert(
+      !links.some(
+        (link) =>
+          link.rel === 'alternate' &&
+          link.type === 'text/markdown' &&
+          new URL(link.href, baseUrl).pathname === '/llms.txt',
+      ),
+      'Homepage does not advertise the Docs index as equivalent Markdown',
+    );
+    const anchors = [...body.matchAll(/<a\b[^>]*>/g)].map(([tag]) =>
+      attributes(tag),
+    );
+    for (const href of [
+      stateMachineArticle,
+      '/docs/state-machines-and-statecharts',
+      '/docs/actor-model',
+    ]) {
+      assert(
+        anchors.some((anchor) => anchor.href === href),
+        `Homepage links to ${href}`,
+      );
+    }
+    const schema = [
+      ...body.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g),
+    ]
+      .flatMap((match) => JSON.parse(match[1])['@graph'] ?? [])
+      .find((item) => item['@type'] === 'FAQPage');
+    assert(schema?.mainEntity.length > 0, 'Homepage has FAQ structured data');
+    const visibleFaq = [
+      ...body.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/g),
+    ]
+      .map(([, detail]) => [
+        detail.match(/<summary\b[^>]*>\s*<span\b[^>]*>([\s\S]*?)<\/span>/)?.[1],
+        detail.match(/<p\b[^>]*>([\s\S]*?)<\/p>/)?.[1],
+      ])
+      .map((pair) =>
+        pair.map((text) =>
+          text
+            ?.replace(/<[^>]*>/g, '')
+            .replace(/&#x([\da-f]+);/gi, (_, hex) =>
+              String.fromCodePoint(parseInt(hex, 16)),
+            )
+            .replace(/&#(\d+);/g, (_, decimal) =>
+              String.fromCodePoint(Number(decimal)),
+            )
+            .replaceAll('&quot;', '"')
+            .replaceAll('&lt;', '<')
+            .replaceAll('&gt;', '>')
+            .replaceAll('&amp;', '&')
+            .trim(),
+        ),
+      );
+    for (const question of schema.mainEntity) {
+      assert(
+        visibleFaq.some(
+          ([q, a]) => q === question.name && a === question.acceptedAnswer.text,
+        ),
+        `FAQ structured data matches the visible answer for ${question.name}`,
+      );
+    }
+    assert.equal(
+      schema.mainEntity.length,
+      visibleFaq.length,
+      'Every visible FAQ has structured data',
+    );
+  }
   if (path === new URL(blogUrl).pathname) {
     assert.equal(content('og:type'), 'article', `${path} is an article`);
     const schema = [
@@ -117,6 +198,22 @@ for (const path of paths) {
   }
   console.log(`PASS ${path}`);
 }
+
+const legacyArticle = await fetch(new URL(legacyStateMachineArticle, baseUrl), {
+  redirect: 'manual',
+  signal: AbortSignal.timeout(60_000),
+});
+assert.equal(
+  legacyArticle.status,
+  308,
+  'Historical article URL redirects permanently',
+);
+assert.equal(
+  new URL(legacyArticle.headers.get('location'), baseUrl).href,
+  new URL(stateMachineArticle, baseUrl).href,
+  'Historical article URL redirects to the primary article',
+);
+console.log('PASS historical state machine article redirect');
 
 const { response: markdown } = await get('/docs/xstate.mdx');
 assert.equal(

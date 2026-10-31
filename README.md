@@ -25,12 +25,12 @@ work without it.
 
 <!-- public routes matching app route handlers -->
 
-| Route                   | Description                                              |
-| ----------------------- | -------------------------------------------------------- |
-| `app/(home)`            | The route group for the landing page and other pages.    |
-| `app/docs`              | The documentation layout and pages.                      |
-| `/api/search`           | Public documentation search.                             |
-| `/api/docs/chat`        | Public documentation AI chat.                             |
+| Route            | Description                                           |
+| ---------------- | ----------------------------------------------------- |
+| `app/(home)`     | The route group for the landing page and other pages. |
+| `app/docs`       | The documentation layout and pages.                   |
+| `/api/search`    | Public documentation search.                          |
+| `/api/docs/chat` | Public documentation AI chat.                         |
 
 ## Documentation UI
 
@@ -48,7 +48,7 @@ uses `/api/docs/chat`; search tool results link back to documentation pages.
 
 ## Search metadata
 
-<!-- search metadata and checks matching lib/seo.ts, app/sitemap.ts, app/llms.mdx/[[...slug]]/route.ts, and scripts/check-seo.mjs -->
+<!-- search metadata and checks matching lib/seo.ts, app/(home)/page.tsx, app/(home)/_landing/sections/Faq.tsx, next.config.mjs, app/sitemap.ts, app/llms.mdx/[[...slug]]/route.ts, and scripts/check-seo.mjs -->
 
 Public HTML routes declare canonical URLs on `https://stately.ai`, with shared
 brand defaults and social cards from `lib/seo.ts`. Blog articles also publish
@@ -56,12 +56,17 @@ their frontmatter dates and authors as article metadata and BlogPosting
 structured data. Markdown responses point to their HTML canonical through the
 HTTP `Link` header.
 
+The homepage links to state machine and actor model introductions. Its FAQ
+structured data uses the same questions and answers as the visible FAQ.
+The historical October 5 state machine article URL redirects permanently to
+the primary October 2 article.
+
 The sitemap contains unique public page URLs and excludes legacy redirect
 sources. It omits modification dates until a source of actual page updates is
 available. Build time is not a page modification date.
 
-To check rendered HTML, article data, sitemap URLs, and Markdown headers, start
-the app and run:
+To check rendered HTML, educational links, FAQ and article data, sitemap URLs,
+the article redirect, and Markdown headers, start the app and run:
 
 ```bash
 pnpm seo:check http://localhost:3000
