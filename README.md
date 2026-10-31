@@ -51,8 +51,10 @@ their frontmatter dates and authors as article metadata and BlogPosting
 structured data. Markdown responses point to their HTML canonical through the
 HTTP `Link` header.
 
-The homepage links to state machine and actor model introductions. Its FAQ
-structured data uses the same questions and answers as the visible FAQ.
+The homepage links to state machine, statechart, and actor model introductions.
+`/docs/statecharts` covers both statechart and state chart searches. The old
+`/docs/xstate/basics/what-is-a-statechart` route redirects directly to that guide.
+The homepage FAQ structured data uses the same questions and answers as the visible FAQ.
 The historical October 5 state machine article URL redirects permanently to
 the primary October 2 article.
 
@@ -279,3 +281,20 @@ docs are not indexed twice.
 - `pnpm docs:watch`: use and watch available sibling source repos, then regenerate
 - `pnpm dev`: run the app after a sync pass
 - `pnpm build`: run sync and then a production build
+
+## Illustrated examples
+
+<!-- static example rendering from content/components/StatechartExample.tsx -->
+
+`StatechartExample` renders a local diagram, descriptive alt text, and a caption
+in the initial HTML. Opening its keyboard-accessible disclosure loads a
+read-only hosted Studio embed, labeled as requiring sign-in. The image stays
+visible if that embed fails. Without JavaScript, the diagram and direct example
+link still work.
+
+The statecharts guide uses SVG exports from the existing public XState
+introduction examples. Asset provenance is in
+`public/assets/statecharts/README.md`.
+
+After a production build, run `node scripts/check-statecharts.mjs <base-url>`
+to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
