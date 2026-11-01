@@ -1,5 +1,7 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import * as TabsComponents from 'fumadocs-ui/components/tabs';
+import { StatechartExample } from './content/components/StatechartExample';
+import { StatechartActions } from './content/components/StatechartActions';
 import { EmbedMachine } from './content/components/EmbedMachine';
 import { YouTube } from './content/components/YouTube';
 import { Tweet } from './content/components/Tweet';
@@ -15,6 +17,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...TabsComponents,
     ...components,
     EmbedMachine,
+    StatechartExample,
+    StatechartActions,
     YouTube,
     Tweet,
     SplitItem,

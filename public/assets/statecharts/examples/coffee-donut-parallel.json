@@ -1,0 +1,41 @@
+{
+  "id": "order",
+  "initial": "Preparing",
+  "states": {
+    "Preparing": {
+      "type": "parallel",
+      "states": {
+        "Coffee": {
+          "initial": "Brewing",
+          "states": {
+            "Brewing": {
+              "on": {
+                "COFFEE_READY": "Ready"
+              }
+            },
+            "Ready": {
+              "type": "final"
+            }
+          }
+        },
+        "Donut": {
+          "initial": "Glazing",
+          "states": {
+            "Glazing": {
+              "on": {
+                "DONUT_READY": "Ready"
+              }
+            },
+            "Ready": {
+              "type": "final"
+            }
+          }
+        }
+      },
+      "onDone": "Ready for pickup"
+    },
+    "Ready for pickup": {
+      "type": "final"
+    }
+  }
+}

@@ -70,8 +70,12 @@ export function Faq() {
               className={textLinkCls}
             >
               state machines and statecharts
-            </Link>{' '}
-            and the{' '}
+            </Link>
+            ,{' '}
+            <Link href="/docs/statecharts" className={textLinkCls}>
+              state chart examples
+            </Link>
+            , and the{' '}
             <Link href="/docs/actor-model" className={textLinkCls}>
               actor model
             </Link>

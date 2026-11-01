@@ -25,6 +25,11 @@ const config = {
   serverExternalPackages: ['typescript', 'twoslash'],
   async redirects() {
     return [
+      {
+        source: '/docs/xstate/basics/what-is-a-statechart',
+        destination: '/docs/statecharts',
+        permanent: true,
+      },
       ...blogAliases.map((alias) => ({ ...alias, permanent: true })),
       {
         source: '/docs/privacy',

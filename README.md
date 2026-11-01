@@ -51,8 +51,10 @@ their frontmatter dates and authors as article metadata and BlogPosting
 structured data. Markdown responses point to their HTML canonical through the
 HTTP `Link` header.
 
-The homepage links to state machine and actor model introductions. Its FAQ
-structured data uses the same questions and answers as the visible FAQ.
+The homepage links to state machine, statechart, and actor model introductions.
+`/docs/statecharts` covers both statechart and state chart searches. The old
+`/docs/xstate/basics/what-is-a-statechart` route redirects directly to that guide.
+The homepage FAQ structured data uses the same questions and answers as the visible FAQ.
 Historical blog URLs in `lib/blog-aliases.mjs` redirect permanently to the
 current article URLs. Next.js and the rendered SEO check share this reviewed
 list. Article frontmatter changes do not alter these historical redirects.
@@ -284,3 +286,26 @@ docs are not indexed twice.
 - `pnpm docs:watch`: use and watch available sibling source repos, then regenerate
 - `pnpm dev`: run the app after a sync pass
 - `pnpm build`: run sync and then a production build
+
+## Illustrated examples
+
+<!-- static example rendering from content/components/StatechartExample.tsx -->
+
+`StatechartExample` renders a local screenshot, descriptive alt text, and a
+caption in the initial HTML. Opening its keyboard-accessible disclosure loads
+an anonymous, read-only `/viz` view with pan and zoom. The screenshot stays
+visible if the embed fails. Without JavaScript, the screenshot and direct
+example link still work.
+
+To add an example, put its XState JSON definition in
+`public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,
+and capture the corresponding production editor view. Use that entry's ID in
+`StatechartExample`; its source URL and screenshot dimensions come from the
+registry. Asset provenance and capture details are in
+`public/assets/statecharts/README.md`.
+
+`StatechartActions` keeps each editor invitation in a native paragraph so MDX
+cannot turn the link and following punctuation into separate blocks.
+
+After a production build, run `node scripts/check-statecharts.mjs <base-url>`
+to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
