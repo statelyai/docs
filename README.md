@@ -43,7 +43,7 @@ uses `/api/docs/chat`; search tool results link back to documentation pages.
 
 ## Search metadata
 
-<!-- search metadata and checks matching lib/seo.ts, app/(home)/page.tsx, app/(home)/_landing/sections/Faq.tsx, next.config.mjs, app/sitemap.ts, app/llms.mdx/[[...slug]]/route.ts, and scripts/check-seo.mjs -->
+<!-- search metadata and checks matching lib/seo.ts, lib/blog-aliases.mjs, app/(home)/page.tsx, app/(home)/_landing/sections/Faq.tsx, next.config.mjs, app/sitemap.ts, app/llms.mdx/[[...slug]]/route.ts, and scripts/check-seo.mjs -->
 
 Public HTML routes declare canonical URLs on `https://stately.ai`, with shared
 brand defaults and social cards from `lib/seo.ts`. Blog articles also publish
@@ -53,15 +53,16 @@ HTTP `Link` header.
 
 The homepage links to state machine and actor model introductions. Its FAQ
 structured data uses the same questions and answers as the visible FAQ.
-The historical October 5 state machine article URL redirects permanently to
-the primary October 2 article.
+Historical blog URLs in `lib/blog-aliases.mjs` redirect permanently to the
+current article URLs. Next.js and the rendered SEO check share this reviewed
+list. Article frontmatter changes do not alter these historical redirects.
 
 The sitemap contains unique public page URLs and excludes legacy redirect
 sources. It omits modification dates until a source of actual page updates is
 available. Build time is not a page modification date.
 
 To check rendered HTML, educational links, FAQ and article data, sitemap URLs,
-the article redirect, and Markdown headers, start the app and run:
+every historical blog redirect, and Markdown headers, start the app and run:
 
 ```bash
 pnpm seo:check http://localhost:3000
@@ -69,6 +70,10 @@ pnpm seo:check http://localhost:3000
 
 The check also accepts a deployed or preview origin. Expected canonical and
 social URLs always use the production domain.
+Every blog alias must redirect in one hop to an indexable article with its own
+canonical URL. The check rejects duplicate sources, redirect chains, and alias
+URLs in the sitemap. Preview deployments that send `noindex` require a local
+production build to verify article indexability.
 
 <!-- website analytics matching app/layout.tsx and app/(home)/page.tsx -->
 
