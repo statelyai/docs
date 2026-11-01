@@ -1,0 +1,96 @@
+---
+title: David Harel's statecharts paper, explained
+description: Read David Harel's original statecharts paper and explore hierarchy, concurrency, and communication through an original media-player example.
+---
+
+David Harel's 1987 paper, **Statecharts: A visual formalism for complex systems**, describes a way to model systems that respond to events. Statecharts extend conventional state diagrams with hierarchy, concurrency, and communication so that a diagram can describe complex behavior without repeating every combination of states.
+
+This is an original Stately explainer and reading companion. For a first introduction with diagrams you can explore, start with [What are statecharts?](statecharts).
+
+## Read Harel's original paper
+
+[Read the paper as a PDF on Harel's website](https://www.weizmann.ac.il/math/harel/sites/math.harel/files/users/user56/Statecharts.pdf). The link comes from [Harel's publication list](https://www.weizmann.ac.il/math/harel/publications-0), which also records a preliminary technical report from February 1984.
+
+The published citation is:
+
+David Harel. "Statecharts: A visual formalism for complex systems." *Science of Computer Programming*, volume 8, issue 3, pages 231-274, June 1987. [DOI: 10.1016/0167-6423(87)90035-9](https://doi.org/10.1016/0167-6423(87)90035-9).
+
+The PDF contains the original paper. The explanations and media-player example below are Stately's own, with links to modern implementation details.
+
+## Why a flat state diagram gets difficult
+
+Imagine a media player. It can be playing or paused, and its sound can be audible or muted. If you describe both choices in one flat state machine, you need four combined states:
+
+- Playing with audible sound.
+- Playing with muted sound.
+- Paused with audible sound.
+- Paused with muted sound.
+
+Now add an online or offline connection mode. If every combination is possible, there are eight combinations to describe. An event such as `MUTE` also needs a response wherever sound is audible.
+
+The problem is repeated structure. Playback, sound, and connectivity have their own behavior, but a flat diagram mixes their combinations together.
+
+Statecharts let you describe those parts separately while keeping their relationships explicit. The following example illustrates the ideas with a modern application rather than reproducing a diagram from the paper.
+
+## Hierarchy groups states that share behavior
+
+Suppose `Loaded` contains the player's playback and sound behavior. A `CLOSE` event leaves Loaded and enters `Closed`.
+
+You can define that transition on Loaded instead of repeating it for every playing, paused, audible, and muted combination. The parent describes behavior shared by its descendants.
+
+Hierarchy also lets you choose how much detail to show. At one level, the player is Loaded. At a more detailed level, its playback is Playing and its sound is Muted.
+
+Being in a child state also means being in its ancestors. Nesting describes the system's behavior, not just where a box sits on the page. See [parent and child states](parent-states) for XState examples and transition rules.
+
+## Concurrency separates behavior that can happen together
+
+Inside Loaded, use a **Playback** region and a **Sound** region. Both regions are active. Playback can be Playing while Sound is Muted.
+
+![An original media-player statechart snapshot. Loaded contains parallel Playback and Sound regions. Playing is active in Playback, and Muted is active in Sound.](/assets/harel-statecharts/media-player.svg)
+
+This illustration shows one active configuration, Playing and Muted. It omits transitions so that the active states and their containing regions are clear.
+
+In the paper, you will encounter the term *orthogonality*. For this example, think of the independent regions that remain active together. Within each region, the player chooses one of its alternatives.
+
+The four combined configurations still exist. The diagram lets you define Playback and Sound separately instead of giving each combination its own box. Adding a region can increase the number of configurations even when the drawing stays small.
+
+Concurrency in a statechart does not require a CPU thread for each region. See [parallel states](parallel-states) for how XState handles active regions and events.
+
+## Communication coordinates the regions
+
+Separate regions can still respond to the same event. Suppose `RESET_CONTROLS` changes Playing to Paused and Muted to Audible. The model needs to define a response in each relevant region.
+
+Harel's paper includes broadcast communication among the ideas that connect concurrent behavior. The important design question is which active parts can react to an event and how those reactions affect one another.
+
+The boxes alone do not answer that question. An executable model also needs rules for event processing, transition selection, and actions. When you implement the player, check those rules in your chosen runtime. XState documents [event transitions](transitions) and [raised events](actions#raise-action) separately.
+
+## History remembers a previous configuration
+
+Suppose the player leaves Loaded to show a settings screen. Returning through a history state can restore the previous playback and sound states instead of always starting from defaults.
+
+The amount remembered depends on the history type. In XState, shallow history remembers direct children, while deep history remembers active descendants. See [history states](history-states) for defaults and examples.
+
+History is distinct from storing a playback position or restoring an application after a restart. Those requirements also need data and, for restart recovery, [persistence](persistence).
+
+## How to approach the paper
+
+As you read Harel's examples, keep track of the active states and the event being handled. Ask these questions:
+
+- Does containment mean that the system chooses a child, or that several regions are active together?
+- Does a transition leave one child, a whole parent, or multiple active regions?
+- Which states can react to the event, and which conditions allow their transitions?
+- On reentry, does the model use an initial state or remembered history?
+
+These questions make a diagram's behavior concrete. For the media player, try a sequence such as play, mute, open settings, return, and close. Decide what must remain active after each event before choosing the arrows.
+
+## Harel statecharts, SCXML, and XState
+
+The 1987 paper is a starting point for understanding statecharts. Modern tools and standards specify their own execution rules. The W3C's [SCXML recommendation](https://www.w3.org/TR/scxml/) defines an XML state-machine language, including event processing and transition selection.
+
+[XState](xstate) uses statecharts to describe executable application behavior in JavaScript and TypeScript. Its documentation is the reference for how an XState machine runs. Do not assume that every event-ordering or transition-priority rule is identical across the original paper, SCXML, UML state machines, and XState.
+
+To work through a complete example, continue with the [coffee and donut statecharts guide](statecharts). To implement your own model, use the [XState quick start](quick-start).
+
+<div>
+  <a href="https://editor.stately.ai/?source=docs-harel-statecharts" className="plausible-event-name=Editor+CTA">Open the Stately statechart editor</a> to draw and simulate your own model.
+</div>
