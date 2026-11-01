@@ -39,7 +39,7 @@ export default function PricingPage() {
                 ctaHref="/registry/signup"
                 features={[
                   {
-                    text: 'Unlimited public projects and machines',
+                    text: 'Public projects and machines',
                     href: '/docs/studio-community-plan',
                   },
                   {
@@ -53,6 +53,11 @@ export default function PricingPage() {
                   {
                     text: 'Export to JavaScript and TypeScript',
                     href: '/docs/export-as-code',
+                  },
+                  {
+                    text: '200 AI credits / month',
+                    subtext: 'Generate and modify state machines using AI',
+                    href: '/docs/generate-flow',
                   },
                   {
                     text: 'Community support',
@@ -77,7 +82,7 @@ export default function PricingPage() {
                 highlighted
                 features={[
                   {
-                    text: 'Private and unlisted projects',
+                    text: 'Unlimited private and unlisted projects',
                     href: '/docs/projects#change-a-projects-visibility',
                   },
                   {
@@ -102,8 +107,8 @@ export default function PricingPage() {
                     href: '/docs/live-simulation',
                   },
                   {
-                    text: 'Generate and modify state machines using AI ✨',
-                    subtext: '1,000 generations / month',
+                    text: '1,000 AI credits / month ✨',
+                    subtext: 'Generate and modify state machines using AI',
                     href: '/docs/generate-flow',
                   },
                   {
@@ -158,6 +163,11 @@ export default function PricingPage() {
                     text: 'Unlimited view-only access for non-team members',
                     href: '/docs/teams',
                   },
+                  {
+                    text: '4,000 shared AI credits / month',
+                    subtext: 'One allowance for team-owned work',
+                    href: '/docs/generate-flow',
+                  },
                   { text: 'Live collaboration', subtext: 'Coming soon' },
                   { text: 'Priority support' },
                 ]}
@@ -179,7 +189,7 @@ export default function PricingPage() {
                   href: '/docs/studio-pro-plan',
                 },
                 {
-                  text: 'Unlimited generated flows',
+                  text: 'Custom AI allowance',
                   href: '/docs/generate-flow',
                 },
                 { text: 'Flexible hosting' },

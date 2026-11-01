@@ -26,13 +26,13 @@ const features = (items: string[]) => (
 );
 
 const tiers: [string, React.ReactNode, string[]][] = [
-  ['Community', price('$0'), ['Editor and simulation', 'Export to JavaScript and TypeScript', 'Unlimited public projects and machines']],
+  ['Community', price('$0'), ['Public projects and machines', 'Editor, simulation, and code export', '200 AI credits a month']],
   [
     'Pro',
     price('$39 / mo', '$33 / mo billed yearly'),
-    ['Private and unlisted projects', 'Codebase sync via GitHub, CLI, SDK, or MCP', 'Test path generation and locked machines', 'Version history and live simulation', 'AI generation, 1,000 a month'],
+    ['Unlimited private and unlisted projects', 'Codebase sync via GitHub, CLI, SDK, or MCP', 'Test path generation and locked machines', 'Version history and live simulation', '1,000 AI credits a month'],
   ],
-  ['Team', price('$199 / mo', '$167 / mo billed yearly'), ['Everything in Pro for up to 10 people', 'Shared team projects', 'Admins, editors, and unlimited viewers']],
+  ['Team', price('$199 / mo', '$167 / mo billed yearly'), ['Everything in Pro for up to 10 people', 'Shared team projects', '4,000 shared AI credits a month', 'Admins, editors, and unlimited viewers']],
   [
     'Enterprise',
     <a key="demo" href={DEMO_URL} target="_blank" rel="noopener noreferrer" className={`whitespace-nowrap ${textLinkCls}`}>
