@@ -1,18 +1,28 @@
-# Statechart example diagrams
+# Coffee and donut statecharts
 
-These SVG exports accompany the existing public dog statechart examples.
-Source: `statelyai/xstate`, commit
-`d98d948a534b028f4af8b271eb431a8625ab5cb3`, directory
-`docs/guides/introduction-to-state-machines-and-statecharts`.
+Original examples for `/docs/statecharts`. Each JSON definition in `examples/`
+is used by the guide's read-only view and the corresponding screenshot.
 
-| Local file                | Original file            |
-| ------------------------- | ------------------------ |
-| `dog-states.svg`          | `transitions-events.svg` |
-| `dog-nested-states.svg`   | `compound-state.svg`     |
-| `dog-parallel-states.svg` | `parallel-states.svg`    |
+Screenshots captured from **https://editor.stately.ai/viz** on October 31, 2026.
+Source format: `xstate-json`; URL fragment contains the base64url-encoded JSON.
+View options: `chrome=plain`, `theme=light`, `panels=none`. The guide additionally
+sets `interactive=1` for pan and zoom. No customer models or account saves were
+used. Screenshots are unmodified browser captures, cropped to the diagram.
 
-The external font declaration was removed. The exports already include an
-Arial fallback. Images therefore have no external font dependency.
+| Screenshot                | Browser crop (x, y, width, height) |
+| ------------------------- | ---------------------------------- |
+| coffee-order.jpg          | 600, 245, 300, 465                 |
+| coffee-nested.jpg         | 430, 210, 620, 540                 |
+| coffee-donut-parallel.jpg | 405, 290, 660, 390                 |
 
-The source repository is MIT licensed, copyright David Khourshid. The original notice is included in `LICENSE.txt`.
-See https://github.com/statelyai/xstate/blob/d98d948a534b028f4af8b271eb431a8625ab5cb3/LICENSE.
+The nested and parallel screenshots show the editor's compact child-state
+presentation. Child transitions appear inline; parent transitions remain arrows.
+
+To refresh: use `statechartExampleURL` in `lib/statechart-examples.ts` to open
+the exact source in the editor, capture its rendered diagram, and update the
+registered dimensions if the crop changes. Inspect the screenshot before
+publishing. Run `check-statechart-models.mjs` and the rendered guide check.
+
+A future Viz “Copy Docs example” action could export a screenshot, source JSON,
+read-only URL, and MDX snippet together. The public read-only route already
+exists; this would simplify authoring and prevent source/image drift.

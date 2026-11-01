@@ -1,0 +1,37 @@
+{
+  "id": "coffee",
+  "initial": "Ready",
+  "states": {
+    "Ready": {
+      "on": {
+        "ORDER": "Preparing"
+      }
+    },
+    "Preparing": {
+      "initial": "Grinding",
+      "on": {
+        "CANCEL": "Ready"
+      },
+      "states": {
+        "Grinding": {
+          "on": {
+            "GROUND": "Brewing"
+          }
+        },
+        "Brewing": {
+          "on": {
+            "BREWED": "Steaming milk"
+          }
+        },
+        "Steaming milk": {
+          "on": {
+            "STEAMED": "#coffee.Served"
+          }
+        }
+      }
+    },
+    "Served": {
+      "type": "final"
+    }
+  }
+}

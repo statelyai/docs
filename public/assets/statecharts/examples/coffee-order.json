@@ -1,0 +1,20 @@
+{
+  "id": "coffee",
+  "initial": "Ready",
+  "states": {
+    "Ready": {
+      "on": {
+        "ORDER": "Brewing"
+      }
+    },
+    "Brewing": {
+      "on": {
+        "BREWED": "Served",
+        "CANCEL": "Ready"
+      }
+    },
+    "Served": {
+      "type": "final"
+    }
+  }
+}

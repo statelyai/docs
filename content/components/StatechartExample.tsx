@@ -2,38 +2,34 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import {
+  statechartExamples,
+  statechartExampleURL,
+  type StatechartExampleId,
+} from '@/lib/statechart-examples';
 
 type Props = {
   name: string;
-  src: string;
+  example: StatechartExampleId;
   alt: string;
-  width: number;
-  height: number;
   caption: string;
-  embedURL: string;
 };
 
-export function StatechartExample({
-  name,
-  src,
-  alt,
-  width,
-  height,
-  caption,
-  embedURL,
-}: Props) {
+export function StatechartExample({ name, example, alt, caption }: Props) {
   const [expanded, setExpanded] = useState(false);
+  const { width, height } = statechartExamples[example];
+  const embedURL = statechartExampleURL(example);
 
   return (
     <div className="my-6">
       <figure>
         <Image
-          src={src}
+          src={`/assets/statecharts/${example}.jpg`}
           alt={alt}
           width={width}
           height={height}
           unoptimized
-          className="h-auto w-full rounded-lg bg-white"
+          className="mx-auto h-auto max-w-full rounded-lg bg-white"
         />
         <figcaption className="mt-2 text-sm text-fd-muted-foreground">
           {caption}
@@ -43,13 +39,10 @@ export function StatechartExample({
         className="mt-3 rounded-lg border p-3"
         onToggle={(event) => setExpanded(event.currentTarget.open)}
       >
-        <summary className="cursor-pointer">
-          Explore {name} in Stately (sign-in required)
-        </summary>
+        <summary className="cursor-pointer">Explore {name} in Stately</summary>
         <p className="text-sm">
-          This hosted example is read-only and requires Stately sign-in. The
-          diagram above stays available without an account or if the interactive
-          view cannot load.{' '}
+          Pan and zoom this read-only example. The screenshot above stays
+          available if the interactive view cannot load.{' '}
           <a href={embedURL} target="_blank" rel="noopener noreferrer">
             Open the example in a new tab
           </a>

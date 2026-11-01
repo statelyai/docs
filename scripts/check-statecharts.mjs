@@ -11,13 +11,16 @@ assert.equal(response.status, 200);
 const html = await response.text();
 assert.match(
   html,
-  /<title>What are statecharts\? State chart examples \| Stately<\/title>/,
+  /<title>What are statecharts\? Coffee and donut examples \| Stately<\/title>/,
 );
 assert.match(
   html,
   /rel="canonical" href="https:\/\/stately.ai\/docs\/statecharts"/,
 );
-assert.match(html, /Statecharts extend state machines with nested states/);
+assert.match(
+  html,
+  /Learn how statecharts extend state machines with nested states/,
+);
 assert.match(html, /name="twitter:card" content="summary_large_image"/);
 assert(!/<meta[^>]*name="robots"[^>]*noindex/.test(html));
 assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
@@ -27,14 +30,24 @@ assert.equal(
   'Embeds wait for interaction',
 );
 assert.equal((html.match(/<summary\b/g) ?? []).length, 3);
-for (const file of ['dog-states', 'dog-nested-states', 'dog-parallel-states']) {
+for (const file of ['coffee-order', 'coffee-nested', 'coffee-donut-parallel']) {
   assert.match(
     html,
-    new RegExp(`<img[^>]+src="/assets/statecharts/${file}\\.svg"`),
+    new RegExp(`<img[^>]+src="/assets/statecharts/${file}\\.jpg"`),
   );
-  const image = await get(`/assets/statecharts/${file}.svg`);
+  const image = await get(`/assets/statecharts/${file}.jpg`);
   assert.equal(image.status, 200);
-  assert.match(image.headers.get('content-type'), /image\/svg\+xml/);
+  assert.match(image.headers.get('content-type'), /image\/jpeg/);
+}
+assert.match(html, /data-statechart-actions/);
+assert.match(
+  html.replaceAll('<!-- -->', ''),
+  /Try the sample simulation<\/a> without an account\. Sign in/,
+);
+for (const path of ['coffee-order', 'coffee-nested', 'coffee-donut-parallel']) {
+  const source = await get(`/assets/statecharts/examples/${path}.json`);
+  assert.equal(source.status, 200);
+  assert((await source.json()).states);
 }
 for (const path of [
   '/docs',

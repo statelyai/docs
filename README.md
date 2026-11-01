@@ -286,15 +286,21 @@ docs are not indexed twice.
 
 <!-- static example rendering from content/components/StatechartExample.tsx -->
 
-`StatechartExample` renders a local diagram, descriptive alt text, and a caption
-in the initial HTML. Opening its keyboard-accessible disclosure loads a
-read-only hosted Studio embed, labeled as requiring sign-in. The image stays
-visible if that embed fails. Without JavaScript, the diagram and direct example
-link still work.
+`StatechartExample` renders a local screenshot, descriptive alt text, and a
+caption in the initial HTML. Opening its keyboard-accessible disclosure loads
+an anonymous, read-only `/viz` view with pan and zoom. The screenshot stays
+visible if the embed fails. Without JavaScript, the screenshot and direct
+example link still work.
 
-The statecharts guide uses SVG exports from the existing public XState
-introduction examples. Asset provenance is in
+To add an example, put its XState JSON definition in
+`public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,
+and capture the corresponding production editor view. Use that entry's ID in
+`StatechartExample`; its source URL and screenshot dimensions come from the
+registry. Asset provenance and capture details are in
 `public/assets/statecharts/README.md`.
+
+`StatechartActions` keeps each editor invitation in a native paragraph so MDX
+cannot turn the link and following punctuation into separate blocks.
 
 After a production build, run `node scripts/check-statecharts.mjs <base-url>`
 to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
