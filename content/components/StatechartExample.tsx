@@ -1,0 +1,63 @@
+'use client';
+
+import Image from 'next/image';
+import { useState } from 'react';
+import {
+  statechartExamples,
+  statechartExampleURL,
+  type StatechartExampleId,
+} from '@/lib/statechart-examples';
+
+type Props = {
+  name: string;
+  example: StatechartExampleId;
+  alt: string;
+  caption: string;
+};
+
+export function StatechartExample({ name, example, alt, caption }: Props) {
+  const [expanded, setExpanded] = useState(false);
+  const { width, height } = statechartExamples[example];
+  const embedURL = statechartExampleURL(example);
+
+  return (
+    <div className="my-6">
+      <figure>
+        <Image
+          src={`/assets/statecharts/${example}.jpg`}
+          alt={alt}
+          width={width}
+          height={height}
+          unoptimized
+          className="mx-auto h-auto max-w-full rounded-lg bg-white"
+        />
+        <figcaption className="mt-2 text-sm text-fd-muted-foreground">
+          {caption}
+        </figcaption>
+      </figure>
+      <details
+        className="mt-3 rounded-lg border p-3"
+        onToggle={(event) => setExpanded(event.currentTarget.open)}
+      >
+        <summary className="cursor-pointer">Explore {name} in Stately</summary>
+        <p className="text-sm">
+          Pan and zoom this read-only example. The screenshot above stays
+          available if the interactive view cannot load.{' '}
+          <a href={embedURL} target="_blank" rel="noopener noreferrer">
+            Open the example in a new tab
+          </a>
+          .
+        </p>
+        {expanded && (
+          <iframe
+            src={embedURL}
+            title={`${name} read-only statechart`}
+            loading="lazy"
+            className="block h-[480px] w-full border-0"
+            allowFullScreen
+          />
+        )}
+      </details>
+    </div>
+  );
+}

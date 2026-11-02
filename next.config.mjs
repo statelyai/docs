@@ -1,4 +1,5 @@
 import { createMDX } from 'fumadocs-mdx/next';
+import { blogAliases } from './lib/blog-aliases.mjs';
 
 const withMDX = createMDX();
 
@@ -25,10 +26,11 @@ const config = {
   async redirects() {
     return [
       {
-        source: '/blog/2023-10-05-what-is-a-state-machine',
-        destination: '/blog/2023-10-02-what-is-a-state-machine',
+        source: '/docs/xstate/basics/what-is-a-statechart',
+        destination: '/docs/statecharts',
         permanent: true,
       },
+      ...blogAliases.map((alias) => ({ ...alias, permanent: true })),
       {
         source: '/docs/privacy',
         destination: '/privacy',

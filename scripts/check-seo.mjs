@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { blogAliases } from '../lib/blog-aliases.mjs';
 
 const baseUrl = process.argv[2];
 assert(baseUrl, 'Usage: node scripts/check-seo.mjs <base-url>');
@@ -7,6 +8,7 @@ const canonicalOrigin = 'https://stately.ai';
 async function get(path, headers = {}) {
   const response = await fetch(new URL(path, baseUrl), {
     headers,
+    redirect: 'manual',
     signal: AbortSignal.timeout(60_000),
   });
   assert.equal(response.status, 200, `${path} returns 200`);
@@ -16,7 +18,7 @@ async function get(path, headers = {}) {
 function attributes(tag) {
   return Object.fromEntries(
     [...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map((match) => [
-      match[1],
+      match[1].toLowerCase(),
       match[2].replaceAll('&amp;', '&'),
     ]),
   );
@@ -43,13 +45,47 @@ for (const path of ['/', '/pricing', '/privacy', '/terms', '/blog', '/docs']) {
   assert(urls.includes(`${canonicalOrigin}${path}`), `${path} is in sitemap`);
 }
 const stateMachineArticle = '/blog/2023-10-02-what-is-a-state-machine';
-const legacyStateMachineArticle = '/blog/2023-10-05-what-is-a-state-machine';
-for (const path of [
-  '/docs/privacy',
-  '/docs/xstate-graph',
-  '/docs/mcp',
-  legacyStateMachineArticle,
-]) {
+const aliasSources = new Set(blogAliases.map(({ source }) => source));
+assert.equal(
+  aliasSources.size,
+  blogAliases.length,
+  'Blog alias sources are unique',
+);
+for (const { source, destination } of blogAliases) {
+  for (const path of [source, destination]) {
+    assert.match(
+      path,
+      /^\/blog\/[a-z0-9/-]+$/,
+      `${path} is a literal blog path`,
+    );
+  }
+  assert(
+    !aliasSources.has(destination),
+    `${source} does not redirect to an alias`,
+  );
+  assert(
+    !urls.includes(`${canonicalOrigin}${source}`),
+    `${source} alias is absent from sitemap`,
+  );
+  assert(
+    urls.includes(`${canonicalOrigin}${destination}`),
+    `${destination} is in sitemap`,
+  );
+  const response = await fetch(new URL(source, baseUrl), {
+    redirect: 'manual',
+    signal: AbortSignal.timeout(60_000),
+  });
+  assert.equal(response.status, 308, `${source} redirects permanently`);
+  const location = response.headers.get('location');
+  assert(location, `${source} has a redirect destination`);
+  assert.equal(
+    new URL(location, baseUrl).href,
+    new URL(destination, baseUrl).href,
+    `${source} redirects to ${destination}`,
+  );
+  console.log(`PASS redirect ${source} -> ${destination}`);
+}
+for (const path of ['/docs/privacy', '/docs/xstate-graph', '/docs/mcp']) {
   assert(
     !urls.includes(`${canonicalOrigin}${path}`),
     `${path} redirect is absent`,
@@ -58,7 +94,7 @@ for (const path of [
 
 const blogUrl = urls.find((url) => new URL(url).pathname.startsWith('/blog/'));
 assert(blogUrl, 'Sitemap has an article');
-const paths = [
+const paths = new Set([
   '/',
   '/pricing',
   '/privacy',
@@ -71,10 +107,11 @@ const paths = [
   '/docs/actor-model',
   stateMachineArticle,
   new URL(blogUrl).pathname,
-];
+  ...blogAliases.map(({ destination }) => destination),
+]);
 
 for (const path of paths) {
-  const { body } = await get(path);
+  const { response, body } = await get(path);
   const title = body.match(/<title>(.*?)<\/title>/)?.[1];
   assert(title?.includes('Stately'), `${path} has a branded title`);
   const links = [...body.matchAll(/<link\b[^>]*>/g)].map(([tag]) =>
@@ -90,8 +127,16 @@ for (const path of paths) {
   const meta = [...body.matchAll(/<meta\b[^>]*>/g)].map(([tag]) =>
     attributes(tag),
   );
-  const content = (name) =>
-    meta.find((item) => item.name === name || item.property === name)?.content;
+  const contents = (name) =>
+    meta
+      .filter(
+        (item) =>
+          item.name?.toLowerCase() === name ||
+          item.property?.toLowerCase() === name,
+      )
+      .map((item) => item.content)
+      .filter((value) => value !== undefined);
+  const content = (name) => contents(name)[0];
   assert(content('description'), `${path} has a description`);
   assert.equal(
     new URL(content('og:url')).href,
@@ -109,7 +154,16 @@ for (const path of paths) {
       `${path} absolute ${name}`,
     );
   }
-  assert(!content('robots')?.includes('noindex'), `${path} remains indexable`);
+  for (const directive of [
+    ...contents('robots'),
+    ...contents('googlebot'),
+    response.headers.get('x-robots-tag'),
+  ]) {
+    assert(
+      !/\b(noindex|none)\b/i.test(directive ?? ''),
+      `${path} remains indexable`,
+    );
+  }
   if (path === '/') {
     assert(
       /state machine editor/i.test(title),
@@ -198,22 +252,6 @@ for (const path of paths) {
   }
   console.log(`PASS ${path}`);
 }
-
-const legacyArticle = await fetch(new URL(legacyStateMachineArticle, baseUrl), {
-  redirect: 'manual',
-  signal: AbortSignal.timeout(60_000),
-});
-assert.equal(
-  legacyArticle.status,
-  308,
-  'Historical article URL redirects permanently',
-);
-assert.equal(
-  new URL(legacyArticle.headers.get('location'), baseUrl).href,
-  new URL(stateMachineArticle, baseUrl).href,
-  'Historical article URL redirects to the primary article',
-);
-console.log('PASS historical state machine article redirect');
 
 const { response: markdown } = await get('/docs/xstate.mdx');
 assert.equal(

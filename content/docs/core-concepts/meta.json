@@ -2,6 +2,7 @@
   "title": "Core Concepts",
   "pages": [
     "[State machines and statecharts](/docs/state-machines-and-statecharts)",
+    "[Statecharts](/docs/statecharts)",
     "[Actor model](/docs/actor-model)",
     "[What is XState?](/docs/xstate)"
   ]

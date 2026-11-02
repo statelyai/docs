@@ -26,13 +26,13 @@ const features = (items: string[]) => (
 );
 
 const tiers: [string, React.ReactNode, string[]][] = [
-  ['Community', price('$0'), ['Editor and simulation', 'Export to JavaScript and TypeScript', '2 projects, 3 machines']],
+  ['Community', price('$0'), ['Public projects and machines', 'Editor, simulation, and code export', '200 AI credits a month']],
   [
     'Pro',
     price('$39 / mo', '$33 / mo billed yearly'),
-    ['Unlimited private projects', 'AI generation, 1,000 a month', 'Codebase sync via GitHub or the CLI', 'Version history and live simulation', 'Figma embeds, colored states'],
+    ['Unlimited private and unlisted projects', 'Codebase sync via GitHub, CLI, SDK, or MCP', 'Test path generation and locked machines', 'Version history and live simulation', '1,000 AI credits a month'],
   ],
-  ['Team', price('$199 / mo', '$167 / mo billed yearly'), ['Everything in Pro for up to 10 people', 'Shared team projects', 'Admins, editors, and unlimited viewers']],
+  ['Team', price('$199 / mo', '$167 / mo billed yearly'), ['Everything in Pro for up to 10 people', 'Shared team projects', '4,000 shared AI credits a month', 'Admins, editors, and unlimited viewers']],
   [
     'Enterprise',
     <a key="demo" href={DEMO_URL} target="_blank" rel="noopener noreferrer" className={`whitespace-nowrap ${textLinkCls}`}>
@@ -87,7 +87,7 @@ export function PricingTeaser() {
     <Section id="pricing" event="UPGRADE" color="green">
       <SectionHeading
         title="Start free."
-        lede="Community is the editor, simulation, and code export. Pro adds private projects, AI generation, and codebase sync. Team shares all of it with up to 10 people. Enterprise runs where you need it to."
+        lede="Community is the editor, simulation, and code export. Pro adds private projects, codebase sync, and test paths. Team shares all of it with up to 10 people. Enterprise runs where you need it to."
       />
       <div aria-hidden className="mt-12 hidden lg:block">
         <Statechart machine={tierMachine} className="w-full h-auto max-w-[64rem]" />
