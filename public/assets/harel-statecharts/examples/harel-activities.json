@@ -1,0 +1,67 @@
+{
+  "id": "harel-activities",
+  "description": "Nested entry/exit actions and broadcast adaptation. Named action raise beta needs an XState raise implementation. start X/stop X mark activity lifetime; they do not implement a physical activity.",
+  "meta": {
+    "harel": {
+      "figures": [
+        37
+      ],
+      "adaptation": "Nested entry/exit actions and broadcast adaptation. Named action raise beta needs an XState raise implementation. start X/stop X mark activity lifetime; they do not implement a physical activity."
+    }
+  },
+  "type": "parallel",
+  "states": {
+    "Left": {
+      "initial": "C",
+      "states": {
+        "C": {
+          "on": {
+            "alpha": "A.B"
+          }
+        },
+        "A": {
+          "initial": "B",
+          "entry": [
+            "S",
+            "start X"
+          ],
+          "exit": [
+            "raise beta",
+            "T",
+            "stop X"
+          ],
+          "states": {
+            "B": {
+              "entry": "V",
+              "on": {
+                "gamma": {
+                  "target": "#harel-activities.Left.C",
+                  "actions": "W"
+                },
+                "TO_F": "F"
+              }
+            },
+            "F": {
+              "on": {
+                "TO_B": "B"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Right": {
+      "initial": "D",
+      "states": {
+        "D": {
+          "on": {
+            "beta": "E"
+          }
+        },
+        "E": {
+          "entry": "U"
+        }
+      }
+    }
+  }
+}

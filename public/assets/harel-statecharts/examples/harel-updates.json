@@ -1,0 +1,168 @@
+{
+  "id": "harel-updates",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "adaptation": "Time/date and one alarm update sequence. Figure 15 applies identically to alarm 2. The paper d-to-history self-reentry is rendered as a targetless D_PRESS action, preserving the selected field without claiming the original reentry semantics. The action is deliberately named; no clock values are hidden in the diagram. HOLD_C_2_SECONDS represents two continuous seconds in wait."
+  },
+  "initial": "time",
+  "states": {
+    "time": {
+      "on": {
+        "C_PRESS": "wait",
+        "A_PRESS": "alarm 1.history"
+      }
+    },
+    "wait": {
+      "on": {
+        "C_RELEASE": "time",
+        "HOLD_C_2_SECONDS": "update.sec"
+      }
+    },
+    "update": {
+      "id": "time-update",
+      "initial": "sec",
+      "states": {
+        "sec": {
+          "on": {
+            "C_PRESS": "1 min",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "1 min": {
+          "on": {
+            "C_PRESS": "10 min",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "10 min": {
+          "on": {
+            "C_PRESS": "hr",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "hr": {
+          "on": {
+            "C_PRESS": "mon",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "mon": {
+          "on": {
+            "C_PRESS": "date",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "date": {
+          "on": {
+            "C_PRESS": "day",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "day": {
+          "on": {
+            "C_PRESS": "year",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "year": {
+          "on": {
+            "C_PRESS": "mode",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "mode": {
+          "on": {
+            "C_PRESS": "#harel-updates.time",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        }
+      },
+      "on": {
+        "B_PRESS": "#harel-updates.time"
+      }
+    },
+    "alarm 1": {
+      "id": "update-alarm1",
+      "initial": "history",
+      "states": {
+        "history": {
+          "type": "history",
+          "target": "off"
+        },
+        "off": {
+          "id": "update-alarm1-off",
+          "on": {
+            "D_PRESS": "on"
+          }
+        },
+        "on": {
+          "id": "update-alarm1-on",
+          "on": {
+            "D_PRESS": "off"
+          }
+        }
+      },
+      "on": {
+        "A_PRESS": "#harel-updates.time",
+        "C_PRESS": "update 1.hr"
+      }
+    },
+    "update 1": {
+      "id": "alarm-update",
+      "initial": "hr",
+      "states": {
+        "hr": {
+          "on": {
+            "C_PRESS": "10 min",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "10 min": {
+          "on": {
+            "C_PRESS": "1 min",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        },
+        "1 min": {
+          "on": {
+            "C_PRESS": "#update-alarm1.history",
+            "D_PRESS": {
+              "actions": "increment selected field"
+            }
+          }
+        }
+      },
+      "on": {
+        "B_PRESS": "#update-alarm1.history"
+      }
+    }
+  }
+}

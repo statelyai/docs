@@ -1,0 +1,38 @@
+{
+  "id": "harel-unclustering",
+  "description": "Figure 36 has anonymous boxes. Named boxes and illustrative STEP/LEAVE events make its separation of overview and internal refinement explicit without changing containment.",
+  "meta": {
+    "harel": {
+      "figures": [
+        36
+      ],
+      "adaptation": "Figure 36 has anonymous boxes. Named boxes and illustrative STEP/LEAVE events make its separation of overview and internal refinement explicit without changing containment."
+    }
+  },
+  "initial": "Outside",
+  "states": {
+    "Outside": {
+      "on": {
+        "ENTER": "Cluster"
+      }
+    },
+    "Cluster": {
+      "initial": "First",
+      "on": {
+        "LEAVE": "Outside"
+      },
+      "states": {
+        "First": {
+          "on": {
+            "STEP": "Second"
+          }
+        },
+        "Second": {
+          "on": {
+            "STEP": "First"
+          }
+        }
+      }
+    }
+  }
+}

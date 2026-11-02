@@ -1,8 +1,10 @@
+import { harelStatechartExamples } from './harel-statechart-examples';
 import coffeeOrder from '@/public/assets/statecharts/examples/coffee-order.json';
 import coffeeNested from '@/public/assets/statecharts/examples/coffee-nested.json';
 import coffeeDonut from '@/public/assets/statecharts/examples/coffee-donut-parallel.json';
 
 export const statechartExamples = {
+  ...harelStatechartExamples,
   'coffee-order': { machine: coffeeOrder, width: 300, height: 465 },
   'coffee-nested': { machine: coffeeNested, width: 620, height: 540 },
   'coffee-donut-parallel': { machine: coffeeDonut, width: 660, height: 390 },
@@ -21,7 +23,11 @@ export function statechartExampleURL(example: StatechartExampleId): string {
     .replaceAll('/', '_')
     .replace(/=+$/, '');
   const url = new URL('https://editor.stately.ai/viz');
-  url.searchParams.set('source', 'docs-statecharts');
+  const entry = statechartExamples[example];
+  url.searchParams.set(
+    'source',
+    'source' in entry ? entry.source : 'docs-statecharts',
+  );
   url.hash = new URLSearchParams({
     machine,
     format: 'xstate-json',

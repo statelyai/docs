@@ -304,6 +304,11 @@ and capture the corresponding production editor view. Use that entry's ID in
 registry. Asset provenance and capture details are in
 `public/assets/statecharts/README.md`.
 
+The Harel paper companion uses the same component with 28 native adaptations
+registered in `lib/harel-statechart-examples.ts`. Its section/figure coverage,
+model sources, screenshot hashes, capture workflow, and behavior checks are
+documented in `public/assets/harel-statecharts/README.md`.
+
 `StatechartActions` keeps each editor invitation in a native paragraph so MDX
 cannot turn the link and following punctuation into separate blocks.
 

@@ -1,0 +1,93 @@
+{
+  "id": "harel-overlap",
+  "description": "Figure 42 duplication implements the standalone-versus-parallel alternatives proposed by overlapping Figures 44-45. A1 and A2 are distinct copies. Figure 43 inactive-B workaround is discussed rather than represented as literal overlap. alpha enters standalone C1; beta enters parallel C2/E; gamma explicitly enters parallel D2/E; delta explicitly enters standalone D1. ADVANCE/CHANGE_B are illustrative internal events.",
+  "meta": {
+    "harel": {
+      "figures": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "adaptation": "Figure 42 duplication implements the standalone-versus-parallel alternatives proposed by overlapping Figures 44-45. A1 and A2 are distinct copies. Figure 43 inactive-B workaround is discussed rather than represented as literal overlap. alpha enters standalone C1; beta enters parallel C2/E; gamma explicitly enters parallel D2/E; delta explicitly enters standalone D1. ADVANCE/CHANGE_B are illustrative internal events."
+    }
+  },
+  "initial": "Outside",
+  "states": {
+    "Outside": {
+      "on": {
+        "alpha": "A1",
+        "beta": "Together",
+        "gamma": {
+          "target": [
+            "Together.A2.D2",
+            "Together.B.E"
+          ]
+        },
+        "delta": "A1.D1"
+      }
+    },
+    "A1": {
+      "initial": "C1",
+      "states": {
+        "C1": {
+          "on": {
+            "ADVANCE": "D1"
+          }
+        },
+        "D1": {
+          "on": {
+            "epsilon": "#harel-overlap.Outside"
+          }
+        }
+      },
+      "on": {
+        "delta": "Outside"
+      }
+    },
+    "Together": {
+      "type": "parallel",
+      "on": {
+        "delta": "Outside"
+      },
+      "states": {
+        "A2": {
+          "initial": "C2",
+          "states": {
+            "C2": {
+              "on": {
+                "ADVANCE": "D2"
+              }
+            },
+            "D2": {
+              "on": {
+                "epsilon": "#harel-overlap.Outside",
+                "omega": "#harel-overlap.Outside"
+              }
+            }
+          }
+        },
+        "B": {
+          "initial": "E",
+          "states": {
+            "E": {
+              "on": {
+                "CHANGE_B": "F"
+              }
+            },
+            "F": {
+              "on": {
+                "CHANGE_B": "G"
+              }
+            },
+            "G": {
+              "on": {
+                "CHANGE_B": "E"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

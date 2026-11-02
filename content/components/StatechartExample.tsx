@@ -17,14 +17,17 @@ type Props = {
 
 export function StatechartExample({ name, example, alt, caption }: Props) {
   const [expanded, setExpanded] = useState(false);
-  const { width, height } = statechartExamples[example];
+  const entry = statechartExamples[example];
+  const { width, height } = entry;
+  const image =
+    'image' in entry ? entry.image : `/assets/statecharts/${example}.jpg`;
   const embedURL = statechartExampleURL(example);
 
   return (
     <div className="my-6">
       <figure>
         <Image
-          src={`/assets/statecharts/${example}.jpg`}
+          src={image}
           alt={alt}
           width={width}
           height={height}

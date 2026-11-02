@@ -1,0 +1,54 @@
+{
+  "id": "harel-parallel",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      19,
+      21
+    ],
+    "adaptation": "Exact two-by-three orthogonal example. The named guard in G must test D.G in the pre-event configuration. Figure 21 is a naming/layout alternative."
+  },
+  "type": "parallel",
+  "states": {
+    "A": {
+      "initial": "B",
+      "states": {
+        "B": {
+          "on": {
+            "alpha": "C"
+          }
+        },
+        "C": {
+          "on": {
+            "beta": {
+              "target": "B",
+              "guard": "in G"
+            }
+          }
+        }
+      }
+    },
+    "D": {
+      "initial": "F",
+      "states": {
+        "E": {
+          "on": {
+            "gamma": "G"
+          }
+        },
+        "F": {
+          "on": {
+            "mu": "E",
+            "alpha": "G"
+          }
+        },
+        "G": {
+          "id": "parallel-G",
+          "on": {
+            "delta": "F"
+          }
+        }
+      }
+    }
+  }
+}

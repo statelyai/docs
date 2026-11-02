@@ -1,0 +1,44 @@
+{
+  "id": "harel-conditional",
+  "description": "Figure 33 expanded into explicit guarded entries. P, Q, and R are mutually exclusive event.condition values in the executable adaptation.",
+  "meta": {
+    "harel": {
+      "figures": [
+        33
+      ],
+      "adaptation": "Figure 33 expanded into explicit guarded entries. P, Q, and R are mutually exclusive event.condition values in the executable adaptation."
+    }
+  },
+  "initial": "Outside",
+  "states": {
+    "Outside": {
+      "on": {
+        "alpha": [
+          {
+            "guard": "P",
+            "target": "Inside.P branch"
+          },
+          {
+            "guard": "Q",
+            "target": "Inside.Q branch"
+          },
+          {
+            "guard": "R",
+            "target": "Inside.R branch"
+          }
+        ]
+      }
+    },
+    "Inside": {
+      "initial": "P branch",
+      "on": {
+        "RESET": "Outside"
+      },
+      "states": {
+        "P branch": {},
+        "Q branch": {},
+        "R branch": {}
+      }
+    }
+  }
+}
