@@ -393,7 +393,7 @@
                 "history": {
                   "type": "history",
                   "history": "deep",
-                  "target": "displays"
+                  "target": "regular"
                 }
               },
               "id": "watch-displays"

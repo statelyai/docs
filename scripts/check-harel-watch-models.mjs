@@ -166,6 +166,13 @@ send(beep, 'A_RELEASE', 'D_RELEASE');
 assert.equal(beep.getSnapshot().value, '10');
 beep.stop();
 
+const firstAlarmConfig = await load('harel-watch');
+firstAlarmConfig.states.alive.states.main.initial = 'alarms-beep';
+const firstAlarm = createActor(createMachine(firstAlarmConfig, { guards, actions })).start();
+send(firstAlarm, 'BATTERY_INSERTED', 'ALARM_30_SECONDS');
+assert(firstAlarm.getSnapshot().matches({ alive: { main: { displays: { regular: { controls: 'time' } } } } }), 'history with no previous display uses the concrete regular/time fallback');
+firstAlarm.stop();
+
 const alarmReturn = start('harel-watch');
 send(alarmReturn, 'BATTERY_INSERTED', 'A_PRESS', 'D_PRESS', 'T_HITS_T1_ONLY');
 assert(alarmReturn.getSnapshot().matches({ alive: { main: { 'alarms-beep': 'alarm 1 beeps' } } }));
