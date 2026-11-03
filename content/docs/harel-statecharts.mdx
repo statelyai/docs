@@ -31,6 +31,14 @@ The editor provides structural simulation: guarded branches are explicit choices
 
 A transformational system takes an input and produces a result. A reactive system has an ongoing relationship with its environment. A watch responds to button presses while keeping time. An interface responds to clicks while requests and timers finish. Describing one input/output calculation does not capture those changing circumstances.
 
+The abstract describes the intended benefit:
+
+> small diagrams can express complex behavior
+
+*David Harel, p. 231.*
+
+The goal is a compact description whose structure still determines what happens. A small drawing can represent many configurations.
+
 Harel starts from a familiar observation. People often explain reactive behavior using a current state, an event, a condition, and a resulting state. For example, pressing a button while the watch shows the time may switch it to the date. A state-transition diagram collects these rules in one picture.
 
 Figure 1 uses three states, A, B, and C. The label on an arrow tells you which event causes the transition. A condition restricts when an arrow applies. In the adaptation, spelled-out event names replace the paper's Greek letters, and the condition retains its name, P.
@@ -39,7 +47,13 @@ Figure 1 uses three states, A, B, and C. The label on an arrow tells you which e
 
 Flat diagrams become difficult when different parts of a system have independent states. A model with several independent choices needs a state for each permitted combination. Shared reactions also repeat. An emergency event that applies throughout a large operating mode may require many copies of the same arrow.
 
-The paper's proposal addresses both problems. Group states that share behavior. Refine a state when more detail is needed. Represent independent parts together without listing every combination. Let those parts coordinate through events.
+Harel summarizes the extension as:
+
+> statecharts = state-diagrams + depth + orthogonality + broadcast-communication.
+
+*David Harel, p. 233.*
+
+Here, depth means nested states. Orthogonality separates concurrent parts without listing every combination. Broadcast communication lets active parts coordinate through events. The following sections explain what each addition changes in the model.
 
 The distinction matters when reading the rest of the paper. The number of possible system configurations does not disappear. The description becomes smaller because structure expresses relationships that a flat diagram would repeat.
 
@@ -239,7 +253,13 @@ This is why zooming and focused views matter. A reviewer often needs to see one 
 
 *Paper pages 255-258; Figure 37.*
 
-A state named beeping does not, by its name alone, make a speaker sound. Up to this point, most diagrams specify the control configuration. Section 5 connects that configuration to work performed by the system.
+Harel challenges what the watch diagrams have specified so far:
+
+> Who says it even keeps the time?
+
+*David Harel, p. 256.*
+
+A state named beeping does not, by its name alone, make a speaker sound. Up to this point, most diagrams specify the control configuration. The question exposes the missing connection between a state label and an implemented effect. Section 5 supplies that connection through actions and activities.
 
 An **action** is treated as an instantaneous occurrence in the model. Examples include assigning a value or emitting a signal. An **activity** takes time, such as sounding a beeper, displaying a value, or performing a computation.
 
