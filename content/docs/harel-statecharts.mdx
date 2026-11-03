@@ -149,6 +149,8 @@ Here, concurrency means that several regions participate in the same system conf
 
 Figure 20 expands the same structure into six combined states. Compare the repeated transitions in that form with the compact parallel description.
 
+Harel calls the growth an "exponential blow-up" (p. 243). Two regions with a thousand states each would require a million combined states in a flat description. Orthogonality lets us specify the regions separately; it does not remove the million possible combinations.
+
 <StatechartExample example="harel-product" name="the flattened six-state product" alt="Six explicit combined states represent the two-by-three product of the parallel example." caption="Figure 20. The combinations still exist; the parallel drawing expresses them with less repetition." />
 
 The components need not be completely independent. A transition in one region may be guarded by whether another region is in G. Shared events can coordinate both regions too. Orthogonality gives the model a way to separate concerns while retaining specified dependencies.
@@ -253,15 +255,13 @@ This is why zooming and focused views matter. A reviewer often needs to see one 
 
 *Paper pages 255-258; Figure 37.*
 
-Harel challenges what the watch diagrams have specified so far:
+Harel challenges what the watch diagrams have specified so far: have they established that the watch actually displays anything, beeps, or keeps time?
 
-> Who says it even keeps the time?
-
-*David Harel, p. 256.*
-
-A state named beeping does not, by its name alone, make a speaker sound. Up to this point, most diagrams specify the control configuration. The question exposes the missing connection between a state label and an implemented effect. Section 5 supplies that connection through actions and activities.
+A state named beeping does not, by its name alone, make a speaker sound. Up to this point, most diagrams specify the control configuration. Section 5 connects that configuration to implemented effects through actions and activities.
 
 An **action** is treated as an instantaneous occurrence in the model. Examples include assigning a value or emitting a signal. An **activity** takes time, such as sounding a beeper, displaying a value, or performing a computation.
+
+Harel says actions take "ideally zero time" (p. 256). The qualification describes an abstraction used to reason about a reaction. It does not promise that a physical signal or a JavaScript function finishes in zero elapsed time. Work whose duration matters belongs in the activity part of the description.
 
 The paper writes a transition label as `α(P)/S`: event α triggers it, condition P must hold, and action S occurs when the transition is taken. For activities, `start(X)` and `stop(X)` name the boundary actions, and `active(X)` asks whether the activity is running. These are the paper's concepts, not XState API calls.
 
@@ -399,7 +399,7 @@ Harel organizes the basic state tree through three relationships. Two states may
 
 The semantics then needs a next-step relation. Given a full configuration, external conditions, and a set of external events, it determines possible next configurations. It must account for applicable transitions, their consequences, internally generated events, conflicts, defaults, and remembered history.
 
-A step must reach a stable, consistent result before the relation can return that result. More than one possible result represents nondeterminism in the formal account. The detailed construction is delegated to another paper cited as reference 15.
+A step must reach what Harel calls a "stable and consistent" situation (p. 266) before the relation can return its result. Selecting the first enabled arrow is therefore only the beginning: generated events and their consequences must also be accounted for. The cycle in Figure 47 shows why finishing this process needs a rule of its own. More than one possible result represents nondeterminism in the formal account. The detailed construction is delegated to another paper cited as reference 15.
 
 History adds remembered information. Conditional and selection entries abbreviate other constructs. The more experimental extensions from Section 6 remain less settled.
 
@@ -454,7 +454,7 @@ The conclusion is careful about what the paper establishes. It argues for the ap
 
 The lasting question is whether a description remains understandable as detail grows. Hierarchy shares behavior and supports refinement. Orthogonality separates concurrent concerns. Communication connects them. Formal semantics gives those visual constructs an execution meaning.
 
-That combination is why a statechart can be more than an illustration beside a program. Its structure can be part of the specification itself. Whether a particular tool's model also serves as executable source depends on the tool and its defined semantics.
+Harel's term "visual formalism" (p. 272) captures the stronger claim: the graphical constructs themselves have precise meanings, so their arrangement can be the specification itself. Text can describe or serialize that structure, but a separate textual description need not be its sole authority. Whether a particular tool's model also serves as executable source depends on the tool and its defined semantics.
 
 ## Acknowledgments and references
 
