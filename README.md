@@ -294,8 +294,9 @@ docs are not indexed twice.
 `StatechartExample` renders a local screenshot, descriptive alt text, and a
 caption in the initial HTML. Opening its keyboard-accessible disclosure loads
 an anonymous, read-only `/viz` editor with simulation, parent-state expansion
-and collapse, and pan and zoom. The structure and simulation panels are available
-but start closed. The screenshot stays
+and collapse, and pan and zoom. All parents start expanded. Zoom and simulation
+controls stay on the canvas;
+the command bar, breadcrumbs, and side panels are hidden. The screenshot stays
 visible if the embed fails. Without JavaScript, the screenshot and direct
 example link still work.
 

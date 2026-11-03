@@ -14,7 +14,7 @@
   "states": {
     "displays": {
       "id": "displays",
-      "initial": "history",
+      "initial": "time",
       "states": {
         "history": {
           "type": "history",
@@ -36,7 +36,7 @@
         },
         "alarm 1": {
           "id": "display-alarm1",
-          "initial": "history",
+          "initial": "off",
           "states": {
             "history": {
               "type": "history",
@@ -61,7 +61,7 @@
         },
         "alarm 2": {
           "id": "display-alarm2",
-          "initial": "history",
+          "initial": "off",
           "states": {
             "history": {
               "type": "history",
@@ -86,7 +86,7 @@
         },
         "chime": {
           "id": "display-chime",
-          "initial": "history",
+          "initial": "off",
           "states": {
             "history": {
               "type": "history",

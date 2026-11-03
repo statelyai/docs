@@ -20,7 +20,7 @@
       }
     },
     "stopwatch": {
-      "initial": "history",
+      "initial": "zero",
       "states": {
         "history": {
           "type": "history",

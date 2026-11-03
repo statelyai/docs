@@ -180,7 +180,7 @@
                   "states": {
                     "alarm 1": {
                       "id": "watch-alarm1",
-                      "initial": "history",
+                      "initial": "off",
                       "states": {
                         "history": {
                           "type": "history",
@@ -206,7 +206,7 @@
                     },
                     "alarm 2": {
                       "id": "watch-alarm2",
-                      "initial": "history",
+                      "initial": "off",
                       "states": {
                         "history": {
                           "type": "history",
@@ -232,7 +232,7 @@
                     },
                     "chime": {
                       "id": "watch-chime",
-                      "initial": "history",
+                      "initial": "off",
                       "states": {
                         "history": {
                           "type": "history",
@@ -327,7 +327,7 @@
                   }
                 },
                 "stopwatch": {
-                  "initial": "history",
+                  "initial": "zero",
                   "states": {
                     "history": {
                       "type": "history",

@@ -52,8 +52,8 @@
     },
     "deviceScaleFactor": 2,
     "nodes": 2,
-    "sourceSha256": "1b671470202fc2d6a7ee03ce62cc08c90c5cecd150a42f875b6d53f538a99655",
-    "capturedAt": "2026-11-02T18:33:50.413Z",
+    "sourceSha256": "8931482312a1fc95d6eb5e426bd8114b7f77b0b81ef8fe94e4c043727c2ad5f7",
+    "capturedAt": "2026-11-03T03:30:27.240Z",
     "renderer": "https://editor.stately.ai/viz"
   },
   "harel-history-shallow": {
@@ -128,8 +128,8 @@
     },
     "deviceScaleFactor": 2,
     "nodes": 5,
-    "sourceSha256": "6cd32c969b36348cf9cb8bd41064bc80728af7198d842896b5090c036df6decb",
-    "capturedAt": "2026-11-02T18:34:04.885Z",
+    "sourceSha256": "ef28b6fe77e62804a0cbce53f611148aac32a77bfc6b32b8c049d8dd36ed2d55",
+    "capturedAt": "2026-11-03T03:30:31.855Z",
     "renderer": "https://editor.stately.ai/viz"
   },
   "harel-parallel": {
@@ -223,8 +223,8 @@
     },
     "deviceScaleFactor": 2,
     "nodes": 3,
-    "sourceSha256": "36bb1b9846098ade7f893360bffcac5956e69f1eb2848b7e8a97bdd2944c8a89",
-    "capturedAt": "2026-11-02T18:34:21.435Z",
+    "sourceSha256": "492fed1da01212aee9d74950a4ec55b546107f33843aa5b17e1f8b6d6893ef0b",
+    "capturedAt": "2026-11-03T03:30:36.483Z",
     "renderer": "https://editor.stately.ai/viz"
   },
   "harel-watch": {
@@ -242,8 +242,8 @@
     },
     "deviceScaleFactor": 2,
     "nodes": 2,
-    "sourceSha256": "801cb0b9a72994d4471b4f8826810d335f7764700c7707e1231f4c494d6f957f",
-    "capturedAt": "2026-11-02T18:41:59.700Z",
+    "sourceSha256": "5d093458967b58f38f4874de9f5357e6c670560f799c05e107bffa6e6cca2281",
+    "capturedAt": "2026-11-03T03:30:39.851Z",
     "renderer": "https://editor.stately.ai/viz"
   },
   "harel-beep-test": {

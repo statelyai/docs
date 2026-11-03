@@ -133,6 +133,19 @@ send(entry, 'theta');
 assert.equal(entry.getSnapshot().value, 'K', 'one region can exit the whole parallel state');
 entry.stop();
 
+const bareStopwatch = createActor(createMachine(await load('harel-stopwatch'))).start();
+assert.deepEqual(bareStopwatch.getSnapshot().value, { stopwatch: 'zero' }, 'Figure 25 first visit enters zero without implementation providers');
+bareStopwatch.stop();
+for (const name of ['harel-stopwatch', 'harel-displays', 'harel-watch', 'harel-updates']) {
+  const checkInitial = (state) => {
+    if (state.initial) {
+      assert.notEqual(state.states[state.initial].type, 'history', `${name}: first visits use concrete defaults; return transitions target history explicitly`);
+    }
+    for (const child of Object.values(state.states ?? {})) checkInitial(child);
+  };
+  checkInitial(await load(name));
+}
+
 const stopwatch = start('harel-stopwatch');
 send(stopwatch, 'B_PRESS', 'D_PRESS');
 assert(stopwatch.getSnapshot().matches({ stopwatch: { timing: { display: 'lap', run: 'on' } } }));

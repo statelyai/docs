@@ -33,7 +33,11 @@ export function statechartExampleURL(example: StatechartExampleId): string {
     machine,
     format: 'xstate-json',
     theme: 'light',
-    panels: 'structure,simulation',
+    chrome: 'none',
+    canvasSlots: 'viewportControls,simulationControls',
+    topBar: '0',
+    expanded: '1',
+    panels: 'none',
   }).toString();
   return url.toString();
 }

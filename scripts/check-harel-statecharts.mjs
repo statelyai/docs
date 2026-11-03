@@ -43,8 +43,11 @@ if (base) {
   for (const [, href] of editorLinks) {
     const url = new URL(href.replaceAll('&amp;', '&'));
     const params = new URLSearchParams(url.hash.slice(1));
-    assert.equal(params.has('chrome'), false, 'Full read-only editor controls are visible');
-    assert.equal(params.get('panels'), 'structure,simulation');
+    assert.equal(params.get('chrome'), 'none', 'Only the requested canvas controls are visible');
+    assert.equal(params.get('canvasSlots'), 'viewportControls,simulationControls');
+    assert.equal(params.get('topBar'), '0');
+    assert.equal(params.get('expanded'), '1');
+    assert.equal(params.get('panels'), 'none');
     assert.equal(url.searchParams.get('activePanels'), '', 'Panels start closed');
   }
   const anchors = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));

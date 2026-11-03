@@ -23,11 +23,12 @@ editor's compact child-state view renders many child transitions inline.
 `lib/harel-statechart-examples.ts` registers these definitions and capture
 sizes. `StatechartExample` keeps the screenshot visible and mounts the anonymous,
 read-only editor only when its disclosure is opened. It enables simulation,
-parent-state expansion/collapse, and pan/zoom. Structure and simulation panels
-start closed so the diagram has room. The source is
+parent-state expansion/collapse, and pan/zoom. Parents start expanded. The
+command bar, breadcrumbs, and side panels are hidden. The source is
 UTF-8 JSON encoded as base64url in the fragment, with `format=xstate-json`,
-`panels=structure,simulation` and query `activePanels=`. Full editor chrome
-exposes the controls while `/viz` keeps editing disabled. The source tag is
+`chrome=none`, `canvasSlots=viewportControls,simulationControls`, `topBar=0`,
+`expanded=1`, and `panels=none`. The canvas controls remain usable while `/viz`
+keeps editing disabled. The source tag is
 `docs-harel-statecharts`. Static screenshots retain the plain light capture view
 (`chrome=plain`, `theme=light`, `interactive=1`, `panels=none`).
 
@@ -60,6 +61,10 @@ the paper's combined scenario is supplied in the watch check.
 The paper's `clear-history(main*)` is a host reset boundary here. Battery
 removal/death must stop and replace the actor before reinsertion. Sending both
 battery events to the same actor does not establish history erasure.
+
+Ordinary first visits enter concrete initial children. Transitions that return
+to a previous visit target history explicitly. This avoids using a history node
+as an initial state, which produced misleading unreachable-state diagnostics.
 
 History navigation adds explicit `ENTER`, `LEAVE`, and `GO_*` events absent
 from the structural original figures. The update and field-selection models

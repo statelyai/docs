@@ -107,7 +107,7 @@
     },
     "alarm 1": {
       "id": "update-alarm1",
-      "initial": "history",
+      "initial": "off",
       "states": {
         "history": {
           "type": "history",
