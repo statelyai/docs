@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const assets = new URL('../public/assets/harel-statecharts/', import.meta.url);
@@ -36,7 +37,7 @@ try {
     assert(bounds.nodes > 1 && bounds.width > 50 && bounds.height > 50, `${id}: native graph rendered`);
     assert.deepEqual(errors, [], `${id}: no browser runtime errors`);
     const { nodes, ...clip } = bounds;
-    await page.screenshot({ path: new URL(`screenshots/${id}.png`, assets).pathname, clip, animations: 'disabled', timeout: 30000 });
+    await page.screenshot({ path: fileURLToPath(new URL(`screenshots/${id}.png`, assets)), clip, animations: 'disabled', timeout: 30000 });
     previous[id] = { width: clip.width, height: clip.height, viewport, clip, deviceScaleFactor: 2, nodes, sourceSha256: createHash('sha256').update(source).digest('hex'), capturedAt: new Date().toISOString(), renderer: 'https://editor.stately.ai/viz' };
     await writeFile(new URL('captures.json', assets), `${JSON.stringify(previous, null, 2)}\n`);
     console.log(`${id}: ${nodes} native nodes; ${clip.width}x${clip.height}; no page errors`);
