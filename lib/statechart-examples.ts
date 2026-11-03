@@ -28,13 +28,12 @@ export function statechartExampleURL(example: StatechartExampleId): string {
     'source',
     'source' in entry ? entry.source : 'docs-statecharts',
   );
+  url.searchParams.set('activePanels', '');
   url.hash = new URLSearchParams({
     machine,
     format: 'xstate-json',
-    chrome: 'plain',
     theme: 'light',
-    interactive: '1',
-    panels: 'none',
+    panels: 'structure,simulation',
   }).toString();
   return url.toString();
 }

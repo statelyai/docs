@@ -38,6 +38,15 @@ if (base) {
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
   assert.equal((html.match(/<iframe\b/g) ?? []).length, 0, 'Native editors wait for user interaction');
   assert.equal((html.match(/<summary\b/g) ?? []).length, ids.length);
+  const editorLinks = [...html.matchAll(/href="(https:\/\/editor\.stately\.ai\/viz[^"]+)"/g)];
+  assert.equal(editorLinks.length, ids.length, 'Every example has a read-only editor link');
+  for (const [, href] of editorLinks) {
+    const url = new URL(href.replaceAll('&amp;', '&'));
+    const params = new URLSearchParams(url.hash.slice(1));
+    assert.equal(params.has('chrome'), false, 'Full read-only editor controls are visible');
+    assert.equal(params.get('panels'), 'structure,simulation');
+    assert.equal(url.searchParams.get('activePanels'), '', 'Panels start closed');
+  }
   const anchors = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
   for (const section of coverage.sections) assert(anchors.has(section.anchor), `${section.number}: stable section anchor`);
   for (const match of html.matchAll(/href="#([^"]+)"/g)) assert(anchors.has(match[1]), `Fragment target exists: ${match[1]}`);

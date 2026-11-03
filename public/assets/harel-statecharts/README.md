@@ -22,10 +22,14 @@ editor's compact child-state view renders many child transitions inline.
 
 `lib/harel-statechart-examples.ts` registers these definitions and capture
 sizes. `StatechartExample` keeps the screenshot visible and mounts the anonymous,
-read-only, pan/zoom editor only when its disclosure is opened. The source is
+read-only editor only when its disclosure is opened. It enables simulation,
+parent-state expansion/collapse, and pan/zoom. Structure and simulation panels
+start closed so the diagram has room. The source is
 UTF-8 JSON encoded as base64url in the fragment, with `format=xstate-json`,
-`chrome=plain`, `theme=light`, `interactive=1`, and `panels=none`. The source tag
-is `docs-harel-statecharts`.
+`panels=structure,simulation` and query `activePanels=`. Full editor chrome
+exposes the controls while `/viz` keeps editing disabled. The source tag is
+`docs-harel-statecharts`. Static screenshots retain the plain light capture view
+(`chrome=plain`, `theme=light`, `interactive=1`, `panels=none`).
 
 ## Refresh screenshots
 

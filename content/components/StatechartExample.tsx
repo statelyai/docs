@@ -44,8 +44,9 @@ export function StatechartExample({ name, example, alt, caption }: Props) {
       >
         <summary className="cursor-pointer">Explore {name} in Stately</summary>
         <p className="text-sm">
-          Pan and zoom this read-only example. The screenshot above stays
-          available if the interactive view cannot load.{' '}
+          Simulate events, expand or collapse parent states, and pan or zoom this
+          read-only example. The screenshot stays available if the editor cannot
+          load.{' '}
           <a href={embedURL} target="_blank" rel="noopener noreferrer">
             Open the example in a new tab
           </a>
@@ -56,7 +57,7 @@ export function StatechartExample({ name, example, alt, caption }: Props) {
             src={embedURL}
             title={`${name} read-only statechart`}
             loading="lazy"
-            className="block h-[480px] w-full border-0"
+            className="block h-[640px] w-full border-0"
             allowFullScreen
           />
         )}

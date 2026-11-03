@@ -5,9 +5,11 @@ is used by the guide's read-only view and the corresponding screenshot.
 
 Screenshots captured from **https://editor.stately.ai/viz** on October 31, 2026.
 Source format: `xstate-json`; URL fragment contains the base64url-encoded JSON.
-View options: `chrome=plain`, `theme=light`, `panels=none`. The guide additionally
-sets `interactive=1` for pan and zoom. No customer models or account saves were
-used. Screenshots are unmodified browser captures, cropped to the diagram.
+View options: `chrome=plain`, `theme=light`, `panels=none`. The read-only editor
+links use full chrome,
+`panels=structure,simulation`, and query `activePanels=` so simulation and parent
+expansion/collapse are available while panels start closed. No customer models
+or account saves were used. Screenshots are unmodified browser captures, cropped to the diagram.
 
 | Screenshot                | Browser crop (x, y, width, height) |
 | ------------------------- | ---------------------------------- |
