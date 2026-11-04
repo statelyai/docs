@@ -292,13 +292,17 @@ docs are not indexed twice.
 <!-- static example rendering from content/components/StatechartExample.tsx -->
 
 `StatechartExample` renders a local screenshot, descriptive alt text, and a
-caption in the initial HTML. Opening its keyboard-accessible disclosure loads
-an anonymous, read-only `/viz` editor with simulation, parent-state expansion
-and collapse, and pan and zoom. All parents start expanded. Zoom and simulation
-controls stay on the canvas;
-the command bar, breadcrumbs, and side panels are hidden. The screenshot stays
-visible if the embed fails. Without JavaScript, the screenshot and direct
-example link still work.
+caption in the initial HTML. Set `display="inline"` to load the read-only `/viz`
+editor as the example approaches the viewport. The image stays visible until
+Viz sends `@statelyai.loaded` after its initial layout; iframe `load` alone does
+not reveal the editor. Failed loads retain the image and offer a retry. This
+mode requires the URL-embed readiness notifications from Viz.
+
+The default `display="on-demand"` loads the editor when its keyboard-accessible
+disclosure opens. Both modes allow simulation, parent-state expansion/collapse,
+and pan/zoom, with parents initially expanded. Zoom and simulation controls
+stay on the canvas; the command bar, breadcrumbs, and side panels are hidden.
+Without JavaScript, the screenshot and direct example link still work.
 
 To add an example, put its XState JSON definition in
 `public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,

@@ -21,8 +21,12 @@ from the production Stately editor, clipped around the rendered graph. The
 editor's compact child-state view renders many child transitions inline.
 
 `lib/harel-statechart-examples.ts` registers these definitions and capture
-sizes. `StatechartExample` keeps the screenshot visible and mounts the anonymous,
-read-only editor only when its disclosure is opened. It enables simulation,
+sizes. `StatechartExample` uses `display="inline"` here. It mounts the anonymous,
+read-only editor as the example approaches the viewport, retaining the screenshot
+until Viz reports `@statelyai.loaded`. It checks the notification's origin and
+source window. An error or timeout retains the screenshot and offers a retry;
+without JavaScript, the screenshot and direct link remain available. The default
+`display="on-demand"` remains available for other pages. It enables simulation,
 parent-state expansion/collapse, and pan/zoom. Parents start expanded. The
 command bar, breadcrumbs, and side panels are hidden. The source is
 UTF-8 JSON encoded as base64url in the fragment, with `format=xstate-json`,

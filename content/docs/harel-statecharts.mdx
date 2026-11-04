@@ -19,7 +19,7 @@ Page references below use the **printed journal pages**, not a PDF viewer's page
 
 ### How the Stately adaptations work
 
-Every diagram below is rendered by Stately from a local XState model. Open **Explore … in Stately** to open an anonymous, read-only embedded editor. Parents start expanded. Use the canvas simulation control to send events and the parent-state chevrons to expand or collapse children. You can also pan and zoom. A screenshot remains visible before the editor loads, and a direct link opens the same model in a new tab.
+Every diagram below is rendered by Stately from a local XState model. Each example loads an anonymous, read-only embedded editor as you approach it on the page. Parents start expanded. Use the canvas simulation control to send events and the parent-state chevrons to expand or collapse children. You can also pan and zoom. A screenshot stays visible until the diagram is ready and remains available if loading fails. A direct link opens the same model in a new tab.
 
 These are newly drawn adaptations with explanatory labels. They preserve the idea being discussed, while making translation choices explicit. They are not scans of the original figures or a claim that XState implements every rule proposed in 1987. The later sections discuss overlapping states, nondeterminism, and simultaneous events that do not have a direct equivalent in an ordinary XState state tree.
 
@@ -43,7 +43,7 @@ Harel starts from a familiar observation. People often explain reactive behavior
 
 Figure 1 uses three states, A, B, and C. The label on an arrow tells you which event causes the transition. A condition restricts when an arrow applies. In the adaptation, spelled-out event names replace the paper's Greek letters, and the condition retains its name, P.
 
-<StatechartExample example="harel-flat" name="the flat three-state example" alt="Three states A, B, and C connected by event transitions, including a transition guarded by P." caption="Figure 1 adapted in Stately. A flat diagram makes each source and destination explicit." />
+<StatechartExample display="inline" example="harel-flat" name="the flat three-state example" alt="Three states A, B, and C connected by event transitions, including a transition guarded by P." caption="Figure 1 adapted in Stately. A flat diagram makes each source and destination explicit." />
 
 Flat diagrams become difficult when different parts of a system have independent states. A model with several independent choices needs a state for each permitted combination. Shared reactions also repeat. An emergency event that applies throughout a large operating mode may require many copies of the same arrow.
 
@@ -67,7 +67,7 @@ In Figure 1, both A and C have the same reaction to one event: move to B. Figure
 
 D is an **exclusive** choice between A and C. Being in A also means being in D. Being in C also means being in D. Being in D does not mean that A and C are both active.
 
-<StatechartExample example="harel-clustered" name="clustering and refinement" alt="A parent D contains A and C. One transition on D leads to B, replacing the repeated exits in the flat model." caption="Figures 2-6 adapted as one nested model. The parent shares an exit; initial arrows resolve which child is entered." />
+<StatechartExample display="inline" example="harel-clustered" name="clustering and refinement" alt="A parent D contains A and C. One transition on D leads to B, replacing the repeated exits in the flat model." caption="Figures 2-6 adapted as one nested model. The parent shares an exit; initial arrows resolve which child is entered." />
 
 You can arrive at this structure in either direction. **Clustering** starts with detailed states and groups them. **Refinement** starts with a broad state and adds detail inside it. Figures 3 and 4 show the broad and refined views. Figure 5 isolates the inside of D.
 
@@ -91,7 +91,7 @@ Figure 8 first separates normal displays from alarm beeping. Alarm 1, alarm 2, o
 
 Figure 9 refines displays. Repeated presses of a cycle through display modes. The time and date displays have their own connection through d, and remaining in the date display for two minutes returns to time.
 
-<StatechartExample example="harel-displays" name="the watch displays and alarm interruption" alt="Watch display modes sit inside a displays parent. Alarm beeping interrupts the displays, with a history entry available on return." caption="Figures 8-10 adapted, with the deep-history policy introduced in Figure 13. Update-mode detail appears in the separate refinement below." />
+<StatechartExample display="inline" example="harel-displays" name="the watch displays and alarm interruption" alt="Watch display modes sit inside a displays parent. Alarm beeping interrupts the displays, with a history entry available on return." caption="Figures 8-10 adapted, with the deep-history policy introduced in Figure 13. Update-mode detail appears in the separate refinement below." />
 
 Initially, returning from an alarm beep could always enter the time display. The paper later changes that decision to restore the previous display through history. This is a concrete example of refinement changing an entry policy without abandoning the whole model.
 
@@ -103,13 +103,13 @@ Figure 10 refines an alarm display into off and on. When the user returns to the
 
 Figures 11 and 12 distinguish the amount of remembered detail. Suppose K contains G and F, and those states have children of their own. **Shallow history** restores the last direct child of K, then follows that child's normal default. **Deep history** restores the active descendants too.
 
-<StatechartExample example="harel-history-shallow" name="shallow history" alt="K contains nested G and F states and a shallow history entry. Reentry restores a direct child while its descendants use defaults." caption="Figures 10 and 11(a). Shallow history remembers one level of choice." />
+<StatechartExample display="inline" example="harel-history-shallow" name="shallow history" alt="K contains nested G and F states and a shallow history entry. Reentry restores a direct child while its descendants use defaults." caption="Figures 10 and 11(a). Shallow history remembers one level of choice." />
 
-<StatechartExample example="harel-history-deep" name="deep history" alt="The same nested K structure has a deep history entry that restores the previously active descendant." caption="Figure 11(b). Deep history remembers the nested configuration." />
+<StatechartExample display="inline" example="harel-history-deep" name="deep history" alt="The same nested K structure has a deep history entry that restores the previously active descendant." caption="Figure 11(b). Deep history remembers the nested configuration." />
 
 Figure 12 combines history at selected levels. Its purpose is to show that remembering one level and remembering every level are not the only possible policies.
 
-<StatechartExample example="harel-history-selective" name="history at selected levels" alt="History at selected levels restores detail in one branch while another branch follows its default." caption="Figure 12. Selective history makes the restoration policy part of the model." />
+<StatechartExample display="inline" example="harel-history-selective" name="history at selected levels" alt="History at selected levels restores detail in one branch while another branch follows its default." caption="Figure 12. Selective history makes the restoration policy part of the model." />
 
 To reason about these diagrams, leave a parent while one of its non-default descendants is active. Then return through the history entry. Record the direct child and the leaf state separately. A test that only checks the direct child cannot distinguish shallow from deep history.
 
@@ -121,7 +121,7 @@ Figure 13 adds update modes for the alarms and the time/date settings. The time/
 
 Figures 14 and 15 refine the update modes into fields. The user can move between fields and increment the selected value. The arrow for incrementing may return through history to the same field. Remaining in the same visible field can still involve an action that changes data.
 
-<StatechartExample example="harel-updates" name="the watch update modes" alt="Nested time, date, and alarm update fields use button events to select a field, update it, and return to a display." caption="Figures 14-16. Field-level transitions belong to the fields where they apply." />
+<StatechartExample display="inline" example="harel-updates" name="the watch update modes" alt="Nested time, date, and alarm update fields use button events to select a field, update it, and return to a display." caption="Figures 14-16. Field-level transitions belong to the fields where they apply." />
 
 Figure 16 warns against an inaccurate abstraction. An exit available from only some children must not become an exit from the entire parent merely because the detail is hidden. The paper's stubbed arrow preserves that incomplete boundary information. In a native model, keeping the transition on its actual source child preserves the behavior. The adaptation uses a targetless action for incrementing the selected field. It retains the field without reproducing the original history self-reentry, so entry and exit effects are not implied.
 
@@ -143,7 +143,7 @@ Section 2 uses an exclusive choice inside a parent. Section 3 adds a different r
 
 Figure 19 contains A, which chooses between B and C, and D, which chooses between E, F, and G. The default configuration is B together with F. One event can change both components, producing C together with G. Another event can change only one component.
 
-<StatechartExample example="harel-parallel" name="the two orthogonal components" alt="A parallel state contains a two-state region and a three-state region. Shared events can move both regions, and a condition links one transition to another region's state." caption="Figures 19 and 21. Parallel regions define concurrent behavior without enumerating every pair." />
+<StatechartExample display="inline" example="harel-parallel" name="the two orthogonal components" alt="A parallel state contains a two-state region and a three-state region. Shared events can move both regions, and a condition links one transition to another region's state." caption="Figures 19 and 21. Parallel regions define concurrent behavior without enumerating every pair." />
 
 Here, concurrency means that several regions participate in the same system configuration. It does not require one operating-system thread for every region.
 
@@ -151,19 +151,19 @@ Figure 20 expands the same structure into six combined states. Compare the repea
 
 Harel calls the growth an "exponential blow-up" (p. 243). Two regions with a thousand states each would require a million combined states in a flat description. Orthogonality lets us specify the regions separately; it does not remove the million possible combinations.
 
-<StatechartExample example="harel-product" name="the flattened six-state product" alt="Six explicit combined states represent the two-by-three product of the parallel example." caption="Figure 20. The combinations still exist; the parallel drawing expresses them with less repetition." />
+<StatechartExample display="inline" example="harel-product" name="the flattened six-state product" alt="Six explicit combined states represent the two-by-three product of the parallel example." caption="Figure 20. The combinations still exist; the parallel drawing expresses them with less repetition." />
 
 The components need not be completely independent. A transition in one region may be guarded by whether another region is in G. Shared events can coordinate both regions too. Orthogonality gives the model a way to separate concerns while retaining specified dependencies.
 
 Figure 21 compares placements of the enclosing state's name. This changes the drawing, not the distinction between a compound state and a parallel state. Figure 22 applies the same decomposition to an avionics system, separating a general operating mode from subsystem modes. The original drawing supplies a structural sketch rather than a complete flight controller.
 
-<StatechartExample example="harel-avionics" name="the avionics decomposition" alt="An avionics sketch separates a general-mode region from a subsystem region with its own modes." caption="Figure 22 adapted as a structural example. Initial choices are added for inspection; no aircraft operation or safety behavior is claimed." />
+<StatechartExample display="inline" example="harel-avionics" name="the avionics decomposition" alt="An avionics sketch separates a general-mode region from a subsystem region with its own modes." caption="Figure 22 adapted as a structural example. Initial choices are added for inspection; no aircraft operation or safety behavior is claimed." />
 
 ### Entering and leaving a parallel state needs a policy
 
 Figure 23 explores a parallel state's interface. A transition can select a particular child in both regions. It can select a child in one region and use the other region's default. It can combine a specific target with history in another region.
 
-<StatechartExample example="harel-parallel-entry" name="entries and exits across parallel regions" alt="External states connect to a parallel parent through explicit targets, defaults, and history. Exits can depend on one or several active regions." caption="Figures 23 and 24. Specify the complete resulting configuration, even when an arrow names only part of it." />
+<StatechartExample display="inline" example="harel-parallel-entry" name="entries and exits across parallel regions" alt="External states connect to a parallel parent through explicit targets, defaults, and history. Exits can depend on one or several active regions." caption="Figures 23 and 24. Specify the complete resulting configuration, even when an arrow names only part of it." />
 
 An exit may depend on a combination of states or on just one active child. Leaving the whole parallel parent also leaves its other active region. That differs from a local transition that changes one region while the others remain active.
 
@@ -173,7 +173,7 @@ Figure 24 hides the internal detail but keeps stubs for entries that cross a bou
 
 Figure 25 refines the stopwatch. The first visit starts at zero. Returning from the chime display uses explicit deep history to restore the last stopwatch configuration. Its display can be regular or lap while the counting mechanism is on or off. A frozen lap display does not imply that counting has stopped.
 
-<StatechartExample example="harel-stopwatch" name="the stopwatch's independent display and run modes" alt="A stopwatch has orthogonal display and run regions, allowing lap display while counting remains on." caption="Figure 25. What the watch displays and what its counter does are separate parts of its state." />
+<StatechartExample display="inline" example="harel-stopwatch" name="the stopwatch's independent display and run modes" alt="A stopwatch has orthogonal display and run regions, allowing lap display while counting remains on." caption="Figure 25. What the watch displays and what its counter does are separate parts of its state." />
 
 This is a useful modeling question for interfaces too. Does a frozen screen mean that the underlying process is paused, or only that the displayed value is unchanged? Separate those choices when they can change independently.
 
@@ -183,7 +183,7 @@ The stopwatch also has a special zero state. Resetting to zero has conditions th
 
 Figure 26 starts with battery insertion, battery removal, and battery death. Figures 27 and 28 refine the alive state into six concurrent components: main behavior, alarm 1 status, alarm 2 status, chime status, power, and light.
 
-<StatechartExample example="harel-watch" name="the combined wristwatch" alt="The watch separates dead and alive. Alive contains six parallel regions for the main behavior, two alarm statuses, chime, power, and light, with nested displays and update modes." caption="Figures 26-31 adapted as a combined model. Open the editor to inspect the hierarchy; the focused diagrams above explain its main parts." />
+<StatechartExample display="inline" example="harel-watch" name="the combined wristwatch" alt="The watch separates dead and alive. Alive contains six parallel regions for the main behavior, two alarm statuses, chime, power, and light, with nested displays and update modes." caption="Figures 26-31 adapted as a combined model. Open the editor to inspect the hierarchy; the focused diagrams above explain its main parts." />
 
 Placing the light at this level has a behavioral consequence. Pressing b can turn on the light while a different region responds to the same press. If the main region is updating a setting, that press can also leave update mode.
 
@@ -191,7 +191,7 @@ The enabled status of an alarm is likewise separate from whether its settings ar
 
 Figures 29 and 30 introduce the beeper test and show why its **scope** matters. Adding an orthogonal region to the time display makes the test available there. The actual watch also permits it in the date display and the general update sequence, but not in the two-second waiting period. Figure 31 groups the appropriate modes to express that boundary.
 
-<StatechartExample example="harel-beep-test" name="the scoped beeper test" alt="The beeper test tracks held buttons and a beeping state, with an additional interruption while a is pressed." caption="Figures 29, 30, and 32. The combined watch determines where the test is available; this focused view shows its internal behavior." />
+<StatechartExample display="inline" example="harel-beep-test" name="the scoped beeper test" alt="The beeper test tracks held buttons and a beeping state, with an additional interruption while a is pressed." caption="Figures 29, 30, and 32. The combined watch determines where the test is available; this focused view shows its internal behavior." />
 
 Harel checks the combined model with a scenario. Start while updating the month. Press d and hold it, then press b and hold it. The month increments. The main display returns to time. The beeper test sounds, and the light is on. A single sequence has consequences in several regions.
 
@@ -215,13 +215,13 @@ The first examples establish the basic structure. Section 4 adds ways to express
 
 An entry into a compound state may depend on a condition. Figure 33 introduces a circled C that abbreviates a set of conditional paths. It does not remove the need to define those conditions. If a compact drawing hides them, the full specification still needs them.
 
-<StatechartExample example="harel-conditional" name="conditional entry" alt="An entry routes to a child according to explicit conditions, expressing the conditional entrance without the paper's C connector." caption="Figure 33 adapted with explicit guarded routing. The choice must be defined, even when a drawing abbreviates it." />
+<StatechartExample display="inline" example="harel-conditional" name="conditional entry" alt="An entry routes to a child according to explicit conditions, expressing the conditional entrance without the paper's C connector." caption="Figure 33 adapted with explicit guarded routing. The choice must be defined, even when a drawing abbreviates it." />
 
 For a deterministic model, make the conditions mutually exclusive or define an intentional priority and fallback. An ordered list of XState guards is a particular policy. It should not be mistaken for an unspecified choice in the original figure.
 
 A circled S abbreviates **selection**. Figure 34 uses a storage system with keys for type, name, quantity, and place. Selecting an option determines which update state to enter. The event-to-state association must be defined. In the adaptation, updating is a targetless action within the chosen field, rather than a history self-reentry.
 
-<StatechartExample example="harel-selection" name="the storage system's field selection" alt="Type, name, quantity, and place selection events enter their corresponding update states, where update and return behavior are explicit." caption="Figure 34. Explicit selection events replace the abbreviated S entrance." />
+<StatechartExample display="inline" example="harel-selection" name="the storage system's field selection" alt="Type, name, quantity, and place selection events enter their corresponding update states, where update and return behavior are explicit." caption="Figure 34. Explicit selection events replace the abbreviated S entrance." />
 
 Conditional entry asks which condition holds. Selection entry asks which option the event selected. Both need concrete routing information. Neither connector is an unexplained jump to an arbitrary child.
 
@@ -233,7 +233,7 @@ The watch already uses elapsed time to leave a date display or stop an alarm. Ha
 
 Figure 35 adds a state-duration annotation. An upper bound limits how long the system remains in the state. A lower bound prevents exit-triggering events from taking effect before enough time has elapsed.
 
-<StatechartExample example="harel-timeout" name="minimum and maximum waiting times" alt="A waiting state first blocks early exits, then permits them, and has a separate maximum-duration timeout." caption="Figure 35 adapted with explicit timing phases. A minimum duration and a maximum duration impose different rules." />
+<StatechartExample display="inline" example="harel-timeout" name="minimum and maximum waiting times" alt="A waiting state first blocks early exits, then permits them, and has a separate maximum-duration timeout." caption="Figure 35 adapted with explicit timing phases. A minimum duration and a maximum duration impose different rules." />
 
 A useful concrete reading is a control that cannot finish during its initial protected interval, may finish after that interval, and must time out at its upper bound. The implementation must say which entry starts each timer, which exits cancel it, and whether reentry restarts it. This adaptation uses the figure's two-second upper bound and adds a half-second lower bound to illustrate the surrounding text. Its timers restart on entry.
 
@@ -245,7 +245,7 @@ In XState, [delayed transitions](delayed-transitions) describe state-relative de
 
 Large statecharts can become unreadable even when their behavior is well structured. Figure 36 moves a detailed part outside its usual visual neighborhood while retaining its connection to the surrounding model.
 
-<StatechartExample example="harel-unclustering" name="a parent and its detailed refinement" alt="An outer state contains a detailed nested component whose internal choices remain part of the same hierarchy." caption="Figure 36. The native hierarchy keeps the relationship explicit while a focused view can expose the detail." />
+<StatechartExample display="inline" example="harel-unclustering" name="a parent and its detailed refinement" alt="An outer state contains a detailed nested component whose internal choices remain part of the same hierarchy." caption="Figure 36. The native hierarchy keeps the relationship explicit while a focused view can expose the detail." />
 
 Unclustering is a presentation technique. It does not create a second independent instance of the state. The detached detail and the compact outer view describe the same part of the same system.
 
@@ -267,7 +267,7 @@ The paper writes a transition label as `α(P)/S`: event α triggers it, conditio
 
 Harel adds actions to transition labels and to state entry and exit. An activity associated with being in a state can be understood as starting on entry and stopping on exit. This gives the control model an explicit relationship with the rest of the system.
 
-<StatechartExample example="harel-activities" name="entry, exit, and communication between regions" alt="Entering A and its child B performs S and V. Leaving B and A performs exit actions and emits beta, which moves the other region from D to E." caption="Figure 37. Nested entry and exit determine which actions apply, while a generated event coordinates another region." />
+<StatechartExample display="inline" example="harel-activities" name="entry, exit, and communication between regions" alt="Entering A and its child B performs S and V. Leaving B and A performs exit actions and emits beta, which moves the other region from D to E." caption="Figure 37. Nested entry and exit determine which actions apply, while a generated event coordinates another region." />
 
 In the paper's example, the initial configuration is C with D. An event moves the left region into A and its child B. A's entry action S and B's entry action V both apply. Moving within A from B to F does not enter A again, so A's entry action is not repeated.
 
@@ -291,13 +291,13 @@ This section changes status. Harel presents **research proposals**, often withou
 
 Some state structures repeat with only a value or instance number changed. Figure 38 expands a minute digit into ten states, with increment transitions around the cycle. Figure 39 replaces that repeated structure with a parameterized description.
 
-<StatechartExample example="harel-digit" name="the expanded minute-digit cycle" alt="Ten states numbered zero through nine form a cycle under the increment event." caption="Figures 38 and 39. The explicit finite expansion shows the structure that a parameter would abbreviate." />
+<StatechartExample display="inline" example="harel-digit" name="the expanded minute-digit cycle" alt="Ten states numbered zero through nine form a cycle under the increment event." caption="Figures 38 and 39. The explicit finite expansion shows the structure that a parameter would abbreviate." />
 
 There are two distinct motivations. A parameterized exclusive choice can represent the value of a digit. A parameterized parallel structure can represent many similar components that are all present together.
 
 Figure 40 uses a telephone network as the second case. Each telephone has a local state, while events coordinate interactions between telephones.
 
-<StatechartExample example="harel-telephones" name="two instances of the telephone pattern" alt="Two telephone regions run the same local behavior in parallel, illustrating repeated concurrent instances." caption="Figure 40 adapted with two explicit instances. The paper sketches a family of one thousand telephones; this view shows the repeating unit." />
+<StatechartExample display="inline" example="harel-telephones" name="two instances of the telephone pattern" alt="Two telephone regions run the same local behavior in parallel, illustrating repeated concurrent instances." caption="Figure 40 adapted with two explicit instances. The paper sketches a family of one thousand telephones; this view shows the repeating unit." />
 
 An XState application might put numeric values in [context](context), create machine definitions with a factory, or create separate actors for repeated components. Those choices have different consequences. Ten digit states are a finite enumeration. A data variable is not automatically such an enumeration, and one thousand actors are not automatically one thousand parallel regions of a single actor.
 
@@ -309,17 +309,17 @@ The paper itself suggests that variables and richer data structures in a program
 
 The hierarchy so far is a tree. A state has one parent. Figure 41 asks whether a state could belong to two overlapping groups, perhaps because both groups share an exit condition.
 
-<StatechartExample example="harel-overlap-shared" name="a tree-based alternative to a shared child" alt="Separate tree branches make the shared behavior explicit without giving a child two parents." caption="Figure 41 adapted through an explicit tree-based alternative. The native model does not claim to implement overlapping parentage." />
+<StatechartExample display="inline" example="harel-overlap-shared" name="a tree-based alternative to a shared child" alt="Separate tree branches make the shared behavior explicit without giving a child two parents." caption="Figure 41 adapted through an explicit tree-based alternative. The native model does not claim to implement overlapping parentage." />
 
 Figures 42 and 43 consider a related problem. A can exist by itself in one mode, but be active alongside B in another. One workaround repeats A. Another gives B an artificial state meaning that B is absent.
 
 Harel proposes the overlapping representation in Figure 44 to avoid those compromises. Figure 45 then shows why entries need further notation. Entering a shared descendant must say whether it also enters the additional parallel component.
 
-<StatechartExample example="harel-overlap" name="A alone and A alongside B" alt="An exclusive outer choice distinguishes A alone from a parallel configuration containing A and B." caption="Figures 42-45 adapted with explicit modes and duplicated structure. The extra mode records a choice that overlapping boundaries would otherwise have to express." />
+<StatechartExample display="inline" example="harel-overlap" name="A alone and A alongside B" alt="An exclusive outer choice distinguishes A alone from a parallel configuration containing A and B." caption="Figures 42-45 adapted with explicit modes and duplicated structure. The extra mode records a choice that overlapping boundaries would otherwise have to express." />
 
 Figure 43's inactive-component workaround is also worth inspecting directly. B still exists as a region, but one of its states represents being inactive. That differs structurally from B not being present.
 
-<StatechartExample example="harel-overlap-inactive" name="the inactive-component workaround" alt="Parallel A and B remain present, while B can enter a special inactive state." caption="Figure 43. A special inactive state avoids duplicate A structure at the cost of keeping B in the model." />
+<StatechartExample display="inline" example="harel-overlap-inactive" name="the inactive-component workaround" alt="Parallel A and B remain present, while B can enter a special inactive state." caption="Figure 43. A special inactive state avoids duplicate A structure at the cost of keeping B in the model." />
 
 The native workaround is intentionally visible. Ordinary XState nesting cannot give one state two parents. Duplicating A can express a chosen finite behavior, but the copies have separate identity and history. Reusable definitions may reduce source duplication without making those runtime states identical.
 
@@ -361,7 +361,7 @@ A diagram becomes executable only when rules determine its meaning. Nesting and 
 
 Figure 46 begins in A with B. One alpha event leads to C with D. On the next alpha, the competing transitions permit E with H or G with F. The paper explicitly says that taking both destinations as E with F is not the result.
 
-<StatechartExample example="harel-conflict" name="the conflict and its explicit resolutions" alt="An initial parallel pair reaches C and D, then explicit alternatives show the two resolutions of a conflicting transition." caption="Figure 46 adapted with an explicit choice policy. The paper's nondeterministic alternatives are made inspectable rather than silently resolved by XState's selection rules." />
+<StatechartExample display="inline" example="harel-conflict" name="the conflict and its explicit resolutions" alt="An initial parallel pair reaches C and D, then explicit alternatives show the two resolutions of a conflicting transition." caption="Figure 46 adapted with an explicit choice policy. The paper's nondeterministic alternatives are made inspectable rather than silently resolved by XState's selection rules." />
 
 That example is a warning against reading each arrow independently and combining all the targets. Transitions can conflict because of the configurations they leave, even when parts of their drawings look separate.
 
@@ -369,7 +369,7 @@ That example is a warning against reading each arrow independently and combining
 
 In Figure 47, one region emits an event that causes another region to emit the next event. Following the chain returns to the first event.
 
-<StatechartExample example="harel-broadcast-cycle" name="the generated-event cycle" alt="Two regions show alpha producing beta, beta producing gamma, gamma producing delta, and delta producing alpha." caption="Figure 47 shown structurally. The emission labels expose the cycle; this read-only illustration does not run an unbounded raised-event loop." />
+<StatechartExample display="inline" example="harel-broadcast-cycle" name="the generated-event cycle" alt="Two regions show alpha producing beta, beta producing gamma, gamma producing delta, and delta producing alpha." caption="Figure 47 shown structurally. The emission labels expose the cycle; this read-only illustration does not run an unbounded raised-event loop." />
 
 Without a rule that rejects, bounds, or otherwise defines that behavior, a reaction may never reach a stable result. The drawing alone does not guarantee that one external input finishes processing.
 
@@ -377,7 +377,7 @@ Without a rule that rejects, bounds, or otherwise defines that behavior, a react
 
 Figure 48 starts with A, C, and E active. Alpha changes A to B. Another region responds to entering B. A third responds to alpha only if A is active.
 
-<StatechartExample example="harel-semantics" name="the state-observation example" alt="Three parallel regions show alpha moving A to B, an entered-B event moving C to D, and a guarded alpha transition from E to F." caption="Figure 48 adapted under an explicit XState processing policy. The original figure poses a semantic question rather than declaring one universal outcome." />
+<StatechartExample display="inline" example="harel-semantics" name="the state-observation example" alt="Three parallel regions show alpha moving A to B, an entered-B event moving C to D, and a guarded alpha transition from E to F." caption="Figure 48 adapted under an explicit XState processing policy. The original figure poses a semantic question rather than declaring one universal outcome." />
 
 Does the guard observe A before or after the first transition? Is an entered-state event visible during the same step? Harel lists four candidate results and says that a formal semantics must settle the question. His intuition is not a substitute for the rules.
 
@@ -387,7 +387,7 @@ The JSON labels the action that raises entered B. With the companion's supplied 
 
 Figure 49 sends A to B on alpha together with beta, or to C on alpha without beta. A third arrow goes to D on gamma together with the event of leaving A. Can gamma cause that departure when leaving A is itself a prerequisite? That causal question makes the example harder than ordinary ordered input.
 
-<StatechartExample example="harel-simultaneous" name="an explicit simultaneous-input policy" alt="An explicit input policy distinguishes alpha with beta from alpha without beta and separates the unresolved leave-state dependency." caption="Figure 49 adapted as a declared input policy. Two sequential actor.send calls do not represent the paper's set of simultaneous events." />
+<StatechartExample display="inline" example="harel-simultaneous" name="an explicit simultaneous-input policy" alt="An explicit input policy distinguishes alpha with beta from alpha without beta and separates the unresolved leave-state dependency." caption="Figure 49 adapted as a declared input policy. Two sequential actor.send calls do not represent the paper's set of simultaneous events." />
 
 The adaptation accepts an INPUT packet with explicit observations. Alpha with beta chooses B; alpha without beta chooses C. Gamma alone stays in A, and D remains unreachable. That declared policy does not solve the paper's causal question.
 

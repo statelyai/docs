@@ -7,7 +7,7 @@ const readJSON = async (path) => JSON.parse(await readFile(new URL(path, assets)
 const coverage = await readJSON('coverage.json');
 const captures = await readJSON('captures.json');
 const article = await readFile(new URL('../content/docs/harel-statecharts.mdx', import.meta.url), 'utf8');
-const ids = [...article.matchAll(/<StatechartExample\s+example="([^"]+)"/g)].map((match) => match[1]);
+const ids = [...article.matchAll(/<StatechartExample\s+display="inline"\s+example="([^"]+)"/g)].map((match) => match[1]);
 assert.deepEqual(ids, Object.keys(coverage.examples), 'Every registered adaptation appears in reading order');
 assert.equal(new Set(ids).size, ids.length, 'Each diagram appears once');
 assert.deepEqual((await readdir(new URL('examples/', assets))).sort(), ids.map((id) => `${id}.json`).sort(), 'No orphan or missing source models');
@@ -36,8 +36,8 @@ if (base) {
   assert.match(html, /<title>David Harel&#x27;s statecharts paper, explained \| Stately<\/title>|<title>David Harel's statecharts paper, explained \| Stately<\/title>/);
   assert.match(html, /rel="canonical" href="https:\/\/stately.ai\/docs\/harel-statecharts"/);
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
-  assert.equal((html.match(/<iframe\b/g) ?? []).length, 0, 'Native editors wait for user interaction');
-  assert.equal((html.match(/<summary\b/g) ?? []).length, ids.length);
+  assert.equal((html.match(/<iframe\b/g) ?? []).length, 0, 'Native editors wait until near the viewport');
+  assert.equal((html.match(/data-statechart-embed="waiting"/g) ?? []).length, ids.length);
   const editorLinks = [...html.matchAll(/href="(https:\/\/editor\.stately\.ai\/viz[^"]+)"/g)];
   assert.equal(editorLinks.length, ids.length, 'Every example has a read-only editor link');
   for (const [, href] of editorLinks) {
@@ -71,6 +71,6 @@ if (base) {
     assert.equal(page.status, 200);
     assert((await page.text()).includes('/docs/harel-statecharts'), `${path}: guide discoverable`);
   }
-  console.log('Rendered Harel guide: sections, anchors, 28 static diagrams, deferred embeds, sources, canonical, sitemap, discovery, Markdown PASS');
+  console.log('Rendered Harel guide: sections, anchors, 28 fallback diagrams, inline embed placeholders, sources, canonical, sitemap, discovery, Markdown PASS');
 }
 console.log('Harel paper coverage: 17 numbered sections/subsections, 49 figures, 28 native model/screenshot pairs PASS');
