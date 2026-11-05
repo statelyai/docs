@@ -302,11 +302,16 @@ The default `display="on-demand"` loads the editor when its keyboard-accessible
 disclosure opens. Both modes allow simulation, parent-state expansion/collapse,
 and pan/zoom, with parents initially expanded. Zoom and simulation controls
 stay on the canvas; the command bar, breadcrumbs, and side panels are hidden.
-Without JavaScript, the screenshot and direct example link still work.
+Embeds and direct links follow the docs' resolved light/dark theme, including
+manual theme choices. Links default to `theme=system` before hydration. Switching
+the docs theme updates the iframe fragment without remounting it. Light and dark
+screenshots keep the loading and failure states consistent with the page.
+Without JavaScript, the theme-appropriate screenshot and direct link still work.
 
 To add an example, put its XState JSON definition in
 `public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,
-and capture the corresponding production editor view. Use that entry's ID in
+and capture its light and dark production editor views. Refresh the dark
+capture manifest with `scripts/capture-statechart-dark-examples.mjs`. Use that ID in
 `StatechartExample`; its source URL and screenshot dimensions come from the
 registry. Asset provenance and capture details are in
 `public/assets/statecharts/README.md`.

@@ -27,6 +27,22 @@ for (const id of ids) {
   assert.equal(png.readUInt32BE(16), captures[id].width * captures[id].deviceScaleFactor, `${id}: captured width`);
   assert.equal(png.readUInt32BE(20), captures[id].height * captures[id].deviceScaleFactor, `${id}: captured height`);
 }
+const darkAssets = new URL('../public/assets/statecharts/', import.meta.url);
+const darkCaptures = JSON.parse(await readFile(new URL('dark-captures.json', darkAssets), 'utf8'));
+const coffeeIds = (await readdir(new URL('examples/', darkAssets))).filter((file) => file.endsWith('.json')).map((file) => file.slice(0, -5));
+assert.deepEqual(Object.keys(darkCaptures).sort(), [...ids, ...coffeeIds].sort(), 'Every example has a native dark fallback');
+for (const id of Object.keys(darkCaptures)) {
+  const root = ids.includes(id) ? assets : darkAssets;
+  const source = await readFile(new URL(`examples/${id}.json`, root));
+  const capture = darkCaptures[id];
+  assert.equal(capture.theme, 'dark');
+  assert.equal(capture.sourceSha256, createHash('sha256').update(source).digest('hex'), `${id}: dark screenshot source unchanged`);
+  const png = await readFile(new URL(`dark/${id}.png`, darkAssets));
+  assert.equal(png.subarray(1, 4).toString(), 'PNG');
+  assert.equal(png.readUInt32BE(16), capture.width * capture.deviceScaleFactor);
+  assert.equal(png.readUInt32BE(20), capture.height * capture.deviceScaleFactor);
+}
+console.log('Dark fallbacks: 31 native captures, source hashes, and dimensions PASS');
 const base = process.argv[2];
 if (base) {
   const get = (path) => fetch(new URL(path, base));
@@ -43,6 +59,7 @@ if (base) {
   for (const [, href] of editorLinks) {
     const url = new URL(href.replaceAll('&amp;', '&'));
     const params = new URLSearchParams(url.hash.slice(1));
+    assert.equal(params.get('theme'), 'system', 'Server-rendered links follow system preference until hydration');
     assert.equal(params.get('chrome'), 'none', 'Only the requested canvas controls are visible');
     assert.equal(params.get('canvasSlots'), 'viewportControls,simulationControls');
     assert.equal(params.get('topBar'), '0');

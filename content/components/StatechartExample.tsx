@@ -1,11 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import darkCaptures from '@/public/assets/statecharts/dark-captures.json';
 import {
   statechartExamples,
   statechartExampleURL,
   type StatechartExampleId,
+  type StatechartColorMode,
 } from '@/lib/statechart-examples';
 
 type Props = {
@@ -16,23 +19,40 @@ type Props = {
   display?: 'inline' | 'on-demand';
 };
 
+const subscribeToNothing = () => () => {};
+
 function StatechartImage({
   example,
   alt,
   className,
-}: Pick<Props, 'example' | 'alt'> & { className: string }) {
+  fill = false,
+}: Pick<Props, 'example' | 'alt'> & { className: string; fill?: boolean }) {
   const entry = statechartExamples[example];
+  const dark = darkCaptures[example];
   return (
-    <Image
-      src={
-        'image' in entry ? entry.image : `/assets/statecharts/${example}.jpg`
-      }
-      alt={alt}
-      width={entry.width}
-      height={entry.height}
-      unoptimized
+    <div
       className={className}
-    />
+      style={fill ? undefined : { width: entry.width }}
+    >
+      <Image
+        src={
+          'image' in entry ? entry.image : `/assets/statecharts/${example}.jpg`
+        }
+        alt={alt}
+        width={entry.width}
+        height={entry.height}
+        unoptimized
+        className={`${fill ? 'h-full w-full object-contain' : 'h-auto w-full'} dark:hidden`}
+      />
+      <Image
+        src={`/assets/statecharts/dark/${example}.png`}
+        alt={alt}
+        width={dark.width}
+        height={dark.height}
+        unoptimized
+        className={`hidden ${fill ? 'h-full w-full object-contain' : 'h-auto w-full'} dark:block`}
+      />
+    </div>
   );
 }
 
@@ -40,14 +60,18 @@ function InlineStatechart({
   example,
   name,
   alt,
-}: Pick<Props, 'example' | 'name' | 'alt'>) {
+  embedURL,
+  colorMode,
+}: Pick<Props, 'example' | 'name' | 'alt'> & {
+  embedURL: string;
+  colorMode: StatechartColorMode;
+}) {
   const container = useRef<HTMLDivElement>(null);
   const iframe = useRef<HTMLIFrameElement>(null);
   const [status, setStatus] = useState<
     'waiting' | 'loading' | 'ready' | 'error'
   >('waiting');
   const [attempt, setAttempt] = useState(0);
-  const embedURL = statechartExampleURL(example);
 
   useEffect(() => {
     if (status !== 'waiting' || !container.current) return;
@@ -90,11 +114,12 @@ function InlineStatechart({
     <div
       ref={container}
       data-statechart-embed={status}
-      className="relative h-[640px] overflow-hidden rounded-lg border bg-white"
+      className="relative h-[640px] overflow-hidden rounded-lg border bg-fd-card"
     >
       <StatechartImage
         example={example}
         alt={alt}
+        fill
         className={
           status === 'ready' ? 'hidden' : 'h-full w-full object-contain'
         }
@@ -104,6 +129,9 @@ function InlineStatechart({
           key={attempt}
           ref={iframe}
           src={embedURL}
+          style={{
+            colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
+          }}
           title={`${name} read-only statechart`}
           aria-hidden={status !== 'ready'}
           tabIndex={status === 'ready' ? 0 : -1}
@@ -115,7 +143,7 @@ function InlineStatechart({
       {(status === 'loading' || status === 'error') && (
         <div
           role="status"
-          className="absolute inset-x-0 bottom-0 bg-white/95 p-3 text-center text-sm text-gray-700"
+          className="absolute inset-x-0 bottom-0 bg-fd-card/95 p-3 text-center text-sm text-fd-muted-foreground"
         >
           {status === 'loading' ? (
             'Loading interactive example…'
@@ -148,7 +176,17 @@ export function StatechartExample({
   display = 'on-demand',
 }: Props) {
   const [expanded, setExpanded] = useState(false);
-  const embedURL = statechartExampleURL(example);
+  const { resolvedTheme } = useTheme();
+  const hydrated = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
+  const colorMode =
+    hydrated && (resolvedTheme === 'light' || resolvedTheme === 'dark')
+      ? resolvedTheme
+      : 'system';
+  const embedURL = statechartExampleURL(example, colorMode);
 
   return (
     <div className="my-6">
@@ -159,12 +197,14 @@ export function StatechartExample({
             example={example}
             name={name}
             alt={alt}
+            embedURL={embedURL}
+            colorMode={colorMode}
           />
         ) : (
           <StatechartImage
             example={example}
             alt={alt}
-            className="mx-auto h-auto max-w-full rounded-lg bg-white"
+            className="mx-auto w-fit max-w-full rounded-lg bg-fd-card"
           />
         )}
         <figcaption className="mt-2 text-sm text-fd-muted-foreground">
@@ -197,6 +237,9 @@ export function StatechartExample({
           {expanded && (
             <iframe
               src={embedURL}
+              style={{
+                colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
+              }}
               title={`${name} read-only statechart`}
               loading="lazy"
               className="block h-[640px] w-full border-0"

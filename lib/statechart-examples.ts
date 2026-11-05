@@ -11,8 +11,12 @@ export const statechartExamples = {
 };
 
 export type StatechartExampleId = keyof typeof statechartExamples;
+export type StatechartColorMode = 'light' | 'dark' | 'system';
 
-export function statechartExampleURL(example: StatechartExampleId): string {
+export function statechartExampleURL(
+  example: StatechartExampleId,
+  theme: StatechartColorMode = 'system',
+): string {
   const bytes = new TextEncoder().encode(
     JSON.stringify(statechartExamples[example].machine),
   );
@@ -32,7 +36,7 @@ export function statechartExampleURL(example: StatechartExampleId): string {
   url.hash = new URLSearchParams({
     machine,
     format: 'xstate-json',
-    theme: 'light',
+    theme,
     chrome: 'none',
     canvasSlots: 'viewportControls,simulationControls',
     topBar: '0',

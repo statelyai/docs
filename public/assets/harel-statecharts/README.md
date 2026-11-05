@@ -33,7 +33,11 @@ UTF-8 JSON encoded as base64url in the fragment, with `format=xstate-json`,
 `chrome=none`, `canvasSlots=viewportControls,simulationControls`, `topBar=0`,
 `expanded=1`, and `panels=none`. The canvas controls remain usable while `/viz`
 keeps editing disabled. The source tag is
-`docs-harel-statecharts`. Static screenshots retain the plain light capture view
+`docs-harel-statecharts`. Interactive embeds follow the docs' resolved theme.
+Native dark fallbacks and
+capture metadata are in `../statecharts/dark/` and `../statecharts/dark-captures.json`;
+regenerate them with `scripts/capture-statechart-dark-examples.mjs`.
+Static light screenshots retain the plain light capture view
 (`chrome=plain`, `theme=light`, `interactive=1`, `panels=none`).
 
 ## Refresh screenshots
