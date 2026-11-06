@@ -1,0 +1,339 @@
+---
+title: 'Announcing XState v6 beta'
+description: 'Releasing the first beta of XState v6, a new major version focused on making state machines easier to read, write, verify, and run anywhere.'
+authors: [david]
+tags: [xstate, xstate v6, announcement, beta, state machines, actor model]
+date: 2026-11-05
+slug: 2026-11-05-xstate-v6-beta
+image: /assets/blog/2026-11-05-xstate-v6-beta.png
+---
+
+![XState v6 beta](/assets/blog/2026-11-05-xstate-v6-beta.png)
+
+Today, we’re releasing the first beta of XState v6, a new major version focused on making state machines (and statecharts) easier to read, write, verify, and run anywhere.
+
+A lot has happened since we released XState v5 almost 3 years ago. Today, it has over 30k stars and over 8 million weekly downloads, and more teams than ever are using it in production, for many use-cases, including UI logic, backend workflows, and (increasingly) AI agents. The way most code gets written has also changed (a lot), and that honestly shaped this release more than anything else. {/* truncate */}
+
+XState is a **fully open-source (MIT) and zero-dependency** state management & orchestration solution based on state machines, statecharts, and the actor model. **XState orchestrates any logic**, from promises to state machines and statecharts and everything in between.
+
+You can try out XState v6 beta today by installing `xstate@beta`:
+
+```bash
+npm i xstate@beta
+```
+
+We consider the core API stable, and we only plan to make breaking changes before the stable release if overwhelming feedback shows that we need to. A few newer APIs, like durable execution, are still marked as experimental.
+
+## Agents write state machines now
+
+More and more code is now written by AI agents, and that includes state machines. Agents are actually _really good_ at writing state machines and statecharts with XState. This makes sense: XState has been around since 2015, so there are many years of docs, examples, discussions, and open-source code using it. Statecharts themselves go back to [David Harel’s 1987 paper](https://www.sciencedirect.com/science/article/pii/0167642387900359), and the core concepts (states, events, transitions, guards, parallel states, history states, actors, etc.) haven’t changed since. Models know these concepts well; the syntax is the part they struggled with in the past.
+
+And that’s because they learned XState from years of v4/v5 code, so they often write older syntax, like `cond` instead of `guard` or `interpret(...)` instead of `createActor(...)`. And most models haven’t seen v6 in their training data yet… and that's completely fine!
+
+Instead of hoping that models remember the right version, we designed v6 so that an agent (or a human like you!) can get the right answer from the code, the types, and the docs in front of it, and so that mistakes are caught as early as possible. In practice, that means:
+
+- **Way less API to learn**. Transitions are plain functions (idiomatic JS), and the action creators and guard helpers are gone.
+- **Much stronger types**. Schemas power typed events and context, and type errors tell you exactly what’s wrong.
+- **Docs in the package**. Every install includes docs for that exact version, including a guide written for agents.
+- **Tools that don’t run your code**. A new CLI inspects, validates, simulates, and tests machine definitions, and returns JSON.
+- **Pure transitions everywhere**. The same machine can run in memory, in a serverless function, or on a durable execution host.
+
+Let’s take a look at some of these.
+
+## Transitions are just functions
+
+In XState v5, a transition was an object with `target`, `guard`, and `actions` properties. Actions were created with action creators like `assign(...)`, `raise(...)`, `sendTo(...)`, and `emit(...)`, and guards could be combined with higher-order guards like `and(...)`, `or(...)`, and `not(...)`. This worked, but it was a lot of API to learn (and a lot of API for agents to get wrong), and logic that belonged together was split across separate properties:
+
+```ts
+// XState v5
+import { setup, assign, emit } from 'xstate';
+
+const feedbackMachine = setup({
+  guards: {
+    hasFeedback: ({ context }) => context.feedback.trim() !== '',
+  },
+}).createMachine({
+  // ...
+  states: {
+    editing: {
+      on: {
+        submit: {
+          // [!code highlight:9]
+          guard: 'hasFeedback',
+          target: 'submitted',
+          actions: [
+            assign({ attempts: ({ context }) => context.attempts + 1 }),
+            emit(({ context }) => ({
+              type: 'feedback.submitted',
+              feedback: context.feedback,
+            })),
+          ],
+        },
+      },
+    },
+    // ...
+  },
+});
+```
+
+In XState v6, a transition can be a plain function. It receives the current `context` and `event` (and more), and it returns the next state and any context updates. Side effects are enqueued with `enq` instead of being executed directly:
+
+```ts
+// 🆕 XState v6
+import { setup } from 'xstate';
+
+const feedbackMachine = setup({
+  // ...
+}).createMachine({
+  // ...
+  states: {
+    editing: {
+      on: {
+        submit: ({ context }, enq) => {
+          // [!code highlight:8]
+          if (context.feedback.trim() === '') return;
+
+          enq.emit({ type: 'feedback.submitted', feedback: context.feedback });
+
+          return {
+            target: 'submitted',
+            context: { attempts: context.attempts + 1 },
+          };
+        },
+      },
+    },
+    // ...
+  },
+});
+```
+
+There’s no `guard` property here; if the function returns nothing (and enqueues nothing), the transition isn’t taken. There are no action creators either. `enq.raise(...)`, `enq.sendTo(...)`, `enq.emit(...)`, `enq.spawn(...)`, and friends replace them, and any other side effect is just `enq(fn)`. Conditions are plain JavaScript (`if`, `&&`, `||`, `!`), and TypeScript narrowing carries through each branch, which _wasn’t possible_ when guards and actions were declared separately. Hard to understate this: **transition functions provide much stronger type safety.**
+
+These transition functions are still pure. `enq` only _records_ (internally enqueues) effects, and the actor executes them after the next state is calculated. So a transition is still `(state, event) => [nextState, effects]`, which will be important later. And when there’s no logic to run, you can still write a plain transition object, like `{ target: 'submitted' }`.
+
+[Read more about transitions in our docs](/docs/xstate/v6/transitions).
+
+## Much better type safety
+
+In XState v5, you declared types with `types: {} as { ... }`… not really the most idiomatic pattern. In XState v6, you declare `schemas` instead, using [Zod](https://zod.dev) or any other [Standard Schema](https://standardschema.dev) library (or `types<T>()` if you only need TypeScript types):
+
+```ts
+import { z } from 'zod';
+import { setup, createActor } from 'xstate';
+
+const feedbackMachine = setup({
+  // [!code highlight:7]
+  schemas: {
+    context: z.object({ feedback: z.string(), attempts: z.number() }),
+    events: {
+      'feedback.update': z.object({ feedback: z.string() }),
+      submit: z.object({}),
+    },
+  },
+}).createMachine({
+  // ...
+});
+
+const actor = createActor(feedbackMachine).start();
+
+// [!code highlight:2]
+actor.send({ type: 'feedback.update', feedback: 'Love it' });
+actor.send({ type: 'submit' });
+```
+
+Events sent with `actor.send(...)` are typed from your event schemas, so a misspelled event type or a missing payload property is a type error. The same goes for misspelled event keys in `on: { ... }` and for context updates that don’t match the context schema:
+
+```ts
+on: {
+  // Type error: Event type 'sumbit' is not declared in schemas.events.
+  sumbit: { target: 'submitted' }, // [!code highlight]
+},
+```
+
+This is especially useful for agents, since a type error is about the cheapest feedback loop there is, and an agent doesn’t need to have read any docs to understand `Event type 'sumbit' is not declared in schemas.events`.
+
+Since schemas are real values (not just types), tools like the visual editor can read them too, and you can use them for runtime validation. There are also two new ways to make context more precise:
+
+- **Typestates**. Each state can declare the shape of context that’s valid in that state, and `snapshot.matches(...)` narrows context accordingly. [Read more about typestates](/docs/xstate/v6/typestates).
+- **State input**. A state can declare a typed `input` payload that must be provided when transitioning to it, and that only exists while the state is active, so you don’t need optional context properties that only matter in one state. [Read more about state input](/docs/xstate/v6/state-input).
+
+## Docs and tools for agents (and humans)
+
+The `xstate` package now ships with its own docs in `node_modules/xstate/docs`, matching the exact version you have installed. This includes an [agent guide](/docs/xstate/v6/agents) with the rules for writing v6 machines. Point your agent at `node_modules/xstate/docs/agents.md`, and it’ll stop writing `cond` (if it’s smart enough).
+
+The `xstate` package also includes a CLI. Its commands work on JSON machine definitions and return JSON, and none of them run your application code:
+
+- `xstate inspect` reports a definition’s structure and graph.
+- `xstate validate` checks a definition.
+- `xstate simulate` calculates transitions for a list of events, without executing effects.
+- `xstate test` checks safety and reachability properties.
+- `xstate replay` replays a counterexample from a failed check.
+- `xstate diff` reports structural changes between two definitions.
+
+```bash
+npx xstate simulate review.json events.json
+```
+
+Machines can be converted to and from JSON with `machineToJSON(...)` and `machineFromJSON(...)`, which is useful for storing machines as data, generating them, or round-tripping them through other tools. And `npx xstate migrate` migrates XState v5 code to v6 (more on that below).
+
+## A visual editor that speaks v6
+
+We’ve also been building a new visual editor, and it supports XState v6. Here’s a small checkout machine written in XState v6, rendered with the editor’s read-only viz:
+
+<EmbedMachine
+  name="checkout"
+  embedURL="https://editor.stately.ai/viz#machine=aW1wb3J0IHsgc2V0dXAsIHR5cGVzIH0gZnJvbSAneHN0YXRlJzsKCmNvbnN0IGNoZWNrb3V0TWFjaGluZSA9IHNldHVwKHsKICBzY2hlbWFzOiB7CiAgICBjb250ZXh0OiB0eXBlczx7IGF0dGVtcHRzOiBudW1iZXIgfT4oKSwKICAgIGV2ZW50czogewogICAgICBzdWJtaXQ6IHR5cGVzPHt9PigpLAogICAgICAncGF5bWVudC5zdWNjZWVkZWQnOiB0eXBlczx7fT4oKSwKICAgICAgJ3BheW1lbnQuZmFpbGVkJzogdHlwZXM8eyByZWFzb246IHN0cmluZyB9PigpLAogICAgICByZXRyeTogdHlwZXM8e30-KCksCiAgICAgIGNhbmNlbDogdHlwZXM8e30-KCkKICAgIH0KICB9Cn0pLmNyZWF0ZU1hY2hpbmUoewogIGlkOiAnY2hlY2tvdXQnLAogIGNvbnRleHQ6IHsgYXR0ZW1wdHM6IDAgfSwKICBpbml0aWFsOiAncmV2aWV3aW5nJywKICBzdGF0ZXM6IHsKICAgIHJldmlld2luZzogewogICAgICBvbjogeyBzdWJtaXQ6IHsgdGFyZ2V0OiAncGF5aW5nJyB9LCBjYW5jZWw6IHsgdGFyZ2V0OiAnY2FuY2VsbGVkJyB9IH0KICAgIH0sCiAgICBwYXlpbmc6IHsKICAgICAgdGltZW91dDogMzBfMDAwLAogICAgICBvblRpbWVvdXQ6IHsgdGFyZ2V0OiAnZmFpbGVkJyB9LAogICAgICBvbjogewogICAgICAgICdwYXltZW50LnN1Y2NlZWRlZCc6IHsgdGFyZ2V0OiAnY29uZmlybWVkJyB9LAogICAgICAgICdwYXltZW50LmZhaWxlZCc6IHsgdGFyZ2V0OiAnZmFpbGVkJyB9CiAgICAgIH0KICAgIH0sCiAgICBmYWlsZWQ6IHsKICAgICAgb246IHsKICAgICAgICByZXRyeTogKHsgY29udGV4dCB9KSA9PiB7CiAgICAgICAgICBpZiAoY29udGV4dC5hdHRlbXB0cyA-PSAzKSByZXR1cm47CiAgICAgICAgICByZXR1cm4geyB0YXJnZXQ6ICdwYXlpbmcnLCBjb250ZXh0OiB7IGF0dGVtcHRzOiBjb250ZXh0LmF0dGVtcHRzICsgMSB9IH07CiAgICAgICAgfSwKICAgICAgICBjYW5jZWw6IHsgdGFyZ2V0OiAnY2FuY2VsbGVkJyB9CiAgICAgIH0KICAgIH0sCiAgICBjb25maXJtZWQ6IHsgdHlwZTogJ2ZpbmFsJyB9LAogICAgY2FuY2VsbGVkOiB7IHR5cGU6ICdmaW5hbCcgfQogIH0KfSk7CmV4cG9ydCB7IGNoZWNrb3V0TWFjaGluZSB9Owo&format=xstate"
+/>
+
+The `retry` transition in that machine is a function, and the editor still shows its condition and its context update.
+
+The editor can also edit v6 code bidirectionally. With Editor Sync, you can open a machine from your codebase in the visual editor, either from the [Stately Editor VS Code extension](https://marketplace.visualstudio.com/items?itemName=statelyai.stately-editor) or by running [`statelyai open`](/docs/packages/cli#open) in your terminal. Edit the diagram, and the changes are written back to your source code; edit the code, and the diagram updates. These edits are deterministic, so the same visual change always produces the same code change.
+
+## Actors and durable execution
+
+In XState v5, **actors** became the main focus, and that hasn’t changed. Actors are a natural fit for long-running logic, like backend workflows that wait days for an approval, or agents that pause for human input. But long-running logic needs to survive crashes, restarts, and deploys, and surviving those is the whole point of durable execution.
+
+Even back in 2022, I wrote in [a GitHub discussion](https://github.com/statelyai/xstate/discussions/3434#discussioncomment-3084629) that I wanted XState’s “atomic unit” to be `(state, event) => [nextState, effects]`. That turns out to be exactly what durable execution needs. Durable execution platforms like Restate, Inngest, Trigger, Cloudflare Workflows, and Temporal work by conceptually "recording" (journaling) every step of a workflow, so that it can be replayed or resumed after a failure. That’s much easier when the logic is a pure function that returns effects as data.
+
+In XState v6, transitions are pure, effects have stable IDs, and actors have deterministic addresses, so a durable host can journal effects and replay a workflow deterministically. The new (experimental) `xstate/durable` module lets you hand the execution loop to a durable host through a small adapter:
+
+```ts
+import { createDurable } from 'xstate/durable';
+
+// [!code highlight:1]
+const durable = createDurable(orderMachine, {
+  // How your durable host sends events, schedules timers,
+  // runs actions, and waits for the next event
+  enqueueRootEvent: (_source, event) => host.enqueue(event),
+  scheduleTimer: (source, timer, delay) =>
+    host.schedule({ address: source.address, timer, delay }),
+  cancelTimer: (source, timer) =>
+    host.cancelTimer({ address: source.address, timer }),
+  executeAction: (action, { id }, runtime) =>
+    host.runAction(id, () => action.exec(runtime)),
+  waitForEvent: ({ id }) => host.waitForEvent(id),
+});
+
+const output = await durable.run(input); // [!code highlight]
+```
+
+The `durable.run(...)` method is shorthand for a loop that should look familiar:
+
+```ts
+let [state, effects] = durable.initialTransition(input);
+await durable.executeEffects(effects);
+
+while (state.status === 'active') {
+  [state, effects] = durable.transition(state, await durable.waitForEvent());
+  await durable.executeEffects(effects);
+}
+```
+
+The machine itself doesn’t know (or care) that it’s running durably. There’s no special “step” vocabulary to learn; a promise actor invoked by the machine is a single journaled step, and the states between those actors make the progress of the workflow visible. The same machine runs in memory with `createActor(...)`, too.
+
+XState v6 is designed to work with any durable execution host, and we’ll be publishing examples for Temporal, Restate, Rivet, Cloudflare, and more soon. If you don’t need a durable host, persisted snapshots include pending delayed transitions, so a three-day `after` delay survives a deploy as long as you restore the actor.
+
+[Read more about durable execution in our docs](/docs/xstate/v6/durable-execution).
+
+## State machines for agents
+
+Agents themselves are a great fit for state machines. An agent is a loop: call a model, maybe call some tools, check the result, decide what to do next. When that loop is implicit, it’s hard to tell what an agent is allowed to do (or why it did what it did). Make the loop a state machine, and the machine owns the control flow; the model can only choose among the events that are allowed in the current state.
+
+We’ve added a dozen [agent examples](https://github.com/statelyai/xstate/tree/next/examples) to the XState repo, including tool loops, human-in-the-loop approval, model fallbacks, streaming responses, RAG pipelines, structured output, MCP servers, and multi-agent orchestration.
+
+We’re also working on [Stately Agent](https://github.com/statelyai/agent) 2.0 (currently in alpha), which builds on XState v6. With it, you can check (without calling a model) that an agent can never reach a state like `refundedOverLimit`, replay a run from its event log, and even make it self-improve its own workflows. More on that in a future post.
+
+## Everything else
+
+There are a ton of other new features in XState v6. Here are some of my favorites:
+
+- **Choice states**. `type: 'choice'` states make branching logic declarative, replacing chains of `always` transitions. [Read more about choice states](/docs/xstate/v6/choice-states).
+- **State timeouts**. Any state can have a `timeout` and an `onTimeout` transition, which is automatically cancelled when the state is exited. [Read more about timeouts](/docs/xstate/v6/timeouts).
+- **Duration strings**. Delays can be written as `'500ms'`, `'5s'`, or ISO 8601 durations like `'PT1M30S'`.
+- **Route states**. States with a `route` can be navigated to directly with an `xstate.route` event, which is useful for URL-driven navigation and deep links. [Read more about route states](/docs/xstate/v6/route-states).
+- **`actor.select(...)`**. Derive a memoized, subscribable value from an actor’s snapshot.
+- **Internal events**. Events that the machine can raise internally, but that can’t be sent from outside the actor.
+- **`createAsyncLogic(...)`**. Promise actors rebuilt with timeouts, `AbortSignal` support, and event emission.
+- **`createStepLogic(...)`**. Stateful actor logic defined as a single transition function, like a tiny state machine.
+- **`enq.listen(...)` and `enq.subscribeTo(...)`**. Declaratively react to a child actor’s emitted events or snapshots.
+- **Actor registry**. Look up actors anywhere in the system by `registryKey`, without passing references around.
+- **Snapshot versioning**. Stamp persisted snapshots with a machine `version`, and migrate older snapshots when restoring them.
+- **`@xstate/effect`**. A new (beta) integration for using XState with [Effect](https://effect.website).
+
+Here’s what choice states and state timeouts look like together:
+
+```ts
+states: {
+  routing: {
+    // [!code highlight:5]
+    type: 'choice',
+    choice: ({ context }) => {
+      if (context.isVip) return { target: 'vipFlow' };
+      return { target: 'waitingForApproval' };
+    },
+  },
+  vipFlow: {},
+  waitingForApproval: {
+    // [!code highlight:2]
+    timeout: 5_000,
+    onTimeout: { target: 'escalated' },
+    on: { approve: { target: 'approved' } },
+  },
+  // ...
+}
+```
+
+## What we removed (and why)
+
+Most of the breaking changes in v6 come from wanting one obvious way to do each thing. When there are three ways to update context, humans have to learn all three, and agents will happily mix them.
+
+- **Action creators** (`assign`, `raise`, `sendTo`, `sendParent`, `forwardTo`, `emit`, `log`, `cancel`, `spawnChild`, `stopChild`, `enqueueActions`) are removed in favor of transition functions and `enq`.
+- **Higher-order guards** (`and`, `or`, `not`, `stateIn`) are removed in favor of `&&`, `||`, `!`, and `snapshot.matches(...)`.
+- **String transitions** like `on: { submit: 'submitted' }` are removed in favor of `{ target: 'submitted' }`, so that a transition always has one shape.
+- **`types: {} as { ... }`** is replaced by `schemas`, and typegen (`tsTypes`) is gone, since schemas give you inference without code generation.
+- **`fromPromise(...)`, `fromCallback(...)`, `fromObservable(...)`, and `fromTransition(...)`** are replaced by `createAsyncLogic(...)`, `createCallbackLogic(...)`, `createObservableLogic(...)`, and `createStepLogic(...)`.
+- **`@xstate/immer`** is removed, since transition functions return context updates directly. You can still use Immer with XState.
+- **`@xstate/inspect`** is removed in favor of the `inspect` option on `createActor(...)` and the [Stately Inspector](/docs/inspector).
+- **`interpret(...)`**, the legacy alias for `createActor(...)`, is finally gone.
+
+## Migrating from XState v5
+
+Much of the migration is mechanical, so we’ve built a codemod for it:
+
+```bash
+npx xstate migrate 'src/**/*.ts' --dry
+```
+
+The codemod renames imports, converts string targets to `{ target }` objects, converts `types` to `schemas`, rewrites v5 actions, guards, and action creators as transition functions, and reports anything it can’t convert so you can migrate it by hand. You can also install v6 alongside v5 and migrate one machine at a time. We’ve tested v6 (and the migration path) on hundreds of real-world machines and examples, and we’ll be adding hundreds more before the stable release.
+
+[Read the full guide for migrating from XState v5 to v6](/docs/xstate/v6/xstate-v5-to-v6), which lists every change, including the few runtime behavior changes that don’t show up as type errors.
+
+XState v5 is still supported, so there’s no rush to migrate; use v5 if you need a stable release today.
+
+## 70+ alphas later
+
+The first v6 alpha was released in June 2026, and we’ve published 70+ alpha releases since then. Many of the changes in those releases came from migrating real-world v5 machines to v6, and from watching agents write v6 code and fixing whatever tripped them up (which is also why we rewrote [the docs](/docs/xstate/v6/quick-start) for v6).
+
+Thank you to everyone who contributed to v6, including Asaf Katz, Sandro Maglione, Mateusz Burzyński, Joel Hooks, Mark Xian, Yang Bai, Ben Freed, Christian Rishøj, Jayesh Bhade, Ruben Fricke, Saad Abdullah, and Žan Mlakar, and to everyone who tried the alphas and reported issues.
+
+## Why I think modeling matters more now
+
+Agents can add features (and bugs) faster than anyone can review them. When an agent can write a thousand lines of code in a few minutes, reading every line isn’t a realistic way to understand what a system does; you need a higher-level model of the behavior, one that you can actually look at and check.
+
+Statecharts were invented for exactly this; David Harel came up with them while modeling complex avionics systems back in 1987. A statechart says which states a system can be in, which events it responds to in each state, and what happens next. I think this is going to matter even more in the coming years, especially as formal verification becomes practical for everyday software, now that agents can help write the specs. State machines are one of the most approachable formal models there is, and with XState, the model is the code that runs.
+
+With XState v6, you can already:
+
+- Check safety and reachability properties of a machine with `xstate test`, and replay any counterexample with `xstate replay`.
+- Generate test paths and random event sequences from a machine with [`@xstate/test`](/docs/xstate/v6/model-based-testing), and gate CI on coverage.
+- Check that an agent can’t reach states you’ve marked as unsafe with Stately Agent 2.0 (in alpha).
+
+We’re going to keep working on XState for a long time. XState is and always will be an open and independent library, and that isn’t changing.
+
+## Try it out
+
+```bash
+npm i xstate@beta
+```
+
+Try XState v6 on a real project (or point your agent at it), and let us know what breaks. You can find us on [Discord](https://discord.gg/xstate) and in [GitHub Discussions](https://github.com/statelyai/xstate/discussions). Beta is a transient state; the sooner we hear from you, the sooner we can transition to stable.
