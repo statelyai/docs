@@ -20,7 +20,7 @@ You can try out XState v6 beta today by installing `xstate@beta`:
 
 ```bash
 npm i xstate@beta
-``` 
+```
 
 We consider the core API stable, and we only plan to make breaking changes before the stable release if overwhelming feedback shows that we need to. A few newer APIs, like durable execution, are still marked as experimental.
 
@@ -200,7 +200,8 @@ In XState v6, transitions are pure, effects have stable IDs, and actors have det
 ```ts
 import { createDurable } from 'xstate/durable';
 
-const durable = createDurable(orderMachine, { // [!code highlight]
+// [!code highlight:1]
+const durable = createDurable(orderMachine, {
   // How your durable host sends events, schedules timers,
   // runs actions, and waits for the next event
   enqueueRootEvent: (_source, event) => host.enqueue(event),
