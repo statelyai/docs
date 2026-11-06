@@ -302,6 +302,9 @@ The default `display="on-demand"` loads the editor when its keyboard-accessible
 disclosure opens. Both modes allow simulation, parent-state expansion/collapse,
 and pan/zoom, with parents initially expanded. Zoom and simulation controls
 stay on the canvas; the command bar, breadcrumbs, and side panels are hidden.
+Both embed modes use `min(640px, 60svh)`: at most 60% of the small viewport height,
+with a 640px ceiling. This leaves room for captions and reading context on phones;
+the small viewport unit keeps the canvas stable as browser toolbars retract.
 Embeds and direct links follow the docs' resolved light/dark theme, including
 manual theme choices. Links default to `theme=system` before hydration. Switching
 the docs theme updates the iframe fragment without remounting it. Light and dark

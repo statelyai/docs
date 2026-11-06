@@ -31,7 +31,7 @@ function StatechartImage({
   const dark = darkCaptures[example];
   return (
     <div
-      className={className}
+      className={`not-prose ${className}`}
       style={fill ? undefined : { width: entry.width }}
     >
       <Image
@@ -42,7 +42,7 @@ function StatechartImage({
         width={entry.width}
         height={entry.height}
         unoptimized
-        className={`${fill ? 'h-full w-full object-contain' : 'h-auto w-full'} dark:hidden`}
+        className={`${fill ? 'h-full max-h-full w-full object-contain' : 'h-auto w-full'} dark:hidden`}
       />
       <Image
         src={`/assets/statecharts/dark/${example}.png`}
@@ -50,7 +50,7 @@ function StatechartImage({
         width={dark.width}
         height={dark.height}
         unoptimized
-        className={`hidden ${fill ? 'h-full w-full object-contain' : 'h-auto w-full'} dark:block`}
+        className={`hidden ${fill ? 'h-full max-h-full w-full object-contain' : 'h-auto w-full'} dark:block`}
       />
     </div>
   );
@@ -114,14 +114,14 @@ function InlineStatechart({
     <div
       ref={container}
       data-statechart-embed={status}
-      className="relative h-[640px] overflow-hidden rounded-lg border bg-fd-card"
+      className="relative flex h-[min(640px,60svh)] flex-col overflow-hidden rounded-lg border bg-fd-card"
     >
       <StatechartImage
         example={example}
         alt={alt}
         fill
         className={
-          status === 'ready' ? 'hidden' : 'h-full w-full object-contain'
+          status === 'ready' ? 'hidden' : 'min-h-0 w-full flex-1'
         }
       />
       {status !== 'waiting' && (
@@ -143,7 +143,7 @@ function InlineStatechart({
       {(status === 'loading' || status === 'error') && (
         <div
           role="status"
-          className="absolute inset-x-0 bottom-0 bg-fd-card/95 p-3 text-center text-sm text-fd-muted-foreground"
+          className="shrink-0 bg-fd-card/95 p-3 text-center text-sm text-fd-muted-foreground"
         >
           {status === 'loading' ? (
             'Loading interactive example…'
@@ -242,7 +242,7 @@ export function StatechartExample({
               }}
               title={`${name} read-only statechart`}
               loading="lazy"
-              className="block h-[640px] w-full border-0"
+              className="block h-[min(640px,60svh)] w-full border-0"
               allowFullScreen
             />
           )}
