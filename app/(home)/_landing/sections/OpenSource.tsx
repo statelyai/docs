@@ -109,7 +109,7 @@ export function OpenSource() {
         </div>
         <div className="min-w-0 space-y-6 lg:col-start-1 lg:row-start-2">
           <p className="sp-mono text-[12px] text-[var(--sp-muted)]">
-            xstate 5 · xstate/graph · @xstate/store · xstate 6 <span className="text-[var(--sp-warn)]">alpha</span>
+            xstate 5 · xstate/graph · @xstate/store · xstate 6 <span className="text-[var(--sp-warn)]">beta</span>
           </p>
           <Quote t={quotes[1]} />
           <div className="border-t border-[var(--sp-border)] pt-5">

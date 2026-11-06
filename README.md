@@ -113,11 +113,11 @@ The external docs manifest lives in `docs-sources.json`:
     "ref": "main"
   },
   {
-    "name": "XState v6 alpha",
+    "name": "XState v6 beta",
     "package": "xstate-v6",
     "source": "xstate",
     "notice": {
-      "title": "XState v6 is in alpha",
+      "title": "XState v6 is in beta",
       "description": "APIs and behavior may change before the stable release.",
       "type": "warning"
     },
