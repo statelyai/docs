@@ -157,9 +157,61 @@ Since schemas are real values (not just types), tools like the visual editor can
 - **Typestates**. Each state can declare the shape of context that’s valid in that state, and `snapshot.matches(...)` narrows context accordingly. [Read more about typestates](/docs/xstate/v6/typestates).
 - **State input**. A state can declare a typed `input` payload that must be provided when transitioning to it, and that only exists while the state is active, so you don’t need optional context properties that only matter in one state. [Read more about state input](/docs/xstate/v6/state-input).
 
+## Tiny state machines are back
+
+We deprecated `@xstate/fsm` in XState v5, and many of you asked for it back. Sometimes you just want a small, flat state machine for a toggle or a form step, without the actor runtime. In XState v6, it’s back as `xstate/fsm`, and it’s smaller than before: about half a kilobyte minified and gzipped (`@xstate/fsm` was about 2 kB).
+
+```ts
+// [!code highlight:1]
+import { setup, types } from 'xstate/fsm';
+
+const toggleMachine = setup({
+  schemas: {
+    context: types<{ count: number }>(),
+    events: { toggle: types<{}>() },
+  },
+}).createFSM({
+  initial: 'inactive',
+  context: { count: 0 },
+  states: {
+    inactive: {
+      on: {
+        toggle: ({ context }) => ({
+          target: 'active',
+          context: { count: context.count + 1 },
+        }),
+      },
+    },
+    active: {
+      on: { toggle: { target: 'inactive' } },
+    },
+  },
+});
+
+const [state] = toggleMachine.transition(toggleMachine.initialState, {
+  type: 'toggle',
+});
+
+state.value; // 'active'
+```
+
+It uses the same syntax as full machines (transition functions, `{ target }` objects, schemas, and typestates), so when you need nested states, effects, or invoked actors, you can import `setup` from `xstate` instead, change `createFSM` to `createMachine`, and keep the same config. An FSM is also actor logic, so it works with `createActor(...)`, `transition(...)`, and `initialTransition(...)` from `xstate`; `xstate/fsm` itself doesn’t import the actor runtime.
+
+[Read more about `xstate/fsm` in our docs](/docs/xstate/v6/fsm).
+
 ## Docs and tools for agents (and humans)
 
 The `xstate` package now ships with its own docs in `node_modules/xstate/docs`, matching the exact version you have installed. This includes an [agent guide](/docs/xstate/v6/agents) with the rules for writing v6 machines. Point your agent at `node_modules/xstate/docs/agents.md`, and it’ll stop writing `cond` (if it’s smart enough).
+
+And if it isn’t, XState v6 tells it what to write instead. Leftover v5 config, like `cond`, `types`, or removed actor options, throws an error that names the replacement:
+
+```ts
+createActor(machine, { systemId: 'payments' });
+// Error: The "systemId" actor option was renamed. Use "registryKey":
+// createActor(logic, { registryKey }), and look the actor up with system.get(registryKey).
+```
+
+Production builds throw a short error code instead (like `XState error E8`), with a link to the [error reference](/docs/xstate/v6/errors). Development builds also freeze context, so mutating it in place throws instead of silently corrupting state, and they warn when an event doesn’t match any transition.
 
 The `xstate` package also includes a CLI. Its commands work on JSON machine definitions and return JSON, and none of them run your application code:
 
@@ -247,6 +299,9 @@ We’re also working on [Stately Agent](https://github.com/statelyai/agent) 2.0 
 
 There are a ton of other new features in XState v6. Here are some of my favorites:
 
+- **Parallel regions stay put**. A transition into one region of a parallel state no longer exits and resets its sibling regions, and a `reenter: true` transition inside one region only reenters that region. [Read more about parallel states](/docs/xstate/v6/parallel-states).
+- **State-level `onError`**. Any state can handle errors from its actors and effects with an `onError` transition while it’s active.
+- **Unhandled events**. The `onUnhandledEvent` actor option and the `isUnhandled(...)` helper tell you when an event didn’t match any transition.
 - **Choice states**. `type: 'choice'` states make branching logic declarative, replacing chains of `always` transitions. [Read more about choice states](/docs/xstate/v6/choice-states).
 - **State timeouts**. Any state can have a `timeout` and an `onTimeout` transition, which is automatically cancelled when the state is exited. [Read more about timeouts](/docs/xstate/v6/timeouts).
 - **Duration strings**. Delays can be written as `'500ms'`, `'5s'`, or ISO 8601 durations like `'PT1M30S'`.
@@ -258,6 +313,7 @@ There are a ton of other new features in XState v6. Here are some of my favorite
 - **`enq.listen(...)` and `enq.subscribeTo(...)`**. Declaratively react to a child actor’s emitted events or snapshots.
 - **Actor registry**. Look up actors anywhere in the system by `registryKey`, without passing references around.
 - **Snapshot versioning**. Stamp persisted snapshots with a machine `version`, and migrate older snapshots when restoring them.
+- **`createStateConfig(...)`**. Define a fully typed state in its own file and compose it into a machine.
 - **`@xstate/effect`**. A new (beta) integration for using XState with [Effect](https://effect.website).
 
 Here’s what choice states and state timeouts look like together:
@@ -293,7 +349,8 @@ Most of the breaking changes in v6 come from wanting one obvious way to do each 
 - **`types: {} as { ... }`** is replaced by `schemas`, and typegen (`tsTypes`) is gone, since schemas give you inference without code generation.
 - **`fromPromise(...)`, `fromCallback(...)`, `fromObservable(...)`, and `fromTransition(...)`** are replaced by `createAsyncLogic(...)`, `createCallbackLogic(...)`, `createObservableLogic(...)`, and `createStepLogic(...)`.
 - **`@xstate/immer`** is removed, since transition functions return context updates directly. You can still use Immer with XState.
-- **`@xstate/inspect`** is removed in favor of the `inspect` option on `createActor(...)` and the [Stately Inspector](/docs/inspector).
+- **`createActor(machine, { snapshot })`** is replaced by `restoreActor(machine, snapshot)` from `xstate/persist`, which validates and migrates the snapshot and restores its child actors. The framework hooks (`useMachine`, `useActor`, and `useActorRef`) accept the restored actor instead of a `snapshot` option. [Read more about persistence](/docs/xstate/v6/persistence).
+- **`@xstate/inspect`** is removed in favor of the `inspect` option on `createActor(...)` and the [Stately Inspector](/docs/inspector). The inspection protocol is also down to two event types, `@xstate.actor` and `@xstate.transition`, without losing any information.
 - **`interpret(...)`**, the legacy alias for `createActor(...)`, is finally gone.
 
 ## Migrating from XState v5
@@ -335,5 +392,7 @@ We’re going to keep working on XState for a long time. XState is and always wi
 ```bash
 npm i xstate@beta
 ```
+
+The framework integrations have betas too: `@xstate/react@beta`, `@xstate/vue@beta`, `@xstate/svelte@beta`, and `@xstate/solid@beta`, along with `@xstate/test@beta` and `@xstate/scxml@beta`.
 
 Try XState v6 on a real project (or point your agent at it), and let us know what breaks. You can find us on [Discord](https://discord.gg/xstate) and in [GitHub Discussions](https://github.com/statelyai/xstate/discussions). Beta is a transient state; the sooner we hear from you, the sooner we can transition to stable.
