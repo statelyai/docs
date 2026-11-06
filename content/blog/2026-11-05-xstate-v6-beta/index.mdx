@@ -298,7 +298,7 @@ Much of the migration is mechanical, so we’ve built a codemod for it:
 npx xstate migrate 'src/**/*.ts' --dry
 ```
 
-The codemod renames imports, converts string targets to `{ target }` objects, converts `types` to `schemas`, and reports the remaining APIs that need to be migrated by hand (like action creators). You can also install v6 alongside v5 and migrate one machine at a time. We’ve tested v6 (and the migration path) on hundreds of real-world machines and examples, and we’ll be adding hundreds more before the stable release.
+The codemod renames imports, converts string targets to `{ target }` objects, converts `types` to `schemas`, rewrites v5 actions, guards, and action creators as transition functions, and reports anything it can’t convert so you can migrate it by hand. You can also install v6 alongside v5 and migrate one machine at a time. We’ve tested v6 (and the migration path) on hundreds of real-world machines and examples, and we’ll be adding hundreds more before the stable release.
 
 [Read the full guide for migrating from XState v5 to v6](/docs/xstate/v6/xstate-v5-to-v6), which lists every change, including the few runtime behavior changes that don’t show up as type errors.
 
