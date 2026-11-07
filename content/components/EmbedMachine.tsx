@@ -99,8 +99,12 @@ function manageURL(
   options?: { colorMode: 'light' | 'dark' },
 ): string {
   const url = new URL(embedURL);
-  for (const opt in options) {
-    url.searchParams.set(opt, options[opt as keyof typeof options]);
+  if (options?.colorMode) {
+    const themeParam =
+      url.hostname === 'editor.stately.ai' && url.pathname === '/viz'
+        ? 'theme'
+        : 'colorMode';
+    url.searchParams.set(themeParam, options.colorMode);
   }
   return url.toString();
 }
