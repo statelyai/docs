@@ -28,6 +28,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/from-a-loop"
       },
       {
+        "title": "Strangler-fig retrofit",
+        "url": "/docs/packages/agent/strangler-fig"
+      },
+      {
         "title": "Scope and ecosystem boundaries",
         "url": "/docs/packages/agent/scope"
       },
@@ -42,6 +46,14 @@ export const externalDocsNav = [
       {
         "title": "Decisions",
         "url": "/docs/packages/agent/decisions"
+      },
+      {
+        "title": "Acting on events",
+        "url": "/docs/packages/agent/act"
+      },
+      {
+        "title": "Environment and policy",
+        "url": "/docs/packages/agent/environment-and-policy"
       },
       {
         "title": "Text requests",
@@ -84,7 +96,11 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/xstate-4-and-5-apps"
       },
       {
-        "title": "The step API",
+        "title": "Upgrading between alphas",
+        "url": "/docs/packages/agent/upgrading"
+      },
+      {
+        "title": "The runtime loop",
         "url": "/docs/packages/agent/steps"
       },
       {
