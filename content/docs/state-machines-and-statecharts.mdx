@@ -10,7 +10,7 @@ State machines model your application logic. Below is the logic for a video play
 
 <EmbedMachine
   name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544"
+  embedURL="https://editor.stately.ai/viz?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544"
 />
 
 ## Benefits of state machines
@@ -50,7 +50,7 @@ A state describes the machine’s status or mode, which could be as simple as *
 
 <EmbedMachine
   name="Dog states"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87"
+  embedURL="https://editor.stately.ai/viz?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87"
 />
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
@@ -102,7 +102,7 @@ Transitions are “deterministic”; each combination of state and event always 
 
 <EmbedMachine
   name="Dog states with transitions"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9"
+  embedURL="https://editor.stately.ai/viz?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9"
 />
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
@@ -153,7 +153,7 @@ In the dog walking statechart, the final state would be **walk complete**.
 
 <EmbedMachine
   name="Dog walking"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481"
+  embedURL="https://editor.stately.ai/viz?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481"
 />
 
 [Read more about final states](final-states)
@@ -166,7 +166,7 @@ A parent state is symbolised by a labelled rectangle box that acts as a containe
 
 <EmbedMachine
   name="Dog walk with parent state"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066"
+  embedURL="https://editor.stately.ai/viz?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066"
 />
 
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
@@ -187,7 +187,7 @@ Inside the **on a walk** parallel state, there could be two regions. One region 
 
 <EmbedMachine
   name="Dog walk with parallel state"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23"
+  embedURL="https://editor.stately.ai/viz?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23"
 />
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
@@ -204,7 +204,7 @@ In a **dog begging** process, there would be a **begging** state with a **gets t
 
 <EmbedMachine
   name="Dog begging"
-  embedURL="https://stately.ai/registry/editor/embed/17986605-400c-4c00-8b33-47e3ecca478b?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5"
+  embedURL="https://editor.stately.ai/viz?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5"
 />
 
 [Read more about self transitions](/docs/transitions/#self-transitions)

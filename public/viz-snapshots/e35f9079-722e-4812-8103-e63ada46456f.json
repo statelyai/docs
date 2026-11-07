@@ -1,0 +1,225 @@
+{
+  "type": "directed",
+  "id": "pbbd7nwzeka",
+  "parentId": null,
+  "initialNodeId": "pbbd7nwzeka",
+  "nodes": [
+    {
+      "type": "node",
+      "id": "pbbd7nwzeka",
+      "label": "traffic light",
+      "parentId": null,
+      "initialNodeId": "af2pmelwyzb",
+      "data": {
+        "nodeId": "traffic light",
+        "key": "traffic light",
+        "type": null,
+        "initialId": "af2pmelwyzb",
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": []
+      },
+      "position": {
+        "x": -363.1766523472037,
+        "y": -385.4683825699329
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 768.484375,
+      "height": 41.5
+    },
+    {
+      "type": "node",
+      "id": "wuzuju2q0u",
+      "label": "green",
+      "parentId": "pbbd7nwzeka",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "traffic light.green",
+        "key": "green",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "green"
+      },
+      "position": {
+        "x": 283.6746960314036,
+        "y": -292.91796748789494
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 73.640625,
+      "height": 41.5
+    },
+    {
+      "type": "node",
+      "id": "fzinxh1ds9",
+      "label": "yellow",
+      "parentId": "pbbd7nwzeka",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "traffic light.yellow",
+        "key": "yellow",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "yellow"
+      },
+      "position": {
+        "x": -29.4073542601098,
+        "y": -292.91796748789494
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 78.25,
+      "height": 41.5
+    },
+    {
+      "type": "node",
+      "id": "af2pmelwyzb",
+      "label": "red",
+      "parentId": "pbbd7nwzeka",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "traffic light.red",
+        "key": "red",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "red"
+      },
+      "position": {
+        "x": -315.1766523472037,
+        "y": -295.9683825699329
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 55.6875,
+      "height": 41.5
+    }
+  ],
+  "edges": [
+    {
+      "type": "edge",
+      "id": "84n4ys29sjb",
+      "label": "TIMER",
+      "sourceId": "wuzuju2q0u",
+      "targetId": "fzinxh1ds9",
+      "data": {
+        "eventType": "TIMER",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": 134.92859775723878,
+        "y": -292.16796748789494
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 79.5234375,
+      "height": 40
+    },
+    {
+      "type": "edge",
+      "id": "1s8ezphqjfj",
+      "label": "TIMER",
+      "sourceId": "fzinxh1ds9",
+      "targetId": "af2pmelwyzb",
+      "data": {
+        "eventType": "TIMER",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": -184.68469318302937,
+        "y": -292.16796748789494
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 79.5234375,
+      "height": 40
+    },
+    {
+      "type": "edge",
+      "id": "fuzsoyb35qf",
+      "label": "TIMER",
+      "sourceId": "af2pmelwyzb",
+      "targetId": "wuzuju2q0u",
+      "data": {
+        "eventType": "TIMER",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": -30.0440730101098,
+        "y": -104.88671431100187
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 79.5234375,
+      "height": 40
+    }
+  ],
+  "annotations": [],
+  "layout": {
+    "status": "complete"
+  },
+  "data": {
+    "context": {},
+    "implementations": {
+      "actions": [],
+      "guards": [],
+      "actors": [],
+      "delays": [],
+      "tags": []
+    },
+    "schemas": {
+      "context": null,
+      "events": null,
+      "input": null,
+      "output": null
+    },
+    "layout": null
+  }
+}
