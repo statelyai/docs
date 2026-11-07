@@ -126,6 +126,7 @@ export function createBlogCollection(dir = 'content/blog') {
     schema: pageSchema.extend({
       authors: z.array(z.string()),
       date: z.iso.date().or(z.date()),
+      ogImage: z.string().optional(),
     }),
   });
 }
