@@ -1,0 +1,43 @@
+{
+  "id": "harel-timeout",
+  "description": "The paper upper bound is two seconds. The additional 500 ms lower bound illustrates the accompanying text. LEAVE is ignored before that lower bound. Both timers restart on reentry.",
+  "meta": {
+    "harel": {
+      "figures": [
+        35
+      ],
+      "adaptation": "The paper upper bound is two seconds. The additional 500 ms lower bound illustrates the accompanying text. LEAVE is ignored before that lower bound. Both timers restart on reentry."
+    }
+  },
+  "initial": "Waiting",
+  "states": {
+    "Waiting": {
+      "initial": "Minimum not met",
+      "after": {
+        "2000": "Timed out"
+      },
+      "states": {
+        "Minimum not met": {
+          "after": {
+            "500": "Eligible to leave"
+          }
+        },
+        "Eligible to leave": {
+          "on": {
+            "LEAVE": "#harel-timeout.Completed"
+          }
+        }
+      }
+    },
+    "Timed out": {
+      "on": {
+        "RESET": "Waiting"
+      }
+    },
+    "Completed": {
+      "on": {
+        "RESET": "Waiting"
+      }
+    }
+  }
+}

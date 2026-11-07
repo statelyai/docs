@@ -1,0 +1,48 @@
+{
+  "id": "harel-product",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      20
+    ],
+    "adaptation": "Explicit six-state expansion of Figure 19. Every event trace is checked against the parallel model, including the in G guard."
+  },
+  "initial": "B,F",
+  "states": {
+    "B,E": {
+      "on": {
+        "alpha": "C,E",
+        "gamma": "B,G"
+      }
+    },
+    "B,F": {
+      "on": {
+        "alpha": "C,G",
+        "mu": "B,E"
+      }
+    },
+    "B,G": {
+      "on": {
+        "alpha": "C,G",
+        "delta": "B,F"
+      }
+    },
+    "C,E": {
+      "on": {
+        "gamma": "C,G"
+      }
+    },
+    "C,F": {
+      "on": {
+        "alpha": "C,G",
+        "mu": "C,E"
+      }
+    },
+    "C,G": {
+      "on": {
+        "beta": "B,G",
+        "delta": "C,F"
+      }
+    }
+  }
+}

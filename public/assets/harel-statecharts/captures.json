@@ -1,0 +1,534 @@
+{
+  "harel-flat": {
+    "width": 320,
+    "height": 382,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 742,
+      "y": 509,
+      "width": 320,
+      "height": 382
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "3b9c90fedf58ac6971aa0f33c0193b3cdd4d3a3eadccd5c7cebb62f48f43c350",
+    "capturedAt": "2026-11-02T18:33:44.141Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-clustered": {
+    "width": 322,
+    "height": 376,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 734,
+      "y": 512,
+      "width": 322,
+      "height": 376
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "6e9b0b5573fac1d91a1d37853333d9cc893d0a508a4ad6973022e01b130e57db",
+    "capturedAt": "2026-11-02T18:33:47.244Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-displays": {
+    "width": 700,
+    "height": 958,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 545,
+      "y": 221,
+      "width": 700,
+      "height": 958
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "8931482312a1fc95d6eb5e426bd8114b7f77b0b81ef8fe94e4c043727c2ad5f7",
+    "capturedAt": "2026-11-03T03:30:27.240Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-history-shallow": {
+    "width": 638,
+    "height": 418,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 586,
+      "y": 491,
+      "width": 638,
+      "height": 418
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "757a20cfdf2cbca79c65930b3163faefac21bbb7ce89e74cae6c48642dec37b5",
+    "capturedAt": "2026-11-02T18:37:20.460Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-history-deep": {
+    "width": 638,
+    "height": 418,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 586,
+      "y": 491,
+      "width": 638,
+      "height": 418
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "fe0dafa0855f44441e8c0c4c2785812cdfb9b5a2c2d793c96194512474a5fcdd",
+    "capturedAt": "2026-11-02T18:37:24.172Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-history-selective": {
+    "width": 680,
+    "height": 544,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 565,
+      "y": 428,
+      "width": 680,
+      "height": 544
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "cf519cffbc38c3d8a812c2502a937fe7daa8bd1bb9412df6c130278f309146ba",
+    "capturedAt": "2026-11-02T18:37:27.963Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-updates": {
+    "width": 1144,
+    "height": 634,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 333,
+      "y": 383,
+      "width": 1144,
+      "height": 634
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 5,
+    "sourceSha256": "ef28b6fe77e62804a0cbce53f611148aac32a77bfc6b32b8c049d8dd36ed2d55",
+    "capturedAt": "2026-11-03T03:30:31.855Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-parallel": {
+    "width": 368,
+    "height": 320,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 721,
+      "y": 540,
+      "width": 368,
+      "height": 320
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "eb17ecd67e453f617dfd6693c43f33edf91181a5c8992905997570aa3f5fc24c",
+    "capturedAt": "2026-11-02T18:34:09.005Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-product": {
+    "width": 510,
+    "height": 524,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 650,
+      "y": 438,
+      "width": 510,
+      "height": 524
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 6,
+    "sourceSha256": "2fede941aa0b5b175fdaf620cebe9c47042e50539376f615106e7c918737e795",
+    "capturedAt": "2026-11-02T18:34:12.204Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-avionics": {
+    "width": 550,
+    "height": 276,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 630,
+      "y": 562,
+      "width": 550,
+      "height": 276
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "66c0972dd527050a72ced091b0cf572da5030cbe13cfd3782c3aa6ceb3612def",
+    "capturedAt": "2026-11-02T18:34:15.317Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-parallel-entry": {
+    "width": 714,
+    "height": 678,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 548,
+      "y": 361,
+      "width": 714,
+      "height": 678
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 5,
+    "sourceSha256": "9ccac31f2f20e61acea211215c8fb889edb37d37ee9421cfb43e7ecb10eadb03",
+    "capturedAt": "2026-11-02T18:34:18.396Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-stopwatch": {
+    "width": 700,
+    "height": 594,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 545,
+      "y": 403,
+      "width": 700,
+      "height": 594
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "492fed1da01212aee9d74950a4ec55b546107f33843aa5b17e1f8b6d6893ef0b",
+    "capturedAt": "2026-11-03T03:30:36.483Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-watch": {
+    "width": 448,
+    "height": 1358,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 681,
+      "y": 21,
+      "width": 448,
+      "height": 1358
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "b7323a5bb5141672936391ab23947432121fc35758789e22a61096d6b4989470",
+    "capturedAt": "2026-11-03T04:05:23.033Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-beep-test": {
+    "width": 456,
+    "height": 454,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 677,
+      "y": 473,
+      "width": 456,
+      "height": 454
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 4,
+    "sourceSha256": "06bf44d28b0c5f227c17d16e29321515c6f36e39683e1122bab20461640f7036",
+    "capturedAt": "2026-11-02T18:34:27.630Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-conditional": {
+    "width": 385,
+    "height": 536,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 709,
+      "y": 432,
+      "width": 385,
+      "height": 536
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "c7f600b9eb5c5692035a1462b8d8d298744efc03ad23a24b151ac062c7531f7e",
+    "capturedAt": "2026-11-02T18:34:31.030Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-selection": {
+    "width": 532,
+    "height": 630,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 639,
+      "y": 385,
+      "width": 532,
+      "height": 630
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "e25ebe5e988c3f940f5a6cb488c301617f3bbd3d6e9160318a8f3d7d95a744af",
+    "capturedAt": "2026-11-02T18:34:34.183Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-timeout": {
+    "width": 560,
+    "height": 330,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 622,
+      "y": 535,
+      "width": 560,
+      "height": 330
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "df0b11e53fdedef5ed332e29db34db957187c97e2671138630ab841c2840a1c7",
+    "capturedAt": "2026-11-02T18:34:37.318Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-unclustering": {
+    "width": 328,
+    "height": 310,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 741,
+      "y": 545,
+      "width": 328,
+      "height": 310
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "99bcc5ceeb04ba7457b7b1bf99e5e614b7ff2c1b503a1447073336cef382d58b",
+    "capturedAt": "2026-11-02T18:34:41.564Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-activities": {
+    "width": 416,
+    "height": 360,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 697,
+      "y": 520,
+      "width": 416,
+      "height": 360
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "2c94240a2d7633f8a76cff4188aa1730c782a63aedae5231e94fd34dbccc4717",
+    "capturedAt": "2026-11-02T18:34:44.692Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-digit": {
+    "width": 712,
+    "height": 1358,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 549,
+      "y": 21,
+      "width": 712,
+      "height": 1358
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "4b68d6f2cf25fd0f800ff7ef62f73378c02609d9e8dde47f05d5c3a836248a2c",
+    "capturedAt": "2026-11-02T18:34:47.857Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-telephones": {
+    "width": 558,
+    "height": 412,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 626,
+      "y": 494,
+      "width": 558,
+      "height": 412
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "7eca72dd03278815ac1513f1498aa115817727de289f8c42b512f4192b25e894",
+    "capturedAt": "2026-11-02T18:34:50.942Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-overlap-shared": {
+    "width": 944,
+    "height": 562,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 433,
+      "y": 419,
+      "width": 944,
+      "height": 562
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 5,
+    "sourceSha256": "58bb239dd48ff4803b1c7c8817222faf2d8042effcdddd16a48f611db85d7257",
+    "capturedAt": "2026-11-02T18:34:54.356Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-overlap": {
+    "width": 994,
+    "height": 502,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 408,
+      "y": 449,
+      "width": 994,
+      "height": 502
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "73e7e4e2771bc368d92a11d17dcdee6a1af9abd8b14c7a968416ae1ce8109517",
+    "capturedAt": "2026-11-02T18:34:58.838Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-overlap-inactive": {
+    "width": 562,
+    "height": 388,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 624,
+      "y": 506,
+      "width": 562,
+      "height": 388
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "4d02f2a34ac75fea880f1c10948e8c9b40e1bcf6516d58e88c1f1a28b912ea8a",
+    "capturedAt": "2026-11-02T18:35:02.607Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-conflict": {
+    "width": 878,
+    "height": 474,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 466,
+      "y": 463,
+      "width": 878,
+      "height": 474
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "620b528190d30cc532f047243b0efe5b1fa438aaf43e9567e5c7bd04733d72e9",
+    "capturedAt": "2026-11-02T18:35:05.836Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-broadcast-cycle": {
+    "width": 298,
+    "height": 304,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 756,
+      "y": 548,
+      "width": 298,
+      "height": 304
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 2,
+    "sourceSha256": "667d210de064c3f3a836ef7af082fabed0adb83be75d4e884e20946e2a41e5f8",
+    "capturedAt": "2026-11-02T18:35:09.597Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-semantics": {
+    "width": 490,
+    "height": 304,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 660,
+      "y": 548,
+      "width": 490,
+      "height": 304
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 3,
+    "sourceSha256": "6e9c0213d4823ef21f9b9a67e5ccc7e1367f6fcf688daff5082912b1c3e9d97d",
+    "capturedAt": "2026-11-02T18:35:13.907Z",
+    "renderer": "https://editor.stately.ai/viz"
+  },
+  "harel-simultaneous": {
+    "width": 652,
+    "height": 294,
+    "viewport": {
+      "width": 1800,
+      "height": 1400
+    },
+    "clip": {
+      "x": 579,
+      "y": 553,
+      "width": 652,
+      "height": 294
+    },
+    "deviceScaleFactor": 2,
+    "nodes": 4,
+    "sourceSha256": "9c5549006e671e37d7a3a26e12e91e95529c5719693ca19fc94c5ba5fc7bcabf",
+    "capturedAt": "2026-11-02T18:35:16.960Z",
+    "renderer": "https://editor.stately.ai/viz"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "harel-broadcast-cycle",
+  "description": "Structural diagram only. Symbolic emit beta/gamma/delta/alpha actions deliberately have no implementations. Sending alpha does not automatically propagate the cycle. Implementing every emission with raise would create a non-terminating internal event cascade.",
+  "meta": {
+    "harel": {
+      "figures": [
+        47
+      ],
+      "adaptation": "Structural diagram only. Symbolic emit beta/gamma/delta/alpha actions deliberately have no implementations. Sending alpha does not automatically propagate the cycle. Implementing every emission with raise would create a non-terminating internal event cascade."
+    }
+  },
+  "type": "parallel",
+  "states": {
+    "Left": {
+      "initial": "L0",
+      "states": {
+        "L0": {
+          "on": {
+            "alpha": {
+              "target": "L1",
+              "actions": "emit beta"
+            }
+          }
+        },
+        "L1": {
+          "on": {
+            "gamma": {
+              "target": "L0",
+              "actions": "emit delta"
+            }
+          }
+        }
+      }
+    },
+    "Right": {
+      "initial": "R0",
+      "states": {
+        "R0": {
+          "on": {
+            "beta": {
+              "target": "R1",
+              "actions": "emit gamma"
+            }
+          }
+        },
+        "R1": {
+          "on": {
+            "delta": {
+              "target": "R0",
+              "actions": "emit alpha"
+            }
+          }
+        }
+      }
+    }
+  }
+}

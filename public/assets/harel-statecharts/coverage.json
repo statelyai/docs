@@ -1,0 +1,299 @@
+{
+  "paper": {
+    "title": "Statecharts: A visual formalism for complex systems",
+    "author": "David Harel",
+    "year": 1987,
+    "doi": "10.1016/0167-6423(87)90035-9",
+    "url": "https://www.weizmann.ac.il/math/harel/sites/math.harel/files/users/user56/Statecharts.pdf"
+  },
+  "sections": [
+    {
+      "number": "1",
+      "title": "Introduction",
+      "anchor": "1-introduction"
+    },
+    {
+      "number": "2",
+      "title": "State-levels: Clustering and refinement",
+      "anchor": "2-state-levels-clustering-and-refinement"
+    },
+    {
+      "number": "3",
+      "title": "Orthogonality: Independence and concurrency",
+      "anchor": "3-orthogonality-independence-and-concurrency"
+    },
+    {
+      "number": "4",
+      "title": "Additional statechart features",
+      "anchor": "4-additional-statechart-features"
+    },
+    {
+      "number": "4.1",
+      "title": "Condition and selection entrances",
+      "anchor": "41-condition-and-selection-entrances"
+    },
+    {
+      "number": "4.2",
+      "title": "Delays and timeouts",
+      "anchor": "42-delays-and-timeouts"
+    },
+    {
+      "number": "4.3",
+      "title": "Unclustering",
+      "anchor": "43-unclustering"
+    },
+    {
+      "number": "5",
+      "title": "Actions and activities",
+      "anchor": "5-actions-and-activities"
+    },
+    {
+      "number": "6",
+      "title": "Possible extensions to the formalism",
+      "anchor": "6-possible-extensions-to-the-formalism"
+    },
+    {
+      "number": "6.1",
+      "title": "Parameterized states",
+      "anchor": "61-parameterized-states"
+    },
+    {
+      "number": "6.2",
+      "title": "Overlapping states",
+      "anchor": "62-overlapping-states"
+    },
+    {
+      "number": "6.3",
+      "title": "Incorporating temporal logic",
+      "anchor": "63-incorporating-temporal-logic"
+    },
+    {
+      "number": "6.4",
+      "title": "Recursive and probabilistic statecharts",
+      "anchor": "64-recursive-and-probabilistic-statecharts"
+    },
+    {
+      "number": "7",
+      "title": "Semantics of statecharts",
+      "anchor": "7-semantics-of-statecharts"
+    },
+    {
+      "number": "8",
+      "title": "Related work",
+      "anchor": "8-related-work"
+    },
+    {
+      "number": "9",
+      "title": "Practical experience and implementation",
+      "anchor": "9-practical-experience-and-implementation"
+    },
+    {
+      "number": "10",
+      "title": "Conclusion",
+      "anchor": "10-conclusion"
+    }
+  ],
+  "examples": {
+    "harel-flat": {
+      "name": "the flat three-state example",
+      "figures": [
+        1
+      ]
+    },
+    "harel-clustered": {
+      "name": "clustering and refinement",
+      "figures": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        17,
+        18
+      ]
+    },
+    "harel-displays": {
+      "name": "the watch displays and alarm interruption",
+      "figures": [
+        8,
+        9,
+        10,
+        13
+      ]
+    },
+    "harel-history-shallow": {
+      "name": "shallow history",
+      "figures": [
+        11
+      ]
+    },
+    "harel-history-deep": {
+      "name": "deep history",
+      "figures": [
+        11
+      ]
+    },
+    "harel-history-selective": {
+      "name": "history at selected levels",
+      "figures": [
+        12
+      ]
+    },
+    "harel-updates": {
+      "name": "the watch update modes",
+      "figures": [
+        14,
+        15,
+        16
+      ]
+    },
+    "harel-parallel": {
+      "name": "the two orthogonal components",
+      "figures": [
+        19,
+        21
+      ]
+    },
+    "harel-product": {
+      "name": "the flattened six-state product",
+      "figures": [
+        20
+      ]
+    },
+    "harel-avionics": {
+      "name": "the avionics decomposition",
+      "figures": [
+        22
+      ]
+    },
+    "harel-parallel-entry": {
+      "name": "entries and exits across parallel regions",
+      "figures": [
+        23,
+        24
+      ]
+    },
+    "harel-stopwatch": {
+      "name": "the stopwatch's independent display and run modes",
+      "figures": [
+        25
+      ]
+    },
+    "harel-watch": {
+      "name": "the combined wristwatch",
+      "figures": [
+        7,
+        26,
+        27,
+        28,
+        30,
+        31
+      ]
+    },
+    "harel-beep-test": {
+      "name": "the scoped beeper test",
+      "figures": [
+        29,
+        32
+      ]
+    },
+    "harel-conditional": {
+      "name": "conditional entry",
+      "figures": [
+        33
+      ]
+    },
+    "harel-selection": {
+      "name": "the storage system's field selection",
+      "figures": [
+        34
+      ]
+    },
+    "harel-timeout": {
+      "name": "minimum and maximum waiting times",
+      "figures": [
+        35
+      ]
+    },
+    "harel-unclustering": {
+      "name": "a parent and its detailed refinement",
+      "figures": [
+        36
+      ]
+    },
+    "harel-activities": {
+      "name": "entry, exit, and communication between regions",
+      "figures": [
+        37
+      ]
+    },
+    "harel-digit": {
+      "name": "the expanded minute-digit cycle",
+      "figures": [
+        38,
+        39
+      ]
+    },
+    "harel-telephones": {
+      "name": "two instances of the telephone pattern",
+      "figures": [
+        40
+      ]
+    },
+    "harel-overlap-shared": {
+      "name": "a tree-based alternative to a shared child",
+      "figures": [
+        41
+      ]
+    },
+    "harel-overlap": {
+      "name": "A alone and A alongside B",
+      "figures": [
+        42,
+        44,
+        45
+      ]
+    },
+    "harel-overlap-inactive": {
+      "name": "the inactive-component workaround",
+      "figures": [
+        43
+      ]
+    },
+    "harel-conflict": {
+      "name": "the conflict and its explicit resolutions",
+      "figures": [
+        46
+      ]
+    },
+    "harel-broadcast-cycle": {
+      "name": "the generated-event cycle",
+      "figures": [
+        47
+      ]
+    },
+    "harel-semantics": {
+      "name": "the state-observation example",
+      "figures": [
+        48
+      ]
+    },
+    "harel-simultaneous": {
+      "name": "an explicit simultaneous-input policy",
+      "figures": [
+        49
+      ]
+    }
+  },
+  "figureBoundaries": {
+    "7": "Physical watch illustration is explained through the behavioral model; no native photograph replacement.",
+    "18": "Contradictory/underspecified diagram is explained; explicit resolved model is not an equivalent execution.",
+    "41": "Multiple parentage replaced by explicit transitions.",
+    "44": "Literal overlap replaced by duplication.",
+    "45": "Overlap-entry notation translated to explicit mode targets.",
+    "46": "Nondeterminism replaced by explicit policy choice.",
+    "47": "Generated emissions remain symbolic to avoid an unbounded cycle.",
+    "48": "Declared XState interpretation; original leaves semantic question open.",
+    "49": "Declared event-packet policy; original causal question remains unresolved."
+  }
+}

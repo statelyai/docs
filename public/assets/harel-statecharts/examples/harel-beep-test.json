@@ -1,0 +1,51 @@
+{
+  "id": "harel-beep-test",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      29,
+      32
+    ],
+    "adaptation": "The states 00,10,01 record which of b,d is held. Figure 32 refines beep with A_PRESS suppression and A_RELEASE resumption. These are control states; no audio is produced by the read-only illustration."
+  },
+  "initial": "00",
+  "states": {
+    "00": {
+      "on": {
+        "B_PRESS": "10",
+        "D_PRESS": "01"
+      }
+    },
+    "10": {
+      "on": {
+        "B_RELEASE": "00",
+        "D_PRESS": "beep"
+      }
+    },
+    "01": {
+      "on": {
+        "D_RELEASE": "00",
+        "B_PRESS": "beep"
+      }
+    },
+    "beep": {
+      "initial": "on",
+      "states": {
+        "on": {
+          "on": {
+            "A_PRESS": "off"
+          }
+        },
+        "off": {
+          "on": {
+            "A_RELEASE": "on"
+          }
+        }
+      },
+      "on": {
+        "D_RELEASE": "10",
+        "B_RELEASE": "01"
+      }
+    }
+  }
+}

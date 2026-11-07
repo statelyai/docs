@@ -1,0 +1,86 @@
+{
+  "id": "harel-stopwatch",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      25
+    ],
+    "adaptation": "The zero state and orthogonal display/run states follow Figure 25. The in on/in off condition is the named stopwatch running guard. Time-to-chime navigation abbreviates the intervening alarm displays; use harel-displays for the full display cycle. Counter values and a ticking clock are outside this control model."
+  },
+  "initial": "stopwatch",
+  "states": {
+    "time": {
+      "on": {
+        "A_PRESS": "chime"
+      }
+    },
+    "chime": {
+      "on": {
+        "A_PRESS": "stopwatch.history"
+      }
+    },
+    "stopwatch": {
+      "initial": "zero",
+      "states": {
+        "history": {
+          "type": "history",
+          "history": "deep",
+          "target": "zero"
+        },
+        "zero": {
+          "on": {
+            "B_PRESS": "timing"
+          },
+          "id": "stopwatch-zero"
+        },
+        "timing": {
+          "type": "parallel",
+          "states": {
+            "display": {
+              "initial": "regular",
+              "states": {
+                "regular": {
+                  "on": {
+                    "D_PRESS": [
+                      {
+                        "target": "lap",
+                        "guard": "stopwatch running"
+                      },
+                      {
+                        "target": "#stopwatch-zero"
+                      }
+                    ]
+                  }
+                },
+                "lap": {
+                  "on": {
+                    "D_PRESS": "regular"
+                  }
+                }
+              }
+            },
+            "run": {
+              "initial": "on",
+              "states": {
+                "on": {
+                  "id": "stopwatch-running",
+                  "on": {
+                    "B_PRESS": "off"
+                  }
+                },
+                "off": {
+                  "on": {
+                    "B_PRESS": "on"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "on": {
+        "A_PRESS": "time"
+      }
+    }
+  }
+}

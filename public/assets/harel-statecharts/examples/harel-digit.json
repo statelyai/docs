@@ -1,0 +1,126 @@
+{
+  "id": "harel-digit",
+  "description": "The ten-state expansion of the parameterized minute digit. SYNC uses event.digit with named digit guards. Context arithmetic is an alternative to these ten states; this is not a complete clock.",
+  "meta": {
+    "harel": {
+      "figures": [
+        38,
+        39
+      ],
+      "adaptation": "The ten-state expansion of the parameterized minute digit. SYNC uses event.digit with named digit guards. Context arithmetic is an alternative to these ten states; this is not a complete clock."
+    }
+  },
+  "initial": "Seconds",
+  "states": {
+    "Seconds": {
+      "on": {
+        "c": "One minute"
+      }
+    },
+    "One minute": {
+      "initial": "0",
+      "on": {
+        "c": "Ten minutes",
+        "SYNC": [
+          {
+            "guard": "digit 0",
+            "target": ".0"
+          },
+          {
+            "guard": "digit 1",
+            "target": ".1"
+          },
+          {
+            "guard": "digit 2",
+            "target": ".2"
+          },
+          {
+            "guard": "digit 3",
+            "target": ".3"
+          },
+          {
+            "guard": "digit 4",
+            "target": ".4"
+          },
+          {
+            "guard": "digit 5",
+            "target": ".5"
+          },
+          {
+            "guard": "digit 6",
+            "target": ".6"
+          },
+          {
+            "guard": "digit 7",
+            "target": ".7"
+          },
+          {
+            "guard": "digit 8",
+            "target": ".8"
+          },
+          {
+            "guard": "digit 9",
+            "target": ".9"
+          }
+        ]
+      },
+      "states": {
+        "0": {
+          "on": {
+            "d": "1"
+          }
+        },
+        "1": {
+          "on": {
+            "d": "2"
+          }
+        },
+        "2": {
+          "on": {
+            "d": "3"
+          }
+        },
+        "3": {
+          "on": {
+            "d": "4"
+          }
+        },
+        "4": {
+          "on": {
+            "d": "5"
+          }
+        },
+        "5": {
+          "on": {
+            "d": "6"
+          }
+        },
+        "6": {
+          "on": {
+            "d": "7"
+          }
+        },
+        "7": {
+          "on": {
+            "d": "8"
+          }
+        },
+        "8": {
+          "on": {
+            "d": "9"
+          }
+        },
+        "9": {
+          "on": {
+            "d": "0"
+          }
+        }
+      }
+    },
+    "Ten minutes": {
+      "on": {
+        "c": "Seconds"
+      }
+    }
+  }
+}

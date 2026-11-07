@@ -1,0 +1,63 @@
+{
+  "id": "harel-selection",
+  "description": "Selection and repeated update of type, name, qty, and place. Explicit event types expand the S connector. UPDATE is a targetless action in the selected state, replacing the paper history-return loop.",
+  "meta": {
+    "harel": {
+      "figures": [
+        34
+      ],
+      "adaptation": "Selection and repeated update of type, name, qty, and place. Explicit event types expand the S connector. UPDATE is a targetless action in the selected state, replacing the paper history-return loop."
+    }
+  },
+  "initial": "Browsing",
+  "states": {
+    "Browsing": {
+      "on": {
+        "SELECT_TYPE": "Updating.type",
+        "SELECT_NAME": "Updating.name",
+        "SELECT_QTY": "Updating.qty",
+        "SELECT_PLACE": "Updating.place"
+      }
+    },
+    "Updating": {
+      "initial": "type",
+      "on": {
+        "CLOSE": "Browsing",
+        "SELECT_TYPE": ".type",
+        "SELECT_NAME": ".name",
+        "SELECT_QTY": ".qty",
+        "SELECT_PLACE": ".place"
+      },
+      "states": {
+        "type": {
+          "on": {
+            "UPDATE": {
+              "actions": "update type"
+            }
+          }
+        },
+        "name": {
+          "on": {
+            "UPDATE": {
+              "actions": "update name"
+            }
+          }
+        },
+        "qty": {
+          "on": {
+            "UPDATE": {
+              "actions": "update qty"
+            }
+          }
+        },
+        "place": {
+          "on": {
+            "UPDATE": {
+              "actions": "update place"
+            }
+          }
+        }
+      }
+    }
+  }
+}

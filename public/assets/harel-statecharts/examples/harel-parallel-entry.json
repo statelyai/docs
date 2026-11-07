@@ -1,0 +1,108 @@
+{
+  "id": "harel-parallel-entry",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      23,
+      24
+    ],
+    "adaptation": "Figure 23 boundary transitions with internal navigation from Figure 19. Native multi-target transitions replace split incoming arrows; guards replace merging exits. The named guards test the active regions. Figure 24 is the collapsed boundary view."
+  },
+  "initial": "J",
+  "states": {
+    "J": {
+      "on": {
+        "nu": "Y",
+        "delta": {
+          "target": [
+            "#entry-B",
+            "#entry-E"
+          ]
+        }
+      }
+    },
+    "K": {
+      "on": {
+        "alpha": "#entry-C"
+      }
+    },
+    "L": {
+      "on": {
+        "beta": {
+          "target": [
+            "#entry-C",
+            "#entry-D.history"
+          ]
+        }
+      }
+    },
+    "H": {},
+    "Y": {
+      "id": "entry-Y",
+      "type": "parallel",
+      "states": {
+        "A": {
+          "initial": "B",
+          "states": {
+            "B": {
+              "id": "entry-B",
+              "on": {
+                "alpha": "C"
+              }
+            },
+            "C": {
+              "id": "entry-C",
+              "on": {
+                "theta": "#harel-parallel-entry.K",
+                "beta": {
+                  "target": "B",
+                  "guard": "entry in G"
+                }
+              }
+            }
+          }
+        },
+        "D": {
+          "id": "entry-D",
+          "initial": "F",
+          "states": {
+            "history": {
+              "type": "history",
+              "target": "F"
+            },
+            "E": {
+              "id": "entry-E",
+              "on": {
+                "gamma": "G"
+              }
+            },
+            "F": {
+              "id": "entry-F",
+              "on": {
+                "mu": "E",
+                "alpha": "G",
+                "eta": {
+                  "target": "#harel-parallel-entry.H",
+                  "guard": "entry in B"
+                }
+              }
+            },
+            "G": {
+              "id": "entry-G",
+              "on": {
+                "delta": "F"
+              }
+            }
+          }
+        }
+      },
+      "on": {
+        "omega": {
+          "target": "K",
+          "guard": "entry in B and G"
+        },
+        "epsilon": "L"
+      }
+    }
+  }
+}

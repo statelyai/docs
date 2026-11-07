@@ -1,0 +1,58 @@
+{
+  "id": "harel-overlap-inactive",
+  "description": "Figure 43 inactive-B workaround expressed with native parallel states. X means B is inactive. ENABLE_B and DISABLE_B are explicit illustrative events; the original diagram leaves transitions unspecified. A remains active while B changes between X and E/F/G.",
+  "meta": {
+    "harel": {
+      "figures": [
+        43
+      ],
+      "adaptation": "Figure 43 inactive-B workaround expressed with native parallel states. X means B is inactive. ENABLE_B and DISABLE_B are explicit illustrative events; the original diagram leaves transitions unspecified. A remains active while B changes between X and E/F/G."
+    }
+  },
+  "type": "parallel",
+  "states": {
+    "A": {
+      "initial": "C",
+      "states": {
+        "C": {
+          "on": {
+            "ADVANCE_A": "D"
+          }
+        },
+        "D": {
+          "on": {
+            "ADVANCE_A": "C"
+          }
+        }
+      }
+    },
+    "B": {
+      "initial": "E",
+      "on": {
+        "DISABLE_B": ".X"
+      },
+      "states": {
+        "E": {
+          "on": {
+            "ADVANCE_B": "F"
+          }
+        },
+        "F": {
+          "on": {
+            "ADVANCE_B": "G"
+          }
+        },
+        "G": {
+          "on": {
+            "ADVANCE_B": "E"
+          }
+        },
+        "X": {
+          "on": {
+            "ENABLE_B": "E"
+          }
+        }
+      }
+    }
+  }
+}
