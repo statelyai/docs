@@ -1,86 +1,61 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { useTheme } from 'next-themes';
+import { useState, useRef, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 type Embed = {
-  name: string;
+  name?: string;
   embedURL: string;
   snapshotURL?: string;
+  publishedId?: string;
 };
 
-export function EmbedMachine({ name, embedURL, snapshotURL }: Embed) {
+const siteKey = process.env.NEXT_PUBLIC_STATELY_EMBED_SITE_KEY;
+
+export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedId }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [snapshotSrc, setSnapshotSrc] = useState<string | null>(null);
-  const [snapshotFailed, setSnapshotFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  useEffect(() => setMounted(true), []);
   useEffect(() => {
     if (!isActive) return;
-
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsActive(false);
       }
     };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [isActive]);
 
-  useEffect(() => {
-    if (!snapshotURL) return;
-    let cancelled = false;
-    fetch(snapshotURL)
-      .then((response) => {
-        if (!response.ok) throw new Error(`Snapshot ${response.status}`);
-        return response.text();
-      })
-      .then((content) => {
-        if (!cancelled) {
-          setSnapshotSrc(
-            `https://editor.stately.ai/viz#machine=${encodeURIComponent(toBase64(content))}&format=xgraph`,
-          );
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setSnapshotFailed(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [snapshotURL]);
-
-  const colorMode = resolvedTheme === 'dark' ? 'dark' : 'light';
-
+  const src = publishedEmbedURL(
+    embedURL,
+    snapshotURL,
+    publishedId,
+    resolvedTheme === "dark" ? "dark" : "light",
+  );
   return (
     <div ref={containerRef} className="relative my-4">
-      {mounted && (!snapshotURL || snapshotSrc || snapshotFailed) ? (
+      {mounted && src ? (
         <iframe
           loading="lazy"
-          src={manageURL(snapshotSrc ?? embedURL, {
-            colorMode,
-          })}
+          src={src}
+          title={`${name} machine`}
           className="block w-full aspect-video"
         >
-          <a href={embedURL}>
-            View the <em>{name}</em> machine in Stately Studio
+          <a href={src}>
+            View the <em>{name}</em> machine in Stately Viz
           </a>
           .
         </iframe>
       ) : (
-        <div className="block w-full aspect-video" />
+        <div className="block w-full aspect-video flex items-center justify-center">
+          <span>Machine preview unavailable</span>
+        </div>
       )}
-      {!isActive && (
+      {src && !isActive && (
         <div
           className="absolute inset-0 cursor-pointer bg-transparent hover:bg-black/5 flex items-center justify-center group"
           onClick={() => setIsActive(true)}
@@ -94,26 +69,30 @@ export function EmbedMachine({ name, embedURL, snapshotURL }: Embed) {
   );
 }
 
-function manageURL(
+export function publishedEmbedURL(
   embedURL: string,
-  options?: { colorMode: 'light' | 'dark' },
-): string {
-  const url = new URL(embedURL);
-  if (options?.colorMode) {
-    const themeParam =
-      url.hostname === 'editor.stately.ai' && url.pathname === '/viz'
-        ? 'theme'
-        : 'colorMode';
-    url.searchParams.set(themeParam, options.colorMode);
-  }
+  snapshotURL: string | undefined,
+  publishedId: string | undefined,
+  theme: "light" | "dark",
+): string | null {
+  if (!siteKey) return null;
+  const source = new URL(embedURL);
+  const snapshotId = snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1];
+  const id =
+    publishedId ??
+    snapshotId ??
+    source.searchParams.get("machineId") ??
+    source.searchParams.get("projectVersionId") ??
+    source.searchParams.get("projectId") ??
+    (source.pathname.includes("/registry/editor/embed/")
+      ? source.pathname.split("/").at(-1)
+      : null);
+  if (!id) return null;
+  const url = new URL("https://editor.stately.ai/viz");
+  url.searchParams.set("siteKey", siteKey);
+  url.searchParams.set("publishedId", id);
+  url.searchParams.set("theme", theme);
+  const mode = source.searchParams.get("mode");
+  if (mode) url.searchParams.set("mode", mode);
   return url.toString();
-}
-
-function toBase64(content: string): string {
-  const bytes = new TextEncoder().encode(content);
-  let binary = '';
-  for (let index = 0; index < bytes.length; index += 8192) {
-    binary += String.fromCharCode(...bytes.subarray(index, index + 8192));
-  }
-  return btoa(binary);
 }
