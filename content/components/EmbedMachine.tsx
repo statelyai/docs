@@ -6,11 +6,14 @@ import { useTheme } from 'next-themes';
 type Embed = {
   name: string;
   embedURL: string;
+  snapshotURL?: string;
 };
 
-export function EmbedMachine({ name, embedURL }: Embed) {
+export function EmbedMachine({ name, embedURL, snapshotURL }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [snapshotSrc, setSnapshotSrc] = useState<string | null>(null);
+  const [snapshotFailed, setSnapshotFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
@@ -34,14 +37,37 @@ export function EmbedMachine({ name, embedURL }: Embed) {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isActive]);
 
+  useEffect(() => {
+    if (!snapshotURL) return;
+    let cancelled = false;
+    fetch(snapshotURL)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Snapshot ${response.status}`);
+        return response.text();
+      })
+      .then((content) => {
+        if (!cancelled) {
+          setSnapshotSrc(
+            `https://editor.stately.ai/viz#machine=${encodeURIComponent(toBase64(content))}&format=xgraph`,
+          );
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setSnapshotFailed(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [snapshotURL]);
+
   const colorMode = resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
     <div ref={containerRef} className="relative my-4">
-      {mounted ? (
+      {mounted && (!snapshotURL || snapshotSrc || snapshotFailed) ? (
         <iframe
           loading="lazy"
-          src={manageURL(embedURL, {
+          src={manageURL(snapshotSrc ?? embedURL, {
             colorMode,
           })}
           className="block w-full aspect-video"
@@ -73,8 +99,21 @@ function manageURL(
   options?: { colorMode: 'light' | 'dark' },
 ): string {
   const url = new URL(embedURL);
-  for (const opt in options) {
-    url.searchParams.set(opt, options[opt as keyof typeof options]);
+  if (options?.colorMode) {
+    const themeParam =
+      url.hostname === 'editor.stately.ai' && url.pathname === '/viz'
+        ? 'theme'
+        : 'colorMode';
+    url.searchParams.set(themeParam, options.colorMode);
   }
   return url.toString();
+}
+
+function toBase64(content: string): string {
+  const bytes = new TextEncoder().encode(content);
+  let binary = '';
+  for (let index = 0; index < bytes.length; index += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + 8192));
+  }
+  return btoa(binary);
 }

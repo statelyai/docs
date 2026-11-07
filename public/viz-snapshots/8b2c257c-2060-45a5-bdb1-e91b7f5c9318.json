@@ -1,0 +1,683 @@
+{
+  "xgraphSchemaVersion": "1.0.0",
+  "id": "8b2c257c-2060-45a5-bdb1-e91b7f5c9318",
+  "type": "directed",
+  "parentId": null,
+  "initialNodeId": "8jx0cvman6w",
+  "nodes": [
+    {
+      "id": "8jx0cvman6w",
+      "type": "node",
+      "parentId": null,
+      "label": "Editor page machine",
+      "data": {
+        "key": "Editor page machine",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "entry": [],
+        "assets": [],
+        "layout": {
+          "status": "complete"
+        },
+        "nodeId": "Editor page machine",
+        "history": false,
+        "invokes": [],
+        "initialId": "roqrfhcweo"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 352.0781133058568,
+        "y": 77.2241488350802
+      },
+      "initialNodeId": "roqrfhcweo"
+    },
+    {
+      "id": "roqrfhcweo",
+      "type": "node",
+      "parentId": "8jx0cvman6w",
+      "label": "idle",
+      "data": {
+        "key": "idle",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "entry": [
+          {
+            "id": "zxwo1pt33v",
+            "type": "clearCreateMachineError",
+            "params": {}
+          }
+        ],
+        "assets": [],
+        "nodeId": "Editor page machine.idle",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 149,
+      "y": 475,
+      "position": {
+        "x": 149,
+        "y": 475
+      },
+      "initialNodeId": null
+    },
+    {
+      "id": "fhp1bpvntxp",
+      "type": "node",
+      "parentId": "8jx0cvman6w",
+      "label": "Check for offline machine",
+      "data": {
+        "key": "Check for offline machine",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "color": "purple",
+        "entry": [],
+        "assets": [],
+        "nodeId": "Editor page machine.Check for offline machine",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 343,
+      "y": 820,
+      "position": {
+        "x": 343,
+        "y": 820
+      },
+      "initialNodeId": null
+    },
+    {
+      "id": "sjw02f14yjm",
+      "type": "node",
+      "parentId": "8jx0cvman6w",
+      "label": "Handle offline machine",
+      "data": {
+        "key": "Handle offline machine",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "color": "purple",
+        "entry": [
+          {
+            "id": "lstw4d5vayl",
+            "type": "setOfflineMachine",
+            "params": {}
+          }
+        ],
+        "assets": [],
+        "nodeId": "Editor page machine.Handle offline machine",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 934,
+      "y": 979,
+      "position": {
+        "x": 934,
+        "y": 979
+      },
+      "initialNodeId": null
+    }
+  ],
+  "edges": [
+    {
+      "id": "l2g5uclqd2b",
+      "type": "edge",
+      "sourceId": "8jx0cvman6w",
+      "targetId": "8jx0cvman6w",
+      "label": "Clear create machine error",
+      "data": {
+        "meta": null,
+        "color": "red",
+        "guard": null,
+        "actions": [
+          {
+            "id": "2p6u9bkwh2n",
+            "type": "clearCreateMachineError",
+            "params": {}
+          }
+        ],
+        "eventType": "Clear create machine error",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 388.1523035301769,
+        "y": -134.7379882668455
+      }
+    },
+    {
+      "id": "bkh5c7ot4n",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "roqrfhcweo",
+      "label": "Update local machine",
+      "data": {
+        "meta": null,
+        "color": "yellow",
+        "guard": null,
+        "actions": [
+          {
+            "id": "5nix57fqflo",
+            "type": "updateLocalMachine",
+            "params": {}
+          }
+        ],
+        "eventType": "Update local machine",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": -61,
+      "y": 561,
+      "position": {
+        "x": -61,
+        "y": 561
+      }
+    },
+    {
+      "id": "pcvf1srk74g",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "roqrfhcweo",
+      "label": "Update local project visibility",
+      "data": {
+        "meta": null,
+        "color": "yellow",
+        "guard": null,
+        "actions": [
+          {
+            "id": "1v8zap836fh",
+            "type": "updateLocalProjectVisibility",
+            "params": {}
+          }
+        ],
+        "eventType": "Update local project visibility",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": 141,
+      "y": 53,
+      "position": {
+        "x": 141,
+        "y": 53
+      }
+    },
+    {
+      "id": "pp09fany0e",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "fhp1bpvntxp",
+      "label": "Set selected machine",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": {
+          "type": "machineNotAlreadySelected",
+          "params": {}
+        },
+        "actions": [
+          {
+            "id": "mtq3fj5pgmg",
+            "type": "setSelectedMachine",
+            "params": {}
+          }
+        ],
+        "eventType": "Set selected machine",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 48,
+      "y": 636,
+      "position": {
+        "x": 48,
+        "y": 636
+      }
+    },
+    {
+      "id": "flxvqzcl65b",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "roqrfhcweo",
+      "label": "Revert machine back to its current version",
+      "data": {
+        "meta": null,
+        "color": "yellow",
+        "guard": null,
+        "actions": [
+          {
+            "id": "lkrmcifqxed",
+            "type": "setSelectedMachineToProjectMachine",
+            "params": {}
+          }
+        ],
+        "eventType": "Revert machine back to its current version",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": -193,
+      "y": 43,
+      "position": {
+        "x": -193,
+        "y": 43
+      }
+    },
+    {
+      "id": "464jcafp7ur",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "roqrfhcweo",
+      "label": "Remove machine that was moved",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": null,
+        "actions": [
+          {
+            "id": "fs7ylsdll6m",
+            "type": "removeMachineThatWasMoved",
+            "params": {}
+          },
+          {
+            "id": "7o9vtbl6kyi",
+            "type": "selectFirstMachineInProject",
+            "params": {}
+          },
+          {
+            "id": "r2a3utfot68",
+            "type": "updateURL",
+            "params": {}
+          }
+        ],
+        "eventType": "Remove machine that was moved",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": -456.9999999999999,
+      "y": -15,
+      "position": {
+        "x": -457,
+        "y": -15
+      }
+    },
+    {
+      "id": "uid3xtmnmvp",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "fhp1bpvntxp",
+      "label": "Delete machine",
+      "data": {
+        "meta": null,
+        "color": "yellow",
+        "guard": {
+          "type": "selectedMachineWasDeleted",
+          "params": {}
+        },
+        "actions": [
+          {
+            "id": "nszr9266ly",
+            "type": "removeMachineThatWasDeleted",
+            "params": {}
+          },
+          {
+            "id": "1wiwtmjce2l",
+            "type": "selectFirstMachineInProject",
+            "params": {}
+          },
+          {
+            "id": "ke18duzp21h",
+            "type": "updateURL",
+            "params": {}
+          }
+        ],
+        "eventType": "Delete machine",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 322,
+      "y": 636,
+      "position": {
+        "x": 322,
+        "y": 636
+      }
+    },
+    {
+      "id": "34qj9qvl6kq",
+      "type": "edge",
+      "sourceId": "roqrfhcweo",
+      "targetId": "fhp1bpvntxp",
+      "label": "Delete machine",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": null,
+        "actions": [
+          {
+            "id": "um7y2fjrfm",
+            "type": "removeMachineThatWasDeleted",
+            "params": {}
+          }
+        ],
+        "eventType": "Delete machine",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 592,
+      "y": 636,
+      "position": {
+        "x": 592,
+        "y": 636
+      }
+    },
+    {
+      "id": "tlb7fcu52r",
+      "type": "edge",
+      "sourceId": "fhp1bpvntxp",
+      "targetId": "sjw02f14yjm",
+      "label": "",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": {
+          "type": "hasOfflineMachine",
+          "params": {}
+        },
+        "actions": [],
+        "eventType": "",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 380,
+      "y": 895,
+      "position": {
+        "x": 380,
+        "y": 895
+      }
+    },
+    {
+      "id": "yfiusv0vhkj",
+      "type": "edge",
+      "sourceId": "fhp1bpvntxp",
+      "targetId": "roqrfhcweo",
+      "label": "",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": null,
+        "actions": [],
+        "eventType": "",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 862,
+      "y": 626,
+      "position": {
+        "x": 862,
+        "y": 626
+      }
+    },
+    {
+      "id": "erpdo510yea",
+      "type": "edge",
+      "sourceId": "sjw02f14yjm",
+      "targetId": "roqrfhcweo",
+      "label": "Ignore offline machine",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": null,
+        "actions": [],
+        "eventType": "Ignore offline machine",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 942,
+      "y": 820,
+      "position": {
+        "x": 942,
+        "y": 820
+      }
+    },
+    {
+      "id": "ptiwcgh009n",
+      "type": "edge",
+      "sourceId": "sjw02f14yjm",
+      "targetId": "roqrfhcweo",
+      "label": "Delete offline machine",
+      "data": {
+        "meta": null,
+        "color": "purple",
+        "guard": null,
+        "actions": [
+          {
+            "id": "x4fykvc6ru",
+            "type": "deleteOfflineMachine",
+            "params": {}
+          }
+        ],
+        "eventType": "Delete offline machine",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 1182,
+      "y": 606,
+      "position": {
+        "x": 1182,
+        "y": 606
+      }
+    }
+  ],
+  "data": {
+    "layout": null,
+    "schemas": {
+      "input": null,
+      "events": {
+        "Delete machine": {
+          "type": "object",
+          "properties": {}
+        },
+        "Set selected machine": {
+          "type": "object",
+          "properties": {}
+        },
+        "Update local machine": {
+          "type": "object",
+          "properties": {}
+        },
+        "Delete offline machine": {
+          "type": "object",
+          "properties": {}
+        },
+        "Ignore offline machine": {
+          "type": "object",
+          "properties": {}
+        },
+        "Clear create machine error": {
+          "type": "object",
+          "properties": {}
+        },
+        "Remove machine that was moved": {
+          "type": "object",
+          "properties": {}
+        },
+        "Update local project visibility": {
+          "type": "object",
+          "properties": {}
+        },
+        "Revert machine back to its current version": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "output": null,
+      "context": {}
+    },
+    "schemaMeta": {
+      "events": {
+        "Delete machine": {
+          "origin": "defined"
+        },
+        "Set selected machine": {
+          "origin": "defined"
+        },
+        "Update local machine": {
+          "origin": "defined"
+        },
+        "Delete offline machine": {
+          "origin": "defined"
+        },
+        "Ignore offline machine": {
+          "origin": "defined"
+        },
+        "Clear create machine error": {
+          "origin": "defined"
+        },
+        "Remove machine that was moved": {
+          "origin": "defined"
+        },
+        "Update local project visibility": {
+          "origin": "defined"
+        },
+        "Revert machine back to its current version": {
+          "origin": "defined"
+        }
+      }
+    },
+    "implementations": {
+      "tags": [],
+      "actors": [],
+      "delays": [],
+      "guards": [
+        {
+          "id": "hasOfflineMachine",
+          "code": null,
+          "name": "hasOfflineMachine",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "machineNotAlreadySelected",
+          "code": null,
+          "name": "machineNotAlreadySelected",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "selectedMachineWasDeleted",
+          "code": null,
+          "name": "selectedMachineWasDeleted",
+          "description": null,
+          "paramsSchema": null
+        }
+      ],
+      "actions": [
+        {
+          "id": "updateURL",
+          "code": null,
+          "name": "updateURL",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "setOfflineMachine",
+          "code": null,
+          "name": "setOfflineMachine",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "setSelectedMachine",
+          "code": null,
+          "name": "setSelectedMachine",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "updateLocalMachine",
+          "code": null,
+          "name": "updateLocalMachine",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "deleteOfflineMachine",
+          "code": null,
+          "name": "deleteOfflineMachine",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "clearCreateMachineError",
+          "code": null,
+          "name": "clearCreateMachineError",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "removeMachineThatWasMoved",
+          "code": null,
+          "name": "removeMachineThatWasMoved",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "removeMachineThatWasDeleted",
+          "code": null,
+          "name": "removeMachineThatWasDeleted",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "selectFirstMachineInProject",
+          "code": null,
+          "name": "selectFirstMachineInProject",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "updateLocalProjectVisibility",
+          "code": null,
+          "name": "updateLocalProjectVisibility",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "setSelectedMachineToProjectMachine",
+          "code": null,
+          "name": "setSelectedMachineToProjectMachine",
+          "description": null,
+          "paramsSchema": null
+        }
+      ]
+    }
+  },
+  "layout": null,
+  "annotations": [
+    {
+      "x": -192.9999999999999,
+      "y": -320,
+      "id": "t1hodg7zzfn",
+      "data": {
+        "referenceIds": [
+          "8jx0cvman6w"
+        ]
+      },
+      "type": "node",
+      "content": "🟨 Yellow: user events\n\n🟪 Purple: system events\n\n🟥 Red: **errors**",
+      "parentId": "8jx0cvman6w",
+      "position": {
+        "x": 312,
+        "y": -123
+      }
+    }
+  ]
+}
