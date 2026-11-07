@@ -1,0 +1,40 @@
+{
+  "id": "harel-simultaneous",
+  "description": "Explicit event-packet policy for the simultaneous-event question. INPUT carries alpha/beta/gamma booleans. alpha and beta choose B; alpha without beta chooses C. gamma alone stays in A. D is intentionally unreachable because this policy rejects self-justifying left A. This policy illustrates the question rather than resolving Harel semantics.",
+  "meta": {
+    "harel": {
+      "figures": [
+        49
+      ],
+      "adaptation": "Explicit event-packet policy for the simultaneous-event question. INPUT carries alpha/beta/gamma booleans. alpha and beta choose B; alpha without beta chooses C. gamma alone stays in A. D is intentionally unreachable because this policy rejects self-justifying left A. This policy illustrates the question rather than resolving Harel semantics."
+    }
+  },
+  "initial": "A",
+  "states": {
+    "A": {
+      "on": {
+        "INPUT": [
+          {
+            "guard": "alpha and beta",
+            "target": "B"
+          },
+          {
+            "guard": "alpha without beta",
+            "target": "C"
+          }
+        ]
+      }
+    },
+    "B": {
+      "on": {
+        "RESET": "A"
+      }
+    },
+    "C": {
+      "on": {
+        "RESET": "A"
+      }
+    },
+    "D": {}
+  }
+}

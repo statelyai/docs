@@ -1,0 +1,54 @@
+{
+  "id": "harel-semantics",
+  "description": "Declared XState adaptation of the unresolved Figure 48. alpha transitions are selected against the pre-event snapshot; B entry raises entered B for a later internal microstep. With supplied action and stateIn guard providers, alpha yields B/D/F, not a claim about the paper semantics.",
+  "meta": {
+    "harel": {
+      "figures": [
+        48
+      ],
+      "adaptation": "Declared XState adaptation of the unresolved Figure 48. alpha transitions are selected against the pre-event snapshot; B entry raises entered B for a later internal microstep. With supplied action and stateIn guard providers, alpha yields B/D/F, not a claim about the paper semantics."
+    }
+  },
+  "type": "parallel",
+  "states": {
+    "First": {
+      "initial": "A",
+      "states": {
+        "A": {
+          "id": "harel-semantics-A",
+          "on": {
+            "alpha": "B"
+          }
+        },
+        "B": {
+          "entry": "raise entered B"
+        }
+      }
+    },
+    "Second": {
+      "initial": "C",
+      "states": {
+        "C": {
+          "on": {
+            "entered B": "D"
+          }
+        },
+        "D": {}
+      }
+    },
+    "Third": {
+      "initial": "E",
+      "states": {
+        "E": {
+          "on": {
+            "alpha": {
+              "guard": "in A",
+              "target": "F"
+            }
+          }
+        },
+        "F": {}
+      }
+    }
+  }
+}

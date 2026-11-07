@@ -1,0 +1,34 @@
+{
+  "id": "harel-flat",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      1,
+      6
+    ],
+    "adaptation": "Greek event names use alpha, beta, gamma, delta. P is an external condition represented by a named guard. Initial A follows Figure 6(i)."
+  },
+  "initial": "A",
+  "states": {
+    "A": {
+      "on": {
+        "beta": "B",
+        "gamma": {
+          "target": "C",
+          "guard": "P"
+        }
+      }
+    },
+    "B": {
+      "on": {
+        "alpha": "A",
+        "delta": "C"
+      }
+    },
+    "C": {
+      "on": {
+        "beta": "B"
+      }
+    }
+  }
+}

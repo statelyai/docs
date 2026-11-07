@@ -1,11 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useTheme } from 'next-themes';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import darkCaptures from '@/public/assets/statecharts/dark-captures.json';
 import {
   statechartExamples,
   statechartExampleURL,
   type StatechartExampleId,
+  type StatechartColorMode,
 } from '@/lib/statechart-examples';
 
 type Props = {
@@ -13,51 +16,238 @@ type Props = {
   example: StatechartExampleId;
   alt: string;
   caption: string;
+  display?: 'inline' | 'on-demand';
 };
 
-export function StatechartExample({ name, example, alt, caption }: Props) {
+const subscribeToNothing = () => () => {};
+
+function StatechartImage({
+  example,
+  alt,
+  className,
+  fill = false,
+}: Pick<Props, 'example' | 'alt'> & { className: string; fill?: boolean }) {
+  const entry = statechartExamples[example];
+  const dark = darkCaptures[example];
+  return (
+    <div
+      className={`not-prose ${className}`}
+      style={fill ? undefined : { width: entry.width }}
+    >
+      <Image
+        src={
+          'image' in entry ? entry.image : `/assets/statecharts/${example}.jpg`
+        }
+        alt={alt}
+        width={entry.width}
+        height={entry.height}
+        unoptimized
+        className={`${fill ? 'h-full max-h-full w-full object-contain' : 'h-auto w-full'} dark:hidden`}
+      />
+      <Image
+        src={`/assets/statecharts/dark/${example}.png`}
+        alt={alt}
+        width={dark.width}
+        height={dark.height}
+        unoptimized
+        className={`hidden ${fill ? 'h-full max-h-full w-full object-contain' : 'h-auto w-full'} dark:block`}
+      />
+    </div>
+  );
+}
+
+function InlineStatechart({
+  example,
+  name,
+  alt,
+  embedURL,
+  colorMode,
+}: Pick<Props, 'example' | 'name' | 'alt'> & {
+  embedURL: string;
+  colorMode: StatechartColorMode;
+}) {
+  const container = useRef<HTMLDivElement>(null);
+  const iframe = useRef<HTMLIFrameElement>(null);
+  const [status, setStatus] = useState<
+    'waiting' | 'loading' | 'ready' | 'error'
+  >('waiting');
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    if (status !== 'waiting' || !container.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setStatus('loading');
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(container.current);
+    return () => observer.disconnect();
+  }, [status]);
+
+  useEffect(() => {
+    function receive(event: MessageEvent) {
+      if (
+        event.origin !== 'https://editor.stately.ai' ||
+        event.source !== iframe.current?.contentWindow
+      )
+        return;
+      const data: unknown = event.data;
+      if (!data || typeof data !== 'object' || !('type' in data)) return;
+      if (data.type === '@statelyai.loaded') {
+        setStatus('ready');
+      } else if (data.type === '@statelyai.error') {
+        setStatus((current) => (current === 'ready' ? current : 'error'));
+      }
+    }
+    window.addEventListener('message', receive);
+    return () => window.removeEventListener('message', receive);
+  }, [example]);
+
+  useEffect(() => {
+    if (status !== 'loading') return;
+    const timeout = window.setTimeout(() => setStatus('error'), 45_000);
+    return () => window.clearTimeout(timeout);
+  }, [status, attempt]);
+
+  return (
+    <div
+      ref={container}
+      data-statechart-embed={status}
+      className="relative flex h-[min(640px,60svh)] flex-col overflow-hidden rounded-lg border bg-fd-card"
+    >
+      <StatechartImage
+        example={example}
+        alt={alt}
+        fill
+        className={
+          status === 'ready' ? 'hidden' : 'min-h-0 w-full flex-1'
+        }
+      />
+      {status !== 'waiting' && (
+        <iframe
+          key={attempt}
+          ref={iframe}
+          src={embedURL}
+          style={{
+            colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
+          }}
+          title={`${name} read-only statechart`}
+          aria-hidden={status !== 'ready'}
+          tabIndex={status === 'ready' ? 0 : -1}
+          className={`absolute inset-0 h-full w-full border-0 ${status === 'ready' ? '' : 'pointer-events-none opacity-0'}`}
+          onError={() => setStatus('error')}
+          allowFullScreen
+        />
+      )}
+      {(status === 'loading' || status === 'error') && (
+        <div
+          role="status"
+          className="shrink-0 bg-fd-card/95 p-3 text-center text-sm text-fd-muted-foreground"
+        >
+          {status === 'loading' ? (
+            'Loading interactive example…'
+          ) : (
+            <>
+              The editor could not load. The diagram is still available.{' '}
+              <button
+                type="button"
+                className="cursor-pointer underline"
+                onClick={() => {
+                  setAttempt((value) => value + 1);
+                  setStatus('loading');
+                }}
+              >
+                Retry loading
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function StatechartExample({
+  name,
+  example,
+  alt,
+  caption,
+  display = 'on-demand',
+}: Props) {
   const [expanded, setExpanded] = useState(false);
-  const { width, height } = statechartExamples[example];
-  const embedURL = statechartExampleURL(example);
+  const { resolvedTheme } = useTheme();
+  const hydrated = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
+  const colorMode =
+    hydrated && (resolvedTheme === 'light' || resolvedTheme === 'dark')
+      ? resolvedTheme
+      : 'system';
+  const embedURL = statechartExampleURL(example, colorMode);
 
   return (
     <div className="my-6">
       <figure>
-        <Image
-          src={`/assets/statecharts/${example}.jpg`}
-          alt={alt}
-          width={width}
-          height={height}
-          unoptimized
-          className="mx-auto h-auto max-w-full rounded-lg bg-white"
-        />
+        {display === 'inline' ? (
+          <InlineStatechart
+            key={example}
+            example={example}
+            name={name}
+            alt={alt}
+            embedURL={embedURL}
+            colorMode={colorMode}
+          />
+        ) : (
+          <StatechartImage
+            example={example}
+            alt={alt}
+            className="mx-auto w-fit max-w-full rounded-lg bg-fd-card"
+          />
+        )}
         <figcaption className="mt-2 text-sm text-fd-muted-foreground">
           {caption}
         </figcaption>
       </figure>
-      <details
-        className="mt-3 rounded-lg border p-3"
-        onToggle={(event) => setExpanded(event.currentTarget.open)}
-      >
-        <summary className="cursor-pointer">Explore {name} in Stately</summary>
-        <p className="text-sm">
-          Pan and zoom this read-only example. The screenshot above stays
-          available if the interactive view cannot load.{' '}
+      {display === 'inline' ? (
+        <p className="mt-2 text-sm">
           <a href={embedURL} target="_blank" rel="noopener noreferrer">
-            Open the example in a new tab
+            Open {name} in Stately
           </a>
-          .
         </p>
-        {expanded && (
-          <iframe
-            src={embedURL}
-            title={`${name} read-only statechart`}
-            loading="lazy"
-            className="block h-[480px] w-full border-0"
-            allowFullScreen
-          />
-        )}
-      </details>
+      ) : (
+        <details
+          className="mt-3 rounded-lg border p-3"
+          onToggle={(event) => setExpanded(event.currentTarget.open)}
+        >
+          <summary className="cursor-pointer">
+            Explore {name} in Stately
+          </summary>
+          <p className="text-sm">
+            Simulate events, expand or collapse parent states, and pan or zoom
+            this read-only example. The screenshot stays available if the editor
+            cannot load.{' '}
+            <a href={embedURL} target="_blank" rel="noopener noreferrer">
+              Open the example in a new tab
+            </a>
+            .
+          </p>
+          {expanded && (
+            <iframe
+              src={embedURL}
+              style={{
+                colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
+              }}
+              title={`${name} read-only statechart`}
+              loading="lazy"
+              className="block h-[min(640px,60svh)] w-full border-0"
+              allowFullScreen
+            />
+          )}
+        </details>
+      )}
     </div>
   );
 }

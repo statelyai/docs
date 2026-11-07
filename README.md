@@ -118,11 +118,11 @@ The external docs manifest lives in `docs-sources.json`:
     "ref": "main"
   },
   {
-    "name": "XState v6 alpha",
+    "name": "XState v6 beta",
     "package": "xstate-v6",
     "source": "xstate",
     "notice": {
-      "title": "XState v6 is in alpha",
+      "title": "XState v6 is in beta",
       "description": "APIs and behavior may change before the stable release.",
       "type": "warning"
     },
@@ -297,17 +297,37 @@ docs are not indexed twice.
 <!-- static example rendering from content/components/StatechartExample.tsx -->
 
 `StatechartExample` renders a local screenshot, descriptive alt text, and a
-caption in the initial HTML. Opening its keyboard-accessible disclosure loads
-an anonymous, read-only `/viz` view with pan and zoom. The screenshot stays
-visible if the embed fails. Without JavaScript, the screenshot and direct
-example link still work.
+caption in the initial HTML. Set `display="inline"` to load the read-only `/viz`
+editor as the example approaches the viewport. The image stays visible until
+Viz sends `@statelyai.loaded` after its initial layout; iframe `load` alone does
+not reveal the editor. Failed loads retain the image and offer a retry. This
+mode requires the URL-embed readiness notifications from Viz.
+
+The default `display="on-demand"` loads the editor when its keyboard-accessible
+disclosure opens. Both modes allow simulation, parent-state expansion/collapse,
+and pan/zoom, with parents initially expanded. Zoom and simulation controls
+stay on the canvas; the command bar, breadcrumbs, and side panels are hidden.
+Both embed modes use `min(640px, 60svh)`: at most 60% of the small viewport height,
+with a 640px ceiling. This leaves room for captions and reading context on phones;
+the small viewport unit keeps the canvas stable as browser toolbars retract.
+Embeds and direct links follow the docs' resolved light/dark theme, including
+manual theme choices. Links default to `theme=system` before hydration. Switching
+the docs theme updates the iframe fragment without remounting it. Light and dark
+screenshots keep the loading and failure states consistent with the page.
+Without JavaScript, the theme-appropriate screenshot and direct link still work.
 
 To add an example, put its XState JSON definition in
 `public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,
-and capture the corresponding production editor view. Use that entry's ID in
+and capture its light and dark production editor views. Refresh the dark
+capture manifest with `scripts/capture-statechart-dark-examples.mjs`. Use that ID in
 `StatechartExample`; its source URL and screenshot dimensions come from the
 registry. Asset provenance and capture details are in
 `public/assets/statecharts/README.md`.
+
+The Harel paper companion uses the same component with 28 native adaptations
+registered in `lib/harel-statechart-examples.ts`. Its section/figure coverage,
+model sources, screenshot hashes, capture workflow, and behavior checks are
+documented in `public/assets/harel-statecharts/README.md`.
 
 `StatechartActions` keeps each editor invitation in a native paragraph so MDX
 cannot turn the link and following punctuation into separate blocks.

@@ -28,6 +28,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/from-a-loop"
       },
       {
+        "title": "Strangler-fig retrofit",
+        "url": "/docs/packages/agent/strangler-fig"
+      },
+      {
         "title": "Scope and ecosystem boundaries",
         "url": "/docs/packages/agent/scope"
       },
@@ -42,6 +46,14 @@ export const externalDocsNav = [
       {
         "title": "Decisions",
         "url": "/docs/packages/agent/decisions"
+      },
+      {
+        "title": "Acting on events",
+        "url": "/docs/packages/agent/act"
+      },
+      {
+        "title": "Environment and policy",
+        "url": "/docs/packages/agent/environment-and-policy"
       },
       {
         "title": "Text requests",
@@ -84,7 +96,11 @@ export const externalDocsNav = [
         "url": "/docs/packages/agent/xstate-4-and-5-apps"
       },
       {
-        "title": "The step API",
+        "title": "Upgrading between alphas",
+        "url": "/docs/packages/agent/upgrading"
+      },
+      {
+        "title": "The runtime loop",
         "url": "/docs/packages/agent/steps"
       },
       {
@@ -222,12 +238,16 @@ export const externalDocsNav = [
     "route": "packages/graph"
   },
   {
-    "name": "XState v6 alpha",
+    "name": "XState v6 beta",
     "package": "xstate-v6",
     "pages": [
       {
         "title": "Quick start",
         "url": "/docs/xstate/v6/quick-start"
+      },
+      {
+        "title": "Agent guide",
+        "url": "/docs/xstate/v6/agents"
       },
       {
         "title": "Choose XState",
@@ -326,6 +346,10 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/troubleshooting"
       },
       {
+        "title": "Error codes",
+        "url": "/docs/xstate/v6/errors"
+      },
+      {
         "title": "Machine configuration",
         "url": "/docs/xstate/v6/configuration"
       },
@@ -344,6 +368,10 @@ export const externalDocsNav = [
       {
         "title": "Transitions",
         "url": "/docs/xstate/v6/transitions"
+      },
+      {
+        "title": "Transition functions and graph analysis",
+        "url": "/docs/xstate/v6/transition-functions"
       },
       {
         "title": "Context",
@@ -434,12 +462,20 @@ export const externalDocsNav = [
         "url": "/docs/xstate/v6/systems"
       },
       {
+        "title": "Pure system transitions",
+        "url": "/docs/xstate/v6/system-transitions"
+      },
+      {
         "title": "Lifecycle and errors",
         "url": "/docs/xstate/v6/lifecycle-and-errors"
       },
       {
         "title": "TypeScript",
         "url": "/docs/xstate/v6/typescript"
+      },
+      {
+        "title": "Typestates",
+        "url": "/docs/xstate/v6/typestates"
       },
       {
         "title": "Persistence",
@@ -476,10 +512,6 @@ export const externalDocsNav = [
       {
         "title": "Migrate from XState v5 to v6",
         "url": "/docs/xstate/v6/xstate-v5-to-v6"
-      },
-      {
-        "title": "Contributing documentation",
-        "url": "/docs/xstate/v6/documentation"
       },
       {
         "separator": true,
@@ -616,6 +648,10 @@ export const externalDocsNav = [
       {
         "title": "Selectors",
         "url": "/docs/xstate/v6/store/selectors"
+      },
+      {
+        "title": "Source atoms",
+        "url": "/docs/xstate/v6/store/source-atoms"
       },
       {
         "title": "Framework bindings",

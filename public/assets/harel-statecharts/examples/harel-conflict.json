@@ -1,0 +1,90 @@
+{
+  "id": "harel-conflict",
+  "description": "Explicit policy expansion of Figure 46, not a nondeterministic execution. alpha reaches C/D; ALPHA_CHOOSE_LEFT then reaches E/H, or ALPHA_CHOOSE_RIGHT reaches G/F. No path reaches E/F. XState requires the conflict choice to be resolved rather than inferred from two crossing arrows.",
+  "meta": {
+    "harel": {
+      "figures": [
+        46
+      ],
+      "adaptation": "Explicit policy expansion of Figure 46, not a nondeterministic execution. alpha reaches C/D; ALPHA_CHOOSE_LEFT then reaches E/H, or ALPHA_CHOOSE_RIGHT reaches G/F. No path reaches E/F. XState requires the conflict choice to be resolved rather than inferred from two crossing arrows."
+    }
+  },
+  "initial": "Source",
+  "states": {
+    "Source": {
+      "type": "parallel",
+      "states": {
+        "Upper": {
+          "initial": "A",
+          "states": {
+            "A": {
+              "on": {
+                "alpha": "C"
+              }
+            },
+            "C": {}
+          }
+        },
+        "Lower": {
+          "initial": "B",
+          "states": {
+            "B": {
+              "on": {
+                "alpha": "D"
+              }
+            },
+            "D": {}
+          }
+        }
+      },
+      "on": {
+        "ALPHA_CHOOSE_LEFT": {
+          "guard": "both ready",
+          "target": "Left choice"
+        },
+        "ALPHA_CHOOSE_RIGHT": {
+          "guard": "both ready",
+          "target": "Right choice"
+        }
+      }
+    },
+    "Left choice": {
+      "type": "parallel",
+      "states": {
+        "Upper": {
+          "initial": "E",
+          "states": {
+            "E": {},
+            "G": {}
+          }
+        },
+        "Lower": {
+          "initial": "H",
+          "states": {
+            "F": {},
+            "H": {}
+          }
+        }
+      }
+    },
+    "Right choice": {
+      "type": "parallel",
+      "states": {
+        "Upper": {
+          "initial": "G",
+          "states": {
+            "E": {},
+            "G": {}
+          }
+        },
+        "Lower": {
+          "initial": "F",
+          "states": {
+            "F": {},
+            "H": {}
+          }
+        }
+      }
+    }
+  }
+}

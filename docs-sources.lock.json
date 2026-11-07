@@ -1,6 +1,6 @@
 {
   "agent": {
-    "commit": "752290e6621ec95ce80c7ab0c989a10a914a45e7",
+    "commit": "cd6148c01d45a547bed9df5b7601e8a871f9a412",
     "ref": "next",
     "source": "agent"
   },
@@ -10,7 +10,7 @@
     "source": "graph"
   },
   "xstate-v6": {
-    "commit": "6b1ccac9f015d11e0aee977948e7a4c987862eb2",
+    "commit": "1148d89ae2a091bfac23e8d3d2edc26f8de84000",
     "ref": "next",
     "source": "xstate"
   }

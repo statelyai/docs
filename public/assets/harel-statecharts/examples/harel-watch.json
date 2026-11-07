@@ -1,0 +1,555 @@
+{
+  "id": "harel-watch",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      26,
+      27,
+      28,
+      30,
+      31
+    ],
+    "adaptation": "Assembles the six Figure 27 regions, scoped Figure 31 regular controls/beep-test, Figure 32 suppression, alarm/status synchronization, updates and stopwatch. Named guards/actions need a host implementation. Physical clock and inactivity conditions arrive as explicit events. D_PRESS increments the selected field via named actions; only month is implemented in the check script. The original clear-history(main*) has no direct XState JSON equivalent: BATTERY_REMOVED/WEAK_BATTERY_DIES show that action, and a host must replace this actor before the next battery insertion. The check script demonstrates that restart boundary; do not claim actor-local clearing. Time advances and display contents remain outside this model, as they do in Figure 31. Figure 32 is demonstrated separately in harel-beep-test, as it is omitted from the original foldout Figure 31."
+  },
+  "initial": "dead",
+  "states": {
+    "dead": {
+      "on": {
+        "BATTERY_INSERTED": "alive"
+      }
+    },
+    "alive": {
+      "type": "parallel",
+      "states": {
+        "main": {
+          "initial": "displays",
+          "states": {
+            "displays": {
+              "initial": "regular",
+              "states": {
+                "regular": {
+                  "id": "watch-regular",
+                  "type": "parallel",
+                  "states": {
+                    "controls": {
+                      "id": "watch-controls",
+                      "initial": "time",
+                      "states": {
+                        "time": {
+                          "on": {
+                            "D_PRESS": {
+                              "target": "date",
+                              "guard": "b up"
+                            },
+                            "C_PRESS": "#watch-wait",
+                            "A_PRESS": "#watch-alarm1.history"
+                          }
+                        },
+                        "date": {
+                          "on": {
+                            "D_PRESS": "time",
+                            "DATE_2_MINUTES": "time",
+                            "A_PRESS": "#watch-alarm1.history"
+                          }
+                        },
+                        "update": {
+                          "id": "watch-time-update",
+                          "initial": "sec",
+                          "states": {
+                            "sec": {
+                              "on": {
+                                "C_PRESS": "1 min",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "1 min": {
+                              "on": {
+                                "C_PRESS": "10 min",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "10 min": {
+                              "on": {
+                                "C_PRESS": "hr",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "hr": {
+                              "on": {
+                                "C_PRESS": "mon",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "mon": {
+                              "on": {
+                                "C_PRESS": "date",
+                                "D_PRESS": {
+                                  "actions": "increment month"
+                                }
+                              }
+                            },
+                            "date": {
+                              "on": {
+                                "C_PRESS": "day",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "day": {
+                              "on": {
+                                "C_PRESS": "year",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "year": {
+                              "on": {
+                                "C_PRESS": "mode",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            },
+                            "mode": {
+                              "on": {
+                                "C_PRESS": "#watch-controls.time",
+                                "D_PRESS": {
+                                  "actions": "increment selected field"
+                                }
+                              }
+                            }
+                          },
+                          "on": {
+                            "B_PRESS": "#watch-controls.time",
+                            "UPDATE_2_MINUTES": "time"
+                          }
+                        }
+                      }
+                    },
+                    "beep-test": {
+                      "initial": "00",
+                      "states": {
+                        "00": {
+                          "on": {
+                            "B_PRESS": "10",
+                            "D_PRESS": "01"
+                          }
+                        },
+                        "10": {
+                          "on": {
+                            "B_RELEASE": "00",
+                            "D_PRESS": "beep"
+                          }
+                        },
+                        "01": {
+                          "on": {
+                            "D_RELEASE": "00",
+                            "B_PRESS": "beep"
+                          }
+                        },
+                        "beep": {
+                          "on": {
+                            "D_RELEASE": "10",
+                            "B_RELEASE": "01"
+                          }
+                        }
+                      },
+                      "id": "watch-beep-test"
+                    }
+                  }
+                },
+                "wait": {
+                  "id": "watch-wait",
+                  "on": {
+                    "C_RELEASE": "#watch-controls.time",
+                    "HOLD_C_2_SECONDS": "#watch-time-update.sec"
+                  }
+                },
+                "out": {
+                  "initial": "alarm 1",
+                  "states": {
+                    "alarm 1": {
+                      "id": "watch-alarm1",
+                      "initial": "off",
+                      "states": {
+                        "history": {
+                          "type": "history",
+                          "target": "off"
+                        },
+                        "off": {
+                          "id": "watch-alarm1-off",
+                          "on": {
+                            "D_PRESS": "on"
+                          }
+                        },
+                        "on": {
+                          "id": "watch-alarm1-on",
+                          "on": {
+                            "D_PRESS": "off"
+                          }
+                        }
+                      },
+                      "on": {
+                        "A_PRESS": "#watch-alarm2.history",
+                        "C_PRESS": "#watch-update1.hr"
+                      }
+                    },
+                    "alarm 2": {
+                      "id": "watch-alarm2",
+                      "initial": "off",
+                      "states": {
+                        "history": {
+                          "type": "history",
+                          "target": "off"
+                        },
+                        "off": {
+                          "id": "watch-alarm2-off",
+                          "on": {
+                            "D_PRESS": "on"
+                          }
+                        },
+                        "on": {
+                          "id": "watch-alarm2-on",
+                          "on": {
+                            "D_PRESS": "off"
+                          }
+                        }
+                      },
+                      "on": {
+                        "A_PRESS": "#watch-chime.history",
+                        "C_PRESS": "#watch-update2.hr"
+                      }
+                    },
+                    "chime": {
+                      "id": "watch-chime",
+                      "initial": "off",
+                      "states": {
+                        "history": {
+                          "type": "history",
+                          "target": "off"
+                        },
+                        "off": {
+                          "id": "watch-chime-off",
+                          "on": {
+                            "D_PRESS": "on"
+                          }
+                        },
+                        "on": {
+                          "id": "watch-chime-on",
+                          "on": {
+                            "D_PRESS": "off"
+                          }
+                        }
+                      },
+                      "on": {
+                        "A_PRESS": "#watch-stopwatch.history"
+                      }
+                    },
+                    "update 1": {
+                      "id": "watch-update1",
+                      "initial": "hr",
+                      "states": {
+                        "hr": {
+                          "on": {
+                            "C_PRESS": "10 min",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        },
+                        "10 min": {
+                          "on": {
+                            "C_PRESS": "1 min",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        },
+                        "1 min": {
+                          "on": {
+                            "C_PRESS": "#watch-alarm1.history",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        }
+                      },
+                      "on": {
+                        "B_PRESS": "#watch-alarm1.history"
+                      }
+                    },
+                    "update 2": {
+                      "id": "watch-update2",
+                      "initial": "hr",
+                      "states": {
+                        "hr": {
+                          "on": {
+                            "C_PRESS": "10 min",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        },
+                        "10 min": {
+                          "on": {
+                            "C_PRESS": "1 min",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        },
+                        "1 min": {
+                          "on": {
+                            "C_PRESS": "#watch-alarm2.history",
+                            "D_PRESS": {
+                              "actions": "increment selected field"
+                            }
+                          }
+                        }
+                      },
+                      "on": {
+                        "B_PRESS": "#watch-alarm2.history"
+                      }
+                    }
+                  },
+                  "on": {
+                    "NO_BUTTON_2_MINUTES": "#watch-controls.time"
+                  }
+                },
+                "stopwatch": {
+                  "initial": "zero",
+                  "states": {
+                    "history": {
+                      "type": "history",
+                      "history": "deep",
+                      "target": "zero"
+                    },
+                    "zero": {
+                      "on": {
+                        "B_PRESS": "timing"
+                      },
+                      "id": "watch-stopwatch-zero"
+                    },
+                    "timing": {
+                      "type": "parallel",
+                      "states": {
+                        "display": {
+                          "initial": "regular",
+                          "states": {
+                            "regular": {
+                              "on": {
+                                "D_PRESS": [
+                                  {
+                                    "target": "lap",
+                                    "guard": "watch stopwatch running"
+                                  },
+                                  {
+                                    "target": "#watch-stopwatch-zero"
+                                  }
+                                ]
+                              }
+                            },
+                            "lap": {
+                              "on": {
+                                "D_PRESS": "regular"
+                              }
+                            }
+                          }
+                        },
+                        "run": {
+                          "initial": "on",
+                          "states": {
+                            "on": {
+                              "id": "watch-stopwatch-running",
+                              "on": {
+                                "B_PRESS": "off"
+                              }
+                            },
+                            "off": {
+                              "on": {
+                                "B_PRESS": "on"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "on": {
+                    "A_PRESS": "#watch-controls.time"
+                  },
+                  "id": "watch-stopwatch"
+                },
+                "history": {
+                  "type": "history",
+                  "history": "deep",
+                  "target": "regular"
+                }
+              },
+              "id": "watch-displays"
+            },
+            "alarms-beep": {
+              "id": "watch-alarms-beep",
+              "initial": "alarm 1 beeps",
+              "states": {
+                "alarm 1 beeps": {},
+                "alarm 2 beeps": {},
+                "both beep": {}
+              },
+              "on": {
+                "A_PRESS": "#watch-displays.history",
+                "B_PRESS": "#watch-displays.history",
+                "C_PRESS": "#watch-displays.history",
+                "D_PRESS": "#watch-displays.history",
+                "ALARM_30_SECONDS": "#watch-displays.history"
+              }
+            }
+          },
+          "id": "watch-main",
+          "on": {
+            "T_HITS_T1_ONLY": {
+              "target": ".alarms-beep.alarm 1 beeps",
+              "guard": "alarm 1 enabled"
+            },
+            "T_HITS_T2_ONLY": {
+              "target": ".alarms-beep.alarm 2 beeps",
+              "guard": "alarm 2 enabled"
+            },
+            "T_HITS_BOTH": {
+              "target": ".alarms-beep.both beep",
+              "guard": "both alarms enabled"
+            }
+          }
+        },
+        "alarm 1 status": {
+          "id": "watch-alarm1-status",
+          "initial": "disabled",
+          "states": {
+            "disabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "enabled",
+                  "guard": "in alarm 1 off"
+                }
+              }
+            },
+            "enabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "disabled",
+                  "guard": "in alarm 1 on"
+                }
+              }
+            }
+          }
+        },
+        "alarm 2 status": {
+          "id": "watch-alarm2-status",
+          "initial": "disabled",
+          "states": {
+            "disabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "enabled",
+                  "guard": "in alarm 2 off"
+                }
+              }
+            },
+            "enabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "disabled",
+                  "guard": "in alarm 2 on"
+                }
+              }
+            }
+          }
+        },
+        "chime status": {
+          "id": "watch-chime-status",
+          "initial": "disabled",
+          "states": {
+            "disabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "enabled",
+                  "guard": "in chime off"
+                }
+              }
+            },
+            "enabled": {
+              "on": {
+                "D_PRESS": {
+                  "target": "disabled",
+                  "guard": "in chime on"
+                }
+              },
+              "initial": "quiet",
+              "states": {
+                "quiet": {
+                  "on": {
+                    "WHOLE_HOUR": "beep"
+                  }
+                },
+                "beep": {
+                  "on": {
+                    "CHIME_2_SECONDS": "quiet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "light": {
+          "initial": "off",
+          "states": {
+            "off": {
+              "on": {
+                "B_PRESS": "on"
+              }
+            },
+            "on": {
+              "on": {
+                "B_RELEASE": "off"
+              }
+            }
+          }
+        },
+        "power": {
+          "initial": "OK",
+          "states": {
+            "OK": {
+              "on": {
+                "BATTERY_WEAKENS": "blink"
+              }
+            },
+            "blink": {
+              "id": "watch-battery-weak"
+            }
+          }
+        }
+      },
+      "on": {
+        "BATTERY_REMOVED": {
+          "target": "dead",
+          "actions": "clear history of main (host restart)"
+        },
+        "WEAK_BATTERY_DIES": {
+          "target": "dead",
+          "guard": "battery weak",
+          "actions": "clear history of main (host restart)"
+        }
+      }
+    }
+  }
+}

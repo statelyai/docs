@@ -1,0 +1,141 @@
+{
+  "id": "harel-displays",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      8,
+      9,
+      10,
+      13
+    ],
+    "adaptation": "Combines display-cycle and alarm-beep levels, with deep history added in Figure 13. Timer and alarm-condition evaluation are explicit input events rather than a physical clock. T_HITS_T1_ONLY/T2_ONLY/BOTH stand for the paper guards P1/P2/P. Stopwatch and update modes are refined separately."
+  },
+  "initial": "displays",
+  "states": {
+    "displays": {
+      "id": "displays",
+      "initial": "time",
+      "states": {
+        "history": {
+          "type": "history",
+          "history": "deep",
+          "target": "time"
+        },
+        "time": {
+          "on": {
+            "D_PRESS": "date",
+            "A_PRESS": "alarm 1.history"
+          }
+        },
+        "date": {
+          "on": {
+            "D_PRESS": "time",
+            "DATE_2_MINUTES": "time",
+            "A_PRESS": "alarm 1.history"
+          }
+        },
+        "alarm 1": {
+          "id": "display-alarm1",
+          "initial": "off",
+          "states": {
+            "history": {
+              "type": "history",
+              "target": "off"
+            },
+            "off": {
+              "id": "display-alarm1-off",
+              "on": {
+                "D_PRESS": "on"
+              }
+            },
+            "on": {
+              "id": "display-alarm1-on",
+              "on": {
+                "D_PRESS": "off"
+              }
+            }
+          },
+          "on": {
+            "A_PRESS": "alarm 2.history"
+          }
+        },
+        "alarm 2": {
+          "id": "display-alarm2",
+          "initial": "off",
+          "states": {
+            "history": {
+              "type": "history",
+              "target": "off"
+            },
+            "off": {
+              "id": "display-alarm2-off",
+              "on": {
+                "D_PRESS": "on"
+              }
+            },
+            "on": {
+              "id": "display-alarm2-on",
+              "on": {
+                "D_PRESS": "off"
+              }
+            }
+          },
+          "on": {
+            "A_PRESS": "chime.history"
+          }
+        },
+        "chime": {
+          "id": "display-chime",
+          "initial": "off",
+          "states": {
+            "history": {
+              "type": "history",
+              "target": "off"
+            },
+            "off": {
+              "id": "display-chime-off",
+              "on": {
+                "D_PRESS": "on"
+              }
+            },
+            "on": {
+              "id": "display-chime-on",
+              "on": {
+                "D_PRESS": "off"
+              }
+            }
+          },
+          "on": {
+            "A_PRESS": "stopwatch"
+          }
+        },
+        "stopwatch": {
+          "on": {
+            "A_PRESS": "time"
+          }
+        }
+      },
+      "on": {
+        "T_HITS_T1_ONLY": "#display-alarm-beep.alarm 1 beeps",
+        "T_HITS_T2_ONLY": "#display-alarm-beep.alarm 2 beeps",
+        "T_HITS_BOTH": "#display-alarm-beep.both beep"
+      }
+    },
+    "alarms-beep": {
+      "id": "display-alarm-beep",
+      "initial": "alarm 1 beeps",
+      "states": {
+        "alarm 1 beeps": {},
+        "alarm 2 beeps": {},
+        "both beep": {}
+      },
+      "on": {
+        "A_PRESS": "#displays.history",
+        "B_PRESS": "#displays.history",
+        "C_PRESS": "#displays.history",
+        "D_PRESS": "#displays.history",
+        "ALARM_30_SECONDS": "#displays.history"
+      }
+    }
+  }
+}

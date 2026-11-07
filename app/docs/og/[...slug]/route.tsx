@@ -1,13 +1,13 @@
 import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { OGImage } from '@/app/og/_components/og-image';
+import { OGImage } from '@/app/_og/_components/og-image';
 
 export const revalidate = false;
 
 export async function GET(
   _req: Request,
-  { params }: RouteContext<'/og/docs/[...slug]'>,
+  { params }: RouteContext<'/docs/og/[...slug]'>,
 ) {
   const { slug } = await params;
   const page = source.getPage(slug.slice(0, -1));

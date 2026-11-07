@@ -1,0 +1,56 @@
+{
+  "id": "harel-history-shallow",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      11
+    ],
+    "adaptation": "History nesting follows the original. ENTER, LEAVE and GO_* are added navigation events because Figures 11-12 specify history structure without internal transitions. The initial choice G is an explicit first-visit default added for execution."
+  },
+  "initial": "Outside",
+  "states": {
+    "Outside": {
+      "on": {
+        "ENTER": "K.history"
+      }
+    },
+    "K": {
+      "initial": "G",
+      "states": {
+        "history": {
+          "type": "history",
+          "history": "shallow"
+        },
+        "G": {
+          "initial": "B",
+          "states": {
+            "A": {},
+            "B": {}
+          },
+          "on": {
+            "GO_A": ".A",
+            "GO_B": ".B",
+            "GO_F": "F"
+          }
+        },
+        "F": {
+          "initial": "C",
+          "states": {
+            "C": {},
+            "D": {},
+            "E": {}
+          },
+          "on": {
+            "GO_C": ".C",
+            "GO_D": ".D",
+            "GO_E": ".E",
+            "GO_G": "G"
+          }
+        }
+      },
+      "on": {
+        "LEAVE": "Outside"
+      }
+    }
+  }
+}

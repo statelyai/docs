@@ -1,0 +1,29 @@
+{
+  "id": "harel-avionics",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      22
+    ],
+    "adaptation": "Structural sketch only. Figure 22 omits transitions and initial states. This native rendering adds initial choices on-ground and calibration only to satisfy executable XState structure; no avionics operating behavior is specified."
+  },
+  "type": "parallel",
+  "states": {
+    "general mode": {
+      "initial": "on-ground",
+      "states": {
+        "cruise": {},
+        "navigate": {},
+        "touchdown": {},
+        "take off": {},
+        "on-ground": {}
+      }
+    },
+    "abc-system": {
+      "initial": "calibration",
+      "states": {
+        "calibration": {}
+      }
+    }
+  }
+}

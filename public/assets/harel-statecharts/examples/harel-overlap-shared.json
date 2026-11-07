@@ -1,0 +1,66 @@
+{
+  "id": "harel-overlap-shared",
+  "description": "A flat shared-membership behavior expansion of Figure 41. B handles alpha, E and F handle beta, shared C handles both. A and D are metadata labels rather than overlapping native parents. ACTIVATE events are illustrative entries.",
+  "meta": {
+    "harel": {
+      "figures": [
+        41
+      ],
+      "adaptation": "A flat shared-membership behavior expansion of Figure 41. B handles alpha, E and F handle beta, shared C handles both. A and D are metadata labels rather than overlapping native parents. ACTIVATE events are illustrative entries."
+    }
+  },
+  "initial": "B",
+  "states": {
+    "B": {
+      "meta": {
+        "belongsTo": [
+          "A"
+        ]
+      },
+      "on": {
+        "ACTIVATE_C": "C",
+        "ACTIVATE_E": "E",
+        "ACTIVATE_F": "F",
+        "alpha": "Outside"
+      }
+    },
+    "C": {
+      "meta": {
+        "belongsTo": [
+          "A",
+          "D"
+        ]
+      },
+      "on": {
+        "alpha": "Outside",
+        "beta": "Outside",
+        "ACTIVATE_B": "B"
+      }
+    },
+    "E": {
+      "meta": {
+        "belongsTo": [
+          "D"
+        ]
+      },
+      "on": {
+        "beta": "Outside"
+      }
+    },
+    "F": {
+      "meta": {
+        "belongsTo": [
+          "D"
+        ]
+      },
+      "on": {
+        "beta": "Outside"
+      }
+    },
+    "Outside": {
+      "on": {
+        "RESET": "B"
+      }
+    }
+  }
+}

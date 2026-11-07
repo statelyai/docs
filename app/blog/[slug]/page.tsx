@@ -34,7 +34,7 @@ export default async function Page(props: PageProps<'/blog/[slug]'>) {
             description: page.data.description,
             url: `${SITE_URL}${page.url}`,
             mainEntityOfPage: `${SITE_URL}${page.url}`,
-            image: `${SITE_URL}${getBlogImage(page).url}`,
+            image: `${SITE_URL}${page.data.ogImage ?? getBlogImage(page).url}`,
             datePublished: new Date(page.data.date).toISOString(),
             author: page.data.authors.map((name) => ({
               '@type': 'Person',
@@ -79,7 +79,7 @@ export async function generateMetadata(
     title: page.data.title,
     description: page.data.description,
     path: page.url,
-    image: getBlogImage(page).url,
+    image: page.data.ogImage ?? getBlogImage(page).url,
   });
 
   return {

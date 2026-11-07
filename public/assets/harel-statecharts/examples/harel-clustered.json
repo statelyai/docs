@@ -1,0 +1,41 @@
+{
+  "id": "harel-clustered",
+  "meta": {
+    "paper": "David Harel, Statecharts: A visual formalism for complex systems (1987)",
+    "figures": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      17
+    ],
+    "adaptation": "Figure 2 with defaults from Figure 6(iii). Figures 3-5 are abstraction/refinement views of the same structure. Figure 17 shared arrow segments render as ordinary transitions. P remains a named guard."
+  },
+  "initial": "D",
+  "states": {
+    "D": {
+      "initial": "A",
+      "states": {
+        "A": {
+          "on": {
+            "gamma": {
+              "target": "C",
+              "guard": "P"
+            }
+          }
+        },
+        "C": {}
+      },
+      "on": {
+        "beta": "B"
+      }
+    },
+    "B": {
+      "on": {
+        "alpha": "D.A",
+        "delta": "D.C"
+      }
+    }
+  }
+}

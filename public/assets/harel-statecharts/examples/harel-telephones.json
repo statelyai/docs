@@ -1,0 +1,71 @@
+{
+  "id": "harel-telephones",
+  "description": "Two concrete instances replace the proposed thousand parameterized instances. Receiver events are broadcast to both regions. The Buzz state is used as the illustrative off-hook default, which the partial original figure does not specify.",
+  "meta": {
+    "harel": {
+      "figures": [
+        40
+      ],
+      "adaptation": "Two concrete instances replace the proposed thousand parameterized instances. Receiver events are broadcast to both regions. The Buzz state is used as the illustrative off-hook default, which the partial original figure does not specify."
+    }
+  },
+  "type": "parallel",
+  "states": {
+    "Telephone 1": {
+      "initial": "On hook",
+      "states": {
+        "On hook": {
+          "on": {
+            "LIFT_1": "Off hook.Buzz"
+          }
+        },
+        "Off hook": {
+          "initial": "Buzz",
+          "on": {
+            "REPLACE_1": "On hook"
+          },
+          "states": {
+            "Buzz": {
+              "on": {
+                "LIFT_2": "Conversing"
+              }
+            },
+            "Conversing": {
+              "on": {
+                "REPLACE_2": "Buzz"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Telephone 2": {
+      "initial": "On hook",
+      "states": {
+        "On hook": {
+          "on": {
+            "LIFT_2": "Off hook.Buzz"
+          }
+        },
+        "Off hook": {
+          "initial": "Buzz",
+          "on": {
+            "REPLACE_2": "On hook"
+          },
+          "states": {
+            "Buzz": {
+              "on": {
+                "LIFT_1": "Conversing"
+              }
+            },
+            "Conversing": {
+              "on": {
+                "REPLACE_1": "Buzz"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
