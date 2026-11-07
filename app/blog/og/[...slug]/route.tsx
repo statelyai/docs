@@ -1,13 +1,13 @@
 import { blog, getBlogImage } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { OGImage } from '@/app/og/_components/og-image';
+import { OGImage } from '@/app/_og/_components/og-image';
 
 export const revalidate = false;
 
 export async function GET(
   _req: Request,
-  { params }: RouteContext<'/og/blog/[...slug]'>,
+  { params }: RouteContext<'/blog/og/[...slug]'>,
 ) {
   const { slug } = await params;
   // slug is array like ['post-name', 'image.png'], remove image.png

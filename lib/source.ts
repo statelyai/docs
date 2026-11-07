@@ -199,7 +199,7 @@ export function getPageImage(page: InferPageType<typeof source>) {
 
   return {
     segments,
-    url: `/og/docs/${segments.join('/')}`,
+    url: `/docs/og/${segments.join('/')}`,
   };
 }
 
@@ -208,7 +208,7 @@ export function getBlogImage(page: InferPageType<typeof blog>) {
 
   return {
     segments,
-    url: `/og/blog/${segments.join('/')}`,
+    url: `/blog/og/${segments.join('/')}`,
   };
 }
 
