@@ -12,10 +12,14 @@ We love to use embedded machines in our docs! Below is an example of an embedded
   embedURL="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
 />
 
-To embed a live machine, publish it for an account-owned site key and keep its
-project **public**. A private or unlisted machine requires an explicitly
-published snapshot. The site key lists the exact website origins allowed to
-frame the embed. Readers do not need to sign in.
+To embed a live machine, keep its project **public**. In the machine's Share
+dialog, enter the websites allowed to show this project's embeds, then copy the
+embed URL. The URL includes its publishing key automatically. Readers do not
+need to sign in.
+
+Free accounts can embed three public machines from one project. Pro accounts
+can publish more projects and machines, including pinned snapshots of private
+or unlisted machines. Free embeds display Stately attribution.
 
 Read [how to change a project’s visibility settings](/docs/projects/#change-a-projects-visibility).
 
@@ -27,9 +31,12 @@ You can also [get your machine as an image](image) for platforms where `<iframe>
 
 ## Copy the embed URL
 
-1. Create a site key for the website where the iframe will appear, with that website's HTTPS origin in `allowedOrigins`.
-2. Publish the machine for that site key. A live publication requires a public project; a snapshot is pinned to the content submitted at publication time.
-3. Put the site key and published machine ID in the iframe URL. Viewers need no key of their own. [Find example code below](#example-iframe-code).
+1. Open the machine in Stately Viz and select **Share**.
+2. Under **Embed · allowed domains**, enter your website domain. This list applies to the entire project.
+3. Select **Copy embed URL**. Stately publishes the machine and copies a ready-to-use URL. Put it in an `<iframe>`. [Find example code below](#example-iframe-code).
+
+Changing the allowed domains replaces the project's embed URLs. Copy the new
+URLs into existing iframes after a change.
 
 ## Example `<iframe>` code
 
@@ -51,8 +58,7 @@ The following HTML embeds the same machine at the top of this page in dark mode:
 
 <Callout>
 
-The site key is public in the URL. Restrict it by allowed origin and revoke it
-from the publishing account if needed.
+The site key in the URL identifies the publishing account; it is not a secret.
 
 If you want us to prioritize improving embed mode, please [upvote it on our feedback page](https://github.com/statelyai/feedback/issues/94).
 
