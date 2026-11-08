@@ -8,11 +8,12 @@ type Embed = {
   embedURL: string;
   snapshotURL?: string;
   publishedId?: string;
+  publishedURL?: string;
 };
 
 const siteKey = process.env.NEXT_PUBLIC_STATELY_EMBED_SITE_KEY;
 
-export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedId }: Embed) {
+export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedId, publishedURL }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedI
     snapshotURL,
     publishedId,
     resolvedTheme === "dark" ? "dark" : "light",
+    publishedURL,
   );
   return (
     <div ref={containerRef} className="relative my-4">
@@ -74,7 +76,21 @@ export function publishedEmbedURL(
   snapshotURL: string | undefined,
   publishedId: string | undefined,
   theme: "light" | "dark",
+  publishedURL?: string,
 ): string | null {
+  if (publishedURL) {
+    const published = new URL(publishedURL);
+    if (
+      published.origin !== "https://editor.stately.ai" ||
+      published.pathname !== "/viz" ||
+      !published.searchParams.get("siteKey") ||
+      !published.searchParams.get("publishedId")
+    ) return null;
+    published.searchParams.set("theme", theme);
+    const legacyMode = new URL(embedURL).searchParams.get("mode");
+    if (legacyMode) published.searchParams.set("mode", legacyMode);
+    return published.toString();
+  }
   if (!siteKey) return null;
   const source = new URL(embedURL);
   const snapshotId = snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1];

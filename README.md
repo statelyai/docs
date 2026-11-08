@@ -332,11 +332,11 @@ to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
 
 ## Publishing Docs machine embeds
 
-Docs uses one account-owned Viz site key scoped to `https://stately.ai`. The key is public in iframe URLs; the account controls its allowed origin and publications. A reader does not sign in.
+Docs uses one account-owned Viz site key for its own publications. The key is public in iframe URLs; readers do not sign in. Examples owned by another account use that owner's explicitly published URL through the `publishedURL` prop on `EmbedMachine`.
 
-1. Sign in as the Docs publishing account and create a site through `POST /registry/api/v1/embed-sites` with `{"name":"Stately Docs","allowedOrigins":["https://stately.ai"]}`. Save the returned `key` as `NEXT_PUBLIC_STATELY_EMBED_SITE_KEY` in the Docs production environment. Registry and Viz must share `EMBED_SITE_SIGNING_SECRET` (at least 32 characters).
-2. Review the inventory with `node scripts/publish-viz-embeds.mjs --dry-run`. For each live entry, Registry requires a Public project. Snapshot entries submit their checked-in Digraph, XGraph, or XState source explicitly.
-3. Set `STATELY_EMBED_OAUTH_TOKEN` to the publishing account's OAuth bearer token and run `node scripts/publish-viz-embeds.mjs`. This idempotently publishes the inventory. Keep the token out of source control.
-4. Run `node scripts/publish-viz-embeds.mjs --verify` with the public site key. Every published ID must return 200 before releasing the Docs change. Production Docs builds fail if the site key is missing.
+1. Sign in as the Docs publishing account and create a site through `POST /registry/api/v1/embed-sites` with `{"name":"Stately Docs","allowedOrigins":[]}`. Save the returned `key` as `NEXT_PUBLIC_STATELY_EMBED_SITE_KEY` in the Docs production environment. Registry and Viz must share `EMBED_SITE_SIGNING_SECRET` (at least 32 characters).
+2. Review the inventory with `node scripts/publish-viz-embeds.mjs --dry-run`. A live entry requires the Docs account to own its Public project. For someone else's machine, ask its owner/editor to publish and add their Viz URL as `publishedURL`, or use an authorized checked-in snapshot. Snapshot entries submit their checked-in Digraph, XGraph, or XState source explicitly.
+3. Set `STATELY_EMBED_OAUTH_TOKEN` to the publishing account's OAuth bearer token and run `node scripts/publish-viz-embeds.mjs`. This idempotently publishes Docs-owned entries. Keep the token out of source control.
+4. Run `node scripts/publish-viz-embeds.mjs --verify` with the public site key. Every Docs-account publication and owner-published URL must return 200 before releasing the Docs change. Production Docs builds fail if the site key is missing.
 
 Revoking the site key or an individual publication disables its embeds. Registry's successful read responses may remain cached for up to 60 seconds.

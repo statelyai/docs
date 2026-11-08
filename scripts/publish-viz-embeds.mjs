@@ -1,4 +1,4 @@
-/** Publish the Docs embed inventory under one account-owned site key. */
+/** Publish Docs-owned embeds and verify owner-published URLs. */
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -21,11 +21,17 @@ function mdxFiles(dir) {
 }
 
 const publications = new Map();
+const ownerPublished = new Set();
 for (const file of mdxFiles("content")) {
   const source = readFileSync(file, "utf8");
   for (const [component] of source.matchAll(/<EmbedMachine\b[\s\S]*?\/>/g)) {
     const embedURL = component.match(/embedURL="([^"]+)"/)?.[1];
     if (!embedURL) continue;
+    const ownerURL = component.match(/publishedURL="([^"]+)"/)?.[1];
+    if (ownerURL) {
+      ownerPublished.add(ownerURL);
+      continue;
+    }
     const url = new URL(embedURL);
     const snapshotURL = component.match(/snapshotURL="([^"]+)"/)?.[1];
     const publishedId = component.match(/publishedId="([^"]+)"/)?.[1];
@@ -65,12 +71,33 @@ for (const file of mdxFiles("content")) {
 }
 
 console.log(
-  `${publications.size} unique Docs publications (${[...publications.values()].filter((item) => item.mode === "snapshot").length} snapshots).`,
+  `${publications.size} Docs-account publications (${[...publications.values()].filter((item) => item.mode === "snapshot").length} snapshots), ${ownerPublished.size} owner-published URLs.`,
 );
 if (dryRun) {
   for (const item of publications.values()) console.log(`${item.mode}\t${item.lookupId}`);
+  for (const url of ownerPublished) console.log(`owner\t${url}`);
 } else {
   const failures = [];
+  if (verify) for (const ownerURL of ownerPublished) {
+    const url = new URL(ownerURL);
+    if (url.origin !== 'https://editor.stately.ai' || url.pathname !== '/viz') {
+      failures.push(`${ownerURL}: invalid Viz URL`);
+      continue;
+    }
+    const key = url.searchParams.get('siteKey');
+    const id = url.searchParams.get('publishedId');
+    if (!key || !id) {
+      failures.push(`${ownerURL}: missing publication identity`);
+      continue;
+    }
+    const read = await fetch(`${apiBase}/public/embeds/${encodeURIComponent(key)}/${encodeURIComponent(id)}`);
+    if (!read.ok) failures.push(`${ownerURL}: read returned ${read.status}`);
+    const frame = await fetch(url);
+    const ancestors = frame.headers.get('content-security-policy') ?? '';
+    if (!frame.ok || !ancestors.split(/\s+/).includes('https://stately.ai') && ancestors !== 'frame-ancestors *') {
+      failures.push(`${ownerURL}: Viz framing denied (${frame.status}, ${ancestors})`);
+    }
+  }
   for (const item of publications.values()) {
     const response = verify
       ? await fetch(`${apiBase}/public/embeds/${encodeURIComponent(siteKey)}/${item.lookupId}`)
@@ -92,7 +119,7 @@ if (dryRun) {
     const frame = await fetch(viz);
     if (
       !frame.ok ||
-      frame.headers.get("content-security-policy") !== "frame-ancestors https://stately.ai"
+      frame.headers.get("content-security-policy") !== "frame-ancestors *"
     ) {
       throw new Error(
         `Viz frame check failed: HTTP ${frame.status}, CSP ${frame.headers.get("content-security-policy")}`,

@@ -13,13 +13,15 @@ We love to use embedded machines in our docs! Below is an example of an embedded
 />
 
 To embed a live machine, keep its project **public**. In the machine's Share
-dialog, enter the websites allowed to show this project's embeds, then copy the
-embed URL. The URL includes its publishing key automatically. Readers do not
-need to sign in.
+dialog, select **Publish embed**, then copy the URL. The URL includes its
+publishing key automatically. Readers do not need to sign in, and the embed
+works on any site by default.
 
-Free accounts can embed three public machines from one project. Pro accounts
-can publish more projects and machines, including pinned snapshots of private
-or unlisted machines. Free embeds display Stately attribution.
+Free accounts can publish three public machines across projects. Pro accounts
+can publish more machines, including pinned snapshots of private
+or unlisted machines. A private source stays private, but anyone with its
+published snapshot URL can view that snapshot. Free embeds display Stately
+attribution. There is no per-view limit.
 
 Read [how to change a project’s visibility settings](/docs/projects/#change-a-projects-visibility).
 
@@ -32,11 +34,14 @@ You can also [get your machine as an image](image) for platforms where `<iframe>
 ## Copy the embed URL
 
 1. Open the machine in Stately Viz and select **Share**.
-2. Under **Embed · allowed domains**, enter your website domain. This list applies to the entire project.
-3. Select **Copy embed URL**. Stately publishes the machine and copies a ready-to-use URL. Put it in an `<iframe>`. [Find example code below](#example-iframe-code).
+2. Select **Publish embed**. Publishing requires an account with edit access to the project.
+3. Optionally choose theme, start mode, controls, and a responsive size under **Appearance**.
+4. Select **Copy embed URL** or **Copy iframe**. [Find example code below](#example-iframe-code).
 
-Changing the allowed domains replaces the project's embed URLs. Copy the new
-URLs into existing iframes after a change.
+Use **Unpublish** to stop serving the embed and free a publication slot.
+
+To limit where an embed appears, open **Restrict allowed domains (optional)**
+before publishing. Changing restrictions later replaces existing embed URLs.
 
 ## Example `<iframe>` code
 
