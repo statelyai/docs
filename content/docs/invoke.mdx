@@ -2,6 +2,8 @@
 title: 'Invoke'
 ---
 
+import machine_7f8f7dfb from '@/content/machines/7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21.json';
+
 [State machines](machines) can “invoke” one or many [actors](actors) within a given state. The invoked actor will start when the state is entered, and stop when the state is exited. Any XState actor can be invoked, including simple Promise-based actors, or even complex machine-based actors.
 
 Invoking an actor is useful for managing synchronous or asynchronous work that the state machine needs to orchestrate and communicate with at a high level, but doesn't need to know about in detail.
@@ -12,10 +14,7 @@ Invoking an actor is useful for managing synchronous or asynchronous work that t
 
 </Callout>
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21&mode=design"
-  title="User"
-/>
+<Embed machine={machine_7f8f7dfb} title="User" />
 
 <Callout>
 

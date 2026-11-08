@@ -1,0 +1,393 @@
+{
+  "xgraphSchemaVersion": "1.0.0",
+  "id": "3b1987cf-4346-4a10-bb03-2c9f0c363bda",
+  "type": "directed",
+  "parentId": null,
+  "initialNodeId": "t1h7wnqdmdf",
+  "nodes": [
+    {
+      "id": "t1h7wnqdmdf",
+      "type": "node",
+      "parentId": null,
+      "label": "Video player",
+      "data": {
+        "key": "Video player",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "entry": [],
+        "assets": [],
+        "layout": {
+          "status": "complete"
+        },
+        "nodeId": "Video player",
+        "history": false,
+        "invokes": [],
+        "initialId": "7ap5w1eqqlx"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": -197.032350133955,
+        "y": -175.6718845765691
+      },
+      "initialNodeId": "7ap5w1eqqlx"
+    },
+    {
+      "id": "7ap5w1eqqlx",
+      "type": "node",
+      "parentId": "t1h7wnqdmdf",
+      "label": "Closed",
+      "data": {
+        "key": "Closed",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "entry": [],
+        "assets": [],
+        "nodeId": "Video player.Closed",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 220,
+        "y": 48
+      },
+      "initialNodeId": null
+    },
+    {
+      "id": "qwi2a2yz0y",
+      "type": "node",
+      "parentId": "t1h7wnqdmdf",
+      "label": "Opened",
+      "data": {
+        "key": "Opened",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "entry": [],
+        "assets": [],
+        "layout": {
+          "status": "complete",
+          "children": {
+            "display": "inline"
+          },
+          "direction": "DOWN"
+        },
+        "nodeId": "Video player.Opened",
+        "history": false,
+        "invokes": [
+          {
+            "id": "92x68tdc3b",
+            "src": "startVideo",
+            "invocationId": "video"
+          }
+        ],
+        "initialId": "h27c58tv4c8",
+        "description": "The video player should be in full-screen mode"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 48,
+        "y": 181
+      },
+      "initialNodeId": "h27c58tv4c8"
+    },
+    {
+      "id": "h27c58tv4c8",
+      "type": "node",
+      "parentId": "qwi2a2yz0y",
+      "label": "Playing",
+      "data": {
+        "key": "Playing",
+        "exit": [
+          {
+            "id": "3m9epr94bu",
+            "type": "pauseVideo",
+            "params": {}
+          }
+        ],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "color": "green",
+        "entry": [
+          {
+            "id": "swyqiluf3wj",
+            "type": "playVideo",
+            "params": {}
+          }
+        ],
+        "assets": [],
+        "nodeId": "Video player.Opened.Playing",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 26.51212575187179,
+      "y": 99.32812447646131,
+      "position": {
+        "x": 96,
+        "y": 378
+      },
+      "initialNodeId": null
+    },
+    {
+      "id": "2xj2olxnvz8",
+      "type": "node",
+      "parentId": "qwi2a2yz0y",
+      "label": "Paused",
+      "data": {
+        "key": "Paused",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "normal",
+        "color": "yellow",
+        "entry": [],
+        "assets": [],
+        "nodeId": "Video player.Opened.Paused",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 355.8224198477527,
+      "y": 234.635441574443,
+      "position": {
+        "x": 198,
+        "y": 577
+      },
+      "initialNodeId": null
+    },
+    {
+      "id": "loiljxm1u3j",
+      "type": "node",
+      "parentId": "qwi2a2yz0y",
+      "label": "Stopped",
+      "data": {
+        "key": "Stopped",
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "type": "final",
+        "color": "red",
+        "entry": [],
+        "assets": [],
+        "nodeId": "Video player.Opened.Stopped",
+        "history": false,
+        "invokes": [],
+        "initialId": null
+      },
+      "x": 457.6019695018717,
+      "y": 234.635441574443,
+      "position": {
+        "x": 338,
+        "y": 519
+      },
+      "initialNodeId": null
+    }
+  ],
+  "edges": [
+    {
+      "id": "p1umiaqvh7",
+      "type": "edge",
+      "sourceId": "qwi2a2yz0y",
+      "targetId": "loiljxm1u3j",
+      "label": "STOP",
+      "data": {
+        "meta": null,
+        "color": "red",
+        "guard": null,
+        "actions": [
+          {
+            "id": "tx2jk8vidm",
+            "type": "stopVideo",
+            "params": {}
+          }
+        ],
+        "eventType": "STOP",
+        "description": null,
+        "transitionType": "normal"
+      },
+      "x": 441.9848142993963,
+      "y": 103.9441106088876,
+      "position": {
+        "x": 479,
+        "y": 519
+      }
+    },
+    {
+      "id": "1r4ewa0h387i",
+      "type": "edge",
+      "sourceId": "h27c58tv4c8",
+      "targetId": "2xj2olxnvz8",
+      "label": "PAUSE",
+      "data": {
+        "meta": null,
+        "color": "yellow",
+        "guard": null,
+        "actions": [],
+        "eventType": "PAUSE",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 105.4574382518717,
+      "y": 237.635441574443,
+      "position": {
+        "x": 129,
+        "y": 519
+      }
+    },
+    {
+      "id": "bo8anc0y3f",
+      "type": "edge",
+      "sourceId": "2xj2olxnvz8",
+      "targetId": "h27c58tv4c8",
+      "label": "PLAY",
+      "data": {
+        "meta": null,
+        "color": "green",
+        "guard": null,
+        "actions": [],
+        "eventType": "PLAY",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 361.9587839173583,
+      "y": 153.6900985568649,
+      "position": {
+        "x": 238,
+        "y": 519
+      }
+    },
+    {
+      "id": "d00p4azffik",
+      "type": "edge",
+      "sourceId": "7ap5w1eqqlx",
+      "targetId": "qwi2a2yz0y",
+      "label": "PLAY",
+      "data": {
+        "meta": null,
+        "color": "green",
+        "guard": null,
+        "actions": [],
+        "eventType": "PLAY",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 226,
+        "y": 123
+      }
+    },
+    {
+      "id": "2qqcji7l727",
+      "type": "edge",
+      "sourceId": "qwi2a2yz0y",
+      "targetId": "7ap5w1eqqlx",
+      "label": "xstate.done.state.Video player.Opened",
+      "data": {
+        "meta": null,
+        "color": "red",
+        "guard": null,
+        "actions": [],
+        "eventType": "@statelyai.state.done.qwi2a2yz0y",
+        "description": null,
+        "transitionType": "reenter"
+      },
+      "x": 0,
+      "y": 0,
+      "position": {
+        "x": 327,
+        "y": 113
+      }
+    }
+  ],
+  "data": {
+    "layout": null,
+    "schemas": {
+      "input": null,
+      "events": {
+        "PLAY": {
+          "type": "object",
+          "properties": {}
+        },
+        "STOP": {
+          "type": "object",
+          "properties": {}
+        },
+        "PAUSE": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "output": null,
+      "context": {}
+    },
+    "schemaMeta": {
+      "events": {
+        "PLAY": {
+          "origin": "defined"
+        },
+        "STOP": {
+          "origin": "defined"
+        },
+        "PAUSE": {
+          "origin": "defined"
+        }
+      }
+    },
+    "implementations": {
+      "tags": [],
+      "actors": [
+        {
+          "id": "startVideo",
+          "code": null,
+          "name": "Video player.Opened:invocation[0]",
+          "description": null,
+          "inputSchema": null,
+          "outputSchema": null
+        }
+      ],
+      "delays": [],
+      "guards": [],
+      "actions": [
+        {
+          "id": "playVideo",
+          "code": null,
+          "name": "playVideo",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "stopVideo",
+          "code": null,
+          "name": "stopVideo",
+          "description": null,
+          "paramsSchema": null
+        },
+        {
+          "id": "pauseVideo",
+          "code": null,
+          "name": "pauseVideo",
+          "description": null,
+          "paramsSchema": null
+        }
+      ]
+    }
+  },
+  "layout": {
+    "status": "complete",
+    "direction": "DOWN"
+  },
+  "annotations": []
+}

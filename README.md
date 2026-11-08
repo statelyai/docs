@@ -334,3 +334,9 @@ cannot turn the link and following punctuation into separate blocks.
 
 After a production build, run `node scripts/check-statecharts.mjs <base-url>`
 to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
+
+## Docs machine embeds
+
+Docs MDX imports a checked-in Digraph, XGraph, or XState source and renders it with `<Embed machine={machine} />`. The component passes the definition in Viz's URL fragment, so Docs has no machine-read token, publication setup, or server-side conversion step. The fragment is a snapshot; update the JSON file when the example changes. Use `mode="Simulate"` to start in simulation.
+
+Run `node scripts/check-viz-embeds.mjs` to validate inline sources and reject legacy embeds. The 60 examples include four unlisted case-study machines whose definitions were recovered from the Registry database after the normal read API returned 403.

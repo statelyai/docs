@@ -1,0 +1,275 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Invoked actors.Closed#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "width": 76.875,
+          "height": 38.5
+        },
+        "source": "Invoked actors.Closed",
+        "target": "Invoked actors.Opened",
+        "position": {
+          "x": -113.94742089873046,
+          "y": -445.1404655892477
+        }
+      },
+      {
+        "id": "Invoked actors.Opened.Playing#PAUSE[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAUSE"
+          }
+        },
+        "size": {
+          "width": 87.15625,
+          "height": 38.5
+        },
+        "source": "Invoked actors.Opened.Playing",
+        "target": "Invoked actors.Opened.Paused",
+        "position": {
+          "x": 349.29494854002525,
+          "y": -273.9786823936983
+        }
+      },
+      {
+        "id": "Invoked actors.Opened#done.state.Invoked actors.Opened[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "state.done"
+          }
+        },
+        "size": {
+          "width": 100.6640625,
+          "height": 40
+        },
+        "source": "Invoked actors.Opened",
+        "target": "Invoked actors.Closed",
+        "position": {
+          "x": -202.96379495001804,
+          "y": -241.70706911761945
+        }
+      },
+      {
+        "id": "Invoked actors.Opened.Paused#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "width": 76.875,
+          "height": 38.5
+        },
+        "source": "Invoked actors.Opened.Paused",
+        "target": "Invoked actors.Opened.Playing",
+        "position": {
+          "x": 226.91745785914958,
+          "y": -204.33292291634226
+        }
+      },
+      {
+        "id": "Invoked actors.Opened#STOP[0]",
+        "data": {
+          "actions": [],
+          "internal": true,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STOP"
+          }
+        },
+        "size": {
+          "width": 78.4375,
+          "height": 38.5
+        },
+        "source": "Invoked actors.Opened",
+        "target": "Invoked actors.Opened.Stopped",
+        "position": {
+          "x": 71.24526697445413,
+          "y": -273.9786823936983
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "Invoked actors",
+      "data": {
+        "key": "Invoked actors",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "Closed",
+        "description": "Video player"
+      },
+      "size": {
+        "x": -204.484375,
+        "y": -444.1171875,
+        "top": -444.1171875,
+        "left": -204.484375,
+        "right": 596.4140014648438,
+        "width": 800.8983764648438,
+        "bottom": -358.6171875,
+        "height": 85.5
+      },
+      "nodes": [
+        {
+          "id": "Invoked actors.Closed",
+          "data": {
+            "key": "Closed",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -156.484375,
+            "y": -310.6171875,
+            "top": -310.6171875,
+            "left": -156.484375,
+            "right": -71.71875,
+            "width": 84.765625,
+            "bottom": -270.6171875,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": -220.3859240910934,
+            "y": -445.1404655892477
+          }
+        },
+        {
+          "id": "Invoked actors.Opened",
+          "data": {
+            "key": "Opened",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [
+              {
+                "id": ":invocation:6ov1ringm",
+                "src": "startVideo",
+                "kind": "named"
+              }
+            ],
+            "initial": "Playing",
+            "description": "Fullscreen mode"
+          },
+          "size": {
+            "x": 59.6875,
+            "y": -306.953125,
+            "top": -306.953125,
+            "left": 59.6875,
+            "right": 548.3983764648438,
+            "width": 488.71087646484375,
+            "bottom": -187.453125,
+            "height": 119.5
+          },
+          "nodes": [
+            {
+              "id": "Invoked actors.Opened.Playing",
+              "data": {
+                "key": "Playing",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 284.60931396484375,
+                "y": -139.453125,
+                "top": -139.453125,
+                "left": 284.60931396484375,
+                "right": 371.57025146484375,
+                "width": 86.9609375,
+                "bottom": -99.453125,
+                "height": 40
+              },
+              "nodes": [],
+              "position": {
+                "x": 220.71691878039854,
+                "y": -273.9786823936983
+              }
+            },
+            {
+              "id": "Invoked actors.Opened.Paused",
+              "data": {
+                "key": "Paused",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 412.57025146484375,
+                "y": -69.8125,
+                "top": -69.8125,
+                "left": 412.57025146484375,
+                "right": 500.40618896484375,
+                "width": 87.8359375,
+                "bottom": -29.8125,
+                "height": 40
+              },
+              "nodes": [],
+              "position": {
+                "x": 348.677761695185,
+                "y": -204.3329133795984
+              }
+            },
+            {
+              "id": "Invoked actors.Opened.Stopped",
+              "data": {
+                "key": "Stopped",
+                "exit": [],
+                "tags": [],
+                "type": "final",
+                "entry": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 107.68743896484375,
+                "y": -70.3125,
+                "top": -70.3125,
+                "left": 107.68743896484375,
+                "right": 239.24993896484375,
+                "width": 131.5625,
+                "bottom": -29.3125,
+                "height": 41
+              },
+              "nodes": [],
+              "position": {
+                "x": 43.79735719133291,
+                "y": -204.83290977287663
+              }
+            }
+          ],
+          "position": {
+            "x": -4.202642808667093,
+            "y": -441.4786823936983
+          }
+        }
+      ],
+      "position": {
+        "x": -268.3859240910934,
+        "y": -578.6404655892477
+      }
+    }
+  }
+}

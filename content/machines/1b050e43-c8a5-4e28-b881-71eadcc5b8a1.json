@@ -1,0 +1,221 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Copy image URL.Viewing machine#Open left drawer[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Open left drawer"
+          }
+        },
+        "size": {
+          "x": -232.671875,
+          "y": 8.4296875,
+          "top": 8.4296875,
+          "left": -232.671875,
+          "right": -69.2578125,
+          "width": 163.4140625,
+          "bottom": 46.9296875,
+          "height": 38.5
+        },
+        "source": "Copy image URL.Viewing machine",
+        "target": "Copy image URL.Left drawer open",
+        "position": {
+          "x": 516.1719336062671,
+          "y": 41.12989257971448
+        }
+      },
+      {
+        "id": "Copy image URL.Left drawer open#Use ... icon[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "Alongside your machine name in the **Machines** list.",
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Use ... icon"
+          }
+        },
+        "size": {
+          "x": -2.828125,
+          "y": 63.4453125,
+          "top": 63.4453125,
+          "left": -2.828125,
+          "right": 346.1953125,
+          "width": 349.0234375,
+          "bottom": 133.4453125,
+          "height": 70
+        },
+        "source": "Copy image URL.Left drawer open",
+        "target": "Copy image URL.Machine options menu open",
+        "position": {
+          "x": 311.6661748453976,
+          "y": 201.61838651051127
+        }
+      },
+      {
+        "id": "Copy image URL.Machine options menu open#Copy image URL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "Use option in menu",
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Copy image URL"
+          }
+        },
+        "size": {
+          "x": -493.875,
+          "y": 79.1953125,
+          "top": 79.1953125,
+          "left": -493.875,
+          "right": -333.171875,
+          "width": 160.703125,
+          "bottom": 149.1953125,
+          "height": 70
+        },
+        "source": "Copy image URL.Machine options menu open",
+        "target": "Copy image URL.Image URL in clipboard",
+        "position": {
+          "x": 767.9378501042725,
+          "y": 118.09237400094669
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "Copy image URL",
+      "data": {
+        "key": "Copy image URL",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "Viewing machine",
+        "description": ""
+      },
+      "size": {
+        "x": 263.6641083398834,
+        "y": -48.61717907481354,
+        "top": -48.61717907481354,
+        "left": 263.6641083398834,
+        "right": 1008.554791715229,
+        "width": 744.8906833753456,
+        "bottom": -7.617214301379792,
+        "height": 40.99996477343375
+      },
+      "nodes": [
+        {
+          "id": "Copy image URL.Viewing machine",
+          "data": {
+            "key": "Viewing machine",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": ""
+          },
+          "size": {
+            "x": -223.28125,
+            "y": -68.1171875,
+            "top": -68.1171875,
+            "left": -223.28125,
+            "right": -61.328125,
+            "width": 161.953125,
+            "bottom": -28.1171875,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": 313.7714021980764,
+            "y": 40.37989257971448
+          }
+        },
+        {
+          "id": "Copy image URL.Left drawer open",
+          "data": {
+            "key": "Left drawer open",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 83,
+            "y": -3.984375,
+            "top": -3.984375,
+            "left": 83,
+            "right": 244.4921875,
+            "width": 161.4921875,
+            "bottom": 36.015625,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": 314.0018709480764,
+            "y": 123.92273161361616
+          }
+        },
+        {
+          "id": "Copy image URL.Machine options menu open",
+          "data": {
+            "key": "Machine options menu open",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -282.3125,
+            "y": 78.4453125,
+            "top": 78.4453125,
+            "left": -282.3125,
+            "right": -39.6484375,
+            "width": 242.6640625,
+            "bottom": 118.4453125,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": 717.8938843652606,
+            "y": 40.37989257971448
+          }
+        },
+        {
+          "id": "Copy image URL.Image URL in clipboard",
+          "data": {
+            "key": "Image URL in clipboard",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "Ready to paste"
+          },
+          "size": {
+            "x": -468.015625,
+            "y": -3.984375,
+            "top": -3.984375,
+            "left": -468.015625,
+            "right": -264.21875,
+            "width": 203.796875,
+            "bottom": 80.515625,
+            "height": 84.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 746.3909751042725,
+            "y": 218.85319054077073
+          }
+        }
+      ],
+      "position": {
+        "x": 263.6661748453976,
+        "y": -48.62007219371928
+      }
+    }
+  }
+}

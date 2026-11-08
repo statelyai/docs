@@ -19,6 +19,9 @@ slug: 2024-01-23-state-machines-whats-in-a-name
 image: /blog/2024-01-23-state-machines-whats-in-a-name.png
 ---
 
+import machine_db0e655e from '@/content/machines/db0e655e-f16f-4a30-97a7-a0081b73d532.json';
+import machine_5b186011 from '@/content/machines/5b186011-088e-4c1c-be95-9a489a126b13.json';
+
 State machines and visual diagrams are such a powerful way to organize, and convey information. All of those lovely “boxes and arrows” convey meaningful relationships, indicate sequential order, and direct flows in a way that’s easier to understand since it's visual. Add to that the ability to [attach assets to your diagrams](https://stately.ai/docs/assets) and you’re well on your way towards creating truly expressive, executable software diagrams. But there’s still one thing that state machines have that should make them easy to understand. Text.
 
 {/* truncate */}
@@ -30,10 +33,7 @@ We can break down some of these questions into two categories:
 1. [What or how should I name this thing](#what-or-how-should-i-name-this-thing)?
 2. [What style should that name be in](#what-style-should-that-name-be-in)?
 
-<EmbedMachine
-  name="A state machine demonstrating a particular naming convention with states using Title Case, events using dot.case, actions and actors using camelCase and guards using lower case."
-  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=db0e655e-f16f-4a30-97a7-a0081b73d532"
-/>
+<Embed machine={machine_db0e655e} name="A state machine demonstrating a particular naming convention with states using Title Case, events using dot.case, actions and actors using camelCase and guards using lower case." />
 
 ## What or how should I name this thing?
 
@@ -148,9 +148,6 @@ From consistency, conventions often emerge. These could be conventions adhered t
 
 Naming conventions and namings styles are a matter of taste but also an opportunity for customization and personalization at the individual or team level. The most important thing is readability, consistency and using naming to convey meaning.
 
-<EmbedMachine
-  name="A state machine for part of the CD player example showing states for when the CD is loaded and the CD is stopped, playing, and paused."
-  embedURL="https://stately.ai/studio/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?mode=design&machineId=5b186011-088e-4c1c-be95-9a489a126b13"
-/>
+<Embed machine={machine_5b186011} name="A state machine for part of the CD player example showing states for when the CD is loaded and the CD is stopped, playing, and paused." mode="design" />
 
 Sometimes putting attention into the little details goes a long way towards ensuring that machines not only look good but are as understandable as possible. And remember, when your state machines look good, you look good too!

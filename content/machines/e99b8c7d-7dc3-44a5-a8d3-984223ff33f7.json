@@ -1,0 +1,119 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "🌙 Dark mode ☀️ light mode machine.🌙 Dark mode#👇 Press switch to light mode[0]",
+        "data": {
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "👇 Press switch to light mode"
+          },
+          "actions": [],
+          "metaEntries": []
+        },
+        "source": "🌙 Dark mode ☀️ light mode machine.🌙 Dark mode",
+        "target": "🌙 Dark mode ☀️ light mode machine.☀️ Light mode",
+        "position": {
+          "x": 697.2730666334858,
+          "y": -330.78557441593057
+        }
+      },
+      {
+        "id": "🌙 Dark mode ☀️ light mode machine.☀️ Light mode#👇 Press switch to dark mode[0]",
+        "data": {
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "👇 Press switch to dark mode"
+          },
+          "actions": [],
+          "metaEntries": []
+        },
+        "source": "🌙 Dark mode ☀️ light mode machine.☀️ Light mode",
+        "target": "🌙 Dark mode ☀️ light mode machine.🌙 Dark mode",
+        "position": {
+          "x": 415.3784445937666,
+          "y": -282.9929091105171
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "🌙 Dark mode ☀️ light mode machine",
+      "data": {
+        "key": "🌙 Dark mode ☀️ light mode machine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "🌙 Dark mode"
+      },
+      "size": {
+        "x": 413.09374036476385,
+        "y": -378.7578149955692,
+        "top": -378.7578149955692,
+        "left": 413.09374036476385,
+        "right": 975.7499592080792,
+        "width": 562.6562188433152,
+        "bottom": -330.7578162923021,
+        "height": 47.99999870326712
+      },
+      "nodes": [
+        {
+          "id": "🌙 Dark mode ☀️ light mode machine.🌙 Dark mode",
+          "data": {
+            "key": "🌙 Dark mode",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 443.6640549919639,
+            "y": -303.03126443355234,
+            "top": -303.03126443355234,
+            "left": 443.6640549919639,
+            "right": 572.9296551377751,
+            "width": 129.26560014581116,
+            "bottom": -255.03125640772052,
+            "height": 48.00000802583182
+          },
+          "nodes": [],
+          "position": {
+            "x": 466.9448668954302,
+            "y": -377.0771173509596
+          }
+        },
+        {
+          "id": "🌙 Dark mode ☀️ light mode machine.☀️ Light mode",
+          "data": {
+            "key": "☀️ Light mode",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 706.9297193444294,
+            "y": -219.17190470852248,
+            "top": -219.17190470852248,
+            "left": 706.9297193444294,
+            "right": 839.9687549190583,
+            "width": 133.03903557462888,
+            "bottom": -171.17186432046574,
+            "height": 48.00004038805673
+          },
+          "nodes": [],
+          "position": {
+            "x": 747.1363944850898,
+            "y": -247.29324240304072
+          }
+        }
+      ],
+      "position": {
+        "x": 391.3784445937666,
+        "y": -449.07711605422674
+      }
+    }
+  }
+}

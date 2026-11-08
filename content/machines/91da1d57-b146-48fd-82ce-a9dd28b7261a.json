@@ -1,0 +1,98 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "91da1d57-b146-48fd-82ce-a9dd28b7261a",
+    "edges": [
+      {
+        "id": "root self transition#someEvent[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "count": "{{({ context }) => context.count + 1}}"
+                }
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "someEvent"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 407.21875,
+          "width": 407.21875,
+          "bottom": 109,
+          "height": 109
+        },
+        "source": "root self transition",
+        "target": "root self transition",
+        "position": {
+          "x": -199.93359375,
+          "y": -101.72265625
+        },
+        "uniqueId": "isq91w7fykf"
+      }
+    ],
+    "context": {
+      "count": 0
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "someEvent": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "count": {
+          "type": "number",
+          "description": "Generated automatically based on the key: \"count\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "root self transition",
+      "data": {
+        "key": "root self transition",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "metaEntries": []
+      },
+      "size": {
+        "x": 0,
+        "y": 0,
+        "top": 0,
+        "left": 0,
+        "right": 164.6953125,
+        "width": 164.6953125,
+        "bottom": 41.5,
+        "height": 41.5
+      },
+      "nodes": [],
+      "position": {
+        "x": -82.26171875,
+        "y": 43.00390625
+      },
+      "uniqueId": "riva12czvbe"
+    }
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "b2a299ef-efb8-4049-a242-2d197d27c931",
+    "edges": [
+      {
+        "id": "kettle.lukewarm#boil[0]",
+        "data": {
+          "color": "orange",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "boil"
+          }
+        },
+        "size": {
+          "width": 62,
+          "height": 40
+        },
+        "source": "kettle.lukewarm",
+        "target": "kettle.heating",
+        "position": {
+          "x": 345,
+          "y": 193
+        },
+        "uniqueId": "ssrxueks9wg"
+      },
+      {
+        "id": "kettle.heating#always[0]",
+        "data": {
+          "color": "red",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 74,
+          "height": 35
+        },
+        "source": "kettle.heating",
+        "target": "kettle.boiling",
+        "position": {
+          "x": 479,
+          "y": 334
+        },
+        "uniqueId": "mytm12ov4zr"
+      },
+      {
+        "id": "kettle.boiling#always[0]",
+        "data": {
+          "color": "orange",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 74,
+          "height": 35
+        },
+        "source": "kettle.boiling",
+        "target": "kettle.heating",
+        "position": {
+          "x": 205,
+          "y": 334
+        },
+        "uniqueId": "94ejoa52te6"
+      },
+      {
+        "id": "kettle#temp.update[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateTemperature",
+                "params": {}
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "temp.update"
+          }
+        },
+        "size": {
+          "width": 220,
+          "height": 90
+        },
+        "source": "kettle",
+        "position": {
+          "x": 667,
+          "y": 157
+        },
+        "uniqueId": "yqm4oawamg"
+      }
+    ],
+    "context": {
+      "temperature": 80
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "boil": {
+          "type": "object",
+          "properties": {}
+        },
+        "temp.update": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "temperature": {
+          "type": "number",
+          "description": "Generated automatically based on the key: \"temperature\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "kettle",
+      "data": {
+        "key": "kettle",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "lukewarm",
+        "metaEntries": []
+      },
+      "size": {
+        "width": 458,
+        "height": 105
+      },
+      "nodes": [
+        {
+          "id": "kettle.lukewarm",
+          "data": {
+            "key": "lukewarm",
+            "exit": [],
+            "tags": [],
+            "color": "yellow",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 101,
+            "height": 42
+          },
+          "nodes": [],
+          "position": {
+            "x": 191,
+            "y": 192
+          },
+          "uniqueId": "g2rnka5c818"
+        },
+        {
+          "id": "kettle.heating",
+          "data": {
+            "key": "heating",
+            "exit": [],
+            "tags": [],
+            "color": "orange",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 86,
+            "height": 42
+          },
+          "nodes": [],
+          "position": {
+            "x": 333,
+            "y": 283
+          },
+          "uniqueId": "nioijo4f6m"
+        },
+        {
+          "id": "kettle.boiling",
+          "data": {
+            "key": "boiling",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "turnOffLight",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 180,
+            "height": 128
+          },
+          "nodes": [],
+          "position": {
+            "x": 289,
+            "y": 378
+          },
+          "uniqueId": "d01svafopwa"
+        }
+      ],
+      "position": {
+        "x": 143,
+        "y": 39
+      },
+      "uniqueId": "fzs9krw2k2l"
+    },
+    "implementations": {
+      "actors": {},
+      "guards": {},
+      "actions": {
+        "turnOffLight": {
+          "id": "turnOffLight",
+          "name": "turnOffLight",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "updateTemperature": {
+          "id": "updateTemperature",
+          "name": "updateTemperature",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,776 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "72280163-4dde-4e85-a2a1-b30f49c7f27f",
+    "edges": [
+      {
+        "id": "Claw Machine.initializing#connect[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "connect"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.initializing",
+        "target": "Claw Machine.connectingToMachine",
+        "position": {
+          "x": 305,
+          "y": 365
+        },
+        "uniqueId": "o6g5rfukne"
+      },
+      {
+        "id": "Claw Machine.connectingToMachine#done.invoke.clientConnection[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "assignRobotClient",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "clientConnection"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.connectingToMachine",
+        "target": "Claw Machine.connected",
+        "position": {
+          "x": 437,
+          "y": 735
+        },
+        "uniqueId": "2dd1lz2q40t"
+      },
+      {
+        "id": "Claw Machine.connectingToMachine#error.platform.clientConnection[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "assignError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "clientConnection"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.connectingToMachine",
+        "target": "Claw Machine.clientErrored",
+        "position": {
+          "x": 196,
+          "y": 748
+        },
+        "uniqueId": "t7bs487w7oq"
+      },
+      {
+        "id": "Claw Machine.clientErrored#retry[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "clearError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "retry"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.clientErrored",
+        "target": "Claw Machine.initializing",
+        "position": {
+          "x": 42,
+          "y": 340
+        },
+        "uniqueId": "yjzgi6uwiug"
+      },
+      {
+        "id": "Claw Machine.connected#always[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.connected",
+        "target": "Claw Machine.ready",
+        "position": {
+          "x": 506,
+          "y": 1218
+        },
+        "uniqueId": "dggnncos3ah"
+      },
+      {
+        "id": "Claw Machine.ready#move[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "move"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.ready",
+        "target": "Claw Machine.moving",
+        "position": {
+          "x": 469,
+          "y": 1396
+        },
+        "uniqueId": "w3ya4ed64v"
+      },
+      {
+        "id": "Claw Machine.moving#done.invoke.armMover[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "armMover"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.moving",
+        "target": "Claw Machine.ready",
+        "position": {
+          "x": 268,
+          "y": 1427
+        },
+        "uniqueId": "xdm2zr52bx"
+      },
+      {
+        "id": "Claw Machine.moving#error.platform.armMover[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "assignError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "armMover"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.moving",
+        "target": "Claw Machine.displayingMoveError",
+        "position": {
+          "x": 305,
+          "y": 1798
+        },
+        "uniqueId": "qlko3hzcrl8"
+      },
+      {
+        "id": "Claw Machine.displayingMoveError#xstate.after(3000)#Claw Machine.displayingMoveError[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "clearError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "3000"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.displayingMoveError",
+        "target": "Claw Machine.ready",
+        "position": {
+          "x": 60,
+          "y": 1400
+        },
+        "uniqueId": "uvign8rme09"
+      },
+      {
+        "id": "Claw Machine.ready#dropAndHome[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "dropAndHome"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.ready",
+        "target": "Claw Machine.picking",
+        "position": {
+          "x": 1040,
+          "y": 1425
+        },
+        "uniqueId": "wd4528dxwyi"
+      },
+      {
+        "id": "Claw Machine.picking#done.invoke.picker[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "picker"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.picking",
+        "target": "Claw Machine.ready",
+        "position": {
+          "x": 864,
+          "y": 1427
+        },
+        "uniqueId": "qti93hugs69"
+      },
+      {
+        "id": "Claw Machine.picking#error.platform.picker[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "assignError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "picker"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.picking",
+        "target": "Claw Machine.displayingPickerError",
+        "position": {
+          "x": 873,
+          "y": 1798
+        },
+        "uniqueId": "lp2f3htkl8l"
+      },
+      {
+        "id": "Claw Machine.displayingPickerError#xstate.after(2000)#Claw Machine.displayingPickerError[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "clearError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "2000"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Claw Machine.displayingPickerError",
+        "target": "Claw Machine.ready",
+        "position": {
+          "x": 656,
+          "y": 1400
+        },
+        "uniqueId": "wge5j1crde"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "": {
+          "type": "object",
+          "properties": {}
+        },
+        "move": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "schema": {
+                "type": "number"
+              }
+            },
+            "y": {
+              "type": "number",
+              "schema": {
+                "type": "number"
+              }
+            },
+            "target": {
+              "type": "string"
+            }
+          },
+          "description": "Move the claw arm to a location determined by x & y. Target must be \"home\" | \"planar\" | \"quadrant\"."
+        },
+        "retry": {
+          "type": "object",
+          "properties": {}
+        },
+        "connect": {
+          "type": "object",
+          "properties": {}
+        },
+        "dropAndHome": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "error": {
+          "type": "null",
+          "description": "Any thrown errors from the various actions throughout the machine"
+        },
+        "armClient": {
+          "type": "object",
+          "properties": {},
+          "description": "The arm component client"
+        },
+        "boardClient": {
+          "type": "object",
+          "properties": {},
+          "description": "The board component client"
+        },
+        "motionClient": {
+          "type": "object",
+          "properties": {},
+          "description": "The motion planning service client"
+        },
+        "gripperClient": {
+          "type": "object",
+          "properties": {},
+          "description": "The gripper component client"
+        },
+        "machineClient": {
+          "type": "object",
+          "properties": {},
+          "description": "The initialized client class for communicating with the claw machine"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "Claw Machine",
+      "data": {
+        "key": "Claw Machine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "initializing"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "Claw Machine.initializing",
+          "data": {
+            "key": "initializing",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 82,
+            "y": 235
+          },
+          "uniqueId": "1d9knlsicfr"
+        },
+        {
+          "id": "Claw Machine.connectingToMachine",
+          "data": {
+            "key": "connectingToMachine",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "clientConnection",
+                "src": "createRobotClient",
+                "kind": "named",
+                "input": {
+                  "apiKey": "randomApiKey",
+                  "apiKeyId": "randomValue",
+                  "locationAddress": "some.machine.viam.cloud"
+                },
+                "settings": {}
+              }
+            ]
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 212,
+            "y": 480
+          },
+          "uniqueId": "iz35t0c4ul"
+        },
+        {
+          "id": "Claw Machine.connected",
+          "data": {
+            "key": "connected",
+            "exit": [],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "assignClients",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": [],
+            "description": "Create the the necessary component and service clients:\n\n- motionClient\n- boardClient\n- armClient\n- gripperClient"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 350,
+            "y": 897
+          },
+          "uniqueId": "931en5e3abg"
+        },
+        {
+          "id": "Claw Machine.clientErrored",
+          "data": {
+            "key": "clientErrored",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 38,
+            "y": 780
+          },
+          "uniqueId": "xkulqgajpb9"
+        },
+        {
+          "id": "Claw Machine.ready",
+          "data": {
+            "key": "ready",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 506,
+            "y": 1304
+          },
+          "uniqueId": "ha63gkbgmk5"
+        },
+        {
+          "id": "Claw Machine.moving",
+          "data": {
+            "key": "moving",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "armMover",
+                "src": "moveHandler",
+                "kind": "named",
+                "input": {
+                  "x": "number",
+                  "y": "number",
+                  "target": "planar|quadrant|home"
+                },
+                "settings": {}
+              }
+            ]
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 252,
+            "y": 1543
+          },
+          "uniqueId": "f9q8ex08a0k"
+        },
+        {
+          "id": "Claw Machine.displayingMoveError",
+          "data": {
+            "key": "displayingMoveError",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 71,
+            "y": 1820
+          },
+          "uniqueId": "h69j9q4bu1k"
+        },
+        {
+          "id": "Claw Machine.picking",
+          "data": {
+            "key": "picking",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "picker",
+                "src": "dropHandler",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ]
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 867,
+            "y": 1560
+          },
+          "uniqueId": "ia0zsrr6bv"
+        },
+        {
+          "id": "Claw Machine.displayingPickerError",
+          "data": {
+            "key": "displayingPickerError",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 642,
+            "y": 1820
+          },
+          "uniqueId": "409r9h8vvzg"
+        }
+      ],
+      "position": {
+        "x": -10,
+        "y": 187
+      },
+      "uniqueId": "rnf60541pfk"
+    },
+    "implementations": {
+      "actors": {
+        "dropHandler": {
+          "id": "dropHandler",
+          "code": "export default fromPromise(async (({input})) => {\n  await zMove(input.motionClient, input.armClient, 240)\n  await grab(input.boardClient, input.gripperClient)\n  await delay(1000)\n  await zMove(input.motionClient, input.armClient, input.moveHeight)\n  await home(input.motionClient, input.armClient)\n  await delay(1000)\n  await release(input.boardClient, input.gripperClient)\n})\n",
+          "kind": "named",
+          "name": "dropHandler",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "moveHandler": {
+          "id": "moveHandler",
+          "code": "export default fromPromise(async ({ input }) => {\n  if (input.target == \"quadrant\") {\n    await moveToQuadrant(input.motionClient, input.armClient, input.x, input.y)\n  }\n  if (input.target == \"planar\") {\n    await inPlanarMove(input.motionClient, input.armClient, input.x, input.y)\n  }\n})\n",
+          "kind": "named",
+          "name": "moveHandler",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "createRobotClient": {
+          "id": "createRobotClient",
+          "code": "export default fromPromise(\n  async ({ input }) => {\n    const credential = {\n      type: \"api-key\",\n      payload: input.apiKey,\n    }\n\n    //This is the host address of the main part of your robot.\n    const host = input.locationAddress\n\n    return createRobotClient({\n      host,\n      credential,\n      authEntity: input.apiKeyId,\n      signalingAddress:\n        \"https://app.viam.com:443\",\n    })\n  },\n)\n",
+          "kind": "named",
+          "name": "createRobotClient",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {},
+      "actions": {
+        "reset": {
+          "id": "reset",
+          "name": "reset",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "clearError": {
+          "id": "clearError",
+          "name": "clearError",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "assignError": {
+          "id": "assignError",
+          "name": "assignError",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "assignClients": {
+          "id": "assignClients",
+          "code": "export default assign({\n  motionClient: ({ context }, params) =>\n    new MotionClient(context.client, params.motionClientName),\n\n  boardClient: ({ context }, params) =>\n    new BoardClient(context.client, params.boardClientName),\n\n  armClient: ({ context }, params) =>\n    new ArmClient(context.client, params.armClientName),\n\n  gripperClient: ({ context }, params) =>\n    new GripperClient(context.client, params.gripperClientName),\n})\n",
+          "name": "assignClients",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "assignRobotClient": {
+          "id": "assignRobotClient",
+          "code": "export default assign({\n  robotClient: ({ event }) =>\n    event.output.client,\n})\n",
+          "name": "assignRobotClient",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

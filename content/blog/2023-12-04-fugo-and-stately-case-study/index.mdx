@@ -9,6 +9,9 @@ slug: 2023-12-04-fugo-and-stately-case-study
 image: /blog/2023-12-04-fugo-and-stately-case-study.png
 ---
 
+import machine_d2fc56d9 from '@/content/machines/d2fc56d9-9b71-42fb-bf71-5ce69d59a10e.json';
+import machine_efd4162d from '@/content/machines/efd4162d-52e0-4a68-9828-ab8f71a531ea.json';
+
 In the always-changing world of digital signage for modern businesses, Fugo turns to Stately's tooling to tackle complex application logic, ensuring robust IOT systems and seamless communication across design concerns in an industry where reliability is key.
 
 {/* truncate */}
@@ -48,10 +51,7 @@ At its core, Fugo's product offerings require _a lot_ of state management. In th
 
 While wrangling this without an explicit state machine is certainly possible, maintaining this logic without a proper framework adds significant overhead, lacks the ability to easily understand these processes, and allows plenty of room to introduce bugs. This is where Stately's tooling comes in for the team. By representing their app logic as state machines, the team at Fugo is better able to understand the flows for their features. This makes adding and modifying functionality straightforward and easy to communicate. For example, the logic representing the process for taking screenshots can be found below:
 
-<EmbedMachine
-  name="Screenshot Machine"
-  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?mode=design&machineId=d2fc56d9-9b71-42fb-bf71-5ce69d59a10e"
-/>
+<Embed machine={machine_d2fc56d9} name="Screenshot Machine" />
 
 The machine above displays a clear flow for events and states. Representing logic in this way allows the Fugo team to capture their working context without fear of losing it or misunderstanding the event flow. From Marsel, lead developer on the team,
 
@@ -69,10 +69,7 @@ While users primarily interact with the CMS, the Player acts as the unsung hero 
 
 These may seem straightforward alone, but the surface area for problems grow exponentially when these systems need to interact with each other. Additionally, the Player is not intended to be interacted with directly from the end user. So when errors do occur, it has to be able to recover from them gracefully, all while still providing a competent user experience. Designing these processes and their error cases in Stately Studio helps the team plan for these eventualities. For example, the following machine fetches requests from the Player for new commands it needs to process:
 
-<EmbedMachine
-  name="Fetch Machine"
-  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?mode=design&machineId=efd4162d-52e0-4a68-9828-ab8f71a531ea"
-/>
+<Embed machine={machine_efd4162d} name="Fetch Machine" />
 
 This machine is designed to manage the inevitable "sad" paths in software, such as error scenarios and branching logic. Implementing this with nested logic would result in complex, difficult-to-maintain code that must be written defensively. However, by designing this flow as a state machine and using Stately Studio for visualization, the team can understand the data flow, identify potential issues, and implement error-handling logic for edge cases.
 

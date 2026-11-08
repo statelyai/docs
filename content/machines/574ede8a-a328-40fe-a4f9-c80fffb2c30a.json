@@ -1,0 +1,173 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Descriptions.Paused#Play[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "play event",
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Play"
+          }
+        },
+        "size": {
+          "x": -345.953125,
+          "y": -197.5234375,
+          "top": -197.5234375,
+          "left": -345.953125,
+          "right": -242.7421875,
+          "width": 103.2109375,
+          "bottom": -124.0234375,
+          "height": 73.5
+        },
+        "source": "Descriptions.Paused",
+        "target": "Descriptions.Playing",
+        "position": {
+          "x": -623.07688707989,
+          "y": -328.322934746743
+        },
+        "uniqueId": "g8ixg5x9lts"
+      },
+      {
+        "id": "Descriptions.Playing#Pause[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "When the video player is paused, [show this icon](https://figma.com/icon-example). In here.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Pause"
+          }
+        },
+        "size": {
+          "x": -648.90625,
+          "y": -63.1953125,
+          "top": -63.1953125,
+          "left": -648.90625,
+          "right": -258.2734375,
+          "width": 390.6328125,
+          "bottom": 10.3046875,
+          "height": 73.5
+        },
+        "source": "Descriptions.Playing",
+        "target": "Descriptions.Paused",
+        "position": {
+          "x": -872.8777249554239,
+          "y": -217.0143260587003
+        },
+        "uniqueId": "hryr1r9ihf7"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "Play": {
+          "type": "object",
+          "properties": {}
+        },
+        "Pause": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Descriptions",
+      "data": {
+        "key": "Descriptions",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Paused",
+        "description": "Video player machine"
+      },
+      "size": {
+        "x": -916.6875,
+        "y": -467.3046875,
+        "top": -467.3046875,
+        "left": -916.6875,
+        "right": 263.3125,
+        "width": 1180,
+        "bottom": -381.8046875,
+        "height": 85.5
+      },
+      "nodes": [
+        {
+          "id": "Descriptions.Paused",
+          "data": {
+            "key": "Paused",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "video player is paused"
+          },
+          "size": {
+            "x": -550.96875,
+            "y": -181.6640625,
+            "top": -181.6640625,
+            "left": -550.96875,
+            "right": -380.6875,
+            "width": 170.28125,
+            "bottom": -96.1640625,
+            "height": 85.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -832.721474955424,
+            "y": -334.322934746743
+          },
+          "uniqueId": "7jhv4rkoaem"
+        },
+        {
+          "id": "Descriptions.Playing",
+          "data": {
+            "key": "Playing",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "![img](https://user-images.githubusercontent.com/1093738/196252003-7003256f-50fb-4ac9-96d8-e1738ca66dec.png)\n\nExample of video player"
+          },
+          "size": {
+            "x": -462.203125,
+            "y": -338.8046875,
+            "top": -338.8046875,
+            "left": -462.203125,
+            "right": 210.796875,
+            "width": 673,
+            "bottom": 257.9921875,
+            "height": 596.796875
+          },
+          "nodes": [],
+          "position": {
+            "x": -462.2032275951781,
+            "y": -338.8072948087003
+          },
+          "uniqueId": "rltobl6eq4q"
+        }
+      ],
+      "position": {
+        "x": -920.8777249554239,
+        "y": -472.3072948087003
+      },
+      "uniqueId": "2cqtwqyqtyr"
+    }
+  }
+}

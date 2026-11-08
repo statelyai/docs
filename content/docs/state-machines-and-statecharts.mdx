@@ -2,16 +2,21 @@
 title: What are state machines and statecharts?
 ---
 
+import machine_dbcfca1c from '@/content/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.json';
+import machine_469f2d59 from '@/content/machines/469f2d59-551f-43cb-bfc0-e6f3ea0f9d87.json';
+import machine_e48e774e from '@/content/machines/e48e774e-c31f-4e51-a934-6b795c12b2b9.json';
+import machine_988d8d05 from '@/content/machines/988d8d05-86ba-422a-8a28-d13cbf54d481.json';
+import machine_aa8a9c5d from '@/content/machines/aa8a9c5d-8fd9-4e47-b71a-bda219cda066.json';
+import machine_1f43dcd3 from '@/content/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.json';
+import machine_933419cb from '@/content/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.json';
+
 State machines help us model how a process goes from state to state when an event occurs.
 
 State machines are useful in software development because they help us capture all the states, events and transitions between them. Using state machines makes it easier to find impossible states and spot undesirable transitions.
 
 State machines model your application logic. Below is the logic for a video player. When the video is Played, it is opened into fullscreen mode. When the video is stopped, it closes out of fullscreen mode. When the video player is in fullscreen mode, it can be _Playing_ or _Paused_.
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=dbcfca1c-075d-4cd6-a865-efcbd7be1544"
-/>
+<Embed machine={machine_dbcfca1c} name="Video player" />
 
 ## Benefits of state machines
 
@@ -48,10 +53,7 @@ In Stately Studio, we refer to both state machines and statecharts as **state ma
 
 A state describes the machine’s status or mode, which could be as simple as *Asleep* and *Awake*. A flat state machine has one active state at a time. A statechart can also have active parent states and multiple active regions in a [parallel state](parallel-states).
 
-<EmbedMachine
-  name="Dog states"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=469f2d59-551f-43cb-bfc0-e6f3ea0f9d87"
-/>
+<Embed machine={machine_469f2d59} name="Dog states" />
 
 A dog is always **asleep** or **awake**. The dog can’t be asleep and awake at the same time, and it’s impossible for the dog to be neither asleep nor awake. There are only these two states, a precisely limited, _finite_ number of states.
 
@@ -100,10 +102,7 @@ How the dog goes between **asleep** and **awake** is through **transitions**. E
 
 Transitions are “deterministic”; each combination of state and event always points to the same next state. Dogs never **wake up** to become **asleep** or **fall asleep** to become **awake**.
 
-<EmbedMachine
-  name="Dog states with transitions"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=e48e774e-c31f-4e51-a934-6b795c12b2b9"
-/>
+<Embed machine={machine_e48e774e} name="Dog states with transitions" />
 
 With its two finite states and transitions, this tiny dog process is a _Finite State Machine._ A state machine is used to describe the behavior of something. The machine describes the thing’s states and the transitions between those states. It’s a Finite State Machine because it has a finite number of states. (Sometimes abbreviated to FSM by folks who love jargon).
 
@@ -151,10 +150,7 @@ Most processes with states will have a _final state_, the last state when the pr
 
 In the dog walking statechart, the final state would be **walk complete**.
 
-<EmbedMachine
-  name="Dog walking"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=988d8d05-86ba-422a-8a28-d13cbf54d481"
-/>
+<Embed machine={machine_988d8d05} name="Dog walking" />
 
 [Read more about final states](final-states)
 
@@ -164,10 +160,7 @@ A parent state is a state that can contain more states, also known as child stat
 
 A parent state is symbolised by a labelled rectangle box that acts as a container for its child states. Parent states are sometimes known as _compound states_.
 
-<EmbedMachine
-  name="Dog walk with parent state"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=aa8a9c5d-8fd9-4e47-b71a-bda219cda066"
-/>
+<Embed machine={machine_aa8a9c5d} name="Dog walk with parent state" />
 
 A parent state should also specify which child state is the initial state. In the **on a walk** parent state, the initial state is **walking**.
 
@@ -185,10 +178,7 @@ A parallel state is a state where all of its child states, also known as regions
 
 Inside the **on a walk** parallel state, there could be two regions. One region contains the dog’s activity child states of **walking** and **running**, and the other region containing the dog’s tail states of **wagging** and **not wagging**. The dog can walk and wag its tail or run and wag its tail, it can also do both of these activities without wagging its tail.
 
-<EmbedMachine
-  name="Dog walk with parallel state"
-  embedURL="https://stately.ai/registry/editor/embed/1f84ff0d-fe41-4a92-ad5c-fadfa8b37ffb?machineId=1f43dcd3-255c-40bf-b6b0-eba9a2bccb23"
-/>
+<Embed machine={machine_1f43dcd3} name="Dog walk with parallel state" />
 
 Both regions should also specify which child state is the initial state. In our **tail** region, the initial state is **not wagging**.
 
@@ -202,10 +192,7 @@ A helpful way to describe a self-transition is “doing something, not going som
 
 In a **dog begging** process, there would be a **begging** state with a **gets treat** event. And for the dogs who love their food, no matter how many times you go through the **gets treat** event, the dog returns to its **begging** state.
 
-<EmbedMachine
-  name="Dog begging"
-  embedURL="https://stately.ai/registry/editor/embed/17986605-400c-4c00-8b33-47e3ecca478b?machineId=933419cb-dd94-453c-a2b1-de2290c0a5a5"
-/>
+<Embed machine={machine_933419cb} name="Dog begging" />
 
 [Read more about self transitions](/docs/transitions/#self-transitions)
 

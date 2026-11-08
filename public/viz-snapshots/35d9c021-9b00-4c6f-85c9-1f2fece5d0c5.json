@@ -1,0 +1,282 @@
+{
+  "type": "directed",
+  "id": "f5hz1qmyw44",
+  "parentId": null,
+  "initialNodeId": "f5hz1qmyw44",
+  "nodes": [
+    {
+      "type": "node",
+      "id": "f5hz1qmyw44",
+      "label": "expenseMachine",
+      "parentId": null,
+      "initialNodeId": "xisb4sahcd",
+      "data": {
+        "nodeId": "expenseMachine",
+        "key": "expenseMachine",
+        "type": null,
+        "initialId": "xisb4sahcd",
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "description": "Showing how you might use colors to highlight popular paths.",
+        "invokes": []
+      },
+      "position": {
+        "x": -261.469850133955,
+        "y": -58.10937629762243
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 996.9844061737178,
+      "height": 41.50000129762243
+    },
+    {
+      "type": "node",
+      "id": "xisb4sahcd",
+      "label": "PURCHASE_PENDING",
+      "parentId": "f5hz1qmyw44",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "expenseMachine.PURCHASE_PENDING",
+        "key": "PURCHASE_PENDING",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "green"
+      },
+      "position": {
+        "x": -213.469850133955,
+        "y": 155.90364738297268
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 187.61719336641613,
+      "height": 41.50000129762245
+    },
+    {
+      "type": "node",
+      "id": "mlux6uyetyg",
+      "label": "PURCHASING",
+      "parentId": "f5hz1qmyw44",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "expenseMachine.PURCHASING",
+        "key": "PURCHASING",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "green"
+      },
+      "position": {
+        "x": 190.21895196541948,
+        "y": 155.90364738297268
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 131.01566978670334,
+      "height": 41.50000129762242
+    },
+    {
+      "type": "node",
+      "id": "ey254ix0bmf",
+      "label": "PURCHASE_CONFIRMED",
+      "parentId": "f5hz1qmyw44",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "expenseMachine.PURCHASE_CONFIRMED",
+        "key": "PURCHASE_CONFIRMED",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": [],
+        "color": "green"
+      },
+      "position": {
+        "x": 478.0392644654195,
+        "y": 80.20052238297268
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 209.47656904991533,
+      "height": 41.500011470148785
+    },
+    {
+      "type": "node",
+      "id": "f7aiq0mxd88",
+      "label": "PURCHASE_CANCELED",
+      "parentId": "f5hz1qmyw44",
+      "initialNodeId": null,
+      "data": {
+        "nodeId": "expenseMachine.PURCHASE_CANCELED",
+        "key": "PURCHASE_CANCELED",
+        "type": null,
+        "initialId": null,
+        "history": false,
+        "entry": [],
+        "exit": [],
+        "meta": null,
+        "tags": [],
+        "invokes": []
+      },
+      "position": {
+        "x": 482.2423894654195,
+        "y": 218.49897514176172
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 200.95313128340433,
+      "height": 41.50000129762242
+    }
+  ],
+  "edges": [
+    {
+      "type": "edge",
+      "id": "ffgmthdnmki",
+      "label": "RESET",
+      "sourceId": "f5hz1qmyw44",
+      "targetId": "xisb4sahcd",
+      "data": {
+        "eventType": "RESET",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "meta": null,
+        "transitionType": "normal"
+      },
+      "position": {
+        "x": -159.559693883955,
+        "y": 31.390625
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 80.5078125,
+      "height": 40
+    },
+    {
+      "type": "edge",
+      "id": "jl1tatov4f",
+      "label": "PURCHASE",
+      "sourceId": "xisb4sahcd",
+      "targetId": "mlux6uyetyg",
+      "data": {
+        "eventType": "PURCHASE",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "color": "green",
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": 23.027545715419485,
+        "y": 156.65364738297268
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 110.5390625,
+      "height": 40
+    },
+    {
+      "type": "edge",
+      "id": "klxmlhv5ly",
+      "label": "CONFIRM",
+      "sourceId": "mlux6uyetyg",
+      "targetId": "ey254ix0bmf",
+      "data": {
+        "eventType": "CONFIRM",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "color": "green",
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": 339.1564519654195,
+        "y": 80.95052238297268
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 100.0390625,
+      "height": 40
+    },
+    {
+      "type": "edge",
+      "id": "t6fet3ktfa9",
+      "label": "CANCEL",
+      "sourceId": "mlux6uyetyg",
+      "targetId": "f7aiq0mxd88",
+      "data": {
+        "eventType": "CANCEL",
+        "guard": null,
+        "description": null,
+        "actions": [],
+        "meta": null,
+        "transitionType": "reenter"
+      },
+      "position": {
+        "x": 342.7970769654195,
+        "y": 219.24897514176172
+      },
+      "x": 0,
+      "y": 0,
+      "dx": 0,
+      "dy": 0,
+      "width": 92.7578125,
+      "height": 40
+    }
+  ],
+  "annotations": [],
+  "layout": {
+    "status": "complete"
+  },
+  "data": {
+    "context": {},
+    "implementations": {
+      "actions": [],
+      "guards": [],
+      "actors": [],
+      "delays": [],
+      "tags": []
+    },
+    "schemas": {
+      "context": null,
+      "events": null,
+      "input": null,
+      "output": null
+    },
+    "layout": null
+  }
+}

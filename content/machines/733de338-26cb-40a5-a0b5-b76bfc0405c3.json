@@ -1,0 +1,346 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Parallel states.video.playing#stop[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "stop"
+          }
+        },
+        "size": {
+          "x": -145.4114099604859,
+          "y": -143.1916817159083,
+          "top": -143.1916817159083,
+          "left": -145.4114099604859,
+          "right": -78.16074006663908,
+          "width": 67.25066989384686,
+          "bottom": -103.1967028856642,
+          "height": 39.99497883024416
+        },
+        "source": "Parallel states.video.playing",
+        "target": "Parallel states.video.stopped",
+        "position": {
+          "x": -302.1500713629199,
+          "y": -221.5490823426203
+        },
+        "uniqueId": "fwmmi6r1wyr"
+      },
+      {
+        "id": "Parallel states.video.stopped#play[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "play"
+          }
+        },
+        "size": {
+          "x": -144.5763656014343,
+          "y": -82.27860646765808,
+          "top": -82.27860646765808,
+          "left": -144.5763656014343,
+          "right": -79.1456023608135,
+          "width": 65.4307632406208,
+          "bottom": -42.2836276374139,
+          "height": 39.99497883024418
+        },
+        "source": "Parallel states.video.stopped",
+        "target": "Parallel states.video.playing",
+        "position": {
+          "x": -301.3115207353151,
+          "y": -160.6506697169444
+        },
+        "uniqueId": "twtkqrrveel"
+      },
+      {
+        "id": "Parallel states.audio.muted#unmute[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "unmute"
+          }
+        },
+        "size": {
+          "x": 272.8659162528364,
+          "y": -146.3176487118398,
+          "top": -146.3176487118398,
+          "left": 272.8659162528364,
+          "right": 360.0712452349385,
+          "width": 87.20532898210212,
+          "bottom": -106.3226698815956,
+          "height": 39.99497883024416
+        },
+        "source": "Parallel states.audio.muted",
+        "target": "Parallel states.audio.unmuted",
+        "position": {
+          "x": 116.1459841500196,
+          "y": -224.6845119492079
+        },
+        "uniqueId": "ivspyzmdclb"
+      },
+      {
+        "id": "Parallel states.audio.unmuted#mute[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "mute"
+          }
+        },
+        "size": {
+          "x": 281.9439853505826,
+          "y": -82.27860646765808,
+          "top": -82.27860646765808,
+          "left": 281.9439853505826,
+          "right": 353.3054845345353,
+          "width": 71.36149918395273,
+          "bottom": -42.2836276374139,
+          "height": 39.99497883024418
+        },
+        "source": "Parallel states.audio.unmuted",
+        "target": "Parallel states.audio.muted",
+        "position": {
+          "x": 125.2163163722666,
+          "y": -160.6506620875494
+        },
+        "uniqueId": "2jz4djlll8t"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "mute": {
+          "type": "object",
+          "properties": {}
+        },
+        "play": {
+          "type": "object",
+          "properties": {}
+        },
+        "stop": {
+          "type": "object",
+          "properties": {}
+        },
+        "unmute": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Parallel states",
+      "data": {
+        "key": "Parallel states",
+        "exit": [],
+        "tags": [],
+        "type": "parallel",
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "description": "Video player machine"
+      },
+      "size": {
+        "x": -350.0538100392001,
+        "y": -417.3114778399996,
+        "top": -417.3114778399996,
+        "left": -350.0538100392001,
+        "right": 604.9441615386942,
+        "width": 954.9979715778943,
+        "bottom": -330.8127022363486,
+        "height": 86.49877560365104
+      },
+      "nodes": [
+        {
+          "id": "Parallel states.video",
+          "data": {
+            "key": "video",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "playing",
+            "description": "active at the same time as the audio state"
+          },
+          "size": {
+            "x": -303.0575135117751,
+            "y": -283.8164449128842,
+            "top": -283.8164449128842,
+            "left": -303.0575135117751,
+            "right": 90.94017268885187,
+            "width": 393.997686200627,
+            "bottom": -198.3239565678311,
+            "height": 85.49248834505306
+          },
+          "nodes": [
+            {
+              "id": "Parallel states.video.playing",
+              "data": {
+                "key": "playing",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": -259.0587518056219,
+                "y": -146.3176487118398,
+                "top": -146.3176487118398,
+                "left": -259.0587518056219,
+                "right": -175.4290004406617,
+                "width": 83.62975136496016,
+                "bottom": -104.82392207294,
+                "height": 41.49372663889974
+              },
+              "nodes": [],
+              "position": {
+                "x": -415.7806714234468,
+                "y": -224.684519578603
+              },
+              "uniqueId": "brhuzv4ylre"
+            },
+            {
+              "id": "Parallel states.video.stopped",
+              "data": {
+                "key": "stopped",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": -51.86848633278726,
+                "y": -146.3176487118398,
+                "top": -146.3176487118398,
+                "left": -51.86848633278726,
+                "right": 39.36205048964752,
+                "width": 91.23053682243477,
+                "bottom": -104.82392207294,
+                "height": 41.49372663889974
+              },
+              "nodes": [],
+              "position": {
+                "x": -208.5923544367255,
+                "y": -224.684519578603
+              },
+              "uniqueId": "uov1atexet"
+            }
+          ],
+          "position": {
+            "x": -463.7806714234468,
+            "y": -366.177007923656
+          },
+          "uniqueId": "1q0hmr4z0o3"
+        },
+        {
+          "id": "Parallel states.audio",
+          "data": {
+            "key": "audio",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "muted",
+            "description": "active at the same time as the video state"
+          },
+          "size": {
+            "x": 123.1416001877502,
+            "y": -283.8164449128842,
+            "top": -283.8164449128842,
+            "left": 123.1416001877502,
+            "right": 548.141778366688,
+            "width": 425.0001781789377,
+            "bottom": -198.3239565678311,
+            "height": 85.49248834505306
+          },
+          "nodes": [
+            {
+              "id": "Parallel states.audio.muted",
+              "data": {
+                "key": "muted",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 167.1403618939035,
+                "y": -143.1916817159083,
+                "top": -143.1916817159083,
+                "left": 167.1403618939035,
+                "right": 244.9678486941521,
+                "width": 77.82748680024855,
+                "bottom": -101.6979746789889,
+                "height": 41.49370703691949
+              },
+              "nodes": [],
+              "position": {
+                "x": 10.42940137918012,
+                "y": -221.5490747132252
+              },
+              "uniqueId": "ndovmo3uz9"
+            },
+            {
+              "id": "Parallel states.audio.unmuted",
+              "data": {
+                "key": "unmuted",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 400.6228418966294,
+                "y": -146.3176487118398,
+                "top": -146.3176487118398,
+                "left": 400.6228418966294,
+                "right": 496.3495829410704,
+                "width": 95.72674104444098,
+                "bottom": -104.82392207294,
+                "height": 41.49372663889974
+              },
+              "nodes": [],
+              "position": {
+                "x": 243.8963762513568,
+                "y": -224.6845119492079
+              },
+              "uniqueId": "vhh3s4hozs"
+            }
+          ],
+          "position": {
+            "x": -37.57059862081988,
+            "y": -366.1770002942609
+          },
+          "uniqueId": "ebpcxze0j1"
+        }
+      ],
+      "position": {
+        "x": -511.7806714234468,
+        "y": -500.6757835273071
+      },
+      "uniqueId": "3vi0z2k7hpg"
+    }
+  }
+}

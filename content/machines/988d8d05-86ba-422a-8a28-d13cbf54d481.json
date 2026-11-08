@@ -1,0 +1,156 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "dog walk.waiting#leave home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "leave home"
+          }
+        },
+        "size": {
+          "width": 120.765625,
+          "height": 38.5
+        },
+        "source": "dog walk.waiting",
+        "target": "dog walk.on a walk",
+        "position": {
+          "x": -240.3295601859545,
+          "y": -353.6635581565447
+        }
+      },
+      {
+        "id": "dog walk.on a walk#arrive home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "arrive home"
+          }
+        },
+        "size": {
+          "width": 124.078125,
+          "height": 38.5
+        },
+        "source": "dog walk.on a walk",
+        "target": "dog walk.walk complete",
+        "position": {
+          "x": 107.71653075244569,
+          "y": -353.6635581565447
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "dog walk",
+      "data": {
+        "key": "dog walk",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "waiting"
+      },
+      "size": {
+        "x": -460.796875,
+        "y": -505.125,
+        "top": -505.125,
+        "left": -460.796875,
+        "right": 487.7890625,
+        "width": 948.5859375,
+        "bottom": -464.125,
+        "height": 41
+      },
+      "nodes": [
+        {
+          "id": "dog walk.waiting",
+          "data": {
+            "key": "waiting",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![puppy patiently waiting](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/waiting.svg)"
+          },
+          "size": {
+            "x": -406.7890625,
+            "y": -414.078125,
+            "top": -414.078125,
+            "left": -406.7890625,
+            "right": -270.7890625,
+            "width": 136,
+            "bottom": -235.078125,
+            "height": 179
+          },
+          "nodes": [],
+          "position": {
+            "x": -414.72013662676494,
+            "y": -409.6362152554074
+          }
+        },
+        {
+          "id": "dog walk.on a walk",
+          "data": {
+            "key": "on a walk",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![happy walking puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+          },
+          "size": {
+            "x": -223.8203125,
+            "y": -390.2734375,
+            "top": -390.2734375,
+            "left": -223.8203125,
+            "right": -88.8203125,
+            "width": 135,
+            "bottom": -198.2734375,
+            "height": 192
+          },
+          "nodes": [],
+          "position": {
+            "x": -73.11338694321847,
+            "y": -416.1362152554074
+          }
+        },
+        {
+          "id": "dog walk.walk complete",
+          "data": {
+            "key": "walk complete",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)"
+          },
+          "size": {
+            "x": 447.421875,
+            "y": -219.7265625,
+            "top": -219.7265625,
+            "left": 447.421875,
+            "right": 622.6953125,
+            "width": 175.2734375,
+            "bottom": -33.7265625,
+            "height": 186
+          },
+          "nodes": [],
+          "position": {
+            "x": 262.59538906348644,
+            "y": -413.1362152554074
+          }
+        }
+      ],
+      "position": {
+        "x": -462.72013662676494,
+        "y": -505.1362152554074
+      }
+    }
+  }
+}

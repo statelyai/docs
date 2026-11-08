@@ -19,6 +19,8 @@ slug: 2023-12-07-tidefi-and-stately-case-study
 image: /blog/2023-12-07-tidefi-and-stately-case-study.png
 ---
 
+import machine_26f0286a from '@/content/machines/26f0286a-e093-4863-a534-b4ea9b656ee0.json';
+
 TIDEFI turns to [Stately](https://stately.ai) to build a resilient financial platform that prioritizes user-friendly transactions and investments.
 
 The Stately team had the pleasure of sitting down with Parker McMullin, Senior Frontend Lead at TIDEFI, to discuss how our logic modeling and visualization tooling helped him manage app complexity and onboarding in TIDEFI’s financial services platform. Parker was so kind as to provide his experiences below, covering the very beginnings of his project from design to development as well as the challenges encountered and how other Stately users came to his aid. He shares his firsthand experiences applying modern software design patterns to his project, engaging with the technical community, and proving instrumental in shaping the direction of [XState V5](/docs/xstate). We’re honored to have Parker in our community, and we hope his words can inspire teams to better navigate complexity in their own apps!
@@ -39,10 +41,7 @@ Because of my previous experience using XState, I knew it could help manage cert
 
 The first part we tackled was the multi-step Onboarding flow. I implemented the smaller parts of the design first, creating the form components, tiles, and imagery. Then as I worked on the state machine to control it, my hunch about managing complexity paid off. Thanks to clean state matching (like `state.matches('chooseSecurityMethod.newAccount.choosePassword')`) conditional logic and views were able to be flat and easy to reason with instead of being riddled with nesting and edge cases. Since this multi-step form had several directions the user could take, the final states were well-documented, and completely foolproof.
 
-<EmbedMachine
-  name="TIDEFI Onboarding Flow"
-  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=26f0286a-e093-4863-a534-b4ea9b656ee0&mode=design/"
-/>
+<Embed machine={machine_26f0286a} name="TIDEFI Onboarding Flow" />
 
 I was able to showcase the machine visualizer to the rest of the company, which was a delight. This helped convey the complexity of the UI pieces, and also helped to discuss how we should handle specific use cases in conjunction with the design mockups.
 

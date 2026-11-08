@@ -1,0 +1,344 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Parent states.Closed#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "x": 102.3984885026735,
+          "y": 508.2656615705934,
+          "top": 508.2656615705934,
+          "left": 102.3984885026735,
+          "right": 175.320366896413,
+          "width": 72.92187839373945,
+          "bottom": 548.2656718174183,
+          "height": 40.0000102468249
+        },
+        "source": "Parent states.Closed",
+        "target": "Parent states.Opened",
+        "position": {
+          "x": 88.23230506866587,
+          "y": 249.887277598353
+        },
+        "uniqueId": "wixxwwxcm6"
+      },
+      {
+        "id": "Parent states.Opened.Playing#PAUSE[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAUSE"
+          }
+        },
+        "size": {
+          "x": 469.6641283033701,
+          "y": 373.9140819501151,
+          "top": 373.9140819501151,
+          "left": 469.6641283033701,
+          "right": 551.500122926873,
+          "width": 81.83599462350293,
+          "bottom": 413.91409219694,
+          "height": 40.0000102468249
+        },
+        "source": "Parent states.Opened.Playing",
+        "target": "Parent states.Opened.Paused",
+        "position": {
+          "x": 469.6641235351562,
+          "y": 373.9166666666667
+        },
+        "uniqueId": "8014eq6zkgs"
+      },
+      {
+        "id": "Parent states.Opened.Paused#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "x": 548.8126003369689,
+          "y": 323.4140983842233,
+          "top": 323.4140983842233,
+          "left": 548.8126003369689,
+          "right": 621.7344787307084,
+          "width": 72.92187839373946,
+          "bottom": 363.4141086310483,
+          "height": 40.00001024682496
+        },
+        "source": "Parent states.Opened.Paused",
+        "target": "Parent states.Opened.Playing",
+        "position": {
+          "x": 548.8125610351562,
+          "y": 323.4166666666667
+        },
+        "uniqueId": "opp66pagpmh"
+      },
+      {
+        "id": "Parent states.Opened.Stopped#xstate.after(5000)#Parent states.Opened.Stopped[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "5000"
+          }
+        },
+        "size": {
+          "x": 98.82036451668178,
+          "y": 90.5937814550306,
+          "top": 90.5937814550306,
+          "left": 98.82036451668178,
+          "right": 225.9845024299606,
+          "width": 127.1641379132788,
+          "bottom": 130.593751190511,
+          "height": 39.99996973548043
+        },
+        "source": "Parent states.Opened.Stopped",
+        "target": "Parent states.Closed",
+        "position": {
+          "x": 17.12398326502296,
+          "y": 537.4102779169597
+        },
+        "uniqueId": "blb8ju7vxg"
+      },
+      {
+        "id": "Parent states.Opened#STOP[0]",
+        "data": {
+          "actions": [],
+          "internal": true,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STOP"
+          }
+        },
+        "size": {
+          "x": 283.6407339678358,
+          "y": 499.7500959473942,
+          "top": 499.7500959473942,
+          "left": 283.6407339678358,
+          "right": 357.9220110354797,
+          "width": 74.28127706764388,
+          "bottom": 539.7500251715302,
+          "height": 39.99992922413594
+        },
+        "source": "Parent states.Opened",
+        "target": "Parent states.Opened.Stopped",
+        "position": {
+          "x": 283.640625,
+          "y": 499.75
+        },
+        "uniqueId": "0d5t8kbr5tjg"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "PLAY": {
+          "type": "object",
+          "properties": {}
+        },
+        "STOP": {
+          "type": "object",
+          "properties": {}
+        },
+        "PAUSE": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Parent states",
+      "data": {
+        "key": "Parent states",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Closed",
+        "description": "Video player"
+      },
+      "size": {
+        "x": -25.87493104396004,
+        "y": 42.99218202683397,
+        "top": 42.99218202683397,
+        "left": -25.87493104396004,
+        "right": 927.1250355839335,
+        "width": 952.9999666278935,
+        "bottom": 128.492225197878,
+        "height": 85.50004317104401
+      },
+      "nodes": [
+        {
+          "id": "Parent states.Closed",
+          "data": {
+            "key": "Closed",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 37.64069930780383,
+            "y": 171.2500047058595,
+            "top": 171.2500047058595,
+            "left": 37.64069930780383,
+            "right": 119.6563212325373,
+            "width": 82.01562192473344,
+            "bottom": 212.7499879917829,
+            "height": 41.49998328592332
+          },
+          "nodes": [],
+          "position": {
+            "x": 59.57678469820587,
+            "y": 172.2080740395226
+          },
+          "uniqueId": "axtbkr4xlbg"
+        },
+        {
+          "id": "Parent states.Opened",
+          "data": {
+            "key": "Opened",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Playing",
+            "description": "Fullscreen mode. A parent state."
+          },
+          "size": {
+            "x": 240.6406966201251,
+            "y": 176.5000318767374,
+            "top": 176.5000318767374,
+            "left": 240.6406966201251,
+            "right": 868.6407521657803,
+            "width": 628.0000555456552,
+            "bottom": 262.000034536437,
+            "height": 85.50000265969962
+          },
+          "nodes": [
+            {
+              "id": "Parent states.Opened.Playing",
+              "data": {
+                "key": "Playing",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "Child state of the \n\n**Opened** parent state."
+              },
+              "size": {
+                "x": 283.6407339678358,
+                "y": 305.0000313728032,
+                "top": 305.0000313728032,
+                "left": 283.6407339678358,
+                "right": 448.6641816652365,
+                "width": 165.0234476974007,
+                "bottom": 410.0000481428824,
+                "height": 105.0000167700792
+              },
+              "nodes": [],
+              "position": {
+                "x": 283.640625,
+                "y": 305
+              },
+              "uniqueId": "wd0a6u0q10q"
+            },
+            {
+              "id": "Parent states.Opened.Paused",
+              "data": {
+                "key": "Paused",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "Child state of the \n\n**Opened** parent state."
+              },
+              "size": {
+                "x": 650.6876125085763,
+                "y": 307.5000269493117,
+                "top": 307.5000269493117,
+                "left": 650.6876125085763,
+                "right": 815.7110602059771,
+                "width": 165.0234476974008,
+                "bottom": 412.5000032080465,
+                "height": 104.9999762587348
+              },
+              "nodes": [],
+              "position": {
+                "x": 650.6875610351562,
+                "y": 307.5
+              },
+              "uniqueId": "373kuvdexwy"
+            },
+            {
+              "id": "Parent states.Opened.Stopped",
+              "data": {
+                "key": "Stopped",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "Child state of the \n\n**Opened** \nparent state."
+              },
+              "size": {
+                "x": 469.6641283033701,
+                "y": 462.9999867739382,
+                "top": 462.9999867739382,
+                "left": 469.6641283033701,
+                "right": 634.6875760007708,
+                "width": 165.0234476974007,
+                "bottom": 568.0000440553619,
+                "height": 105.0000572814237
+              },
+              "nodes": [],
+              "position": {
+                "x": 469.6641235351562,
+                "y": 463
+              },
+              "uniqueId": "736mhgfsned"
+            }
+          ],
+          "position": {
+            "x": 235.640625,
+            "y": 171.4999973403004
+          },
+          "uniqueId": "vycu4ikcr1"
+        }
+      ],
+      "position": {
+        "x": -30.87601673497704,
+        "y": 37.9999541692564
+      },
+      "uniqueId": "2r06uciqe19"
+    }
+  }
+}

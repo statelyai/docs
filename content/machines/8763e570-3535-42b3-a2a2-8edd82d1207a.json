@@ -1,0 +1,192 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "8763e570-3535-42b3-a2a2-8edd82d1207a",
+    "edges": [
+      {
+        "id": "self-transition on state.inactive#activate[0]",
+        "data": {
+          "color": "green",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "activate"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 89.875,
+          "width": 89.875,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "self-transition on state.inactive",
+        "target": "self-transition on state.active",
+        "position": {
+          "x": 198.9296875,
+          "y": 113.25
+        },
+        "uniqueId": "ekwhcgxpuar"
+      },
+      {
+        "id": "self-transition on state.active#someEvent[0]",
+        "data": {
+          "color": "yellow",
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "count": "{{({ context }) => context.count + 1}}"
+                }
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "someEvent"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 407.21875,
+          "width": 407.21875,
+          "bottom": 109,
+          "height": 109
+        },
+        "source": "self-transition on state.active",
+        "target": "self-transition on state.active",
+        "position": {
+          "x": 173.1328125,
+          "y": -33.796875
+        },
+        "uniqueId": "tg53yaisq5"
+      }
+    ],
+    "context": {
+      "count": 0
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "activate": {
+          "type": "object",
+          "properties": {}
+        },
+        "someEvent": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "count": {
+          "type": "number",
+          "description": "Generated automatically based on the key: \"count\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "self-transition on state",
+      "data": {
+        "key": "self-transition on state",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "inactive",
+        "metaEntries": []
+      },
+      "size": {
+        "x": 17,
+        "y": -107.296875,
+        "top": -107.296875,
+        "left": 17,
+        "right": 633,
+        "width": 616,
+        "bottom": -77.296875,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "self-transition on state.inactive",
+          "data": {
+            "key": "inactive",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 88.9296875,
+            "width": 88.9296875,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 60,
+            "y": 112.5
+          },
+          "uniqueId": "5rsgxkx9e7b"
+        },
+        {
+          "id": "self-transition on state.active",
+          "data": {
+            "key": "active",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 75.875,
+            "width": 75.875,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 338.8046875,
+            "y": 112.5
+          },
+          "uniqueId": "5ee6knarws5"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": -111.796875
+      },
+      "uniqueId": "2szhw1wrjez"
+    }
+  }
+}
