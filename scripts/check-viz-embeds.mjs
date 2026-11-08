@@ -16,7 +16,9 @@ for (const file of mdxFiles("content")) {
     [...source.matchAll(/import\s+(\w+)\s+from\s+['"]@\/(content\/machines|public\/viz-snapshots)\/([^'"]+\.json)['"]/g)]
       .map((match) => [match[1], `${match[2]}/${match[3]}`]),
   );
-  for (const [, name] of source.matchAll(/<Embed\s+machine=\{(\w+)\}/g)) {
+  for (const [component] of source.matchAll(/<Embed\b[\s\S]*?\/>/g)) {
+    const name = component.match(/\bmachine=\{\s*(\w+)\s*\}/)?.[1];
+    if (!name) throw new Error(`${file}: inline embed needs a machine import`);
     const path = imports.get(name);
     if (!path || !existsSync(path)) throw new Error(`${file}: missing inline machine ${name}`);
     const machine = JSON.parse(readFileSync(path, "utf8"));
