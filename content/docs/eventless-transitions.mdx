@@ -2,6 +2,8 @@
 title: Eventless (always) transitions
 ---
 
+import machine_b2a299ef from '@/content/machines/b2a299ef-efb8-4049-a242-2d197d27c931.json';
+
 **Eventless transitions** are transitions that happen without an explicit event. These transitions are *always* taken when the transition is enabled.
 
 Eventless transitions are specified on the `always` state property and often referred to as “always” transitions.
@@ -96,10 +98,7 @@ const machine = createMachine({
 });
 ```
 
-<EmbedMachine
-  embedURL="https://editor.stately.ai/viz?machineId=b2a299ef-efb8-4049-a242-2d197d27c931"
-  title="Kettle with eventless transitions"
-/>
+<Embed machine={machine_b2a299ef} title="Kettle with eventless transitions" />
 
 ## Observability and transient states
 

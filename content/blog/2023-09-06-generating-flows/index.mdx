@@ -8,6 +8,8 @@ slug: 2023-09-06-generating-flows
 image: /blog/2023-09-06-generating-flows.png
 ---
 
+import machine_d8b78ea7 from '@/content/machines/d8b78ea7-38a7-4f35-8329-0118a8aa307a.json';
+
 As software architecture grows increasingly complex, developers and project managers often grapple with the challenge of visualizing and organizing application logic. This is where state machines and flows come into play. State machines are a powerful tool for modeling application logic, and flows are a great way to visualize and organize state machines. At Stately, we’re committed to making state machines and flows more accessible and easier to use.
 
 But state machines, though powerful, have a learning curve that can be a bit intimidating. And then there’s the blank slate problem: where do you even start when modeling a flow? Furthermore, when flows get large, how can you apply broad changes in a more natural way while keeping the flow intact and logically correct? These are some of the challenges we set out to solve with our new experimental generative features.
@@ -36,10 +38,7 @@ Stately leverages LLMs to craft a flow that matches your prompt. The result is a
 
 _The following machine is the result of generating the flow described by “A checkout flow where you can edit basket, update basket, add shipping details, add billing details, calculate shipping costs, and take payment. Payment can succeed or fail. Succeed is the final state. On fail, payment can be tried again after update billing details.”_
 
-<EmbedMachine
-  name="checkoutFlow"
-  embedURL="https://editor.stately.ai/viz?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
-/>
+<Embed machine={machine_d8b78ea7} name="checkoutFlow" />
 
 ### Modifying a flow
 
@@ -55,10 +54,7 @@ Stately will use the existing flow as context to generate a new flow that incorp
 
 _The following machine is the result of modifying the previous flow with the description “Viewing basket is the initial state.”_
 
-<EmbedMachine
-  name="checkoutFlow, modified"
-  embedURL="https://editor.stately.ai/viz?machineId=d8b78ea7-38a7-4f35-8329-0118a8aa307a"
-/>
+<Embed machine={machine_d8b78ea7} name="checkoutFlow, modified" />
 
 ## Be creative
 

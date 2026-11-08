@@ -1,0 +1,353 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "",
+    "edges": [
+      {
+        "id": "coffee.preparing.grindBeans.grindingBeans#BEANS_GROUND[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BEANS_GROUND"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 145.6640625,
+          "width": 145.6640625,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "coffee.preparing.grindBeans.grindingBeans",
+        "target": "coffee.preparing.grindBeans.beansGround",
+        "position": {
+          "x": 332.984375,
+          "y": 271.25
+        },
+        "uniqueId": "qusme8j6j6i"
+      },
+      {
+        "id": "coffee.preparing.boilWater.boilingWater#WATER_BOILED[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "WATER_BOILED"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 137.59375,
+          "width": 137.59375,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "coffee.preparing.boilWater.boilingWater",
+        "target": "coffee.preparing.boilWater.waterBoiled",
+        "position": {
+          "x": 336.34375,
+          "y": 501.25
+        },
+        "uniqueId": "fqwuzt94434"
+      },
+      {
+        "id": "coffee.preparing#done.state.coffee.preparing[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "state.done"
+          }
+        },
+        "size": {
+          "x": 831,
+          "y": 347.25,
+          "top": 347.25,
+          "left": 831,
+          "right": 924.6640625,
+          "width": 93.6640625,
+          "bottom": 382.75,
+          "height": 35.5
+        },
+        "source": "coffee.preparing",
+        "target": "coffee.makingCoffee",
+        "position": {
+          "x": 831,
+          "y": 347.25
+        },
+        "uniqueId": "vvnknjcv5al"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {},
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "coffee",
+      "data": {
+        "key": "coffee",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "preparing"
+      },
+      "size": {
+        "x": 17,
+        "y": 9,
+        "top": 9,
+        "left": 17,
+        "right": 1137,
+        "width": 1120,
+        "bottom": 39,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "coffee.preparing",
+          "data": {
+            "key": "preparing",
+            "exit": [],
+            "tags": [],
+            "type": "parallel",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 65,
+            "y": 87,
+            "top": 87,
+            "left": 65,
+            "right": 802,
+            "width": 737,
+            "bottom": 129.5,
+            "height": 42.5
+          },
+          "nodes": [
+            {
+              "id": "coffee.preparing.grindBeans",
+              "data": {
+                "key": "grindBeans",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "grindingBeans"
+              },
+              "size": {
+                "x": 112,
+                "y": 176.5,
+                "top": 176.5,
+                "left": 112,
+                "right": 745,
+                "width": 633,
+                "bottom": 218,
+                "height": 41.5
+              },
+              "nodes": [
+                {
+                  "id": "coffee.preparing.grindBeans.grindingBeans",
+                  "data": {
+                    "key": "grindingBeans",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 156,
+                    "y": 270.5,
+                    "top": 270.5,
+                    "left": 156,
+                    "right": 291.203125,
+                    "width": 135.203125,
+                    "bottom": 312,
+                    "height": 41.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 156,
+                    "y": 270.5
+                  },
+                  "uniqueId": "l3qyhx5zz0k"
+                },
+                {
+                  "id": "coffee.preparing.grindBeans.beansGround",
+                  "data": {
+                    "key": "beansGround",
+                    "exit": [],
+                    "tags": [],
+                    "type": "final",
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 164.7109375,
+                    "width": 164.7109375,
+                    "bottom": 42.5,
+                    "height": 42.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 528.6484375,
+                    "y": 270
+                  },
+                  "uniqueId": "kdwqq8kuyh"
+                }
+              ],
+              "position": {
+                "x": 108,
+                "y": 172.5
+              },
+              "uniqueId": "rt5fsz6obnd"
+            },
+            {
+              "id": "coffee.preparing.boilWater",
+              "data": {
+                "key": "boilWater",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "boilingWater"
+              },
+              "size": {
+                "x": 127.953125,
+                "y": 406.5,
+                "top": 406.5,
+                "left": 127.953125,
+                "right": 728.953125,
+                "width": 601,
+                "bottom": 448,
+                "height": 41.5
+              },
+              "nodes": [
+                {
+                  "id": "coffee.preparing.boilWater.boilingWater",
+                  "data": {
+                    "key": "boilingWater",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 171.953125,
+                    "y": 500.5,
+                    "top": 500.5,
+                    "left": 171.953125,
+                    "right": 294.2421875,
+                    "width": 122.2890625,
+                    "bottom": 542,
+                    "height": 41.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 171.953125,
+                    "y": 500.5
+                  },
+                  "uniqueId": "yrij6t3yx5e"
+                },
+                {
+                  "id": "coffee.preparing.boilWater.waterBoiled",
+                  "data": {
+                    "key": "waterBoiled",
+                    "exit": [],
+                    "tags": [],
+                    "type": "final",
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 153.46875,
+                    "width": 153.46875,
+                    "bottom": 42.5,
+                    "height": 42.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 523.9375,
+                    "y": 500
+                  },
+                  "uniqueId": "aw7xvrm85z6"
+                }
+              ],
+              "position": {
+                "x": 123.953125,
+                "y": 402.5
+              },
+              "uniqueId": "gjhgxegdw0p"
+            }
+          ],
+          "position": {
+            "x": 60,
+            "y": 82
+          },
+          "uniqueId": "klab3wwkgk8"
+        },
+        {
+          "id": "coffee.makingCoffee",
+          "data": {
+            "key": "makingCoffee",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 951,
+            "y": 341.25,
+            "top": 341.25,
+            "left": 951,
+            "right": 1083.515625,
+            "width": 132.515625,
+            "bottom": 382.75,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 951,
+            "y": 341.25
+          },
+          "uniqueId": "fwjpatnca3d"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": 4
+      },
+      "uniqueId": "oqlqln3mc3g"
+    }
+  }
+}

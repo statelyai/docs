@@ -1,7 +1,12 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
-const publications = JSON.parse(readFileSync("content/components/viz-publications.json", "utf8"));
+const knownLegacyIds = new Set([
+  "68b835cc-49fc-4b9c-972e-a63c01465c1f",
+  "afa23e5f-11c7-460d-bd98-ff7de694a41d",
+  "afde01f8-1314-4590-b9be-2fd5dafe90d2",
+  "de091123-5634-481b-aa18-ff9d254403ae",
+]);
 
 function mdxFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -10,53 +15,35 @@ function mdxFiles(dir) {
   });
 }
 
-let checked = 0;
+let inline = 0;
+let legacy = 0;
 for (const file of mdxFiles("content")) {
   const source = readFileSync(file, "utf8");
+  const imports = new Map(
+    [...source.matchAll(/import\s+(\w+)\s+from\s+['"]@\/(content\/machines|public\/viz-snapshots)\/([^'"]+\.json)['"]/g)]
+      .map((match) => [match[1], `${match[2]}/${match[3]}`]),
+  );
+  for (const [, name] of source.matchAll(/<Embed\s+machine=\{(\w+)\}/g)) {
+    const path = imports.get(name);
+    if (!path || !existsSync(path)) throw new Error(`${file}: missing inline machine ${name}`);
+    const machine = JSON.parse(readFileSync(path, "utf8"));
+    const definition = machine.definition ?? machine;
+    const format = machine.format ?? (machine.nodes ? "xgraph" : undefined);
+    const valid = format === "xstate"
+      ? typeof definition === "string" && definition.length > 0
+      : format === "digraph"
+        ? !!definition.rootNode && Array.isArray(definition.edges)
+        : format === "xgraph"
+          ? Array.isArray(definition.nodes) && Array.isArray(definition.edges)
+          : false;
+    if (!valid) throw new Error(`${file}: invalid ${format ?? "unknown"} machine ${path}`);
+    inline++;
+  }
   for (const [component] of source.matchAll(/<EmbedMachine\b[\s\S]*?\/>/g)) {
     const embedURL = component.match(/embedURL="([^"]+)"/)?.[1];
-    if (!embedURL) continue;
-    const ownerURL = component.match(/publishedURL="([^"]+)"/)?.[1];
-    if (ownerURL) {
-      const url = new URL(ownerURL);
-      if (url.origin !== "https://editor.stately.ai" || url.pathname !== "/viz" || !url.searchParams.get("publicationId"))
-        throw new Error(`${file}: invalid owner-published Viz URL`);
-      continue;
-    }
-    const sourceURL = new URL(embedURL);
-    const snapshotURL = component.match(/snapshotURL="([^"]+)"/)?.[1];
-    const id = component.match(/lookupId="([^"]+)"/)?.[1]
-      ?? snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1]
-      ?? sourceURL.searchParams.get("machineId")
-      ?? sourceURL.searchParams.get("projectVersionId")
-      ?? sourceURL.searchParams.get("projectId")
-      ?? (sourceURL.pathname.includes("/registry/editor/embed/") ? sourceURL.pathname.split("/").at(-1) : null);
-    const liveMachineId = !snapshotURL && !component.includes('lookupId=')
-      ? sourceURL.searchParams.get("machineId")
-      : null;
-    if (process.env.VERCEL_ENV === "production" && (!id || (!publications[id] && !liveMachineId)))
-      throw new Error(`${file}: published Viz ID missing from manifest`);
-  }
-  for (const [, url] of source.matchAll(/embedURL="(https?:[^\"]+)"/g)) {
-    if (!url.includes("/viz?")) continue;
-    if (new URL(url).origin !== "https://editor.stately.ai") {
-      throw new Error(`${file}: Viz embed must use editor.stately.ai`);
-    }
-    checked++;
-  }
-  for (const [, name] of source.matchAll(/snapshotURL="\/viz-snapshots\/([^\"]+)"/g)) {
-    const path = join("public", "viz-snapshots", name);
-    if (!existsSync(path)) throw new Error(`${file}: missing ${path}`);
-    const graph = JSON.parse(readFileSync(path, "utf8"));
-    const definition = graph.definition ?? graph;
-    const valid =
-      graph.format === "digraph"
-        ? definition.rootNode && Array.isArray(definition.edges)
-        : Array.isArray(definition.nodes) && Array.isArray(definition.edges);
-    if (!valid) {
-      throw new Error(`${file}: invalid XGraph snapshot ${path}`);
-    }
-    checked++;
+    const id = embedURL && new URL(embedURL).searchParams.get("machineId");
+    if (!id || !knownLegacyIds.has(id)) throw new Error(`${file}: unexpected legacy embed`);
+    legacy++;
   }
 }
-console.log(`Checked ${checked} Viz embeds and snapshots.`);
+console.log(`Checked ${inline} inline Viz embeds; ${legacy} legacy embeds await owner exports.`);

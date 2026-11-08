@@ -1,0 +1,199 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "7d3feeca-1017-4d94-87b3-cd5128682440",
+    "edges": [
+      {
+        "id": "Final state#feedback.close[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "feedback.close"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 135.4609375,
+          "width": 135.4609375,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "Final state",
+        "target": "Final state.closed",
+        "position": {
+          "x": 335.703125,
+          "y": 151.5
+        },
+        "uniqueId": "98wtpque6f7"
+      },
+      {
+        "id": "Final state.prompt#feedback.enter[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "feedback.enter"
+          }
+        },
+        "size": {
+          "x": 159.8203125,
+          "y": 157.2265625,
+          "top": 157.2265625,
+          "left": 159.8203125,
+          "right": 295,
+          "width": 135.1796875,
+          "bottom": 197.2265625,
+          "height": 40
+        },
+        "source": "Final state.prompt",
+        "target": "Final state.thanks",
+        "position": {
+          "x": 159.8203125,
+          "y": 157.2265625
+        },
+        "uniqueId": "b5dyy7ws739"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "feedback.close": {
+          "type": "object",
+          "properties": {}
+        },
+        "feedback.enter": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Final state",
+      "data": {
+        "key": "Final state",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "prompt",
+        "metaEntries": []
+      },
+      "size": {
+        "x": 116.8203125,
+        "y": 15.328125,
+        "top": 15.328125,
+        "left": 116.8203125,
+        "right": 523.8203125,
+        "width": 407,
+        "bottom": 45.328125,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "Final state.prompt",
+          "data": {
+            "key": "prompt",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 84.3671875,
+            "width": 84.3671875,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 184.95703125,
+            "y": 96.046875
+          },
+          "uniqueId": "sbui9dme8rp"
+        },
+        {
+          "id": "Final state.thanks",
+          "data": {
+            "key": "thanks",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 81.3359375,
+            "width": 81.3359375,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 186.47265625,
+            "y": 228.77734375
+          },
+          "uniqueId": "2cb6c9t1x3a"
+        },
+        {
+          "id": "Final state.closed",
+          "data": {
+            "key": "closed",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 116,
+            "width": 116,
+            "bottom": 42.5,
+            "height": 42.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 345.43359375,
+            "y": 241.5
+          },
+          "uniqueId": "4iwkx1zi3mm"
+        }
+      ],
+      "position": {
+        "x": 111.8203125,
+        "y": 18.046875
+      },
+      "uniqueId": "cvw76kqs3ac"
+    }
+  }
+}

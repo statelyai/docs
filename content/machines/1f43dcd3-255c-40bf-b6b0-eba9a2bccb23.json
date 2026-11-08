@@ -1,0 +1,399 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "dog walk.waiting#leave home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "leave home"
+          }
+        },
+        "size": {
+          "width": 120.76562877610081,
+          "height": 38.500001203818385
+        },
+        "source": "dog walk.waiting",
+        "target": "dog walk.on a walk",
+        "position": {
+          "x": -470.5053414359545,
+          "y": -320.59798759318886
+        }
+      },
+      {
+        "id": "dog walk.on a walk.tail.not wagging#wagging starts[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "wagging starts"
+          }
+        },
+        "size": {
+          "width": 146.85937959200044,
+          "height": 38.5000012038184
+        },
+        "source": "dog walk.on a walk.tail.not wagging",
+        "target": "dog walk.on a walk.tail.wagging",
+        "position": {
+          "x": 64.79481843401126,
+          "y": -22.66357421875
+        }
+      },
+      {
+        "id": "dog walk.on a walk.tail.wagging#wagging stops[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "wagging stops"
+          }
+        },
+        "size": {
+          "width": 144.6718795236017,
+          "height": 38.5000012038184
+        },
+        "source": "dog walk.on a walk.tail.wagging",
+        "target": "dog walk.on a walk.tail.not wagging",
+        "position": {
+          "x": 65.88856843401126,
+          "y": 78.73639507834382
+        }
+      },
+      {
+        "id": "dog walk.on a walk#arrive home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "arrive home"
+          }
+        },
+        "size": {
+          "width": 124.07812887967611,
+          "height": 38.50000120381839
+        },
+        "source": "dog walk.on a walk",
+        "target": "dog walk.walk complete",
+        "position": {
+          "x": -472.1615914359545,
+          "y": -85.82455009318898
+        }
+      },
+      {
+        "id": "dog walk.on a walk.activity.walking#speed up[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "speed up"
+          }
+        },
+        "size": {
+          "width": 105.06250328509535,
+          "height": 38.50000120381844
+        },
+        "source": "dog walk.on a walk.activity.walking",
+        "target": "dog walk.on a walk.activity.running",
+        "position": {
+          "x": 77.06010258075861,
+          "y": -386.9339208660838
+        }
+      },
+      {
+        "id": "dog walk.on a walk.activity.running#slow down[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "slow down"
+          }
+        },
+        "size": {
+          "width": 115.38281610779097,
+          "height": 38.500001203818414
+        },
+        "source": "dog walk.on a walk.activity.running",
+        "target": "dog walk.on a walk.activity.walking",
+        "position": {
+          "x": 71.89994633075861,
+          "y": -258.1054601676929
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "dog walk",
+      "data": {
+        "key": "dog walk",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "waiting"
+      },
+      "size": {
+        "x": -526.1484930216503,
+        "y": -663.4999943277818,
+        "top": -663.4999943277818,
+        "left": -526.1484930216503,
+        "right": 569.7187287439363,
+        "width": 1095.8672217655867,
+        "bottom": -622.4999930457934,
+        "height": 41.000001281988375
+      },
+      "nodes": [
+        {
+          "id": "dog walk.waiting",
+          "data": {
+            "key": "waiting",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![puppy patiently waiting](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/waiting.svg)"
+          },
+          "size": {
+            "x": -478.11724151980866,
+            "y": -574.1249915332035,
+            "top": -574.1249915332035,
+            "left": -478.11724151980866,
+            "right": -342.11723726735926,
+            "width": 136.0000042524494,
+            "bottom": -395.1250062812823,
+            "height": 178.99998525192115
+          },
+          "nodes": [],
+          "position": {
+            "x": -478.1225289359545,
+            "y": -574.1323090054075
+          }
+        },
+        {
+          "id": "dog walk.on a walk",
+          "data": {
+            "key": "on a walk",
+            "exit": [],
+            "tags": [],
+            "type": "parallel",
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -234.78129641117806,
+            "y": -574.4999915449289,
+            "top": -574.4999915449289,
+            "left": -234.78129641117806,
+            "right": 521.7187272430717,
+            "width": 756.5000236542498,
+            "bottom": -533.4999902629405,
+            "height": 41.000001281988375
+          },
+          "nodes": [
+            {
+              "id": "dog walk.on a walk.activity",
+              "data": {
+                "key": "activity",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "invoke": [],
+                "initial": "walking"
+              },
+              "size": {
+                "x": -187.2734824257033,
+                "y": -485.8437591178771,
+                "top": -485.8437591178771,
+                "left": -187.2734824257033,
+                "right": 473.2265382268175,
+                "width": 660.5000206525208,
+                "bottom": -444.84375783588865,
+                "height": 41.00000128198843
+              },
+              "nodes": [
+                {
+                  "id": "dog walk.on a walk.activity.walking",
+                  "data": {
+                    "key": "walking",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "invoke": [],
+                    "description": "![happy walking puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+                  },
+                  "size": {
+                    "x": -139.2734809248388,
+                    "y": -396.8437563350242,
+                    "top": -396.8437563350242,
+                    "left": -139.2734809248388,
+                    "right": -4.2734767036574,
+                    "width": 135.0000042211814,
+                    "bottom": -205.84375036283421,
+                    "height": 191.00000597218997
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": -138.78710309473462,
+                    "y": -396.5042375824405
+                  }
+                },
+                {
+                  "id": "dog walk.on a walk.activity.running",
+                  "data": {
+                    "key": "running",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "invoke": [],
+                    "description": "![puppy running bouncily](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/running.svg)"
+                  },
+                  "size": {
+                    "x": 259.2265315354633,
+                    "y": -391.84375617868415,
+                    "top": -391.84375617868415,
+                    "left": 259.2265315354633,
+                    "right": 425.22653672595305,
+                    "width": 166.00000519048973,
+                    "bottom": -210.84375051917425,
+                    "height": 181.0000056595099
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 259.72026288712226,
+                    "y": -391.5042375824405
+                  }
+                }
+              ],
+              "position": {
+                "x": -186.78710309473462,
+                "y": -485.50423886442894
+              }
+            },
+            {
+              "id": "dog walk.on a walk.tail",
+              "data": {
+                "key": "tail",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "invoke": [],
+                "initial": "not wagging"
+              },
+              "size": {
+                "x": -186.57035740371796,
+                "y": -135.33593565819518,
+                "top": -135.33593565819518,
+                "left": -186.57035740371796,
+                "right": 473.50778823561166,
+                "width": 660.0781456393296,
+                "bottom": -94.33593437620677,
+                "height": 41.00000128198842
+              },
+              "nodes": [
+                {
+                  "id": "dog walk.on a walk.tail.wagging",
+                  "data": {
+                    "key": "wagging",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "invoke": [],
+                    "description": "![puppy sniffing the ground with a wagging tail](https://raw.githubusercontent.com/statelyai/assets/d236419f16a3b51a653e401084e9e9be8cfdbaa3/example-images/dogs/wagging.svg)"
+                  },
+                  "size": {
+                    "x": 237.49996835611694,
+                    "y": -46.33593287534227,
+                    "top": -46.33593287534227,
+                    "left": 237.49996835611694,
+                    "right": 425.4999742345029,
+                    "width": 188.00000587838593,
+                    "bottom": 128.66407259655955,
+                    "height": 175.00000547190183
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 237.50748354770997,
+                    "y": -46.34326171875
+                  }
+                },
+                {
+                  "id": "dog walk.on a walk.tail.not wagging",
+                  "data": {
+                    "key": "not wagging",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "invoke": [],
+                    "description": "![puppy sniffing the ground with a still tail](https://raw.githubusercontent.com/statelyai/assets/d236419f16a3b51a653e401084e9e9be8cfdbaa3/example-images/dogs/sniffing.svg)"
+                  },
+                  "size": {
+                    "x": -138.57035590285346,
+                    "y": -38.83593264083219,
+                    "top": -38.83593264083219,
+                    "left": -138.57035590285346,
+                    "right": 35.42964953778032,
+                    "width": 174.0000054406338,
+                    "bottom": 121.16407236204947,
+                    "height": 160.00000500288166
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": -138.57432444321847,
+                    "y": -38.84326171875
+                  }
+                }
+              ],
+              "position": {
+                "x": -186.57432444321847,
+                "y": -135.34326300073843
+              }
+            }
+          ],
+          "position": {
+            "x": -234.78710309473462,
+            "y": -574.5042401464174
+          }
+        },
+        {
+          "id": "dog walk.walk complete",
+          "data": {
+            "key": "walk complete",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)"
+          },
+          "size": {
+            "x": -478.1484915207858,
+            "y": 36.890632226986746,
+            "top": 36.890632226986746,
+            "left": -478.1484915207858,
+            "right": -302.87504854033415,
+            "width": 175.27344298045165,
+            "bottom": 222.89063804283668,
+            "height": 186.00000581584993
+          },
+          "nodes": [],
+          "position": {
+            "x": -478.15461093651356,
+            "y": 36.895035593455304
+          }
+        }
+      ],
+      "position": {
+        "x": -526.1546109365136,
+        "y": -663.5042414284057
+      }
+    }
+  }
+}

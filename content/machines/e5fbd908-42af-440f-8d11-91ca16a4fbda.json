@@ -1,0 +1,521 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "e5fbd908-42af-440f-8d11-91ca16a4fbda",
+    "edges": [
+      {
+        "id": "Simulate mode.Initial state#press[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "to go to state one",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "press"
+          }
+        },
+        "size": {
+          "x": 249.4375129945987,
+          "y": 187.2812597565309,
+          "top": 187.2812597565309,
+          "left": 249.4375129945987,
+          "right": 324.1718594906862,
+          "width": 74.73434649608757,
+          "bottom": 260.2812521251886,
+          "height": 72.99999236865764
+        },
+        "source": "Simulate mode.Initial state",
+        "target": "Simulate mode.state one",
+        "position": {
+          "x": 249.4454146022184,
+          "y": 187.2899139985262
+        },
+        "uniqueId": "l67fr95c9fb"
+      },
+      {
+        "id": "Simulate mode.Initial state#xstate.after(30000)#Simulate mode.Initial state[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "description": "if you don’t trigger the press state, this transition \\\nto **state one** will be taken after 30 seconds.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "30000"
+          }
+        },
+        "size": {
+          "x": 184.8593674788791,
+          "y": 312.2343817374386,
+          "top": 312.2343817374386,
+          "left": 184.8593674788791,
+          "right": 320.531316246999,
+          "width": 135.6719487681199,
+          "bottom": 404.2343789073535,
+          "height": 91.99999716991488
+        },
+        "source": "Simulate mode.Initial state",
+        "target": "Simulate mode.state one",
+        "position": {
+          "x": 184.8707623452453,
+          "y": 312.2431790337528
+        },
+        "uniqueId": "wxm4r7o30b"
+      },
+      {
+        "id": "Simulate mode.Initial state#press instead[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "press instead"
+          }
+        },
+        "size": {
+          "x": -29.34374771723993,
+          "y": 270.0781257298424,
+          "top": 270.0781257298424,
+          "left": -29.34374771723993,
+          "right": 94.76560897394963,
+          "width": 124.1093566911896,
+          "bottom": 310.0781201907856,
+          "height": 39.99999446094319
+        },
+        "source": "Simulate mode.Initial state",
+        "target": "Simulate mode.state two",
+        "position": {
+          "x": -29.34412296586412,
+          "y": 270.0892796842182
+        },
+        "uniqueId": "tygf02qqnta"
+      },
+      {
+        "id": "Simulate mode.state two#press[0]",
+        "data": {
+          "guard": {
+            "type": "a condition",
+            "kind": "named"
+          },
+          "actions": [],
+          "internal": false,
+          "description": "trigger this condition manually by \npressing this event",
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "press"
+          }
+        },
+        "size": {
+          "x": 205.859307589837,
+          "y": 515.9375268780788,
+          "top": 515.9375268780788,
+          "left": 205.859307589837,
+          "right": 402.8281860057033,
+          "width": 196.9688784158663,
+          "bottom": 588.9374696980084,
+          "height": 72.99994281992963
+        },
+        "source": "Simulate mode.state two",
+        "target": "Simulate mode.state three",
+        "position": {
+          "x": 205.8708599195885,
+          "y": 515.9455299141722
+        },
+        "uniqueId": "tt44aehvr4k"
+      },
+      {
+        "id": "Simulate mode.state two#press[1]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "press"
+          }
+        },
+        "size": {
+          "x": 231.1874281921602,
+          "y": 638.1563023023422,
+          "top": 638.1563023023422,
+          "left": 231.1874281921602,
+          "right": 422.9844103756711,
+          "width": 191.7969821835109,
+          "bottom": 678.1562967632852,
+          "height": 39.99999446094307
+        },
+        "source": "Simulate mode.state two",
+        "target": "Simulate mode.state four",
+        "position": {
+          "x": 231.2012311363685,
+          "y": 638.1632927897185
+        },
+        "uniqueId": "sqv07e4mu7g"
+      },
+      {
+        "id": "Simulate mode.state four.child state#press[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "press"
+          }
+        },
+        "size": {
+          "x": 880.2032261206076,
+          "y": 303.7343469916604,
+          "top": 303.7343469916604,
+          "left": 880.2032261206076,
+          "right": 954.3907528540943,
+          "width": 74.18752673348672,
+          "bottom": 343.7343910013316,
+          "height": 40.00004400967117
+        },
+        "source": "Simulate mode.state four.child state",
+        "target": "Simulate mode.state four.final child state",
+        "position": {
+          "x": 880.2138819930169,
+          "y": 303.7347565339977
+        },
+        "uniqueId": "ggm70r9zuuo"
+      },
+      {
+        "id": "Simulate mode.state four#done.state.Simulate mode.state four[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "state.done"
+          }
+        },
+        "size": {
+          "x": 745.2031581046504,
+          "y": 89.64058583831591,
+          "top": 89.64058583831591,
+          "left": 745.2031581046504,
+          "right": 838.8750284559422,
+          "width": 93.67187035129189,
+          "bottom": 124.6406181531872,
+          "height": 35.00003231487129
+        },
+        "source": "Simulate mode.state four",
+        "target": "Simulate mode.Initial state",
+        "position": {
+          "x": 745.2142581594152,
+          "y": 89.65053682315727
+        },
+        "uniqueId": "jniw9afwmjd"
+      },
+      {
+        "id": "Simulate mode.state three#back[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "back"
+          }
+        },
+        "size": {
+          "x": 570.3750297140334,
+          "y": 348.4843798144639,
+          "top": 348.4843798144639,
+          "left": 570.3750297140334,
+          "right": 640.1876019568894,
+          "width": 69.81257224285594,
+          "bottom": 388.484324726679,
+          "height": 39.99994491221514
+        },
+        "source": "Simulate mode.state three",
+        "target": "Simulate mode.state one",
+        "position": {
+          "x": 570.3773838705708,
+          "y": 348.49752129826
+        },
+        "uniqueId": "l7ql7gkps9m"
+      },
+      {
+        "id": "Simulate mode.state one#forward[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "forward"
+          }
+        },
+        "size": {
+          "x": 668.9999891146756,
+          "y": 204.0312568176918,
+          "top": 204.0312568176918,
+          "left": 668.9999891146756,
+          "right": 757.4531892343465,
+          "width": 88.4532001196709,
+          "bottom": 244.0312512786349,
+          "height": 39.99999446094316
+        },
+        "source": "Simulate mode.state one",
+        "target": "Simulate mode.state four",
+        "position": {
+          "x": 669.0028896792254,
+          "y": 204.0398798017669
+        },
+        "uniqueId": "7isyu8v9r8e"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "back": {
+          "type": "object",
+          "properties": {}
+        },
+        "press": {
+          "type": "object",
+          "properties": {}
+        },
+        "forward": {
+          "type": "object",
+          "properties": {}
+        },
+        "press instead": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Simulate mode",
+      "data": {
+        "key": "Simulate mode",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Initial state",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -104.0313202140619,
+        "y": 16.64064301838629,
+        "top": 16.64064301838629,
+        "left": -104.0313202140619,
+        "right": 1324.968860950902,
+        "width": 1429.000181164964,
+        "bottom": 46.64061408972964,
+        "height": 29.99997107134335
+      },
+      "nodes": [
+        {
+          "id": "Simulate mode.Initial state",
+          "data": {
+            "key": "Initial state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "Simulation will start here."
+          },
+          "size": {
+            "x": -61.03124936801957,
+            "y": 155.6562390518042,
+            "top": 155.6562390518042,
+            "left": -61.03124936801957,
+            "right": 127.4687604520029,
+            "width": 188.5000098200225,
+            "bottom": 241.1562358830976,
+            "height": 85.4999968312934
+          },
+          "nodes": [],
+          "position": {
+            "x": -61.03552680156187,
+            "y": 155.6573348204873
+          },
+          "uniqueId": "f6jfh9wxxa"
+        },
+        {
+          "id": "Simulate mode.state one",
+          "data": {
+            "key": "state one",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 527.0468471909394,
+            "y": 203.281237721417,
+            "top": 203.281237721417,
+            "left": 527.0468471909394,
+            "right": 626.2655985483601,
+            "width": 99.21875135742073,
+            "bottom": 244.7812208261817,
+            "height": 41.49998310476474
+          },
+          "nodes": [],
+          "position": {
+            "x": 527.0586712492744,
+            "y": 203.2898868626974
+          },
+          "uniqueId": "qp4gfk8buzc"
+        },
+        {
+          "id": "Simulate mode.state two",
+          "data": {
+            "key": "state two",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -16.85945020139147,
+            "y": 531.9375048429648,
+            "top": 531.9375048429648,
+            "left": -16.85945020139147,
+            "right": 82.2812123606451,
+            "width": 99.14066256203657,
+            "bottom": 573.4375374964575,
+            "height": 41.50003265349267
+          },
+          "nodes": [],
+          "position": {
+            "x": -16.86365898219998,
+            "y": 531.9455222779258
+          },
+          "uniqueId": "bv3ljh8ivj"
+        },
+        {
+          "id": "Simulate mode.state three",
+          "data": {
+            "key": "state three",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 550.1405183537694,
+            "y": 434.2187916780937,
+            "top": 434.2187916780937,
+            "left": 550.1405183537694,
+            "right": 660.4219151222412,
+            "width": 110.2813967684718,
+            "bottom": 475.7188243315865,
+            "height": 41.50003265349278
+          },
+          "nodes": [],
+          "position": {
+            "x": 550.1430181849719,
+            "y": 434.2335239884308
+          },
+          "uniqueId": "okq6imur478"
+        },
+        {
+          "id": "Simulate mode.state four",
+          "data": {
+            "key": "state four",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "child state"
+          },
+          "size": {
+            "x": 827.2968780784088,
+            "y": 153.0155891398752,
+            "top": 153.0155891398752,
+            "left": 827.2968780784088,
+            "right": 1267.29691624624,
+            "width": 440.0000381678308,
+            "bottom": 194.515621793368,
+            "height": 41.50003265349275
+          },
+          "nodes": [
+            {
+              "id": "Simulate mode.state four.child state",
+              "data": {
+                "key": "child state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 874.812522705247,
+                "y": 237.5155935419542,
+                "top": 237.5155935419542,
+                "left": 874.812522705247,
+                "right": 981.6251121214029,
+                "width": 106.8125894161559,
+                "bottom": 279.015626195447,
+                "height": 41.50003265349278
+              },
+              "nodes": [],
+              "position": {
+                "x": 874.8154418099798,
+                "y": 237.5298929264823
+              },
+              "uniqueId": "jsyvpomepne"
+            },
+            {
+              "id": "Simulate mode.state four.final child state",
+              "data": {
+                "key": "final child state",
+                "exit": [],
+                "tags": [],
+                "type": "final",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "when this final state is reached, the machine will \\\ntransition back to the **Initial state** through **onDone**"
+              },
+              "size": {
+                "x": 870.2968498269951,
+                "y": 391.8437284874923,
+                "top": 391.8437284874923,
+                "left": 870.2968498269951,
+                "right": 1214.093870420564,
+                "width": 343.7970205935686,
+                "bottom": 497.3437720979853,
+                "height": 105.500043610493
+              },
+              "nodes": [],
+              "position": {
+                "x": 870.2972152821985,
+                "y": 391.8554224419495
+              },
+              "uniqueId": "ap7g3woix9c"
+            }
+          ],
+          "position": {
+            "x": 822.2972152821985,
+            "y": 148.0298602729895
+          },
+          "uniqueId": "ngn8nf0f1e"
+        }
+      ],
+      "position": {
+        "x": -109.0355268015619,
+        "y": 11.65056575181392
+      },
+      "uniqueId": "lrzy5eo07fg"
+    }
+  }
+}

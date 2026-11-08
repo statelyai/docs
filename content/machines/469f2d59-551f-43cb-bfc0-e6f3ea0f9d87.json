@@ -1,0 +1,90 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [],
+    "context": {},
+    "rootNode": {
+      "id": "dog",
+      "data": {
+        "key": "dog",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "asleep",
+        "description": "Only states. There’s no transitions which means the awake state cannot be reached."
+      },
+      "size": {
+        "x": -507.3359375,
+        "y": -407.03125,
+        "top": -407.03125,
+        "left": -507.3359375,
+        "right": 41.7890625,
+        "width": 549.125,
+        "bottom": -308.53125,
+        "height": 98.5
+      },
+      "nodes": [
+        {
+          "id": "dog.asleep",
+          "data": {
+            "key": "asleep",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)"
+          },
+          "size": {
+            "x": -464.3359375,
+            "y": -262.53125,
+            "top": -262.53125,
+            "left": -464.3359375,
+            "right": -302.3359375,
+            "width": 162,
+            "bottom": -63.53125,
+            "height": 199
+          },
+          "nodes": [],
+          "position": {
+            "x": -464.3364860703558,
+            "y": -262.5319722013712
+          },
+          "uniqueId": "805jr7lk113"
+        },
+        {
+          "id": "dog.awake",
+          "data": {
+            "key": "awake",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![happy awake puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+          },
+          "size": {
+            "x": -264.546875,
+            "y": -265.53125,
+            "top": -265.53125,
+            "left": -264.546875,
+            "right": -120.546875,
+            "width": 144,
+            "bottom": -60.53125,
+            "height": 205
+          },
+          "nodes": [],
+          "position": {
+            "x": -156.4311013137464,
+            "y": -265.5319722013712
+          },
+          "uniqueId": "59q1zvqff2o"
+        }
+      ],
+      "position": {
+        "x": -512.3364860703558,
+        "y": -412.0319722013712
+      },
+      "uniqueId": "i3kqelb0d4"
+    }
+  }
+}

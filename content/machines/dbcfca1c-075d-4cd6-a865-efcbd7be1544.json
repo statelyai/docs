@@ -1,0 +1,347 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "dbcfca1c-075d-4cd6-a865-efcbd7be1544",
+    "edges": [
+      {
+        "id": "What is a state machine?.Closed#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "x": 240.4375092871159,
+          "y": -222.0936939119921,
+          "top": -222.0936939119921,
+          "left": 240.4375092871159,
+          "right": 313.3593486835421,
+          "width": 72.92183939642618,
+          "bottom": -182.0937199917284,
+          "height": 39.9999739202637
+        },
+        "source": "What is a state machine?.Closed",
+        "target": "What is a state machine?.Opened",
+        "position": {
+          "x": 240.4429071463645,
+          "y": -222.1002650897946
+        },
+        "uniqueId": "k3ai57tnm5n"
+      },
+      {
+        "id": "What is a state machine?.Opened.Playing#PAUSE[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAUSE"
+          }
+        },
+        "size": {
+          "x": 520.3672959740378,
+          "y": -49.87495994572077,
+          "top": -49.87495994572077,
+          "left": 520.3672959740378,
+          "right": 602.2032352994767,
+          "width": 81.83593932543886,
+          "bottom": -9.874939708820222,
+          "height": 40.00002023690055
+        },
+        "source": "What is a state machine?.Opened.Playing",
+        "target": "What is a state machine?.Opened.Paused",
+        "position": {
+          "x": 520.369868680554,
+          "y": -49.87591189823841
+        },
+        "uniqueId": "zw39ja3b5sd"
+      },
+      {
+        "id": "What is a state machine?.Opened.Paused#PLAY[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PLAY"
+          }
+        },
+        "size": {
+          "x": 397.9922570753491,
+          "y": 19.76566994602366,
+          "top": 19.76566994602366,
+          "left": 397.9922570753491,
+          "right": 470.9140964717753,
+          "width": 72.92183939642615,
+          "bottom": 59.76564386628736,
+          "height": 39.9999739202637
+        },
+        "source": "What is a state machine?.Opened.Paused",
+        "target": "What is a state machine?.Opened.Playing",
+        "position": {
+          "x": 397.9924383355345,
+          "y": 19.76984757911762
+        },
+        "uniqueId": "wtzdgfz7jfs"
+      },
+      {
+        "id": "What is a state machine?.Opened.Stopped#xstate.after(5000)#What is a state machine?.Opened.Stopped[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "after",
+            "delay": "5000"
+          }
+        },
+        "size": {
+          "x": 124.7655993405546,
+          "y": 74.10944313375043,
+          "top": 74.10944313375043,
+          "left": 124.7655993405546,
+          "right": 251.9296858567225,
+          "width": 127.1640865161679,
+          "bottom": 114.1094170540141,
+          "height": 39.9999739202637
+        },
+        "source": "What is a state machine?.Opened.Stopped",
+        "target": "What is a state machine?.Closed",
+        "position": {
+          "x": 124.7709628377064,
+          "y": 74.11102082320082
+        },
+        "uniqueId": "uiryvigmxzs"
+      },
+      {
+        "id": "What is a state machine?.Opened#STOP[0]",
+        "data": {
+          "actions": [],
+          "internal": true,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STOP"
+          }
+        },
+        "size": {
+          "x": 659.6797731707666,
+          "y": -21.02335419969291,
+          "top": -21.02335419969291,
+          "left": 659.6797731707666,
+          "right": 733.9609132255979,
+          "width": 74.28114005483133,
+          "bottom": 18.97661972057078,
+          "height": 39.9999739202637
+        },
+        "source": "What is a state machine?.Opened",
+        "target": "What is a state machine?.Opened.Stopped",
+        "position": {
+          "x": 659.6797362260545,
+          "y": -21.03083090598891
+        },
+        "uniqueId": "hfoydja1ngu"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "PLAY": {
+          "type": "object",
+          "properties": {}
+        },
+        "STOP": {
+          "type": "object",
+          "properties": {}
+        },
+        "PAUSE": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "What is a state machine?",
+      "data": {
+        "key": "What is a state machine?",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Closed",
+        "description": "Video player"
+      },
+      "size": {
+        "x": 81.76559448242188,
+        "y": -378.8749961853027,
+        "top": -378.8749961853027,
+        "left": 81.76559448242188,
+        "right": 844.7655944824219,
+        "width": 763,
+        "bottom": -292.8749961853027,
+        "height": 86
+      },
+      "nodes": [
+        {
+          "id": "What is a state machine?.Closed",
+          "data": {
+            "key": "Closed",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 135.3202345469529,
+            "y": -222.0936939119921,
+            "top": -222.0936939119921,
+            "left": 135.3202345469529,
+            "right": 217.3358824233871,
+            "width": 82.01564787643426,
+            "bottom": -180.5937093905593,
+            "height": 41.49998452143279
+          },
+          "nodes": [],
+          "position": {
+            "x": 135.3230876158907,
+            "y": -222.1002650897946
+          },
+          "uniqueId": "53v5b31915"
+        },
+        {
+          "id": "What is a state machine?.Opened",
+          "data": {
+            "key": "Opened",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": ":invocation:6ov1ringm",
+                "src": "startVideo",
+                "kind": "named"
+              }
+            ],
+            "initial": "Playing",
+            "description": "Fullscreen mode"
+          },
+          "size": {
+            "x": 348.7890319824219,
+            "y": -244.8749961853027,
+            "top": -244.8749961853027,
+            "left": 348.7890319824219,
+            "right": 786.7890319824219,
+            "width": 438,
+            "bottom": -92.87499618530273,
+            "height": 152
+          },
+          "nodes": [
+            {
+              "id": "What is a state machine?.Opened.Playing",
+              "data": {
+                "key": "Playing",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 391.7890699014289,
+                "y": -49.87495994572077,
+                "top": -49.87495994572077,
+                "left": 391.7890699014289,
+                "right": 475.7812339389912,
+                "width": 83.99216403756225,
+                "bottom": -8.375021740924828,
+                "height": 41.49993820479594
+              },
+              "nodes": [],
+              "position": {
+                "x": 391.7918992567835,
+                "y": -49.87591189823841
+              },
+              "uniqueId": "a2svp136v0g"
+            },
+            {
+              "id": "What is a state machine?.Opened.Paused",
+              "data": {
+                "key": "Paused",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 519.7499878380413,
+                "y": 19.76566994602366,
+                "top": 19.76566994602366,
+                "left": 519.7499878380413,
+                "right": 604.9375842728176,
+                "width": 85.18759643477631,
+                "bottom": 61.26565446745646,
+                "height": 41.49998452143279
+              },
+              "nodes": [],
+              "position": {
+                "x": 519.7527421715699,
+                "y": 19.76985711586147
+              },
+              "uniqueId": "oyaviyoqrgl"
+            },
+            {
+              "id": "What is a state machine?.Opened.Stopped",
+              "data": {
+                "key": "Stopped",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 632.2266056412859,
+                "y": 73.60940872226949,
+                "top": 73.60940872226949,
+                "left": 632.2266056412859,
+                "right": 725.0938709996294,
+                "width": 92.8672653583435,
+                "bottom": 115.1093932437023,
+                "height": 41.49998452143281
+              },
+              "nodes": [],
+              "position": {
+                "x": 632.2318125098964,
+                "y": 73.61100171395034
+              },
+              "uniqueId": "ayzt4apsxv8"
+            }
+          ],
+          "position": {
+            "x": 343.7918992567835,
+            "y": -249.8759118982384
+          },
+          "uniqueId": "29lrcwtgl7x"
+        }
+      ],
+      "position": {
+        "x": 76.7709628377064,
+        "y": -383.8759118982384
+      },
+      "uniqueId": "95y5givb0z"
+    }
+  }
+}

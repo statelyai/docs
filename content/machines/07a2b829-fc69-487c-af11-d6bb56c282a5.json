@@ -1,0 +1,442 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "07a2b829-fc69-487c-af11-d6bb56c282a5",
+    "edges": [
+      {
+        "id": "States with Figma icons.Sound.White noise#toggle sound[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "toggle sound"
+          }
+        },
+        "size": {
+          "x": 839.0702910243002,
+          "y": 90.67187534950799,
+          "top": 90.67187534950799,
+          "left": 839.0702910243002,
+          "right": 960.7187225031479,
+          "width": 121.6484314788477,
+          "bottom": 130.6718969564559,
+          "height": 40.00002160694794
+        },
+        "source": "States with Figma icons.Sound.White noise",
+        "target": "States with Figma icons.Sound.Waves",
+        "position": {
+          "x": 839.0764845218104,
+          "y": 90.67259097933461
+        },
+        "uniqueId": "coe19j8j9xm"
+      },
+      {
+        "id": "States with Figma icons.Sound.Waves#toggle sound[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "toggle sound"
+          }
+        },
+        "size": {
+          "x": 848.5469003134797,
+          "y": -185.531240866918,
+          "top": -185.531240866918,
+          "left": 848.5469003134797,
+          "right": 970.1953317923272,
+          "width": 121.6484314788476,
+          "bottom": -145.5312192599701,
+          "height": 40.00002160694794
+        },
+        "source": "States with Figma icons.Sound.Waves",
+        "target": "States with Figma icons.Sound.White noise",
+        "position": {
+          "x": 848.5477567322313,
+          "y": -185.5372695511644
+        },
+        "uniqueId": "9fkvb7zqt8l"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "toggle sound": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "States with Figma icons",
+      "data": {
+        "key": "States with Figma icons",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Sound",
+        "metaEntries": [
+          [
+            "gitHubUrl",
+            "https://github.com/laurakalbag/whitenoise-demo/blob/43d996b7b794c411a397b9b8094fdb23af2c3f4d/machine.js"
+          ]
+        ]
+      },
+      "size": {
+        "x": 447.7656258291633,
+        "y": -383.4375008919824,
+        "top": -383.4375008919824,
+        "left": 447.7656258291633,
+        "right": 1378.765644440396,
+        "width": 931.0000186112331,
+        "bottom": -353.4374846867715,
+        "height": 30.00001620521095
+      },
+      "nodes": [
+        {
+          "id": "States with Figma icons.Sound",
+          "data": {
+            "key": "Sound",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "White noise",
+            "metaEntries": []
+          },
+          "size": {
+            "x": 495.7655990456119,
+            "y": -305.4374785253924,
+            "top": -305.4374785253924,
+            "left": 495.7655990456119,
+            "right": 1320.765566987419,
+            "width": 824.9999679418072,
+            "bottom": -263.937490700361,
+            "height": 41.49998782503138
+          },
+          "nodes": [
+            {
+              "id": "States with Figma icons.Sound.White noise",
+              "data": {
+                "key": "White noise",
+                "exit": [],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "changeToNoise",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [
+                  {
+                    "name": "noise",
+                    "template": "@figma.link",
+                    "properties": {
+                      "url": "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/c847e711-dfbd-4cd6-a8b4-86b7d5288077",
+                      "name": "noise",
+                      "size": "sm",
+                      "uuid": "7636ee16-1203-4d13-9964-2cb7455c328f",
+                      "fileId": "cf1cQQjyMNBrV2nhpT2ccN",
+                      "nodeId": "1-11",
+                      "lastRefreshed": 1706186188647
+                    }
+                  }
+                ],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": 538.7655860336572,
+                "y": -220.9374872398503,
+                "top": -220.9374872398503,
+                "left": 538.7655860336572,
+                "right": 788.76562224229,
+                "width": 250.0000362086328,
+                "bottom": 155.562516818717,
+                "height": 376.5000040585673
+              },
+              "nodes": [],
+              "position": {
+                "x": 538.7700653228517,
+                "y": -220.9445800574227
+              },
+              "uniqueId": "oq74ejh4vt"
+            },
+            {
+              "id": "States with Figma icons.Sound.Waves",
+              "data": {
+                "key": "Waves",
+                "exit": [],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "changeToWaves",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [
+                  {
+                    "name": "waves",
+                    "template": "@figma.link",
+                    "properties": {
+                      "url": "https://figma-alpha-api.s3.us-west-2.amazonaws.com/images/55b010e8-c904-44c8-9eeb-168d79379ed6",
+                      "name": "waves",
+                      "size": "sm",
+                      "uuid": "d67d06ca-6c47-4550-86bd-d8db6d2a9ef7",
+                      "fileId": "cf1cQQjyMNBrV2nhpT2ccN",
+                      "nodeId": "1-8",
+                      "lastRefreshed": 1706186188650
+                    }
+                  }
+                ],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": 1018.195305008776,
+                "y": -220.9374872398503,
+                "top": -220.9374872398503,
+                "left": 1018.195305008776,
+                "right": 1268.195341217409,
+                "width": 250.0000362086329,
+                "bottom": 155.562516818717,
+                "height": 376.5000040585673
+              },
+              "nodes": [],
+              "position": {
+                "x": 1018.197628983385,
+                "y": -220.9446267215891
+              },
+              "uniqueId": "fejvogsyc9t"
+            }
+          ],
+          "position": {
+            "x": 490.7700653228517,
+            "y": -310.4446145466205
+          },
+          "uniqueId": "o3nlnhjxeib"
+        }
+      ],
+      "position": {
+        "x": 442.7700653228517,
+        "y": -388.4446307518314
+      },
+      "uniqueId": "crt1781ak1k"
+    },
+    "implementations": {
+      "actors": {
+        "audioPlayer": {
+          "id": "audioPlayer",
+          "kind": "named",
+          "name": "audioPlayer",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "isNotMaxVolume": {
+          "id": "isNotMaxVolume",
+          "name": "isNotMaxVolume",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "isNotMinVolume": {
+          "id": "isNotMinVolume",
+          "name": "isNotMinVolume",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "play": {
+          "id": "play",
+          "code": "export default sendTo(\"audioPlayer\", {\"type\":\"play\"},)",
+          "name": "Unnamed sendTo",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "pause": {
+          "id": "pause",
+          "code": "export default sendTo(\"audioPlayer\", {\"type\":\"pause\"},)",
+          "name": "Unnamed sendTo",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "volUp": {
+          "id": "volUp",
+          "name": "volUp",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setBlue": {
+          "id": "setBlue",
+          "name": "setBlue",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "volDown": {
+          "id": "volDown",
+          "name": "volDown",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setGreen": {
+          "id": "setGreen",
+          "name": "setGreen",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "volumeUp": {
+          "id": "volumeUp",
+          "code": "export default assign({\"volume\":(event) => {\\r\n                      return event.context.volume + 1;\\r\n                    }})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setVolume": {
+          "id": "setVolume",
+          "name": "setVolume",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setYellow": {
+          "id": "setYellow",
+          "name": "setYellow",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "volumeDown": {
+          "id": "volumeDown",
+          "code": "export default assign({\"volume\":(event) => {\\r\n                      return event.context.volume - 1;\\r\n                    }})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "hideButtons": {
+          "id": "hideButtons",
+          "name": "hideButtons",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showButtons": {
+          "id": "showButtons",
+          "name": "showButtons",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "removeColour": {
+          "id": "removeColour",
+          "name": "removeColour",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "changeToNoise": {
+          "id": "changeToNoise",
+          "name": "changeToNoise",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "changeToWaves": {
+          "id": "changeToWaves",
+          "name": "changeToWaves",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

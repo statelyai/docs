@@ -1,0 +1,347 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "50c0ee06-8297-4b79-95d1-b1abf779d757",
+    "edges": [
+      {
+        "id": "Transitions.Initial state#event[0]",
+        "data": {
+          "actions": [],
+          "description": "Transitions are triggered<br> by an event.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "event"
+          }
+        },
+        "size": {
+          "x": 170.6015625,
+          "y": 23.5703125,
+          "top": 23.5703125,
+          "left": 170.6015625,
+          "right": 360.9921875,
+          "width": 190.390625,
+          "bottom": 116.5703125,
+          "height": 93
+        },
+        "source": "Transitions.Initial state",
+        "target": "Transitions.Another state",
+        "position": {
+          "x": -54.16414595886411,
+          "y": -172.16015625
+        },
+        "uniqueId": "m3yj3kgr31b"
+      },
+      {
+        "id": "Transitions.Another state#next[0]",
+        "data": {
+          "guard": {
+            "type": "condition",
+            "kind": "named"
+          },
+          "actions": [],
+          "description": "This transition will only happen<br> IF condition is `true`.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 221.6171875,
+          "y": 121.890625,
+          "top": 121.890625,
+          "left": 221.6171875,
+          "right": 471.25,
+          "width": 249.6328125,
+          "bottom": 215.390625,
+          "height": 93.5
+        },
+        "source": "Transitions.Another state",
+        "target": "Transitions.This state",
+        "position": {
+          "x": 262.2157592773438,
+          "y": -64.80859375
+        },
+        "uniqueId": "bccno156oev"
+      },
+      {
+        "id": "Transitions.Another state#next[1]",
+        "data": {
+          "actions": [],
+          "description": "ELSE condition is `false`, this<br> transition will be taken instead.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 454.1015625,
+          "y": 189.0546875,
+          "top": 189.0546875,
+          "left": 454.1015625,
+          "right": 704.4530639648438,
+          "width": 250.3515014648438,
+          "bottom": 282.5546875,
+          "height": 93.5
+        },
+        "source": "Transitions.Another state",
+        "target": "Transitions.That state",
+        "position": {
+          "x": 466.6806335449219,
+          "y": 45.1171875
+        },
+        "uniqueId": "t6hfem7oo8i"
+      },
+      {
+        "id": "Transitions.This state#xstate.after(60000)#Transitions.This state[0]",
+        "data": {
+          "actions": [],
+          "description": "This transition will be taken<br> after 1 minute (`60000ms`)",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "60000"
+          }
+        },
+        "size": {
+          "x": 534.1796264648438,
+          "y": 279.703125,
+          "top": 279.703125,
+          "left": 534.1796264648438,
+          "right": 741.7421264648438,
+          "width": 207.5625,
+          "bottom": 373.203125,
+          "height": 93.5
+        },
+        "source": "Transitions.This state",
+        "target": "Transitions.A state",
+        "position": {
+          "x": 29.48529052734375,
+          "y": 141.3203125
+        },
+        "uniqueId": "k1hwttdjcg"
+      },
+      {
+        "id": "Transitions.A state#always[0]",
+        "data": {
+          "actions": [],
+          "description": "This transition will be taken<br> immediately, without being<br> triggered by an event.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "x": 122.296875,
+          "y": 245.7734375,
+          "top": 245.7734375,
+          "left": 122.296875,
+          "right": 329.859375,
+          "width": 207.5625,
+          "bottom": 353.7734375,
+          "height": 108
+        },
+        "source": "Transitions.A state",
+        "target": "Transitions.Initial state",
+        "position": {
+          "x": -222.071412633955,
+          "y": -3.0859375
+        },
+        "uniqueId": "1hrrx12e95x"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "next": {
+          "type": "object",
+          "properties": {}
+        },
+        "event": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Transitions",
+      "data": {
+        "key": "Transitions",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Initial state",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -265.0703125,
+        "y": -245.15625,
+        "top": -245.15625,
+        "left": -265.0703125,
+        "right": 769.9296875,
+        "width": 1035,
+        "bottom": -215.15625,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "Transitions.Initial state",
+          "data": {
+            "key": "Initial state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 11.7890625,
+            "y": 22.5703125,
+            "top": 22.5703125,
+            "left": 11.7890625,
+            "right": 122.5234375,
+            "width": 110.734375,
+            "bottom": 64.0703125,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -195.528443883955,
+            "y": -146.41015625
+          },
+          "uniqueId": "hh546ml6t9p"
+        },
+        {
+          "id": "Transitions.Another state",
+          "data": {
+            "key": "Another state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 296.7577514648438,
+            "y": 22.5703125,
+            "top": 22.5703125,
+            "left": 296.7577514648438,
+            "right": 427.0233764648438,
+            "width": 130.265625,
+            "bottom": 64.0703125,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 174.6591807074074,
+            "y": -146.41015625
+          },
+          "uniqueId": "aez2ft61mmt"
+        },
+        {
+          "id": "Transitions.This state",
+          "data": {
+            "key": "This state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 341.03125,
+            "y": 246.1015625,
+            "top": 246.1015625,
+            "left": 341.03125,
+            "right": 444.0078125,
+            "width": 102.9765625,
+            "bottom": 287.6015625,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 335.5438842773438,
+            "y": 167.3203125
+          },
+          "uniqueId": "wpkv5s7myjl"
+        },
+        {
+          "id": "Transitions.That state",
+          "data": {
+            "key": "That state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 538.9530639648438,
+            "y": 230.0703125,
+            "top": 230.0703125,
+            "left": 538.9530639648438,
+            "right": 644.2733764648438,
+            "width": 105.3203125,
+            "bottom": 271.5703125,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 539.1962280273438,
+            "y": 167.3203125
+          },
+          "uniqueId": "tg1khk9nuws"
+        },
+        {
+          "id": "Transitions.A state",
+          "data": {
+            "key": "A state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 92.953125,
+            "y": 206.0703125,
+            "top": 206.0703125,
+            "left": 92.953125,
+            "right": 175.8671875,
+            "width": 82.9140625,
+            "bottom": 247.5703125,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -159.747193883955,
+            "y": 167.3203125
+          },
+          "uniqueId": "7kr2cruwrrf"
+        }
+      ],
+      "position": {
+        "x": -270.071412633955,
+        "y": -250.16015625
+      },
+      "uniqueId": "c4y7ab2uc0k"
+    }
+  }
+}

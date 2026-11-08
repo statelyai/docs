@@ -18,6 +18,8 @@ slug: 2023-10-02-persisting-state
 image: /blog/2023-10-02-persisting-state.png
 ---
 
+import machine_6777d80d from '@/content/machines/6777d80d-82d8-41dc-9cd3-c6951495ff0f.json';
+
 State machines are great for modeling state in applications. However, we often need to persist and restore state across sessions - for example, when a user closes and reopens their browser. In this article, we’ll explore how to persist and restore state in XState so your frontend applications or backend workflows can pick up where it left off.
 
 {/* truncate */}
@@ -91,10 +93,7 @@ const checkoutActor = createActor(machine, {
 });
 ```
 
-<EmbedMachine
-  embedURL="https://editor.stately.ai/viz?machineId=6777d80d-82d8-41dc-9cd3-c6951495ff0f"
-  name="checkout"
-/>
+<Embed machine={machine_6777d80d} name="checkout" />
 
 You may want to persist the state of this machine so that when the user comes back to the site, the items in their cart are still there, and the step in the checkout process is still the same. To do this, we need to remember to do two things:
 

@@ -7,6 +7,8 @@ date: 2024-07-29
 slug: 2024-07-29-claw-game-state-machine
 ---
 
+import machine_72280163 from '@/content/machines/72280163-4dde-4e85-a2a1-b30f49c7f27f.json';
+
 The term "robots" invokes a fascinating range of ideas, from manually controlled machines to automated software that crawls the web. One of the prime examples in this area is robotic arms, traditionally used to aid and extend the reach of humans in manufacturing, surgery, and space exploration. Each of these use cases require some way of programming and controlling the arm to perform their dedicated task, usually with proprietary software developed by the manufacturer. The UI is tightly coupled to the hardware through a touchscreen device or desktop application physically connected to the arm, which makes it tough to put online securely and using modern technology.
 
 [Viam](https://www.viam.com/) provides an open source software stack and set of cloud services that makes managing all types of robots (and other smart machines) accessible to developers without any prior hardware experience. To help demonstrate the types of experience that can be built with Viam, the developer advocacy team [built an arcade claw game](https://docs.viam.com/tutorials/projects/claw-game/) that used an industrial robot arm and arcade claw that could be operated using a single-page web application powered by [TypeScript SDK](https://ts.viam.dev/).
@@ -201,10 +203,7 @@ With our initial analysis of the game code done, let's try modeling it all in St
 
 The completed state machine:
 
-<EmbedMachine
-  name="A state machine demonstrating the logic for a robotic claw game that can move around and pick up balls."
-  embedURL="https://editor.stately.ai/viz?machineId=72280163-4dde-4e85-a2a1-b30f49c7f27f"
-/>
+<Embed machine={machine_72280163} name="A state machine demonstrating the logic for a robotic claw game that can move around and pick up balls." />
 
 While we dig into the Stately model, I'll include "enhanced" views using MermaidJS diagrams to focus on certain parts.
 

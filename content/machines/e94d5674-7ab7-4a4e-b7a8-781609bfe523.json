@@ -1,0 +1,273 @@
+{
+  "format": "xgraph",
+  "definition": {
+    "id": "j246cjluiq",
+    "data": {
+      "layout": null,
+      "schemas": {
+        "input": null,
+        "events": {
+          "Share": {
+            "type": "object",
+            "properties": {}
+          },
+          "Copy embed URL": {
+            "type": "object",
+            "properties": {}
+          },
+          "Add URL to iframe": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "output": null,
+        "context": {}
+      },
+      "implementations": {
+        "tags": [],
+        "actors": [],
+        "delays": [],
+        "guards": [],
+        "actions": []
+      }
+    },
+    "type": "directed",
+    "edges": [
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "45wdfdz3uuv",
+        "data": {
+          "meta": null,
+          "guard": null,
+          "actions": [],
+          "eventType": "Share",
+          "description": "Use Share button",
+          "transitionType": "reenter"
+        },
+        "type": "edge",
+        "label": "Share",
+        "width": 147.1797243976058,
+        "height": 73.50000642825205,
+        "position": {
+          "x": -1115.209001824036,
+          "y": -558.4809846543761
+        },
+        "sourceId": "7scqf8fm23f",
+        "targetId": "5fqx60631xx"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "mpxw56ay9p",
+        "data": {
+          "meta": null,
+          "guard": null,
+          "actions": [],
+          "eventType": "Copy embed URL",
+          "description": null,
+          "transitionType": "reenter"
+        },
+        "type": "edge",
+        "label": "Copy embed URL",
+        "width": 147.4530997777741,
+        "height": 39.99998830395589,
+        "position": {
+          "x": -1293.045792221077,
+          "y": -424.4887971543761
+        },
+        "sourceId": "5fqx60631xx",
+        "targetId": "onweetecekl"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "xjz2ie5vxqj",
+        "data": {
+          "meta": {},
+          "guard": null,
+          "actions": [],
+          "eventType": "Add URL to iframe",
+          "description": "`</p>` `</body>`",
+          "transitionType": "reenter"
+        },
+        "type": "edge",
+        "label": "Add URL to iframe",
+        "width": 152.7812467198868,
+        "height": 73.50004304429545,
+        "position": {
+          "x": -1295.709865692133,
+          "y": -275.3486747877308
+        },
+        "sourceId": "onweetecekl",
+        "targetId": "mdwsua4ly1h"
+      }
+    ],
+    "nodes": [
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "j246cjluiq",
+        "data": {
+          "key": "Embed URL",
+          "exit": [],
+          "meta": null,
+          "tags": [],
+          "type": null,
+          "entry": [],
+          "assets": [],
+          "nodeId": "Embed URL",
+          "history": false,
+          "invokes": [],
+          "initialId": "7scqf8fm23f"
+        },
+        "type": "node",
+        "label": "Embed URL",
+        "width": 1155.999980543903,
+        "height": 29.99996376593435,
+        "parentId": null,
+        "position": {
+          "x": -1362.505876824036,
+          "y": -642.1215734203105
+        },
+        "initialNodeId": "7scqf8fm23f"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "7scqf8fm23f",
+        "data": {
+          "key": "Viewing machine",
+          "exit": [],
+          "meta": null,
+          "tags": [],
+          "type": null,
+          "entry": [],
+          "assets": [],
+          "nodeId": "Embed URL.Viewing machine",
+          "history": false,
+          "invokes": [],
+          "initialId": null
+        },
+        "type": "node",
+        "label": "Viewing machine",
+        "width": 154.1562523823675,
+        "height": 41.50000113866997,
+        "parentId": "j246cjluiq",
+        "position": {
+          "x": -1314.505876824036,
+          "y": -548.0356721543761
+        },
+        "initialNodeId": null
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "5fqx60631xx",
+        "data": {
+          "key": "Share modal open",
+          "exit": [],
+          "meta": null,
+          "tags": [],
+          "type": null,
+          "entry": [],
+          "assets": [],
+          "nodeId": "Embed URL.Share modal open",
+          "history": false,
+          "invokes": [],
+          "initialId": null,
+          "description": "![](https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/stately-machine-images/share/share-modal.png?t=2023-05-10T11%3A47%3A44.556Z)"
+        },
+        "type": "node",
+        "label": "Share modal open",
+        "width": 673.000095227004,
+        "height": 467.3047112335732,
+        "parentId": "j246cjluiq",
+        "position": {
+          "x": -927.6715246429519,
+          "y": -564.1216096543761
+        },
+        "initialNodeId": null
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "onweetecekl",
+        "data": {
+          "key": "URL in clipboard",
+          "exit": [],
+          "meta": null,
+          "tags": [],
+          "type": null,
+          "entry": [],
+          "assets": [],
+          "nodeId": "Embed URL.URL in clipboard",
+          "history": false,
+          "invokes": [],
+          "initialId": null
+        },
+        "type": "node",
+        "label": "URL in clipboard",
+        "width": 148.8671381425398,
+        "height": 41.50000113866997,
+        "parentId": "j246cjluiq",
+        "position": {
+          "x": -1287.545792221077,
+          "y": -347.9927034043761
+        },
+        "initialNodeId": null
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "dx": 0,
+        "dy": 0,
+        "id": "mdwsua4ly1h",
+        "data": {
+          "key": "Machine is embeddable",
+          "exit": [],
+          "meta": null,
+          "tags": [],
+          "type": null,
+          "entry": [],
+          "assets": [],
+          "nodeId": "Embed URL.Machine is embeddable",
+          "history": false,
+          "invokes": [],
+          "initialId": null
+        },
+        "type": "node",
+        "label": "Machine is embeddable",
+        "width": 202.2500340039373,
+        "height": 41.50003775471339,
+        "parentId": "j246cjluiq",
+        "position": {
+          "x": -1314.237240151776,
+          "y": -170.0843734517299
+        },
+        "initialNodeId": null
+      }
+    ],
+    "layout": {
+      "status": "complete",
+      "direction": "DOWN"
+    },
+    "parentId": null,
+    "annotations": [],
+    "initialNodeId": "j246cjluiq"
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "95504ba2-3da2-4d70-a3b5-59bbcd31bf2d",
+    "edges": [
+      {
+        "id": "coffee.preparation.beans.grinding#grindingComplete[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "grindingComplete"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 152.5,
+          "width": 152.5,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "coffee.preparation.beans.grinding",
+        "target": "coffee.preparation.beans.ground",
+        "position": {
+          "x": 298,
+          "y": 271.25
+        },
+        "uniqueId": "3tb0gyk2yjf"
+      },
+      {
+        "id": "coffee.preparation.water.heating#always[0]",
+        "data": {
+          "guard": {
+            "name": "waterBoiling",
+            "type": "waterBoiling",
+            "kind": "named"
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 138.796875,
+          "width": 138.796875,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "coffee.preparation.water.heating",
+        "target": "coffee.preparation.water.heated",
+        "position": {
+          "x": 302.71875,
+          "y": 501.25
+        },
+        "uniqueId": "ioc6uax1yt"
+      },
+      {
+        "id": "coffee.preparation#done.state.coffee.preparation[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "state.done"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 93.6640625,
+          "width": 93.6640625,
+          "bottom": 35.5,
+          "height": 35.5
+        },
+        "source": "coffee.preparation",
+        "target": "coffee.brewing",
+        "position": {
+          "x": 766.0625,
+          "y": 346.5
+        },
+        "uniqueId": "d0wtrvkvebq"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "grindingComplete": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "coffee",
+      "data": {
+        "key": "coffee",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "preparation",
+        "metaEntries": []
+      },
+      "size": {
+        "x": 17.00000959877922,
+        "y": 8.99994761228375,
+        "top": 8.99994761228375,
+        "left": 17.00000959877922,
+        "right": 1053.000029345923,
+        "width": 1036.000019747144,
+        "bottom": 38.99996854449134,
+        "height": 30.00002093220759
+      },
+      "nodes": [
+        {
+          "id": "coffee.preparation",
+          "data": {
+            "key": "preparation",
+            "exit": [],
+            "tags": [],
+            "type": "parallel",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 64.9999752383785,
+            "y": 86.99221360205225,
+            "top": 86.99221360205225,
+            "left": 64.9999752383785,
+            "right": 729.0000356723231,
+            "width": 664.0000604339446,
+            "bottom": 129.4921633021126,
+            "height": 42.49994970006036
+          },
+          "nodes": [
+            {
+              "id": "coffee.preparation.beans",
+              "data": {
+                "key": "beans",
+                "exit": [],
+                "tags": [],
+                "color": "orange",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "grinding",
+                "metaEntries": []
+              },
+              "size": {
+                "x": 111.9999994589122,
+                "y": 176.4999689522872,
+                "top": 176.4999689522872,
+                "left": 111.9999994589122,
+                "right": 672.0001418115828,
+                "width": 560.0001423526707,
+                "bottom": 217.9999940872482,
+                "height": 41.50002513496096
+              },
+              "nodes": [
+                {
+                  "id": "coffee.preparation.beans.grinding",
+                  "data": {
+                    "key": "grinding",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 92,
+                    "width": 92,
+                    "bottom": 41.5,
+                    "height": 41.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 156,
+                    "y": 270.5
+                  },
+                  "uniqueId": "4sfibqquwzq"
+                },
+                {
+                  "id": "coffee.preparation.beans.ground",
+                  "data": {
+                    "key": "ground",
+                    "exit": [],
+                    "tags": [],
+                    "type": "final",
+                    "color": "orange",
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [],
+                    "metaEntries": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 119.5625,
+                    "width": 119.5625,
+                    "bottom": 42.5,
+                    "height": 42.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 500.5,
+                    "y": 270
+                  },
+                  "uniqueId": "yh32g58f5hk"
+                }
+              ],
+              "position": {
+                "x": 108,
+                "y": 172.499974865039
+              },
+              "uniqueId": "b5ulaqfqx9b"
+            },
+            {
+              "id": "coffee.preparation.water",
+              "data": {
+                "key": "water",
+                "exit": [],
+                "tags": [],
+                "color": "blue",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "heating",
+                "metaEntries": []
+              },
+              "size": {
+                "x": 122.1484814762877,
+                "y": 406.4999383695677,
+                "top": 406.4999383695677,
+                "left": 122.1484814762877,
+                "right": 662.1485143426644,
+                "width": 540.0000328663766,
+                "bottom": 447.9999635045286,
+                "height": 41.50002513496094
+              },
+              "nodes": [
+                {
+                  "id": "coffee.preparation.water.heating",
+                  "data": {
+                    "key": "heating",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 86.5703125,
+                    "width": 86.5703125,
+                    "bottom": 41.5,
+                    "height": 41.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 166.1484375,
+                    "y": 500.5
+                  },
+                  "uniqueId": "idiibqampv"
+                },
+                {
+                  "id": "coffee.preparation.water.heated",
+                  "data": {
+                    "key": "heated",
+                    "exit": [],
+                    "tags": [],
+                    "type": "final",
+                    "color": "blue",
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [],
+                    "metaEntries": []
+                  },
+                  "size": {
+                    "x": 0,
+                    "y": 0,
+                    "top": 0,
+                    "left": 0,
+                    "right": 118.3984375,
+                    "width": 118.3984375,
+                    "bottom": 42.5,
+                    "height": 42.5
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 491.515625,
+                    "y": 500
+                  },
+                  "uniqueId": "0df2g5xbweln"
+                }
+              ],
+              "position": {
+                "x": 118.1484375,
+                "y": 402.4999748650391
+              },
+              "uniqueId": "o955lejoqbp"
+            }
+          ],
+          "position": {
+            "x": 60,
+            "y": 82.00002516497868
+          },
+          "uniqueId": "15jcxofk47c"
+        },
+        {
+          "id": "coffee.brewing",
+          "data": {
+            "key": "brewing",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 90.6328125,
+            "width": 90.6328125,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 909.7265625,
+            "y": 343.5
+          },
+          "uniqueId": "sq8b82m74gb"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": 4.00000423277109
+      },
+      "uniqueId": "rndkoqju0pj"
+    }
+  }
+}

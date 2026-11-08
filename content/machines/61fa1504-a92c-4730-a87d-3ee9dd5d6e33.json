@@ -1,0 +1,345 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "61fa1504-a92c-4730-a87d-3ee9dd5d6e33",
+    "edges": [
+      {
+        "id": "States.Initial state#next[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 15.59375,
+          "y": -170.421875,
+          "top": -170.421875,
+          "left": 15.59375,
+          "right": 82.578125,
+          "width": 66.984375,
+          "bottom": -130.421875,
+          "height": 40
+        },
+        "source": "States.Initial state",
+        "target": "States.Parent state",
+        "position": {
+          "x": -76.39070845886411,
+          "y": -314.42578125
+        },
+        "uniqueId": "5rutfrt6goy"
+      },
+      {
+        "id": "States.Parent state#next[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 6.90625,
+          "y": 18.5625,
+          "top": 18.5625,
+          "left": 6.90625,
+          "right": 73.890625,
+          "width": 66.984375,
+          "bottom": 58.5625,
+          "height": 40
+        },
+        "source": "States.Parent state",
+        "target": "States.Parallel state",
+        "position": {
+          "x": -76.39070845886411,
+          "y": -192.42578125
+        },
+        "uniqueId": "2qeu8xrvfqn"
+      },
+      {
+        "id": "States.Parallel state#next[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 153.71875,
+          "y": 25.5625,
+          "top": 25.5625,
+          "left": 153.71875,
+          "right": 220.703125,
+          "width": 66.984375,
+          "bottom": 65.5625,
+          "height": 40
+        },
+        "source": "States.Parallel state",
+        "target": "States.Final state",
+        "position": {
+          "x": 72.72357177734375,
+          "y": 63.32421875
+        },
+        "uniqueId": "invqsfpqzj"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "next": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "States",
+      "data": {
+        "key": "States",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Initial state",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -445.265625,
+        "y": -416.671875,
+        "top": -416.671875,
+        "left": -445.265625,
+        "right": 488.7343139648438,
+        "width": 933.9999389648438,
+        "bottom": -386.671875,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "States.Parent state",
+          "data": {
+            "key": "Parent state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Child state",
+            "description": "This parent state is active at the same<br> time as its child states.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": 70.75,
+            "y": -334.421875,
+            "top": -334.421875,
+            "left": 70.75,
+            "right": 429.7499389648438,
+            "width": 358.9999389648438,
+            "bottom": -229.921875,
+            "height": 104.5
+          },
+          "nodes": [
+            {
+              "id": "States.Parent state.Child state",
+              "data": {
+                "key": "Child state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "This child state has its own initial<br> state to indicate this state is entered<br> first when you enter the parent state.",
+                "metaEntries": []
+              },
+              "size": {
+                "x": 111.75,
+                "y": -145.921875,
+                "top": -145.921875,
+                "left": 111.75,
+                "right": 374.3436889648438,
+                "width": 262.5936889648438,
+                "bottom": -22.421875,
+                "height": 123.5
+              },
+              "nodes": [],
+              "position": {
+                "x": 113.7607432074074,
+                "y": -186.92578125
+              },
+              "uniqueId": "fjz5wjat8tr"
+            }
+          ],
+          "position": {
+            "x": 65.76074320740742,
+            "y": -339.42578125
+          },
+          "uniqueId": "xywtj9jsznf"
+        },
+        {
+          "id": "States.Initial state",
+          "data": {
+            "key": "Initial state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The first state the machine enters<br> when it starts.<br><br>\nThe initial state is indicated by the <br>circle and arrow icon pointing at <br>this state.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -364.203125,
+            "y": -231.171875,
+            "top": -231.171875,
+            "left": -364.203125,
+            "right": -116.140625,
+            "width": 248.0625,
+            "bottom": -50.671875,
+            "height": 180.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -397.204225133955,
+            "y": -343.67578125
+          },
+          "uniqueId": "fqvwgac0iw6"
+        },
+        {
+          "id": "States.Final state",
+          "data": {
+            "key": "Final state",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The last states the machine enters<br> before it stops",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -261.265625,
+            "y": 96.3125,
+            "top": 96.3125,
+            "left": -261.265625,
+            "right": -14.5625,
+            "width": 246.703125,
+            "bottom": 201.8125,
+            "height": 105.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 188.9091501898293,
+            "y": 44.57421875
+          },
+          "uniqueId": "yatxo13x9m"
+        },
+        {
+          "id": "States.Parallel state",
+          "data": {
+            "key": "Parallel state",
+            "exit": [],
+            "tags": [],
+            "type": "parallel",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The children of this state are active at the same time.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -395.265625,
+            "y": -18.671875,
+            "top": -18.671875,
+            "left": -395.265625,
+            "right": 13.734375,
+            "width": 409,
+            "bottom": 67.828125,
+            "height": 86.5
+          },
+          "nodes": [
+            {
+              "id": "States.Parallel state.Child state",
+              "data": {
+                "key": "Child state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": -268.265625,
+                "y": 175.8125,
+                "top": 175.8125,
+                "left": -268.265625,
+                "right": -158.9375,
+                "width": 109.328125,
+                "bottom": 217.3125,
+                "height": 41.5
+              },
+              "nodes": [],
+              "position": {
+                "x": -360.2764282226562,
+                "y": 45.82421875
+              },
+              "uniqueId": "xn3imknuf1"
+            },
+            {
+              "id": "States.Parallel state.Another child state",
+              "data": {
+                "key": "Another child state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": -150.265625,
+                "y": 191.3125,
+                "top": 191.3125,
+                "left": -150.265625,
+                "right": 18.375,
+                "width": 168.640625,
+                "bottom": 232.8125,
+                "height": 41.5
+              },
+              "nodes": [],
+              "position": {
+                "x": -224.2764282226562,
+                "y": 45.82421875
+              },
+              "uniqueId": "lle4gm24zx"
+            }
+          ],
+          "position": {
+            "x": -402.2764282226562,
+            "y": -82.67578125
+          },
+          "uniqueId": "5ndr47ug3a3"
+        }
+      ],
+      "position": {
+        "x": -450.2764282226562,
+        "y": -421.67578125
+      },
+      "uniqueId": "g49ayqtw0t"
+    }
+  }
+}

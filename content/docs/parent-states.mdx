@@ -2,6 +2,8 @@
 title: Parent states
 ---
 
+import machine_9ba5377c from '@/content/machines/9ba5377c-aab3-4465-8909-4eea499622fa.json';
+
 States can contain more states, also known as **child states**. These child states are only active when the parent state is active.
 
 Child states are nested inside their parent states. Parent states are also known as **compound states**.
@@ -18,10 +20,7 @@ Watch our ["Parent and child states" video on YouTube](https://www.youtube.com/w
 
 </Callout>
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://editor.stately.ai/viz?machineId=9ba5377c-aab3-4465-8909-4eea499622fa"
-/>
+<Embed machine={machine_9ba5377c} name="Video player" />
 
 In the video player above, the _Opened_ state is a parent state to the _Playing_, _Paused_, and _Stopped_ states. These states, their transitions, and their events are nested inside the _Opened_ state.
 

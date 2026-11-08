@@ -1,0 +1,441 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "7879be19-d267-4e75-9a7d-6a870d540257",
+    "edges": [
+      {
+        "id": "dog walk with annotations.waiting#leave home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "leave home"
+          }
+        },
+        "size": {
+          "x": -280.1953366290355,
+          "y": -234.890654440476,
+          "top": -234.890654440476,
+          "left": -280.1953366290355,
+          "right": -169.2265821857814,
+          "width": 110.9687544432541,
+          "bottom": -194.8906703323178,
+          "height": 39.99998410815817
+        },
+        "source": "dog walk with annotations.waiting",
+        "target": "dog walk with annotations.on a walk",
+        "position": {
+          "x": 391.9201957258387,
+          "y": -669.233330899399
+        },
+        "uniqueId": "70s2dm0l852"
+      },
+      {
+        "id": "dog walk with annotations.on a walk#arrive home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "arrive home"
+          }
+        },
+        "size": {
+          "x": 718.8592987724581,
+          "y": -520.6640751679818,
+          "top": -520.6640751679818,
+          "left": 718.8592987724581,
+          "right": 832.6953290989776,
+          "width": 113.8360303265194,
+          "bottom": -480.6640910598235,
+          "height": 39.99998410815823
+        },
+        "source": "dog walk with annotations.on a walk",
+        "target": "dog walk with annotations.walk complete",
+        "position": {
+          "x": 739.6676300744197,
+          "y": -515.8752669547389
+        },
+        "uniqueId": "hcr23iqn95s"
+      },
+      {
+        "id": "dog walk with annotations.on a walk.walking#speed up[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "speed up"
+          }
+        },
+        "size": {
+          "x": 180.9374660079502,
+          "y": -365.9140839034836,
+          "top": -365.9140839034836,
+          "left": 180.9374660079502,
+          "right": 278.2890551956833,
+          "width": 97.35158918773308,
+          "bottom": -325.9140997953255,
+          "height": 39.99998410815817
+        },
+        "source": "dog walk with annotations.on a walk.walking",
+        "target": "dog walk with annotations.on a walk.running",
+        "position": {
+          "x": 180.9399266498105,
+          "y": -365.9157245523396
+        },
+        "uniqueId": "tr7v5eixdi"
+      },
+      {
+        "id": "dog walk with annotations.on a walk.running#slow down[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "slow down"
+          }
+        },
+        "size": {
+          "x": 177.1249461215756,
+          "y": -237.5547282849449,
+          "top": -237.5547282849449,
+          "left": 177.1249461215756,
+          "right": 283.4218522267279,
+          "width": 106.2969061051524,
+          "bottom": -197.5546750016246,
+          "height": 40.00005328332031
+        },
+        "source": "dog walk with annotations.on a walk.running",
+        "target": "dog walk with annotations.on a walk.walking",
+        "position": {
+          "x": 177.1313328998105,
+          "y": -237.5599201039487
+        },
+        "uniqueId": "1rswzox4ol1"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "speed up": {
+          "type": "object",
+          "properties": {}
+        },
+        "slow down": {
+          "type": "object",
+          "properties": {}
+        },
+        "leave home": {
+          "type": "object",
+          "properties": {}
+        },
+        "arrive home": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "dog walk with annotations",
+      "data": {
+        "key": "dog walk with annotations",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "waiting",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -111.5078320400063,
+        "y": -833.9140334305911,
+        "top": -833.9140334305911,
+        "left": -111.5078320400063,
+        "right": 1025.492210836799,
+        "width": 1137.000042876805,
+        "bottom": -803.9140107618914,
+        "height": 30.00002266869967
+      },
+      "nodes": [
+        {
+          "id": "dog walk with annotations.waiting",
+          "data": {
+            "key": "waiting",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "![puppy patiently waiting](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/waiting.svg)",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -288.7422392000896,
+            "y": -485.8672046431871,
+            "top": -485.8672046431871,
+            "left": -288.7422392000896,
+            "right": -142.7422141951176,
+            "width": 146.0000250049719,
+            "bottom": -305.3672089093402,
+            "height": 180.4999957338468
+          },
+          "nodes": [],
+          "position": {
+            "x": 193.7254793180862,
+            "y": -760.162836384058
+          },
+          "uniqueId": "tlrq800f91l"
+        },
+        {
+          "id": "dog walk with annotations.on a walk",
+          "data": {
+            "key": "on a walk",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "walking"
+          },
+          "size": {
+            "x": -63.50784208582401,
+            "y": -538.7422082798101,
+            "top": -538.7422082798101,
+            "left": -63.50784208582401,
+            "right": 631.4921757878634,
+            "width": 695.0000178736874,
+            "bottom": -497.2421953681521,
+            "height": 41.50001291165802
+          },
+          "nodes": [
+            {
+              "id": "dog walk with annotations.on a walk.walking",
+              "data": {
+                "key": "walking",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "![happy walking puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+              },
+              "size": {
+                "x": -19.53907140000915,
+                "y": -375.7187638602111,
+                "top": -375.7187638602111,
+                "left": -19.53907140000915,
+                "right": 125.4609228734358,
+                "width": 144.999994273445,
+                "bottom": -183.2188143990141,
+                "height": 192.499949461197
+              },
+              "nodes": [],
+              "position": {
+                "x": -19.54009152568272,
+                "y": -375.7243225186963
+              },
+              "uniqueId": "mcmxhpbu25c"
+            },
+            {
+              "id": "dog walk with annotations.on a walk.running",
+              "data": {
+                "key": "running",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "![puppy running bouncily](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/running.svg)"
+              },
+              "size": {
+                "x": 354.2499548696052,
+                "y": -370.7187831404819,
+                "top": -370.7187831404819,
+                "left": 354.2499548696052,
+                "right": 530.2498987805336,
+                "width": 175.9999439109284,
+                "bottom": -188.2187951187433,
+                "height": 182.4999880217386
+              },
+              "nodes": [],
+              "position": {
+                "x": 354.2563369561742,
+                "y": -370.7243225186963
+              },
+              "uniqueId": "0zsu61hhmnd"
+            },
+            {
+              "id": "dog walk with annotations.on a walk.New note",
+              "data": {
+                "key": "New note",
+                "exit": [],
+                "tags": [],
+                "type": "annotation",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "the on a walk state is a parent state for the walking and running child states"
+              },
+              "size": {
+                "x": 290.5468939275042,
+                "y": -454.2422228281564,
+                "top": -454.2422228281564,
+                "left": 290.5468939275042,
+                "right": 578.5468901865025,
+                "width": 287.9999962589983,
+                "bottom": -383.2422199073527,
+                "height": 71.0000029208037
+              },
+              "nodes": [],
+              "position": {
+                "x": 290.5478758950796,
+                "y": -454.2470702771788
+              },
+              "uniqueId": "ynj30xmx39c"
+            },
+            {
+              "id": "dog walk with annotations.on a walk.New note",
+              "data": {
+                "key": "New note",
+                "exit": [],
+                "tags": [],
+                "type": "annotation",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "this is **a note**!"
+              },
+              "size": {
+                "x": -20.50780037066615,
+                "y": -447.7812626839573,
+                "top": -447.7812626839573,
+                "left": -20.50780037066615,
+                "right": 94.11717268009944,
+                "width": 114.6249730507656,
+                "bottom": -396.2812883328408,
+                "height": 51.49997435111652
+              },
+              "nodes": [],
+              "position": {
+                "x": -20.51244321638945,
+                "y": -447.7822265271788
+              },
+              "uniqueId": "imk77q2npzq"
+            }
+          ],
+          "position": {
+            "x": -68.51244321638944,
+            "y": -543.7470831888368
+          },
+          "uniqueId": "kn993l2jx8"
+        },
+        {
+          "id": "dog walk with annotations.walk complete",
+          "data": {
+            "key": "walk complete",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)",
+            "metaEntries": []
+          },
+          "size": {
+            "x": 689.8437770113842,
+            "y": -451.5703321903653,
+            "top": -451.5703321903653,
+            "left": 689.8437770113842,
+            "right": 861.7031032418915,
+            "width": 171.8593262305073,
+            "bottom": -264.0703288613165,
+            "height": 187.5000033290488
+          },
+          "nodes": [],
+          "position": {
+            "x": 710.6559821224257,
+            "y": -445.6695316088857
+          },
+          "uniqueId": "7kofh26jd7k"
+        },
+        {
+          "id": "dog walk with annotations.New note",
+          "data": {
+            "key": "New note",
+            "exit": [],
+            "tags": [],
+            "type": "annotation",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "this is the initial state -&gt;\\\n\\\nRead more about states at <https://stately.ai/docs/states>"
+          },
+          "size": {
+            "x": -309.2422293261416,
+            "y": -607.195320080816,
+            "top": -607.195320080816,
+            "left": -309.2422293261416,
+            "right": -21.24223306714326,
+            "width": 287.9999962589983,
+            "bottom": -497.1953291958,
+            "height": 109.9999908850161
+          },
+          "nodes": [],
+          "position": {
+            "x": -61.58201614922935,
+            "y": -725.6654597237634
+          },
+          "uniqueId": "v8v6s8tsjm"
+        },
+        {
+          "id": "dog walk with annotations.New note",
+          "data": {
+            "key": "New note",
+            "exit": [],
+            "tags": [],
+            "type": "annotation",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "↑ the walk complete state is the machine’s final state"
+          },
+          "size": {
+            "x": 680.6093079162052,
+            "y": -250.3906638467988,
+            "top": -250.3906638467988,
+            "left": 680.6093079162052,
+            "right": 968.6093041752035,
+            "width": 287.9999962589983,
+            "bottom": -179.3906609259951,
+            "height": 71.00000292080372
+          },
+          "nodes": [],
+          "position": {
+            "x": 684.9555362494499,
+            "y": -234.9779219594212
+          },
+          "uniqueId": "6f69pxqz17j"
+        }
+      ],
+      "position": {
+        "x": -116.5124432163894,
+        "y": -838.1628590527577
+      },
+      "uniqueId": "3lbne7gds6h"
+    }
+  }
+}

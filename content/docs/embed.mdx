@@ -3,14 +3,13 @@ title: Embed machines using their embed URL
 description: You can embed your machines anywhere that supports iframes. Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
 ---
 
+import machine_e94d5674 from '@/content/machines/e94d5674-7ab7-4a4e-b7a8-781609bfe523.json';
+
 You can embed your machines anywhere that supports [`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
 
 We love to use embedded machines in our docs! Below is an example of an embedded machine:
 
-<EmbedMachine
-  name="Embed feature machine"
-  embedURL="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
-/>
+<Embed machine={machine_e94d5674} name="Embed feature machine" />
 
 To embed a live machine, keep its project **public**. In the machine's Share
 dialog, select **Publish embed**, then copy the URL. A live public embed uses

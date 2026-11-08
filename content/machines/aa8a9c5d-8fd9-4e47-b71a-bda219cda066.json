@@ -1,0 +1,267 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "aa8a9c5d-8fd9-4e47-b71a-bda219cda066",
+    "edges": [
+      {
+        "id": "dog walk.waiting#leave home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "leave home"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "dog walk.waiting",
+        "target": "dog walk.on a walk",
+        "position": {
+          "x": -373,
+          "y": -294
+        },
+        "uniqueId": "8c8rd5xeth8"
+      },
+      {
+        "id": "dog walk.on a walk#arrive home[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "arrive home"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "dog walk.on a walk",
+        "target": "dog walk.walk complete",
+        "position": {
+          "x": 499,
+          "y": -437
+        },
+        "uniqueId": "qvywcn0l7bp"
+      },
+      {
+        "id": "dog walk.on a walk.walking#speed up[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "speed up"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "dog walk.on a walk.walking",
+        "target": "dog walk.on a walk.running",
+        "position": {
+          "x": 50,
+          "y": -422
+        },
+        "uniqueId": "80x3gwky58e"
+      },
+      {
+        "id": "dog walk.on a walk.running#slow down[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "slow down"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "dog walk.on a walk.running",
+        "target": "dog walk.on a walk.walking",
+        "position": {
+          "x": 46,
+          "y": -294
+        },
+        "uniqueId": "9jtsjc137yh"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "speed up": {
+          "type": "object",
+          "properties": {}
+        },
+        "slow down": {
+          "type": "object",
+          "properties": {}
+        },
+        "leave home": {
+          "type": "object",
+          "properties": {}
+        },
+        "arrive home": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "dog walk",
+      "data": {
+        "key": "dog walk",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "waiting"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "dog walk.waiting",
+          "data": {
+            "key": "waiting",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "![puppy patiently waiting](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/waiting.svg)"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -382,
+            "y": -545
+          },
+          "uniqueId": "nh6j8wrjjo"
+        },
+        {
+          "id": "dog walk.on a walk",
+          "data": {
+            "key": "on a walk",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "walking"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "dog walk.on a walk.walking",
+              "data": {
+                "key": "walking",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "![happy walking puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": -151,
+                "y": -432
+              },
+              "uniqueId": "ok0sly9y8g"
+            },
+            {
+              "id": "dog walk.on a walk.running",
+              "data": {
+                "key": "running",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "![puppy running bouncily](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/running.svg)",
+                "metaEntries": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 223,
+                "y": -427
+              },
+              "uniqueId": "741rdqyc76d"
+            }
+          ],
+          "position": {
+            "x": -199,
+            "y": -480
+          },
+          "uniqueId": "7q833ba4yxf"
+        },
+        {
+          "id": "dog walk.walk complete",
+          "data": {
+            "key": "walk complete",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 472,
+            "y": -351
+          },
+          "uniqueId": "zimvbd7ic8o"
+        }
+      ],
+      "position": {
+        "x": -430,
+        "y": -593
+      },
+      "uniqueId": "win2gnq7d6d"
+    },
+    "implementations": {
+      "actors": {},
+      "guards": {},
+      "actions": {}
+    }
+  }
+}

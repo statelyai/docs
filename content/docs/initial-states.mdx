@@ -2,6 +2,8 @@
 title: Initial states
 ---
 
+import machine_3ebc8874 from '@/content/machines/3ebc8874-2294-480b-a06e-74845337cd8d.json';
+
 When a state machine starts, it enters the **initial state** first. A machine can only have one top-level initial state; if there were multiple initial states, the machine wouldn’t know where to start!
 
 In XState, the initial state is defined by the `initial` property on the machine config:
@@ -33,10 +35,7 @@ Watch our [“What are initial states?” video on YouTube](https://www.youtube.
 
 </Callout>
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://editor.stately.ai/viz?machineId=3ebc8874-2294-480b-a06e-74845337cd8d"
-/>
+<Embed machine={machine_3ebc8874} name="Video player" />
 
 ## Specifying an initial state
 

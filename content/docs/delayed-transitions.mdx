@@ -2,6 +2,8 @@
 title: Delayed (after) transitions
 ---
 
+import machine_78c59862 from '@/content/machines/78c59862-fc40-4b1e-8f9c-42f1b2ddc410.json';
+
 
 **Delayed transitions** are transitions that are triggered after a set amount of time. Delayed transitions are useful for building timeouts and intervals into your application logic. If another event occurs before the end of the timer, the transition doesn’t complete.
 
@@ -40,10 +42,7 @@ const pushTheButtonGame = createMachine({
 });
 ```
 
-<EmbedMachine
-  embedURL="https://editor.stately.ai/viz?machineId=78c59862-fc40-4b1e-8f9c-42f1b2ddc410"
-  title="Push the button game"
-/>
+<Embed machine={machine_78c59862} title="Push the button game" />
 
 <Callout>
 

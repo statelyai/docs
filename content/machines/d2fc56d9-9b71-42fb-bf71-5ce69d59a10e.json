@@ -1,0 +1,257 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "d2fc56d9-9b71-42fb-bf71-5ce69d59a10e",
+    "edges": [
+      {
+        "id": "Player – ScreenshotMachine.screenshot#done.invoke.Player – ScreenshotMachine.screenshot:invocation[0][0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "Player – ScreenshotMachine.screenshot:invocation[0]"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Player – ScreenshotMachine.screenshot",
+        "target": "Player – ScreenshotMachine.idle",
+        "position": {
+          "x": 342.8436721948876,
+          "y": 301.3239464936954
+        },
+        "uniqueId": "nooedf67jc"
+      },
+      {
+        "id": "Player – ScreenshotMachine.screenshot#error.platform.Player – ScreenshotMachine.screenshot:invocation[0][0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "log",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "Player – ScreenshotMachine.screenshot:invocation[0]"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Player – ScreenshotMachine.screenshot",
+        "target": "Player – ScreenshotMachine.idle",
+        "position": {
+          "x": 343.5186752466454,
+          "y": 146.2239556489688
+        },
+        "uniqueId": "vfo4yxonjd"
+      },
+      {
+        "id": "Player – ScreenshotMachine.idle#xstate.after(INTERVAL)#Player – ScreenshotMachine.idle[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "INTERVAL"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Player – ScreenshotMachine.idle",
+        "target": "Player – ScreenshotMachine.screenshot",
+        "position": {
+          "x": 379.5103363184228,
+          "y": 56.22395564896883
+        },
+        "uniqueId": "9uezfgsd829"
+      },
+      {
+        "id": "Player – ScreenshotMachine#UPDATE_SETTINGS[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "isScreenshotRelatedEvent",
+            "params": {}
+          },
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateSettings",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "UPDATE_SETTINGS"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Player – ScreenshotMachine",
+        "target": "Player – ScreenshotMachine",
+        "position": {
+          "x": -188.2063155980811,
+          "y": -185.9760412992734
+        },
+        "uniqueId": "6pkwqct6d83"
+      }
+    ],
+    "context": "{{screenshotMachineInitContext}}",
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "UPDATE_SETTINGS": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Player – ScreenshotMachine",
+      "data": {
+        "key": "Player – ScreenshotMachine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "screenshot"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "Player – ScreenshotMachine.screenshot",
+          "data": {
+            "key": "screenshot",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "Player – ScreenshotMachine.screenshot:invocation[0]",
+                "src": "screenshot",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ],
+            "description": "make & send a screenshot"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -133.2063155980811,
+            "y": 114.0239510713322
+          },
+          "uniqueId": "tfwbzvisw2o"
+        },
+        {
+          "id": "Player – ScreenshotMachine.idle",
+          "data": {
+            "key": "idle",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 604.427000441958,
+            "y": 65.82395793778713
+          },
+          "uniqueId": "t2ce2plj29k"
+        }
+      ],
+      "position": {
+        "x": -181.2063155980811,
+        "y": 8.223955648968833
+      },
+      "uniqueId": "0mrj23v365cn"
+    },
+    "implementations": {
+      "actors": {
+        "screenshot": {
+          "id": "screenshot",
+          "kind": "named",
+          "name": "Player – ScreenshotMachine.screenshot:invocation[0]",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "isScreenshotRelatedEvent": {
+          "id": "isScreenshotRelatedEvent",
+          "name": "isScreenshotRelatedEvent",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "log": {
+          "id": "log",
+          "name": "log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "updateSettings": {
+          "id": "updateSettings",
+          "name": "updateSettings",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

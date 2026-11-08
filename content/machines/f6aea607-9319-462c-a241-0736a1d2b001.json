@@ -1,0 +1,563 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "f6aea607-9319-462c-a241-0736a1d2b001",
+    "edges": [
+      {
+        "id": "petGroomingBooking.Idle#book[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "notifyBooking",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "setAppointment",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "book"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 192.4609375,
+          "width": 192.4609375,
+          "bottom": 120,
+          "height": 120
+        },
+        "source": "petGroomingBooking.Idle",
+        "target": "petGroomingBooking.Appointment Booked",
+        "position": {
+          "x": 356.0671875,
+          "y": 301
+        },
+        "uniqueId": "nfj36yzg1e"
+      },
+      {
+        "id": "petGroomingBooking.Appointment Booked#reschedule[0]",
+        "data": {
+          "color": "yellow",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "notifyRescheduling",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "setAppointment",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "reschedule"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 210.671875,
+          "width": 210.671875,
+          "bottom": 120,
+          "height": 120
+        },
+        "source": "petGroomingBooking.Appointment Booked",
+        "target": "petGroomingBooking.Appointment Rescheduled",
+        "position": {
+          "x": 314.59375,
+          "y": 607
+        },
+        "uniqueId": "8k40jnugp1i"
+      },
+      {
+        "id": "petGroomingBooking.Appointment Booked#cancel[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "notifyCancellation",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "clearAppointment",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "cancel"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 204.59375,
+          "width": 204.59375,
+          "bottom": 120,
+          "height": 120
+        },
+        "source": "petGroomingBooking.Appointment Booked",
+        "target": "petGroomingBooking.Appointment Canceled",
+        "position": {
+          "x": 60,
+          "y": 607
+        },
+        "uniqueId": "0wfpudcxnhfb"
+      },
+      {
+        "id": "petGroomingBooking.Appointment Booked#reminder[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "sendReminder",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "reminder"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 182.9765625,
+          "width": 182.9765625,
+          "bottom": 86,
+          "height": 86
+        },
+        "source": "petGroomingBooking.Appointment Booked",
+        "target": "petGroomingBooking.Reminder Sent",
+        "position": {
+          "x": 875.26953125,
+          "y": 624
+        },
+        "uniqueId": "dr262mpkgvr"
+      },
+      {
+        "id": "petGroomingBooking.Appointment Rescheduled#cancel[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "notifyCancellation",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "clearAppointment",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "cancel"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 204.59375,
+          "width": 204.59375,
+          "bottom": 120,
+          "height": 120
+        },
+        "source": "petGroomingBooking.Appointment Rescheduled",
+        "target": "petGroomingBooking.Appointment Canceled",
+        "position": {
+          "x": 256.1953125,
+          "y": 913
+        },
+        "uniqueId": "b6f2qrq9loq"
+      },
+      {
+        "id": "petGroomingBooking.Appointment Rescheduled#reminder[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "sendReminder",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "reminder"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 182.9765625,
+          "width": 182.9765625,
+          "bottom": 86,
+          "height": 86
+        },
+        "source": "petGroomingBooking.Appointment Rescheduled",
+        "target": "petGroomingBooking.Reminder Sent",
+        "position": {
+          "x": 510.7890625,
+          "y": 930
+        },
+        "uniqueId": "cw703ucd5kq"
+      },
+      {
+        "id": "petGroomingBooking.Reminder Sent#book[0]",
+        "data": {
+          "color": "green",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "notifyBooking",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "setAppointment",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "book"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 192.4609375,
+          "width": 192.4609375,
+          "bottom": 120,
+          "height": 120
+        },
+        "source": "petGroomingBooking.Reminder Sent",
+        "target": "petGroomingBooking.Appointment Booked",
+        "position": {
+          "x": 632.80859375,
+          "y": 607
+        },
+        "uniqueId": "cqmxljua76"
+      }
+    ],
+    "context": {
+      "appointment": null
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "book": {
+          "type": "object",
+          "properties": {}
+        },
+        "cancel": {
+          "type": "object",
+          "properties": {}
+        },
+        "reminder": {
+          "type": "object",
+          "properties": {}
+        },
+        "reschedule": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "appointment": {
+          "type": "null",
+          "description": "Generated automatically based on the key: \"appointment\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "petGroomingBooking",
+      "data": {
+        "key": "petGroomingBooking",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Idle"
+      },
+      "size": {
+        "x": 17.00002612733683,
+        "y": 16.99999530874986,
+        "top": 16.99999530874986,
+        "left": 17.00002612733683,
+        "right": 1110.999975432741,
+        "width": 1093.999949305404,
+        "bottom": 122.0000047439194,
+        "height": 105.0000094351696
+      },
+      "nodes": [
+        {
+          "id": "petGroomingBooking.Idle",
+          "data": {
+            "key": "Idle",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The system is idle, waiting for a pet owner to start the booking process."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 474.7265625,
+            "width": 474.7265625,
+            "bottom": 86,
+            "height": 86
+          },
+          "nodes": [],
+          "position": {
+            "x": 214.934375,
+            "y": 165
+          },
+          "uniqueId": "1u1hk5gespp"
+        },
+        {
+          "id": "petGroomingBooking.Appointment Booked",
+          "data": {
+            "key": "Appointment Booked",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "An appointment has been booked successfully."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 323.6796875,
+            "width": 323.6796875,
+            "bottom": 86,
+            "height": 86
+          },
+          "nodes": [],
+          "position": {
+            "x": 290.4578125,
+            "y": 471
+          },
+          "uniqueId": "fbtiytaf1e9"
+        },
+        {
+          "id": "petGroomingBooking.Appointment Rescheduled",
+          "data": {
+            "key": "Appointment Rescheduled",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The appointment has been rescheduled to a new time."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 368.625,
+            "width": 368.625,
+            "bottom": 86,
+            "height": 86
+          },
+          "nodes": [],
+          "position": {
+            "x": 235.6171875,
+            "y": 777
+          },
+          "uniqueId": "as06zrgs1t"
+        },
+        {
+          "id": "petGroomingBooking.Appointment Canceled",
+          "data": {
+            "key": "Appointment Canceled",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The appointment has been canceled."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 261.7421875,
+            "width": 261.7421875,
+            "bottom": 87,
+            "height": 87
+          },
+          "nodes": [],
+          "position": {
+            "x": 75.04947916666667,
+            "y": 1083
+          },
+          "uniqueId": "mxqdar75rm9"
+        },
+        {
+          "id": "petGroomingBooking.Reminder Sent",
+          "data": {
+            "key": "Reminder Sent",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "A reminder has been sent to the pet owner 24 hours before the appointment."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 507.046875,
+            "width": 507.046875,
+            "bottom": 86,
+            "height": 86
+          },
+          "nodes": [],
+          "position": {
+            "x": 475.515625,
+            "y": 1083
+          },
+          "uniqueId": "xge23dcj2ch"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": 11.99999056483044
+      },
+      "uniqueId": "njgxvs75l7a"
+    },
+    "implementations": {
+      "actors": {},
+      "guards": {},
+      "actions": {
+        "sendReminder": {
+          "id": "sendReminder",
+          "name": "sendReminder",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "notifyBooking": {
+          "id": "notifyBooking",
+          "name": "notifyBooking",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setAppointment": {
+          "id": "setAppointment",
+          "name": "setAppointment",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "clearAppointment": {
+          "id": "clearAppointment",
+          "name": "clearAppointment",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "notifyCancellation": {
+          "id": "notifyCancellation",
+          "name": "notifyCancellation",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "notifyRescheduling": {
+          "id": "notifyRescheduling",
+          "name": "notifyRescheduling",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

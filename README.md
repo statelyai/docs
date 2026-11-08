@@ -330,13 +330,8 @@ cannot turn the link and following punctuation into separate blocks.
 After a production build, run `node scripts/check-statecharts.mjs <base-url>`
 to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
 
-## Publishing Docs machine embeds
+## Docs machine embeds
 
-Most live Docs embeds use their existing machine ID after its owner publishes it. No site key or manifest entry is needed for those URLs. Pinned snapshots use an opaque publication ID and an internal publishing group under the user's Pro account. Readers do not sign in. Other owner-published URLs can be supplied through the `publishedURL` prop on `EmbedMachine`.
+Docs MDX imports a checked-in Digraph, XGraph, or XState source and renders it with `<Embed machine={machine} />`. The component passes the definition in Viz's URL fragment, so Docs has no machine-read token, publication setup, or server-side conversion step. The fragment is a snapshot; update the JSON file when the example changes. Use `mode="Simulate"` to start in simulation.
 
-1. Sign in as the Docs publishing account and create a group through `POST /registry/api/v1/embed-sites` with `{"name":"Stately Docs","allowedOrigins":[]}`. Keep the returned internal ID as `STATELY_DOCS_EMBED_SITE_ID` for the publishing script. It never appears in an iframe URL.
-2. Review the inventory with `node scripts/publish-viz-embeds.mjs --dry-run`. For each live machine ID, ask its owner/editor to select Publish; the existing ID then resolves in Viz. A version-only link needs an owner-published URL or an authorized snapshot. Snapshot entries submit their checked-in Digraph, XGraph, or XState source explicitly.
-3. Set `STATELY_EMBED_OAUTH_TOKEN` to the publishing account's OAuth bearer token and run `node scripts/publish-viz-embeds.mjs`. This idempotently publishes Docs-owned snapshots and writes their opaque IDs to `content/components/viz-publications.json`. Commit that manifest. Keep the token out of source control.
-4. Run `node scripts/publish-viz-embeds.mjs --verify`. Every live machine ID, Docs snapshot, and owner-published URL must return 200 before releasing the Docs change. Production Docs builds fail until snapshots and version-only links have a publication ID or owner-published URL.
-
-Revoking an individual publication disables its embed. Registry's successful read responses may remain cached for up to 60 seconds.
+Run `node scripts/check-viz-embeds.mjs` to validate inline sources. Four legacy embeds in the Koordinates and WebinarGeek case studies still need owner exports; their machine IDs are listed in that script. Do not recreate their diagrams from screenshots.

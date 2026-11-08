@@ -2,19 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "next-themes";
-import publicationMap from "./viz-publications.json";
 
 type Embed = {
   name?: string;
-  embedURL: string;
-  snapshotURL?: string;
-  lookupId?: string;
-  publishedURL?: string;
+  title?: string;
+  embedURL?: string;
+  machine?: unknown;
+  mode?: string;
 };
 
-const publications: Record<string, string> = publicationMap;
-
-export function EmbedMachine({ name = "State", embedURL, snapshotURL, lookupId, publishedURL }: Embed) {
+export function Embed({ name = "State", title, embedURL, machine, mode }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,20 +29,17 @@ export function EmbedMachine({ name = "State", embedURL, snapshotURL, lookupId, 
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isActive]);
 
-  const src = publishedEmbedURL(
-    embedURL,
-    snapshotURL,
-    lookupId,
-    resolvedTheme === "dark" ? "dark" : "light",
-    publishedURL,
-  );
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const src = machine
+    ? inlineEmbedURL(machine, theme, mode)
+    : embedURL ?? null;
   return (
     <div ref={containerRef} className="relative my-4">
       {mounted && src ? (
         <iframe
           loading="lazy"
           src={src}
-          title={`${name} machine`}
+          title={title ?? `${name} machine`}
           className="block w-full aspect-video"
         >
           <a href={src}>
@@ -72,45 +66,20 @@ export function EmbedMachine({ name = "State", embedURL, snapshotURL, lookupId, 
   );
 }
 
-export function publishedEmbedURL(
-  embedURL: string,
-  snapshotURL: string | undefined,
-  lookupId: string | undefined,
-  theme: "light" | "dark",
-  publishedURL?: string,
-): string | null {
-  if (publishedURL) {
-    const published = new URL(publishedURL);
-    if (
-      published.origin !== "https://editor.stately.ai" ||
-      published.pathname !== "/viz" ||
-      !published.searchParams.get("publicationId")
-    ) return null;
-    published.searchParams.set("theme", theme);
-    const legacyMode = new URL(embedURL).searchParams.get("mode");
-    if (legacyMode) published.searchParams.set("mode", legacyMode);
-    return published.toString();
-  }
-  const source = new URL(embedURL);
-  const snapshotId = snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1];
-  const id =
-    lookupId ??
-    snapshotId ??
-    source.searchParams.get("machineId") ??
-    source.searchParams.get("projectVersionId") ??
-    source.searchParams.get("projectId") ??
-    (source.pathname.includes("/registry/editor/embed/")
-      ? source.pathname.split("/").at(-1)
-      : null);
-  if (!id) return null;
-  const publicationId = publications[id];
-  const liveMachineId = !snapshotURL && !lookupId ? source.searchParams.get("machineId") : null;
-  if (!publicationId && !liveMachineId) return null;
-  const url = new URL("https://editor.stately.ai/viz");
-  if (publicationId) url.searchParams.set("publicationId", publicationId);
-  else if (liveMachineId) url.searchParams.set("machineId", liveMachineId);
-  url.searchParams.set("theme", theme);
-  const mode = source.searchParams.get("mode");
-  if (mode) url.searchParams.set("mode", mode);
-  return url.toString();
+export const EmbedMachine = Embed;
+
+export function inlineEmbedURL(machine: unknown, theme: "light" | "dark", mode?: string): string | null {
+  if (!machine || typeof machine !== "object" || Array.isArray(machine)) return null;
+  const wrapper = machine as Record<string, unknown>;
+  const definition = wrapper.definition ?? wrapper;
+  const format = wrapper.format ?? (wrapper.rootNode ? "digraph" : wrapper.nodes ? "xgraph" : undefined);
+  if (format !== "digraph" && format !== "xgraph" && format !== "xstate" && format !== "xstate-json") return null;
+  const source = typeof definition === "string" ? definition : JSON.stringify(definition);
+  const bytes = new TextEncoder().encode(source);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  const encoded = btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
+  const params = new URLSearchParams({ machine: encoded, format, theme });
+  if (mode) params.set("mode", mode);
+  return `https://editor.stately.ai/viz#${params.toString()}`;
 }

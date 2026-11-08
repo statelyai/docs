@@ -5,6 +5,8 @@ slug: '/'
 hide_title: true
 ---
 
+import machine_3e69d71f from '@/content/machines/3e69d71f-1eda-41af-bee0-e82031d3f810.json';
+
 import { LayoutIcon, BookOpenTextIcon, CodeIcon, RocketIcon } from 'lucide-react';
 import { Cards, Card } from 'fumadocs-ui/components/card';
 
@@ -101,10 +103,7 @@ console.log(toggleActor.getSnapshot().value); // 'inactive'
   </Card>
 </Cards>
 
-<EmbedMachine
-  name="Default machine"
-  embedURL="https://editor.stately.ai/viz?machineId=3e69d71f-1eda-41af-bee0-e82031d3f810"
-/>
+<Embed machine={machine_3e69d71f} name="Default machine" />
 
 ## Stately Studio or XState?
 

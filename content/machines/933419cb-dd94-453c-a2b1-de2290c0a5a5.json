@@ -1,0 +1,88 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "begging.begging#gets treat[0]",
+        "data": {
+          "actions": [],
+          "internal": true,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "gets treat"
+          }
+        },
+        "size": {
+          "x": 9.0625,
+          "y": -201.5625,
+          "top": -201.5625,
+          "left": 9.0625,
+          "right": 121.1171875,
+          "width": 112.0546875,
+          "bottom": -163.0625,
+          "height": 38.5
+        },
+        "source": "begging.begging",
+        "target": "begging.begging",
+        "position": {
+          "x": -48.3828125,
+          "y": -228.7265625
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "begging",
+      "data": {
+        "key": "begging",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "begging"
+      },
+      "size": {
+        "x": -141.234375,
+        "y": -290.5625,
+        "top": -290.5625,
+        "left": -141.234375,
+        "right": 169.125,
+        "width": 310.359375,
+        "bottom": -249.5625,
+        "height": 41
+      },
+      "nodes": [
+        {
+          "id": "begging.begging",
+          "data": {
+            "key": "begging",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![happy walking puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/begging.svg)"
+          },
+          "size": {
+            "x": -93.234375,
+            "y": -150.0546875,
+            "top": -150.0546875,
+            "left": -93.234375,
+            "right": 23.765625,
+            "width": 117,
+            "bottom": 51.9453125,
+            "height": 202
+          },
+          "nodes": [],
+          "position": {
+            "x": -150.6875,
+            "y": -177.21875
+          }
+        }
+      ],
+      "position": {
+        "x": -198.6875,
+        "y": -317.7265625
+      }
+    }
+  }
+}

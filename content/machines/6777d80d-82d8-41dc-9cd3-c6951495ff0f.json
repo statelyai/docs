@@ -1,0 +1,355 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "checkout.shopping#item.add[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "items": "{{({ context, event }) => {\n                            return [...context.items, event.item];\n                        }}}"
+                }
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "item.add"
+          }
+        },
+        "size": {
+          "x": 60,
+          "y": 251.5,
+          "top": 251.5,
+          "left": 60,
+          "right": 579.7421875,
+          "width": 519.7421875,
+          "bottom": 365,
+          "height": 113.5
+        },
+        "source": "checkout.shopping",
+        "target": "checkout.shopping",
+        "position": {
+          "x": 35.58983129783334,
+          "y": 196.4999980460224
+        },
+        "uniqueId": "ey1ovn8dg5j"
+      },
+      {
+        "id": "checkout.checkingOut.loading#PAYMENT_SUCCESS[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAYMENT_SUCCESS"
+          }
+        },
+        "size": {
+          "x": 341.046875,
+          "y": 1273.750003814697,
+          "top": 1273.750003814697,
+          "left": 341.046875,
+          "right": 510.5390625,
+          "width": 169.4921875,
+          "bottom": 1313.750003814697,
+          "height": 40
+        },
+        "source": "checkout.checkingOut.loading",
+        "target": "checkout.checkingOut.success",
+        "position": {
+          "x": 434.7578061492937,
+          "y": 435.5468614613366
+        },
+        "uniqueId": "zm9ch37iuq"
+      },
+      {
+        "id": "checkout.checkingOut.loading#PAYMENT_FAILURE[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAYMENT_FAILURE"
+          }
+        },
+        "size": {
+          "x": 177.0703125,
+          "y": 1103.250003814697,
+          "top": 1103.250003814697,
+          "left": 177.0703125,
+          "right": 337.1328125,
+          "width": 160.0625,
+          "bottom": 1143.250003814697,
+          "height": 40
+        },
+        "source": "checkout.checkingOut.loading",
+        "target": "checkout.checkingOut.failure",
+        "position": {
+          "x": 65.80207805343181,
+          "y": 435.5468614613366
+        },
+        "uniqueId": "zopvmmem8ho"
+      },
+      {
+        "id": "checkout.checkingOut.failure#RETRY_PAYMENT[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "RETRY_PAYMENT"
+          }
+        },
+        "size": {
+          "x": 348.1328125,
+          "y": 1103.250003814697,
+          "top": 1103.250003814697,
+          "left": 348.1328125,
+          "right": 498.453125,
+          "width": 150.3203125,
+          "bottom": 1143.250003814697,
+          "height": 40
+        },
+        "source": "checkout.checkingOut.failure",
+        "target": "checkout.checkingOut.loading",
+        "position": {
+          "x": 254.8345958463598,
+          "y": 523.4478963289837
+        },
+        "uniqueId": "xxrmoitwmj"
+      },
+      {
+        "id": "checkout.shopping#checkout[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "checkout"
+          }
+        },
+        "size": {
+          "x": 503.7109905597565,
+          "y": 385.0000115662588,
+          "top": 385.0000115662588,
+          "left": 503.7109905597565,
+          "right": 601.4922440336179,
+          "width": 97.78125347386145,
+          "bottom": 425.0000129873334,
+          "height": 40.00000142107461
+        },
+        "source": "checkout.shopping",
+        "target": "checkout.checkingOut",
+        "position": {
+          "x": 549.4427099579473,
+          "y": 136.208324494545
+        },
+        "uniqueId": "09oob49op9fa"
+      }
+    ],
+    "context": {
+      "items": []
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "checkout": {
+          "type": "object",
+          "properties": {}
+        },
+        "item.add": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "items": {
+          "type": "array",
+          "description": "Generated automatically based on the key: \"items\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "checkout",
+      "data": {
+        "key": "checkout",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "shopping"
+      },
+      "size": {
+        "x": 187.3750186152539,
+        "y": 158.4140649444583,
+        "top": 158.4140649444583,
+        "left": 187.3750186152539,
+        "right": 927.3751262853463,
+        "width": 740.0001076700923,
+        "bottom": 188.4140660102643,
+        "height": 30.000001065806
+      },
+      "nodes": [
+        {
+          "id": "checkout.shopping",
+          "data": {
+            "key": "shopping",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 596.6875,
+            "y": 206.75,
+            "top": 206.75,
+            "left": 596.6875,
+            "right": 695.234375,
+            "width": 98.546875,
+            "bottom": 248.25,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 246.1874875478334,
+            "y": 111.9218716310538
+          },
+          "uniqueId": "zdlmljt8eee"
+        },
+        {
+          "id": "checkout.checkingOut",
+          "data": {
+            "key": "checkingOut",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "loading",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -0.2187380493641191,
+            "y": 803.8437755743912,
+            "top": 803.8437755743912,
+            "left": -0.2187380493641191,
+            "right": 633.7813658548803,
+            "width": 634.0001039042444,
+            "bottom": 845.3437770487561,
+            "height": 41.50000147436492
+          },
+          "nodes": [
+            {
+              "id": "checkout.checkingOut.loading",
+              "data": {
+                "key": "loading",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": 213.1875195322912,
+                "y": 756.2031488818691,
+                "top": 756.2031488818691,
+                "left": 213.1875195322912,
+                "right": 297.8125225387523,
+                "width": 84.62500300646107,
+                "bottom": 797.703150356234,
+                "height": 41.50000147436492
+              },
+              "nodes": [],
+              "position": {
+                "x": 287.6822505931293,
+                "y": 434.7968607241541
+              },
+              "uniqueId": "5xpzhdpniq4"
+            },
+            {
+              "id": "checkout.checkingOut.success",
+              "data": {
+                "key": "success",
+                "exit": [],
+                "tags": [],
+                "type": "final",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": 517.6015928471688,
+                "y": 920.976592235753,
+                "top": 920.976592235753,
+                "left": 517.6015928471688,
+                "right": 644.4610537342961,
+                "width": 126.8594608871273,
+                "bottom": 963.4765937456448,
+                "height": 42.50000150989183
+              },
+              "nodes": [],
+              "position": {
+                "x": 456.07416945573,
+                "y": 522.1978955740376
+              },
+              "uniqueId": "n5fx6tgyfxg"
+            },
+            {
+              "id": "checkout.checkingOut.failure",
+              "data": {
+                "key": "failure",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": 55.42970142765048,
+                "y": 580.703142646904,
+                "top": 580.703142646904,
+                "left": 55.42970142765048,
+                "right": 131.8984541443455,
+                "width": 76.46875271669504,
+                "bottom": 622.2031441212689,
+                "height": 41.50000147436492
+              },
+              "nodes": [],
+              "position": {
+                "x": 107.5989516950843,
+                "y": 522.6978955918012
+              },
+              "uniqueId": "ndr4j9hguel"
+            }
+          ],
+          "position": {
+            "x": 17.80207805343181,
+            "y": 345.2968592497892
+          },
+          "uniqueId": "pfqiwkkgkj"
+        }
+      ],
+      "position": {
+        "x": -30.19792194656819,
+        "y": 33.92187056524784
+      },
+      "uniqueId": "1bamqaaskrn"
+    }
+  }
+}
