@@ -1,17 +1,19 @@
 /** Publish Docs-owned embeds and verify owner-published URLs. */
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const dryRun = process.argv.includes("--dry-run");
 const verify = process.argv.includes("--verify");
-const siteKey = process.env.NEXT_PUBLIC_STATELY_EMBED_SITE_KEY;
+const siteId = process.env.STATELY_DOCS_EMBED_SITE_ID;
 const token = process.env.STATELY_EMBED_OAUTH_TOKEN;
 const apiBase = process.env.STATELY_REGISTRY_API_BASE ?? "https://stately.ai/registry/api/v1";
-if (!dryRun && (!siteKey || (!verify && !token))) {
+if (!dryRun && !verify && (!siteId || !token)) {
   throw new Error(
-    "Set NEXT_PUBLIC_STATELY_EMBED_SITE_KEY and, for publishing, STATELY_EMBED_OAUTH_TOKEN.",
+    "Set STATELY_DOCS_EMBED_SITE_ID and STATELY_EMBED_OAUTH_TOKEN to publish.",
   );
 }
+const manifestPath = "content/components/viz-publications.json";
+const publicationIds = JSON.parse(readFileSync(manifestPath, "utf8"));
 
 function mdxFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -34,10 +36,10 @@ for (const file of mdxFiles("content")) {
     }
     const url = new URL(embedURL);
     const snapshotURL = component.match(/snapshotURL="([^"]+)"/)?.[1];
-    const publishedId = component.match(/publishedId="([^"]+)"/)?.[1];
+    const explicitLookupId = component.match(/lookupId="([^"]+)"/)?.[1];
     const snapshotId = snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1];
     const lookupId =
-      publishedId ??
+      explicitLookupId ??
       snapshotId ??
       url.searchParams.get("machineId") ??
       url.searchParams.get("projectVersionId") ??
@@ -57,24 +59,25 @@ for (const file of mdxFiles("content")) {
           format: snapshot.format ?? "xgraph",
           definition: snapshot.definition ?? snapshot,
         }
-      : publishedId
+      : explicitLookupId
         ? {
             lookupId,
             mode: "snapshot",
             format: inline.get("format") ?? "xstate",
             definition: Buffer.from(inline.get("machine") ?? "", "base64url").toString("utf8"),
           }
-        : { lookupId, mode: "live" };
+      : { lookupId, mode: "live", directMachineId: Boolean(url.searchParams.get("machineId")) };
     const previous = publications.get(lookupId);
     if (!previous || publication.mode === "snapshot") publications.set(lookupId, publication);
   }
 }
 
+const snapshotCount = [...publications.values()].filter((item) => item.mode === "snapshot").length;
 console.log(
-  `${publications.size} Docs-account publications (${[...publications.values()].filter((item) => item.mode === "snapshot").length} snapshots), ${ownerPublished.size} owner-published URLs.`,
+  `${publications.size - snapshotCount} live lookups, ${snapshotCount} Docs snapshots, ${ownerPublished.size} owner-published URLs.`,
 );
 if (dryRun) {
-  for (const item of publications.values()) console.log(`${item.mode}\t${item.lookupId}`);
+  for (const item of publications.values()) console.log(`${item.mode}${item.directMachineId ? '-machine-id' : ''}\t${item.lookupId}`);
   for (const url of ownerPublished) console.log(`owner\t${url}`);
 } else {
   const failures = [];
@@ -84,13 +87,12 @@ if (dryRun) {
       failures.push(`${ownerURL}: invalid Viz URL`);
       continue;
     }
-    const key = url.searchParams.get('siteKey');
-    const id = url.searchParams.get('publishedId');
-    if (!key || !id) {
+    const id = url.searchParams.get('publicationId');
+    if (!id) {
       failures.push(`${ownerURL}: missing publication identity`);
       continue;
     }
-    const read = await fetch(`${apiBase}/public/embeds/${encodeURIComponent(key)}/${encodeURIComponent(id)}`);
+    const read = await fetch(`${apiBase}/public/embeds/${encodeURIComponent(id)}`);
     if (!read.ok) failures.push(`${ownerURL}: read returned ${read.status}`);
     const frame = await fetch(url);
     const ancestors = frame.headers.get('content-security-policy') ?? '';
@@ -99,23 +101,40 @@ if (dryRun) {
     }
   }
   for (const item of publications.values()) {
+    if (item.mode === 'live' && !verify) continue;
+    const publicationId = publicationIds[item.lookupId];
+    const readId = item.mode === 'live' && item.directMachineId
+      ? item.lookupId
+      : publicationId;
+    if (verify && !readId) {
+      failures.push(`${item.lookupId}: missing publication ID in ${manifestPath}`);
+      continue;
+    }
     const response = verify
-      ? await fetch(`${apiBase}/public/embeds/${encodeURIComponent(siteKey)}/${item.lookupId}`)
-      : await fetch(`${apiBase}/embed-sites/${encodeURIComponent(siteKey)}/publications`, {
+      ? await fetch(`${apiBase}/public/embeds/${encodeURIComponent(readId)}`)
+      : await fetch(`${apiBase}/embed-sites/${encodeURIComponent(siteId)}/publications`, {
           method: "POST",
           headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
           body: JSON.stringify(item),
         });
     if (!response.ok)
       failures.push(`${item.lookupId}: ${response.status} ${await response.text()}`);
+    else if (!verify) {
+      const result = await response.json();
+      const id = result?.data?.id;
+      if (typeof id !== 'string') failures.push(`${item.lookupId}: missing publication ID`);
+      else publicationIds[item.lookupId] = id;
+    }
   }
   if (failures.length)
     throw new Error(`${failures.length} publications failed:\n${failures.join("\n")}`);
-  if (verify) {
-    const firstId = publications.keys().next().value;
+  if (!verify) {
+    writeFileSync(manifestPath, `${JSON.stringify(publicationIds, null, 2)}\n`);
+  } else {
+    const firstItem = [...publications.values()].find((item) => item.mode === 'snapshot');
+    const firstId = firstItem ? publicationIds[firstItem.lookupId] : publications.keys().next().value;
     const viz = new URL("https://editor.stately.ai/viz");
-    viz.searchParams.set("siteKey", siteKey);
-    viz.searchParams.set("publishedId", firstId);
+    viz.searchParams.set("publicationId", firstId);
     const frame = await fetch(viz);
     if (
       !frame.ok ||

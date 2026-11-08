@@ -13,8 +13,9 @@ We love to use embedded machines in our docs! Below is an example of an embedded
 />
 
 To embed a live machine, keep its project **public**. In the machine's Share
-dialog, select **Publish embed**, then copy the URL. The URL includes its
-publishing key automatically. Readers do not need to sign in, and the embed
+dialog, select **Publish embed**, then copy the URL. A live public embed uses
+the machine's existing ID; a pinned snapshot uses an opaque publication ID.
+Readers do not need to sign in, and the embed
 works on any site by default.
 
 Free accounts can publish three public machines across projects. Pro accounts
@@ -40,8 +41,8 @@ You can also [get your machine as an image](image) for platforms where `<iframe>
 
 Use **Unpublish** to stop serving the embed and free a publication slot.
 
-To limit where an embed appears, open **Restrict allowed domains (optional)**
-before publishing. Changing restrictions later replaces existing embed URLs.
+To limit where an embed appears, open **Restrict allowed domains (optional)**.
+Changing restrictions later keeps existing embed URLs.
 
 ## Example `<iframe>` code
 
@@ -50,11 +51,11 @@ The following HTML embeds the same machine at the top of this page in dark mode:
 ```html
 <iframe
   loading="lazy"
-  src="https://editor.stately.ai/viz?siteKey=YOUR_SITE_KEY&publishedId=e94d5674-7ab7-4a4e-b7a8-781609bfe523&theme=dark"
+  src="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523&theme=dark"
   style="display: block; width: 100%; aspect-ratio: 6 / 4;"
 >
   <a
-    href="https://editor.stately.ai/viz?siteKey=YOUR_SITE_KEY&publishedId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
+    href="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
   >
     View the <em>Embed feature machine</em> in Stately Viz </a
   >.
@@ -63,7 +64,7 @@ The following HTML embeds the same machine at the top of this page in dark mode:
 
 <Callout>
 
-The site key in the URL identifies the publishing account; it is not a secret.
+The machine owner can unpublish the embed at any time. Private-source snapshots use a separate publication ID.
 
 If you want us to prioritize improving embed mode, please [upvote it on our feedback page](https://github.com/statelyai/feedback/issues/94).
 
@@ -73,8 +74,8 @@ If you want us to prioritize improving embed mode, please [upvote it on our feed
 
 The embed URL has some of the same parameters as the [machine URL](url).
 
-- **siteKey**: the publishing site's public key.
-- **publishedId**: the ID explicitly published for this site, often a machine ID.
+- **machineId**: an explicitly published live public machine.
+- **publicationId**: the opaque ID for a pinned snapshot.
 - **mode**: the current machine mode. For example, `mode=Design` or `mode=Simulate`
 - **theme**: the color mode for the embedded machine. For example, `theme=light` or `theme=dark`. Legacy `colorMode` also works.
 

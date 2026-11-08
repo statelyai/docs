@@ -2,18 +2,19 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "next-themes";
+import publicationMap from "./viz-publications.json";
 
 type Embed = {
   name?: string;
   embedURL: string;
   snapshotURL?: string;
-  publishedId?: string;
+  lookupId?: string;
   publishedURL?: string;
 };
 
-const siteKey = process.env.NEXT_PUBLIC_STATELY_EMBED_SITE_KEY;
+const publications: Record<string, string> = publicationMap;
 
-export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedId, publishedURL }: Embed) {
+export function EmbedMachine({ name = "State", embedURL, snapshotURL, lookupId, publishedURL }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,7 @@ export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedI
   const src = publishedEmbedURL(
     embedURL,
     snapshotURL,
-    publishedId,
+    lookupId,
     resolvedTheme === "dark" ? "dark" : "light",
     publishedURL,
   );
@@ -74,7 +75,7 @@ export function EmbedMachine({ name = "State", embedURL, snapshotURL, publishedI
 export function publishedEmbedURL(
   embedURL: string,
   snapshotURL: string | undefined,
-  publishedId: string | undefined,
+  lookupId: string | undefined,
   theme: "light" | "dark",
   publishedURL?: string,
 ): string | null {
@@ -83,19 +84,17 @@ export function publishedEmbedURL(
     if (
       published.origin !== "https://editor.stately.ai" ||
       published.pathname !== "/viz" ||
-      !published.searchParams.get("siteKey") ||
-      !published.searchParams.get("publishedId")
+      !published.searchParams.get("publicationId")
     ) return null;
     published.searchParams.set("theme", theme);
     const legacyMode = new URL(embedURL).searchParams.get("mode");
     if (legacyMode) published.searchParams.set("mode", legacyMode);
     return published.toString();
   }
-  if (!siteKey) return null;
   const source = new URL(embedURL);
   const snapshotId = snapshotURL?.match(/\/([0-9a-f-]{36})\.json$/i)?.[1];
   const id =
-    publishedId ??
+    lookupId ??
     snapshotId ??
     source.searchParams.get("machineId") ??
     source.searchParams.get("projectVersionId") ??
@@ -104,9 +103,12 @@ export function publishedEmbedURL(
       ? source.pathname.split("/").at(-1)
       : null);
   if (!id) return null;
+  const publicationId = publications[id];
+  const liveMachineId = !snapshotURL && !lookupId ? source.searchParams.get("machineId") : null;
+  if (!publicationId && !liveMachineId) return null;
   const url = new URL("https://editor.stately.ai/viz");
-  url.searchParams.set("siteKey", siteKey);
-  url.searchParams.set("publishedId", id);
+  if (publicationId) url.searchParams.set("publicationId", publicationId);
+  else if (liveMachineId) url.searchParams.set("machineId", liveMachineId);
   url.searchParams.set("theme", theme);
   const mode = source.searchParams.get("mode");
   if (mode) url.searchParams.set("mode", mode);
