@@ -1,0 +1,324 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "7f8f7dfb-f9a0-4e37-9c2a-bbca9f093d21",
+    "edges": [
+      {
+        "id": "user.idle#FETCH[0]",
+        "data": {
+          "color": "yellow",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "FETCH"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 82.2578125,
+          "width": 82.2578125,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "user.idle",
+        "target": "user.loading",
+        "position": {
+          "x": 489.0684562834138,
+          "y": 229.7360926910182
+        },
+        "uniqueId": "71mzg1dbqdj"
+      },
+      {
+        "id": "user.loading#done.invoke.getUser[0]",
+        "data": {
+          "color": "green",
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "user": "{{({ event }) => event.output}}"
+                }
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "getUser"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 349.421875,
+          "width": 349.421875,
+          "bottom": 104.5,
+          "height": 104.5
+        },
+        "source": "user.loading",
+        "target": "user.success",
+        "position": {
+          "x": 95.33104007609677,
+          "y": 470.7171925432469
+        },
+        "uniqueId": "sjkfgp0rl0k"
+      },
+      {
+        "id": "user.loading#error.platform.getUser[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "error": "{{({ event }) => event.error}}"
+                }
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "getUser"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 349.421875,
+          "width": 349.421875,
+          "bottom": 104.5,
+          "height": 104.5
+        },
+        "source": "user.loading",
+        "target": "user.failure",
+        "position": {
+          "x": 627.2305456384249,
+          "y": 470.717192543247
+        },
+        "uniqueId": "bibiyaxjwne"
+      },
+      {
+        "id": "user.failure#RETRY[0]",
+        "data": {
+          "color": "yellow",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "RETRY"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 81.421875,
+          "width": 81.421875,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "user.failure",
+        "target": "user.loading",
+        "position": {
+          "x": 487.700570032755,
+          "y": 502.9671925432471
+        },
+        "uniqueId": "0j2554xxgcj8"
+      }
+    ],
+    "context": {
+      "userId": "42"
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "FETCH": {
+          "type": "object",
+          "properties": {}
+        },
+        "RETRY": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "userId": {
+          "type": "string",
+          "description": "Generated automatically based on the key: \"userId\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "user",
+      "data": {
+        "key": "user",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "idle",
+        "metaEntries": []
+      },
+      "size": {
+        "x": 68.3984280337072,
+        "y": -34.98438873720263,
+        "top": -34.98438873720263,
+        "left": 68.3984280337072,
+        "right": 1045.398515602949,
+        "width": 977.0000875692422,
+        "bottom": 70.01561064902803,
+        "height": 104.9999993862307
+      },
+      "nodes": [
+        {
+          "id": "user.idle",
+          "data": {
+            "key": "idle",
+            "exit": [],
+            "tags": [],
+            "color": "yellow",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 57.640625,
+            "width": 57.640625,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 501.3770500334139,
+            "y": 159.3394774532687
+          },
+          "uniqueId": "28mqdiseoxe"
+        },
+        {
+          "id": "user.loading",
+          "data": {
+            "key": "loading",
+            "exit": [],
+            "tags": [],
+            "color": "blue",
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "getUser",
+                "src": "inline",
+                "kind": "named"
+              }
+            ],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 163.3125,
+            "width": 163.3125,
+            "bottom": 138.5,
+            "height": 138.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 448.5411125334139,
+            "y": 305.3097327638206
+          },
+          "uniqueId": "b2h08y0wa5d"
+        },
+        {
+          "id": "user.success",
+          "data": {
+            "key": "success",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 90.859375,
+            "width": 90.859375,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 224.6122900760968,
+            "y": 618.4963185898744
+          },
+          "uniqueId": "i6n7bnk35t"
+        },
+        {
+          "id": "user.failure",
+          "data": {
+            "key": "failure",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 76.46875,
+            "width": 76.46875,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 763.7071081384249,
+            "y": 618.4963185898744
+          },
+          "uniqueId": "siirsxc9p6s"
+        }
+      ],
+      "position": {
+        "x": 47.33104007609677,
+        "y": 6.339478067038016
+      },
+      "uniqueId": "p35km1vil3"
+    }
+  }
+}

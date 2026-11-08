@@ -1,0 +1,728 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "checkoutFlow.editingBasket#UPDATE_BASKET[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "UPDATE_BASKET"
+          }
+        },
+        "size": {
+          "x": 718.687447518576,
+          "y": 231.3593568939715,
+          "top": 231.3593568939715,
+          "left": 718.687447518576,
+          "right": 867.0937335559555,
+          "width": 148.4062860373795,
+          "bottom": 271.3593550627818,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.editingBasket",
+        "target": "checkoutFlow.updatingBasket",
+        "position": {
+          "x": 718.6892203187057,
+          "y": 231.3607673023299
+        },
+        "uniqueId": "693u8fi8dew"
+      },
+      {
+        "id": "checkoutFlow.editingBasket#ADD_SHIPPING_DETAILS[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "ADD_SHIPPING_DETAILS"
+          }
+        },
+        "size": {
+          "x": 1064.656199655527,
+          "y": 96.98437051311288,
+          "top": 96.98437051311288,
+          "left": 1064.656199655527,
+          "right": 1258.757779339142,
+          "width": 194.1015796836155,
+          "bottom": 136.9843686819231,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.editingBasket",
+        "target": "checkoutFlow.addingShippingDetails",
+        "position": {
+          "x": 947.3040701515799,
+          "y": 197.1176201535594
+        },
+        "uniqueId": "62xnsefieg"
+      },
+      {
+        "id": "checkoutFlow.updatingBasket#BASKET_UPDATED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BASKET_UPDATED"
+          }
+        },
+        "size": {
+          "x": 554.2265565251777,
+          "y": 231.3593568939715,
+          "top": 231.3593568939715,
+          "left": 554.2265565251777,
+          "right": 710.7968640843407,
+          "width": 156.570307559163,
+          "bottom": 271.3593550627818,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.updatingBasket",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 554.2311319653941,
+          "y": 231.3607673023299
+        },
+        "uniqueId": "v233wri3up"
+      },
+      {
+        "id": "checkoutFlow.updatingBasket#ADD_SHIPPING_DETAILS[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "ADD_SHIPPING_DETAILS"
+          }
+        },
+        "size": {
+          "x": 936.4452792662274,
+          "y": 301.1874563748016,
+          "top": 301.1874563748016,
+          "left": 936.4452792662274,
+          "right": 1130.546790675664,
+          "width": 194.1015114094363,
+          "bottom": 341.1874545436119,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.updatingBasket",
+        "target": "checkoutFlow.addingShippingDetails",
+        "position": {
+          "x": 947.3041042886696,
+          "y": 266.5793510844052
+        },
+        "uniqueId": "wdcpfyppy5r"
+      },
+      {
+        "id": "checkoutFlow.addingShippingDetails#SHIPPING_DETAILS_ADDED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SHIPPING_DETAILS_ADDED"
+          }
+        },
+        "size": {
+          "x": 1301.187450721829,
+          "y": 301.1874563748016,
+          "top": 301.1874563748016,
+          "left": 1301.187450721829,
+          "right": 1513.124976970007,
+          "width": 211.9375262481781,
+          "bottom": 341.1874545436119,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.addingShippingDetails",
+        "target": "checkoutFlow.addingBillingDetails",
+        "position": {
+          "x": 1301.192125428407,
+          "y": 301.1949237620149
+        },
+        "uniqueId": "r29dweuh9zr"
+      },
+      {
+        "id": "checkoutFlow.addingShippingDetails#CANCEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL"
+          }
+        },
+        "size": {
+          "x": 1015.828077024214,
+          "y": 161.2421845385649,
+          "top": 161.2421845385649,
+          "left": 1015.828077024214,
+          "right": 1108.585854754426,
+          "width": 92.75777773021252,
+          "bottom": 201.2421827073752,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.addingShippingDetails",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 1033.111195286799,
+          "y": 96.98508806118421
+        },
+        "uniqueId": "tx32e8idum"
+      },
+      {
+        "id": "checkoutFlow.addingBillingDetails#BILLING_DETAILS_ADDED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BILLING_DETAILS_ADDED"
+          }
+        },
+        "size": {
+          "x": 1306.976554921425,
+          "y": 495.8046426594568,
+          "top": 495.8046426594568,
+          "left": 1306.976554921425,
+          "right": 1507.335872770411,
+          "width": 200.3593178489866,
+          "bottom": 535.804640828267,
+          "height": 39.99999816881024
+        },
+        "source": "checkoutFlow.addingBillingDetails",
+        "target": "checkoutFlow.calculatingShippingCosts",
+        "position": {
+          "x": 1306.981145653044,
+          "y": 495.8075030711796
+        },
+        "uniqueId": "a9arvxzr1qs"
+      },
+      {
+        "id": "checkoutFlow.addingBillingDetails#CANCEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL"
+          }
+        },
+        "size": {
+          "x": 1024.906221530812,
+          "y": 171.9531060398478,
+          "top": 171.9531060398478,
+          "left": 1024.906221530812,
+          "right": 1117.663999261024,
+          "width": 92.75777773021264,
+          "bottom": 211.9531042086581,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.addingBillingDetails",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 870.2358967764942,
+          "y": 396.014434852019
+        },
+        "uniqueId": "1ego2vzu4cd"
+      },
+      {
+        "id": "checkoutFlow.calculatingShippingCosts#SHIPPING_COSTS_CALCULATED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SHIPPING_COSTS_CALCULATED"
+          }
+        },
+        "size": {
+          "x": 1285.140560748056,
+          "y": 696.9999778322954,
+          "top": 696.9999778322954,
+          "left": 1285.140560748056,
+          "right": 1529.171866943781,
+          "width": 244.0313061957249,
+          "bottom": 736.9999760011056,
+          "height": 39.99999816881018
+        },
+        "source": "checkoutFlow.calculatingShippingCosts",
+        "target": "checkoutFlow.takingPayment",
+        "position": {
+          "x": 1285.145161666468,
+          "y": 697.0000555477959
+        },
+        "uniqueId": "45vxke4nrjv"
+      },
+      {
+        "id": "checkoutFlow.calculatingShippingCosts#CANCEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL"
+          }
+        },
+        "size": {
+          "x": 870.2343457974572,
+          "y": 396.0077970575308,
+          "top": 396.0077970575308,
+          "left": 870.2343457974572,
+          "right": 962.9921235276697,
+          "width": 92.75777773021252,
+          "bottom": 436.007795226341,
+          "height": 39.99999816881024
+        },
+        "source": "checkoutFlow.calculatingShippingCosts",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 870.2358967764942,
+          "y": 396.014434852019
+        },
+        "uniqueId": "tu2qcv8vqtp"
+      },
+      {
+        "id": "checkoutFlow.takingPayment#PAYMENT_SUCCEEDED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAYMENT_SUCCEEDED"
+          }
+        },
+        "size": {
+          "x": 1047.726524545175,
+          "y": 801.3905833050298,
+          "top": 801.3905833050298,
+          "left": 1047.726524545175,
+          "right": 1234.976517253059,
+          "width": 187.2499927078841,
+          "bottom": 841.3905814738401,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.takingPayment",
+        "target": "checkoutFlow.succeed",
+        "position": {
+          "x": 1047.72928939687,
+          "y": 801.3981571629777
+        },
+        "uniqueId": "eb9b3p8rdha"
+      },
+      {
+        "id": "checkoutFlow.takingPayment#PAYMENT_FAILED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PAYMENT_FAILED"
+          }
+        },
+        "size": {
+          "x": 1575.609369191698,
+          "y": 801.3905833050298,
+          "top": 801.3905833050298,
+          "left": 1575.609369191698,
+          "right": 1727.101443304711,
+          "width": 151.4920741130134,
+          "bottom": 841.3905814738401,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.takingPayment",
+        "target": "checkoutFlow.paymentFailed",
+        "position": {
+          "x": 1575.610191723735,
+          "y": 801.3981571629777
+        },
+        "uniqueId": "jl2yhfucobs"
+      },
+      {
+        "id": "checkoutFlow.paymentFailed#RETRY_PAYMENT[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "RETRY_PAYMENT"
+          }
+        },
+        "size": {
+          "x": 1890.406179348162,
+          "y": 598.0546477928913,
+          "top": 598.0546477928913,
+          "left": 1890.406179348162,
+          "right": 2040.726531998379,
+          "width": 150.3203526502164,
+          "bottom": 638.0546459617016,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.paymentFailed",
+        "target": "checkoutFlow.updatingBillingDetails",
+        "position": {
+          "x": 1890.408526782914,
+          "y": 598.0555101202954
+        },
+        "uniqueId": "7ard995848h"
+      },
+      {
+        "id": "checkoutFlow.paymentFailed#CANCEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL"
+          }
+        },
+        "size": {
+          "x": 2101.23425018494,
+          "y": 96.98437051311288,
+          "top": 96.98437051311288,
+          "left": 2101.23425018494,
+          "right": 2193.992096189332,
+          "width": 92.75784600439192,
+          "bottom": 136.9843686819231,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.paymentFailed",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 2101.236937253615,
+          "y": 96.98508806118421
+        },
+        "uniqueId": "dzmzydn8bon"
+      },
+      {
+        "id": "checkoutFlow.updatingBillingDetails#BILLING_DETAILS_UPDATED[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BILLING_DETAILS_UPDATED"
+          }
+        },
+        "size": {
+          "x": 1628.163964795911,
+          "y": 598.0546477928913,
+          "top": 598.0546477928913,
+          "left": 1628.163964795911,
+          "right": 1843.414017668724,
+          "width": 215.2500528728124,
+          "bottom": 638.0546459617016,
+          "height": 39.99999816881029
+        },
+        "source": "checkoutFlow.updatingBillingDetails",
+        "target": "checkoutFlow.takingPayment",
+        "position": {
+          "x": 1628.170249586499,
+          "y": 598.0555101202954
+        },
+        "uniqueId": "pcigmhe9ga"
+      },
+      {
+        "id": "checkoutFlow.updatingBillingDetails#CANCEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL"
+          }
+        },
+        "size": {
+          "x": 1893.554574846088,
+          "y": 96.98437051311288,
+          "top": 96.98437051311288,
+          "left": 1893.554574846088,
+          "right": 1986.31242085048,
+          "width": 92.7578460043917,
+          "bottom": 136.9843686819231,
+          "height": 39.99999816881027
+        },
+        "source": "checkoutFlow.updatingBillingDetails",
+        "target": "checkoutFlow.editingBasket",
+        "position": {
+          "x": 1893.556933910308,
+          "y": 96.98508806118423
+        },
+        "uniqueId": "g8zs8bhp5m"
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "checkoutFlow",
+      "data": {
+        "key": "checkoutFlow",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "editingBasket"
+      },
+      "size": {
+        "x": 511.2265226497625,
+        "y": 12.48437182121946,
+        "top": 12.48437182121946,
+        "left": 511.2265226497625,
+        "right": 2422.226532455378,
+        "width": 1911.000009805616,
+        "bottom": 53.98437077478735,
+        "height": 41.4999989535679
+      },
+      "nodes": [
+        {
+          "id": "checkoutFlow.editingBasket",
+          "data": {
+            "key": "editingBasket",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can edit the basket."
+          },
+          "size": {
+            "x": 566.539053721268,
+            "y": 110.39843745291,
+            "top": 110.39843745291,
+            "left": 566.539053721268,
+            "right": 853.2264967519635,
+            "width": 286.6874430306955,
+            "bottom": 208.8984491587228,
+            "height": 98.50001170581282
+          },
+          "nodes": [],
+          "position": {
+            "x": 566.5463023575423,
+            "y": 110.4039932729216
+          },
+          "uniqueId": "u934ipv39xe"
+        },
+        {
+          "id": "checkoutFlow.updatingBasket",
+          "data": {
+            "key": "updatingBasket",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can update the basket."
+          },
+          "size": {
+            "x": 556.7187006129883,
+            "y": 297.312487062222,
+            "top": 297.312487062222,
+            "left": 556.7187006129883,
+            "right": 863.0546331166678,
+            "width": 306.3359325036795,
+            "bottom": 395.8124646309452,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 556.7220747093984,
+            "y": 297.317892769388
+          },
+          "uniqueId": "mk2igzzrzam"
+        },
+        {
+          "id": "checkoutFlow.addingShippingDetails",
+          "data": {
+            "key": "addingShippingDetails",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can add shipping details."
+          },
+          "size": {
+            "x": 1248.163948055124,
+            "y": 179.8905938351681,
+            "top": 179.8905938351681,
+            "left": 1248.163948055124,
+            "right": 1566.148343088354,
+            "width": 317.9843950332299,
+            "bottom": 278.390605540981,
+            "height": 98.50001170581288
+          },
+          "nodes": [],
+          "position": {
+            "x": 1248.168697976809,
+            "y": 179.8944149417994
+          },
+          "uniqueId": "nxe19ptv87n"
+        },
+        {
+          "id": "checkoutFlow.addingBillingDetails",
+          "data": {
+            "key": "addingBillingDetails",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can add billing details."
+          },
+          "size": {
+            "x": 1263.038980017742,
+            "y": 374.2578283499072,
+            "top": 374.2578283499072,
+            "left": 1263.038980017742,
+            "right": 1564.945215503142,
+            "width": 301.9062354853997,
+            "bottom": 472.7578059186305,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 1263.044677690348,
+            "y": 374.2619226682471
+          },
+          "uniqueId": "pduklr66sx"
+        },
+        {
+          "id": "checkoutFlow.calculatingShippingCosts",
+          "data": {
+            "key": "calculatingShippingCosts",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the system calculates the shipping costs."
+          },
+          "size": {
+            "x": 1231.742096289387,
+            "y": 568.8046922300243,
+            "top": 568.8046922300243,
+            "left": 1231.742096289387,
+            "right": 1596.242099231497,
+            "width": 364.5000029421101,
+            "bottom": 667.3046697987477,
+            "height": 98.49997756872335
+          },
+          "nodes": [],
+          "position": {
+            "x": 1231.747848668756,
+            "y": 568.8055112431535
+          },
+          "uniqueId": "2rak147f1rp"
+        },
+        {
+          "id": "checkoutFlow.takingPayment",
+          "data": {
+            "key": "takingPayment",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can take payment."
+          },
+          "size": {
+            "x": 1268.140563233166,
+            "y": 772.1406277421629,
+            "top": 772.1406277421629,
+            "left": 1268.140563233166,
+            "right": 1546.17186445867,
+            "width": 278.0313012255046,
+            "bottom": 870.6406053108861,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 1268.145209592166,
+            "y": 772.1481918203634
+          },
+          "uniqueId": "pffxf1pbob"
+        },
+        {
+          "id": "checkoutFlow.paymentFailed",
+          "data": {
+            "key": "paymentFailed",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the payment failed and the user can retry payment after updating billing details."
+          },
+          "size": {
+            "x": 1769.179639213067,
+            "y": 772.1406277421629,
+            "top": 772.1406277421629,
+            "left": 1769.179639213067,
+            "right": 2369.367160915381,
+            "width": 600.1875217023146,
+            "bottom": 870.6406053108861,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 1769.186698678487,
+            "y": 772.148155824792
+          },
+          "uniqueId": "iu7dfgv27ue"
+        },
+        {
+          "id": "checkoutFlow.updatingBillingDetails",
+          "data": {
+            "key": "updatingBillingDetails",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "State where the user can update billing details after a payment failure."
+          },
+          "size": {
+            "x": 1623.820224969198,
+            "y": 374.2578283499072,
+            "top": 374.2578283499072,
+            "left": 1623.820224969198,
+            "right": 2087.562482355892,
+            "width": 463.7422573866941,
+            "bottom": 472.7578059186305,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 1623.823148419759,
+            "y": 374.2619226682471
+          },
+          "uniqueId": "ueos6nazcur"
+        },
+        {
+          "id": "checkoutFlow.succeed",
+          "data": {
+            "key": "succeed",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "invoke": [],
+            "description": "State indicating a successful payment."
+          },
+          "size": {
+            "x": 725.3749716417786,
+            "y": 772.1406277421629,
+            "top": 772.1406277421629,
+            "left": 725.3749716417786,
+            "right": 995.0546339011596,
+            "width": 269.679662259381,
+            "bottom": 870.6406053108861,
+            "height": 98.49997756872324
+          },
+          "nodes": [],
+          "position": {
+            "x": 725.377520413601,
+            "y": 772.148155824792
+          },
+          "uniqueId": "txspuom9kod"
+        }
+      ],
+      "position": {
+        "x": 506.2311319653941,
+        "y": 7.485089107616318
+      },
+      "uniqueId": "8b7bdo55m7w"
+    }
+  }
+}

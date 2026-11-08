@@ -1,0 +1,1713 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "26f0286a-e093-4863-a534-b4ea9b656ee0",
+    "edges": [
+      {
+        "id": "Onboarding.loading#xstate.after(3000)#Onboarding.loading[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "3000"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.loading",
+        "target": "Onboarding.thankYou",
+        "position": {
+          "x": -939.3907084588641,
+          "y": -315.42578125
+        },
+        "uniqueId": "ynde472ltrj"
+      },
+      {
+        "id": "Onboarding.thankYou#GET_STARTED[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "GET_STARTED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.thankYou",
+        "target": "Onboarding.termsAgreement",
+        "position": {
+          "x": -600.7559193902489,
+          "y": -315.6257781982422
+        },
+        "uniqueId": "5c4adq21w4"
+      },
+      {
+        "id": "Onboarding.termsAgreement#AGREE[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "AGREE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.termsAgreement",
+        "target": "Onboarding.countryRestrictionsAgreement",
+        "position": {
+          "x": -256.8633575439453,
+          "y": -315.6257781982422
+        },
+        "uniqueId": "gwusi2p8tkh"
+      },
+      {
+        "id": "Onboarding.countryRestrictionsAgreement#AGREE[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "AGREE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.countryRestrictionsAgreement",
+        "target": "Onboarding.chooseTelemetry",
+        "position": {
+          "x": 134.3366394042969,
+          "y": -316.8257827758789
+        },
+        "uniqueId": "86dvw40fmqi"
+      },
+      {
+        "id": "Onboarding.chooseTelemetry.idle#UPDATE_TELEMETRY_ENABLED[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "UPDATE_TELEMETRY_ENABLED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseTelemetry.idle",
+        "target": "Onboarding.chooseTelemetry.idle",
+        "position": {
+          "x": 308.969970703125,
+          "y": -406.8257827758789
+        },
+        "uniqueId": "taalykvy5fs"
+      },
+      {
+        "id": "Onboarding.chooseTelemetry.idle#CONTINUE[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseTelemetry.idle",
+        "target": "Onboarding.chooseTelemetry.setTelemetry",
+        "position": {
+          "x": 579.969970703125,
+          "y": -308.4257888793945
+        },
+        "uniqueId": "zbzf8ilryuh"
+      },
+      {
+        "id": "Onboarding.chooseTelemetry.setTelemetry#done.invoke.setTelemetry[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "setTelemetry"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseTelemetry.setTelemetry",
+        "target": "Onboarding.setProfileName",
+        "position": {
+          "x": 1070.553298950195,
+          "y": -456.2257919311523
+        },
+        "uniqueId": "h1iea8blp0p"
+      },
+      {
+        "id": "Onboarding.chooseTelemetry.setTelemetry#error.platform.setTelemetry[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "setTelemetry"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseTelemetry.setTelemetry",
+        "target": "Onboarding.chooseTelemetry.idle",
+        "position": {
+          "x": 434.753303527832,
+          "y": -234.2257919311523
+        },
+        "uniqueId": "rt20gxn4n6p"
+      },
+      {
+        "id": "Onboarding.setProfileName.idle#CONTINUE[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.setProfileName.idle",
+        "target": "Onboarding.setProfileName.setProfile",
+        "position": {
+          "x": 1602.103302001953,
+          "y": -359.8757858276367
+        },
+        "uniqueId": "039zipj82yyu"
+      },
+      {
+        "id": "Onboarding.setProfileName.setProfile#done.invoke.setProfileName[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "setProfileName"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.setProfileName.setProfile",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1553.919967651367,
+          "y": 33.12421417236328
+        },
+        "uniqueId": "5k3pf2cxg8"
+      },
+      {
+        "id": "Onboarding.setProfileName.setProfile#error.platform.setProfileName[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "setProfileName"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.setProfileName.setProfile",
+        "target": "Onboarding.setProfileName.idle",
+        "position": {
+          "x": 1427.243135865031,
+          "y": -262.9337764258039
+        },
+        "uniqueId": "xfw5gaj6cm"
+      },
+      {
+        "id": "Onboarding.setProfileName.idle#UPDATE_PROFILE_NAME[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "UPDATE_PROFILE_NAME"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.setProfileName.idle",
+        "target": "Onboarding.setProfileName.idle",
+        "position": {
+          "x": 1367.103302001953,
+          "y": -430.8757858276367
+        },
+        "uniqueId": "su70352pe2n"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.idle#SELECT[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SELECT"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.idle",
+        "target": "Onboarding.chooseSecurityMethod.idle",
+        "position": {
+          "x": 693.1033630371094,
+          "y": 118.9741592407227
+        },
+        "uniqueId": "brwt7r5eo8d"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.idle#CONTINUE[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "fieldHasValue",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.idle",
+        "target": "Onboarding.chooseSecurityMethod.newAccount",
+        "position": {
+          "x": 494.9102165404696,
+          "y": 269.037847296423
+        },
+        "uniqueId": "zk5cw64idwe"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.idle#CONTINUE[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "fieldHasRecoverValue",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.idle",
+        "target": "Onboarding.chooseSecurityMethod.recoverAccount",
+        "position": {
+          "x": 452.2199783325195,
+          "y": 420.7741546630859
+        },
+        "uniqueId": "if2262tfbgo"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.idle#CONTINUE[2]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "fieldHasImportValue",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.idle",
+        "target": "Onboarding.chooseSecurityMethod.importBackup",
+        "position": {
+          "x": 457.048592317857,
+          "y": 631.8859209489445
+        },
+        "uniqueId": "7t53402hp2v"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.choosePassword#done.invoke.showCoosePasswordWindow[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "showCoosePasswordWindow"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.choosePassword",
+        "target": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "position": {
+          "x": 1437.811630249023,
+          "y": 302.1241607666016
+        },
+        "uniqueId": "q4jwtwzxrs"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.idle#SELECT[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SELECT"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "target": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "position": {
+          "x": 1686.320053100586,
+          "y": 379.8741607666016
+        },
+        "uniqueId": "vtz45kgc3ok"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.idle#STEP_BACK[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1726.503379821777,
+          "y": 172.7241439819336
+        },
+        "uniqueId": "ywf4lfstj5"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.idle#CONTINUE[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "fieldHasValue",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "target": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic",
+        "position": {
+          "x": 1889.320053100586,
+          "y": 221.6741638183594
+        },
+        "uniqueId": "tn8y25tb78m"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.idle#CONTINUE[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "!fieldHasValue",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONTINUE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.idle",
+        "target": "Onboarding.chooseSecurityMethod.newAccount.withStrongHolders",
+        "position": {
+          "x": 1916.320053100586,
+          "y": 358.7241744995117
+        },
+        "uniqueId": "hw6cs1vcsgj"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic#STEP_BACK[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "closeEguWindow",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic",
+        "target": "Onboarding.chooseSecurityMethod.newAccount",
+        "position": {
+          "x": 2534.120048522949,
+          "y": 175.2741546630859
+        },
+        "uniqueId": "c3gl8evzpai"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic#done.invoke.showGeneratedMnemonicWindow[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "showGeneratedMnemonicWindow"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic",
+        "target": "Onboarding.finalizing",
+        "position": {
+          "x": 3025.886703491211,
+          "y": 294.9241409301758
+        },
+        "uniqueId": "dzfg10dblos"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.recoverAccount.choosePassword#done.invoke.showChoosePasswordWindow[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "showChoosePasswordWindow"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.recoverAccount.choosePassword",
+        "target": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic",
+        "position": {
+          "x": 1410.399181365967,
+          "y": 672.1741638183594
+        },
+        "uniqueId": "s41tw8w0m09"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic#done.invoke.showInputMnemonicWindow[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "showInputMnemonicWindow"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic",
+        "target": "Onboarding.finalizing",
+        "position": {
+          "x": 2972.953308105469,
+          "y": 665.4241638183594
+        },
+        "uniqueId": "e12odpydr5t"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic#STEP_BACK[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "closeGuiWindow",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1917.836639404297,
+          "y": 491.7741546630859
+        },
+        "uniqueId": "jnkuz0ruy68"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.idle#START_IMPORT[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "START_IMPORT"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.idle",
+        "target": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "position": {
+          "x": 1438.628364562988,
+          "y": 1048.774154663086
+        },
+        "uniqueId": "ghc56vq5oob"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.idle#STEP_BACK[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "closeEguWindow",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.idle",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1326.261703491211,
+          "y": 833.9741516113281
+        },
+        "uniqueId": "igwobk8m1t"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.uploading#done.invoke.showImportBackupAndPasswordWindows[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "showImportBackupAndPasswordWindows"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "target": "Onboarding.finalizing",
+        "position": {
+          "x": 2100.269966125488,
+          "y": 1041.024154663086
+        },
+        "uniqueId": "24xq2h15jrt"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.uploading#error.platform.showImportBackupAndPasswordWindows[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "importBackupCanceled",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "showImportBackupAndPasswordWindows"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "target": "Onboarding.chooseSecurityMethod.importBackup.idle",
+        "position": {
+          "x": 1105.032512664795,
+          "y": 1170.774154663086
+        },
+        "uniqueId": "7hft4fim3mt"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.uploading#error.platform.showImportBackupAndPasswordWindows[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "New guard",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "showImportBackupAndPasswordWindows"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "target": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "position": {
+          "x": 2164.032512664795,
+          "y": 1170.774154663086
+        },
+        "uniqueId": "mihl8nce3el"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.importBackup.uploading#error.platform.showImportBackupAndPasswordWindows[2]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "showImportBackupAndPasswordWindows"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "target": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+        "position": {
+          "x": 1863.032512664795,
+          "y": 1260.774154663086
+        },
+        "uniqueId": "alyonnx5lm"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.newAccount.choosePassword#STEP_BACK[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "closeEguWindow",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.newAccount.choosePassword",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1183.470031738281,
+          "y": 109.1241607666016
+        },
+        "uniqueId": "fw66twb7wnf"
+      },
+      {
+        "id": "Onboarding.chooseSecurityMethod.recoverAccount.choosePassword#STEP_BACK[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "closeEguWindow",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "STEP_BACK"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.chooseSecurityMethod.recoverAccount.choosePassword",
+        "target": "Onboarding.chooseSecurityMethod",
+        "position": {
+          "x": 1150.815837860107,
+          "y": 491.1741638183594
+        },
+        "uniqueId": "0qwnimlu8xm"
+      },
+      {
+        "id": "Onboarding.finalizing#xstate.after(3000)#Onboarding.finalizing[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "3000"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Onboarding.finalizing",
+        "target": "Onboarding.finalized",
+        "position": {
+          "x": 3151.470031738281,
+          "y": 1282.574127197266
+        },
+        "uniqueId": "t96fcggut1f"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "": {
+          "type": "object",
+          "properties": {}
+        },
+        "AGREE": {
+          "type": "object",
+          "properties": {}
+        },
+        "SELECT": {
+          "type": "object",
+          "properties": {}
+        },
+        "CONTINUE": {
+          "type": "object",
+          "properties": {}
+        },
+        "STEP_BACK": {
+          "type": "object",
+          "properties": {}
+        },
+        "GET_STARTED": {
+          "type": "object",
+          "properties": {}
+        },
+        "START_IMPORT": {
+          "type": "object",
+          "properties": {}
+        },
+        "UPDATE_PROFILE_NAME": {
+          "type": "object",
+          "properties": {}
+        },
+        "UPDATE_TELEMETRY_ENABLED": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Onboarding",
+      "data": {
+        "key": "Onboarding",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "loading"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "Onboarding.loading",
+          "data": {
+            "key": "loading",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -1098.204225133955,
+            "y": -316.42578125
+          },
+          "uniqueId": "23p9y3oda0h"
+        },
+        {
+          "id": "Onboarding.thankYou",
+          "data": {
+            "key": "thankYou",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -734.2392567925926,
+            "y": -316.42578125
+          },
+          "uniqueId": "jowp38z9fuo"
+        },
+        {
+          "id": "Onboarding.termsAgreement",
+          "data": {
+            "key": "termsAgreement",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -438.530029296875,
+            "y": -316.42578125
+          },
+          "uniqueId": "lwb31733lmo"
+        },
+        {
+          "id": "Onboarding.countryRestrictionsAgreement",
+          "data": {
+            "key": "countryRestrictionsAgreement",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -141.8633575439453,
+            "y": -319.6257781982422
+          },
+          "uniqueId": "efhtf0klxmo"
+        },
+        {
+          "id": "Onboarding.chooseTelemetry",
+          "data": {
+            "key": "chooseTelemetry",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "idle"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "Onboarding.chooseTelemetry.idle",
+              "data": {
+                "key": "idle",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 333.3366394042969,
+                "y": -319.6257858276367
+              },
+              "uniqueId": "16bnywixkz5"
+            },
+            {
+              "id": "Onboarding.chooseTelemetry.setTelemetry",
+              "data": {
+                "key": "setTelemetry",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "setTelemetry",
+                    "src": "setTelemetry",
+                    "kind": "named",
+                    "input": {},
+                    "settings": {}
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 779.969970703125,
+                "y": -380.6258392333984
+              },
+              "uniqueId": "oijj0mur0dh"
+            }
+          ],
+          "position": {
+            "x": 260.969970703125,
+            "y": -454.8257827758789
+          },
+          "uniqueId": "y5qqt8yl7u"
+        },
+        {
+          "id": "Onboarding.setProfileName",
+          "data": {
+            "key": "setProfileName",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "idle"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "Onboarding.setProfileName.idle",
+              "data": {
+                "key": "idle",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1482.469970703125,
+                "y": -369.6757888793945
+              },
+              "uniqueId": "6othe6oeok"
+            },
+            {
+              "id": "Onboarding.setProfileName.setProfile",
+              "data": {
+                "key": "setProfile",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "setProfileName",
+                    "src": "setProfileName",
+                    "kind": "named",
+                    "input": {},
+                    "settings": {}
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1777.103302001953,
+                "y": -408.8757858276367
+              },
+              "uniqueId": "19hx6ydx7q8"
+            }
+          ],
+          "position": {
+            "x": 1319.103302001953,
+            "y": -478.8757858276367
+          },
+          "uniqueId": "o6miqihlzx"
+        },
+        {
+          "id": "Onboarding.chooseSecurityMethod",
+          "data": {
+            "key": "chooseSecurityMethod",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "idle"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "Onboarding.chooseSecurityMethod.idle",
+              "data": {
+                "key": "idle",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 569.4700317382812,
+                "y": 65.17416381835938
+              },
+              "uniqueId": "mldwejo53wi"
+            },
+            {
+              "id": "Onboarding.chooseSecurityMethod.newAccount",
+              "data": {
+                "key": "newAccount",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "choosePassword"
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [
+                {
+                  "id": "Onboarding.chooseSecurityMethod.newAccount.choosePassword",
+                  "data": {
+                    "key": "choosePassword",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "showCoosePasswordWindow",
+                        "src": "showCoosePasswordWindow",
+                        "kind": "named",
+                        "input": {},
+                        "settings": {}
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1111.470031738281,
+                    "y": 260.1241607666016
+                  },
+                  "uniqueId": "3sv8d1rnetp"
+                },
+                {
+                  "id": "Onboarding.chooseSecurityMethod.newAccount.idle",
+                  "data": {
+                    "key": "idle",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1761.978370666504,
+                    "y": 299.0741577148438
+                  },
+                  "uniqueId": "fxuzq0jnjwp"
+                },
+                {
+                  "id": "Onboarding.chooseSecurityMethod.newAccount.withMnemonic",
+                  "data": {
+                    "key": "withMnemonic",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "showGeneratedMnemonicWindow",
+                        "src": "showGeneratedMnemonicWindow",
+                        "kind": "named",
+                        "input": {},
+                        "settings": {}
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 2196.320053100586,
+                    "y": 190.8741607666016
+                  },
+                  "uniqueId": "7k88ykunxa8"
+                },
+                {
+                  "id": "Onboarding.chooseSecurityMethod.newAccount.withStrongHolders",
+                  "data": {
+                    "key": "withStrongHolders",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 2227.470031738281,
+                    "y": 341.9241714477539
+                  },
+                  "uniqueId": "42pbgqqaspc"
+                }
+              ],
+              "position": {
+                "x": 1063.470031738281,
+                "y": 127.2741546630859
+              },
+              "uniqueId": "829rq98od7j"
+            },
+            {
+              "id": "Onboarding.chooseSecurityMethod.recoverAccount",
+              "data": {
+                "key": "recoverAccount",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "choosePassword"
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [
+                {
+                  "id": "Onboarding.chooseSecurityMethod.recoverAccount.choosePassword",
+                  "data": {
+                    "key": "choosePassword",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "showChoosePasswordWindow",
+                        "src": "showChoosePasswordWindow",
+                        "kind": "named",
+                        "input": {},
+                        "settings": {}
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1105.965831756592,
+                    "y": 630.1741638183594
+                  },
+                  "uniqueId": "aci5yupqrac"
+                },
+                {
+                  "id": "Onboarding.chooseSecurityMethod.recoverAccount.inputMnemonic",
+                  "data": {
+                    "key": "inputMnemonic",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "showInputMnemonicWindow",
+                        "src": "showInputMnemonicWindow",
+                        "kind": "named",
+                        "input": {},
+                        "settings": {}
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1746.474109649658,
+                    "y": 629.7741546630859
+                  },
+                  "uniqueId": "p15zpwufbw"
+                }
+              ],
+              "position": {
+                "x": 1057.965831756592,
+                "y": 581.7741546630859
+              },
+              "uniqueId": "0ghd86vg8l2o"
+            },
+            {
+              "id": "Onboarding.chooseSecurityMethod.importBackup",
+              "data": {
+                "key": "importBackup",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "idle"
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [
+                {
+                  "id": "Onboarding.chooseSecurityMethod.importBackup.idle",
+                  "data": {
+                    "key": "idle",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": []
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1343.99503326416,
+                    "y": 1031.774154663086
+                  },
+                  "uniqueId": "0kt7m6ugyu8"
+                },
+                {
+                  "id": "Onboarding.chooseSecurityMethod.importBackup.uploading",
+                  "data": {
+                    "key": "uploading",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "showImportBackupAndPasswordWindows",
+                        "src": "showImportBackupAndPasswordWindows",
+                        "kind": "named",
+                        "input": {},
+                        "settings": {}
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 1645.232524871826,
+                    "y": 1029.774154663086
+                  },
+                  "uniqueId": "rvvf0ke5wm"
+                }
+              ],
+              "position": {
+                "x": 1057.032512664795,
+                "y": 981.7741546630859
+              },
+              "uniqueId": "h3nawh68y3w"
+            }
+          ],
+          "position": {
+            "x": 404.2199783325195,
+            "y": 17.17416381835938
+          },
+          "uniqueId": "bo964cv5zdl"
+        },
+        {
+          "id": "Onboarding.finalizing",
+          "data": {
+            "key": "finalizing",
+            "exit": [],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "finishOnboarding",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 3098.470031738281,
+            "y": 1138.574127197266
+          },
+          "uniqueId": "09hat7jhee15"
+        },
+        {
+          "id": "Onboarding.finalized",
+          "data": {
+            "key": "finalized",
+            "exit": [],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "navigateToDashboard",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 3085.12003326416,
+            "y": 1396.574127197266
+          },
+          "uniqueId": "lnlcu6yw4sr"
+        }
+      ],
+      "position": {
+        "x": -1146.204225133955,
+        "y": -526.8757858276367
+      },
+      "uniqueId": "yw0v23h9pf"
+    },
+    "implementations": {
+      "actors": {
+        "setTelemetry": {
+          "id": "setTelemetry",
+          "kind": "named",
+          "name": "setTelemetry",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "setProfileName": {
+          "id": "setProfileName",
+          "kind": "named",
+          "name": "setProfileName",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showCoosePasswordWindow": {
+          "id": "showCoosePasswordWindow",
+          "kind": "named",
+          "name": "showCoosePasswordWindow",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showInputMnemonicWindow": {
+          "id": "showInputMnemonicWindow",
+          "kind": "named",
+          "name": "showInputMnemonicWindow",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showChoosePasswordWindow": {
+          "id": "showChoosePasswordWindow",
+          "kind": "named",
+          "name": "showChoosePasswordWindow",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showGeneratedMnemonicWindow": {
+          "id": "showGeneratedMnemonicWindow",
+          "kind": "named",
+          "name": "showGeneratedMnemonicWindow",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "showImportBackupAndPasswordWindows": {
+          "id": "showImportBackupAndPasswordWindows",
+          "kind": "named",
+          "name": "showImportBackupAndPasswordWindows",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "New guard": {
+          "id": "New guard",
+          "name": "New guard",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "fieldHasValue": {
+          "id": "fieldHasValue",
+          "name": "fieldHasValue",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "!fieldHasValue": {
+          "id": "!fieldHasValue",
+          "name": "!fieldHasValue",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "fieldHasImportValue": {
+          "id": "fieldHasImportValue",
+          "name": "fieldHasImportValue",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "fieldHasRecoverValue": {
+          "id": "fieldHasRecoverValue",
+          "name": "fieldHasRecoverValue",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "importBackupCanceled": {
+          "id": "importBackupCanceled",
+          "name": "importBackupCanceled",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "closeEguWindow": {
+          "id": "closeEguWindow",
+          "name": "closeEguWindow",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "closeGuiWindow": {
+          "id": "closeGuiWindow",
+          "name": "closeGuiWindow",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "finishOnboarding": {
+          "id": "finishOnboarding",
+          "name": "finishOnboarding",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "navigateToDashboard": {
+          "id": "navigateToDashboard",
+          "name": "navigateToDashboard",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

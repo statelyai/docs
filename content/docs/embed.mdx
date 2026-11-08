@@ -3,21 +3,25 @@ title: Embed machines using their embed URL
 description: You can embed your machines anywhere that supports iframes. Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
 ---
 
+import machine_e94d5674 from '@/content/machines/e94d5674-7ab7-4a4e-b7a8-781609bfe523.json';
+
 You can embed your machines anywhere that supports [`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
 
 We love to use embedded machines in our docs! Below is an example of an embedded machine:
 
-<EmbedMachine
-  name="Embed feature machine"
-  embedURL="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?mode=Design&machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
-/>
+<Embed machine={machine_e94d5674} name="Embed feature machine" />
 
-Your machine will only be embeddable if:
+To embed a live machine, keep its project **public**. In the machine's Share
+dialog, select **Publish embed**, then copy the URL. A live public embed uses
+the machine's existing ID; a pinned snapshot uses an opaque publication ID.
+Readers do not need to sign in, and the embed
+works on any site by default.
 
-- the project visibility is **public**
-- the project visibility is **unlisted**
-
-Embed URLs are not available for private machines.
+Free accounts can publish three public machines across projects. Pro accounts
+can publish more machines, including pinned snapshots of private
+or unlisted machines. A private source stays private, but anyone with its
+published snapshot URL can view that snapshot. Free embeds display Stately
+attribution. There is no per-view limit.
 
 Read [how to change a project’s visibility settings](/docs/projects/#change-a-projects-visibility).
 
@@ -29,9 +33,15 @@ You can also [get your machine as an image](image) for platforms where `<iframe>
 
 ## Copy the embed URL
 
-1. Use the **Share** button in Stately Studio’s top bar to open the Share dialog.
-2. Use the **Copy embed URL** button to copy the machine’s embed URL to your clipboard.
-3. Use the embed URL in an `<iframe>` to embed the machine anywhere that supports iframes. [Find some example code below](#example-iframe-code).
+1. Open the machine in Stately Viz and select **Share**.
+2. Select **Publish embed**. Publishing requires an account with edit access to the project.
+3. Optionally choose theme, start mode, controls, and a responsive size under **Appearance**.
+4. Select **Copy embed URL** or **Copy iframe**. [Find example code below](#example-iframe-code).
+
+Use **Unpublish** to stop serving the embed and free a publication slot.
+
+To limit where an embed appears, open **Restrict allowed domains (optional)**.
+Changing restrictions later keeps existing embed URLs.
 
 ## Example `<iframe>` code
 
@@ -40,20 +50,20 @@ The following HTML embeds the same machine at the top of this page in dark mode:
 ```html
 <iframe
   loading="lazy"
-  src="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?mode=Design&machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523&colorMode=dark"
+  src="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523&theme=dark"
   style="display: block; width: 100%; aspect-ratio: 6 / 4;"
 >
   <a
-    href="https://stately.ai/registry/editor/embed/9e7f6b1e-416a-491f-a4a0-bba386a02d8d?mode=Design&machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
+    href="https://editor.stately.ai/viz?machineId=e94d5674-7ab7-4a4e-b7a8-781609bfe523"
   >
-    View the <em>Embed feature machine</em> machine in Stately Studio </a
+    View the <em>Embed feature machine</em> in Stately Viz </a
   >.
 </iframe>
 ```
 
 <Callout>
 
-In the future, we plan to provide configurable embeds with copy-and-paste code.
+The machine owner can unpublish the embed at any time. Private-source snapshots use a separate publication ID.
 
 If you want us to prioritize improving embed mode, please [upvote it on our feedback page](https://github.com/statelyai/feedback/issues/94).
 
@@ -63,8 +73,9 @@ If you want us to prioritize improving embed mode, please [upvote it on our feed
 
 The embed URL has some of the same parameters as the [machine URL](url).
 
-- **machineId**: the unique ID for the machine. For example, `machineId=491a4c60-5300-4e22-92cf-8a32a8ffffca`
+- **machineId**: an explicitly published live public machine.
+- **publicationId**: the opaque ID for a pinned snapshot.
 - **mode**: the current machine mode. For example, `mode=Design` or `mode=Simulate`
-- **colorMode**: the color mode for the embedded machine. For example, `colorMode=light` or `colorMode=dark`
+- **theme**: the color mode for the embedded machine. For example, `theme=light` or `theme=dark`. Legacy `colorMode` also works.
 
-By default, the color mode will be the same as your chosen Stately Studio color mode. Add `&colorMode=light` or `&colorMode=dark` to the URL to force that color mode.
+Add `&theme=light` or `&theme=dark` to force the color mode.

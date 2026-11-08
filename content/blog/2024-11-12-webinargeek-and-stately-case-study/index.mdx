@@ -7,6 +7,9 @@ date: 2024-11-12
 slug: 2024-11--webinargeek-and-stately-case-study
 ---
 
+import machine_afde01f8 from '@/content/machines/afde01f8-1314-4590-b9be-2fd5dafe90d2.json';
+import machine_de091123 from '@/content/machines/de091123-5634-481b-aa18-ff9d254403ae.json';
+
 [WebinarGeek](https://www.webinargeek.com/) leans on [Stately](https://stately.ai) tooling to manage the inherent complexities in building the best user-friendly webinar platform on the internet.
 
 {/* truncate */}
@@ -29,10 +32,7 @@ The team knew that a refactoring had to happen, but it wasn't until the 2020 pan
 
 Building in this way, with explicit states and introducing barriers for what events to respond to, ultimately gave the team more confidence in adding more complex logic to their streaming page. As an example, during a given webinar, the application has to orchestrate events coming from various sources, like WebRTC, user button clicks, the video player, and even web sockets. All of these events have special considerations that need to be addressed, but they are all in service of achieving similar business goals. This cohesion allowed the WebinarGeek team to rebuild and ship the new streaming page in less than a year. As an example, state machine below illustrates the flow for loading new messages into the chat window:
 
-<EmbedMachine
-  name="Chat Window New Message Flow"
-  embedURL="https://stately.ai/registry/editor/embed/bfc1bb17-1586-466b-8616-8f2ac841598f?mode=design&machineId=afde01f8-1314-4590-b9be-2fd5dafe90d2"
-/>
+<Embed machine={machine_afde01f8} name="Chat Window New Message Flow" />
 
 ### Reducing complexity and increasing resilience
 
@@ -42,10 +42,7 @@ Because state machines only allow transitions whenever **allowed** events occur,
 
 Statements like this inspire the Stately team to continue building tools that give developers a robust experience building more fault-tolerant applications. Not only has WebinarGeek rebuilt their streaming page to scale for requests, but they've also engineered it to scale for feature development. With their logic defined as state machines in a single location, context can be better absorbed by the developers, leading to a much faster burn rate and more features shipped in less time. Even though these machines live in the same place, it does not mean they aren't able to handle wholly different tasks. The WebinarGeek team has a collection of over 100 state machines, all individually scoped to the specific problem they mean to solve. For example, the state machine below demonstrates how the team handles the initialization of other **actors,** or state machine instances:
 
-<EmbedMachine
-  name="Actor Manager Machine"
-  embedURL="https://stately.ai/registry/editor/embed/427bc3fa-4096-43ec-87c6-e11e5353aa4f?mode=design&machineId=de091123-5634-481b-aa18-ff9d254403ae"
-/>
+<Embed machine={machine_de091123} name="Actor Manager Machine" />
 
 This Actor Manager machine lazy-loads instances of other machines, loads any relevant data the actors need, and collects relevant events as they travel through the actor system. This manager also act as an error boundary, logging any captured errors to an external sink for reviewing later. These configurations can vary wildly in their application, like different webinar details, different users and their roles, and bespoke individual settings configured by end users. But, while these concerns are different, loading their _configurations_ is the same, and that process can be reused for all of these. It's also important to note that having a manager in place serves an important purpose around performance. Loading and instantiating only what is needed at the time makes for a faster and more responsive experience without pulling in unnecessary content.
 

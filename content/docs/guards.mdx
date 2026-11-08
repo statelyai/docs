@@ -2,6 +2,8 @@
 title: Guards
 ---
 
+import machine_2e91a914 from '@/content/machines/2e91a914-7f83-45fe-9216-e1b5c495a44a.json';
+
 A **guard** is a condition function that the machine checks when it goes through an event. If the condition is `true`, the machine follows the transition to the next state. If the condition is `false`, the machine follows the rest of the conditions to the next state.
 
 A **guarded transition** is a transition that is enabled only if its `guard` evaluates to `true`. The guard determines whether or not the transition can be enabled. Any transition can be a guarded transition.
@@ -46,10 +48,7 @@ const feedbackMachine = createMachine(
 );
 ```
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=2e91a914-7f83-45fe-9216-e1b5c495a44a"
-  title="Feedback form with guards"
-/>
+<Embed machine={machine_2e91a914} title="Feedback form with guards" />
 
 ## Multiple guarded transitions
 

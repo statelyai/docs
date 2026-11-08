@@ -1,0 +1,353 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Default new machine.Initial state#next[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 80.73434848568223,
+          "y": 21.42967766385454,
+          "top": 21.42967766385454,
+          "left": 80.73434848568223,
+          "right": 147.7187331309662,
+          "width": 66.984384645284,
+          "bottom": 61.42968429192226,
+          "height": 40.00000662806772
+        },
+        "source": "Default new machine.Initial state",
+        "target": "Default new machine.Another state",
+        "position": {
+          "x": 80.74210287943157,
+          "y": 21.43132172961649
+        },
+        "uniqueId": "usih42vef7c"
+      },
+      {
+        "id": "Default new machine.Parent state.Child state#next[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 80.73434848568223,
+          "y": 338.0937063786634,
+          "top": 338.0937063786634,
+          "left": 80.73434848568223,
+          "right": 147.7187331309662,
+          "width": 66.984384645284,
+          "bottom": 378.0937806903553,
+          "height": 40.00007431169189
+        },
+        "source": "Default new machine.Parent state.Child state",
+        "target": "Default new machine.Parent state.Another state",
+        "position": {
+          "x": 147.4337558501952,
+          "y": 342.7465039385868
+        },
+        "uniqueId": "2y8j0jtptp"
+      },
+      {
+        "id": "Default new machine.Another state#next[0]",
+        "data": {
+          "guard": {
+            "type": "some condition",
+            "kind": "named"
+          },
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 233.6874267842288,
+          "y": 79.77343548078859,
+          "top": 79.77343548078859,
+          "left": 233.6874267842288,
+          "right": 449.5468836884006,
+          "width": 215.8594569041718,
+          "bottom": 119.7734421088563,
+          "height": 40.00000662806772
+        },
+        "source": "Default new machine.Another state",
+        "target": "Default new machine.Parent state",
+        "position": {
+          "x": 233.6875919918966,
+          "y": 79.77968718411226
+        },
+        "uniqueId": "ykzqvzc2vdl"
+      },
+      {
+        "id": "Default new machine.Another state#next[1]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 35.52337963303193,
+          "y": 119.5078177258147,
+          "top": 119.5078177258147,
+          "left": 35.52337963303193,
+          "right": 220.1094149401774,
+          "width": 184.5860353071455,
+          "bottom": 159.5078243538824,
+          "height": 40.00000662806772
+        },
+        "source": "Default new machine.Another state",
+        "target": "Default new machine.Initial state",
+        "position": {
+          "x": 35.53106994523938,
+          "y": 119.5108480433248
+        },
+        "uniqueId": "qz9pempvei"
+      },
+      {
+        "id": "Default new machine.Parent state#back[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "reset",
+                "params": {}
+              }
+            }
+          ],
+          "internal": false,
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "back"
+          }
+        },
+        "size": {
+          "x": -207.7500432509412,
+          "y": 96.53125782999645,
+          "top": 96.53125782999645,
+          "left": -207.7500432509412,
+          "right": -68.20312807468713,
+          "width": 139.5469151762541,
+          "bottom": 206.5312252944646,
+          "height": 109.9999674644681
+        },
+        "source": "Default new machine.Parent state",
+        "target": "Default new machine.Initial state",
+        "position": {
+          "x": -228.2829920910456,
+          "y": 171.9544240197088
+        },
+        "uniqueId": "4q03ky7vmo7"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "back": {
+          "type": "object",
+          "properties": {}
+        },
+        "next": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Default new machine",
+      "data": {
+        "key": "Default new machine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Initial state",
+        "description": "Go to [state.new](https://state.new) to try this machine for yourself."
+      },
+      "size": {
+        "x": -271.281277074872,
+        "y": -108.0078252769174,
+        "top": -108.0078252769174,
+        "left": -271.281277074872,
+        "right": 502.7187327318961,
+        "width": 774.0000098067682,
+        "bottom": -22.50782380010215,
+        "height": 85.50000147681524
+      },
+      "nodes": [
+        {
+          "id": "Default new machine.Initial state",
+          "data": {
+            "key": "Initial state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -214.4218888195346,
+            "y": 20.48437432693244,
+            "top": 20.48437432693244,
+            "left": -214.4218888195346,
+            "right": -102.593786666328,
+            "width": 111.8281021532066,
+            "bottom": 61.98438543377921,
+            "height": 41.50001110684677
+          },
+          "nodes": [],
+          "position": {
+            "x": -214.4235855795219,
+            "y": 20.48671874999998
+          },
+          "uniqueId": "3182ls0bbnh"
+        },
+        {
+          "id": "Default new machine.Parent state",
+          "data": {
+            "key": "Parent state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Child state",
+            "description": "This is a _state description_.\n\n[📚 Learn more in the docs](https://stately.ai/docs)"
+          },
+          "size": {
+            "x": -98.4141198231711,
+            "y": 189.5937367649066,
+            "top": 189.5937367649066,
+            "left": -98.4141198231711,
+            "right": 363.5859736519172,
+            "width": 462.0000934750883,
+            "bottom": 294.5937118613193,
+            "height": 104.9999750964126
+          },
+          "nodes": [
+            {
+              "id": "Default new machine.Parent state.Child state",
+              "data": {
+                "key": "Child state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": -55.41410423754527,
+                "y": 337.5937951305693,
+                "top": 337.5937951305693,
+                "left": -55.41410423754527,
+                "right": 54.72650979794093,
+                "width": 110.1406140354862,
+                "bottom": 379.0937385537919,
+                "height": 41.49994342322259
+              },
+              "nodes": [],
+              "position": {
+                "x": 11.27750701189956,
+                "y": 342.2465140730856
+              },
+              "uniqueId": "p2yvr48miz"
+            },
+            {
+              "id": "Default new machine.Parent state.Another state",
+              "data": {
+                "key": "Another state",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 179.4843500429316,
+                "y": 337.5937951305693,
+                "top": 337.5937951305693,
+                "left": 179.4843500429316,
+                "right": 311.0312638935721,
+                "width": 131.5469138506405,
+                "bottom": 379.0937385537919,
+                "height": 41.49994342322259
+              },
+              "nodes": [],
+              "position": {
+                "x": 246.1837558501952,
+                "y": 342.2465039385868
+              },
+              "uniqueId": "dwhhmeivbj"
+            }
+          ],
+          "position": {
+            "x": -36.72249298810044,
+            "y": 189.2465288421742
+          },
+          "uniqueId": "xggjlqlgdzh"
+        },
+        {
+          "id": "Default new machine.Another state",
+          "data": {
+            "key": "Another state",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 274.9062124326635,
+            "y": 20.48437432693244,
+            "top": 20.48437432693244,
+            "left": 274.9062124326635,
+            "right": 406.4531262833041,
+            "width": 131.5469138506406,
+            "bottom": 61.98438543377921,
+            "height": 41.50001110684677
+          },
+          "nodes": [],
+          "position": {
+            "x": 274.9091807074074,
+            "y": 20.48671874999998
+          },
+          "uniqueId": "flynl3xfcj"
+        }
+      ],
+      "position": {
+        "x": -276.2829920910456,
+        "y": -113.0132827268153
+      },
+      "uniqueId": "ymw1v4bmj7"
+    }
+  }
+}

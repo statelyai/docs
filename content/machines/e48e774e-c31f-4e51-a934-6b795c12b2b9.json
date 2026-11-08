@@ -1,0 +1,146 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "dog.asleep#wakes up[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "wakes up"
+          }
+        },
+        "size": {
+          "x": -225.5546875,
+          "y": -346.6328125,
+          "top": -346.6328125,
+          "left": -225.5546875,
+          "right": -126.7578125,
+          "width": 98.796875,
+          "bottom": -306.6328125,
+          "height": 40
+        },
+        "source": "dog.asleep",
+        "target": "dog.awake",
+        "position": {
+          "x": -225.56000756374635,
+          "y": -346.63499741762166
+        },
+        "uniqueId": "hppgvofgbd6"
+      },
+      {
+        "id": "dog.awake#falls asleep[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "falls asleep"
+          }
+        },
+        "size": {
+          "x": -457.046875,
+          "y": -154.6796875,
+          "top": -154.6796875,
+          "left": -457.046875,
+          "right": -347.015625,
+          "width": 110.03125,
+          "bottom": -114.6796875,
+          "height": 40
+        },
+        "source": "dog.awake",
+        "target": "dog.asleep",
+        "position": {
+          "x": -457.0513298203558,
+          "y": -154.68434001394496
+        },
+        "uniqueId": "v7wmyaqzq"
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "dog",
+      "data": {
+        "key": "dog",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "asleep"
+      },
+      "size": {
+        "x": -514.84375,
+        "y": -472.375,
+        "top": -472.375,
+        "left": -514.84375,
+        "right": -24.8359375,
+        "width": 490.0078125,
+        "bottom": -430.875,
+        "height": 41.5
+      },
+      "nodes": [
+        {
+          "id": "dog.asleep",
+          "data": {
+            "key": "asleep",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![sleeping puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/asleep.svg)"
+          },
+          "size": {
+            "x": -471.84375,
+            "y": -387.875,
+            "top": -387.875,
+            "left": -471.84375,
+            "right": -293.84375,
+            "width": 178,
+            "bottom": -200.875,
+            "height": 187
+          },
+          "nodes": [],
+          "position": {
+            "x": -471.8442985703558,
+            "y": -387.8757222013712
+          },
+          "uniqueId": "sd0n1p91zp"
+        },
+        {
+          "id": "dog.awake",
+          "data": {
+            "key": "awake",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": [],
+            "description": "![happy awake puppy](https://raw.githubusercontent.com/statelyai/assets/main/example-images/dogs/walking.svg)"
+          },
+          "size": {
+            "x": -237.828125,
+            "y": -263.8984375,
+            "top": -263.8984375,
+            "left": -237.828125,
+            "right": -77.828125,
+            "width": 160,
+            "bottom": -70.8984375,
+            "height": 193
+          },
+          "nodes": [],
+          "position": {
+            "x": -237.83344506374635,
+            "y": -263.8991597013712
+          },
+          "uniqueId": "64m8teg5jqg"
+        }
+      ],
+      "position": {
+        "x": -519.8442985703558,
+        "y": -477.3757222013712
+      },
+      "uniqueId": "a7zotixy1wv"
+    }
+  }
+}

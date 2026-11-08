@@ -6,7 +6,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next build",
+    "build": "node scripts/docs-sync.mjs && node scripts/check-viz-embeds.mjs && node scripts/build-search-index.mjs && next build",
     "dev": "portless docs node scripts/docs-sync.mjs && node scripts/build-search-index.mjs && next dev",
     "docs:generate": "node scripts/docs-sync.mjs && fumadocs-mdx",
     "docs:lock": "node scripts/docs-sync.mjs --update-lock",

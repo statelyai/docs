@@ -1,0 +1,204 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "000b2694-2267-413c-8477-988cc750d581",
+    "edges": [
+      {
+        "id": "Actions and actors.Initial state#next[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "doSomethingElse",
+                "params": {}
+              }
+            }
+          ],
+          "description": "When this transition is taken,<br> `doSomethingElse` will be fired.",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "next"
+          }
+        },
+        "size": {
+          "x": 164.8203125,
+          "y": -185.0859375,
+          "top": -185.0859375,
+          "left": 164.8203125,
+          "right": 400.2655639648438,
+          "width": 235.4452514648438,
+          "bottom": -23.5859375,
+          "height": 161.5
+        },
+        "source": "Actions and actors.Initial state",
+        "target": "Actions and actors.Second State",
+        "position": {
+          "x": 95.33585404113589,
+          "y": -218.37890625
+        },
+        "uniqueId": "ec75dfeh0a"
+      },
+      {
+        "id": "Actions and actors.Second State#back[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "back"
+          }
+        },
+        "size": {
+          "x": 301.453125,
+          "y": 30.40625,
+          "top": 30.40625,
+          "left": 301.453125,
+          "right": 371.2655639648438,
+          "width": 69.81243896484375,
+          "bottom": 70.40625,
+          "height": 40
+        },
+        "source": "Actions and actors.Second State",
+        "target": "Actions and actors.Initial state",
+        "position": {
+          "x": 178.1522602911359,
+          "y": -14.28125
+        },
+        "uniqueId": "koo1a13b1am"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "back": {
+          "type": "object",
+          "properties": {}
+        },
+        "next": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Actions and actors",
+      "data": {
+        "key": "Actions and actors",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Initial state",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -314.9765625,
+        "y": -306.625,
+        "top": -306.625,
+        "left": -314.9765625,
+        "right": 738.0234375,
+        "width": 1053,
+        "bottom": -276.625,
+        "height": 30
+      },
+      "nodes": [
+        {
+          "id": "Actions and actors.Initial state",
+          "data": {
+            "key": "Initial state",
+            "exit": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "doThat",
+                  "params": {}
+                }
+              }
+            ],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "doThis",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": [],
+            "description": "When this state is entered, `doThis` will<br> be fired. When this state is exited, `doThat` <br>will be fired.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -97.671875,
+            "y": -134.609375,
+            "top": -134.609375,
+            "left": -97.671875,
+            "right": 199.8046875,
+            "width": 297.4765625,
+            "bottom": 57.390625,
+            "height": 192
+          },
+          "nodes": [],
+          "position": {
+            "x": -271.981568883955,
+            "y": -233.62890625
+          },
+          "uniqueId": "jjwohdwrf8l"
+        },
+        {
+          "id": "Actions and actors.Second State",
+          "data": {
+            "key": "Second State",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "actor",
+                "src": "thisActor",
+                "kind": "named"
+              }
+            ],
+            "description": "When this state is entered, `thisActor`<br> will be invoked.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": 411.9296264648438,
+            "y": -213.875,
+            "top": -213.875,
+            "left": 411.9296264648438,
+            "right": 684.5468139648438,
+            "width": 272.6171875,
+            "bottom": -41.875,
+            "height": 172
+          },
+          "nodes": [],
+          "position": {
+            "x": 412.4326182074074,
+            "y": -223.62890625
+          },
+          "uniqueId": "sc5ysxach0a"
+        }
+      ],
+      "position": {
+        "x": -319.981568883955,
+        "y": -311.62890625
+      },
+      "uniqueId": "qvyioag5win"
+    }
+  }
+}

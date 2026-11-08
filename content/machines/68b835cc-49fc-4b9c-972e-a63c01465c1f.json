@@ -1,0 +1,619 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "68b835cc-49fc-4b9c-972e-a63c01465c1f",
+    "edges": [
+      {
+        "id": "bd-list-view.loading#always[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "dataError",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.loading",
+        "target": "bd-list-view.error",
+        "position": {
+          "x": 1395,
+          "y": 266
+        },
+        "uniqueId": "t9o4dzd1thj"
+      },
+      {
+        "id": "bd-list-view.loading#always[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "dataLoaded",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.loading",
+        "target": "bd-list-view.loaded",
+        "position": {
+          "x": 1369,
+          "y": 363
+        },
+        "uniqueId": "fywv1qdfj7b"
+      },
+      {
+        "id": "bd-list-view.error.conductor#always[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "is404error",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.error.conductor",
+        "target": "bd-list-view.error.fourOhFour",
+        "position": {
+          "x": 1669,
+          "y": 605
+        },
+        "uniqueId": "qgg7kov4re"
+      },
+      {
+        "id": "bd-list-view.error.conductor#always[1]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.error.conductor",
+        "target": "bd-list-view.error.somethingElse",
+        "position": {
+          "x": 1831,
+          "y": 605
+        },
+        "uniqueId": "6riwtgtlyl2"
+      },
+      {
+        "id": "bd-list-view.error#always[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "dataLoaded",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.error",
+        "target": "bd-list-view.loaded",
+        "position": {
+          "x": 2039,
+          "y": 345
+        },
+        "uniqueId": "surcbwvg8qj"
+      },
+      {
+        "id": "bd-list-view.loaded#always[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "dataError",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.loaded",
+        "target": "bd-list-view.error",
+        "position": {
+          "x": 1804,
+          "y": 363
+        },
+        "uniqueId": "z54mwoxmwwf"
+      },
+      {
+        "id": "bd-list-view.loaded#always[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "loadingNewData",
+            "params": {}
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view.loaded",
+        "target": "bd-list-view.loading",
+        "position": {
+          "x": 1170,
+          "y": 425
+        },
+        "uniqueId": "ec6cf2x47y"
+      },
+      {
+        "id": "bd-list-view#DATASET_PIN_STATUS_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "invalidateList",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "DATASET_PIN_STATUS_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view",
+        "target": "bd-list-view",
+        "position": {
+          "x": 2191,
+          "y": -122
+        },
+        "uniqueId": "2ssk550x3xp"
+      },
+      {
+        "id": "bd-list-view#GO_TO_DATASET[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateQueryParams",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "GO_TO_DATASET"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view",
+        "target": "bd-list-view",
+        "position": {
+          "x": 1898,
+          "y": -122
+        },
+        "uniqueId": "y51zgbtymb"
+      },
+      {
+        "id": "bd-list-view#apiClient.sync[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveQueries",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "apiClient.sync"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view",
+        "target": "bd-list-view",
+        "position": {
+          "x": 1673,
+          "y": -122
+        },
+        "uniqueId": "vhjsnhll27l"
+      },
+      {
+        "id": "bd-list-view#FILTERS_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateQueryParams",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "FILTERS_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "bd-list-view",
+        "target": "bd-list-view",
+        "position": {
+          "x": 1400,
+          "y": -122
+        },
+        "uniqueId": "4iusjgynya9"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "GO_TO_DATASET": {
+          "type": "object",
+          "properties": {}
+        },
+        "apiClient.sync": {
+          "type": "object",
+          "properties": {}
+        },
+        "FILTERS_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "DATASET_PIN_STATUS_UPDATED": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "bd-list-view",
+      "data": {
+        "key": "bd-list-view",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [
+          {
+            "id": "queries",
+            "src": "queries",
+            "kind": "named",
+            "input": {},
+            "settings": {}
+          },
+          {
+            "id": "filtersUpdated",
+            "src": "filtersUpdated",
+            "kind": "named",
+            "input": {},
+            "settings": {}
+          },
+          {
+            "id": "publisherBanner",
+            "src": "publisherBanner",
+            "kind": "named",
+            "input": {},
+            "settings": {}
+          }
+        ],
+        "initial": "loading"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "bd-list-view.loading",
+          "data": {
+            "key": "loading",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 1239,
+            "y": 256
+          },
+          "uniqueId": "q32bx9aqqrm"
+        },
+        {
+          "id": "bd-list-view.error",
+          "data": {
+            "key": "error",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "conductor"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "bd-list-view.error.conductor",
+              "data": {
+                "key": "conductor",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1711,
+                "y": 543
+              },
+              "uniqueId": "u1e3vmdxb9"
+            },
+            {
+              "id": "bd-list-view.error.fourOhFour",
+              "data": {
+                "key": "fourOhFour",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1689,
+                "y": 670
+              },
+              "uniqueId": "g7vaxkaonrg"
+            },
+            {
+              "id": "bd-list-view.error.somethingElse",
+              "data": {
+                "key": "somethingElse",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1838,
+                "y": 670
+              },
+              "uniqueId": "ozcz8y730v"
+            }
+          ],
+          "position": {
+            "x": 1621,
+            "y": 495
+          },
+          "uniqueId": "usb2d1mr3xp"
+        },
+        {
+          "id": "bd-list-view.loaded",
+          "data": {
+            "key": "loaded",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 1829,
+            "y": 271
+          },
+          "uniqueId": "d7nyamrcszb"
+        }
+      ],
+      "position": {
+        "x": 1122,
+        "y": 208
+      },
+      "uniqueId": "qev0n5mxp2o"
+    },
+    "implementations": {
+      "actors": {
+        "queries": {
+          "id": "queries",
+          "kind": "named",
+          "name": "queries",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "filtersUpdated": {
+          "id": "filtersUpdated",
+          "kind": "named",
+          "name": "filtersUpdated",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "publisherBanner": {
+          "id": "publisherBanner",
+          "kind": "named",
+          "name": "publisherBanner",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "dataError": {
+          "id": "dataError",
+          "name": "dataError",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "dataLoaded": {
+          "id": "dataLoaded",
+          "name": "dataLoaded",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "is404error": {
+          "id": "is404error",
+          "name": "is404error",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "loadingNewData": {
+          "id": "loadingNewData",
+          "name": "loadingNewData",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "saveQueries": {
+          "id": "saveQueries",
+          "name": "saveQueries",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "invalidateList": {
+          "id": "invalidateList",
+          "name": "invalidateList",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "updateQueryParams": {
+          "id": "updateQueryParams",
+          "name": "updateQueryParams",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

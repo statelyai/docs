@@ -1,0 +1,533 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "efd4162d-52e0-4a68-9828-ab8f71a531ea",
+    "edges": [
+      {
+        "id": "FetchMachine.Fetch#done.invoke.fetchPendingCommands[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "savePendingCommands",
+                "params": {}
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "fetchPendingCommands"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.Fetch",
+        "target": "FetchMachine.checkIfHaveCommandsToProcess",
+        "position": {
+          "x": 11.53849451196572,
+          "y": 142.2493560830195
+        },
+        "uniqueId": "64dwj5dgiwu"
+      },
+      {
+        "id": "FetchMachine.Fetch#error.platform.fetchPendingCommands[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "consoleError",
+                "params": {}
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "fetchPendingCommands"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.Fetch",
+        "target": "FetchMachine.Idle",
+        "position": {
+          "x": -547.2487937957669,
+          "y": 207.53373633336
+        },
+        "uniqueId": "2nqf4ql5z7r"
+      },
+      {
+        "id": "FetchMachine.Idle#xstate.after(PLAYER_FETCH_PENDING_COMMANDS_DELAY)#FetchMachine.Idle[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "PLAYER_FETCH_PENDING_COMMANDS_DELAY"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.Idle",
+        "target": "FetchMachine.Fetch",
+        "position": {
+          "x": -213.7152437889349,
+          "y": 456.4750044496811
+        },
+        "uniqueId": "fotxu8xl80u"
+      },
+      {
+        "id": "FetchMachine.checkIfHaveCommandsToProcess#always[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "noPendingCommandToProcess",
+            "params": {}
+          },
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.checkIfHaveCommandsToProcess",
+        "target": "FetchMachine.Idle",
+        "position": {
+          "x": 429.3556771042844,
+          "y": 456.4750044496811
+        },
+        "uniqueId": "6l0dovfi3is"
+      },
+      {
+        "id": "FetchMachine.checkIfHaveCommandsToProcess#always[1]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "pendingCommandHaveUnknownType",
+            "params": {}
+          },
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "commandWasUnknown",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.checkIfHaveCommandsToProcess",
+        "target": "FetchMachine.ResponseOnCommand",
+        "position": {
+          "x": 583.8467412812627,
+          "y": 98.74934014819246
+        },
+        "uniqueId": "xepcm0narm"
+      },
+      {
+        "id": "FetchMachine.checkIfHaveCommandsToProcess#always[2]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "processPendingCommand",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.checkIfHaveCommandsToProcess",
+        "target": "FetchMachine.Idle",
+        "position": {
+          "x": 919.5792266359724,
+          "y": 408.3068817624651
+        },
+        "uniqueId": "2x03wvjne98"
+      },
+      {
+        "id": "FetchMachine.ResponseOnCommand#done.invoke.responseOnCommand[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "shiftPendingCommand",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "responseOnCommand"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine.ResponseOnCommand",
+        "target": "FetchMachine.checkIfHaveCommandsToProcess",
+        "position": {
+          "x": 1138.900710646112,
+          "y": 100.9942787702124
+        },
+        "uniqueId": "5g5w9bqbib8"
+      },
+      {
+        "id": "FetchMachine#COMMAND_RESTART[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "commandWasSuccessful",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "COMMAND_RESTART"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine",
+        "target": "FetchMachine.ResponseOnCommand",
+        "position": {
+          "x": 8.870039994755558,
+          "y": -164.6557087862098
+        },
+        "uniqueId": "rzap4hsyu4j"
+      },
+      {
+        "id": "FetchMachine#UPDATE_SETTINGS[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "commandWasSuccessful",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "UPDATE_SETTINGS"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "FetchMachine",
+        "target": "FetchMachine.ResponseOnCommand",
+        "position": {
+          "x": 800.3053996318301,
+          "y": -164.6557087862098
+        },
+        "uniqueId": "lclbx8iq1h"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "": {
+          "type": "object",
+          "properties": {}
+        },
+        "COMMAND_RESTART": {
+          "type": "object",
+          "properties": {}
+        },
+        "UPDATE_SETTINGS": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "FetchMachine",
+      "data": {
+        "key": "FetchMachine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Fetch"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "FetchMachine.Fetch",
+          "data": {
+            "key": "Fetch",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "fetchPendingCommands",
+                "src": "fetchPendingCommands",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -538.6019368766606,
+            "y": -17.70501689428448
+          },
+          "uniqueId": "lrvk6s1aknh"
+        },
+        {
+          "id": "FetchMachine.Idle",
+          "data": {
+            "key": "Idle",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 183.4702126300794,
+            "y": 523.0918707524634
+          },
+          "uniqueId": "vp5xa1xa4qd"
+        },
+        {
+          "id": "FetchMachine.checkIfHaveCommandsToProcess",
+          "data": {
+            "key": "checkIfHaveCommandsToProcess",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 276.7170553003971,
+            "y": 340.0274902645508
+          },
+          "uniqueId": "ujv5k97ndni"
+        },
+        {
+          "id": "FetchMachine.ResponseOnCommand",
+          "data": {
+            "key": "ResponseOnCommand",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "responseOnCommand",
+                "src": "responseOnCommand",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ]
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 358.7733492267868,
+            "y": -72.10130258092806
+          },
+          "uniqueId": "yd1ty8nof"
+        }
+      ],
+      "position": {
+        "x": -595.2487937957669,
+        "y": -212.6557087862098
+      },
+      "uniqueId": "lpzaerepxn"
+    },
+    "implementations": {
+      "actors": {
+        "responseOnCommand": {
+          "id": "responseOnCommand",
+          "kind": "named",
+          "name": "responseOnCommand",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "fetchPendingCommands": {
+          "id": "fetchPendingCommands",
+          "kind": "named",
+          "name": "fetchPendingCommands",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "noPendingCommandToProcess": {
+          "id": "noPendingCommandToProcess",
+          "name": "noPendingCommandToProcess",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "pendingCommandHaveUnknownType": {
+          "id": "pendingCommandHaveUnknownType",
+          "name": "pendingCommandHaveUnknownType",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "consoleError": {
+          "id": "consoleError",
+          "name": "consoleError",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "commandWasUnknown": {
+          "id": "commandWasUnknown",
+          "name": "commandWasUnknown",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "savePendingCommands": {
+          "id": "savePendingCommands",
+          "name": "savePendingCommands",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "shiftPendingCommand": {
+          "id": "shiftPendingCommand",
+          "name": "shiftPendingCommand",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "commandWasSuccessful": {
+          "id": "commandWasSuccessful",
+          "name": "commandWasSuccessful",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "processPendingCommand": {
+          "id": "processPendingCommand",
+          "name": "processPendingCommand",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

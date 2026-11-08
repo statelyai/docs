@@ -8,6 +8,8 @@ image: /blog/2023-10-05-what-is-a-state-machine.png
 date: 2023-10-05
 ---
 
+import machine_5e614700 from '@/content/machines/5e614700-7fc3-4d22-adce-4dd6cf4f6de0.json';
+
 You might have heard of “state machine” or “finite-state machine” before. [If you look up _state machine_ on Wikipedia](https://en.wikipedia.org/wiki/Finite-state_machine), you’ll read that a state machine is described as a “mathematical model of computation,” followed by a bunch of symbols and computer science jargon that doesn’t immediately seem to apply to your team’s work.
 
 However, state machines are _really useful_ for describing almost any kind of logic, feature, user story, sequence, process, workflow, specification, and more. {/* truncate */}They can greatly improve how your team collaborates on processes, flows, features, and any other kinds of application logic, and they’re much simpler to understand than you may think.
@@ -89,10 +91,7 @@ But other events can happen:
 
 You can then combine these states and events to create a complete **state machine diagram** that represents all the possible user flows through the app:
 
-<EmbedMachine
-  name="booking machine"
-  embedURL="https://stately.ai/registry/editor/embed/9fa24cc0-3026-41be-bb22-9afc3980fefc?machineId=5e614700-7fc3-4d22-adce-4dd6cf4f6de0&mode=Design"
-/>
+<Embed machine={machine_5e614700} name="booking machine" />
 
 The state machine above uses parent and child states, a feature of [statecharts](/docs/statecharts), to reduce complexity.
 

@@ -2,6 +2,9 @@
 title: Parallel states
 ---
 
+import machine_733de338 from '@/content/machines/733de338-26cb-40a5-a0b5-b76bfc0405c3.json';
+import machine_187dcde8 from '@/content/machines/187dcde8-efed-4106-bfa7-59afadb2297f.json';
+
 In statecharts, a parallel state is a state that has multiple child states (also known as **regions**) that are all active at the same time. This is different from a [parent state](parent-states), where only _one_ child state is active at a time.
 
 Parallel states have the following characteristics:
@@ -52,10 +55,7 @@ const playerMachine = createMachine({
 });
 ```
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=733de338-26cb-40a5-a0b5-b76bfc0405c3"
-/>
+<Embed machine={machine_733de338} name="Video player" />
 
 ## Parallel state value
 
@@ -132,7 +132,7 @@ export const machine = createMachine({
 });
 ```
 
-<EmbedMachine embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=187dcde8-efed-4106-bfa7-59afadb2297f&mode=Simulate" />
+<Embed machine={machine_187dcde8} mode="Simulate" />
 
 ## Modeling
 

@@ -3,14 +3,13 @@ title: 'Simulate mode'
 description: 'Tour the features in Stately editor’s Simulate mode, including a guide to all the panels and how to simulate your machines.'
 ---
 
+import machine_e5fbd908 from '@/content/machines/e5fbd908-42af-440f-8d11-91ca16a4fbda.json';
+
 import { Play, ListOrderedIcon, RefreshCcw, AlertCircle } from 'lucide-react';
 
 You can simulate your machine as if it were live using the <Play size={18}/> **Simulate** button. Your machine will start in the initial state, and any possible events that can be triggered are highlighted in blue.
 
-<EmbedMachine
-  name="Simulate mode"
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=e5fbd908-42af-440f-8d11-91ca16a4fbda&mode=Simulate"
-/>
+<Embed machine={machine_e5fbd908} name="Simulate mode" mode="Simulate" />
 
 ## Simulate events
 

@@ -2,6 +2,10 @@
 title: Events and transitions
 ---
 
+import machine_9630e3b7 from '@/content/machines/9630e3b7-9f8e-4dc9-8b55-661f854d28b7.json';
+import machine_91da1d57 from '@/content/machines/91da1d57-b146-48fd-82ce-a9dd28b7261a.json';
+import machine_8763e570 from '@/content/machines/8763e570-3535-42b3-a2a2-8edd82d1207a.json';
+
 A **transition** is a change from one finite state to another, triggered by an event.
 
 An **event** is a signal, trigger, or message that causes a transition. When an actor receives an event, its machine will determine if there are any enabled transitions for that event in the current state. If enabled transitions exist, the machine will take them and execute their actions.
@@ -12,10 +16,7 @@ You can visualize your state machines and easily add transitions in our drag-and
 
 </Callout>
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/e13bef2b-bb13-4465-96ac-0bc25340688e?machineId=9630e3b7-9f8e-4dc9-8b55-661f854d28b7&mode=Simulate"
-/>
+<Embed machine={machine_9630e3b7} name="Video player" mode="Simulate" />
 
 Transitions are "deterministic"; each combination of state and event always points to the same next state. When a state machine receives an event, only the active finite states are checked to see if any of them have a transition for that event. Those transitions are called **enabled transitions**. If there is an enabled transition, the state machine will execute the transition's actions, and then transition to the target state.
 
@@ -97,10 +98,7 @@ const machine = createMachine({
 });
 ```
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=91da1d57-b146-48fd-82ce-a9dd28b7261a"
-  title="Root self-transition"
-/>
+<Embed machine={machine_91da1d57} title="Root self-transition" />
 
 **Self-transitions on states:**
 
@@ -129,10 +127,7 @@ const machine = createMachine({
 });
 ```
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=8763e570-3535-42b3-a2a2-8edd82d1207a"
-  title="Self-transition on state"
-/>
+<Embed machine={machine_8763e570} title="Self-transition on state" />
 
 <Callout>
 

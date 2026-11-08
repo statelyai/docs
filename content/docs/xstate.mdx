@@ -4,6 +4,9 @@ description: XState v5 documentation for JavaScript and TypeScript. Install XSta
 slug: '/xstate'
 ---
 
+import machine_89e9d8f1 from '@/public/viz-snapshots/89e9d8f1-73d6-4dee-92bc-1796270e2f50.json';
+import machine_fa84c2d4 from '@/public/viz-snapshots/fa84c2d4-7c42-4f67-8bde-66f972133703.json';
+
 XState is a state management and orchestration solution for JavaScript and TypeScript apps.
 
 It uses [event-driven](transitions) programming, [state machines](state-machines-and-statecharts), [statecharts](/docs/statecharts), and the [actor model](actor-model) to handle complex logic in predictable, robust, and visual ways. XState provides a powerful and flexible way to manage application and workflow state by allowing developers to model logic as actors and state machines. It integrates well with React, Vue, Svelte, and other frameworks and can be used in the frontend, backend, or wherever JavaScript runs.
@@ -92,10 +95,7 @@ countActor.send({ type: 'SET', value: 10 });
 // logs 10
 ```
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?machineId=89e9d8f1-73d6-4dee-92bc-1796270e2f50&mode=design"
-  title="Simple machine"
-/>
+<Embed machine={machine_89e9d8f1} title="Simple machine" />
 
 [Check out more cheatsheet examples](cheatsheet).
 
@@ -160,10 +160,7 @@ textActor.send({ type: 'text.cancel' });
 // logs 'Hello'
 ```
 
-<EmbedMachine
-  embedURL="https://stately.ai/registry/editor/embed/c447d996-cef1-421d-a422-8be695668764?mode=design&machineId=fa84c2d4-7c42-4f67-8bde-66f972133703"
-  title="more complex machine"
-/>
+<Embed machine={machine_fa84c2d4} title="more complex machine" />
 
 ## Download the XState VS Code extension
 

@@ -1,0 +1,548 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "bf81f493-6855-43e7-a6aa-4551f1acdc6e",
+    "edges": [
+      {
+        "id": "State assets.Viewing Puppies#choose_extra_large_puppy[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "choice": "{{(context, event) => \"extra large puppy with a waggly tail\"}}"
+                }
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "choose_extra_large_puppy"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 448.8046875,
+          "width": 448.8046875,
+          "bottom": 137,
+          "height": 137
+        },
+        "source": "State assets.Viewing Puppies",
+        "target": "State assets.Extra Large Puppy Chosen",
+        "position": {
+          "x": 2049.968319908102,
+          "y": 134.4576987216941
+        },
+        "uniqueId": "0ofqr13ktk7"
+      },
+      {
+        "id": "State assets.Viewing Puppies#choose_large_puppy[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "choice": "{{(context, event) => \"large puppy with a waggly tail\"}}"
+                }
+              }
+            }
+          ],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "choose_large_puppy"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 448.8046875,
+          "width": 448.8046875,
+          "bottom": 137,
+          "height": 137
+        },
+        "source": "State assets.Viewing Puppies",
+        "target": "State assets.Large Puppy Chosen",
+        "position": {
+          "x": 1364.543155767111,
+          "y": 213.4033220530119
+        },
+        "uniqueId": "jlogd73alf"
+      },
+      {
+        "id": "State assets.Viewing Puppies#choose_medium_puppy[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "choice": "{{(context, event) => \"medium puppy with a waggly tail\"}}"
+                }
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "choose_medium_puppy"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 448.8046875,
+          "width": 448.8046875,
+          "bottom": 137,
+          "height": 137
+        },
+        "source": "State assets.Viewing Puppies",
+        "target": "State assets.Medium Puppy Chosen",
+        "position": {
+          "x": 869.1730374692463,
+          "y": 213.4033220530119
+        },
+        "uniqueId": "tabnosif3bd"
+      },
+      {
+        "id": "State assets.Viewing Puppies#choose_small_puppy[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "choice": "{{(context, event) => \"small puppy with a waggly tail\"}}"
+                }
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "choose_small_puppy"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 448.8046875,
+          "width": 448.8046875,
+          "bottom": 137,
+          "height": 137
+        },
+        "source": "State assets.Viewing Puppies",
+        "target": "State assets.Small Puppy Chosen",
+        "position": {
+          "x": 430.1779858181099,
+          "y": 36.05913648613392
+        },
+        "uniqueId": "jo4krd0qblt"
+      },
+      {
+        "id": "State assets.Extra Large Puppy Chosen#confirm_choice[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "confirm_choice"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 135.7578125,
+          "width": 135.7578125,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "State assets.Extra Large Puppy Chosen",
+        "target": "State assets.Choice Confirmed",
+        "position": {
+          "x": 1338.866130270293,
+          "y": 1538.142341845424
+        },
+        "uniqueId": "uh14oj1a0n"
+      },
+      {
+        "id": "State assets.Large Puppy Chosen#confirm_choice[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "confirm_choice"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 135.7578125,
+          "width": 135.7578125,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "State assets.Large Puppy Chosen",
+        "target": "State assets.Choice Confirmed",
+        "position": {
+          "x": 651.1726617598928,
+          "y": 944.517082089228
+        },
+        "uniqueId": "anfuyc0ihr"
+      },
+      {
+        "id": "State assets.Medium Puppy Chosen#confirm_choice[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "confirm_choice"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 135.7578125,
+          "width": 135.7578125,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "State assets.Medium Puppy Chosen",
+        "target": "State assets.Choice Confirmed",
+        "position": {
+          "x": 110.1769506987671,
+          "y": 835.5856394136488
+        },
+        "uniqueId": "zkge3yietjf"
+      },
+      {
+        "id": "State assets.Small Puppy Chosen#confirm_choice[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "confirm_choice"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 135.7578125,
+          "width": 135.7578125,
+          "bottom": 40,
+          "height": 40
+        },
+        "source": "State assets.Small Puppy Chosen",
+        "target": "State assets.Choice Confirmed",
+        "position": {
+          "x": -25.89637802115003,
+          "y": 437.3957184347419
+        },
+        "uniqueId": "cwevyb25tpl"
+      }
+    ],
+    "context": {
+      "choice": "null"
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "confirm_choice": {
+          "type": "object",
+          "properties": {}
+        },
+        "choose_large_puppy": {
+          "type": "object",
+          "properties": {}
+        },
+        "choose_small_puppy": {
+          "type": "object",
+          "properties": {}
+        },
+        "choose_medium_puppy": {
+          "type": "object",
+          "properties": {}
+        },
+        "choose_extra_large_puppy": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "choice": {
+          "type": "string",
+          "description": "Generated automatically based on the key: \"choice\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "State assets",
+      "data": {
+        "key": "State assets",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Viewing Puppies"
+      },
+      "size": {
+        "x": -152.0625962931575,
+        "y": -36.93749295687193,
+        "top": -36.93749295687193,
+        "left": -152.0625962931575,
+        "right": 3510.937465981649,
+        "width": 3663.000062274806,
+        "bottom": -6.937507002660674,
+        "height": 29.99998595421125
+      },
+      "nodes": [
+        {
+          "id": "State assets.Viewing Puppies",
+          "data": {
+            "key": "Viewing Puppies",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The initial state where a person is viewing puppies in the window.",
+            "metaEntries": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 435.2890625,
+            "width": 435.2890625,
+            "bottom": 86,
+            "height": 86
+          },
+          "nodes": [],
+          "position": {
+            "x": 1169.7890625,
+            "y": 61.55913648613394
+          },
+          "uniqueId": "tc88et98xm"
+        },
+        {
+          "id": "State assets.Extra Large Puppy Chosen",
+          "data": {
+            "key": "Extra Large Puppy Chosen",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [
+              {
+                "name": "extra-large.png",
+                "template": "@stately.image",
+                "properties": {
+                  "url": "https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/assets/c447d996-cef1-421d-a422-8be695668764/40a469cc-e0f0-4790-9bf1-8c88a47f0302",
+                  "path": "c447d996-cef1-421d-a422-8be695668764/40a469cc-e0f0-4790-9bf1-8c88a47f0302",
+                  "size": "xl",
+                  "uuid": "40a469cc-e0f0-4790-9bf1-8c88a47f0302"
+                }
+              }
+            ],
+            "invoke": [],
+            "description": "The state that represents choosing an extra large puppy.\n\n Uses the **Extra Large (XL)** asset size."
+          },
+          "size": {
+            "x": 1991.976541883396,
+            "y": 307.6874416154577,
+            "top": 307.6874416154577,
+            "left": 1991.976541883396,
+            "right": 3457.976305541288,
+            "width": 1465.999763657892,
+            "bottom": 1883.117066279205,
+            "height": 1575.429624663747
+          },
+          "nodes": [],
+          "position": {
+            "x": 1991.98387617986,
+            "y": 307.6908769438914
+          },
+          "uniqueId": "grjegozqsnl"
+        },
+        {
+          "id": "State assets.Large Puppy Chosen",
+          "data": {
+            "key": "Large Puppy Chosen",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [
+              {
+                "name": "large.png",
+                "template": "@stately.image",
+                "properties": {
+                  "url": "https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/assets/c447d996-cef1-421d-a422-8be695668764/943eeda7-09ad-44af-a99e-162efbf23743",
+                  "path": "c447d996-cef1-421d-a422-8be695668764/943eeda7-09ad-44af-a99e-162efbf23743",
+                  "size": "lg",
+                  "uuid": "943eeda7-09ad-44af-a99e-162efbf23743"
+                }
+              }
+            ],
+            "invoke": [],
+            "description": "The state that represents choosing a large puppy.\n\nUses the **Large (LG)** asset size."
+          },
+          "size": {
+            "x": 900.4452153510343,
+            "y": 413.2031550597902,
+            "top": 413.2031550597902,
+            "left": 900.4452153510343,
+            "right": 1950.445203544894,
+            "width": 1049.99998819386,
+            "bottom": 1516.437456490283,
+            "height": 1103.234301430492
+          },
+          "nodes": [],
+          "position": {
+            "x": 900.4495083564279,
+            "y": 413.2037556543418
+          },
+          "uniqueId": "0xogzky8m4ni"
+        },
+        {
+          "id": "State assets.Medium Puppy Chosen",
+          "data": {
+            "key": "Medium Puppy Chosen",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [
+              {
+                "name": "medium.png",
+                "template": "@stately.image",
+                "properties": {
+                  "url": "https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/assets/c447d996-cef1-421d-a422-8be695668764/76cbef3a-6b14-4588-be21-504608afb1fc",
+                  "path": "c447d996-cef1-421d-a422-8be695668764/76cbef3a-6b14-4588-be21-504608afb1fc",
+                  "size": "md",
+                  "uuid": "76cbef3a-6b14-4588-be21-504608afb1fc"
+                }
+              }
+            ],
+            "invoke": [],
+            "description": "The state that represents choosing a medium puppy.\\\nUses the **Medium (MD)** asset size."
+          },
+          "size": {
+            "x": 277.5076687224828,
+            "y": 225.2734621344465,
+            "top": 225.2734621344465,
+            "left": 277.5076687224828,
+            "right": 815.5077282645286,
+            "width": 538.0000595420458,
+            "bottom": 848.1094329087218,
+            "height": 622.8359707742753
+          },
+          "nodes": [],
+          "position": {
+            "x": 277.510279896693,
+            "y": 225.2772352999831
+          },
+          "uniqueId": "3y7oawe3k0w"
+        },
+        {
+          "id": "State assets.Small Puppy Chosen",
+          "data": {
+            "key": "Small Puppy Chosen",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [
+              {
+                "name": "small.png",
+                "template": "@stately.image",
+                "properties": {
+                  "url": "https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/assets/c447d996-cef1-421d-a422-8be695668764/2100b2d0-8153-4971-9085-6104fc48f801",
+                  "path": "c447d996-cef1-421d-a422-8be695668764/2100b2d0-8153-4971-9085-6104fc48f801",
+                  "size": "sm",
+                  "uuid": "2100b2d0-8153-4971-9085-6104fc48f801"
+                }
+              }
+            ],
+            "invoke": [],
+            "description": "The state that represents choosing a small puppy.\n\nUses the **Small (SM)** asset size."
+          },
+          "size": {
+            "x": -109.0626054417701,
+            "y": 39.64843363018961,
+            "top": 39.64843363018961,
+            "left": -109.0626054417701,
+            "right": 231.7185887365513,
+            "width": 340.7811941783215,
+            "bottom": 362.4218900518109,
+            "height": 322.7734564216213
+          },
+          "nodes": [],
+          "position": {
+            "x": -109.0632045223921,
+            "y": 39.65034210259189
+          },
+          "uniqueId": "swcv788niql"
+        },
+        {
+          "id": "State assets.Choice Confirmed",
+          "data": {
+            "key": "Choice Confirmed",
+            "exit": [],
+            "tags": [],
+            "type": "final",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The final state that represents the confirmation of the puppy choice."
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 453.546875,
+            "width": 453.546875,
+            "bottom": 87,
+            "height": 87
+          },
+          "nodes": [],
+          "position": {
+            "x": -10.60012424978527,
+            "y": 1068.912580748822
+          },
+          "uniqueId": "rgxa4jpo9ka"
+        }
+      ],
+      "position": {
+        "x": -157.0632045223921,
+        "y": -41.94084946807733
+      },
+      "uniqueId": "h0c2agenuq8"
+    }
+  }
+}

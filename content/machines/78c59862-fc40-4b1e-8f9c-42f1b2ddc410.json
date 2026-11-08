@@ -1,0 +1,210 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "78c59862-fc40-4b1e-8f9c-42f1b2ddc410",
+    "edges": [
+      {
+        "id": "pushTheButtonGame.waitingForButtonPush#PUSH_BUTTON[0]",
+        "data": {
+          "color": "green",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "logSuccess",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "PUSH_BUTTON"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 176.203125,
+          "width": 176.203125,
+          "bottom": 82,
+          "height": 82
+        },
+        "source": "pushTheButtonGame.waitingForButtonPush",
+        "target": "pushTheButtonGame.success",
+        "position": {
+          "x": 60,
+          "y": 181.5
+        },
+        "uniqueId": "03iz9rbemfib"
+      },
+      {
+        "id": "pushTheButtonGame.waitingForButtonPush#xstate.after(5000)#pushTheButtonGame.waitingForButtonPush[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "logThatYouGotTimedOut",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "after",
+            "delay": "5000"
+          }
+        },
+        "size": {
+          "x": 0,
+          "y": 0,
+          "top": 0,
+          "left": 0,
+          "right": 251.921875,
+          "width": 251.921875,
+          "bottom": 82,
+          "height": 82
+        },
+        "source": "pushTheButtonGame.waitingForButtonPush",
+        "target": "pushTheButtonGame.timedOut",
+        "position": {
+          "x": 286.203125,
+          "y": 181.5
+        },
+        "uniqueId": "p4d6h4ji088"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "PUSH_BUTTON": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "pushTheButtonGame",
+      "data": {
+        "key": "pushTheButtonGame",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "waitingForButtonPush"
+      },
+      "size": {
+        "x": 16.99999236357763,
+        "y": 17.00002740584224,
+        "top": 17.00002740584224,
+        "left": 16.99999236357763,
+        "right": 591.0000117972459,
+        "width": 574.0000194336683,
+        "bottom": 47.00005512168502,
+        "height": 30.00002771584278
+      },
+      "nodes": [
+        {
+          "id": "pushTheButtonGame.waitingForButtonPush",
+          "data": {
+            "key": "waitingForButtonPush",
+            "exit": [],
+            "tags": [],
+            "color": "yellow",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 192.984375,
+            "width": 192.984375,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 83.7734375,
+            "y": 90
+          },
+          "uniqueId": "v8cmjrd29zp"
+        },
+        {
+          "id": "pushTheButtonGame.success",
+          "data": {
+            "key": "success",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 91.765625,
+            "width": 91.765625,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 102.21875,
+            "y": 313.5
+          },
+          "uniqueId": "txm8euvtydt"
+        },
+        {
+          "id": "pushTheButtonGame.timedOut",
+          "data": {
+            "key": "timedOut",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 0,
+            "y": 0,
+            "top": 0,
+            "left": 0,
+            "right": 99.6015625,
+            "width": 99.6015625,
+            "bottom": 41.5,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 362.36328125,
+            "y": 313.5
+          },
+          "uniqueId": "a42znfi26f"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": 11.99997228415722
+      },
+      "uniqueId": "6kh2bm8iwc"
+    }
+  }
+}

@@ -2,6 +2,9 @@
 title: Colors
 ---
 
+import machine_3b1987cf from '@/public/viz-snapshots/3b1987cf-4346-4a10-bb03-2c9f0c363bda.json';
+import machine_34da5c64 from '@/public/viz-snapshots/34da5c64-3aed-455d-883b-8b6d5ac4c9d5.json';
+
 import { Info, Star } from 'lucide-react';
 
 You can highlight your machine’s state and event nodes with colors. You can use colors however you like; some ideas include:
@@ -16,10 +19,7 @@ Colors are a premium feature of Stately Studio. [Check out the features on our P
 
 </Callout>
 
-<EmbedMachine
-  name="Video player"
-  embedURL="https://stately.ai/registry/editor/embed/7b5d60dc-94b0-4a1e-9ade-ea644b8cc35f?machineId=3b1987cf-4346-4a10-bb03-2c9f0c363bda"
-/>
+<Embed machine={machine_3b1987cf} name="Video player" />
 
 <Callout>
 
@@ -50,10 +50,7 @@ Colors are faded out in Simulate mode to make the current state and possible eve
 
 ## Available colors
 
-<EmbedMachine
-  name="Colors"
-  embedURL="https://stately.ai/registry/editor/embed/7b5d60dc-94b0-4a1e-9ade-ea644b8cc35f?machineId=34da5c64-3aed-455d-883b-8b6d5ac4c9d5"
-/>
+<Embed machine={machine_34da5c64} name="Colors" />
 
 - Default: grey in dark mode, white in light mode
 - Purple

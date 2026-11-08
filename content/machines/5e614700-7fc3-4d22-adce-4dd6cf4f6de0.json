@@ -1,0 +1,861 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "booking.idle#BOOK_FLIGHT[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_FLIGHT"
+          }
+        },
+        "size": {
+          "x": -141.8204398965669,
+          "y": -429.3437183464815,
+          "top": -429.3437183464815,
+          "left": -141.8204398965669,
+          "right": -12.39072508964258,
+          "width": 129.4297148069243,
+          "bottom": -389.3437369133673,
+          "height": 39.99998143311416
+        },
+        "source": "booking.idle",
+        "target": "booking.flightBooking",
+        "position": {
+          "x": -141.8234712624792,
+          "y": -429.3475040898844
+        },
+        "uniqueId": "dfx6ks6op37"
+      },
+      {
+        "id": "booking.idle#BOOK_HOTEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_HOTEL"
+          }
+        },
+        "size": {
+          "x": -140.1016367416009,
+          "y": -184.3984146292935,
+          "top": -184.3984146292935,
+          "left": -140.1016367416009,
+          "right": -14.10942075895069,
+          "width": 125.9922159826503,
+          "bottom": -144.3984331961794,
+          "height": 39.99998143311413
+        },
+        "source": "booking.idle",
+        "target": "booking.hotelBooking",
+        "position": {
+          "x": -140.1046851869059,
+          "y": -184.4013264947089
+        },
+        "uniqueId": "z9pnwl6vl7f"
+      },
+      {
+        "id": "booking.idle#BOOK_CAR[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_CAR"
+          }
+        },
+        "size": {
+          "x": -210.5938482554641,
+          "y": -22.92969738207181,
+          "top": -22.92969738207181,
+          "left": -210.5938482554641,
+          "right": -100.867329392309,
+          "width": 109.7265188631551,
+          "bottom": 17.07033779387125,
+          "height": 40.00003517594305
+        },
+        "source": "booking.idle",
+        "target": "booking.carBooking",
+        "position": {
+          "x": -210.59546549226,
+          "y": -22.93257075823018
+        },
+        "uniqueId": "4bci80f45j2"
+      },
+      {
+        "id": "booking.flightBooking#CANCEL_FLIGHT[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL_FLIGHT"
+          }
+        },
+        "size": {
+          "x": -358.0156948185581,
+          "y": -769.406197795074,
+          "top": -769.406197795074,
+          "left": -358.0156948185581,
+          "right": -89.36733137136184,
+          "width": 268.6483634471963,
+          "bottom": -655.9062336839787,
+          "height": 113.4999641110953
+        },
+        "source": "booking.flightBooking",
+        "target": "booking.idle",
+        "position": {
+          "x": -358.018131266677,
+          "y": -769.410202985777
+        },
+        "uniqueId": "lpjfsz94h5"
+      },
+      {
+        "id": "booking.flightBooking#BOOK_HOTEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_HOTEL"
+          }
+        },
+        "size": {
+          "x": 508.0311834621173,
+          "y": -429.3437183464815,
+          "top": -429.3437183464815,
+          "left": 508.0311834621173,
+          "right": 634.0232919591097,
+          "width": 125.9921084969923,
+          "bottom": -389.3437369133673,
+          "height": 39.99998143311416
+        },
+        "source": "booking.flightBooking",
+        "target": "booking.hotelBooking",
+        "position": {
+          "x": 508.033645935305,
+          "y": -429.3474737772663
+        },
+        "uniqueId": "pxetka9cb7i"
+      },
+      {
+        "id": "booking.flightBooking#BOOK_CAR[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_CAR"
+          }
+        },
+        "size": {
+          "x": 1390.226384523896,
+          "y": -554.3749588049635,
+          "top": -554.3749588049635,
+          "left": 1390.226384523896,
+          "right": 1499.952903387051,
+          "width": 109.7265188631552,
+          "bottom": -514.3749773718494,
+          "height": 39.99998143311416
+        },
+        "source": "booking.flightBooking",
+        "target": "booking.carBooking",
+        "position": {
+          "x": 1390.229598837867,
+          "y": -554.3803734179678
+        },
+        "uniqueId": "bg5zw2f3qsl"
+      },
+      {
+        "id": "booking.hotelBooking#CANCEL_HOTEL[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL_HOTEL"
+          }
+        },
+        "size": {
+          "x": -6.992257923226068,
+          "y": -349.3124771538136,
+          "top": -349.3124771538136,
+          "left": -6.992257923226068,
+          "right": 261.6561055239702,
+          "width": 268.6483634471963,
+          "bottom": -235.8124592998893,
+          "height": 113.5000178539243
+        },
+        "source": "booking.hotelBooking",
+        "target": "booking.idle",
+        "position": {
+          "x": -6.997668671906339,
+          "y": -349.3197894024676
+        },
+        "uniqueId": "wl7d0ciyjg"
+      },
+      {
+        "id": "booking.hotelBooking#BOOK_FLIGHT[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_FLIGHT"
+          }
+        },
+        "size": {
+          "x": 836.6483750896175,
+          "y": -429.3437183464815,
+          "top": -429.3437183464815,
+          "left": 836.6483750896175,
+          "right": 966.0780898965419,
+          "width": 129.4297148069244,
+          "bottom": -389.3437369133673,
+          "height": 39.99998143311416
+        },
+        "source": "booking.hotelBooking",
+        "target": "booking.flightBooking",
+        "position": {
+          "x": 836.6516774220848,
+          "y": -429.3475040898845
+        },
+        "uniqueId": "bu1bmv8pje6"
+      },
+      {
+        "id": "booking.hotelBooking#BOOK_CAR[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_CAR"
+          }
+        },
+        "size": {
+          "x": 846.4998655758443,
+          "y": 64.57029223320662,
+          "top": 64.57029223320662,
+          "left": 846.4998655758443,
+          "right": 956.2263844389994,
+          "width": 109.7265188631551,
+          "bottom": 104.5703274091497,
+          "height": 40.00003517594305
+        },
+        "source": "booking.hotelBooking",
+        "target": "booking.carBooking",
+        "position": {
+          "x": 846.5031570774236,
+          "y": 64.57546273180904
+        },
+        "uniqueId": "ve0qnecabcr"
+      },
+      {
+        "id": "booking.carBooking#CANCEL_CAR[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CANCEL_CAR"
+          }
+        },
+        "size": {
+          "x": -358.0156948185581,
+          "y": 322.1093680258057,
+          "top": 322.1093680258057,
+          "left": -358.0156948185581,
+          "right": -89.36733137136184,
+          "width": 268.6483634471963,
+          "bottom": 435.60938587973,
+          "height": 113.5000178539243
+        },
+        "source": "booking.carBooking",
+        "target": "booking.idle",
+        "position": {
+          "x": -358.018131266677,
+          "y": 322.1148535858106
+        },
+        "uniqueId": "qpnpauio8f"
+      },
+      {
+        "id": "booking.carBooking#BOOK_FLIGHT[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_FLIGHT"
+          }
+        },
+        "size": {
+          "x": 1307.366980701408,
+          "y": 216.507826254648,
+          "top": 216.507826254648,
+          "left": 1307.366980701408,
+          "right": 1436.796695508332,
+          "width": 129.4297148069243,
+          "bottom": 256.507861430591,
+          "height": 40.00003517594303
+        },
+        "source": "booking.carBooking",
+        "target": "booking.flightBooking",
+        "position": {
+          "x": 1307.369469251815,
+          "y": 216.5078635168018
+        },
+        "uniqueId": "lw7jmm3qr5o"
+      },
+      {
+        "id": "booking.carBooking#BOOK_HOTEL[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BOOK_HOTEL"
+          }
+        },
+        "size": {
+          "x": 508.0311834621173,
+          "y": 64.57029223320662,
+          "top": 64.57029223320662,
+          "left": 508.0311834621173,
+          "right": 634.0232919591097,
+          "width": 125.9921084969923,
+          "bottom": 104.5703274091497,
+          "height": 40.00003517594305
+        },
+        "source": "booking.carBooking",
+        "target": "booking.hotelBooking",
+        "position": {
+          "x": 508.0335853100687,
+          "y": 64.57540210657271
+        },
+        "uniqueId": "byydumyzazj"
+      },
+      {
+        "id": "booking.carBooking.Unselected#SELECT_CAR[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SELECT_CAR"
+          }
+        },
+        "size": {
+          "x": 513.8358389296167,
+          "y": 334.3906792937947,
+          "top": 334.3906792937947,
+          "left": 513.8358389296167,
+          "right": 782.484202376813,
+          "width": 268.6483634471963,
+          "bottom": 447.8905896620612,
+          "height": 113.4999103682665
+        },
+        "source": "booking.carBooking.Unselected",
+        "target": "booking.carBooking.carSelected",
+        "position": {
+          "x": 513.8359390032431,
+          "y": 334.3916988291605
+        },
+        "uniqueId": "5k4ed80qu64"
+      },
+      {
+        "id": "booking.hotelBooking.Unselected#SELECT_HOTEL[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SELECT_HOTEL"
+          }
+        },
+        "size": {
+          "x": 500.0545653060807,
+          "y": -169.4296932004617,
+          "top": -169.4296932004617,
+          "left": 500.0545653060807,
+          "right": 768.7030362389349,
+          "width": 268.6484709328542,
+          "bottom": -55.92972908936628,
+          "height": 113.4999641110954
+        },
+        "source": "booking.hotelBooking.Unselected",
+        "target": "booking.hotelBooking.hotelSelected",
+        "position": {
+          "x": 500.0560005394849,
+          "y": -169.4322208991174
+        },
+        "uniqueId": "bnjuk3syzmv"
+      },
+      {
+        "id": "booking.flightBooking.Unselected#SELECT_FLIGHT[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "builtin",
+              "action": {
+                "type": "xstate.assign",
+                "assignment": {
+                  "booking": "{{{}}}"
+                }
+              }
+            }
+          ],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "SELECT_FLIGHT"
+          }
+        },
+        "size": {
+          "x": 513.3826793960455,
+          "y": -654.9608973230303,
+          "top": -654.9608973230303,
+          "left": 513.3826793960455,
+          "right": 782.0310428432418,
+          "width": 268.6483634471963,
+          "bottom": -541.460933211935,
+          "height": 113.4999641110953
+        },
+        "source": "booking.flightBooking.Unselected",
+        "target": "booking.flightBooking.flightSelected",
+        "position": {
+          "x": 513.3838350434899,
+          "y": -654.9650189641094
+        },
+        "uniqueId": "t81i5b2tgm"
+      }
+    ],
+    "context": {
+      "booking": {
+        "car": "null",
+        "hotel": "null",
+        "flight": "null"
+      }
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "BOOK_CAR": {
+          "type": "object",
+          "properties": {}
+        },
+        "BOOK_HOTEL": {
+          "type": "object",
+          "properties": {}
+        },
+        "CANCEL_CAR": {
+          "type": "object",
+          "properties": {}
+        },
+        "SELECT_CAR": {
+          "type": "object",
+          "properties": {}
+        },
+        "BOOK_FLIGHT": {
+          "type": "object",
+          "properties": {}
+        },
+        "CANCEL_HOTEL": {
+          "type": "object",
+          "properties": {}
+        },
+        "SELECT_HOTEL": {
+          "type": "object",
+          "properties": {}
+        },
+        "CANCEL_FLIGHT": {
+          "type": "object",
+          "properties": {}
+        },
+        "SELECT_FLIGHT": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "booking": {
+          "type": "object",
+          "properties": {},
+          "description": "Generated automatically based on the key: \"booking\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "booking",
+      "data": {
+        "key": "booking",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "idle"
+      },
+      "size": {
+        "x": -407.9532090070223,
+        "y": -905.96092174864,
+        "top": -905.96092174864,
+        "left": -407.9532090070223,
+        "right": 1553.046733918807,
+        "width": 1960.999942925829,
+        "bottom": -875.9609222380972,
+        "height": 29.99999951054281
+      },
+      "nodes": [
+        {
+          "id": "booking.idle",
+          "data": {
+            "key": "idle",
+            "exit": [],
+            "tags": [],
+            "color": "blue",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "The initial state of the app where the \n\nuser can choose to book a flight, hotel, or car."
+          },
+          "size": {
+            "x": -364.9532491199855,
+            "y": -347.015616130834,
+            "top": -347.015616130834,
+            "left": -364.9532491199855,
+            "right": -50.88295145701439,
+            "width": 314.0702976629711,
+            "bottom": -242.0156178439341,
+            "height": 104.9999982868999
+          },
+          "nodes": [],
+          "position": {
+            "x": -364.9598318492469,
+            "y": -347.0229338410891
+          },
+          "uniqueId": "x9pgd6ysyqm"
+        },
+        {
+          "id": "booking.flightBooking",
+          "data": {
+            "key": "flightBooking",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Unselected",
+            "description": "The state where the user can book a flight.\n\nThey can select a flight, cancel the booking,\n\nor proceed to book a hotel or car."
+          },
+          "size": {
+            "x": 297.7030331748467,
+            "y": -827.9608909176386,
+            "top": -827.9608909176386,
+            "left": 297.7030331748467,
+            "right": 1213.703118550035,
+            "width": 916.0000853751883,
+            "bottom": -703.4608983231689,
+            "height": 124.4999925944697
+          },
+          "nodes": [
+            {
+              "id": "booking.flightBooking.flightSelected",
+              "data": {
+                "key": "flightSelected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "The state where the user has selected a flight.\n\nThey can cancel the flight booking or proceed\n\nto book a hotel or car."
+              },
+              "size": {
+                "x": 842.4530305571169,
+                "y": -660.460884693303,
+                "top": -660.460884693303,
+                "left": 842.4530305571169,
+                "right": 1160.757618226137,
+                "width": 318.3045876690202,
+                "bottom": -535.9608920988333,
+                "height": 124.4999925944697
+              },
+              "nodes": [],
+              "position": {
+                "x": 842.4595858122655,
+                "y": -660.4649907235336
+              },
+              "uniqueId": "1b2pl89e4u2"
+            },
+            {
+              "id": "booking.flightBooking.Unselected",
+              "data": {
+                "key": "Unselected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 340.7029930618836,
+                "y": -618.960887161813,
+                "top": -618.960887161813,
+                "left": 340.7029930618836,
+                "right": 454.3124313155174,
+                "width": 113.6094382536338,
+                "bottom": -577.4608896303232,
+                "height": 41.49999753148984
+              },
+              "nodes": [],
+              "position": {
+                "x": 340.7086606648274,
+                "y": -618.96497612214
+              },
+              "uniqueId": "rxkujpj82od"
+            }
+          ],
+          "position": {
+            "x": 292.7086606648274,
+            "y": -832.9649833180033
+          },
+          "uniqueId": "he7gb8sc7v"
+        },
+        {
+          "id": "booking.hotelBooking",
+          "data": {
+            "key": "hotelBooking",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Unselected",
+            "description": "The state where the user can book a hotel. \n\nThey can select a hotel, cancel the booking, \n\nor proceed to book a flight or car."
+          },
+          "size": {
+            "x": 303.4999496749796,
+            "y": -342.4296330522411,
+            "top": -342.4296330522411,
+            "left": 303.4999496749796,
+            "right": 1195.499777476155,
+            "width": 891.9998278011751,
+            "bottom": -217.9296942006002,
+            "height": 124.4999388516409
+          },
+          "nodes": [
+            {
+              "id": "booking.hotelBooking.hotelSelected",
+              "data": {
+                "key": "hotelSelected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "The state where the user has selected a hotel.\n\nThey can cancel the hotel booking or proceed\n\nto book a flight or car."
+              },
+              "size": {
+                "x": 824.1953017403556,
+                "y": -174.9296805707344,
+                "top": -174.9296805707344,
+                "left": 824.1953017403556,
+                "right": 1142.054468843171,
+                "width": 317.8591671028154,
+                "bottom": -50.42968797626458,
+                "height": 124.4999925944698
+              },
+              "nodes": [],
+              "position": {
+                "x": 824.1987028953689,
+                "y": -174.9321617377625
+              },
+              "uniqueId": "hdd5dw35dyc"
+            },
+            {
+              "id": "booking.hotelBooking.Unselected",
+              "data": {
+                "key": "Unselected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 346.4999095620165,
+                "y": -133.4296830392445,
+                "top": -133.4296830392445,
+                "left": 346.4999095620165,
+                "right": 460.1092403299925,
+                "width": 113.609330767976,
+                "bottom": -91.92968550775453,
+                "height": 41.49999753148995
+              },
+              "nodes": [],
+              "position": {
+                "x": 346.5046800979418,
+                "y": -133.4322089779273
+              },
+              "uniqueId": "x40rkvh6ori"
+            }
+          ],
+          "position": {
+            "x": 298.5046800979418,
+            "y": -347.4321005894034
+          },
+          "uniqueId": "vunvygnpn8s"
+        },
+        {
+          "id": "booking.carBooking",
+          "data": {
+            "key": "carBooking",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "Unselected",
+            "description": "The state where the user can book a car.\n\nThey can select a car, cancel the booking,\n\nor proceed to book a flight or hotel."
+          },
+          "size": {
+            "x": 306.2342773254818,
+            "y": 161.3905782135285,
+            "top": 161.3905782135285,
+            "left": 306.2342773254818,
+            "right": 1205.234108595306,
+            "width": 898.9998312698237,
+            "bottom": 285.8905708079984,
+            "height": 124.4999925944699
+          },
+          "nodes": [
+            {
+              "id": "booking.carBooking.Unselected",
+              "data": {
+                "key": "Unselected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "x": 349.2342372125186,
+                "y": 370.390635712183,
+                "top": 370.390635712183,
+                "left": 349.2342372125186,
+                "right": 462.8435679804946,
+                "width": 113.609330767976,
+                "bottom": 411.8906332436729,
+                "height": 41.49999753148995
+              },
+              "nodes": [],
+              "position": {
+                "x": 349.2364682125112,
+                "y": 370.3916489087922
+              },
+              "uniqueId": "5dwwkrsz5t2"
+            },
+            {
+              "id": "booking.carBooking.carSelected",
+              "data": {
+                "key": "carSelected",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "description": "The state where the user has selected a car.\n\nThey can cancel the car booking or proceed\n\nto book a flight or hotel."
+              },
+              "size": {
+                "x": 846.3435814293043,
+                "y": 328.890638180693,
+                "top": 328.890638180693,
+                "left": 846.3435814293043,
+                "right": 1152.07019741462,
+                "width": 305.7266159853157,
+                "bottom": 453.3906307751629,
+                "height": 124.4999925944699
+              },
+              "nodes": [],
+              "position": {
+                "x": 846.3458504274411,
+                "y": 328.891696148957
+              },
+              "uniqueId": "rrcuw6hr5tl"
+            }
+          ],
+          "position": {
+            "x": 301.2364682125112,
+            "y": 156.3917035544872
+          },
+          "uniqueId": "bl29he4xfc"
+        }
+      ],
+      "position": {
+        "x": -412.9598318492469,
+        "y": -910.9649828285461
+      },
+      "uniqueId": "wu8lifmd3df"
+    }
+  }
+}

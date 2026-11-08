@@ -1,0 +1,319 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "db0e655e-f16f-4a30-97a7-a0081b73d532",
+    "edges": [
+      {
+        "id": "Well Named State Machine.First State#event.next[0]",
+        "data": {
+          "color": "yellow",
+          "guard": {
+            "kind": "named",
+            "type": "meets some condition",
+            "params": {}
+          },
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "event.next"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Well Named State Machine.First State",
+        "target": "Well Named State Machine.Second State",
+        "position": {
+          "x": -280.399537633955,
+          "y": 154.50390625
+        },
+        "uniqueId": "7zfyzx7zyzf"
+      },
+      {
+        "id": "Well Named State Machine.First State#event.next[1]",
+        "data": {
+          "color": "yellow",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "event.next"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Well Named State Machine.First State",
+        "target": "Well Named State Machine.First State",
+        "position": {
+          "x": -60.47766263395502,
+          "y": 215.9375
+        },
+        "uniqueId": "v3sq5sfixoa"
+      },
+      {
+        "id": "Well Named State Machine.Second State#done.invoke.Well Named State Machine.Second State:invocation[0][0]",
+        "data": {
+          "color": "green",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": ":invocation:eaggqncvlu"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Well Named State Machine.Second State",
+        "target": "Well Named State Machine.First State",
+        "position": {
+          "x": -490.903443883955,
+          "y": 332.76953125
+        },
+        "uniqueId": "runmne81g1g"
+      },
+      {
+        "id": "Well Named State Machine.Second State#error.platform.Well Named State Machine.Second State:invocation[0][0]",
+        "data": {
+          "color": "red",
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": ":invocation:eaggqncvlu"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "Well Named State Machine.Second State",
+        "target": "Well Named State Machine.Error State",
+        "position": {
+          "x": -239.735475133955,
+          "y": 497.93359375
+        },
+        "uniqueId": "v6z6gy4yq0c"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "event.next": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Well Named State Machine",
+      "data": {
+        "key": "Well Named State Machine",
+        "exit": [],
+        "tags": [],
+        "color": "blue",
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "First State",
+        "metaEntries": []
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "Well Named State Machine.First State",
+          "data": {
+            "key": "First State",
+            "exit": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "doOnExit",
+                  "params": {}
+                }
+              }
+            ],
+            "tags": [],
+            "color": "green",
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "doOnEntry",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -279.3370071163769,
+            "y": -17.85546875
+          },
+          "uniqueId": "6lwfl17l2c"
+        },
+        {
+          "id": "Well Named State Machine.Second State",
+          "data": {
+            "key": "Second State",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": ":invocation:eaggqncvlu",
+                "src": "fetchSomeData",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -221.860475133955,
+            "y": 304.51171875
+          },
+          "uniqueId": "8iwz9ht84ov"
+        },
+        {
+          "id": "Well Named State Machine.Error State",
+          "data": {
+            "key": "Error State",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": -176.055787633955,
+            "y": 576.3984375
+          },
+          "uniqueId": "95r5b2l9bdr"
+        },
+        {
+          "id": "Well Named State Machine.New note",
+          "data": {
+            "key": "New note",
+            "exit": [],
+            "tags": [],
+            "type": "annotation",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "This machine demonstrates one possible naming convention:\n\n- States - `Title Case`\n- Events - `dot.case`\n- Actions - `camelCase`\n- Guards - `lower case`\n- Actors - `camelCase`"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 46.79779052734381,
+            "y": 308.0546875
+          },
+          "uniqueId": "ddvwxq1v1qv"
+        }
+      ],
+      "position": {
+        "x": -538.903443883955,
+        "y": -65.85546875
+      },
+      "uniqueId": "8xwvdrj5s6x"
+    },
+    "implementations": {
+      "actors": {
+        "fetchSomeData": {
+          "id": "fetchSomeData",
+          "code": "",
+          "kind": "named",
+          "name": "camelCaseActor",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {
+        "meets some condition": {
+          "id": "meets some condition",
+          "name": "meets some condition",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "doOnExit": {
+          "id": "doOnExit",
+          "code": "",
+          "name": "camelCaseExitAction",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "doOnEntry": {
+          "id": "doOnEntry",
+          "code": "",
+          "name": "camelCaseAction",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

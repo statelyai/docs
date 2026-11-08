@@ -1,0 +1,169 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Initial state.Paused#Play[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Play"
+          }
+        },
+        "size": {
+          "x": 130.375,
+          "y": -116.5,
+          "top": -116.5,
+          "left": 130.375,
+          "right": 196.0703125,
+          "width": 65.6953125,
+          "bottom": -76.5,
+          "height": 40
+        },
+        "source": "Initial state.Paused",
+        "target": "Initial state.Playing",
+        "position": {
+          "x": 106.1412168484148,
+          "y": -116.5006461543956
+        },
+        "uniqueId": "5w4hio1iiaj"
+      },
+      {
+        "id": "Initial state.Playing#Pause[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Pause"
+          }
+        },
+        "size": {
+          "x": 123.453125,
+          "y": -61.9765625,
+          "top": -61.9765625,
+          "left": 123.453125,
+          "right": 201.1484375,
+          "width": 77.6953125,
+          "bottom": -21.9765625,
+          "height": 40
+        },
+        "source": "Initial state.Playing",
+        "target": "Initial state.Paused",
+        "position": {
+          "x": 210.3892606198754,
+          "y": -64.38017379894882
+        },
+        "uniqueId": "zni01ek3oj"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "Play": {
+          "type": "object",
+          "properties": {}
+        },
+        "Pause": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "Initial state",
+      "data": {
+        "key": "Initial state",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Paused",
+        "description": "Video player machine"
+      },
+      "size": {
+        "x": -212.5859375,
+        "y": -245.75,
+        "top": -245.75,
+        "left": -212.5859375,
+        "right": 344.4140014648438,
+        "width": 556.9999389648438,
+        "bottom": -160.25,
+        "height": 85.5
+      },
+      "nodes": [
+        {
+          "id": "Initial state.Paused",
+          "data": {
+            "key": "Paused",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "This Paused state is the initial state."
+          },
+          "size": {
+            "x": -169.5859375,
+            "y": -116.5,
+            "top": -116.5,
+            "left": -169.5859375,
+            "right": 84.5859375,
+            "width": 254.171875,
+            "bottom": -31,
+            "height": 85.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -169.5918732702779,
+            "y": -116.5006461543956
+          },
+          "uniqueId": "b8ybw7yp4p"
+        },
+        {
+          "id": "Initial state.Playing",
+          "data": {
+            "key": "Playing",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 251.1015014648438,
+            "y": -117.25,
+            "top": -117.25,
+            "left": 251.1015014648438,
+            "right": 335.0936889648438,
+            "width": 83.9921875,
+            "bottom": -75.75,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 207.2408231198754,
+            "y": -117.2506461543956
+          },
+          "uniqueId": "cn6cuappw8j"
+        }
+      ],
+      "position": {
+        "x": -217.5918732702779,
+        "y": -250.7506461543956
+      },
+      "uniqueId": "eyb3ql16e1h"
+    }
+  }
+}

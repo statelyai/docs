@@ -1,0 +1,686 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "5b186011-088e-4c1c-be95-9a489a126b13",
+    "edges": [
+      {
+        "id": "CD Player Loading & Playing.No CD Loaded#cd.load[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "cd.load"
+          }
+        },
+        "size": {
+          "x": -164.2500305175781,
+          "y": 165.828125,
+          "top": 165.828125,
+          "left": -164.2500305175781,
+          "right": -78.57815551757812,
+          "width": 85.671875,
+          "bottom": 205.828125,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.No CD Loaded",
+        "target": "CD Player Loading & Playing.CD Loaded",
+        "position": {
+          "x": -164.251100133955,
+          "y": 165.83203125
+        },
+        "uniqueId": "tmfgjv0x0gr"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded#cd.eject[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "cd.eject"
+          }
+        },
+        "size": {
+          "x": -67.53128051757812,
+          "y": 165.828125,
+          "top": 165.828125,
+          "left": -67.53128051757812,
+          "right": 22.43746948242188,
+          "width": 89.96875,
+          "bottom": 205.828125,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded",
+        "target": "CD Player Loading & Playing.No CD Loaded",
+        "position": {
+          "x": -67.53628690153312,
+          "y": 165.83203125
+        },
+        "uniqueId": "mjnnw2hwr1"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded#track.next[0]",
+        "data": {
+          "guard": {
+            "kind": "named",
+            "type": "is last track",
+            "params": {}
+          },
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "track.next"
+          }
+        },
+        "size": {
+          "x": -217.5625305175781,
+          "y": 350.234375,
+          "top": 350.234375,
+          "left": -217.5625305175781,
+          "right": 12.73434448242188,
+          "width": 230.296875,
+          "bottom": 390.234375,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+        "position": {
+          "x": -217.5743735896043,
+          "y": 350.2421875
+        },
+        "uniqueId": "7szylx7yl6"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Stopped#play[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "play"
+          }
+        },
+        "size": {
+          "x": -114.2500305175781,
+          "y": 554.6875,
+          "top": 554.6875,
+          "left": -114.2500305175781,
+          "right": -48.79690551757812,
+          "width": 65.453125,
+          "bottom": 594.6875,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "position": {
+          "x": -114.2579978571824,
+          "y": 554.69140625
+        },
+        "uniqueId": "tobfgtc952e"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Playing#stop[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "stop"
+          }
+        },
+        "size": {
+          "x": -158.0469055175781,
+          "y": 612.75,
+          "top": 612.75,
+          "left": -158.0469055175781,
+          "right": -90.78128051757812,
+          "width": 67.265625,
+          "bottom": 652.75,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+        "position": {
+          "x": -158.0470603571824,
+          "y": 612.7578125
+        },
+        "uniqueId": "w56m1zqxiq"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Playing#timer.expired[0]",
+        "data": {
+          "actions": [],
+          "description": "End of the CD",
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "timer.expired"
+          }
+        },
+        "size": {
+          "x": -300.7187805175781,
+          "y": 596,
+          "top": 596,
+          "left": -300.7187805175781,
+          "right": -170.9219055175781,
+          "width": 129.796875,
+          "bottom": 669.5,
+          "height": 73.5
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+        "position": {
+          "x": -300.7189353571824,
+          "y": 596.0078125
+        },
+        "uniqueId": "mkb5nnm5inc"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Playing#pause[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "pause"
+          }
+        },
+        "size": {
+          "x": 5.671844482421875,
+          "y": 684.234375,
+          "top": 684.234375,
+          "left": 5.671844482421875,
+          "right": 83.24996948242188,
+          "width": 77.578125,
+          "bottom": 724.234375,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Paused",
+        "position": {
+          "x": 5.682493616045022,
+          "y": 684.23828125
+        },
+        "uniqueId": "xj8gxjwij7r"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Paused#pause[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "pause"
+          }
+        },
+        "size": {
+          "x": 5.671844482421875,
+          "y": 809.0625,
+          "top": 809.0625,
+          "left": 5.671844482421875,
+          "right": 83.24996948242188,
+          "width": 77.578125,
+          "bottom": 849.0625,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Paused",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "position": {
+          "x": 5.682493616045022,
+          "y": 809.07421875
+        },
+        "uniqueId": "g4u1s8l9mdi"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields not blank#timer.expired[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "timer.expired"
+          }
+        },
+        "size": {
+          "x": 211.5780944824219,
+          "y": 636.34375,
+          "top": 636.34375,
+          "left": 211.5780944824219,
+          "right": 333.7812194824219,
+          "width": 122.203125,
+          "bottom": 676.34375,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields not blank",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields blank",
+        "position": {
+          "x": 211.5799553041163,
+          "y": 636.353515625
+        },
+        "uniqueId": "n0ybdhyg72l"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields blank#timer.expired[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "timer.expired"
+          }
+        },
+        "size": {
+          "x": 342.7968444824219,
+          "y": 636.34375,
+          "top": 636.34375,
+          "left": 342.7968444824219,
+          "right": 464.9999694824219,
+          "width": 122.203125,
+          "bottom": 676.34375,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields blank",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields not blank",
+        "position": {
+          "x": 342.8065178041163,
+          "y": 636.353515625
+        },
+        "uniqueId": "n9wrogx9e7f"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Paused#stop[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "stop"
+          }
+        },
+        "size": {
+          "x": 10.82809448242188,
+          "y": 461.4375,
+          "top": 461.4375,
+          "left": 10.82809448242188,
+          "right": 78.09371948242188,
+          "width": 67.265625,
+          "bottom": 501.4375,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Paused",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+        "position": {
+          "x": 10.8387130984669,
+          "y": 461.4453125
+        },
+        "uniqueId": "wc51zrrigbf"
+      },
+      {
+        "id": "CD Player Loading & Playing.CD Loaded.CD Paused#play[0]",
+        "data": {
+          "actions": [],
+          "metaEntries": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "play"
+          }
+        },
+        "size": {
+          "x": 11.73434448242188,
+          "y": 752.40625,
+          "top": 752.40625,
+          "left": 11.73434448242188,
+          "right": 77.18746948242188,
+          "width": 65.453125,
+          "bottom": 792.40625,
+          "height": 40
+        },
+        "source": "CD Player Loading & Playing.CD Loaded.CD Paused",
+        "target": "CD Player Loading & Playing.CD Loaded.CD Playing",
+        "position": {
+          "x": 11.74499361604502,
+          "y": 752.412109375
+        },
+        "uniqueId": "mandnmdjucc"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "play": {
+          "type": "object",
+          "properties": {}
+        },
+        "stop": {
+          "type": "object",
+          "properties": {}
+        },
+        "pause": {
+          "type": "object",
+          "properties": {}
+        },
+        "cd.load": {
+          "type": "object",
+          "properties": {}
+        },
+        "cd.eject": {
+          "type": "object",
+          "properties": {}
+        },
+        "track.next": {
+          "type": "object",
+          "properties": {}
+        },
+        "timer.expired": {
+          "type": "object",
+          "properties": {}
+        },
+        "Timer expired & (end of CD)": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "CD Player Loading & Playing",
+      "data": {
+        "key": "CD Player Loading & Playing",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [
+          {
+            "name": "Audiolab CD.png",
+            "template": "@stately.image",
+            "properties": {
+              "url": "https://ascelcgzufjyvdzuplwo.supabase.co/storage/v1/object/public/assets/9fa24cc0-3026-41be-bb22-9afc3980fefc/eec2fa60-3837-4446-8b59-b41e9b081158",
+              "path": "6541bdd9-e250-47c8-9a5e-fa1352cd5088/eec2fa60-3837-4446-8b59-b41e9b081158",
+              "size": "lg",
+              "uuid": "eec2fa60-3837-4446-8b59-b41e9b081158"
+            }
+          }
+        ],
+        "invoke": [],
+        "initial": "No CD Loaded",
+        "metaEntries": []
+      },
+      "size": {
+        "x": -391.7187805175781,
+        "y": 40.421875,
+        "top": 40.421875,
+        "left": -391.7187805175781,
+        "right": 634.2812194824219,
+        "width": 1026,
+        "bottom": 309.421875,
+        "height": 269
+      },
+      "nodes": [
+        {
+          "id": "CD Player Loading & Playing.No CD Loaded",
+          "data": {
+            "key": "No CD Loaded",
+            "exit": [],
+            "tags": [],
+            "color": "blue",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "metaEntries": []
+          },
+          "size": {
+            "x": -141.0312805175781,
+            "y": 83.421875,
+            "top": 83.421875,
+            "left": -141.0312805175781,
+            "right": -5.562530517578125,
+            "width": 135.46875,
+            "bottom": 125.421875,
+            "height": 42
+          },
+          "nodes": [],
+          "position": {
+            "x": -141.040162633955,
+            "y": 83.4296875
+          },
+          "uniqueId": "idpxloj8ltf"
+        },
+        {
+          "id": "CD Player Loading & Playing.CD Loaded",
+          "data": {
+            "key": "CD Loaded",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "CD Stopped",
+            "metaEntries": []
+          },
+          "size": {
+            "x": -343.7187805175781,
+            "y": 265.234375,
+            "top": 265.234375,
+            "left": -343.7187805175781,
+            "right": 576.2812194824219,
+            "width": 920,
+            "bottom": 307.234375,
+            "height": 42
+          },
+          "nodes": [
+            {
+              "id": "CD Player Loading & Playing.CD Loaded.CD Playing",
+              "data": {
+                "key": "CD Playing",
+                "exit": [],
+                "tags": [],
+                "color": "green",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": -164.2031555175781,
+                "y": 741.328125,
+                "top": 741.328125,
+                "left": -164.2031555175781,
+                "right": -53.75003051757812,
+                "width": 110.453125,
+                "bottom": 783.328125,
+                "height": 42
+              },
+              "nodes": [],
+              "position": {
+                "x": -164.2033103571824,
+                "y": 741.33984375
+              },
+              "uniqueId": "e1t0zzij1e9"
+            },
+            {
+              "id": "CD Player Loading & Playing.CD Loaded.CD Stopped",
+              "data": {
+                "key": "CD Stopped",
+                "exit": [],
+                "tags": [],
+                "color": "blue",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "metaEntries": []
+              },
+              "size": {
+                "x": -152.2656555175781,
+                "y": 460.4375,
+                "top": 460.4375,
+                "left": -152.2656555175781,
+                "right": -33.21878051757812,
+                "width": 119.046875,
+                "bottom": 502.4375,
+                "height": 42
+              },
+              "nodes": [],
+              "position": {
+                "x": -152.2697166071824,
+                "y": 460.4453125
+              },
+              "uniqueId": "8hr88ig08kr"
+            },
+            {
+              "id": "CD Player Loading & Playing.CD Loaded.CD Paused",
+              "data": {
+                "key": "CD Paused",
+                "exit": [],
+                "tags": [],
+                "color": "yellow",
+                "entry": [],
+                "assets": [],
+                "invoke": [],
+                "initial": "Time & Track fields not blank",
+                "metaEntries": []
+              },
+              "size": {
+                "x": 156.4374694824219,
+                "y": 462.046875,
+                "top": 462.046875,
+                "left": 156.4374694824219,
+                "right": 518.4374694824219,
+                "width": 362,
+                "bottom": 504.046875,
+                "height": 42
+              },
+              "nodes": [
+                {
+                  "id": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields not blank",
+                  "data": {
+                    "key": "Time & Track fields not blank",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [],
+                    "metaEntries": []
+                  },
+                  "size": {
+                    "x": 199.4374694824219,
+                    "y": 547.046875,
+                    "top": 547.046875,
+                    "left": 199.4374694824219,
+                    "right": 440.2343444824219,
+                    "width": 240.796875,
+                    "bottom": 589.046875,
+                    "height": 42
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 199.4393303041164,
+                    "y": 547.056640625
+                  },
+                  "uniqueId": "nue3r03vu2m"
+                },
+                {
+                  "id": "CD Player Loading & Playing.CD Loaded.CD Paused.Time & Track fields blank",
+                  "data": {
+                    "key": "Time & Track fields blank",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [],
+                    "metaEntries": []
+                  },
+                  "size": {
+                    "x": 220.3280944824219,
+                    "y": 751.40625,
+                    "top": 751.40625,
+                    "left": 220.3280944824219,
+                    "right": 433.4374694824219,
+                    "width": 213.109375,
+                    "bottom": 793.40625,
+                    "height": 42
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 220.3416740541163,
+                    "y": 751.412109375
+                  },
+                  "uniqueId": "m2abeycum19"
+                }
+              ],
+              "position": {
+                "x": 151.4393303041164,
+                "y": 457.056640625
+              },
+              "uniqueId": "qhyd2aqmnwc"
+            }
+          ],
+          "position": {
+            "x": -348.7189353571824,
+            "y": 260.2421875
+          },
+          "uniqueId": "y3r61zvj3ek"
+        },
+        {
+          "id": "CD Player Loading & Playing.New note",
+          "data": {
+            "key": "New note",
+            "exit": [],
+            "tags": [],
+            "type": "annotation",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "Example from Statecharts: Constructing the User Interface by Ian Horrocks (1999), page 221."
+          },
+          "size": {
+            "x": 167.6093444824219,
+            "y": 88.515625,
+            "top": 88.515625,
+            "left": 167.6093444824219,
+            "right": 455.6093444824219,
+            "width": 288,
+            "bottom": 179.015625,
+            "height": 90.5
+          },
+          "nodes": [],
+          "position": {
+            "x": 167.6248146428176,
+            "y": 88.52734375
+          },
+          "uniqueId": "2h6wsnmu7do"
+        }
+      ],
+      "position": {
+        "x": -396.7189353571824,
+        "y": -233.5703125
+      },
+      "uniqueId": "hugbzd0hj9a"
+    },
+    "implementations": {
+      "actors": {},
+      "guards": {
+        "is last track": {
+          "id": "is last track",
+          "name": "is last track",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {}
+    }
+  }
+}

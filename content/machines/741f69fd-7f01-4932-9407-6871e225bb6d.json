@@ -1,0 +1,198 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "741f69fd-7f01-4932-9407-6871e225bb6d",
+    "edges": [
+      {
+        "id": "States.Paused#play[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "play"
+          }
+        },
+        "size": {
+          "x": -339.5234375,
+          "y": -240.4296875,
+          "top": -240.4296875,
+          "left": -339.5234375,
+          "right": -274.078125,
+          "width": 65.4453125,
+          "bottom": -200.4296875,
+          "height": 40
+        },
+        "source": "States.Paused",
+        "target": "States.Playing",
+        "position": {
+          "x": -339.5294654471103,
+          "y": -240.7031017450595
+        },
+        "uniqueId": "38fq30yri59"
+      },
+      {
+        "id": "States.Playing#pause[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "pause"
+          }
+        },
+        "size": {
+          "x": -389.1171875,
+          "y": -114.9296875,
+          "top": -114.9296875,
+          "left": -389.1171875,
+          "right": -311.5390625,
+          "width": 77.578125,
+          "bottom": -74.9296875,
+          "height": 40
+        },
+        "source": "States.Playing",
+        "target": "States.Paused",
+        "position": {
+          "x": -345.5958716971103,
+          "y": -114.9335704950595
+        },
+        "uniqueId": "30x5uguy873"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "play": {
+          "type": "object",
+          "properties": {}
+        },
+        "pause": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "States",
+      "data": {
+        "key": "States",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "Paused",
+        "description": "Video player"
+      },
+      "size": {
+        "x": -491.7109375,
+        "y": -369.6953125,
+        "top": -369.6953125,
+        "left": -491.7109375,
+        "right": 88.28912353515625,
+        "width": 580.0000610351562,
+        "bottom": -283.6953125,
+        "height": 86
+      },
+      "nodes": [
+        {
+          "id": "States.Paused",
+          "data": {
+            "key": "Paused",
+            "exit": [],
+            "tags": [],
+            "color": "blue",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -448.7109375,
+            "y": -180.4296875,
+            "top": -180.4296875,
+            "left": -448.7109375,
+            "right": -363.5234375,
+            "width": 85.1875,
+            "bottom": -138.9296875,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -448.7169654471103,
+            "y": -180.4335704950595
+          },
+          "uniqueId": "29s0zn6nwsc"
+        },
+        {
+          "id": "States.Playing",
+          "data": {
+            "key": "Playing",
+            "exit": [],
+            "tags": [],
+            "color": "blue",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -330.96875,
+            "y": -180.4296875,
+            "top": -180.4296875,
+            "left": -330.96875,
+            "right": -246.9765625,
+            "width": 83.9921875,
+            "bottom": -138.9296875,
+            "height": 41.5
+          },
+          "nodes": [],
+          "position": {
+            "x": -269.1211385961647,
+            "y": -180.4335704950595
+          },
+          "uniqueId": "neejd47qgk"
+        },
+        {
+          "id": "States.New note",
+          "data": {
+            "key": "New note",
+            "exit": [],
+            "tags": [],
+            "type": "annotation",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "description": "There are two child states:\n\n**Paused** and **Playing**"
+          },
+          "size": {
+            "x": -439.9921875,
+            "y": -50.984375,
+            "top": -50.984375,
+            "left": -439.9921875,
+            "right": -244.6171875,
+            "width": 195.375,
+            "bottom": 20.015625,
+            "height": 71
+          },
+          "nodes": [],
+          "position": {
+            "x": -159.8302466971103,
+            "y": -195.1835704950595
+          },
+          "uniqueId": "c50w12lsehw"
+        }
+      ],
+      "position": {
+        "x": -496.7169654471103,
+        "y": -374.7031017450595
+      },
+      "uniqueId": "a5cj4q8wzh"
+    }
+  }
+}

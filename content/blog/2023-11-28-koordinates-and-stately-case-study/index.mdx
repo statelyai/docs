@@ -18,6 +18,9 @@ slug: 2023-11-28-koordinates-and-stately-case-study
 image: /blog/2023-11-28-koordinates-and-stately-case-study.png
 ---
 
+import machine_68b835cc from '@/content/machines/68b835cc-49fc-4b9c-972e-a63c01465c1f.json';
+import machine_afa23e5f from '@/content/machines/afa23e5f-11c7-460d-bd98-ff7de694a41d.json';
+
 When it came to navigating the complexities of business context and application state, Koordinates found their solution in Stately's tools, reshaping their coding practices and ensuring a seamless user experience.
 {/* truncate */}
 
@@ -50,10 +53,7 @@ In the case of Kart, many of these operations can be long-running and have sever
 
 In the case of both their products, Koordinates was able to use Stately’s tooling to break their “big” problems down into several, distinct smaller ones. Taylor Lodge, an engineer on the core team, explained that with Sta tely’s visual editor and simulation tooling, they were able to break their application logic into several small, testable state machines. For example, the UI for Koordinates Cloud has several components, but the logic for loading elements in their list view is represented rather succinctly in this state machine:
 
-<EmbedMachine
-  name="Koordinates List View Machine"
-  embedURL="https://stately.ai/registry/editor/embed/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?machineId=68b835cc-49fc-4b9c-972e-a63c01465c1f"
-/>
+<Embed machine={machine_68b835cc} name="Koordinates List View Machine" />
 
 There are several potential events that _can_ happen, but the core states are relatively few to model this behavior. Instead of representing their entire app state in a monolith, the team decided to go with a more modular approach, making use of the [actor model](https://en.wikipedia.org/wiki/Actor_model). This makes maintaining and testing individual components much easier, and it allows for extensibility down the line as project complexity grows.
 
@@ -67,10 +67,7 @@ While there are other state management platforms for developers, the team at Koo
 
 Being a source control solution for complex datasets, Kart has a naturally complex set of problems to solve as well. Merging, cloning, and loading data all have plenty of considerations, edge cases, and possible failure scenarios, so the team had to take care to address all of them. The ability to map this logic using the Stately Editor proved to be extremely useful.
 
-<EmbedMachine
-  name="Koordinates List View Machine"
-  embedURL="https://stately.ai/registry/editor/embed/1b48bbf1-6f7a-4847-b1e0-47ee5c283371?machineId=afa23e5f-11c7-460d-bd98-ff7de694a41d"
-/>
+<Embed machine={machine_afa23e5f} name="Koordinates List View Machine" />
 
 Stately tooling isn’t just for managing UI state. In fact, the logic representing Kart repos is all managed using an XState actor. That actor then watches the filesystem to execute Kart-specific commands and update its own in-memory state.
 

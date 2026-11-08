@@ -1,0 +1,128 @@
+{
+  "format": "digraph",
+  "definition": {
+    "edges": [
+      {
+        "id": "Transitions and events.Paused#Play[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Play"
+          }
+        },
+        "size": {
+          "width": 68.53125,
+          "height": 38.5
+        },
+        "source": "Transitions and events.Paused",
+        "target": "Transitions and events.Playing",
+        "position": {
+          "x": -82.45384950507885,
+          "y": -128.70573565885428
+        }
+      },
+      {
+        "id": "Transitions and events.Playing#Pause[0]",
+        "data": {
+          "actions": [],
+          "internal": false,
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "Pause"
+          }
+        },
+        "size": {
+          "width": 82.375,
+          "height": 38.5
+        },
+        "source": "Transitions and events.Playing",
+        "target": "Transitions and events.Paused",
+        "position": {
+          "x": -89.09447450507885,
+          "y": 8.613955446592541
+        }
+      }
+    ],
+    "context": {},
+    "rootNode": {
+      "id": "Transitions and events",
+      "data": {
+        "key": "Transitions and events",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "invoke": [],
+        "initial": "Paused",
+        "description": "Video player machine"
+      },
+      "size": {
+        "x": -281.28125,
+        "y": -259.8203125,
+        "top": -259.8203125,
+        "left": -281.28125,
+        "right": 190.875,
+        "width": 472.15625,
+        "bottom": -174.3203125,
+        "height": 85.5
+      },
+      "nodes": [
+        {
+          "id": "Transitions and events.Paused",
+          "data": {
+            "key": "Paused",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": -233.28125,
+            "y": -58.296875,
+            "top": -58.296875,
+            "left": -233.28125,
+            "right": -145.4453125,
+            "width": 87.8359375,
+            "bottom": -18.296875,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": -234.9740445002968,
+            "y": -60.68034503385425
+          }
+        },
+        {
+          "id": "Transitions and events.Playing",
+          "data": {
+            "key": "Playing",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "invoke": []
+          },
+          "size": {
+            "x": 55.9140625,
+            "y": -58.296875,
+            "top": -58.296875,
+            "left": 55.9140625,
+            "right": 142.875,
+            "width": 86.9609375,
+            "bottom": -18.296875,
+            "height": 40
+          },
+          "nodes": [],
+          "position": {
+            "x": 54.2277925148565,
+            "y": -60.68034503385425
+          }
+        }
+      ],
+      "position": {
+        "x": -282.9740445002968,
+        "y": -262.2057356588543
+      }
+    }
+  }
+}
