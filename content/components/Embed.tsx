@@ -46,7 +46,7 @@ export function Embed({ name = "State", title, machine, mode }: Embed) {
         </iframe>
       ) : (
         <div className="block w-full aspect-video flex items-center justify-center">
-          <span>Machine preview unavailable</span>
+          <span>{src ? "Loading machine preview…" : "Machine preview unavailable"}</span>
         </div>
       )}
       {src && !isActive && (
