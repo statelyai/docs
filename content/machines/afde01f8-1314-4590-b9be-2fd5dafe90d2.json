@@ -1,0 +1,477 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "afde01f8-1314-4590-b9be-2fd5dafe90d2",
+    "edges": [
+      {
+        "id": "chat.loading#done.invoke.getChatMessages[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loading#done.invoke.getChatMessages[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "getChatMessages"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loading",
+        "target": "chat.loaded",
+        "position": {
+          "x": 384,
+          "y": 368
+        },
+        "uniqueId": "n7uw9gvy6a"
+      },
+      {
+        "id": "chat.loading#error.platform.getChatMessages[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loading#error.platform.getChatMessages[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "getChatMessages"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loading",
+        "target": "chat.error",
+        "position": {
+          "x": 60,
+          "y": 368
+        },
+        "uniqueId": "6v922s6ja43"
+      },
+      {
+        "id": "chat.loaded.idle#loadMoreChats[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "loadMoreChats"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loaded.idle",
+        "target": "chat.loaded.loadingMore",
+        "position": {
+          "x": 542,
+          "y": 748
+        },
+        "uniqueId": "mbpfucz998r"
+      },
+      {
+        "id": "chat.loaded.loadingMore#done.invoke.getChatMessages[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loaded.loadingMore#done.invoke.getChatMessages[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "getChatMessages"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loaded.loadingMore",
+        "target": "chat.loaded.idle",
+        "position": {
+          "x": 291,
+          "y": 712
+        },
+        "uniqueId": "4bqdghf587f"
+      },
+      {
+        "id": "chat.loaded#phoenix.newMessage[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loaded#phoenix.newMessage[-1]#transition[0]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loaded#phoenix.newMessage[-1]#transition[1]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "phoenix.newMessage"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loaded",
+        "position": {
+          "x": 274,
+          "y": 1125
+        },
+        "uniqueId": "xrgggmbu36o"
+      },
+      {
+        "id": "chat.loaded#phoenix.removeMessage[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loaded#phoenix.removeMessage[-1]#transition[0]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:chat.loaded#phoenix.removeMessage[-1]#transition[1]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "phoenix.removeMessage"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "chat.loaded",
+        "position": {
+          "x": 520,
+          "y": 1125
+        },
+        "uniqueId": "4k0hwcufjv8"
+      }
+    ],
+    "context": {
+      "chats": []
+    },
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "loadMoreChats": {
+          "type": "object",
+          "properties": {}
+        },
+        "phoenix.newMessage": {
+          "type": "object",
+          "properties": {}
+        },
+        "phoenix.removeMessage": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {
+        "chats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Generated automatically based on the key: \"chats\" in initial context values"
+        }
+      }
+    },
+    "rootNode": {
+      "id": "chat",
+      "data": {
+        "key": "chat",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "loading",
+        "metaEntries": [
+          [
+            "gitHubUrl",
+            "https://github.com/xylophonehero/wg-stately/blob/master/src/chat/chatMachine.tsx"
+          ]
+        ]
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "chat.loading",
+          "data": {
+            "key": "loading",
+            "exit": [],
+            "tags": [],
+            "color": "yellow",
+            "entry": [],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "getChatMessages",
+                "src": "getChatMessages",
+                "kind": "named",
+                "input": {},
+                "settings": {}
+              }
+            ]
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 80,
+            "y": 165
+          },
+          "uniqueId": "melk3jpmuj"
+        },
+        {
+          "id": "chat.loaded",
+          "data": {
+            "key": "loaded",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "idle"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "chat.loaded.idle",
+              "data": {
+                "key": "idle",
+                "exit": [],
+                "tags": [],
+                "color": "green",
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 372,
+                "y": 620
+              },
+              "uniqueId": "2z2tkjh42yk"
+            },
+            {
+              "id": "chat.loaded.loadingMore",
+              "data": {
+                "key": "loadingMore",
+                "exit": [],
+                "tags": [],
+                "color": "yellow",
+                "entry": [],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "getChatMessages",
+                    "src": "getChatMessages",
+                    "kind": "named",
+                    "input": {},
+                    "settings": {}
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 312,
+                "y": 874
+              },
+              "uniqueId": "wt8zb1zu6hs"
+            }
+          ],
+          "position": {
+            "x": 243,
+            "y": 572
+          },
+          "uniqueId": "s8jc9cy5h2c"
+        },
+        {
+          "id": "chat.error",
+          "data": {
+            "key": "error",
+            "exit": [],
+            "tags": [],
+            "color": "red",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 126,
+            "y": 530
+          },
+          "uniqueId": "ifrsh91vc2c"
+        }
+      ],
+      "position": {
+        "x": 12,
+        "y": 117
+      },
+      "uniqueId": "ck3p4wrjhq"
+    },
+    "implementations": {
+      "actors": {
+        "getChatMessages": {
+          "id": "getChatMessages",
+          "kind": "named",
+          "name": "getChatMessages",
+          "type": "actor",
+          "input": {
+            "type": "object",
+            "properties": {}
+          },
+          "output": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "guards": {},
+      "actions": {
+        "inline:chat.loaded#phoenix.newMessage[-1]#transition[0]": {
+          "id": "inline:chat.loaded#phoenix.newMessage[-1]#transition[0]",
+          "code": "export default log(({ event }) => `New message received:${event.payload.id}`)",
+          "name": "Unnamed log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loaded#phoenix.newMessage[-1]#transition[1]": {
+          "id": "inline:chat.loaded#phoenix.newMessage[-1]#transition[1]",
+          "code": "export default assign({\"chats\":({ context, event }) => [\n                  event.payload,\n                  ...context.chats,\n                ]})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loaded#phoenix.removeMessage[-1]#transition[0]": {
+          "id": "inline:chat.loaded#phoenix.removeMessage[-1]#transition[0]",
+          "code": "export default log(({ event }) => `Message removed:${event.payload.id}`)",
+          "name": "Unnamed log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loaded#phoenix.removeMessage[-1]#transition[1]": {
+          "id": "inline:chat.loaded#phoenix.removeMessage[-1]#transition[1]",
+          "code": "export default assign({\"chats\":({ context, event }) =>\n                context.chats.filter(\n                  (message) => message.id !== event.payload.id,\n                )})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loading#done.invoke.getChatMessages[-1]#transition[0]": {
+          "id": "inline:chat.loading#done.invoke.getChatMessages[-1]#transition[0]",
+          "code": "export default assign({\"chats\":({ event }) => event.output.chats})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loading#error.platform.getChatMessages[-1]#transition[0]": {
+          "id": "inline:chat.loading#error.platform.getChatMessages[-1]#transition[0]",
+          "code": "export default log(\"Failed to get chat messages\")",
+          "name": "Unnamed log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:chat.loaded.loadingMore#done.invoke.getChatMessages[-1]#transition[0]": {
+          "id": "inline:chat.loaded.loadingMore#done.invoke.getChatMessages[-1]#transition[0]",
+          "code": "export default assign({\"chats\":({ context, event }) => [\n                    ...context.chats,\n                    ...event.output.chats,\n                  ]})",
+          "name": "Unnamed assign",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

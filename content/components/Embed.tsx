@@ -6,12 +6,11 @@ import { useTheme } from "next-themes";
 type Embed = {
   name?: string;
   title?: string;
-  embedURL?: string;
-  machine?: unknown;
+  machine: unknown;
   mode?: string;
 };
 
-export function Embed({ name = "State", title, embedURL, machine, mode }: Embed) {
+export function Embed({ name = "State", title, machine, mode }: Embed) {
   const [isActive, setIsActive] = useState(false);
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,9 +29,7 @@ export function Embed({ name = "State", title, embedURL, machine, mode }: Embed)
   }, [isActive]);
 
   const theme = resolvedTheme === "dark" ? "dark" : "light";
-  const src = machine
-    ? inlineEmbedURL(machine, theme, mode)
-    : embedURL ?? null;
+  const src = inlineEmbedURL(machine, theme, mode);
   return (
     <div ref={containerRef} className="relative my-4">
       {mounted && src ? (
@@ -65,8 +62,6 @@ export function Embed({ name = "State", title, embedURL, machine, mode }: Embed)
     </div>
   );
 }
-
-export const EmbedMachine = Embed;
 
 export function inlineEmbedURL(machine: unknown, theme: "light" | "dark", mode?: string): string | null {
   if (!machine || typeof machine !== "object" || Array.isArray(machine)) return null;

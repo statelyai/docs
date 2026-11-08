@@ -1,0 +1,552 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "de091123-5634-481b-aa18-ff9d254403ae",
+    "edges": [
+      {
+        "id": "actorManager#actor.start[0]",
+        "data": {
+          "color": "green",
+          "guard": {
+            "kind": "named",
+            "type": "actorDoesNotExist",
+            "params": {}
+          },
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.start[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "actor.start"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": -115,
+          "y": -369
+        },
+        "uniqueId": "u5r9v7zfeg8"
+      },
+      {
+        "id": "actorManager#actor.start[1]",
+        "data": {
+          "color": "blue",
+          "guard": {
+            "kind": "named",
+            "type": "actorAlreadyStarted",
+            "params": {}
+          },
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.start[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "actor.start"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": 279,
+          "y": -369
+        },
+        "uniqueId": "84cfttgvi9e"
+      },
+      {
+        "id": "actorManager#actor.start[2]",
+        "data": {
+          "color": "yellow",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.start[-1]#transition[0]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.start[-1]#transition[1]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateActorStatus",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "actor.start"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": 720,
+          "y": -420
+        },
+        "uniqueId": "ufjakv3jpwp"
+      },
+      {
+        "id": "actorManager#actor.stop[0]",
+        "data": {
+          "color": "blue",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.stop[-1]#transition[0]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#actor.stop[-1]#transition[1]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateActorStatus",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "actor.stop"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": 896,
+          "y": 220
+        },
+        "uniqueId": "ogszhmk70xk"
+      },
+      {
+        "id": "actorManager#done.actor.import.*[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[0]",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[1]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "done.actor.import.*"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": -273,
+          "y": 429
+        },
+        "uniqueId": "5im6t0w0k1i"
+      },
+      {
+        "id": "actorManager#error.actor.*[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#xstate.error.actor.*[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "error.actor.*"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": -273,
+          "y": 85
+        },
+        "uniqueId": "54qzda84avh"
+      },
+      {
+        "id": "actorManager#error.actor.import.*[0]",
+        "data": {
+          "color": "red",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "inline:actorManager#xstate.error.actor.import.*[-1]#transition[0]",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "error.actor.import.*"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager",
+        "position": {
+          "x": -273,
+          "y": 247
+        },
+        "uniqueId": "zl4evv1zh6"
+      },
+      {
+        "id": "actorManager.configNotLoaded#always[0]",
+        "data": {
+          "color": "green",
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "CONFIG_FOR_LOADING_STRATEGY",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "actorManager.configNotLoaded",
+        "target": "actorManager.configLoaded",
+        "position": {
+          "x": 376,
+          "y": 330
+        },
+        "uniqueId": "2a5njvzh0pd"
+      }
+    ],
+    "context": "{{({ input }) => ({\n        lazyActorConfig: input.lazyActorConfig,\n        actorStatusMap: {},\n    })}}",
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "actor.stop": {
+          "type": "object",
+          "properties": {}
+        },
+        "actor.start": {
+          "type": "object",
+          "properties": {}
+        },
+        "error.actor.*": {
+          "type": "object",
+          "properties": {}
+        },
+        "done.actor.import.*": {
+          "type": "object",
+          "properties": {}
+        },
+        "error.actor.import.*": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "actorManager",
+      "data": {
+        "key": "actorManager",
+        "exit": [],
+        "tags": [],
+        "color": "green",
+        "entry": [
+          {
+            "kind": "named",
+            "action": {
+              "type": "inline:actorManager#entry[0]",
+              "params": {}
+            }
+          }
+        ],
+        "assets": [],
+        "invoke": [],
+        "initial": "configNotLoaded"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "actorManager.configNotLoaded",
+          "data": {
+            "key": "configNotLoaded",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 164,
+            "y": 410
+          },
+          "uniqueId": "xyj6t0gvek8"
+        },
+        {
+          "id": "actorManager.configLoaded",
+          "data": {
+            "key": "configLoaded",
+            "exit": [],
+            "tags": [],
+            "color": "green",
+            "entry": [],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 177,
+            "y": 319
+          },
+          "uniqueId": "a9elklaqtm"
+        }
+      ],
+      "position": {
+        "x": -321,
+        "y": -468
+      },
+      "uniqueId": "9i7mknmzz9"
+    },
+    "implementations": {
+      "actors": {},
+      "guards": {
+        "actorDoesNotExist": {
+          "id": "actorDoesNotExist",
+          "name": "actorDoesNotExist",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "actorAlreadyStarted": {
+          "id": "actorAlreadyStarted",
+          "name": "actorAlreadyStarted",
+          "type": "guard",
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      },
+      "actions": {
+        "updateActorStatus": {
+          "id": "updateActorStatus",
+          "name": "updateActorStatus",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "CONFIG_FOR_LOADING_STRATEGY": {
+          "id": "CONFIG_FOR_LOADING_STRATEGY",
+          "code": "",
+          "name": "CONFIG_FOR_LOADING_STRATEGY",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#entry[0]": {
+          "id": "inline:actorManager#entry[0]",
+          "code": "export default enqueueActions(({ context, enqueue }) => {\n        Object.entries(context.lazyActorConfig).forEach(([id, actorConfig]) => {\n            const { loadingStrategy, input } = actorConfig;\n            if (loadingStrategy !== \"eager\")\n                return;\n            if (typeof input === \"function\")\n                throw new Error(\"Lazy actor config input cannot be a function when loading strategy is eager\");\n            enqueue.raise({ type: \"actor.start\", id, input });\n        });\n    })",
+          "name": "inline:actorManager#entry[0]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#actor.stop[-1]#transition[0]": {
+          "id": "inline:actorManager#actor.stop[-1]#transition[0]",
+          "code": "export default log(({ event }) => `Stopped ${event.id} actor`)",
+          "name": "Unnamed log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#actor.stop[-1]#transition[1]": {
+          "id": "inline:actorManager#actor.stop[-1]#transition[1]",
+          "code": "export default stopChild(({ event }) => event.id)",
+          "name": "inline:actorManager#actor.stop[-1]#transition[1]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#actor.start[-1]#transition[0]": {
+          "id": "inline:actorManager#actor.start[-1]#transition[0]",
+          "code": "export default log(({ event }) => `Actor ${event.id} not in lazyActorConfig`)",
+          "name": "Unnamed log",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#actor.start[-1]#transition[1]": {
+          "id": "inline:actorManager#actor.start[-1]#transition[1]",
+          "code": "export default enqueueActions(({ context, enqueue, event }) => {\n                        const { path, loader } = assertExists(context.lazyActorConfig[event.id]);\n                        const { id, input = {} } = event;\n                        enqueue.spawnChild(\"lazyActorLoader\", {\n                            input: {\n                                id,\n                                actorLogicPath: path,\n                                loader,\n                                actorInput: input,\n                            },\n                            id: `import.${id}`,\n                            systemId: id,\n                        });\n                    })",
+          "name": "inline:actorManager#actor.start[-1]#transition[1]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#xstate.error.actor.*[-1]#transition[0]": {
+          "id": "inline:actorManager#xstate.error.actor.*[-1]#transition[0]",
+          "code": "export default enqueueActions(({ enqueue, event, check }) => {\n                    const id = event.type.split(\".\")[3];\n                    const { error } = event as unknown as EventObject & {\n                        error: Error;\n                    };\n                    if (check(\"isDebugMode\"))\n                        console.error(error);\n                    enqueue(log(`${id} actor ${error.toString()}`, \"ACTORMANAGERERROR\"));\n                    enqueue.stopChild(id);\n                    enqueue({\n                        type: \"updateActorStatus\",\n                        params: { id, status: \"error\" },\n                    });\n                })",
+          "name": "inline:actorManager#xstate.error.actor.*[-1]#transition[0]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#xstate.done.actor.import.*[-1]#transition[0]": {
+          "id": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[0]",
+          "code": "export default enqueueActions(({ enqueue, event }) => {\n                    const id = event.type.split(\".\")[4];\n                    const { actorLogic, loaderData, actorInput } = event.output;\n                    const input = typeof actorInput === \"function\" ? actorInput(loaderData) : actorInput;\n                    enqueue(log(`Started ${id} actor`));\n                    enqueue.stopChild(`import.${id}`);\n                    // IDEA: Figure out how to type this\n                    // @ts-expect-error need to figure out how to type this\n                    enqueue.spawnChild(actorLogic, {\n                        id,\n                        systemId: id,\n                        input,\n                    });\n                    enqueue({\n                        type: \"updateActorStatus\",\n                        params: { id, status: \"running\" },\n                    });\n                })",
+          "name": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[0]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#xstate.done.actor.import.*[-1]#transition[1]": {
+          "id": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[1]",
+          "code": "export default enqueueActions(({ enqueue, event, system }) => {\n                    const id = event.type.split(\".\")[4];\n                    const { eventQueue, eventListeners } = event.output;\n                    const actor = system.get(id) as AnyActorRef;\n                    eventListeners.forEach((callbacks, key) => {\n                        callbacks.forEach((callback) => actor.on(key, callback));\n                    });\n                    eventQueue.forEach((queuedEvent) => {\n                        enqueue.sendTo(actor, queuedEvent);\n                    });\n                })",
+          "name": "inline:actorManager#xstate.done.actor.import.*[-1]#transition[1]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager#xstate.error.actor.import.*[-1]#transition[0]": {
+          "id": "inline:actorManager#xstate.error.actor.import.*[-1]#transition[0]",
+          "code": "export default enqueueActions(({ check, enqueue, event }) => {\n                const id = event.type.split(\".\")[4];\n                const { error } = event as unknown as EventObject & {\n                    error: Error;\n                };\n                if (check(\"isDebugMode\"))\n                    console.error(error);\n                enqueue(log(`import ${id} actor ${error.toString()}`, \"ACTORMANAGERERROR\"));\n                enqueue.stopChild(`import.${id}`);\n                enqueue({\n                    type: \"updateActorStatus\",\n                    params: { id, status: \"error\" },\n                });\n            })",
+          "name": "inline:actorManager#xstate.error.actor.import.*[-1]#transition[0]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        },
+        "inline:actorManager.configNotLoaded#CONFIG_FOR_LOADING_STRATEGY[-1]#transition[0]": {
+          "id": "inline:actorManager.configNotLoaded#CONFIG_FOR_LOADING_STRATEGY[-1]#transition[0]",
+          "code": "export default enqueueActions(({ context, enqueue, event }) => {\n    Object.entries(context.lazyActorConfig).forEach(([id, actorConfig]) => {\n        if (actorConfig.loadingStrategy !== \"fromConfig\")\n            return;\n        const { loadingCondition, input: actorConfigInput } = actorConfig;\n        if (!loadingCondition(event.config))\n            return;\n        const input = actorConfigInput?.(event.config);\n        enqueue.raise({ type: \"actor.start\", id, input });\n    });\n})",
+          "name": "inline:actorManager.configNotLoaded#CONFIG_FOR_LOADING_STRATEGY[-1]#transition[0]",
+          "type": "action",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "imports": []
+        }
+      }
+    }
+  }
+}

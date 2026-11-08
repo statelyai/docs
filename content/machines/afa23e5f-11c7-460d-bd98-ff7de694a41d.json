@@ -1,0 +1,1386 @@
+{
+  "format": "digraph",
+  "definition": {
+    "id": "afa23e5f-11c7-460d-bd98-ff7de694a41d",
+    "edges": [
+      {
+        "id": "machine.waitingToLoad#START_CLONE[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "START_CLONE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.waitingToLoad",
+        "target": "machine.cloning",
+        "position": {
+          "x": 558.5402821879038,
+          "y": 235.4509556263162
+        },
+        "uniqueId": "jgx929c101r"
+      },
+      {
+        "id": "machine.waitingToLoad#START_INITIAL_LOAD[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "START_INITIAL_LOAD"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.waitingToLoad",
+        "target": "machine.loadingInitialData",
+        "position": {
+          "x": 256.5894210882432,
+          "y": 397.7021837034827
+        },
+        "uniqueId": "avksoh1oa2"
+      },
+      {
+        "id": "machine.cloning.starting#CLONE_FAILED[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_FAILED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.starting",
+        "target": "machine.cloning.failed",
+        "position": {
+          "x": 1188.524203151478,
+          "y": 283.9888127106942
+        },
+        "uniqueId": "mh7a83z83fa"
+      },
+      {
+        "id": "machine.cloning.starting#CLONE_STARTED_SUCCESSFULLY[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_STARTED_SUCCESSFULLY"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.starting",
+        "target": "machine.cloning.monitoringProgress",
+        "position": {
+          "x": 791.7252115535798,
+          "y": 390.1455625756767
+        },
+        "uniqueId": "t5bxmwcrecb"
+      },
+      {
+        "id": "machine.cloning.monitoringProgress#CLONE_CANCELLED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "Inline",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_CANCELLED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.monitoringProgress",
+        "target": "machine.cloning.monitoringProgress",
+        "position": {
+          "x": 1171.725229448524,
+          "y": 377.1131358583742
+        },
+        "uniqueId": "3uri5efdtzi"
+      },
+      {
+        "id": "machine.cloning.monitoringProgress#CLONE_FAILED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "assignCloningError",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_FAILED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.monitoringProgress",
+        "target": "machine.cloning.failed",
+        "position": {
+          "x": 1453.664023830866,
+          "y": 500.1050291790486
+        },
+        "uniqueId": "1lwie62k54k"
+      },
+      {
+        "id": "machine.cloning.monitoringProgress#CLONE_PROGRESS_UPDATE[0]",
+        "data": {
+          "guard": {
+            "name": "cloneHasFinished",
+            "type": "cloneHasFinished"
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_PROGRESS_UPDATE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.monitoringProgress",
+        "target": "machine.loadingInitialData",
+        "position": {
+          "x": 903.7540328829289,
+          "y": 1003.2428582761
+        },
+        "uniqueId": "lmrtyfrxs4i"
+      },
+      {
+        "id": "machine.cloning.monitoringProgress#CLONE_PROGRESS_UPDATE[1]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateCloneProgress",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "triggerChangeCb",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CLONE_PROGRESS_UPDATE"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning.monitoringProgress",
+        "target": "machine.cloning.monitoringProgress",
+        "position": {
+          "x": 753.0875487880602,
+          "y": 726.7928314371554
+        },
+        "uniqueId": "0pywaa7mc70r"
+      },
+      {
+        "id": "machine.cloning#done.invoke.performClone[0]",
+        "data": {
+          "guard": {
+            "name": "cloneHasSucceeded",
+            "type": "cloneHasSucceeded"
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "performClone"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.cloning",
+        "target": "machine.loadingInitialData",
+        "position": {
+          "x": 1375.540970575697,
+          "y": 977.7077241495167
+        },
+        "uniqueId": "w4aqmrjv6hp"
+      },
+      {
+        "id": "machine.loadingInitialData.loadingSnapshot#done.invoke.loadSnapshot[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "loadSnapshot"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loadingInitialData.loadingSnapshot",
+        "target": "machine.loadingInitialData.loadingFromScratch",
+        "position": {
+          "x": 446.4381146775264,
+          "y": 1235.18611152082
+        },
+        "uniqueId": "6v65uwozpim"
+      },
+      {
+        "id": "machine.loadingInitialData.loadingFromScratch#done.invoke.loadingInitialData[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "loadingInitialData"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loadingInitialData.loadingFromScratch",
+        "target": "machine.loaded",
+        "position": {
+          "x": 1320.184004503701,
+          "y": 1235.18611152082
+        },
+        "uniqueId": "qdtn1qi1n3"
+      },
+      {
+        "id": "machine.loaded.choose#always[0]",
+        "data": {
+          "guard": {
+            "name": "loadedSuccessfully",
+            "type": "loadedSuccessfully"
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.choose",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 2074.629174499174,
+          "y": 337.3552548968356
+        },
+        "uniqueId": "85wun3jvcgp"
+      },
+      {
+        "id": "machine.loaded.choose#always[1]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.choose",
+        "target": "machine.loaded.errored",
+        "position": {
+          "x": 2102.75769858801,
+          "y": 426.5940560165999
+        },
+        "uniqueId": "ms9ctigu1v"
+      },
+      {
+        "id": "machine.loaded.successfully.waitingForQueueToIdle#done.invoke.waitForIdleQueue[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "waitForIdleQueue"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully.waitingForQueueToIdle",
+        "target": "machine.loaded.successfully.refreshingDataOffDisk",
+        "position": {
+          "x": 2875.522204019365,
+          "y": 769.4061755514475
+        },
+        "uniqueId": "rog4x0gmnsp"
+      },
+      {
+        "id": "machine.loaded.successfully.refreshingDataOffDisk#done.invoke.loadInitialData[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "storeInitialData",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "triggerChangeCb",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "loadInitialData"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully.refreshingDataOffDisk",
+        "target": "machine.loaded.successfully.Idle",
+        "position": {
+          "x": 3004.936104108416,
+          "y": 938.2503339666017
+        },
+        "uniqueId": "8ivch79e96"
+      },
+      {
+        "id": "machine.loaded.successfully.Idle.settingUserInfoInConfig#always[0]",
+        "data": {
+          "guard": {
+            "name": "userInfoSetInConfig",
+            "type": "userInfoSetInConfig"
+          },
+          "actions": [],
+          "eventTypeData": {
+            "type": "always"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully.Idle.settingUserInfoInConfig",
+        "target": "machine.loaded.successfully.Idle.userInfoSetInConfig",
+        "position": {
+          "x": 2907.829026924135,
+          "y": 1490.123775324622
+        },
+        "uniqueId": "fqb2arrfhjk"
+      },
+      {
+        "id": "machine.loaded.successfully.Idle.settingUserInfoInConfig#done.invoke.setUserInfoInConfig[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "setUserInfoInConfig"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully.Idle.settingUserInfoInConfig",
+        "target": "machine.loaded.successfully.Idle.userInfoSetInConfig",
+        "position": {
+          "x": 2894.721914854386,
+          "y": 1667.483223269776
+        },
+        "uniqueId": "neur90x9r8j"
+      },
+      {
+        "id": "machine.loaded.successfully.Idle#FETCH_NEW_REMOTE_CHANGES[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateAllRemotes",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "FETCH_NEW_REMOTE_CHANGES"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully.Idle",
+        "target": "machine.loaded.successfully.Idle",
+        "position": {
+          "x": 2327.571625151661,
+          "y": 1222.227839548245
+        },
+        "uniqueId": "npwq5qcpvss"
+      },
+      {
+        "id": "machine.loaded.successfully#CONFIG_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateConfigInfo",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "CONFIG_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 3113.130068715068,
+          "y": 1145.664324269766
+        },
+        "uniqueId": "vv4xsaqvkdg"
+      },
+      {
+        "id": "machine.loaded.successfully#DATASETS_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateDatasets",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnaphot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "DATASETS_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 2899.546740467998,
+          "y": 1145.664324269766
+        },
+        "uniqueId": "8pb0q7wnb8i"
+      },
+      {
+        "id": "machine.loaded.successfully#WORKINGCOPY_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateWorkingCopy",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "WORKINGCOPY_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 1912.779261563996,
+          "y": 1020.95083780672
+        },
+        "uniqueId": "1r8vlvsgq0l"
+      },
+      {
+        "id": "machine.loaded.successfully#REMOTES_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateRemoteInfo",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "REMOTES_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 1918.170569167809,
+          "y": 855.7214294425529
+        },
+        "uniqueId": "46mtifocqgn"
+      },
+      {
+        "id": "machine.loaded.successfully#TIP_UPDDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateTipInfo",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "TIP_UPDDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 1930.672123507091,
+          "y": 671.8427334089895
+        },
+        "uniqueId": "6lczvpgkykv"
+      },
+      {
+        "id": "machine.loaded.successfully#BRANCHES_UPDATED[0]",
+        "data": {
+          "actions": [
+            {
+              "kind": "named",
+              "action": {
+                "type": "updateBranchInfo",
+                "params": {}
+              }
+            },
+            {
+              "kind": "named",
+              "action": {
+                "type": "saveSnapshot",
+                "params": {}
+              }
+            }
+          ],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "BRANCHES_UPDATED"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.successfully",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 1919.948130851677,
+          "y": 502.2508525271272
+        },
+        "uniqueId": "jp88svq1lti"
+      },
+      {
+        "id": "machine.loaded.merging#done.invoke.performMerge[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.done",
+            "invocationId": "performMerge"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.merging",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 2555.500129425744,
+          "y": 301.1940746748178
+        },
+        "uniqueId": "c2ome76f3xl"
+      },
+      {
+        "id": "machine.loaded.merging#error.platform.performMerge[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "invocation.error",
+            "invocationId": "performMerge"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded.merging",
+        "target": "machine.loaded.successfully",
+        "position": {
+          "x": 2813.520233475416,
+          "y": 254.5886722950694
+        },
+        "uniqueId": "pniy65u1we"
+      },
+      {
+        "id": "machine.loaded#MERGE_REF[0]",
+        "data": {
+          "actions": [],
+          "eventTypeData": {
+            "type": "named",
+            "eventType": "MERGE_REF"
+          }
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "source": "machine.loaded",
+        "target": "machine.loaded.merging",
+        "position": {
+          "x": 3078.019918476018,
+          "y": 175.1087921214641
+        },
+        "uniqueId": "e7f5orliqnn"
+      }
+    ],
+    "context": {},
+    "schemas": {
+      "tags": {},
+      "input": null,
+      "actors": {},
+      "delays": {},
+      "events": {
+        "MERGE_REF": {
+          "type": "object",
+          "properties": {}
+        },
+        "START_CLONE": {
+          "type": "object",
+          "properties": {}
+        },
+        "CLONE_FAILED": {
+          "type": "object",
+          "properties": {}
+        },
+        "TIP_UPDDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "CONFIG_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "CLONE_CANCELLED": {
+          "type": "object",
+          "properties": {}
+        },
+        "REMOTES_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "BRANCHES_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "DATASETS_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "START_INITIAL_LOAD": {
+          "type": "object",
+          "properties": {}
+        },
+        "WORKINGCOPY_UPDATED": {
+          "type": "object",
+          "properties": {}
+        },
+        "CLONE_PROGRESS_UPDATE": {
+          "type": "object",
+          "properties": {}
+        },
+        "FETCH_NEW_REMOTE_CHANGES": {
+          "type": "object",
+          "properties": {}
+        },
+        "CLONE_STARTED_SUCCESSFULLY": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "guards": {},
+      "output": null,
+      "actions": {},
+      "context": {}
+    },
+    "rootNode": {
+      "id": "machine",
+      "data": {
+        "key": "machine",
+        "exit": [],
+        "tags": [],
+        "entry": [],
+        "assets": [],
+        "invoke": [],
+        "initial": "waitingToLoad"
+      },
+      "size": {
+        "width": 0,
+        "height": 0
+      },
+      "nodes": [
+        {
+          "id": "machine.waitingToLoad",
+          "data": {
+            "key": "waitingToLoad",
+            "exit": [],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "createLoadingRepo",
+                  "params": {}
+                }
+              },
+              {
+                "kind": "named",
+                "action": {
+                  "type": "createSnapshotSaver",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": []
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [],
+          "position": {
+            "x": 229.7501281735993,
+            "y": 141.5689608295324
+          },
+          "uniqueId": "fcjq1e3p6bf"
+        },
+        {
+          "id": "machine.cloning",
+          "data": {
+            "key": "cloning",
+            "exit": [],
+            "tags": [],
+            "entry": [
+              {
+                "kind": "named",
+                "action": {
+                  "type": "setRepoStateToCloning",
+                  "params": {}
+                }
+              },
+              {
+                "kind": "named",
+                "action": {
+                  "type": "triggerChangeCb",
+                  "params": {}
+                }
+              }
+            ],
+            "assets": [],
+            "invoke": [
+              {
+                "id": "performClone",
+                "src": "performClone"
+              }
+            ],
+            "initial": "starting"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "machine.cloning.starting",
+              "data": {
+                "key": "starting",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 876.2279752736102,
+                "y": 283.24653459839
+              },
+              "uniqueId": "xe0g3tgydg"
+            },
+            {
+              "id": "machine.cloning.failed",
+              "data": {
+                "key": "failed",
+                "exit": [],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "assignCloningError",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "triggerChangeCb",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1435.958717735203,
+                "y": 266.1455936727067
+              },
+              "uniqueId": "5yq1n6qp767"
+            },
+            {
+              "id": "machine.cloning.monitoringProgress",
+              "data": {
+                "key": "monitoringProgress",
+                "exit": [],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "triggerChangeCb",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 818.3887083461219,
+                "y": 476.7252912128081
+              },
+              "uniqueId": "saibfe6d84"
+            }
+          ],
+          "position": {
+            "x": 705.0875487880602,
+            "y": 218.1455936727067
+          },
+          "uniqueId": "habhq4biwbh"
+        },
+        {
+          "id": "machine.loadingInitialData",
+          "data": {
+            "key": "loadingInitialData",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "loadingSnapshot"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "machine.loadingInitialData.loadingSnapshot",
+              "data": {
+                "key": "loadingSnapshot",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "loadSnapshot",
+                    "src": "loadSnapshot"
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 102.2871733448742,
+                "y": 1166.413737069778
+              },
+              "uniqueId": "9645jesy1y"
+            },
+            {
+              "id": "machine.loadingInitialData.loadingFromScratch",
+              "data": {
+                "key": "loadingFromScratch",
+                "exit": [],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "setStateToLoading",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "loadingInitialData",
+                    "src": "loadingInitialData"
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 752.4185751913147,
+                "y": 1173.445868091987
+              },
+              "uniqueId": "6fi8tv0z0cv"
+            }
+          ],
+          "position": {
+            "x": 54.2871733448742,
+            "y": 1118.413737069778
+          },
+          "uniqueId": "io6y4aknd5r"
+        },
+        {
+          "id": "machine.loaded",
+          "data": {
+            "key": "loaded",
+            "exit": [],
+            "tags": [],
+            "entry": [],
+            "assets": [],
+            "invoke": [],
+            "initial": "choose"
+          },
+          "size": {
+            "width": 0,
+            "height": 0
+          },
+          "nodes": [
+            {
+              "id": "machine.loaded.choose",
+              "data": {
+                "key": "choose",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1965.925665439398,
+                "y": 336.6129767845314
+              },
+              "uniqueId": "dzw307c9cr"
+            },
+            {
+              "id": "machine.loaded.successfully",
+              "data": {
+                "key": "successfully",
+                "exit": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "killWatchers",
+                      "params": {}
+                    }
+                  }
+                ],
+                "tags": [],
+                "entry": [
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "branchWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "datasetsWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "remotesWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "tipWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "workingCopyWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "configWatcher",
+                      "params": {}
+                    }
+                  },
+                  {
+                    "kind": "named",
+                    "action": {
+                      "type": "saveSnapshot",
+                      "params": {}
+                    }
+                  }
+                ],
+                "assets": [],
+                "invoke": [],
+                "initial": "waitingForQueueToIdle"
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [
+                {
+                  "id": "machine.loaded.successfully.waitingForQueueToIdle",
+                  "data": {
+                    "key": "waitingForQueueToIdle",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "waitForIdleQueue",
+                        "src": "waitForIdleQueue"
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 2590.012111811765,
+                    "y": 767.1562331389547
+                  },
+                  "uniqueId": "c0ak28j1nbc"
+                },
+                {
+                  "id": "machine.loaded.successfully.refreshingDataOffDisk",
+                  "data": {
+                    "key": "refreshingDataOffDisk",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [
+                      {
+                        "kind": "named",
+                        "action": {
+                          "type": "Inline",
+                          "params": {}
+                        }
+                      }
+                    ],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "loadInitialData",
+                        "src": "loadInitialData"
+                      }
+                    ]
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [],
+                  "position": {
+                    "x": 2590.397695268332,
+                    "y": 951.7481140208171
+                  },
+                  "uniqueId": "x1u3ysf1a1"
+                },
+                {
+                  "id": "machine.loaded.successfully.Idle",
+                  "data": {
+                    "key": "Idle",
+                    "exit": [],
+                    "tags": [],
+                    "entry": [],
+                    "assets": [],
+                    "invoke": [
+                      {
+                        "id": "updateRemotesInterval",
+                        "src": "updateRemotesInterval"
+                      }
+                    ],
+                    "initial": "settingUserInfoInConfig"
+                  },
+                  "size": {
+                    "width": 0,
+                    "height": 0
+                  },
+                  "nodes": [
+                    {
+                      "id": "machine.loaded.successfully.Idle.settingUserInfoInConfig",
+                      "data": {
+                        "key": "settingUserInfoInConfig",
+                        "exit": [],
+                        "tags": [],
+                        "entry": [],
+                        "assets": [],
+                        "invoke": [
+                          {
+                            "id": "setUserInfoInConfig",
+                            "src": "setUserInfoInConfig"
+                          }
+                        ]
+                      },
+                      "size": {
+                        "width": 0,
+                        "height": 0
+                      },
+                      "nodes": [],
+                      "position": {
+                        "x": 2660.164853299857,
+                        "y": 1508.983223269776
+                      },
+                      "uniqueId": "rr7f90komys"
+                    },
+                    {
+                      "id": "machine.loaded.successfully.Idle.userInfoSetInConfig",
+                      "data": {
+                        "key": "userInfoSetInConfig",
+                        "exit": [],
+                        "tags": [],
+                        "entry": [],
+                        "assets": [],
+                        "invoke": []
+                      },
+                      "size": {
+                        "width": 0,
+                        "height": 0
+                      },
+                      "nodes": [],
+                      "position": {
+                        "x": 3086.517530629361,
+                        "y": 1557.485373357615
+                      },
+                      "uniqueId": "22ij6oq22al"
+                    }
+                  ],
+                  "position": {
+                    "x": 2612.164853299857,
+                    "y": 1442.123775324622
+                  },
+                  "uniqueId": "xqvmwgyjgf"
+                }
+              ],
+              "position": {
+                "x": 2279.571625151661,
+                "y": 719.1562331389547
+              },
+              "uniqueId": "8cunvgobrtv"
+            },
+            {
+              "id": "machine.loaded.errored",
+              "data": {
+                "key": "errored",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": []
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1964.009963035637,
+                "y": 420.3913579364287
+              },
+              "uniqueId": "ifv02nnp1c"
+            },
+            {
+              "id": "machine.loaded.merging",
+              "data": {
+                "key": "merging",
+                "exit": [],
+                "tags": [],
+                "entry": [],
+                "assets": [],
+                "invoke": [
+                  {
+                    "id": "performMerge",
+                    "src": "performMerge"
+                  }
+                ]
+              },
+              "size": {
+                "width": 0,
+                "height": 0
+              },
+              "nodes": [],
+              "position": {
+                "x": 1944.381835837576,
+                "y": 147.8724527170121
+              },
+              "uniqueId": "39u3q94qtz4"
+            }
+          ],
+          "position": {
+            "x": 1864.779261563996,
+            "y": 99.8724527170121
+          },
+          "uniqueId": "w74s6n5az5"
+        }
+      ],
+      "position": {
+        "x": 6.287173344874205,
+        "y": 51.8724527170121
+      },
+      "uniqueId": "xemva5iky6c"
+    }
+  }
+}
