@@ -58,7 +58,7 @@ feedbackActor.send({ type: 'feedback.good' });
 
 ## Creating actors from machines
 
-A machine contains the logic of an actor. An [actor](actors) is a running instance of the machine; in other words, it is the entity whose logic is described by the machine. Multiple actors can be created from the same machine, and each of those actors will exhibit the same behavior (reaction to received events), but they will be independent of each other and have their own states.
+A machine contains the logic of an actor. An [actor](actors) is a running instance of the machine: the entity whose logic is described by the machine. Multiple actors can be created from the same machine, and each of those actors will exhibit the same behavior (reaction to received events), but they will be independent of each other and have their own states.
 
 To create an actor, use the `createActor(machine)` function:
 

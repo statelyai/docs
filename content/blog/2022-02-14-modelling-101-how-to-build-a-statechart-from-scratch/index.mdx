@@ -47,11 +47,11 @@ For a spreadsheet:
 - User presses `escape`
 - User scrolls up or down
 
-Seeing all the events in a big list may start giving you an idea of what is possible in your statechart. You might start thinking in terms of _sequences of events_ — i.e. `User changes input` -> `User submits form`. Write down any sequences that pop into your head, they’ll be useful later.
+Seeing all the events in a big list may start giving you an idea of what is possible in your statechart. You might start thinking in terms of _sequences of events_, such as `User changes input` -> `User submits form`. Write down any sequences that pop into your head, they’ll be useful later.
 
 ## 2. List all the possible tasks
 
-Next, it’s important to consider the _tasks_ your app needs to perform. These tasks could be called ‘side effects’ — things that happen as a result of your statechart running. These could be as diverse as:
+Next, it’s important to consider the _tasks_ your app needs to perform. These tasks could be called ‘side effects’: things that happen as a result of your statechart running. These could be as diverse as:
 
 1. **Adding an item to a todo list (in local state)**
 2. **Sending a request to the API to load some data**
@@ -59,7 +59,7 @@ Next, it’s important to consider the _tasks_ your app needs to perform. These 
 4. **Waiting for a video to load**
 5. **Subscribing to something for updates** (perhaps via `window.addEventListener()`)
 
-_NOTE: I’m using ‘tasks’ loosely. This isn’t an official term in the XState docs — but ‘services’ and ‘actions’ are._
+_NOTE: I’m using ‘tasks’ loosely. This isn’t an official term in the XState docs, but ‘services’ and ‘actions’ are._
 
 Once you have a list of tasks, you need to divide them into two groups.
 
@@ -71,15 +71,15 @@ From our list above, these are services:
 
 2. **Sending a request to the API to load some data**
 
-We need to get something from the API, meaning that we need to wait until we receive the data. This task can also fail — if we’re having network trouble or the API method fails. That means we care whether it succeeds or fails.
+We need to get something from the API, meaning that we need to wait until we receive the data. This task can also fail if we’re having network trouble or the API method fails. That means we care whether it succeeds or fails.
 
 4. **Waiting for a video to load**
 
-Same as above — we need to wait for the video to be loaded, and we care if it fails to load.
+Same as above. We need to wait for the video to be loaded, and we care if it fails to load.
 
 5. **Subscribing to something for updates**
 
-Here, it’s a little different — when you subscribe to something, you need to clean up the listener to prevent a memory leak. For instance:
+Here, it’s a little different. When you subscribe to something, you need to clean up the listener to prevent a memory leak. For instance:
 
 ```ts
 const listener = () => {
@@ -93,7 +93,7 @@ window.addEventListener('focus', listener);
 window.removeEventListener('focus', listener);
 ```
 
-Here, we care about the outcome because we need to _run something at the end of the process_ — i.e. unsubscribe from the listener.
+Here, we care about the outcome because we need to _run something at the end of the process_: unsubscribe from the listener.
 
 #### Adding onDone/onError events
 
@@ -137,7 +137,7 @@ Now that you know what your app looks like when your statechart gets initiated, 
 
 #### Dynamic initial states
 
-Every statechart _must_ have an initial state, and it can’t be dynamic — it must be the same every time your statechart runs.
+Every statechart _must_ have an initial state, and it can’t be dynamic. It must be the same every time your statechart runs.
 
 If you feel your statechart _does_ have more than one initial state (for instance it could start in two different modes) consider using a ‘checking’ state via an [eventless transition](https://xstate.js.org/docs/guides/transitions.html#eventless-always-transitions).
 
@@ -177,17 +177,17 @@ If you have an event like this, draw out the new event and either create a new s
 
 Sometimes, [events can be used to fire an action](https://xstate.js.org/docs/guides/actions.html#api) instead of changing state. A good example of this is when a form input changes, and you need to save the new value to local state.
 
-This is called a [self-transition](https://xstate.js.org/docs/guides/transitions.html#self-transitions), where the event doesn’t change the state — the state transitions to itself.
+This is called a [self-transition](https://xstate.js.org/docs/guides/transitions.html#self-transitions), where the event doesn’t change the state. The state transitions to itself.
 
 #### Events that do nothing
 
 It’s important to bear in mind that when your statechart is in a certain state, _only the events that you specify_ will be handled. In other words, any event you don’t specify will do _nothing_ when it’s sent to the statechart.
 
-A classic example of this is a form. When you submit the form, you go to the ‘submitting’ state. It’s important that you don’t allow the ‘submit’ event to be received while in the ‘submitting’ state — otherwise the form might get sent twice!
+A classic example of this is a form. When you submit the form, you go to the ‘submitting’ state. It’s important that you don’t allow the ‘submit’ event to be received while in the ‘submitting’ state. Otherwise, the form might get sent twice!
 
 ## 5. Keep going!
 
-Once you’ve figured out which actions/services are running in which states, and what all the events do, you’ve modelled your first state! You’ll likely have states which branch off your initial state — so go through those one-by-one and build them out.
+Once you’ve figured out which actions/services are running in which states, and what all the events do, you’ve modelled your first state! You’ll likely have states which branch off your initial state, so go through those one-by-one and build them out.
 
 You can also leave parts of your statechart unimplemented, and dive into building the frontend/actions/services before returning to modelling again.
 

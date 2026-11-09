@@ -428,8 +428,8 @@ npx statelyai open
 fields, so `--fail-on-changes` can gate CI on machine semantics.
 
 Pushing a linked machine reads its remote definition first. Local source wins
-for structure, while presentation attached to unchanged entities—including
-layout, colors, and annotations—is preserved.
+for structure. Presentation attached to unchanged entities, including layout,
+colors, and annotations, is preserved.
 The sync helpers re-read before writing and abort if remote edits keep changing.
 
 Pulling into an existing JavaScript or TypeScript machine uses surgical source

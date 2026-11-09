@@ -12,7 +12,7 @@ An **event** is a signal, trigger, or message that causes a transition. When an 
 
 <Callout>
 
-You can visualize your state machines and easily add transitions in our drag-and-drop Stately editor. [Read more about transitions in Stately's editor](/docs/editor-states-and-transitions/#transitions-and-events).
+You can visualize your state machines and add transitions in our drag-and-drop Stately editor. [Read more about transitions in Stately's editor](/docs/editor-states-and-transitions/#transitions-and-events).
 
 </Callout>
 
@@ -131,13 +131,13 @@ const machine = createMachine({
 
 <Callout>
 
-You can easily visualize self-transitions in Stately's editor. [Read more about self-transitions in Stately's editor](/docs/editor-states-and-transitions/#self-transitions).
+You can visualize self-transitions in Stately's editor. [Read more about self-transitions in Stately's editor](/docs/editor-states-and-transitions/#self-transitions).
 
 </Callout>
 
 ### Self-transitions with a target and child states
 
-When a self-transition has an explicit `target` — even if it points back to the same state — XState will re-resolve the descendant states. This means **child states reset to their initial state**.
+When a self-transition has an explicit `target`, even if it points back to the same state, XState will re-resolve the descendant states. This means **child states reset to their initial state**.
 
 If you want to handle an event on a parent state without resetting child states, use a **targetless transition** (omit `target`) instead.
 
@@ -369,13 +369,13 @@ actor2.send({ type: 'event.thatReenters' });
 
 Transitions can target any state in the machine using different path formats depending on the relationship between the source and target states:
 
-- **Sibling descendant states:** `{ target: 'sibling.child.grandchild' }` — target a nested state within a sibling
-- **Parent to descendant states:** `{ target: '.child.grandchild' }` — target a nested state within the current state
-- **Any state by ID:** `{ target: '#specificState' }` — target any state in the machine by its unique ID
+- **Sibling descendant states:** `{ target: 'sibling.child.grandchild' }`: target a nested state within a sibling
+- **Parent to descendant states:** `{ target: '.child.grandchild' }`: target a nested state within the current state
+- **Any state by ID:** `{ target: '#specificState' }`: target any state in the machine by its unique ID
 
 ## Forbidden transitions
 
-A **forbidden transition** is a transition that is explicitly defined but has no target or actions. This is different from omitting the transition entirely — when a forbidden transition is matched, the transition selection algorithm stops looking for transitions in parent states.
+A **forbidden transition** is a transition that is explicitly defined but has no target or actions. This is different from omitting the transition entirely. When a forbidden transition is matched, the transition selection algorithm stops looking for transitions in parent states.
 
 ```ts
 on: {

@@ -207,6 +207,10 @@ export const externalDocsNav = [
         "url": "/docs/packages/graph"
       },
       {
+        "title": "From an XState machine",
+        "url": "/docs/packages/graph/from-xstate-machine"
+      },
+      {
         "title": "Algorithms reference",
         "url": "/docs/packages/graph/algorithms"
       },

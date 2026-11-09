@@ -176,7 +176,7 @@ for (const entry of patterns) {
       continue;
     }
     if (seenUrls.has(url)) {
-      console.warn(`[search-index] duplicate URL ${url} (${rel}) — skipping`);
+      console.warn(`[search-index] duplicate URL ${url} (${rel}), skipping`);
       continue;
     }
     seenUrls.add(url);

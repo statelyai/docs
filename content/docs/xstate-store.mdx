@@ -924,7 +924,7 @@ userAtom.subscribe((snapshot) => {
 
 ### Working with Stores and Selectors
 
-Atoms can seamlessly integrate with XState stores and selectors:
+Atoms integrate with XState stores and selectors:
 
 ```ts
 const store = createStore({
@@ -1122,7 +1122,7 @@ XState Store extensions add behavior to a store with `.with(...)`.
 
 ## Using with XState
 
-You may notice that stores are very similar to [actors in XState](./actors). This is very much by design. XState's actors are very powerful, but may also be too complex for simple use cases, which is why `@xstate/store` exists.
+Stores are intentionally similar to [actors in XState](./actors). XState's actors handle complex logic, but may be more than simple use cases need, which is why `@xstate/store` exists.
 
 However, if you have existing XState code, and you enjoy the simplicity of creating store logic with `@xstate/store`, you can use the `fromStore(...)` actor logic creator to create XState-compatible store logic that can be passed to the `createActor(storeLogic)` function:
 
@@ -1155,7 +1155,7 @@ store.send({
 });
 ```
 
-In short, you can convert `createStore(…)` to `fromStore(…)` just by changing one line of code. Note that `fromStore(…)` returns _store logic_, and not a store actor instance. Store logic is passed to `createActor(storeLogic)` to create a store actor instance:
+In short, you can convert `createStore(…)` to `fromStore(…)` by changing one line of code. `fromStore(…)` returns _store logic_, and not a store actor instance. Store logic is passed to `createActor(storeLogic)` to create a store actor instance:
 
 ```ts
 import { fromStore } from '@xstate/store';
