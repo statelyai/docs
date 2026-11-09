@@ -1,16 +1,17 @@
-/* Landing page tokens: mirror the Viz editor. Light by default; `.dark` on <html> (next-themes) switches.
-   See landing-design-language.md. */
+/* Landing page tokens: copied from the Viz editor (statelyai/viz
+   packages/editor/src/index.css, synced 2026-11-08). Light by default; `.dark`
+   on <html> (next-themes) switches. See DESIGN.md. */
 .sp {
-  --sp-bg: #fdfdff;
+  --sp-bg: #fdfdfe;
   --sp-canvas: #eff1f3;
-  --sp-surface: #fdfdff;
-  --sp-fg: #09090b;
-  --sp-muted: #5c5c67;
-  --sp-muted-2: #6b6b76;
-  --sp-muted-fill: #f1f4f8;
-  --sp-border: #e4e4e7;
-  --sp-border-strong: #d4d4d8;
-  --sp-ring: #9f9fa9;
+  --sp-surface: #fdfdfe;
+  --sp-fg: #15151d;
+  --sp-muted: #4d4f5f;
+  --sp-muted-2: #606478;
+  --sp-muted-fill: #dfe3e7;
+  --sp-border: #dfe3e7;
+  --sp-border-strong: #ced1da;
+  --sp-ring: #9da1b1;
   --sp-primary: #0f6ee5;
   --sp-primary-hover: #005cde;
   --sp-select: #3178aa;
@@ -19,19 +20,19 @@
   --sp-orange-soft: color-mix(in oklab, #db4206 10%, transparent);
   /* Motif: values copied from the editor. */
   --sp-node: #dfe3e7;
-  --sp-node-stroke: #9a9da0;
-  --sp-edge: #9a9da0;
-  --sp-edge-hover: #323334;
-  --sp-edge-halo: rgb(239 241 243 / 0.7);
-  --sp-label-bg: rgb(234 237 239 / 0.5);
+  --sp-node-stroke: #72758b;
+  --sp-edge: #72758b;
+  --sp-edge-hover: #4d4f5f;
+  --sp-edge-halo: white;
+  --sp-label-bg: color-mix(in oklab, #dfe3e7 25%, transparent);
   --sp-sim: #005cde;
   --sp-final-icon: #606478;
   --sp-grid: #e6e9ec;
-  --sp-warn: #8a5600;
-  --sp-success: #207029;
-  --sp-destructive: #c50516;
+  --sp-warn: #905900;
+  --sp-success: #0f7528;
+  --sp-destructive: #bd2b29;
   --sp-info: #27699c;
-  --sp-ai: #6a3fc8;
+  --sp-ai: #7245dc;
 
   /* Authored color ramps (light: fill 100 / border 400 / title 900). */
   --sp-ramp-purple-fill: #edddfb; --sp-ramp-purple-border: #b092ee; --sp-ramp-purple-title: #241257;
@@ -57,32 +58,32 @@
   color-scheme: light;
 }
 .dark .sp {
-  --sp-bg: #09090b;
+  --sp-bg: #15151d;
   --sp-canvas: #15151d;
-  --sp-surface: #17171f;
-  --sp-fg: #fafafa;
-  --sp-muted: #9f9fa9;
-  --sp-muted-2: oklch(0.63 0.015 286);
-  --sp-muted-fill: #262630;
-  --sp-border: rgb(255 255 255 / 0.1);
-  --sp-border-strong: rgb(255 255 255 / 0.18);
-  --sp-ring: #71717b;
+  --sp-surface: #1f1f29;
+  --sp-fg: #f5f7f7;
+  --sp-muted: #9da1b1;
+  --sp-muted-2: #9da1b1;
+  --sp-muted-fill: #2e2f3c;
+  --sp-border: oklch(1 0 0 / 10%);
+  --sp-border-strong: oklch(1 0 0 / 15%);
+  --sp-ring: #72758b;
   --sp-orange: #ff7f2c;
   --sp-orange-soft: color-mix(in oklab, #ff7f2c 14%, transparent);
-  --sp-node: #2d3143;
-  --sp-node-stroke: #464a5b;
-  --sp-edge: #464a5b;
-  --sp-edge-hover: #8a8d98;
-  --sp-edge-halo: rgb(0 0 0 / 0.5);
-  --sp-label-bg: rgb(20 24 34 / 0.5);
+  --sp-node: #2e2f3c;
+  --sp-node-stroke: #72758b;
+  --sp-edge: #72758b;
+  --sp-edge-hover: #9da1b1;
+  --sp-edge-halo: black;
+  --sp-label-bg: color-mix(in oklab, #2e2f3c 50%, transparent);
   --sp-sim: #63a3fc;
   --sp-final-icon: #bdc2cc;
   --sp-grid: #1a1a24;
-  --sp-warn: #f7b83d;
-  --sp-success: #67d283;
-  --sp-destructive: #ff6467;
-  --sp-info: #68b7ed;
-  --sp-ai: oklch(0.74 0.15 295);
+  --sp-warn: #f8b632;
+  --sp-success: #54b559;
+  --sp-destructive: #f17f7b;
+  --sp-info: #43abdf;
+  --sp-ai: #b092ee;
 
   /* dark: fill 800 / border 700 / title 100 */
   --sp-ramp-purple-fill: #341c79; --sp-ramp-purple-border: #5c31b9; --sp-ramp-purple-title: #edddfb;
