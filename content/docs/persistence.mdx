@@ -36,7 +36,7 @@ const feedbackActor = createActor(feedbackMachine).start();
 const persistedState = feedbackActor.getPersistedSnapshot();
 ```
 
-The internal state can be persisted from any actor, not only machines. Note that the persisted state is _not_ the same as the snapshot from `actor.getSnapshot()`; persisted state represents the internal state of the actor, while snapshots represent the actor's last emitted value:
+The internal state can be persisted from any actor, not only machines. The persisted state is not the same as the snapshot from `actor.getSnapshot()`; persisted state represents the internal state of the actor, while snapshots represent the actor's last emitted value:
 
 ```ts
 const promiseActor = fromPromise(() => Promise.resolve(42));

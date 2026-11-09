@@ -1,5 +1,5 @@
 'use client';
-// PROTOTYPE — bits shared by hero variants.
+// PROTOTYPE: bits shared by hero variants.
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CopyButton } from './sections/CopyLine';
@@ -112,7 +112,7 @@ export function CtaRow({ className = '' }: { className?: string }) {
 export function FigCaption({ n, children }: { n: number; children: React.ReactNode }) {
   return (
     <p className="sp-mono text-[11.5px] text-[var(--sp-muted-2)] mt-3">
-      <span className="text-[var(--sp-muted)]">Fig {n}</span> — {children}
+      <span className="text-[var(--sp-muted)]">Fig {n}</span>: {children}
     </p>
   );
 }

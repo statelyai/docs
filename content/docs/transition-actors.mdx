@@ -14,7 +14,7 @@ This is very similar to a _reducer function_ in libraries like Redux.
 |     | Capability          | Notes                                                                                                                                                 |
 | --- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ✅  | Receive&nbsp;events | Transition actors receive events to modify its state.                                                                                                 |
-| ✅  | Send events         | Transition actors can send events to other actors it has reference to, such as those provided in its `input`. Note that doing this would be _impure_. |
+| ✅  | Send events         | Transition actors can send events to other actors it has reference to, such as those provided in its `input`. Doing this is impure. |
 | ❌  | Spawn actors        | Transition actors currently cannot spawn new actors.                                                                                                  |
 | ✅  | Input               | You can provide `input` to transition actors.                                                                                                         |
 | ❌  | Output              | Transition actors currently do not produce output – they are active indefinitely until they are stopped or an error occurs.                           |
