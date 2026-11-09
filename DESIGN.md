@@ -24,16 +24,16 @@ a comment naming the Viz token.
 
 Fumadocs tokens map to Viz semantic roles:
 
-| Fumadocs | Viz role | Light | Dark |
-|---|---|---|---|
-| `fd-background` | light `floating`, dark `canvas` | `#fdfdfe` | `#15151d` |
-| `fd-foreground` | `fg` | `#15151d` | `#f5f7f7` |
-| `fd-muted-foreground` | `fg-muted` | `#4d4f5f` | `#9da1b1` |
-| `fd-card` | light `canvas`, dark `floating` | `#eff1f3` | `#1f1f29` |
-| `fd-popover` | `floating` | `#fdfdfe` | `#1f1f29` |
-| `fd-muted` / `accent` / `secondary` | `raised` | `#dfe3e7` | `#2e2f3c` |
-| `fd-border` | `border` | `#dfe3e7` | `oklch(1 0 0 / 10%)` |
-| `fd-primary`, `fd-ring` | `primary-text`, `focus` | `#005cde` | `#63a3fc` |
+| Fumadocs                            | Viz role                        | Light     | Dark                 |
+| ----------------------------------- | ------------------------------- | --------- | -------------------- |
+| `fd-background`                     | light `floating`, dark `canvas` | `#fdfdfe` | `#15151d`            |
+| `fd-foreground`                     | `fg`                            | `#15151d` | `#f5f7f7`            |
+| `fd-muted-foreground`               | `fg-muted`                      | `#4d4f5f` | `#9da1b1`            |
+| `fd-card`                           | light `canvas`, dark `floating` | `#eff1f3` | `#1f1f29`            |
+| `fd-popover`                        | `floating`                      | `#fdfdfe` | `#1f1f29`            |
+| `fd-muted` / `accent` / `secondary` | `raised`                        | `#dfe3e7` | `#2e2f3c`            |
+| `fd-border`                         | `border`                        | `#dfe3e7` | `oklch(1 0 0 / 10%)` |
+| `fd-primary`, `fd-ring`             | `primary-text`, `focus`         | `#005cde` | `#63a3fc`            |
 
 Light pages use `floating` as the page so long-form text sits on the lightest
 surface; the sidebar and cards take `canvas`.
