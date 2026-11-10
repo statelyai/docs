@@ -15,11 +15,12 @@ To update a repository-based deployment, check out the revision supplied by your
 git fetch --tags
 # Check out the revision supplied for your deployment.
 pnpm install
+pnpm build:sdk
 pnpm build:app
 pnpm start -H 0.0.0.0
 ```
 
-Configure the environment before running the build and start commands. After restarting, check the editor and test a representative import, edit, and export. Ask your Stately contact for the changes and compatibility requirements for the revision.
+Build the SDK dependencies before the app. Configure the environment before running the build and start commands. After restarting, check the editor and test a representative import, edit, and export. Ask your Stately contact for the changes and compatibility requirements for the revision.
 
 ## Export machine JSON
 
@@ -30,7 +31,7 @@ npx statelyai pull <machine-id> src/machines/checkout.graph.json \
   --base-url https://studio.example.internal
 ```
 
-The machine API requires a configured resource provider. The standalone editor can also store projects in the browser. For an embedded editor, the host application is responsible for persistence and can save the graph from the SDK's `save` event:
+The machine API requires a configured resource provider. The standalone editor can also store projects in the browser. For an embedded editor, the host application is responsible for persistence and can receive the graph from the SDK's `change` event and persist it:
 
 ```ts
 import { createStatelyEmbed } from '@statelyai/sdk';
@@ -40,12 +41,12 @@ const embed = createStatelyEmbed({
   origin: 'https://studio.example.internal',
 });
 
-embed.on('save', async ({ graph }) => {
+embed.on('change', async ({ graph }) => {
   await writeToWorkingBranch('src/machines/checkout.graph.json', graph);
 });
 ```
 
-`writeToWorkingBranch` represents a function implemented by your host application. Mount and initialize the embed as described in [Self-hosting](self-hosting). Configure authentication and permitted origins for your deployment.
+`writeToWorkingBranch` represents a function implemented by your host application. Debounce or queue writes as needed for your storage system. Mount and initialize the embed as described in [Self-hosting](self-hosting). Configure authentication and permitted origins for your deployment.
 
 ## Validate in CI
 
