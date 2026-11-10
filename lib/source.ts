@@ -96,7 +96,8 @@ function withExternalNavigation(
             (item) =>
               !getProjectRoutePrefix(item.package).startsWith('packages/'),
           )
-          .map((item) => getProjectRoutePrefix(item.package));
+          .map((item) => getProjectRoutePrefix(item.package))
+          .sort((a, b) => Number(b === 'xstate/v6') - Number(a === 'xstate/v6'));
         const packages = enabledExternalDocsSources
           .filter((item) =>
             getProjectRoutePrefix(item.package).startsWith('packages/'),

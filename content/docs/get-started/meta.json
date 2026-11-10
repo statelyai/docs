@@ -1,6 +1,7 @@
 {
-  "title": "Get Started",
+  "title": "XState v5",
   "pages": [
+    "[XState v5 overview](/docs/xstate)",
     "[Quick start](/docs/quick-start)",
     "[Install XState](/docs/installation)",
     "[Migrate to XState v5](/docs/migration)",

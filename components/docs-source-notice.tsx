@@ -13,6 +13,11 @@ export function DocsSourceNotice({ sourceId }: { sourceId: string }) {
       type={notice.type}
     >
       {notice.description}
+      {sourceId === 'xstate-v6' && (
+        <>
+          {' '}<a href="/docs/quick-start">Read the stable v5 docs</a>.
+        </>
+      )}
     </Callout>
   );
 }

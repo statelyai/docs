@@ -25,14 +25,14 @@ import { Cards, Card } from 'fumadocs-ui/components/card';
     </svg>
   </div>
   <div>
-    <a href="/docs/xstate">XState</a> is a best-in-class open source library for
-    orchestrating and managing complex application logic in JavaScript and TypeScript apps.
+    <a href="/docs/what-is-xstate">XState</a> is an open source library for modeling and running application
+    logic in JavaScript and TypeScript.
   </div>
 </div>
 
 <Callout type="info">
 
-These docs are for XState v5. Looking for XState v4 docs? [Find them here](https://xstate.js.org/docs/). We recommend [migrating to v5](/docs/migration).
+XState v6 is in beta. Its APIs and behavior may change before the stable release. Read the [v6 beta docs](/docs/xstate/v6/quick-start) or the [stable v5 docs](/docs/quick-start).
 
 </Callout>
 
@@ -41,7 +41,7 @@ These docs are for XState v5. Looking for XState v4 docs? [Find them here](https
 Install XState:
 
 ```bash
-npm install xstate
+npm install xstate@beta
 ```
 
 Create a state machine:
@@ -53,8 +53,8 @@ const toggleMachine = createMachine({
   id: 'toggle',
   initial: 'inactive',
   states: {
-    inactive: { on: { toggle: 'active' } },
-    active: { on: { toggle: 'inactive' } },
+    inactive: { on: { toggle: { target: 'active' } } },
+    active: { on: { toggle: { target: 'inactive' } } },
   },
 });
 
@@ -68,15 +68,14 @@ toggleActor.send({ type: 'toggle' });
 console.log(toggleActor.getSnapshot().value); // 'inactive'
 ```
 
-[Read the full quick start guide](/docs/quick-start) to learn more.
+[Read the v6 beta quick start guide](/docs/xstate/v6/quick-start) to learn more.
 
 <Cards>
   <Card
-    href="/docs/states"
-    title={<><RocketIcon size="20" className="mr-2" /> Get started</>}
+    href="/docs/xstate/v6/quick-start"
+    title={<><RocketIcon size="20" className="mr-2" /> Get started with XState v6</>}
   >
-    Jump straight into learning how to use Stately Studio editor, starting
-    with states.
+    Create and run your first XState machine.
   </Card>
   <Card
     href="/docs/studio"
@@ -95,7 +94,7 @@ console.log(toggleActor.getSnapshot().value); // 'inactive'
     Read state chart examples, learn the notation, and explore nested and parallel states.
   </Card>
   <Card
-    href="/docs/xstate"
+    href="/docs/what-is-xstate"
     title={<><CodeIcon size="20" className="mr-2" /> Learn XState</>}
   >
     Get started with our JavaScript and TypeScript library for state
