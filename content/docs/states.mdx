@@ -30,7 +30,7 @@ The state object represents the current state of a running machine ([actor](acto
   - a string representing a simple state like `'playing'`, or:
   - an object representing nested states like `{ paused: 'buffering' }`.
 - **`context`**: the current [context](context) (extended state.)
-- **`meta`**: an object containing state node meta data.
+- **`getMeta()`**: a method that returns metadata from active state nodes.
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -59,11 +59,13 @@ console.log(actor.getSnapshot());
 //   value: 'question',
 //   context: {
 //     feedback: ''
-//   },
-//   meta: {
-//     'feedback.question': {
-//       question: 'How was your experience?'
-//     }
+//   }
+// }
+
+console.log(actor.getSnapshot().getMeta());
+// {
+//   'feedback.question': {
+//     question: 'How was your experience?'
 //   }
 // }
 ```
