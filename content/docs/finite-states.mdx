@@ -175,7 +175,7 @@ Read more about [tags](tags).
 
 Meta data is static data that describes relevant properties of a state node. You can specify meta data on the `.meta` property of any state node. This can be useful for displaying information about a state node in a UI, or for generating documentation.
 
-The `state.meta` property collects the `.meta` data from all active state nodes and places them in an object with the state node's ID as the key and the `.meta` data as the value:
+The snapshot's `getMeta()` method returns the `.meta` data from all active state nodes. The returned object maps each state node's ID to its metadata:
 
 ```ts
 import { createMachine, createActor } from 'xstate';
@@ -208,7 +208,7 @@ const feedbackMachine = createMachine({
 
 const feedbackActor = createActor(feedbackMachine).start();
 
-console.log(feedbackActor.getSnapshot().meta);
+console.log(feedbackActor.getSnapshot().getMeta());
 // logs the object:
 // {
 //   feedback: {
