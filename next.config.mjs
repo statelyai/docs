@@ -1,5 +1,6 @@
 import { createMDX } from 'fumadocs-mdx/next';
 import { blogAliases } from './lib/blog-aliases.mjs';
+import { getXStateV5Path, xstateV5Slugs } from './lib/xstate-v5-routes.mjs';
 
 const withMDX = createMDX();
 
@@ -30,6 +31,22 @@ const config = {
         destination: '/docs/statecharts',
         permanent: true,
       },
+      ...xstateV5Slugs.flatMap((slug) => {
+        const destination = getXStateV5Path(slug);
+        return [
+          { source: `/docs/${slug}`, destination, permanent: true },
+          {
+            source: `/docs/${slug}.mdx`,
+            destination: `${destination}.mdx`,
+            permanent: true,
+          },
+          {
+            source: `/llms.mdx/${slug}`,
+            destination: `/llms.mdx/${destination.slice('/docs/'.length)}`,
+            permanent: true,
+          },
+        ];
+      }),
       ...blogAliases.map((alias) => ({ ...alias, permanent: true })),
       {
         source: '/docs/privacy',
@@ -38,7 +55,7 @@ const config = {
       },
       {
         source: '/docs/xstate-graph',
-        destination: '/docs/graph',
+        destination: '/docs/xstate/v5/graph',
         permanent: true,
       },
       {

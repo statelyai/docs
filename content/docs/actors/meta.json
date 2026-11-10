@@ -1,15 +1,15 @@
 {
   "title": "Actors (v5)",
   "pages": [
-    "[Actors](/docs/actors)",
-    "[State machine actors](/docs/state-machine-actors)",
-    "[Promise actors](/docs/promise-actors)",
-    "[Transition actors](/docs/transition-actors)",
-    "[Callback actors](/docs/callback-actors)",
-    "[Observable actors](/docs/observable-actors)",
-    "[Invoke](/docs/invoke)",
-    "[Spawn](/docs/spawn)",
-    "[System](/docs/system)",
-    "[Inspection](/docs/inspection)"
+    "[Actors](/docs/xstate/v5/actors)",
+    "[State machine actors](/docs/xstate/v5/state-machine-actors)",
+    "[Promise actors](/docs/xstate/v5/promise-actors)",
+    "[Transition actors](/docs/xstate/v5/transition-actors)",
+    "[Callback actors](/docs/xstate/v5/callback-actors)",
+    "[Observable actors](/docs/xstate/v5/observable-actors)",
+    "[Invoke](/docs/xstate/v5/invoke)",
+    "[Spawn](/docs/xstate/v5/spawn)",
+    "[System](/docs/xstate/v5/system)",
+    "[Inspection](/docs/xstate/v5/inspection)"
   ]
 }

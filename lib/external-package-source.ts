@@ -13,6 +13,10 @@ import {
   stripProjectPrefix,
 } from '@/lib/docs-sources';
 import { parseWorkspaceRelativeHref } from '@/lib/workspace-link.mjs';
+import {
+  resolveXStateV5Href,
+  resolveXStateV5RelativeHref,
+} from '@/lib/xstate-v5-routes.mjs';
 
 export function isExternalDocsSlug(slugs: string[] = []): boolean {
   return slugs[0] === 'packages' && typeof slugs[1] === 'string';
@@ -66,8 +70,14 @@ export function resolveExternalPackageHref(
 ): string | undefined {
   if (!href) return href;
 
+  if (page.type === 'docs' && page.slugs[0] === 'xstate' && page.slugs[1] === 'v5') {
+    const originalSlug = page.path.replace(/\.mdx?$/iu, '');
+    href = resolveXStateV5RelativeHref(href, originalSlug);
+  }
+
   const resolved = source.resolveHref(href, page);
-  if (resolved !== href) return resolved;
+  const v5Href = resolveXStateV5Href(resolved);
+  if (v5Href !== href) return v5Href;
 
   const sourceConfig = getDocsSourceByPackage(page.type);
   if (sourceConfig?.mode !== 'workspace') return href;

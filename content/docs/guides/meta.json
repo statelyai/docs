@@ -1,8 +1,8 @@
 {
   "title": "Guides (v5)",
   "pages": [
-    "[Graph utilities](/docs/graph)",
-    "[Testing](/docs/testing)",
-    "[Immer](/docs/immer)"
+    "[Graph utilities](/docs/xstate/v5/graph)",
+    "[Testing](/docs/xstate/v5/testing)",
+    "[Immer](/docs/xstate/v5/immer)"
   ]
 }

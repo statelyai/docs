@@ -50,10 +50,10 @@ test('native navigation preserves grouping and flat documentation URLs', async (
   assert.deepEqual(
     started.children.slice(0, 4).map((node) => [node.name, node.url]),
     [
-      ['XState v5 overview', '/docs/xstate'],
-      ['Quick start', '/docs/quick-start'],
-      ['Install XState', '/docs/installation'],
-      ['Migrate to XState v5', '/docs/migration'],
+      ['XState v5 overview', '/docs/xstate/v5'],
+      ['Quick start', '/docs/xstate/v5/quick-start'],
+      ['Install XState', '/docs/xstate/v5/installation'],
+      ['Migrate to XState v5', '/docs/xstate/v5/migration'],
     ],
   );
   const store = tree.children.find((node) => node.name === 'XState Store');

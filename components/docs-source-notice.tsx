@@ -15,7 +15,7 @@ export function DocsSourceNotice({ sourceId }: { sourceId: string }) {
       {notice.description}
       {sourceId === 'xstate-v6' && (
         <>
-          {' '}<a href="/docs/quick-start">Read the stable v5 docs</a>.
+          {' '}<a href="/docs/xstate/v5/quick-start">Read the stable v5 docs</a>.
         </>
       )}
     </Callout>
