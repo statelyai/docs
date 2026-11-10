@@ -13,7 +13,7 @@ export const faqItems: { q: string; a: string }[] = [
   },
   {
     q: 'Does Stately replace my workflow runtime?',
-    a: 'No. Temporal, Inngest, Restate, and LangGraph keep running your workflows. Stately models, analyzes, and verifies the behavior they run.',
+    a: 'No. Temporal, Inngest, Restate, and LangGraph keep running your workflows. Stately models and analyzes the behavior they run.',
   },
   {
     q: 'Do I need XState?',
@@ -25,7 +25,7 @@ export const faqItems: { q: string; a: string }[] = [
   },
   {
     q: 'What does my agent actually do with Stately?',
-    a: 'It calls the MCP tools to map code into a statechart with cited evidence, propose changes to that graph, and verify the implementation still matches. Each step produces an artifact a human can review and approve.',
+    a: 'It can map code into a statechart with cited evidence, propose graph changes, and compare a model with implementation evidence. People can review the resulting changes.',
   },
   {
     q: 'Where are the machine-readable docs?',

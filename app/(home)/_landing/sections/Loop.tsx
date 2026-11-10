@@ -7,11 +7,11 @@ import { Section, SectionHeading, StateNode } from '../shared';
 import { TextLink } from './CopyLine';
 
 const states = [
-  { id: 'mapped', title: 'Mapped', body: 'A statechart drawn from the code, with a file and line cited for every transition.', artifact: 'statechart + source hash', cell: 'lg:col-start-1 lg:row-start-2' },
-  { id: 'proposed', title: 'Proposed', body: 'An edit to the graph, made in the editor or over MCP. It is never altered once saved.', artifact: 'immutable proposal', cell: 'lg:col-start-2 lg:row-start-1' },
-  { id: 'approved', title: 'Approved', body: 'A reviewer reads the visual diff on the PR and signs off.', artifact: 'visual diff + sign‑off', cell: 'lg:col-start-3 lg:row-start-2' },
+  { id: 'mapped', title: 'Mapped', body: 'A model of the code, with source citations for observed behavior.', artifact: 'statechart + source hash', cell: 'lg:col-start-1 lg:row-start-2' },
+  { id: 'proposed', title: 'Proposed', body: 'A proposed edit to the graph, made in the editor or over MCP.', artifact: 'proposed change', cell: 'lg:col-start-2 lg:row-start-1' },
+  { id: 'approved', title: 'Approved', body: 'A reviewer examines the proposed change and approves it.', artifact: 'review + approval', cell: 'lg:col-start-3 lg:row-start-2' },
   { id: 'implemented', title: 'Implemented', body: 'The approved edit, written into the source.', artifact: 'commit', cell: 'lg:col-start-4 lg:row-start-1' },
-  { id: 'verified', title: 'Verified', body: 'The source is read again and compared with the approved graph.', artifact: 'matches | drifted', cell: 'lg:col-start-5 lg:row-start-2', final: true },
+  { id: 'verified', title: 'Verified', body: 'The implementation is compared with the approved model.', artifact: 'review findings', cell: 'lg:col-start-5 lg:row-start-2', final: true },
 ];
 
 const chain: EdgeSpec[] = [
@@ -36,7 +36,7 @@ export function Loop() {
     <Section id="loop" event="MAP" color="purple">
       <SectionHeading
         title="How an agent's change gets reviewed."
-        lede="Each state leaves something you can check: a map, a proposal, a visual diff, a code change, a verdict."
+        lede="Map behavior, review a proposed change, and compare the implementation with the model."
       />
       {/* One compound state, `review`: the five states, the CI gate, and what we test. */}
       <div className="mt-12 rounded-md border-2 border-[var(--sp-node-stroke)]">
@@ -54,7 +54,7 @@ export function Loop() {
           ))}
           <div data-edge-id="ci-gate" className="min-w-0 lg:col-start-4 lg:col-span-2 lg:row-start-3 lg:mt-12">
             <StateNode title={<h3 className={nodeTitleCls}>CI gate</h3>} className="h-full">
-              <p className="px-3 text-[13px] leading-snug text-[var(--sp-muted)]">The diff step fails the build when the behavior changed.</p>
+              <p className="px-3 text-[13px] leading-snug text-[var(--sp-muted)]">The diff command can fail a build when machine semantics change.</p>
               <code className="sp-mono block px-3 pt-2 text-[12px] text-[var(--sp-fg)] opacity-80 whitespace-pre-wrap break-words">
                 <span className="text-[var(--sp-muted-2)] select-none">$ </span>statelyai diff &lt;base&gt; &lt;head&gt; --fail-on-changes
               </code>
@@ -67,9 +67,8 @@ export function Loop() {
           <div data-edge-id="what-we-test" className="min-w-0 lg:col-start-1 lg:col-span-2 lg:row-start-3 lg:mt-12">
             <StateNode title={<h3 className={nodeTitleCls}>What we test</h3>} className="h-full">
               <p className="px-3 pb-3 text-[14px] leading-relaxed text-[var(--sp-muted)]">
-                We run Claude Code and Codex through map, edit, apply, and
-                verify. In each run, every change is cited to its source and
-                checked by verify. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
+                We run Claude Code and Codex through map, edit, and apply.
+                Changes can include citations to their source. <TextLink href="/docs/packages/mcp">MCP docs</TextLink>
               </p>
             </StateNode>
           </div>
