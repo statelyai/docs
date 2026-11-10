@@ -8,7 +8,7 @@ import { CopyLine, TextLink } from './CopyLine';
 const clientIds = clients.map((c) => c.id);
 
 type Level = 'stable' | 'beta' | 'alpha';
-/** Twelve core graph tools. A tool whose level differs from its group's is marked on its chip. */
+/** Core graph tools. A tool whose level differs from its group's is marked on its chip. */
 const groups: { title: string; body: string; level: Level; tools: [string, Level?][] }[] = [
   {
     title: 'Validate and convert',
@@ -29,10 +29,10 @@ const groups: { title: string; body: string; level: Level; tools: [string, Level
     tools: [['generate_graph_paths'], ['simulate_machine'], ['visualize_machine', 'beta']],
   },
   {
-    title: 'Extract, review, verify',
-    body: 'Pull machines out of source, compare them to the implementation, and inspect verification reports. Running verify requires a trusted execution host.',
+    title: 'Extract and review',
+    body: 'Extract machines from source and compare a model with implementation evidence.',
     level: 'beta',
-    tools: [['extract_machines_from_code'], ['review_machine_implementation'], ['verify'], ['generate_test_paths'], ['coverage_report']],
+    tools: [['extract_machines_from_code'], ['review_machine_implementation']],
   },
 ];
 
@@ -42,7 +42,7 @@ export function AgentSetup() {
     <Section id="agent-setup" event="CONNECT_AGENT" color="blue">
       <SectionHeading
         title="Connect once. Your agent maps the rest."
-        lede="The hosted MCP server covers graphs, projects, proposals, comments, and editor work. These 12 core graph tools map source, compare behavior, list paths, and inspect verification evidence."
+        lede="The hosted MCP server covers graphs, projects, proposals, comments, and editor work. These graph tools map source, compare behavior, and list paths."
       />
       {/* CONNECT is routed between the real boxes by EdgeLayer (right→left on lg, down below). */}
       <div className="relative mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
