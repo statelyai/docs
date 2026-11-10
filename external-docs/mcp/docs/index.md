@@ -8,28 +8,6 @@ sourceUrl: "https://github.com/statelyai/docs/blob/main/external-docs/mcp/docs/i
 Validate, execute, explore, compare, convert, and visualize state machines from
 an MCP-compatible agent.
 
-## Verification reports
-
-
-
-- `verify` accepts `model: { kind: "source", content: "..." }` or
-  `model: { kind: "machine", machineId: "..." }`, optional bindings
-  `{ content, name? }`, and an optional baseline report or reference. It returns
-  a validated run report through a host-supplied `executeVerification` adapter.
-  Without an adapter it returns `verification_unavailable`; there is no HTTP
-  fallback or bundled execution engine.
-- `generate_test_paths` accepts `{ report }` and returns recorded paths from that
-  report. It does not plan or execute new tests. Legacy reports lacking `paths`
-  return `verification_paths_unavailable`.
-- `coverage_report` accepts `{ report }` and returns model and executed coverage
-  plus the verdict. It does not rerun verification.
-
-All three tools use normal tool allowlists and content-free observer events.
-Adapters receive an AI-free, network-denied execution policy and must enforce
-isolation themselves. Model and baseline IDs are inert references for the host
-to resolve. See [CLI verification reports](https://github.com/statelyai/viz/blob/main/docs/cli/verify.md) for report
-semantics and JUnit mapping.
-
 ## Two ways to run it
 
 **Local (stdio).** `npx @statelyai/mcp` runs the server on your machine. Use it
