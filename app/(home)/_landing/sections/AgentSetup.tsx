@@ -8,7 +8,7 @@ import { CopyLine, TextLink } from './CopyLine';
 const clientIds = clients.map((c) => c.id);
 
 type Level = 'stable' | 'beta' | 'alpha';
-/** 12 tools in four groups. A tool whose level differs from its group's is marked on its chip. */
+/** Twelve core graph tools. A tool whose level differs from its group's is marked on its chip. */
 const groups: { title: string; body: string; level: Level; tools: [string, Level?][] }[] = [
   {
     title: 'Validate and convert',
@@ -30,7 +30,7 @@ const groups: { title: string; body: string; level: Level; tools: [string, Level
   },
   {
     title: 'Extract, review, verify',
-    body: 'Pull machines out of source, compare them to the implementation, and report matches or drifted with coverage.',
+    body: 'Pull machines out of source, compare them to the implementation, and inspect verification reports. Running verify requires a trusted execution host.',
     level: 'beta',
     tools: [['extract_machines_from_code'], ['review_machine_implementation'], ['verify'], ['generate_test_paths'], ['coverage_report']],
   },
@@ -42,7 +42,7 @@ export function AgentSetup() {
     <Section id="agent-setup" event="CONNECT_AGENT" color="blue">
       <SectionHeading
         title="Connect once. Your agent maps the rest."
-        lede="A hosted MCP server with 12 tools. Your agent reads the repo, draws the statechart, diffs it, lists its paths, and checks it against the source. You don't draw anything."
+        lede="The hosted MCP server covers graphs, projects, proposals, comments, and editor work. These 12 core graph tools map source, compare behavior, list paths, and inspect verification evidence."
       />
       {/* CONNECT is routed between the real boxes by EdgeLayer (right→left on lg, down below). */}
       <div className="relative mt-12 grid lg:grid-cols-[minmax(0,5fr)_auto_minmax(0,7fr)] items-start">
