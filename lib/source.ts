@@ -11,6 +11,7 @@ import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
 import { externalDocsCollections } from '@/lib/external-docs.generated';
 import { getXStateV5Path } from '@/lib/xstate-v5-routes.mjs';
+import { filterDocsSourceGates } from '@/lib/docs-source-enabled.mjs';
 import {
   enabledExternalDocsSources,
   getDocsPageGitHubUrl,
@@ -229,7 +230,10 @@ export function getPageGitHubUrl(page: InferPageType<typeof source>) {
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await page.data.getText('processed');
+  const processed = filterDocsSourceGates(
+    await page.data.getText('processed'),
+    process.env.DOCS_SOURCE_IDS,
+  );
 
   return `# ${page.data.title} (${page.url})
 

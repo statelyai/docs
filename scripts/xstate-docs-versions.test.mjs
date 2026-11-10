@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { findProjection } from 'fumadocs-core/page-tree';
 import { searchPath } from 'fumadocs-core/breadcrumb';
-import { withXStateVersions } from '../lib/xstate-docs-versions.ts';
+import { withXStateVersions, xstateVersionPagePairs } from '../lib/xstate-docs-versions.ts';
+import { externalDocsNav } from '../lib/external-docs-nav.generated.ts';
+import { xstateV5Slugs, getXStateV5Path } from '../lib/xstate-v5-routes.mjs';
+import { filterDocsSourceGates, isDocsSourceEnabled } from '../lib/docs-source-enabled.mjs';
 import { resolveXStateV5Href, resolveXStateV5RelativeHref } from '../lib/xstate-v5-routes.mjs';
 
 const page = (url) => ({ type: 'page', name: url, url });
@@ -20,7 +23,7 @@ const tree = {
 };
 
 test('native version roots preserve URLs and project matching pages', () => {
-  const result = withXStateVersions(tree);
+  const result = withXStateVersions(tree, true);
   const [v6, v5] = result.children;
   assert.equal(v6.root, 'xstate-version');
   assert.equal(v5.root, 'xstate-version');
@@ -38,7 +41,7 @@ test('native version roots preserve URLs and project matching pages', () => {
 
 test('keeps the tree unchanged when v6 docs are disabled', () => {
   const withoutV6 = { ...tree, children: tree.children.slice(1) };
-  assert.equal(withXStateVersions(withoutV6), withoutV6);
+  assert.equal(withXStateVersions(withoutV6, false), withoutV6);
 });
 
 test('rewrites legacy links without losing fragments or query strings', () => {
@@ -53,4 +56,39 @@ test('resolves v5 relative links against their original location', () => {
   assert.equal(resolveXStateV5RelativeHref('../../blog/example', 'xstate'), '/blog/example');
   assert.equal(resolveXStateV5RelativeHref('#state-object', 'states'), '#state-object');
   assert.equal(resolveXStateV5RelativeHref('https://example.com', 'states'), 'https://example.com');
+});
+
+test('fails when enabled version navigation is incomplete', () => {
+  const withoutV6 = { ...tree, children: tree.children.slice(1) };
+  assert.throws(() => withXStateVersions(withoutV6, true), /v6.*navigation is missing/i);
+  const withoutV5Section = { ...tree, children: tree.children.filter((node) => node.$id !== 'actors') };
+  assert.throws(() => withXStateVersions(withoutV5Section, true), /v5.*navigation is incomplete/i);
+  const withoutQuickStart = { ...tree, children: [folder('xstate/v6', [page('/docs/xstate/v6/states')]), ...tree.children.slice(1)] };
+  assert.throws(() => withXStateVersions(withoutQuickStart, true), /quick start is missing/i);
+});
+
+test('version pairs match the synced v6 navigation and v5 routes', {
+  skip: !isDocsSourceEnabled('xstate-v6', process.env.DOCS_SOURCE_IDS),
+}, () => {
+  const v6 = externalDocsNav.find((item) => item.package === 'xstate-v6');
+  assert(v6, 'XState v6 must be synced for this test');
+  const v6Urls = new Set(v6.pages.flatMap((item) => 'url' in item ? [item.url] : []));
+  const v5Urls = new Set(xstateV5Slugs.map(getXStateV5Path));
+  for (const [v5Url, v6Url] of xstateVersionPagePairs) {
+    assert(v5Urls.has(v5Url), `${v5Url} is a v5 route`);
+    assert(v6Urls.has(v6Url), `${v6Url} is in the synced v6 navigation`);
+  }
+});
+
+test('source selection enables all sources by default and honors overrides', () => {
+  assert.equal(isDocsSourceEnabled('xstate-v6', undefined), true);
+  assert.equal(isDocsSourceEnabled('xstate-v6', 'agent'), false);
+  assert.equal(isDocsSourceEnabled('xstate-v6', 'agent, xstate-v6'), true);
+  assert.equal(isDocsSourceEnabled('xstate-v6', '*'), true);
+});
+
+test('source-gated Markdown follows the source selection', () => {
+  const source = '<DocsSourceGate sourceId="xstate-v6">beta</DocsSourceGate><DocsSourceGate sourceId="xstate-v6" enabled={false}>stable</DocsSourceGate>';
+  assert.equal(filterDocsSourceGates(source, undefined), 'beta');
+  assert.equal(filterDocsSourceGates(source, 'agent'), 'stable');
 });

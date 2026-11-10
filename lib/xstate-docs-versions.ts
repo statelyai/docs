@@ -1,6 +1,6 @@
 import type * as PageTree from 'fumadocs-core/page-tree';
 
-const pagePairs = [
+export const xstateVersionPagePairs = [
   ['/docs/xstate/v5/quick-start', '/docs/xstate/v6/quick-start'],
   ['/docs/xstate/v5/examples', '/docs/xstate/v6/examples'],
   ['/docs/xstate/v5/cheatsheet', '/docs/xstate/v6/cheatsheet'],
@@ -30,8 +30,9 @@ const v5Sections = new Set([
   'guides',
 ]);
 
+/** Give paired pages matching paths for Fumadocs version projection. */
 function projectItem(node: PageTree.Item, version: 'v5' | 'v6'): PageTree.Item {
-  const pairIndex = pagePairs.findIndex(
+  const pairIndex = xstateVersionPagePairs.findIndex(
     (pair) => pair[version === 'v5' ? 0 : 1] === node.url,
   );
   // Fumadocs projects pages by their paths relative to each version root.
@@ -40,6 +41,7 @@ function projectItem(node: PageTree.Item, version: 'v5' | 'v6'): PageTree.Item {
     : { ...node, $ref: `xstate-versions/${version}/${pairIndex}` };
 }
 
+/** Project each page without changing its public URL. */
 function projectPages(node: PageTree.Node, version: 'v5' | 'v6'): PageTree.Node {
   if (node.type === 'page') return projectItem(node, version);
   if (node.type === 'folder') {
@@ -52,7 +54,12 @@ function projectPages(node: PageTree.Node, version: 'v5' | 'v6'): PageTree.Node 
   return node;
 }
 
-export function withXStateVersions(tree: PageTree.Root): PageTree.Root {
+/** Group the versions for Fumadocs while keeping their public URLs unchanged. */
+export function withXStateVersions(
+  tree: PageTree.Root,
+  v6Enabled: boolean,
+): PageTree.Root {
+  if (!v6Enabled) return tree;
   const v6 = tree.children.find(
     (node): node is PageTree.Folder =>
       node.type === 'folder' && node.$id === 'xstate/v6',
@@ -61,7 +68,12 @@ export function withXStateVersions(tree: PageTree.Root): PageTree.Root {
     (node): node is PageTree.Folder =>
       node.type === 'folder' && v5Sections.has(node.$id ?? ''),
   );
-  if (!v6 || v5.length !== v5Sections.size) return tree;
+  if (!v6) {
+    throw new Error('XState v6 is enabled, but its documentation navigation is missing.');
+  }
+  if (v5.length !== v5Sections.size) {
+    throw new Error('XState v6 is enabled, but the v5 documentation navigation is incomplete.');
+  }
 
   const v5Children = v5.map((node) => projectPages(node, 'v5'));
   v5Children.push({
@@ -89,7 +101,9 @@ export function withXStateVersions(tree: PageTree.Root): PageTree.Root {
     (node): node is PageTree.Item =>
       node.type === 'page' && node.url === '/docs/xstate/v6/quick-start',
   );
-  if (!v6Index) return tree;
+  if (!v6Index) {
+    throw new Error('XState v6 is enabled, but its quick start is missing from navigation.');
+  }
 
   const versions: PageTree.Folder[] = [
     {
