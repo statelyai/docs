@@ -32,12 +32,12 @@ test('native navigation preserves grouping and flat documentation URLs', async (
   assert.deepEqual(
     tree.children.map((node) => node.name),
     [
-      'Get Started',
+      'XState v5',
       'Core Concepts',
-      'State Machines',
-      'Actors',
+      'State Machines (v5)',
+      'Actors (v5)',
       'Agents',
-      'Guides',
+      'Guides (v5)',
       'XState Store',
       'Packages',
       'Developer Tools',
@@ -46,13 +46,14 @@ test('native navigation preserves grouping and flat documentation URLs', async (
       'Self-hosting',
     ],
   );
-  const started = tree.children.find((node) => node.name === 'Get Started');
+  const started = tree.children.find((node) => node.name === 'XState v5');
   assert.deepEqual(
-    started.children.slice(0, 3).map((node) => [node.name, node.url]),
+    started.children.slice(0, 4).map((node) => [node.name, node.url]),
     [
-      ['Quick start', '/docs/quick-start'],
-      ['Install XState', '/docs/installation'],
-      ['Migrate to XState v5', '/docs/migration'],
+      ['XState v5 overview', '/docs/xstate/v5'],
+      ['Quick start', '/docs/xstate/v5/quick-start'],
+      ['Install XState', '/docs/xstate/v5/installation'],
+      ['Migrate to XState v5', '/docs/xstate/v5/migration'],
     ],
   );
   const store = tree.children.find((node) => node.name === 'XState Store');

@@ -1,6 +1,7 @@
 import docsSourcesJson from '../docs-sources.json';
 import docsSourcesLockJson from '../docs-sources.lock.json';
 import { resolveDocsSourceRoutePath } from '@/lib/docs-source-route.mjs';
+import { isDocsSourceEnabled as isEnabled } from '@/lib/docs-source-enabled.mjs';
 
 export type DocsSourceConfig = {
   name: string;
@@ -28,17 +29,6 @@ const docsSourceLocks = docsSourcesLockJson as Record<
   { commit: string; ref: string; source: string }
 >;
 
-function parseEnabledSourceOverride(value: string | undefined): Set<string> | 'all' {
-  if (!value) return new Set();
-
-  const ids = value
-    .split(',')
-    .map((id) => id.trim())
-    .filter(Boolean);
-
-  return ids.includes('*') ? 'all' : new Set(ids);
-}
-
 function normalizeSourcePath(source: string): string {
   return source.replace(/^\/+|\/+$/g, '');
 }
@@ -51,15 +41,8 @@ export function getDocsSourceSubpath(source: string): string {
   return normalizeSourcePath(source).split('/').slice(1).join('/');
 }
 
-const enabledSourceOverride = parseEnabledSourceOverride(process.env.DOCS_SOURCE_IDS);
-
 export function isDocsSourceEnabled(sourceId: string): boolean {
-  if (enabledSourceOverride === 'all') return true;
-  if (enabledSourceOverride.size > 0) {
-    return enabledSourceOverride.has(sourceId);
-  }
-
-  return true;
+  return isEnabled(sourceId, process.env.DOCS_SOURCE_IDS);
 }
 
 export function getProjectRepo(repo: string): string {

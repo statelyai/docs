@@ -10,6 +10,8 @@ import {
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
 import { externalDocsCollections } from '@/lib/external-docs.generated';
+import { getXStateV5Path } from '@/lib/xstate-v5-routes.mjs';
+import { filterDocsSourceGates } from '@/lib/docs-source-enabled.mjs';
 import {
   enabledExternalDocsSources,
   getDocsPageGitHubUrl,
@@ -90,13 +92,20 @@ function withExternalNavigation(
   return update(localSource)
     .files((files) =>
       files.map((file) => {
-        if (file.type !== 'meta') return file;
+        if (file.type === 'page') {
+          const route = getRouteFromFile(file);
+          const v5Path = getXStateV5Path(route);
+          return v5Path
+            ? { ...file, slugs: v5Path.slice('/docs/'.length).split('/') }
+            : file;
+        }
         const versionedSources = enabledExternalDocsSources
           .filter(
             (item) =>
               !getProjectRoutePrefix(item.package).startsWith('packages/'),
           )
-          .map((item) => getProjectRoutePrefix(item.package));
+          .map((item) => getProjectRoutePrefix(item.package))
+          .sort((a, b) => Number(b === 'xstate/v6') - Number(a === 'xstate/v6'));
         const packages = enabledExternalDocsSources
           .filter((item) =>
             getProjectRoutePrefix(item.package).startsWith('packages/'),
@@ -221,7 +230,10 @@ export function getPageGitHubUrl(page: InferPageType<typeof source>) {
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {
-  const processed = await page.data.getText('processed');
+  const processed = filterDocsSourceGates(
+    await page.data.getText('processed'),
+    process.env.DOCS_SOURCE_IDS,
+  );
 
   return `# ${page.data.title} (${page.url})
 

@@ -153,7 +153,7 @@ for (const path of [
   '/docs',
   '/docs/state-machines-and-statecharts',
   '/docs/glossary',
-  '/docs/xstate',
+  '/docs/xstate/v5',
   '/',
 ]) {
   const page = await get(path);

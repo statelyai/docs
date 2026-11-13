@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { structure } from 'fumadocs-core/mdx-plugins';
 import { resolveDocsSourceRoutePath } from '../lib/docs-source-route.mjs';
 import { deriveMarkdownTitle } from '../lib/markdown-title.mjs';
+import { getXStateV5Path } from '../lib/xstate-v5-routes.mjs';
+import { filterDocsSourceGates, isDocsSourceEnabled } from '../lib/docs-source-enabled.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..');
@@ -15,7 +17,9 @@ const REPO = path.resolve(__dirname, '..');
 const docsSourcesPath = path.join(REPO, 'docs-sources.json');
 const docsSourcesLockPath = path.join(REPO, 'docs-sources.lock.json');
 const docsSourceConfigs = existsSync(docsSourcesPath)
-  ? JSON.parse(await readFile(docsSourcesPath, 'utf8'))
+  ? JSON.parse(await readFile(docsSourcesPath, 'utf8')).filter((source) =>
+      isDocsSourceEnabled(source.package, process.env.DOCS_SOURCE_IDS),
+    )
   : [];
 const docsSourceLocks = existsSync(docsSourcesLockPath)
   ? JSON.parse(await readFile(docsSourcesLockPath, 'utf8'))
@@ -92,6 +96,10 @@ function toUrl(rel) {
   slug = slug.replace(/\.(mdx?|md)$/, '');
   if (slug === 'index') slug = '';
   else if (slug.endsWith('/index')) slug = slug.slice(0, -'/index'.length);
+  if (prefix === '/docs') {
+    const v5Path = getXStateV5Path(slug);
+    if (v5Path) return v5Path;
+  }
   return slug ? `${prefix}/${slug}` : prefix;
 }
 
@@ -182,7 +190,8 @@ for (const entry of patterns) {
     seenUrls.add(url);
 
     const raw = await readFile(path.join(entry.cwd, rel), 'utf8');
-    const { data: fm, content } = parseFrontmatter(raw);
+    const { data: fm, content: unfilteredContent } = parseFrontmatter(raw);
+    const content = filterDocsSourceGates(unfilteredContent, process.env.DOCS_SOURCE_IDS);
     const fallbackTitle = deriveMarkdownTitle(content, rel);
 
     let structuredData;

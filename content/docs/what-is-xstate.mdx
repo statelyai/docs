@@ -1,0 +1,43 @@
+---
+title: What is XState?
+description: Learn how XState uses state machines and actors to model application logic in JavaScript and TypeScript.
+slug: '/what-is-xstate'
+---
+
+import { DocsSourceGate } from '@/components/docs-source-gate';
+
+XState is a JavaScript and TypeScript library for modeling and running application logic. It uses state machines and actors to describe how a system responds to events over time.
+
+A **state machine** defines the states a system can be in and the transitions between them. For example, a media player can be stopped, playing, or paused. An event such as `play` can transition the player from stopped to playing. The machine can also hold data and run effects, such as starting a request.
+
+An **actor** runs logic and communicates through events. You can create an actor from a state machine, send events to it, and read its current snapshot. Actors can also run other kinds of logic, including asynchronous tasks, and communicate with other actors.
+
+XState works with JavaScript and TypeScript on the frontend and backend. It also provides integrations for frameworks including React, Vue, Svelte, and Solid.
+
+## Get started
+
+<DocsSourceGate sourceId="xstate-v6">
+
+XState v6 is in beta. APIs and behavior may change before the stable release. Install the beta with `npm install xstate@beta`, then follow the [v6 beta quick start](/docs/xstate/v6/quick-start).
+
+</DocsSourceGate>
+
+If you use the stable release, read the [XState v5 docs](/docs/xstate/v5/quick-start). For v4, see the [XState v4 docs](https://xstate.js.org/docs/).
+
+## Learn more
+
+<DocsSourceGate sourceId="xstate-v6">
+
+- [Why state machines?](/docs/xstate/v6/why-state-machines)
+- [Actors](/docs/xstate/v6/actors)
+- [Choose between XState and XState Store](/docs/xstate/v6/choose-xstate)
+</DocsSourceGate>
+
+<DocsSourceGate sourceId="xstate-v6" enabled={false}>
+
+- [State machines and statecharts](/docs/state-machines-and-statecharts)
+- [Actors](/docs/xstate/v5/actors)
+
+</DocsSourceGate>
+
+- [Stately Studio](/docs/studio) for visual modeling

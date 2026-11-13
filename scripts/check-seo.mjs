@@ -101,7 +101,7 @@ const paths = new Set([
   '/terms',
   '/blog',
   '/docs',
-  '/docs/xstate',
+  '/docs/xstate/v5',
   '/docs/packages/mcp',
   '/docs/state-machines-and-statecharts',
   '/docs/actor-model',
@@ -253,10 +253,10 @@ for (const path of paths) {
   console.log(`PASS ${path}`);
 }
 
-const { response: markdown } = await get('/docs/xstate.mdx');
+const { response: markdown } = await get('/docs/xstate/v5.mdx');
 assert.equal(
   markdown.headers.get('link'),
-  `<${canonicalOrigin}/docs/xstate>; rel="canonical"`,
+  `<${canonicalOrigin}/docs/xstate/v5>; rel="canonical"`,
 );
 assert(markdown.headers.get('content-type')?.startsWith('text/markdown'));
 console.log(`PASS sitemap (${urls.length} unique URLs) and Markdown canonical`);
