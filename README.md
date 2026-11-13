@@ -57,8 +57,11 @@ structured data. Markdown responses point to their HTML canonical through the
 HTTP `Link` header.
 
 The homepage links to state machine, statechart, and actor model introductions.
-`/docs/statecharts` covers both statechart and state chart searches. The old
-`/docs/xstate/basics/what-is-a-statechart` route redirects directly to that guide.
+`/docs/state-machines-and-statecharts` introduces state machine basics.
+`/docs/statecharts` covers statechart definitions, notation, and editable examples,
+including the spelling state chart. `/docs/harel-statecharts` is the historical
+paper companion. Each keeps its own canonical URL. The old
+`/docs/xstate/basics/what-is-a-statechart` route redirects directly to `/docs/statecharts`.
 The homepage FAQ structured data uses the same questions and answers as the visible FAQ.
 Historical blog URLs in `lib/blog-aliases.mjs` redirect permanently to the
 current article URLs. Next.js and the rendered SEO check share this reviewed
@@ -294,7 +297,7 @@ docs are not indexed twice.
 
 ## Illustrated examples
 
-<!-- static example rendering from content/components/StatechartExample.tsx -->
+<!-- static example rendering from content/components/StatechartExample.tsx and lib/statechart-examples.ts -->
 
 `StatechartExample` renders a local screenshot, descriptive alt text, and a
 caption in the initial HTML. Set `display="inline"` to load the read-only `/viz`
@@ -316,6 +319,15 @@ the docs theme updates the iframe fragment without remounting it. Light and dark
 screenshots keep the loading and failure states consistent with the page.
 Without JavaScript, the theme-appropriate screenshot and direct link still work.
 
+Coffee examples with a `sourceFile` in the registry also show an edit link and
+a JSON download outside the disclosure. The `/embed?machine=…&format=xstate-json&mode=editing`
+link carries the same public model as the read-only `/viz` fragment. Editing
+requires sign-in and follows the editor account permissions. This standalone
+view does not save to a workspace. Readers can export their edits, or import
+the downloaded JSON into a project for persistence. Only public example source
+belongs in these query URLs, which can appear in request logs. Do not replace
+them with a link to the editor homepage that drops the model.
+
 To add an example, put its XState JSON definition in
 `public/assets/statecharts/examples`, register it in `lib/statechart-examples.ts`,
 and capture its light and dark production editor views. Refresh the dark
@@ -333,7 +345,8 @@ documented in `public/assets/harel-statecharts/README.md`.
 cannot turn the link and following punctuation into separate blocks.
 
 After a production build, run `node scripts/check-statecharts.mjs <base-url>`
-to verify the guide, image fallbacks, redirect, sitemap, and Markdown response.
+to verify page roles, metadata, image fallbacks, exact-model edit/download
+handoffs, discovery links, redirect, sitemap, and Markdown responses.
 
 ## Docs machine embeds
 

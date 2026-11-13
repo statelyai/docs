@@ -1,12 +1,14 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import darkCaptures from '@/public/assets/statecharts/dark-captures.json';
 import {
   statechartExamples,
   statechartExampleURL,
+  statechartExampleEditURL,
   type StatechartExampleId,
   type StatechartColorMode,
 } from '@/lib/statechart-examples';
@@ -120,9 +122,7 @@ function InlineStatechart({
         example={example}
         alt={alt}
         fill
-        className={
-          status === 'ready' ? 'hidden' : 'min-h-0 w-full flex-1'
-        }
+        className={status === 'ready' ? 'hidden' : 'min-h-0 w-full flex-1'}
       />
       {status !== 'waiting' && (
         <iframe
@@ -187,6 +187,7 @@ export function StatechartExample({
       ? resolvedTheme
       : 'system';
   const embedURL = statechartExampleURL(example, colorMode);
+  const entry = statechartExamples[example];
 
   return (
     <div className="my-6">
@@ -211,6 +212,33 @@ export function StatechartExample({
           {caption}
         </figcaption>
       </figure>
+      {'sourceFile' in entry && (
+        <div data-statechart-handoff={example} className="mt-3 text-sm">
+          <p>
+            <a
+              href={statechartExampleEditURL(example)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="plausible-event-name=Editor+CTA"
+            >
+              Edit {name}
+            </a>{' '}
+            or{' '}
+            <a href={entry.sourceFile} download>
+              download the XState JSON
+            </a>
+            .
+          </p>
+          <p className="text-fd-muted-foreground">
+            Sign in to edit this example. Changes in this view are not saved to
+            your workspace. Export your edited machine to keep a copy, or{' '}
+            <Link href="/docs/import-from-code#import-an-example-in-the-stately-editor">
+              import the downloaded JSON
+            </Link>{' '}
+            into a project to save it there.
+          </p>
+        </div>
+      )}
       {display === 'inline' ? (
         <p className="mt-2 text-sm">
           <a href={embedURL} target="_blank" rel="noopener noreferrer">

@@ -1,13 +1,13 @@
 ---
-title: What are statecharts? Coffee and donut examples
-description: Learn how statecharts extend state machines with nested states, parallel states, and history. Explore state chart examples for a coffee and donut order.
+title: What are statecharts? Examples and notation
+description: Learn what statecharts are, how they extend state machines, and how to read state chart notation. Explore and edit nested and parallel state examples.
 ---
 
 A **statechart** is a way to describe how something behaves using states, events, and transitions. It extends a finite state machine with nested states, parallel states, and history, so you can model behavior without drawing every possible combination of states.
 
 You'll also see the spelling **state chart**. It means the same thing.
 
-Let's use coffee and donuts to see how statecharts work. We'll start with a coffee order, add the steps for making a latte, and then prepare a coffee and a donut together.
+This guide explains statechart notation, nested states, parallel states, and history through a coffee and donut order. For states, events, and transitions, start with [the state machine introduction](state-machines-and-statecharts). For the original research, read [Harel's statecharts paper, explained](harel-statecharts).
 
 ## Start with a coffee order
 
@@ -22,7 +22,7 @@ If you cancel while the coffee is brewing, the machine returns to Ready. Once th
   caption="States describe what's happening. Events describe what happened. The arrows show the allowed transitions."
 />
 
-The screenshot comes from the Stately editor. Open the read-only view below it to simulate events, expand or collapse parent states, and pan or zoom the same example. You don't need an account, and the example does not save changes.
+Open the read-only view to simulate events, expand or collapse parent states, and pan or zoom the same example without an account. Choose **Edit the coffee order** to open that model for editing, or download its JSON to import into your project.
 
 This small model is also a finite state machine. You don't need every statechart feature to describe an order with three states.
 
@@ -171,4 +171,4 @@ Pick a feature you know well. Write down what can happen, which states it can ha
 
 <StatechartActions />
 
-For the broader introduction, read [state machines and statecharts](state-machines-and-statecharts). For implementation details, explore [states](states), [transitions](transitions), [guards](guards), and [actions](actions).
+For the broader introduction, read [the state machine introduction](state-machines-and-statecharts). For implementation details, explore [states](states), [transitions](transitions), [guards](guards), and [actions](actions).
