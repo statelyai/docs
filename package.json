@@ -23,6 +23,7 @@
     "@ai-sdk/react": "^4.0.146",
     "@fumadocs/ai-chat": "0.1.1",
     "@mdx-js/react": "^3.1.1",
+    "@statelyai/sdk": "^0.48.0",
     "ai": "^7.0.142",
     "class-variance-authority": "^0.7.1",
     "flexsearch": "^0.8.212",

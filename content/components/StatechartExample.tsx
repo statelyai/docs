@@ -3,7 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import darkCaptures from '@/public/assets/statecharts/dark-captures.json';
 import {
   statechartExamples,
@@ -12,6 +18,7 @@ import {
   type StatechartExampleId,
   type StatechartColorMode,
 } from '@/lib/statechart-examples';
+import { useStatelyVizIframe } from './useStatelyVizIframe';
 
 type Props = {
   name: string;
@@ -69,11 +76,13 @@ function InlineStatechart({
   colorMode: StatechartColorMode;
 }) {
   const container = useRef<HTMLDivElement>(null);
-  const iframe = useRef<HTMLIFrameElement>(null);
+  const frameHost = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<
     'waiting' | 'loading' | 'ready' | 'error'
   >('waiting');
   const [attempt, setAttempt] = useState(0);
+  const colorScheme = colorMode === 'system' ? 'light dark' : colorMode;
+  const handleFrameError = useCallback(() => setStatus('error'), []);
 
   useEffect(() => {
     if (status !== 'waiting' || !container.current) return;
@@ -112,6 +121,16 @@ function InlineStatechart({
     return () => window.clearTimeout(timeout);
   }, [status, attempt]);
 
+  const iframe = useStatelyVizIframe(frameHost, {
+    src: embedURL,
+    title: `${name} read-only statechart`,
+    colorScheme,
+    load: status !== 'waiting',
+    visible: status === 'ready',
+    reloadKey: attempt,
+    onError: handleFrameError,
+  });
+
   return (
     <div
       ref={container}
@@ -124,22 +143,11 @@ function InlineStatechart({
         fill
         className={status === 'ready' ? 'hidden' : 'min-h-0 w-full flex-1'}
       />
-      {status !== 'waiting' && (
-        <iframe
-          key={attempt}
-          ref={iframe}
-          src={embedURL}
-          style={{
-            colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
-          }}
-          title={`${name} read-only statechart`}
-          aria-hidden={status !== 'ready'}
-          tabIndex={status === 'ready' ? 0 : -1}
-          className={`absolute inset-0 h-full w-full border-0 ${status === 'ready' ? '' : 'pointer-events-none opacity-0'}`}
-          onError={() => setStatus('error')}
-          allowFullScreen
-        />
-      )}
+      <div
+        ref={frameHost}
+        aria-hidden={status !== 'ready'}
+        className={`absolute inset-0 h-full w-full ${status === 'ready' ? '' : 'pointer-events-none opacity-0'}`}
+      />
       {(status === 'loading' || status === 'error') && (
         <div
           role="status"
@@ -165,6 +173,34 @@ function InlineStatechart({
         </div>
       )}
     </div>
+  );
+}
+
+function OnDemandStatechartFrame({
+  embedURL,
+  colorMode,
+  name,
+}: {
+  embedURL: string;
+  colorMode: StatechartColorMode;
+  name: string;
+}) {
+  const frameHost = useRef<HTMLDivElement>(null);
+  const colorScheme = colorMode === 'system' ? 'light dark' : colorMode;
+  useStatelyVizIframe(frameHost, {
+    src: embedURL,
+    title: `${name} read-only statechart`,
+    colorScheme,
+    load: true,
+    visible: true,
+  });
+
+  return (
+    <div
+      ref={frameHost}
+      className="w-full"
+      style={{ height: 'min(640px, 60svh)' }}
+    />
   );
 }
 
@@ -263,15 +299,10 @@ export function StatechartExample({
             .
           </p>
           {expanded && (
-            <iframe
-              src={embedURL}
-              style={{
-                colorScheme: colorMode === 'system' ? 'light dark' : colorMode,
-              }}
-              title={`${name} read-only statechart`}
-              loading="lazy"
-              className="block h-[min(640px,60svh)] w-full border-0"
-              allowFullScreen
+            <OnDemandStatechartFrame
+              embedURL={embedURL}
+              colorMode={colorMode}
+              name={name}
             />
           )}
         </details>
