@@ -1,0 +1,78 @@
+---
+title: Self-hosted onboarding
+description: Update a self-hosted Stately deployment and validate machine files in CI.
+---
+
+This guide covers a repository-backed workflow for teams running Stately on their own infrastructure. For deployment configuration and security requirements, read [Self-hosting](self-hosting) first.
+
+## Install and update
+
+Follow the installation instructions supplied with your deployment. Keep the deployment configuration available to both the build and the running server. For example, configure your build and service environment with the same `AUTH_PROVIDER`, `EDITOR_SYNC_AUTH_REQUIRED`, `AI_ENABLED`, and `NEXT_PUBLIC_BASE_URL` values used for the initial deployment. Include any other variables required by your deployment.
+
+To update a repository-based deployment, check out the revision supplied by your Stately contact, install dependencies, build, and restart with the same configuration:
+
+```bash
+git fetch --tags
+# Check out the revision supplied for your deployment.
+pnpm install
+pnpm build:sdk
+pnpm build:app
+pnpm start -H 0.0.0.0
+```
+
+Build the SDK dependencies before the app. Configure the environment before running the build and start commands. After restarting, check the editor and test a representative import, edit, and export. Ask your Stately contact for the changes and compatibility requirements for the revision.
+
+## Export machine JSON
+
+For a machine available through the deployment's machine API, the CLI can write a graph JSON file:
+
+```bash
+npx statelyai pull <machine-id> src/machines/checkout.graph.json \
+  --base-url https://studio.example.internal
+```
+
+The machine API requires a configured resource provider. The standalone editor can also store projects in the browser. For an embedded editor, the host application is responsible for persistence and can receive the graph from the SDK's `change` event and persist it:
+
+```ts
+import { createStatelyEmbed } from '@statelyai/sdk';
+
+const embed = createStatelyEmbed({
+  baseUrl: 'https://studio.example.internal',
+  origin: 'https://studio.example.internal',
+});
+
+embed.on('change', async ({ graph }) => {
+  await writeToWorkingBranch('src/machines/checkout.graph.json', graph);
+});
+```
+
+`writeToWorkingBranch` represents a function implemented by your host application. Debounce or queue writes as needed for your storage system. Mount and initialize the embed as described in [Self-hosting](self-hosting). Configure authentication and permitted origins for your deployment.
+
+## Validate in CI
+
+Send the graph JSON to the deployment's validation endpoint. This example requires Bash and `jq`. It fails the pipeline if the request fails or validation reports an error:
+
+```bash
+set -o pipefail
+curl -sf https://studio.example.internal/api/v1/validate \
+  -H 'content-type: application/json' \
+  -d "$(jq '{source: {format: "xgraph", content: .}}' src/machines/checkout.graph.json)" \
+  | jq -e '.ok == true'
+```
+
+Add authentication headers if your deployment requires them. The response contains `ok` and an `issues` array. Warnings do not make `ok` false. If your project treats warnings as failures, inspect `issues` in your CI check. Add separate checks for project-specific naming or transition rules.
+
+## Compare machines
+
+The CLI compares machine semantics and can return a nonzero exit code when they differ:
+
+```bash
+npx statelyai diff <machine-id> src/machines/checkout.graph.json \
+  --base-url https://studio.example.internal --fail-on-changes
+```
+
+Presentation-only layout and color changes do not count as semantic differences. Remote machine IDs require a reachable machine API. Two local files can also be compared without a remote machine.
+
+## Report problems
+
+Contact your Stately representative or [support@stately.ai](mailto:support@stately.ai). Include the deployed revision, a machine document that reproduces the problem, and the command or endpoint and its response.
