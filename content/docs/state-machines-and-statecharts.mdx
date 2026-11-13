@@ -1,5 +1,6 @@
 ---
-title: What are state machines and statecharts?
+title: What are state machines? States, events, and transitions
+description: Learn state machine basics with visual examples of states, events, and transitions. Model a video player and a dog walk, then explore statecharts.
 ---
 
 import machine_dbcfca1c from '@/content/machines/dbcfca1c-075d-4cd6-a865-efcbd7be1544.json';
@@ -10,7 +11,9 @@ import machine_aa8a9c5d from '@/content/machines/aa8a9c5d-8fd9-4e47-b71a-bda219c
 import machine_1f43dcd3 from '@/content/machines/1f43dcd3-255c-40bf-b6b0-eba9a2bccb23.json';
 import machine_933419cb from '@/content/machines/933419cb-dd94-453c-a2b1-de2290c0a5a5.json';
 
-State machines help us model how a process goes from state to state when an event occurs.
+A **state machine** describes how a process moves between states when events occur. This introduction covers states, events, and transitions with a video player and a dog walk.
+
+For nested states, parallel states, history, and state chart notation, read [What are statecharts?](/docs/statecharts).
 
 State machines are useful in software development because they help us capture all the states, events and transitions between them. Using state machines makes it easier to find impossible states and spot undesirable transitions.
 
@@ -34,8 +37,6 @@ State machines model your application logic. Below is the logic for a video play
 - State machines simplify the design and implementation of complex workflows, which can help reduce complexity and improve maintainability. https://developers.redhat.com/articles/2021/11/23/how-design-state-machines-microservices
 
 ## What is a statechart?
-
-For a focused guide with examples, notation, and comparisons, read [What are statecharts?](/docs/statecharts).
 
 Statecharts extend traditional finite state machines to model more complex logic.
 

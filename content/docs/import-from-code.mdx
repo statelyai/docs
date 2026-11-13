@@ -12,6 +12,17 @@ Watch our [“Import from code” video on YouTube](https://www.youtube.com/watc
 
 </Callout>
 
+## Import an example in the Stately editor
+
+The examples in [What are statecharts?](statecharts) include a JSON download. To keep an example in your own project:
+
+1. Download the example's XState JSON.
+2. Open the [Stately editor](https://editor.stately.ai/) and sign in.
+3. Open your project and start a new machine. Import the JSON file as XState, or paste its contents into the importer.
+4. Check the diagram before saving it in your project.
+
+The example's **Edit** link opens the same model in a standalone editor. That view does not save to your workspace. Use its **Code** panel to download your edited machine before leaving the page.
+
 ## Import state machines
 
 Your state machine code should be formatted as a [`createMachine()` factory function](/docs/actors#createmachine) before import. The importer has basic validation in case your machine has basic errors, including reminding you if the `createMachine` definition is missing.

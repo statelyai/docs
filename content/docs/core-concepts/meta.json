@@ -1,7 +1,7 @@
 {
   "title": "Core Concepts",
   "pages": [
-    "[State machines and statecharts](/docs/state-machines-and-statecharts)",
+    "[State machine basics](/docs/state-machines-and-statecharts)",
     "[Statecharts](/docs/statecharts)",
     "[Harel's statecharts paper](/docs/harel-statecharts)",
     "[Actor model](/docs/actor-model)",

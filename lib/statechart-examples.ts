@@ -5,27 +5,55 @@ import coffeeDonut from '@/public/assets/statecharts/examples/coffee-donut-paral
 
 export const statechartExamples = {
   ...harelStatechartExamples,
-  'coffee-order': { machine: coffeeOrder, width: 300, height: 465 },
-  'coffee-nested': { machine: coffeeNested, width: 620, height: 540 },
-  'coffee-donut-parallel': { machine: coffeeDonut, width: 660, height: 390 },
+  'coffee-order': {
+    machine: coffeeOrder,
+    sourceFile: '/assets/statecharts/examples/coffee-order.json',
+    width: 300,
+    height: 465,
+  },
+  'coffee-nested': {
+    machine: coffeeNested,
+    sourceFile: '/assets/statecharts/examples/coffee-nested.json',
+    width: 620,
+    height: 540,
+  },
+  'coffee-donut-parallel': {
+    machine: coffeeDonut,
+    sourceFile: '/assets/statecharts/examples/coffee-donut-parallel.json',
+    width: 660,
+    height: 390,
+  },
 };
 
 export type StatechartExampleId = keyof typeof statechartExamples;
 export type StatechartColorMode = 'light' | 'dark' | 'system';
 
-export function statechartExampleURL(
-  example: StatechartExampleId,
-  theme: StatechartColorMode = 'system',
-): string {
+function encodeExample(example: StatechartExampleId): string {
   const bytes = new TextEncoder().encode(
     JSON.stringify(statechartExamples[example].machine),
   );
   let binary = '';
   for (const byte of bytes) binary += String.fromCharCode(byte);
-  const machine = btoa(binary)
+  return btoa(binary)
     .replaceAll('+', '-')
     .replaceAll('/', '_')
     .replace(/=+$/, '');
+}
+
+export function statechartExampleEditURL(example: StatechartExampleId): string {
+  const url = new URL('https://editor.stately.ai/embed');
+  url.searchParams.set('machine', encodeExample(example));
+  url.searchParams.set('format', 'xstate-json');
+  url.searchParams.set('mode', 'editing');
+  url.searchParams.set('source', 'docs-statecharts');
+  return url.toString();
+}
+
+export function statechartExampleURL(
+  example: StatechartExampleId,
+  theme: StatechartColorMode = 'system',
+): string {
+  const machine = encodeExample(example);
   const url = new URL('https://editor.stately.ai/viz');
   const entry = statechartExamples[example];
   url.searchParams.set(
