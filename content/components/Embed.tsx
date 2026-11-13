@@ -86,6 +86,7 @@ export function Embed({ name = 'State', title, machine, mode }: Embed) {
       <div
         ref={frameHost}
         aria-hidden={status !== 'ready'}
+        inert={status !== 'ready'}
         className={`absolute inset-0 h-full w-full ${status === 'ready' ? '' : 'pointer-events-none opacity-0'}`}
       />
       {status !== 'ready' && (

@@ -18,6 +18,7 @@ export function useStatelyVizIframe(
   { src, title, colorScheme, load, visible, reloadKey, onError }: Options,
 ) {
   const iframe = useRef<HTMLIFrameElement | null>(null);
+  const visibleRef = useRef(visible);
 
   useEffect(() => {
     if (!load || !src || !container.current) return;
@@ -31,7 +32,7 @@ export function useStatelyVizIframe(
     frame.style.display = 'block';
     frame.style.border = '0';
     frame.style.colorScheme = colorScheme;
-    frame.setAttribute('aria-hidden', 'true');
+    frame.setAttribute('aria-hidden', String(!visibleRef.current));
     if (onError) frame.addEventListener('error', onError);
     container.current.appendChild(frame);
     iframe.current = frame;
@@ -46,6 +47,7 @@ export function useStatelyVizIframe(
   }, [container, src, title, colorScheme, load, reloadKey, onError]);
 
   useEffect(() => {
+    visibleRef.current = visible;
     iframe.current?.setAttribute('aria-hidden', String(!visible));
   }, [visible]);
 

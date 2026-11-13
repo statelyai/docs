@@ -121,6 +121,10 @@ function InlineStatechart({
     return () => window.clearTimeout(timeout);
   }, [status, attempt]);
 
+  useEffect(() => {
+    setStatus((current) => (current === 'waiting' ? current : 'loading'));
+  }, [embedURL]);
+
   const iframe = useStatelyVizIframe(frameHost, {
     src: embedURL,
     title: `${name} read-only statechart`,
@@ -146,6 +150,7 @@ function InlineStatechart({
       <div
         ref={frameHost}
         aria-hidden={status !== 'ready'}
+        inert={status !== 'ready'}
         className={`absolute inset-0 h-full w-full ${status === 'ready' ? '' : 'pointer-events-none opacity-0'}`}
       />
       {(status === 'loading' || status === 'error') && (
