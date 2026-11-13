@@ -223,6 +223,11 @@ Each entry means:
 
 The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 
+Set `DOCS_SOURCE_IDS` to a comma-separated list of `package` keys to build a
+subset of external sources. Use `*` or omit the variable to enable every source.
+The same selection controls generated navigation, source-gated page sections,
+Markdown output, and search indexing.
+
 For a `"workspace"` source, `pnpm docs:lock` resolves `ref` to an immutable
 commit in `docs-sources.lock.json`. Normal syncs check out that commit into
 `.cache/docs-sources/<repo>/<commit>`. Fumadocs compiles the allowlisted files
