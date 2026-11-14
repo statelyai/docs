@@ -355,6 +355,8 @@ handoffs, discovery links, redirect, sitemap, and Markdown responses.
 
 ## Docs machine embeds
 
+<!-- docs machine embed behavior from content/components/Embed.tsx, content/components/StatechartExample.tsx, and content/components/useStatelyVizIframe.ts -->
+
 Docs MDX imports a checked-in Digraph, XGraph, or XState source and renders it
 with `<Embed machine={machine} />`. The component passes the definition in Viz's
 URL fragment, so Docs has no machine-read token, publication setup, or
