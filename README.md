@@ -223,6 +223,11 @@ Each entry means:
 
 The sync pipeline is implemented in `scripts/docs-sync.mjs`.
 
+Set `DOCS_SOURCE_IDS` to a comma-separated list of `package` keys to build a
+subset of external sources. Use `*` or omit the variable to enable every source.
+The same selection controls generated navigation, source-gated page sections,
+Markdown output, and search indexing.
+
 For a `"workspace"` source, `pnpm docs:lock` resolves `ref` to an immutable
 commit in `docs-sources.lock.json`. Normal syncs check out that commit into
 `.cache/docs-sources/<repo>/<commit>`. Fumadocs compiles the allowlisted files
@@ -349,6 +354,8 @@ to verify page roles, metadata, image fallbacks, exact-model edit/download
 handoffs, discovery links, redirect, sitemap, and Markdown responses.
 
 ## Docs machine embeds
+
+<!-- docs machine embed behavior from content/components/Embed.tsx, content/components/StatechartExample.tsx, and content/components/useStatelyVizIframe.ts -->
 
 Docs MDX imports a checked-in Digraph, XGraph, or XState source and renders it
 with `<Embed machine={machine} />`. The component passes the definition in Viz's
