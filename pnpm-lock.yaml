@@ -20,6 +20,9 @@ importers:
       '@mdx-js/react':
         specifier: ^3.1.1
         version: 3.1.1(@types/react@19.2.7)(react@19.2.3)
+      '@statelyai/sdk':
+        specifier: ^0.48.0
+        version: 0.48.0(zod@4.3.4)
       ai:
         specifier: ^7.0.142
         version: 7.0.142(zod@4.3.4)
@@ -852,6 +855,63 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
+
+  '@statelyai/graph@2.6.0':
+    resolution: {integrity: sha512-0TotB7OIQDnmKIWrBR5hDgv85IwoLSfYbDhdYd/Yd5N9qePBNApR9tcR8agICBSX16Fb2Q5FM52CpVoFmHHbxg==}
+    peerDependencies:
+      '@dagrejs/dagre': ^3.0.0 || ^4.0.0
+      '@hpcc-js/wasm-graphviz': ^1.0.0
+      cytoscape: ^3.0.0
+      d3-force: ^3.0.0
+      d3-hierarchy: ^3.0.0
+      dotparser: ^1.0.0
+      elkjs: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0
+      fast-xml-parser: ^5.0.0
+      fflate: 0.8.3
+      graphology: ^0.26.0
+      graphology-layout-forceatlas2: ^0.10.0
+      webcola: ^3.4.0
+      xstate: ^5.19.0
+      zod: ^4.0.0
+    peerDependenciesMeta:
+      '@dagrejs/dagre':
+        optional: true
+      '@hpcc-js/wasm-graphviz':
+        optional: true
+      cytoscape:
+        optional: true
+      d3-force:
+        optional: true
+      d3-hierarchy:
+        optional: true
+      dotparser:
+        optional: true
+      elkjs:
+        optional: true
+      fast-xml-parser:
+        optional: true
+      fflate:
+        optional: true
+      graphology:
+        optional: true
+      graphology-layout-forceatlas2:
+        optional: true
+      webcola:
+        optional: true
+      xstate:
+        optional: true
+      zod:
+        optional: true
+
+  '@statelyai/sdk@0.48.0':
+    resolution: {integrity: sha512-/sKMnOAm9ebMTWwHFMvA6J9m5wSuE+83GakZ5pPD3YRks2Ish35N+hhCNgvqPChY4fkYxiFKQNuA8/RW9S8smg==}
+    engines: {node: '>=22.4'}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.19.0
+    peerDependenciesMeta:
+      ws:
+        optional: true
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -4139,6 +4199,30 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2': {}
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@statelyai/graph@2.6.0(xstate@5.25.0)(zod@4.3.4)':
+    optionalDependencies:
+      xstate: 5.25.0
+      zod: 4.3.4
+
+  '@statelyai/sdk@0.48.0(zod@4.3.4)':
+    dependencies:
+      '@statelyai/graph': 2.6.0(xstate@5.25.0)(zod@4.3.4)
+      xstate: 5.25.0
+    transitivePeerDependencies:
+      - '@dagrejs/dagre'
+      - '@hpcc-js/wasm-graphviz'
+      - cytoscape
+      - d3-force
+      - d3-hierarchy
+      - dotparser
+      - elkjs
+      - fast-xml-parser
+      - fflate
+      - graphology
+      - graphology-layout-forceatlas2
+      - webcola
+      - zod
 
   '@swc/helpers@0.5.15':
     dependencies:
