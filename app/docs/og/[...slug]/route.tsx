@@ -1,12 +1,16 @@
 import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { OGImage } from '@/app/_og/_components/og-image';
+import {
+  getOGFonts,
+  OG_SIZE,
+  OGImage,
+} from '@/app/_og/_components/og-image';
 
 export const revalidate = false;
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: RouteContext<'/docs/og/[...slug]'>,
 ) {
   const { slug } = await params;
@@ -19,12 +23,11 @@ export async function GET(
         title={page.data.title}
         description={page.data.description}
         type="docs"
+        path={page.slugs.slice(0, -1)}
+        url={page.url}
       />
     ),
-    {
-      width: 1200,
-      height: 630,
-    },
+    { ...OG_SIZE, fonts: await getOGFonts() },
   );
 }
 
