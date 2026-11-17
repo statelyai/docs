@@ -1,0 +1,126 @@
+---
+title: Agent skills
+description: Install the Stately skills for Claude Code, Codex, and other agents, and use /stately to find, check, and review state machines in your code.
+---
+
+The [statelyai/skills](https://github.com/statelyai/skills) repository holds skills for coding agents. The main one is the **Stately skill** (`/stately`). It finds implicit state machines in application code, reviews changes for state bugs, model-checks flows, and turns flags into explicit XState machines. It works with any language and framework.
+
+The repository also includes:
+
+| Skill | What it does |
+| --- | --- |
+| `xstate-v5` | Designs, implements, reviews, and migrates XState v5 statecharts in TypeScript. |
+| `state-management` | Models and refactors application state so derived state is computed and impossible states are not representable. |
+| `readme` | Keeps README files in sync with the code through symbolic HTML comments. |
+| `stately-agent` plugin | Builds, traces, evaluates, and improves agents written with [`@statelyai/agent`](/docs/packages/agent) 2.0 alpha. |
+
+## Install
+
+### Claude Code
+
+The repository is a Claude Code plugin marketplace:
+
+```text
+/plugin marketplace add statelyai/skills
+/plugin install stately@stately
+```
+
+The plugin loads the `stately` and `xstate-v5` skills and the hosted [Stately MCP server](/docs/packages/mcp). Run `/mcp` and sign in to `stately` to save and open models in Stately. Invoke the skill with `/stately`, or `/stately:stately` if the host only exposes the qualified name.
+
+### Codex and other agents
+
+Install with [skills](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add statelyai/skills
+```
+
+To install one skill, name it:
+
+```bash
+npx skills add statelyai/skills --skill stately
+```
+
+To save and open models in Stately, connect the agent to the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each host's setup.
+
+Finding, reviewing, and checking work without the MCP server and without a Stately account. Without a connection, the skill gives diagrams as XState configs that you can import into Stately.
+
+## Find implicit state machines
+
+```text
+/stately Find all of the implicit state machines in my app.
+```
+
+An implicit state machine is state that the code tracks with separate flags, status strings, nullable fields, and timers instead of one explicit state. For example, `isLoading`, `error`, and `data` in one component form a state machine whose states are not written down, and nothing prevents `isLoading` and `error` from both being set.
+
+The skill reads the code area by area and lists each candidate with:
+
+- the values and events that make up the machine, cited with `path:line`
+- a transition table
+- the bug each one allows, if any, ranked by consequence
+- a Stately diagram
+
+When the agent can write files, it keeps the list in an inventory document and updates it on later runs. If it covers only part of a large repository, it says which areas remain.
+
+## Review a change for state bugs
+
+```text
+/stately Review this PR for state bugs.
+```
+
+A bundled scanner reads the diff and lists leads: values that a change writes or reads, exits that skip cleanup, removed guards, and work that is no longer awaited. It also picks a review depth:
+
+| Profile | When | What runs |
+| --- | --- | --- |
+| None | The diff changes no executable code (docs, comments, lock files, images) | No review |
+| Single | Most changes | One pass over every changed code file |
+| Thorough | The diff touches persistence, a store, a queue, payments, sync, a cache, a lock, or work it no longer awaits | Two independent passes, then a separate pass that merges them, re-traces each finding, and audits every lead that was cleared |
+
+Each lead is checked against twelve kinds of state bug, including stuck states, event ordering, check-then-act races, stale copies, retries and timers, and error paths. Each finding includes the state, the event, the numbered sequence of `path:line` steps that reaches it, the consequence, and a test sketch. The skill asks before posting review comments.
+
+## Check a flow
+
+```text
+/stately Check that the checkout flow never charges an order twice, and that
+every started payment eventually settles or fails.
+```
+
+The skill models the flow from the code, writes the rules, and runs a bundled model checker. Each rule holds, breaks with a counterexample path, or is not checked. Where the code can run concurrently (two tabs, two requests, or a retry that overlaps the first attempt), the model includes at least two callers.
+
+The default checker uses XState v6 semantics and needs no Java. It downloads XState (about 0.4 MB, checksum-verified) on first use. For flows that need TLA+ features, or for an existing `.tla` file, the skill runs TLC instead and downloads a Java runtime on first use. Checking runs locally; when signed in, the skill attaches the report to the model in Stately.
+
+Model checking proves behavior of the model, not of the application. The skill reports source estimates, checker results, and application test results separately.
+
+### Check a fix
+
+```text
+/stately Check whether my change fixes the double charge.
+```
+
+The skill reruns the same rules and bounds on the fixed model and compares the two runs. Each rule is reported as fixed, still broken, broken by the fix, or not checked.
+
+## Make a machine explicit
+
+```text
+/stately Make the upload flags explicit.
+```
+
+The skill writes tests for the current behavior first, then replaces the flags with an XState machine and deletes the flags it replaces. It uses XState v6 beta by default, or XState v5 when the project already depends on it. It checks the new machine against the same rules and runs the test suite.
+
+The skill changes code only for this request. Finding, reviewing, and checking never edit your code.
+
+## Model a flow in Stately
+
+```text
+/stately Model the checkout flow in this repository and show it in Stately.
+```
+
+The skill saves one machine per flow, with each state and transition linked to the code it came from, and returns a link to the editor. This request needs the MCP server and sign-in.
+
+## Runtimes
+
+The checker runs with Node 22.18 or later, Bun 1.1.5 or later, or Deno 2 or later, on macOS, Linux, and Windows.
+
+## Self-hosting
+
+Finding, reviewing, and checking need no server. A self-hosted deployment exposes its MCP endpoint at `/api/mcp`. See [Conversion API and MCP](/docs/self-hosting#conversion-api-and-mcp) for its tools and for bridging stdio-only clients.
