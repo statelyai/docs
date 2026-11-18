@@ -22,10 +22,10 @@ Or in Claude Code, as a plugin that also connects the Stately MCP server:
 /plugin install stately@stately
 ```
 
-Then ask your agent:
+Then ask your agent (or invoke the skill directly with `/stately` in Claude Code or `$stately` in Codex):
 
 ```text
-Use stately to find all of the implicit state machines in my app.
+Use Stately to find all of the implicit state machines in my app.
 ```
 
 It works with any language and framework, and it doesn’t need XState (or a Stately account) to find, review, or check anything.
@@ -80,7 +80,7 @@ And every diagram shows up in Stately. Sign in to the Stately MCP server (in Cla
 ## Reviewing pull requests for state bugs
 
 ```text
-Use stately to review this PR for state bugs.
+Use Stately to review this PR for state bugs.
 ```
 
 A small scanner reads the diff first. It lists the state values the change writes and reads (including writers and readers in files the diff didn’t touch), early exits that skip cleanup, removed guards, and work that’s no longer awaited. It also picks how much review the change needs: none for docs and lock files, one pass for most changes, and two independent passes plus a separate verifier for changes that touch persistence, payments, queues, caches, or locks.
@@ -92,7 +92,7 @@ We tested it on Quickchat’s benchmark. On six pull requests that no version of
 ## Checking flows with a model checker
 
 ```text
-Use stately to check that the checkout flow never charges an order twice, and that
+Use Stately to check that the checkout flow never charges an order twice, and that
 every started payment eventually settles or fails.
 ```
 
@@ -105,7 +105,7 @@ After you fix a bug, ask it to check the fix. It reruns the same rules on the fi
 ## Making them explicit
 
 ```text
-Use stately to make the upload flags explicit.
+Use Stately to make the upload flags explicit.
 ```
 
 This is the only request that changes your code. The skill writes tests for the current behavior first, then replaces the flags with an XState machine and deletes the flags it replaced:
