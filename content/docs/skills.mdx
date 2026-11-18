@@ -37,7 +37,7 @@ To save and open models in Stately from another agent, connect it to the MCP ser
 
 ## Stately skill
 
-The Stately skill (`/stately`) works with any language and framework. Finding, reviewing, and checking need no XState, no Stately account, and no MCP connection, and they never edit your code. Without a connection, the skill gives diagrams as XState configs that you can import into Stately.
+The Stately skill (`/stately`, or `$stately` in Codex) works with any language and framework. Finding, reviewing, and checking need no XState, no Stately account, and no MCP connection, and they never edit your code. Without a connection, the skill gives diagrams as XState configs that you can import into Stately.
 
 ### Find implicit state machines
 
@@ -83,8 +83,8 @@ The skill models the flow from the code, writes the rules, and runs a bundled mo
 
 Each rule gets one of three verdicts:
 
-- **holds**: no reachable state violates the rule within the bounds.
-- **broken**: the checker found a counterexample, a path of events from the initial state to the violation.
+- **holds**: the rule is true for every behavior of the model within its bounds. For a safety rule, that means no reachable state violates it. For a liveness rule, every path eventually satisfies it.
+- **broken**: the checker found a counterexample. For a safety rule, it is a path of events from the initial state to the violation. For a liveness rule, it is a path that ends in a cycle that repeats forever without satisfying the rule, such as a retry loop that never settles.
 - **not checked**: the checker could not decide, for example because exploration hit its state limit or a guard could not be resolved.
 
 The skill replays counterexamples against your application where your tests allow, and reports model results, source findings, and application test results separately. A rule that holds in the model is not proof that the application behaves the same way.
@@ -113,7 +113,7 @@ The skill writes the rules in a rules file next to the model. The rules file als
 | `leads-to` | Every state that satisfies one condition is followed by a state that satisfies another. |
 | `no-dead-ends` | Every reachable state has a next step. Final states are allowed by default. |
 
-Liveness rules can declare weak fairness for events that the environment eventually sends. Each guard and action can cite the code it came from. The report lists conditions without a citation, and the skill reports a rule as holding only in the model until those conditions are confirmed.
+Liveness rules can declare weak fairness for an event: if the event stays enabled in every state of a cycle, the cycle must eventually take it. Weak fairness does not force an event that is enabled only some of the time. Each guard and action can cite the code it came from. The report lists conditions without a citation, and the skill reports a rule as holding only in the model until those conditions are confirmed.
 
 The skill uses [TLA+](https://lamport.azurewebsites.net/tla/tla.html) with the TLC model checker instead when:
 
@@ -121,7 +121,9 @@ The skill uses [TLA+](https://lamport.azurewebsites.net/tla/tla.html) with the T
 - the state includes sets or maps, such as a set of prepared participants
 - the model needs model-value constants or symmetry
 - a property needs strong fairness or a temporal formula beyond the rule kinds above
-- the data is unbounded and a finite domain would change the question
+- the data needs bounds set by model constants or state constraints instead of a fixed list of values
+
+TLC also explores a finite state space. When the code has unbounded data, such as a retry counter with no limit, the skill checks a bounded version and reports the bounds with each verdict. A rule that holds within those bounds is not a proof for every value.
 
 For TLA+, the skill writes the spec, a TLC config, and a view that projects TLC’s states onto a statechart, so counterexamples show up in Stately like native ones. It uses Java 11 or later when installed, or downloads a Java runtime and TLC 1.7.4 on first use, with checksums verified. To check an existing spec:
 
