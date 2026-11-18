@@ -7,19 +7,19 @@ date: 2026-11-19
 slug: 2026-11-19-stately-skill
 ---
 
-Most apps are full of state machines that nobody wrote down. They’re spread across flags like `isLoading` and `isSubmitting`, status strings, nullable fields, and timers, and their states and transitions only exist in someone’s head (or nowhere at all).
+Today, we’re releasing a new version of the **Stately skill** for Claude Code, Codex, Cursor, and other coding agents. It finds the implicit state machines in your code, reviews pull requests for state bugs, checks flows with a model checker, and turns flags into explicit XState machines when you ask it to. {/* truncate */}
 
-Today, we’re releasing a new version of the **Stately skill** for Claude Code, Codex, and other coding agents. It finds those implicit state machines, reviews pull requests for state bugs, checks flows with a model checker, and turns flags into explicit XState machines when you ask it to. {/* truncate */}
+Install it in any agent with [skills](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add statelyai/skills
+```
+
+Or in Claude Code, as a plugin that also connects the Stately MCP server:
 
 ```text
 /plugin marketplace add statelyai/skills
 /plugin install stately@stately
-```
-
-For Codex and other agents:
-
-```bash
-npx skills add statelyai/skills
 ```
 
 Then ask your agent:
@@ -31,6 +31,8 @@ Then ask your agent:
 It works with any language and framework, and it doesn’t need XState (or a Stately account) to find, review, or check anything.
 
 ## Implicit state machines hide bugs
+
+Most apps are full of state machines that nobody wrote down. They’re spread across flags like `isLoading` and `isSubmitting`, status strings, nullable fields, and timers, and their states and transitions only exist in someone’s head (or nowhere at all).
 
 I wrote about this [back in 2019](/blog/2019-11-13-no-disabling-a-button-is-not-app-logic): when the states of a feature are tracked with separate flags, nothing stops those flags from getting into combinations that make no sense. Here’s a file upload:
 

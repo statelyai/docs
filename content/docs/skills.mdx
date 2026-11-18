@@ -1,35 +1,13 @@
 ---
 title: Agent skills
-description: Install the Stately skills for Claude Code, Codex, and other agents, and use /stately to find, check, and review state machines in your code.
+description: Install the Stately skills for Claude Code, Codex, and other coding agents to find, review, check, and fix state machines in your code.
 ---
 
-The [statelyai/skills](https://github.com/statelyai/skills) repository holds skills for coding agents. The main one is the **Stately skill** (`/stately`). It finds implicit state machines in application code, reviews changes for state bugs, model-checks flows, and turns flags into explicit XState machines. It works with any language and framework.
-
-The repository also includes:
-
-| Skill | What it does |
-| --- | --- |
-| `xstate-v5` | Designs, implements, reviews, and migrates XState v5 statecharts in TypeScript. |
-| `state-management` | Models and refactors application state so derived state is computed and impossible states are not representable. |
-| `readme` | Keeps README files in sync with the code through symbolic HTML comments. |
-| `stately-agent` plugin | Builds, traces, evaluates, and improves agents written with [`@statelyai/agent`](/docs/packages/agent) 2.0 alpha. |
+Stately’s skills teach coding agents to work with state machines: finding the implicit ones in your code, reviewing changes for state bugs, model-checking flows, and writing XState.
 
 ## Install
 
-### Claude Code
-
-The repository is a Claude Code plugin marketplace:
-
-```text
-/plugin marketplace add statelyai/skills
-/plugin install stately@stately
-```
-
-The plugin loads the `stately` and `xstate-v5` skills and the hosted [Stately MCP server](/docs/packages/mcp). Run `/mcp` and sign in to `stately` to save and open models in Stately. Invoke the skill with `/stately`, or `/stately:stately` if the host only exposes the qualified name.
-
-### Codex and other agents
-
-Install with [skills](https://github.com/vercel-labs/skills):
+Install all of the skills with [skills](https://github.com/vercel-labs/skills), which works with Claude Code, Codex, Cursor, OpenCode, and many other coding agents:
 
 ```bash
 npx skills add statelyai/skills
@@ -41,11 +19,27 @@ To install one skill, name it:
 npx skills add statelyai/skills --skill stately
 ```
 
-To save and open models in Stately, connect the agent to the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each host's setup.
+In Claude Code, you can also install the skills as a plugin. The plugin includes the `stately` and `xstate-v5` skills and connects the [Stately MCP server](/docs/packages/mcp):
 
-Finding, reviewing, and checking work without the MCP server and without a Stately account. Without a connection, the skill gives diagrams as XState configs that you can import into Stately.
+```text
+/plugin marketplace add statelyai/skills
+/plugin install stately@stately
+```
 
-## Find implicit state machines
+To save and open models in Stately from another agent, connect it to the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each agent’s setup. In Claude Code, run `/mcp` and sign in to `stately`.
+
+| Skill | Use it to |
+| --- | --- |
+| [`stately`](#stately-skill) | Find implicit state machines, review changes for state bugs, model-check flows, and make flags explicit. |
+| [`xstate-v5`](#xstate-v5-skill) | Write, review, and migrate XState v5 machines. |
+| [`state-management`](#state-management-skill) | Model and refactor application state. |
+| [`readme`](#readme-skill) | Keep README files in sync with the code. |
+
+## Stately skill
+
+The Stately skill (`/stately`) works with any language and framework. Finding, reviewing, and checking need no XState, no Stately account, and no MCP connection, and they never edit your code. Without a connection, the skill gives diagrams as XState configs that you can import into Stately.
+
+### Find implicit state machines
 
 ```text
 /stately Find all of the implicit state machines in my app.
@@ -62,7 +56,7 @@ The skill reads the code area by area and lists each candidate with:
 
 When the agent can write files, it keeps the list in an inventory document and updates it on later runs. If it covers only part of a large repository, it says which areas remain.
 
-## Review a change for state bugs
+### Review a change for state bugs
 
 ```text
 /stately Review this PR for state bugs.
@@ -78,48 +72,100 @@ A bundled scanner reads the diff and lists leads: values that a change writes or
 
 Each lead is checked against twelve kinds of state bug, including stuck states, event ordering, check-then-act races, stale copies, retries and timers, and error paths. Each finding includes the state, the event, the numbered sequence of `path:line` steps that reaches it, the consequence, and a test sketch. The skill asks before posting review comments.
 
-## Check a flow
+### Check a flow
 
 ```text
 /stately Check that the checkout flow never charges an order twice, and that
 every started payment eventually settles or fails.
 ```
 
-The skill models the flow from the code, writes the rules, and runs a bundled model checker. Each rule holds, breaks with a counterexample path, or is not checked. Where the code can run concurrently (two tabs, two requests, or a retry that overlaps the first attempt), the model includes at least two callers.
+The skill models the flow from the code, writes the rules, and runs a bundled model checker. A model checker explores every sequence of events within the model’s bounds, so it finds bugs that only appear after a specific order of events. Where the code can run concurrently (two tabs, two requests, or a retry that overlaps the first attempt), the model includes at least two callers.
 
-The default checker uses XState v6 semantics and needs no Java. It downloads XState (about 0.4 MB, checksum-verified) on first use. For flows that need TLA+ features, or for an existing `.tla` file, the skill runs TLC instead and downloads a Java runtime on first use. Checking runs locally; when signed in, the skill attaches the report to the model in Stately.
+Each rule gets one of three verdicts:
 
-Model checking proves behavior of the model, not of the application. The skill reports source estimates, checker results, and application test results separately.
+- **holds**: no reachable state violates the rule within the bounds.
+- **broken**: the checker found a counterexample, a path of events from the initial state to the violation.
+- **not checked**: the checker could not decide, for example because exploration hit its state limit or a guard could not be resolved.
 
-### Check a fix
+The skill replays counterexamples against your application where your tests allow, and reports model results, source findings, and application test results separately. A rule that holds in the model is not proof that the application behaves the same way.
+
+After a fix, ask the skill to check it:
 
 ```text
 /stately Check whether my change fixes the double charge.
 ```
 
-The skill reruns the same rules and bounds on the fixed model and compares the two runs. Each rule is reported as fixed, still broken, broken by the fix, or not checked.
+It reruns the same rules and bounds on the fixed model and reports each rule as fixed, still broken, broken by the fix, or not checked.
 
-## Make a machine explicit
+### Formal verification and TLA+
+
+By default, the skill checks the statechart itself with a native checker. The native checker explores every reachable configuration of the machine under XState v6 semantics, including nested and parallel states, eventless transitions, and delays. It needs no Java and no TLA+. On first use, it downloads XState (about 0.4 MB) and verifies its checksums.
+
+The skill writes the rules in a rules file next to the model. The rules file also gives each context variable a finite domain, each guard and action an expression, and each event its possible payloads. Rules have one of these kinds:
+
+| Kind | Meaning |
+| --- | --- |
+| `never` | No reachable state satisfies the condition (a safety rule). |
+| `initially` | Every initial state satisfies the condition. |
+| `reachable` | Some reachable state satisfies the condition. |
+| `eventually` | Every behavior reaches a state where the condition holds (a liveness rule). |
+| `eventually-always` | Every behavior reaches a point after which the condition always holds. |
+| `leads-to` | Every state that satisfies one condition is followed by a state that satisfies another. |
+| `no-dead-ends` | Every reachable state has a next step. Final states are allowed by default. |
+
+Liveness rules can declare weak fairness for events that the environment eventually sends. Each guard and action can cite the code it came from. The report lists conditions without a citation, and the skill reports a rule as holding only in the model until those conditions are confirmed.
+
+The skill uses [TLA+](https://lamport.azurewebsites.net/tla/tla.html) with the TLC model checker instead when:
+
+- you give it a `.tla` file or ask for TLA+
+- the state includes sets or maps, such as a set of prepared participants
+- the model needs model-value constants or symmetry
+- a property needs strong fairness or a temporal formula beyond the rule kinds above
+- the data is unbounded and a finite domain would change the question
+
+For TLA+, the skill writes the spec, a TLC config, and a view that projects TLC’s states onto a statechart, so counterexamples show up in Stately like native ones. It uses Java 11 or later when installed, or downloads a Java runtime and TLC 1.7.4 on first use, with checksums verified. To check an existing spec:
+
+```text
+/stately Check verification/Flow.tla.
+```
+
+The skill can also import a TLC JSON trace (`-dumpTrace json`) or DOT state graph (`-dump dot`) from an earlier run, keeping its original provenance.
+
+To keep a durable verification workflow in a project, pair the Stately skill with Lauren Tan’s [create-formal-verification-skill](https://github.com/cursor/plugins/tree/main/pstack/skills/create-formal-verification-skill). Ask it to use `/stately` as its TLA+ checking and reporting backend. For other proof tools such as Lean, Dafny, or Alloy, keep that tool’s proofs authoritative; a Stately model describes their scope, not their proof.
+
+The TLA+ engine is adapted from Lauren Tan’s MIT-licensed `/statechart` skill.
+
+### Make a machine explicit
 
 ```text
 /stately Make the upload flags explicit.
 ```
 
-The skill writes tests for the current behavior first, then replaces the flags with an XState machine and deletes the flags it replaces. It uses XState v6 beta by default, or XState v5 when the project already depends on it. It checks the new machine against the same rules and runs the test suite.
+The skill writes tests for the current behavior first, then replaces the flags with an XState machine and deletes the flags it replaces. It uses XState v6 beta by default, or XState v5 when the project already depends on it. It checks the new machine against the same rules and runs the test suite. This is the only request that changes your code.
 
-The skill changes code only for this request. Finding, reviewing, and checking never edit your code.
-
-## Model a flow in Stately
+### Model a flow in Stately
 
 ```text
 /stately Model the checkout flow in this repository and show it in Stately.
 ```
 
-The skill saves one machine per flow, with each state and transition linked to the code it came from, and returns a link to the editor. This request needs the MCP server and sign-in.
+The skill saves one machine per flow, with each state and transition linked to the code it came from, and returns a link to the editor. This request needs the MCP connection and sign-in.
+
+## XState v5 skill
+
+The `xstate-v5` skill helps an agent design, implement, review, and migrate XState v5 statecharts in TypeScript with v5 APIs such as `setup(...)`, `createActor(...)`, and `fromPromise(...)`. For XState v6, the `xstate` package includes its own [agent guide](/docs/xstate/v6/agents) in `node_modules/xstate/docs/agents.md`.
+
+## State management skill
+
+The `state-management` skill helps an agent model and refactor application state in any library (React state, Redux, Zustand, Pinia, and others). It keeps source state minimal, computes derived state instead of synchronizing it, makes impossible states unrepresentable, and places each piece of state where it belongs.
+
+## README skill
+
+The `readme` skill keeps README files in sync with the code. It uses HTML comments that name the code each section describes, and updates those sections when the code changes.
 
 ## Runtimes
 
-The checker runs with Node 22.18 or later, Bun 1.1.5 or later, or Deno 2 or later, on macOS, Linux, and Windows.
+The Stately skill’s checker runs with Node 22.18 or later (23.6 or later on Node 23), Bun 1.1.5 or later, or Deno 2 or later, on macOS, Linux, and Windows.
 
 ## Self-hosting
 
