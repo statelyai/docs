@@ -19,7 +19,7 @@ To install one skill, name it:
 npx skills add statelyai/skills --skill stately
 ```
 
-In Claude Code, you can also install the skills as a plugin. The plugin includes the `stately` and `xstate-v5` skills and connects the [Stately MCP server](/docs/packages/mcp):
+In Claude Code, you can also install the skills as a plugin. The plugin includes the `stately`, `xstate-v5`, and `xstate-v6` skills and connects the [Stately MCP server](/docs/packages/mcp):
 
 ```text
 /plugin marketplace add statelyai/skills
@@ -32,6 +32,7 @@ To save and open models in Stately from another agent, connect it to the MCP ser
 | --- | --- |
 | [`stately`](#stately-skill) | Find implicit state machines, review changes for state bugs, model-check flows, and make flags explicit. |
 | [`xstate-v5`](#xstate-v5-skill) | Write, review, and migrate XState v5 machines. |
+| [`xstate-v6`](#xstate-v6-skill) | Write, review, test, and migrate XState v6 machines using the installed package’s docs. |
 | [`state-management`](#state-management-skill) | Model and refactor application state. |
 | [`readme`](#readme-skill) | Keep README files in sync with the code. |
 
@@ -155,7 +156,19 @@ The skill saves one machine per flow, with each state and transition linked to t
 
 ## XState v5 skill
 
-The `xstate-v5` skill helps an agent design, implement, review, and migrate XState v5 statecharts in TypeScript with v5 APIs such as `setup(...)`, `createActor(...)`, and `fromPromise(...)`. For XState v6, the `xstate` package includes its own [agent guide](/docs/xstate/v6/agents) in `node_modules/xstate/docs/agents.md`.
+The `xstate-v5` skill helps an agent design, implement, review, and migrate XState v5 statecharts in TypeScript with v5 APIs such as `setup(...)`, `createActor(...)`, and `fromPromise(...)`.
+
+## XState v6 skill
+
+The `xstate-v6` skill helps an agent write, review, test, and migrate XState v6 machines and actors. It reads the documentation bundled with the installed `xstate` version, starting with `node_modules/xstate/docs/index.md` and the [agent guide](/docs/xstate/v6/agents) at `node_modules/xstate/docs/agents.md`, so its guidance matches the version your project uses.
+
+Install it on its own with:
+
+```bash
+npx skills add statelyai/skills --skill xstate-v6
+```
+
+Use it for XState v6, including beta releases, or when migrating from v5 to v6. For projects staying on XState v5, use the [XState v5 skill](#xstate-v5-skill).
 
 ## State management skill
 
