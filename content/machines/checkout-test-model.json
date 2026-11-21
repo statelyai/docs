@@ -1,0 +1,4 @@
+{
+  "format": "xstate",
+  "definition": "import { createMachine } from 'xstate';\n\nexport const checkoutModel = createMachine({\n\tid: 'checkout',\n\tinitial: 'ready',\n\tstates: {\n\t\tready: {\n\t\t\ton: { PAY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }\n\t\t},\n\t\tpaying: {\n\t\t\ton: { PAYMENT_SUCCEEDED: { target: 'paid' }, PAYMENT_DECLINED: { target: 'declined' } }\n\t\t},\n\t\tdeclined: {\n\t\t\ton: { RETRY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }\n\t\t},\n\t\tpaid: { type: 'final' },\n\t\tcancelled: { type: 'final' }\n\t}\n});"
+}
