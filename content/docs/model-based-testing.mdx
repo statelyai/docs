@@ -159,8 +159,8 @@ A coding agent can draft the first model from your tests and requirements. Ask i
 
 ## Model-based testing and formal verification
 
-Model checking can establish that a specified property holds across all reachable states of a finite model within the bounds you give it. For example, if the model includes charge attempts, you can check that an order can never reach a state with two successful charges. A test generated from that model can drive the running checkout and check that the payment service records one charge after a retry.
+Formal verification proves that a model or program satisfies a property. For example, if the model includes charge attempts, a model checker can prove that no reachable state has two successful charges.
 
-Formal verification can also establish properties of implementation code under explicit assumptions. That gives a stronger guarantee for those properties. For an existing app, model-based testing is often the more practical starting point. You can keep the code and run against the same browser, server, and test services you already use. The result applies to the sequences you ran and the behavior you checked.
+A proof holds under its assumptions about everything the code depends on: the browser, the payment provider, the network, and other services. These parts have no formal specification, so the proof assumes how they behave. Model-based testing runs the real app against the same model and checks whether those assumptions hold. A generated test can drive the checkout through a decline and a retry, then check that the test payment service recorded one charge.
 
-You can use both. Check a property on the model, then generate tests that exercise the corresponding behavior in the app.
+You can use both. Prove the property on the model, then generate tests that check the running app follows it.
