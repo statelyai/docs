@@ -1,0 +1,47 @@
+---
+title: Agent skills
+description: Install the Stately skills for Claude Code, Codex, and other coding agents to find, review, check, and fix state machines in your code.
+---
+
+Stately’s skills teach coding agents to work with state machines: finding the implicit ones in your code, reviewing changes for state bugs, model-checking flows, and writing XState.
+
+## Install
+
+Install all of the skills with [skills](https://github.com/vercel-labs/skills), which works with Claude Code, Codex, Cursor, OpenCode, and many other coding agents:
+
+```bash
+npx skills add statelyai/skills
+```
+
+To install one skill, name it:
+
+```bash
+npx skills add statelyai/skills --skill stately
+```
+
+In Claude Code, you can also install the skills as a plugin. The plugin includes the `stately`, `xstate-v5`, and `xstate-v6` skills and connects the [Stately MCP server](/docs/packages/mcp):
+
+```text
+/plugin marketplace add statelyai/skills
+/plugin install stately@stately
+```
+
+To save and open models in Stately from another agent, connect it to the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each agent’s setup. In Claude Code, run `/mcp` and sign in to `stately`.
+
+## Skills
+
+Each skill’s documentation lives next to its source, so it stays current with the skill.
+
+| Skill | Use it to | Docs |
+| --- | --- | --- |
+| `stately` | Find implicit state machines, review changes for state bugs, model-check flows, and make flags explicit. | [Stately skill](https://github.com/statelyai/skills/blob/main/skills/stately/README.md) |
+| `xstate-v5` | Write, review, and migrate XState v5 machines. | [SKILL.md](https://github.com/statelyai/skills/blob/main/skills/xstate-v5/SKILL.md) |
+| `xstate-v6` | Write, review, test, and migrate XState v6 machines using the installed package’s docs. | [SKILL.md](https://github.com/statelyai/skills/blob/main/skills/xstate-v6/SKILL.md) |
+| `state-management` | Model and refactor application state. | [SKILL.md](https://github.com/statelyai/skills/blob/main/skills/state-management/SKILL.md) |
+| `readme` | Keep README files in sync with the code. | [SKILL.md](https://github.com/statelyai/skills/blob/main/skills/readme/SKILL.md) |
+
+To use the Stately skill, mention Stately in a request, such as `Use Stately to find all of the implicit state machines in my app.` You can also invoke it with `/stately:stately` in Claude Code or `$stately` in Codex. Finding, reviewing, and checking need no XState, no Stately account, and no MCP connection.
+
+## Self-hosting
+
+Finding, reviewing, and checking need no server. A self-hosted deployment exposes its MCP endpoint at `/api/mcp`. See [Conversion API and MCP](/docs/self-hosting#conversion-api-and-mcp) for its tools and for bridging stdio-only clients.

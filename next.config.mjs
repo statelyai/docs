@@ -59,6 +59,11 @@ const config = {
         permanent: true,
       },
       {
+        source: '/skills',
+        destination: '/docs/skills',
+        permanent: false,
+      },
+      {
         source: '/docs/mcp',
         destination: '/docs/packages/mcp',
         permanent: true,
