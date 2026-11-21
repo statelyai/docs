@@ -1,0 +1,166 @@
+---
+title: Model-based testing
+description: Generate tests from a state machine, check your app with XState Test, and cover more behavior with fewer hand-written end-to-end scenarios.
+---
+
+import checkoutDiagram from '@/content/machines/checkout-test-model.json';
+
+Model-based testing generates tests from a description of how your app should behave. You give the test runner a model of the feature and a way to drive the app. The runner chooses sequences of events, runs them against both, and checks that the app behaves as the model says it should.
+
+Take a checkout flow. You might write one end-to-end test for a successful payment and another for a declined card. Both can pass while retrying a declined payment leaves the checkout stuck. A model can describe what happens after a decline, including retrying and canceling. Each path can reuse the same code that starts a payment, simulates a response, and checks the checkout status.
+
+## When model-based testing helps
+
+Unit tests are a good fit for rules you can check in isolation, such as how a discount is calculated. End-to-end tests check behavior across the browser, server, and other services. Model-based testing changes how you select test cases. You can generate them for a unit, an API, or an end-to-end test.
+
+The advantage is largest when the order of events matters. A test for each button can miss what happens when you click one button after another. A state machine gives the test runner the rules it needs to choose those sequences. When you add a transition, the generator can use it with the event handlers and checks you already wrote.
+
+Writing and maintaining the model is the main upfront cost. You also need to reset the app between runs, decide what to check, and control dependencies that would otherwise make tests unpredictable. Generating more browser tests can increase CI time. You can spend less time writing scenarios and still test more behavior by generating most paths against a fast API or component and running a smaller set through the browser.
+
+## Write a checkout model
+
+A [state machine](/docs/state-machines-and-statecharts) describes the states a feature can be in and which events move it between them. This model starts at `ready`. A payment can succeed or be declined. After a decline, the customer can retry or cancel.
+
+Install XState v6 and XState Test. Both use the beta release tag in this example.
+
+```sh
+npm install -D xstate@beta @xstate/test@beta
+```
+
+```js
+// checkout.model.mjs
+import { createMachine } from 'xstate';
+
+export const checkoutModel = createMachine({
+	id: 'checkout',
+	initial: 'ready',
+	states: {
+		ready: {
+			on: { PAY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }
+		},
+		paying: {
+			on: { PAYMENT_SUCCEEDED: { target: 'paid' }, PAYMENT_DECLINED: { target: 'declined' } }
+		},
+		declined: {
+			on: { RETRY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }
+		},
+		paid: { type: 'final' },
+		cancelled: { type: 'final' }
+	}
+});
+```
+
+### Visualize the model
+
+<Embed machine={checkoutDiagram} title="Checkout test model" mode="Simulate" />
+
+In the diagram, send `PAY`, `PAYMENT_DECLINED`, `RETRY`, and `PAYMENT_SUCCEEDED`. The checkout should end in `paid`. Try sending `CANCEL` after the decline. The checkout should end in `cancelled`.
+
+To visualize your own model, create a new machine in the [Stately editor](https://editor.stately.ai/) and [import your XState code](/docs/import-from-code). Use simulation to review the paths with someone who knows the requirements. For example, this model allows cancellation before payment and after a decline. If your product allows it while payment is pending, add that rule to the model.
+
+## Generate tests with XState Test
+
+The test needs a fresh checkout for each path, a function that drives it, and a function that reads its status. Use this small implementation to run the example with Node's test runner. It keeps checkout status in memory. In your app, use the public API or UI you already test.
+
+```js
+// checkout.mjs
+export function createCheckout() {
+	let status = 'ready';
+
+	function move(from, to) {
+		if (status === from) {
+			status = to;
+		}
+	}
+
+	return {
+		pay: () => move('ready', 'paying'),
+		resolvePayment: () => move('paying', 'paid'),
+		declinePayment: () => move('paying', 'declined'),
+		retry: () => move('declined', 'paying'),
+		cancel: () => {
+			if (status === 'ready' || status === 'declined') {
+				status = 'cancelled';
+			}
+		},
+		status: () => status
+	};
+}
+```
+
+The `sut` option connects the system under test to the model. The event handlers drive the checkout. `projectModel` selects the expected value to compare with the status returned by `read()`.
+
+```js
+// checkout.test.mjs
+import { test } from 'node:test';
+import { assertTestCoverage, testPaths } from '@xstate/test/paths';
+import { checkoutModel } from './checkout.model.mjs';
+import { createCheckout } from './checkout.mjs';
+
+test('checkout follows its model', async () => {
+	const { coverage } = await testPaths(checkoutModel, {
+		cover: {
+			requirements: {
+				'first payment succeeds': [
+					({ event }) => event.type === 'PAY',
+					({ event }) => event.type === 'PAYMENT_SUCCEEDED'
+				],
+				'payment succeeds after a retry': [
+					({ event }) => event.type === 'PAYMENT_DECLINED',
+					({ event }) => event.type === 'RETRY',
+					({ event }) => event.type === 'PAYMENT_SUCCEEDED'
+				],
+				'customer cancels before paying': ({ event, snapshots }) =>
+					event.type === 'CANCEL' && snapshots[0].matches('ready'),
+				'customer cancels after a decline': ({ event, snapshots }) =>
+					event.type === 'CANCEL' && snapshots[0].matches('declined')
+			}
+		},
+		sut: {
+			create() {
+				const checkout = createCheckout();
+				const actions = {
+					PAY: () => checkout.pay(),
+					PAYMENT_SUCCEEDED: () => checkout.resolvePayment(),
+					PAYMENT_DECLINED: () => checkout.declinePayment(),
+					RETRY: () => checkout.retry(),
+					CANCEL: () => checkout.cancel()
+				};
+
+				return {
+					send: (event) => actions[event.type](),
+					read: () => checkout.status()
+				};
+			},
+			projectModel: (snapshot) => snapshot.value
+		}
+	});
+
+	assertTestCoverage(coverage, { transitions: 1 });
+});
+```
+
+Run the test with `node --test checkout.test.mjs`. XState Test compares the actual status with the model's state after each step. If `retry()` leaves the checkout in `declined`, the test fails at `RETRY` with the sequence that got there.
+
+By default, `testPaths()` looks for short paths to reachable states. A shortest path to `paid` can skip `RETRY` because the first payment can succeed. The beta's `cover` option asks for specific events or sequences, including a successful retry. The coverage assertion asks for 100% of the model's measured transitions. Transition coverage tells you which modeled transitions the tests took. Add explicit checks for rejected events, such as a second payment request while the first is pending. Coverage alone cannot tell you whether a rule is missing or whether every event order or input value works.
+
+For payloads such as amounts and currencies, you can supply representative inputs for path tests or use `propertyTest()` to generate inputs and event sequences and shrink a failure to a smaller example. See the [XState v6 model-based testing guide](/docs/xstate/v6/model-based-testing) and the [XState Test README](https://github.com/statelyai/xstate/blob/9de6888fd03f0d27d16fe20fe03d6e52dff78d3a/packages/xstate-test/README.md).
+
+## Convert existing end-to-end tests
+
+Start with one workflow that already has several tests. Keep running those tests while you build the model.
+
+1. Read the test titles, steps, and assertions. Identify states that change what the user can do next. In checkout, a decline adds the option to retry. Use `declined` as a state. Use `RETRY` as an event.
+2. Reuse your test helpers. Map `PAY` and `RETRY` to button clicks. Map payment outcomes to responses from your test payment service. Reset test data and navigate to the start of the workflow before each path. Wait for the UI to reflect each event before reading its state. In Playwright, use [`createPlaywrightSut()`](https://github.com/statelyai/xstate/blob/9de6888fd03f0d27d16fe20fe03d6e52dff78d3a/packages/xstate-test/README.md#test-a-web-page-with-playwright) to connect these handlers to a page.
+3. Move repeated assertions into checks the generated tests can reuse. Compare the visible checkout status after each step. If a retry must never charge twice, also check the number of charges recorded by the test payment service.
+4. Check which old scenarios the generated tests cover and which new paths they exercise. Remove duplicate tests after verifying the generated suite still makes their assertions. Keep targeted end-to-end tests for behavior the model leaves out, such as the real payment provider's callback reaching your server.
+
+A coding agent can draft the first model from your tests and requirements. Ask it to list the evidence for each transition and flag rules the tests leave open. Review the diagram with someone who knows the intended behavior. If the agent only reads the implementation, it can copy a bug into the model and make the two agree.
+
+## Model-based testing and formal verification
+
+Model checking can establish that a specified property holds across all reachable states of a finite model within the bounds you give it. For example, if the model includes charge attempts, you can check that an order can never reach a state with two successful charges. A test generated from that model can drive the running checkout and check that the payment service records one charge after a retry.
+
+Formal verification can also establish properties of implementation code under explicit assumptions. That gives a stronger guarantee for those properties. For an existing app, model-based testing is often the more practical starting point. You can keep the code and run against the same browser, server, and test services you already use. The result applies to the sequences you ran and the behavior you checked.
+
+You can use both. Check a property on the model, then generate tests that exercise the corresponding behavior in the app.
