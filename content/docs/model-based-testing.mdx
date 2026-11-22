@@ -32,21 +32,24 @@ npm install -D xstate@beta @xstate/test@beta
 import { createMachine } from 'xstate';
 
 export const checkoutModel = createMachine({
-	id: 'checkout',
-	initial: 'ready',
-	states: {
-		ready: {
-			on: { PAY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }
-		},
-		paying: {
-			on: { PAYMENT_SUCCEEDED: { target: 'paid' }, PAYMENT_DECLINED: { target: 'declined' } }
-		},
-		declined: {
-			on: { RETRY: { target: 'paying' }, CANCEL: { target: 'cancelled' } }
-		},
-		paid: { type: 'final' },
-		cancelled: { type: 'final' }
-	}
+  id: 'checkout',
+  initial: 'ready',
+  states: {
+    ready: {
+      on: { PAY: { target: 'paying' }, CANCEL: { target: 'cancelled' } },
+    },
+    paying: {
+      on: {
+        PAYMENT_SUCCEEDED: { target: 'paid' },
+        PAYMENT_DECLINED: { target: 'declined' },
+      },
+    },
+    declined: {
+      on: { RETRY: { target: 'paying' }, CANCEL: { target: 'cancelled' } },
+    },
+    paid: { type: 'final' },
+    cancelled: { type: 'final' },
+  },
 });
 ```
 
@@ -54,7 +57,7 @@ export const checkoutModel = createMachine({
 
 <Embed machine={checkoutDiagram} title="Checkout test model" mode="Simulate" />
 
-In the diagram, send `PAY`, `PAYMENT_DECLINED`, `RETRY`, and `PAYMENT_SUCCEEDED`. The checkout should end in `paid`. Try sending `CANCEL` after the decline. The checkout should end in `cancelled`.
+In the diagram, send `PAY`, `PAYMENT_DECLINED`, `RETRY`, and `PAYMENT_SUCCEEDED`. The checkout should end in `paid`. Reset the simulation, then send `PAY`, `PAYMENT_DECLINED`, and `CANCEL`. The checkout should end in `cancelled`.
 
 To visualize your own model, create a new machine in the [Stately editor](https://editor.stately.ai/) and [import your XState code](/docs/import-from-code). Use simulation to review the paths with someone who knows the requirements. For example, this model allows cancellation before payment and after a decline. If your product allows it while payment is pending, add that rule to the model.
 
@@ -65,26 +68,26 @@ The test needs a fresh checkout for each path, a function that drives it, and a 
 ```js
 // checkout.mjs
 export function createCheckout() {
-	let status = 'ready';
+  let status = 'ready';
 
-	function move(from, to) {
-		if (status === from) {
-			status = to;
-		}
-	}
+  function move(from, to) {
+    if (status === from) {
+      status = to;
+    }
+  }
 
-	return {
-		pay: () => move('ready', 'paying'),
-		resolvePayment: () => move('paying', 'paid'),
-		declinePayment: () => move('paying', 'declined'),
-		retry: () => move('declined', 'paying'),
-		cancel: () => {
-			if (status === 'ready' || status === 'declined') {
-				status = 'cancelled';
-			}
-		},
-		status: () => status
-	};
+  return {
+    pay: () => move('ready', 'paying'),
+    resolvePayment: () => move('paying', 'paid'),
+    declinePayment: () => move('paying', 'declined'),
+    retry: () => move('declined', 'paying'),
+    cancel: () => {
+      if (status === 'ready' || status === 'declined') {
+        status = 'cancelled';
+      }
+    },
+    status: () => status,
+  };
 }
 ```
 
@@ -98,45 +101,45 @@ import { checkoutModel } from './checkout.model.mjs';
 import { createCheckout } from './checkout.mjs';
 
 test('checkout follows its model', async () => {
-	const { coverage } = await testPaths(checkoutModel, {
-		cover: {
-			requirements: {
-				'first payment succeeds': [
-					({ event }) => event.type === 'PAY',
-					({ event }) => event.type === 'PAYMENT_SUCCEEDED'
-				],
-				'payment succeeds after a retry': [
-					({ event }) => event.type === 'PAYMENT_DECLINED',
-					({ event }) => event.type === 'RETRY',
-					({ event }) => event.type === 'PAYMENT_SUCCEEDED'
-				],
-				'customer cancels before paying': ({ event, snapshots }) =>
-					event.type === 'CANCEL' && snapshots[0].matches('ready'),
-				'customer cancels after a decline': ({ event, snapshots }) =>
-					event.type === 'CANCEL' && snapshots[0].matches('declined')
-			}
-		},
-		sut: {
-			create() {
-				const checkout = createCheckout();
-				const actions = {
-					PAY: () => checkout.pay(),
-					PAYMENT_SUCCEEDED: () => checkout.resolvePayment(),
-					PAYMENT_DECLINED: () => checkout.declinePayment(),
-					RETRY: () => checkout.retry(),
-					CANCEL: () => checkout.cancel()
-				};
+  const { coverage } = await testPaths(checkoutModel, {
+    cover: {
+      requirements: {
+        'first payment succeeds': [
+          ({ event }) => event.type === 'PAY',
+          ({ event }) => event.type === 'PAYMENT_SUCCEEDED',
+        ],
+        'payment succeeds after a retry': [
+          ({ event }) => event.type === 'PAYMENT_DECLINED',
+          ({ event }) => event.type === 'RETRY',
+          ({ event }) => event.type === 'PAYMENT_SUCCEEDED',
+        ],
+        'customer cancels before paying': ({ event, snapshots }) =>
+          event.type === 'CANCEL' && snapshots[0].matches('ready'),
+        'customer cancels after a decline': ({ event, snapshots }) =>
+          event.type === 'CANCEL' && snapshots[0].matches('declined'),
+      },
+    },
+    sut: {
+      create() {
+        const checkout = createCheckout();
+        const actions = {
+          PAY: () => checkout.pay(),
+          PAYMENT_SUCCEEDED: () => checkout.resolvePayment(),
+          PAYMENT_DECLINED: () => checkout.declinePayment(),
+          RETRY: () => checkout.retry(),
+          CANCEL: () => checkout.cancel(),
+        };
 
-				return {
-					send: (event) => actions[event.type](),
-					read: () => checkout.status()
-				};
-			},
-			projectModel: (snapshot) => snapshot.value
-		}
-	});
+        return {
+          send: (event) => actions[event.type](),
+          read: () => checkout.status(),
+        };
+      },
+      projectModel: (snapshot) => snapshot.value,
+    },
+  });
 
-	assertTestCoverage(coverage, { transitions: 1 });
+  assertTestCoverage(coverage, { transitions: 1 });
 });
 ```
 
