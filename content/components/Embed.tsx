@@ -154,5 +154,13 @@ export function inlineEmbedURL(
     .replace(/=+$/, '');
   const params = new URLSearchParams({ machine: encoded, format, theme });
   if (mode) params.set('mode', mode);
+  const normalizedMode = mode?.toLowerCase();
+  if (normalizedMode === 'simulate' || normalizedMode === 'simulating') {
+    // Keep the minimal iframe controls and add the simulation dock.
+    params.set(
+      'canvasSlots',
+      'viewportControls,backToContent,contextMenu,dialogs,toasts,simulationControls',
+    );
+  }
   return `https://editor.stately.ai/viz#${params.toString()}`;
 }
