@@ -26,6 +26,7 @@ type Props = {
   alt: string;
   caption: string;
   display?: 'inline' | 'on-demand';
+  source?: string;
 };
 
 const subscribeToNothing = () => () => {};
@@ -215,6 +216,7 @@ export function StatechartExample({
   alt,
   caption,
   display = 'on-demand',
+  source = 'docs-statecharts',
 }: Props) {
   const [expanded, setExpanded] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -227,7 +229,7 @@ export function StatechartExample({
     hydrated && (resolvedTheme === 'light' || resolvedTheme === 'dark')
       ? resolvedTheme
       : 'system';
-  const embedURL = statechartExampleURL(example, colorMode);
+  const embedURL = statechartExampleURL(example, colorMode, source);
   const entry = statechartExamples[example];
 
   return (
@@ -257,7 +259,7 @@ export function StatechartExample({
         <div data-statechart-handoff={example} className="mt-3 text-sm">
           <p>
             <a
-              href={statechartExampleEditURL(example)}
+              href={statechartExampleEditURL(example, source)}
               target="_blank"
               rel="noopener noreferrer"
               className="plausible-event-name=Editor+CTA"

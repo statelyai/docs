@@ -13,16 +13,26 @@ Parallel states have the following characteristics:
 - Exiting a parallel state will also simultaneously exit all of its regions.
 - An event received in a parallel state is simultaneously received & handled by all of its regions.
 
-<Callout>
+## Try a parallel state
 
-You can visualize and simulate parallel states in Stately's editor. [Read more about parallel states in Stately's editor](/docs/editor-states-and-transitions/#parallel-states).
+This order prepares coffee and a donut at the same time. Open the interactive example and send `COFFEE_READY`, then `DONUT_READY`. The order reaches Ready for pickup only after both regions finish. Reload the example to try the events in the opposite order.
 
-</Callout>
+<StatechartExample
+  example="coffee-donut-parallel"
+  source="docs-parallel-states"
+  name="the parallel coffee and donut order"
+  alt="A parallel Preparing state contains Coffee and Donut regions. COFFEE_READY completes Coffee, DONUT_READY completes Donut, and both final states lead to Ready for pickup."
+  caption="Both regions are active while Preparing. Finishing one region leaves the other active."
+/>
+
+Choose **Edit the parallel coffee and donut order** to change the same example in the editor. The example includes an editable XState JSON download. [Read about parallel states in the editor](/docs/editor-states-and-transitions/#parallel-states).
+
+## Define parallel states in XState
 
 Here is a music player example with a parallel state consisting of two regions, one for handling playing the track and one for handling the volume:
 
 ```ts
-import { createMachine, assign } from 'xstate';
+import { createMachine, createActor } from 'xstate';
 
 const playerMachine = createMachine({
   id: 'player',
