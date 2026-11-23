@@ -80,6 +80,8 @@ When you ask the Stately skill to find implicit state machines, it reads your co
 | uploading | uploaded without URL | **uploading (stuck)** | `Upload.tsx:11` |
 | uploading | failed | failed | `Upload.tsx:16` |
 
+![State diagram of the upload found by the skill: idle goes to uploading on upload. From uploading, "uploaded with URL" goes to done, failed goes to failed, and "uploaded without URL" loops back to uploading, which is marked as stuck because isUploading stays true.](./upload-found.png)
+
 The skill knows twelve kinds of state bugs, including impossible states, stuck states, event ordering, check-then-act races, stale copies, retries and timers, and error paths. It also looks for what’s _missing_: an exit that skips cleanup, an increment with no decrement where a reader expects one, a status that can be set but never cleared. When the agent can write files, it keeps an inventory of every machine it found and updates it on later runs.
 
 And every diagram shows up in Stately. Sign in to the Stately MCP server (in Claude Code, run `/mcp`; in Codex, run `codex mcp login stately`), and each candidate gets a link to an interactive diagram in the editor. Links to diagrams you don’t save last 30 days.
@@ -103,7 +105,9 @@ Use Stately to check that the checkout flow never charges an order twice, and th
 every started payment eventually settles or fails.
 ```
 
-Reading code finds a lot of bugs, but some only show up after a specific sequence of events (a second tab, a retry that overlaps the first attempt, a timeout that fires after the response arrives). For those, the skill models the flow from your code, writes the rules you asked for, and runs a model checker that tries every sequence of events within its bounds. Each rule either holds, breaks with a counterexample path you can replay, or isn’t checked.
+Reading code finds a lot of bugs, but some only show up after a specific sequence of events (a second tab, a retry that overlaps the first attempt, a timeout that fires after the response arrives). For those, the skill models the flow from your code, writes the rules you asked for, and runs a model checker that tries every sequence of events within its bounds. Each rule either holds, breaks with a counterexample path you can replay, or isn’t checked. A broken rule comes with the path that breaks it, such as two tabs paying for the same order:
+
+![Counterexample path for the rule "never charge an order twice": orderOpen, then tab A pays (aCharging), then tab B pays while the order is still unpaid (bothCharging), then A's charge succeeds (paidOnce), then B's charge succeeds (chargedTwice).](./checkout-counterexample.png)
 
 The default checker uses XState v6 semantics and doesn’t need Java. For flows that need more (or if you already have a `.tla` spec), it runs TLA+ with TLC. The TLA+ path builds on the engine from Lauren Tan’s `/statechart` skill, and we compared the two directly (see [How we tested it](#how-we-tested-it)).
 
@@ -137,6 +141,8 @@ export const uploadMachine = createFSM({
   },
 });
 ```
+
+![State diagram of the explicit upload machine: idle goes to uploading on upload. From uploading, uploaded goes to done, and noUrl and failed both go to failed. From failed, retry goes back to uploading.](./upload-explicit.png)
 
 A response without a URL is now an explicit `noUrl` event that leads to `failed`, so the upload can’t stay in `uploading`. The skill uses [XState v6 beta](/blog/2026-11-05-xstate-v6-beta) by default (here, the tiny `xstate/fsm` machine), or XState v5 if your project already uses it, and it checks the new machine against the same rules.
 
