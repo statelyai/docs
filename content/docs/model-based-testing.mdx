@@ -100,6 +100,25 @@ import { assertTestCoverage, testPaths } from '@xstate/test/paths';
 import { checkoutModel } from './checkout.model.mjs';
 import { createCheckout } from './checkout.mjs';
 
+const sut = {
+  create() {
+    const checkout = createCheckout();
+    const actions = {
+      PAY: () => checkout.pay(),
+      PAYMENT_SUCCEEDED: () => checkout.resolvePayment(),
+      PAYMENT_DECLINED: () => checkout.declinePayment(),
+      RETRY: () => checkout.retry(),
+      CANCEL: () => checkout.cancel(),
+    };
+
+    return {
+      send: (event) => actions[event.type](),
+      read: () => checkout.status(),
+    };
+  },
+  projectModel: (snapshot) => snapshot.value,
+};
+
 test('checkout follows its model', async () => {
   const { coverage } = await testPaths(checkoutModel, {
     cover: {
@@ -119,42 +138,34 @@ test('checkout follows its model', async () => {
           event.type === 'CANCEL' && snapshots[0].matches('declined'),
       },
     },
-    sut: {
-      create() {
-        const checkout = createCheckout();
-        const actions = {
-          PAY: () => checkout.pay(),
-          PAYMENT_SUCCEEDED: () => checkout.resolvePayment(),
-          PAYMENT_DECLINED: () => checkout.declinePayment(),
-          RETRY: () => checkout.retry(),
-          CANCEL: () => checkout.cancel(),
-        };
-
-        return {
-          send: (event) => actions[event.type](),
-          read: () => checkout.status(),
-        };
-      },
-      projectModel: (snapshot) => snapshot.value,
-    },
+    sut,
   });
 
   assertTestCoverage(coverage, { transitions: 1 });
+});
+
+test('checkout ignores events its model rejects', async () => {
+  await testPaths(checkoutModel, {
+    checkUnhandled: { PAY: true, CANCEL: true },
+    sut,
+  });
 });
 ```
 
 Run the test with `node --test checkout.test.mjs`. XState Test compares the actual status with the model's state after each step. If `retry()` leaves the checkout in `declined`, the test fails at `RETRY` with the sequence that got there.
 
-By default, `testPaths()` looks for short paths to reachable states. A shortest path to `paid` can skip `RETRY` because the first payment can succeed. The beta's `cover` option asks for specific events or sequences, including a successful retry. The coverage assertion asks for 100% of the model's measured transitions. Transition coverage tells you which modeled transitions the tests took. Add explicit checks for rejected events, such as a second payment request while the first is pending. Coverage alone cannot tell you whether a rule is missing or whether every event order or input value works.
+By default, `testPaths()` looks for short paths to reachable states. A shortest path to `paid` can skip `RETRY` because the first payment can succeed. The beta's `cover` option asks for specific events or sequences, including a successful retry. The coverage assertion asks for 100% of the model's measured transitions. Transition coverage tells you which modeled transitions the tests took. It cannot tell you whether a rule is missing or whether every event order or input value works.
 
-For payloads such as amounts and currencies, you can supply representative inputs for path tests or use `propertyTest()` to generate inputs and event sequences and shrink a failure to a smaller example. See the [XState v6 model-based testing guide](/docs/xstate/v6/model-based-testing) and the [XState Test README](https://github.com/statelyai/xstate/blob/9de6888fd03f0d27d16fe20fe03d6e52dff78d3a/packages/xstate-test/README.md).
+The second test checks events the model rejects. `checkUnhandled` sends `PAY` or `CANCEL` from each state where the model has no transition for it, then checks that the checkout status is unchanged. In this model, a second `PAY` while payment is pending must do nothing, and so must `CANCEL`. If `cancel()` also cancels a pending payment, the test fails at `PAY → CANCEL`. `checkUnhandled` generates its own paths, so it cannot be combined with `cover` in the same call.
+
+For payloads such as amounts and currencies, you can supply representative inputs for path tests or use `propertyTest()` to generate inputs and event sequences and shrink a failure to a smaller example. See the [XState v6 model-based testing guide](/docs/xstate/v6/model-based-testing) and the [XState Test README](https://github.com/statelyai/xstate/blob/04b26b8670ec6724279764579a74043fb83960da/packages/xstate-test/README.md).
 
 ## Convert existing end-to-end tests
 
 Start with one workflow that already has several tests. Keep running those tests while you build the model.
 
 1. Read the test titles, steps, and assertions. Identify states that change what the user can do next. In checkout, a decline adds the option to retry. Use `declined` as a state. Use `RETRY` as an event.
-2. Reuse your test helpers. Map `PAY` and `RETRY` to button clicks. Map payment outcomes to responses from your test payment service. Reset test data and navigate to the start of the workflow before each path. Wait for the UI to reflect each event before reading its state. In Playwright, use [`createPlaywrightSut()`](https://github.com/statelyai/xstate/blob/9de6888fd03f0d27d16fe20fe03d6e52dff78d3a/packages/xstate-test/README.md#test-a-web-page-with-playwright) to connect these handlers to a page.
+2. Reuse your test helpers. Map `PAY` and `RETRY` to button clicks. Map payment outcomes to responses from your test payment service. Reset test data and navigate to the start of the workflow before each path. Wait for the UI to reflect each event before reading its state. In Playwright, use [`createPlaywrightSut()`](https://github.com/statelyai/xstate/blob/04b26b8670ec6724279764579a74043fb83960da/packages/xstate-test/README.md#test-a-web-page-with-playwright) to connect these handlers to a page.
 3. Move repeated assertions into checks the generated tests can reuse. Compare the visible checkout status after each step. If a retry must never charge twice, also check the number of charges recorded by the test payment service.
 4. Check which old scenarios the generated tests cover and which new paths they exercise. Remove duplicate tests after verifying the generated suite still makes their assertions. Keep targeted end-to-end tests for behavior the model leaves out, such as the real payment provider's callback reaching your server.
 
