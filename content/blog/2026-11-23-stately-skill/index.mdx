@@ -3,8 +3,8 @@ title: 'Find the state machines hiding in your code'
 description: 'The Stately skill for Claude Code, Codex, and other agents now finds implicit state machines, reviews pull requests for state bugs, model-checks flows, and makes flags explicit.'
 authors: [david]
 tags: [stately, skills, agents, state machines, model checking, code review]
-date: 2026-11-19
-slug: 2026-11-19-stately-skill
+date: 2026-11-23
+slug: 2026-11-23-stately-skill
 ---
 
 Today, we’re releasing a new version of the **Stately skill** for Claude Code, Codex, Cursor, and other coding agents. It finds the implicit state machines in your code, reviews pull requests for state bugs, checks flows with a model checker, and turns flags into explicit XState machines when you ask it to. {/* truncate */}
@@ -15,14 +15,21 @@ Install it in any agent with [skills](https://github.com/vercel-labs/skills):
 npx skills add statelyai/skills
 ```
 
-Or in Claude Code, as a plugin that also connects the Stately MCP server:
+Or install it as a plugin that also connects the Stately MCP server. In Claude Code:
 
 ```text
 /plugin marketplace add statelyai/skills
 /plugin install stately@stately
 ```
 
-Then ask your agent (or invoke the skill directly with `/stately` in Claude Code or `$stately` in Codex):
+In Codex:
+
+```bash
+codex plugin marketplace add statelyai/skills
+codex plugin add stately@stately
+```
+
+Then ask your agent (or invoke the skill directly with `/stately:stately` in Claude Code or `$stately` in Codex):
 
 ```text
 Use Stately to find all of the implicit state machines in my app.
@@ -75,7 +82,7 @@ When you ask the Stately skill to find implicit state machines, it reads your co
 
 The skill knows twelve kinds of state bugs, including impossible states, stuck states, event ordering, check-then-act races, stale copies, retries and timers, and error paths. It also looks for what’s _missing_: an exit that skips cleanup, an increment with no decrement where a reader expects one, a status that can be set but never cleared. When the agent can write files, it keeps an inventory of every machine it found and updates it on later runs.
 
-And every diagram shows up in Stately. Sign in to the Stately MCP server (in Claude Code, run `/mcp`), and each candidate gets a link to an interactive diagram in the editor.
+And every diagram shows up in Stately. Sign in to the Stately MCP server (in Claude Code, run `/mcp`; in Codex, run `codex mcp login stately`), and each candidate gets a link to an interactive diagram in the editor. Links to diagrams you don’t save last 30 days.
 
 ## Reviewing pull requests for state bugs
 
@@ -98,7 +105,7 @@ every started payment eventually settles or fails.
 
 Reading code finds a lot of bugs, but some only show up after a specific sequence of events (a second tab, a retry that overlaps the first attempt, a timeout that fires after the response arrives). For those, the skill models the flow from your code, writes the rules you asked for, and runs a model checker that tries every sequence of events within its bounds. Each rule either holds, breaks with a counterexample path you can replay, or isn’t checked.
 
-The default checker uses XState v6 semantics and doesn’t need Java. For flows that need more (or if you already have a `.tla` spec), it runs TLA+ with TLC. The TLA+ path builds on the engine from Lauren Tan’s `/statechart` skill, and we compared the two directly: on the same flows in six open-source repos, the Stately skill showed 61% of the known bugs as counterexamples, compared with 56%, with fewer tokens.
+The default checker uses XState v6 semantics and doesn’t need Java. For flows that need more (or if you already have a `.tla` spec), it runs TLA+ with TLC. The TLA+ path builds on the engine from Lauren Tan’s `/statechart` skill, and we compared the two directly (see [How we tested it](#how-we-tested-it)).
 
 After you fix a bug, ask it to check the fix. It reruns the same rules on the fixed model and tells you which rules are fixed, which are still broken, and which the fix broke.
 
@@ -139,9 +146,9 @@ I didn’t want to claim this skill is better without measuring it, so we ran it
 
 - **Finding implicit state machines.** On six open-source repos (Rust, Python, Go, TypeScript, Vue, and Next.js), we built an answer key from the maintainers’ own fixes. The skill found 48% of the items, compared with 31% for the plain prompt “find all of the implicit state machines in my app,” and a blind judge preferred its answer in all six repos. It also uses about three times as many tokens.
 - **Reviewing pull requests.** 17 of 20 known bugs on six unseen pull requests from Quickchat’s benchmark, with zero false findings.
-- **Checking flows.** 61% of known bugs shown as counterexamples, compared with 56% for `/statechart`, and the blind judge preferred it in four of the six repos.
+- **Checking flows.** On six flows from other open-source repos (TypeScript, C#, Python, Kotlin, Elixir, and Go), with three runs each, we compared the skill with Lauren Tan’s `/statechart` and with no skill. The first version missed as many known bugs as `/statechart` (34 each) but showed fewer of them as counterexamples (9 compared with 12), so it didn’t meet our bar of “at least as good.” We then changed the skill to sweep the flow’s source for leads before modeling it. The revised version, which this release includes, found known bugs 22 times compared with 14 for `/statechart` and 19 for no skill, and a blind judge ranked it first on five of the six flows against `/statechart` and on all six against no skill.
 
-These are small samples (one or two runs per condition), the answer keys were built by agents from the maintainers’ diffs, and the judges were models, not people. The skill didn’t win everywhere, either: in the checking comparison, the blind judge preferred `/statechart`’s answers on two of the six repos.
+These are small samples (one to three runs per condition), the answer keys were built by agents from the maintainers’ diffs, and the judges were models, not people. The skill didn’t win everywhere, either: `/statechart` still showed more of the known bugs as counterexamples (12 compared with 10), and 82% of the revised skill’s other findings were real, compared with 91% for `/statechart`. We revised the skill after seeing the first checking results, so the revised version’s numbers aren’t blind to the answer keys.
 
 ## Try it out
 

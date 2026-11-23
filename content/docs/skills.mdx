@@ -26,7 +26,14 @@ In Claude Code, you can also install the skills as a plugin. The plugin includes
 /plugin install stately@stately
 ```
 
-To save and open models in Stately from another agent, connect it to the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each agent’s setup. In Claude Code, run `/mcp` and sign in to `stately`.
+In Codex, install the same plugin from the command line:
+
+```bash
+codex plugin marketplace add statelyai/skills
+codex plugin add stately@stately
+```
+
+To save and open models in Stately, sign in to the MCP server. In Claude Code, run `/mcp` and sign in to `stately`. In Codex, run `codex mcp login stately`. `npx skills add` installs the skill files only; to connect another agent, add the MCP server at `https://mcp.stately.ai/mcp`. See [MCP](/docs/packages/mcp) for each agent’s setup.
 
 ## Skills
 
