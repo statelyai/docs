@@ -1,3 +1,5 @@
+import Script from 'next/script';
+import { createElement } from 'react';
 import { pageMetadata, SITE_URL } from '@/lib/seo';
 import { Landing } from './_landing/Landing';
 import { faqItems } from './_landing/sections/Faq';
@@ -57,6 +59,10 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Script src="https://editor.stately.ai/stately-preview-webmcp.js" />
+      <div className="mx-auto max-w-6xl px-6">
+        {createElement('stately-statechart-preview')}
+      </div>
       <Landing />
     </>
   );
