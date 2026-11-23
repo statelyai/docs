@@ -40,25 +40,29 @@ function encodeExample(example: StatechartExampleId): string {
     .replace(/=+$/, '');
 }
 
-export function statechartExampleEditURL(example: StatechartExampleId): string {
+export function statechartExampleEditURL(
+  example: StatechartExampleId,
+  source = 'docs-statecharts',
+): string {
   const url = new URL('https://editor.stately.ai/embed');
   url.searchParams.set('machine', encodeExample(example));
   url.searchParams.set('format', 'xstate-json');
   url.searchParams.set('mode', 'editing');
-  url.searchParams.set('source', 'docs-statecharts');
+  url.searchParams.set('source', source);
   return url.toString();
 }
 
 export function statechartExampleURL(
   example: StatechartExampleId,
   theme: StatechartColorMode = 'system',
+  source = 'docs-statecharts',
 ): string {
   const machine = encodeExample(example);
   const url = new URL('https://editor.stately.ai/viz');
   const entry = statechartExamples[example];
   url.searchParams.set(
     'source',
-    'source' in entry ? entry.source : 'docs-statecharts',
+    'source' in entry ? entry.source : source,
   );
   url.searchParams.set('activePanels', '');
   url.hash = new URLSearchParams({
