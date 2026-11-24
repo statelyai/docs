@@ -167,9 +167,11 @@ export default function PrivacyPage() {
             account is disabled right away, and you can restore it by signing
             in within 7 days. After 7 days, we permanently delete your account,
             your sign-in record, and the projects, machines, and assets you own.
-            Machines you edited in other people&apos;s projects stay in those
-            projects. If you have an active paid subscription, cancel it in
-            Billing before you delete your account. We delete data in our
+            Projects you created in other people&apos;s teams, and machines you
+            edited in other people&apos;s projects, stay with those projects
+            and are credited to the project owner. If you own a team that has
+            other members, remove them before you delete your account. If you
+            have an active paid subscription, cancel it in Billing first. We delete data in our
             database backups within 30 days.
           </p>
           <p>
