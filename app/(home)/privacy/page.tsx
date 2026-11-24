@@ -96,8 +96,10 @@ export default function PrivacyPage() {
             We send usage events from Stately Studio, the Stately editor, and
             the Stately MCP server to Mixpanel. Events describe which features
             and tools you use, how long they take, and whether they fail. They
-            are tied to a random identifier, and to your account when you are
-            signed in. They do not include your machine contents, the inputs you
+            are tied to a random identifier. In the Stately editor and the MCP
+            server, events are also tied to your account when you are signed
+            in. In Stately Studio, events are tied to a hashed user id only if
+            you consent in the Studio settings. They do not include your machine contents, the inputs you
             pass to MCP tools, or your source code. We send events to Mixpanel
             without your IP address, so Mixpanel does not derive your location
             from it. We use this data to understand how our tools are used and
@@ -488,17 +490,19 @@ export default function PrivacyPage() {
             <li>Upstash: share link storage</li>
             <li>Liveblocks: editor comments</li>
             <li>Mixpanel: usage analytics</li>
-            <li>Plausible: website analytics</li>
+            <li>Plausible: website analytics (processed in the EU)</li>
             <li>OpenAI: AI features</li>
             <li>Algolia: search</li>
             <li>Stripe: payments</li>
             <li>Postmark: account emails</li>
             <li>Crisp: mailing list and support</li>
+            <li>Google: surveys (Google Forms)</li>
             <li>Sentry: error tracking in Stately Studio</li>
             <li>Amazon Web Services: preview images of public machines</li>
           </ul>
           <p>
-            These services are based in the United States or process data
+            Except for Plausible, which processes website visitor data in the
+            EU, these services are based in the United States or process data
             there. When we transfer personal data from the European Economic
             Area, the United Kingdom, or Switzerland, we rely on the
             transfer mechanisms these providers offer, such as Standard
