@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { inlineEmbedURL } from "../content/components/inlineEmbedURL.ts";
 
 function mdxFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -32,6 +33,15 @@ for (const file of mdxFiles("content")) {
           ? Array.isArray(definition.nodes) && Array.isArray(definition.edges)
           : false;
     if (!valid) throw new Error(`${file}: invalid ${format ?? "unknown"} machine ${path}`);
+    const mode = component.match(/\bmode=['"](simulate|simulating)['"]/i)?.[1];
+    if (mode) {
+      const url = inlineEmbedURL(machine, "light", mode);
+      if (!url) throw new Error(`${file}: missing simulation embed URL for ${name}`);
+      const params = new URLSearchParams(new URL(url).hash.slice(1));
+      if (!params.get("canvasSlots")?.split(",").includes("simulationControls")) {
+        throw new Error(`${file}: missing simulation controls for ${name}`);
+      }
+    }
     inline++;
   }
 }

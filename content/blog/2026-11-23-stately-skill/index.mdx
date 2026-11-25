@@ -1,0 +1,163 @@
+---
+title: 'Find the state machines hiding in your code'
+description: 'The Stately skill for Claude Code, Codex, and other agents now finds implicit state machines, reviews pull requests for state bugs, model-checks flows, and makes flags explicit.'
+authors: [david]
+tags: [stately, skills, agents, state machines, model checking, code review]
+date: 2026-11-23
+slug: 2026-11-23-stately-skill
+---
+
+Today, we’re releasing a new version of the **Stately skill** for Claude Code, Codex, Cursor, and other coding agents. It finds the implicit state machines in your code, reviews pull requests for state bugs, checks flows with a model checker, and turns flags into explicit XState machines when you ask it to. {/* truncate */}
+
+Install it in any agent with [skills](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add statelyai/skills
+```
+
+Or install it as a plugin that also connects the Stately MCP server. In Claude Code:
+
+```text
+/plugin marketplace add statelyai/skills
+/plugin install stately@stately
+```
+
+In Codex:
+
+```bash
+codex plugin marketplace add statelyai/skills
+codex plugin add stately@stately
+```
+
+Then ask your agent (or invoke the skill directly with `/stately:stately` in Claude Code or `$stately` in Codex):
+
+```text
+Use Stately to find all of the implicit state machines in my app.
+```
+
+It works with any language and framework, and it doesn’t need XState (or a Stately account) to find, review, or check anything.
+
+## Implicit state machines hide bugs
+
+Most apps are full of state machines that nobody wrote down. They’re spread across flags like `isLoading` and `isSubmitting`, status strings, nullable fields, and timers, and their states and transitions only exist in someone’s head (or nowhere at all).
+
+I wrote about this [back in 2019](/blog/2019-11-13-no-disabling-a-button-is-not-app-logic): when the states of a feature are tracked with separate flags, nothing stops those flags from getting into combinations that make no sense. Here’s a file upload:
+
+```ts
+const [isUploading, setIsUploading] = useState(false);
+const [error, setError] = useState(null);
+const [url, setUrl] = useState(null);
+
+async function upload(file) {
+  setIsUploading(true);
+  setError(null);
+
+  try {
+    const result = await uploadFile(file);
+    if (!result.url) return;
+
+    setUrl(result.url);
+    setIsUploading(false);
+  } catch (err) {
+    setError(err);
+    setIsUploading(false);
+  }
+}
+```
+
+Each line looks fine. But if the server responds without a URL, the early `return` skips `setIsUploading(false)`, and the spinner spins forever. That’s a state machine with a stuck state, and no one wrote down that the state machine exists.
+
+The folks at Quickchat AI wrote a great post about this, [Implicit state machines hide bugs that line-by-line review approves](https://quickchat.ai/post/implicit-state-machines-hide-bugs-that-line-by-line-review-approves), along with a public benchmark of real pull requests with real state bugs. Reviewers (human or AI) read a diff line by line, and the bug is in the combination of lines, often in a file the diff didn’t touch.
+
+## Finding them
+
+When you ask the Stately skill to find implicit state machines, it reads your code area by area and lists every candidate: the values and events that make up the machine (each cited with `path:line`), a transition table, and the bug it allows, ranked by consequence. For the upload above, it reports something like this:
+
+| From | Event | To | Source |
+| --- | --- | --- | --- |
+| idle | upload | uploading | `Upload.tsx:6` |
+| uploading | uploaded with URL | done | `Upload.tsx:13` |
+| uploading | uploaded without URL | **uploading (stuck)** | `Upload.tsx:11` |
+| uploading | failed | failed | `Upload.tsx:16` |
+
+![State diagram of the upload found by the skill: idle goes to uploading on upload. From uploading, "uploaded with URL" goes to done, failed goes to failed, and "uploaded without URL" loops back to uploading, which is marked as stuck because isUploading stays true.](./upload-found.png)
+
+The skill knows twelve kinds of state bugs, including impossible states, stuck states, event ordering, check-then-act races, stale copies, retries and timers, and error paths. It also looks for what’s _missing_: an exit that skips cleanup, an increment with no decrement where a reader expects one, a status that can be set but never cleared. When the agent can write files, it keeps an inventory of every machine it found and updates it on later runs.
+
+And every diagram shows up in Stately. Sign in to the Stately MCP server (in Claude Code, run `/mcp`; in Codex, run `codex mcp login stately`), and each candidate gets a link to an interactive diagram in the editor. Links to diagrams you don’t save last 30 days.
+
+## Reviewing pull requests for state bugs
+
+```text
+Use Stately to review this PR for state bugs.
+```
+
+A small scanner reads the diff first. It lists the state values the change writes and reads (including writers and readers in files the diff didn’t touch), early exits that skip cleanup, removed guards, and work that’s no longer awaited. It also picks how much review the change needs: none for docs and lock files, one pass for most changes, and two independent passes plus a separate verifier for changes that touch persistence, payments, queues, caches, or locks.
+
+Every lead has to end up as a finding, a question, cleared, or not checked, and “the UI prevents it” or “a retry recovers” isn’t a valid reason to clear one. Each finding comes with the exact sequence of steps that reaches it, a test sketch, and a bug-path diagram.
+
+We tested it on Quickchat’s benchmark. On six pull requests that no version of the skill had seen before, the thorough profile found 17 of the 20 known state bugs, the same number as QuickReview’s dedicated state review, and none of its findings turned out to be wrong.
+
+## Checking flows with a model checker
+
+```text
+Use Stately to check that the checkout flow never charges an order twice, and that
+every started payment eventually settles or fails.
+```
+
+Reading code finds a lot of bugs, but some only show up after a specific sequence of events (a second tab, a retry that overlaps the first attempt, a timeout that fires after the response arrives). For those, the skill models the flow from your code, writes the rules you asked for, and runs a model checker that tries every sequence of events within its bounds. Each rule either holds, breaks with a counterexample path you can replay, or isn’t checked. A broken rule comes with the path that breaks it, such as two tabs paying for the same order:
+
+![Counterexample path for the rule "never charge an order twice": orderOpen, then tab A pays (aCharging), then tab B pays while the order is still unpaid (bothCharging), then A's charge succeeds (paidOnce), then B's charge succeeds (chargedTwice).](./checkout-counterexample.png)
+
+The default checker uses XState v6 semantics and doesn’t need Java. For flows that need more (or if you already have a `.tla` spec), it runs TLA+ with TLC. The TLA+ path builds on the engine from Lauren Tan’s `/statechart` skill, and we compared the two directly (see [How we tested it](#how-we-tested-it)).
+
+After you fix a bug, ask it to check the fix. It reruns the same rules on the fixed model and tells you which rules are fixed, which are still broken, and which the fix broke.
+
+## Making them explicit
+
+```text
+Use Stately to make the upload flags explicit.
+```
+
+This is the only request that changes your code. The skill writes tests for the current behavior first, then replaces the flags with an XState machine and deletes the flags it replaced:
+
+```ts
+import { createFSM } from 'xstate/fsm';
+
+export const uploadMachine = createFSM({
+  id: 'upload',
+  initial: 'idle',
+  states: {
+    idle: { on: { upload: { target: 'uploading' } } },
+    uploading: {
+      on: {
+        uploaded: { target: 'done' },
+        noUrl: { target: 'failed' },
+        failed: { target: 'failed' },
+      },
+    },
+    done: {},
+    failed: { on: { retry: { target: 'uploading' } } },
+  },
+});
+```
+
+![State diagram of the explicit upload machine: idle goes to uploading on upload. From uploading, uploaded goes to done, and noUrl and failed both go to failed. From failed, retry goes back to uploading.](./upload-explicit.png)
+
+A response without a URL is now an explicit `noUrl` event that leads to `failed`, so the upload can’t stay in `uploading`. The skill uses [XState v6 beta](/blog/2026-11-05-xstate-v6-beta) by default (here, the tiny `xstate/fsm` machine), or XState v5 if your project already uses it, and it checks the new machine against the same rules.
+
+## How we tested it
+
+I didn’t want to claim this skill is better without measuring it, so we ran it against the alternatives on real code:
+
+- **Finding implicit state machines.** On six open-source repos (Rust, Python, Go, TypeScript, Vue, and Next.js), we built an answer key from the maintainers’ own fixes. The skill found 48% of the items, compared with 31% for the plain prompt “find all of the implicit state machines in my app,” and a blind judge preferred its answer in all six repos. It also uses about three times as many tokens.
+- **Reviewing pull requests.** 17 of 20 known bugs on six unseen pull requests from Quickchat’s benchmark, with zero false findings.
+- **Checking flows.** On six flows from other open-source repos (TypeScript, C#, Python, Kotlin, Elixir, and Go), with three runs each, we compared the skill with Lauren Tan’s `/statechart` and with no skill. The first version missed as many known bugs as `/statechart` (34 each) but showed fewer of them as counterexamples (9 compared with 12), so it didn’t meet our bar of “at least as good.” We then changed the skill to sweep the flow’s source for leads before modeling it. The revised version, which this release includes, found known bugs 22 times compared with 14 for `/statechart` and 19 for no skill, and a blind judge ranked it first on five of the six flows against `/statechart` and on all six against no skill.
+
+These are small samples (one to three runs per condition), the answer keys were built by agents from the maintainers’ diffs, and the judges were models, not people. The skill didn’t win everywhere, either: `/statechart` still showed more of the known bugs as counterexamples (12 compared with 10), and 82% of the revised skill’s other findings were real, compared with 91% for `/statechart`. We revised the skill after seeing the first checking results, so the revised version’s numbers aren’t blind to the answer keys.
+
+## Try it out
+
+Install the skill, point it at a real project, and ask it to find the implicit state machines.
+
+[Read the docs for the Stately skills](/docs/skills), and let us know what it finds (or misses) on [Discord](https://discord.gg/xstate) or in [GitHub](https://github.com/statelyai/skills/issues).

@@ -118,6 +118,33 @@ for (const [, id, content] of handoffs) {
     });
   assert(vizHref, `${id} read-only and editable links carry identical models`);
 }
+const parallelResponse = await get('/docs/xstate/v5/parallel-states');
+assert.equal(parallelResponse.status, 200);
+const parallelHTML = await parallelResponse.text();
+assert.match(parallelHTML, /id="try-a-parallel-state"/);
+assert.match(parallelHTML, /COFFEE_READY/);
+assert.match(parallelHTML, /DONUT_READY/);
+const parallelEditHref = parallelHTML.match(
+  /href="(https:\/\/editor\.stately\.ai\/embed[^"]+)"/,
+)[1];
+const parallelEdit = new URL(parallelEditHref.replaceAll('&amp;', '&'));
+assert.equal(parallelEdit.searchParams.get('source'), 'docs-parallel-states');
+assert.equal(parallelEdit.searchParams.get('mode'), 'editing');
+assert.deepEqual(
+  JSON.parse(Buffer.from(parallelEdit.searchParams.get('machine'), 'base64url')),
+  sourceModels['coffee-donut-parallel'],
+  'The parallel guide edits the downloadable parallel model',
+);
+const parallelViewHref = parallelHTML.match(
+  /href="(https:\/\/editor\.stately\.ai\/viz\?source=docs-parallel-states[^"]+)"/,
+)[1];
+const parallelView = new URL(parallelViewHref.replaceAll('&amp;', '&'));
+assert.equal(parallelView.searchParams.get('source'), 'docs-parallel-states');
+assert.equal(
+  new URLSearchParams(parallelView.hash.slice(1)).get('machine'),
+  parallelEdit.searchParams.get('machine'),
+  'The parallel guide views and edits the same model',
+);
 const overview = await (
   await get('/docs/state-machines-and-statecharts')
 ).text();

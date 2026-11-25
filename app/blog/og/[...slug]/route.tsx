@@ -1,12 +1,16 @@
 import { blog, getBlogImage } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { OGImage } from '@/app/_og/_components/og-image';
+import {
+  getOGFonts,
+  OG_SIZE,
+  OGImage,
+} from '@/app/_og/_components/og-image';
 
 export const revalidate = false;
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: RouteContext<'/blog/og/[...slug]'>,
 ) {
   const { slug } = await params;
@@ -33,10 +37,7 @@ export async function GET(
         date={date}
       />
     ),
-    {
-      width: 1200,
-      height: 630,
-    },
+    { ...OG_SIZE, fonts: await getOGFonts() },
   );
 }
 
