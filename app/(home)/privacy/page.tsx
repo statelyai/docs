@@ -97,13 +97,13 @@ export default function PrivacyPage() {
             the Stately MCP server to Mixpanel. Events describe which features
             and tools you use, how long they take, and whether they fail. They
             are tied to a random identifier. In the Stately editor and the MCP
-            server, events are also tied to your account when you are signed
-            in. In Stately Studio, events are tied to a hashed user id only if
-            you consent in the Studio settings. They do not include your machine contents, the inputs you
-            pass to MCP tools, or your source code. We send events to Mixpanel
-            without your IP address, so Mixpanel does not derive your location
-            from it. We use this data to understand how our tools are used and
-            how to improve them.
+            server, events are also tied to your account when you are signed in.
+            In Stately Studio, events are tied to a hashed user id only if you
+            consent in the Studio settings. They do not include your machine
+            contents, the inputs you pass to MCP tools, or your source code. We
+            send events to Mixpanel without your IP address, so Mixpanel does
+            not derive your location from it. We use this data to understand how
+            our tools are used and how to improve them.
           </p>
           <p>
             You can turn off usage analytics with the Usage analytics setting in
@@ -115,10 +115,10 @@ export default function PrivacyPage() {
             identifiers it stored in your browser.
           </p>
           <p>
-            If you visit from the European Economic Area, the United Kingdom,
-            or Switzerland, we keep analytics identifiers for the current
-            browser session only and do not link events to your account or to
-            earlier visits.
+            If you visit from the European Economic Area, the United Kingdom, or
+            Switzerland, we keep analytics identifiers for the current browser
+            session only and do not link events to your account or to earlier
+            visits.
           </p>
           <p>
             <a href="https://mixpanel.com/legal/privacy-hub/">
@@ -163,16 +163,16 @@ export default function PrivacyPage() {
           </p>
           <h3 id="account-deletion">Account deletion</h3>
           <p>
-            You can delete your account from your profile settings. Your
-            account is disabled right away, and you can restore it by signing
-            in within 7 days. After 7 days, we permanently delete your account,
-            your sign-in record, and the projects, machines, and assets you own.
+            You can delete your account from your profile settings. Your account
+            is disabled right away, and you can restore it by signing in within
+            7 days. After 7 days, we permanently delete your account, your
+            sign-in record, and the projects, machines, and assets you own.
             Projects you created in other people&apos;s teams, and machines you
-            edited in other people&apos;s projects, stay with those projects
-            and are credited to the project owner. If you own a team that has
-            other members, remove them before you delete your account. If you
-            have an active paid subscription, cancel it in Billing first. We delete data in our
-            database backups within 30 days.
+            edited in other people&apos;s projects, stay with those projects and
+            are credited to the project owner. If you own a team that has other
+            members, remove them before you delete your account. If you have an
+            active paid subscription, cancel it in Billing first. We delete data
+            in our database backups within 30 days.
           </p>
           <p>
             Deleting your account does not delete usage events already sent to
@@ -406,9 +406,9 @@ export default function PrivacyPage() {
             reviewing flows, chat, and visualizing code. When you use an AI
             feature, we send the machine, chat message, or code you submit to
             OpenAI to generate a response. We do not send your name, email, or
-            other account details. OpenAI does not use data sent through its
-            API to train its models, and it can keep that data for up to 30 days
-            to monitor abuse.
+            other account details. OpenAI does not use data sent through its API
+            to train its models, and it can keep that data for up to 30 days to
+            monitor abuse.
           </p>
           <p>
             <a href="https://openai.com/policies/privacy-policy">
@@ -437,11 +437,11 @@ export default function PrivacyPage() {
             When your agent saves a model or a check result, we store the model,
             the check report, and the context your agent sends: the repository
             URL, the commit, the project folder name, file paths relative to
-            your project, file hashes, and the source citations and
-            descriptions attached to the model. We do not store absolute paths
-            from your computer. The agent skill does not upload your source
-            code. A citation can include a short description of the cited code.
-            Saved models stay until you delete them or your account.
+            your project, file hashes, and the source citations and descriptions
+            attached to the model. We do not store absolute paths from your
+            computer. The agent skill does not upload your source code. A
+            citation can include a short description of the cited code. Saved
+            models stay until you delete them or your account.
           </p>
           <h3 id="agent-skills">Agent skills</h3>
           <p>
@@ -483,9 +483,7 @@ export default function PrivacyPage() {
           </p>
 
           <h2 id="subprocessors">Subprocessors</h2>
-          <p>
-            We use these services to process personal data on our behalf:
-          </p>
+          <p>We use these services to process personal data on our behalf:</p>
           <ul>
             <li>Vercel: hosting, logs, and web analytics</li>
             <li>Supabase: database, authentication, and asset storage</li>
@@ -506,9 +504,9 @@ export default function PrivacyPage() {
             Except for Plausible, which processes website visitor data in the
             EU, these services are based in the United States or process data
             there. When we transfer personal data from the European Economic
-            Area, the United Kingdom, or Switzerland, we rely on the
-            transfer mechanisms these providers offer, such as Standard
-            Contractual Clauses.
+            Area, the United Kingdom, or Switzerland, we rely on the transfer
+            mechanisms these providers offer, such as Standard Contractual
+            Clauses.
           </p>
 
           <h2 id="your-rights">Your rights</h2>
