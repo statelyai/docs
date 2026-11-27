@@ -4,10 +4,29 @@ description: Generate tests from a state machine, check your app with XState Tes
 ---
 
 import checkoutDiagram from '@/content/machines/checkout-test-model.json';
+import { DocsSourceGate } from '@/components/docs-source-gate';
 
 Model-based testing generates tests from a description of how your app should behave. You give the test runner a model of the feature and a way to drive the app. The runner chooses sequences of events, runs them against both, and checks that the app behaves as the model says it should.
 
 Take a checkout flow. You might write one end-to-end test for a successful payment and another for a declined card. Both can pass while retrying a declined payment leaves the checkout stuck. A model can describe what happens after a decline, including retrying and canceling. Each path can reuse the same code that starts a payment, simulates a response, and checks the checkout status.
+
+## Choose a guide for your XState version
+
+- XState v5 stable uses [`xstate/graph`](/docs/xstate/v5/graph#model-based-testing).
+
+<DocsSourceGate sourceId="xstate-v6">
+
+- XState v6 beta uses [`@xstate/test@beta`](/docs/xstate/v6/model-based-testing). The checkout example below uses this version.
+
+</DocsSourceGate>
+
+## Add model-based tests with a coding agent
+
+```text title="Copy prompt"
+Add and run model-based tests for [feature]. Model the expected behavior and
+check it through the app's API or UI. Follow the guide for this project's
+XState version at https://stately.ai/docs/model-based-testing.mdx
+```
 
 ## When model-based testing helps
 
@@ -158,7 +177,7 @@ By default, `testPaths()` looks for short paths to reachable states. A shortest 
 
 The second test checks events the model rejects. `checkUnhandled` sends `PAY` or `CANCEL` from each state where the model has no transition for it, then checks that the checkout status is unchanged. In this model, a second `PAY` while payment is pending must do nothing, and so must `CANCEL`. If `cancel()` also cancels a pending payment, the test fails at `PAY → CANCEL`. `checkUnhandled` generates its own paths, so it cannot be combined with `cover` in the same call.
 
-For payloads such as amounts and currencies, you can supply representative inputs for path tests or use `propertyTest()` to generate inputs and event sequences and shrink a failure to a smaller example. See the [XState v6 model-based testing guide](/docs/xstate/v6/model-based-testing) and the [XState Test README](https://github.com/statelyai/xstate/blob/04b26b8670ec6724279764579a74043fb83960da/packages/xstate-test/README.md).
+For payloads such as amounts and currencies, you can supply representative inputs for path tests or use `propertyTest()` to generate inputs and event sequences and shrink a failure to a smaller example. See the [XState Test README](https://github.com/statelyai/xstate/blob/04b26b8670ec6724279764579a74043fb83960da/packages/xstate-test/README.md).
 
 ## Convert existing end-to-end tests
 
