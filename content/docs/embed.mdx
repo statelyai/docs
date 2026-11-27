@@ -4,6 +4,7 @@ description: You can embed your machines anywhere that supports iframes. Embed m
 ---
 
 import machine_e94d5674 from '@/content/machines/e94d5674-7ab7-4a4e-b7a8-781609bfe523.json';
+import { DocsSourceGate } from '@/components/docs-source-gate';
 
 You can embed your machines anywhere that supports [`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe). Embed mode is a focused non-editable view of your machine in Stately Studio’s editor, which can be zoomed and panned.
 
@@ -72,6 +73,18 @@ The machine owner can unpublish the embed at any time. Private-source snapshots 
 If you want us to prioritize improving embed mode, please [upvote it on our feedback page](https://github.com/statelyai/feedback/issues/94).
 
 </Callout>
+
+<DocsSourceGate sourceId="sdk">
+
+Use the [Stately SDK](/docs/packages/sdk#embeddable-editor) to embed a machine
+from your application code.
+
+```text title="Copy prompt"
+Embed [machine] in [screen] in read-only mode with @statelyai/sdk.
+Use https://stately.ai/docs/packages/sdk.mdx and verify the embed renders.
+```
+
+</DocsSourceGate>
 
 ## URL parameters, including color mode
 
