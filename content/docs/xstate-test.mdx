@@ -1,15 +1,19 @@
 ---
 title: '@xstate/test'
-description: Model-based testing utilities for XState.
+description: Reference for the legacy createModel API and links to current testing guides.
 ---
 
-<Callout>
+import { DocsSourceGate } from '@/components/docs-source-gate';
 
-The latest version of the model-based testing utilities (prev. `@xstate/test`) are now part of the latest `@xstate/graph` package.
+This page documents the legacy `createModel` API. For new tests, use the guide for your installed XState version.
 
-Documentation for `@xstate/graph` (including the testing utilities) is coming soon; the documentation below is for `@xstate/test@beta`.
+- XState v5 stable uses [`xstate/graph`](/docs/xstate/v5/graph#model-based-testing).
 
-</Callout>
+<DocsSourceGate sourceId="xstate-v6">
+
+- XState v6 beta uses [`@xstate/test@beta`](/docs/xstate/v6/model-based-testing).
+
+</DocsSourceGate>
 
 The [@xstate/test package](https://github.com/statelyai/xstate/tree/main/packages/xstate-test) contains utilities for facilitating [model-based testing](https://en.wikipedia.org/wiki/Model-based_testing) for any software.
 
@@ -20,7 +24,7 @@ The [@xstate/test package](https://github.com/statelyai/xstate/tree/main/package
 1. Install `xstate` and `@xstate/test`:
 
 ```bash
-npm install xstate @xstate/test
+npm install xstate@4 @xstate/test@0.5
 ```
 
 2. Create the machine that will be used to model the system under test (SUT):

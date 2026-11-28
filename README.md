@@ -31,6 +31,7 @@ work without it.
 | `app/docs`       | The documentation layout and pages.                   |
 | `/api/search`    | Public documentation search.                          |
 | `/api/docs/chat` | Public documentation AI chat.                         |
+| `/llms.txt`      | Markdown links by task and the full page index.       |
 
 ## Documentation UI
 
